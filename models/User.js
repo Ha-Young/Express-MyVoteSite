@@ -18,10 +18,6 @@ const userSchema = new Schema({
     trim: true,
     required: [true, 'Name required'],
     match: [/^[가-힣]{2,4}|[a-zA-Z]{2,20}$/, 'Not a valid name']
-  },
-  salt: {
-    type: String,
-    require: true
   }
 });
 

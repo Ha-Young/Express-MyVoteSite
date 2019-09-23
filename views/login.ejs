@@ -4,8 +4,27 @@
     <% include ./partials/head %>
   </head>
   <body>
-    <% include ./partials/header %>
     <h2>Login</h2>
-    <p></p>
+    <form method="POST" action="/login">
+      <label>
+        <span>Email</span>
+        <input type="email" name="email" />
+      </label>
+      <label>
+        <span>Password</span>
+        <input type="password" name="password" />
+      </label>
+      <button type="submit">
+        Login
+      </button>
+    </form>
+    <a href="/join">회원가입</a>
+    <script>
+      var message = '<%= message %>';
+
+      if (message) {
+        alert(message);
+      }
+    </script>
   </body>
 </html>

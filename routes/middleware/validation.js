@@ -24,12 +24,14 @@ exports.validateUser = async (req, res, next) => {
       return res.redirect("/join");
     }
 
-    const user = await User.find({ email: req.body.email });
+    const user = await User.findOne({ email: req.body.email });
 
-    if (user.length > 0) {
+    if (user) {
       req.flash('errorMessage', 'A user already exists with this email');
       return res.redirect("/join");
     }
+
+    next();
   } catch (err) {
     console.error(err);
     next(err);

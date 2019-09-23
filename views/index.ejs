@@ -8,4 +8,11 @@
     <h2><%= title %></h2>
     <p>Welcome to <%= title %></p>
   </body>
+  <script>
+    var message = '<%= loginMessage %>';
+
+    if (message) {
+      alert(message);
+    }
+  </script>
 </html>

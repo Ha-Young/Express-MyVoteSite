@@ -1,20 +1,35 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const crypto = require('crypto');
+const bcrypt = require('bcrypt');
+const passport = require('passport');
 const { validateUser } = require('./middleware/validation');
+const { isAuthenticated } = require('./middleware/authentication');
 
-router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express' });
+router.get('/', isAuthenticated, (req, res, next) => {
+  res.render('index', { title: 'Express', loginMessage: req.flash('success')[0] });
 });
 
 router.get('/login', (req, res, next) => {
-  res.render('login');
+  res.render('login', {
+    message: req.flash('joinMessage')[0] || req.flash('error')[0]
+  });
+});
+
+router.post('/login', passport.authenticate('local', {
+  successRedirect : '/',
+  failureRedirect: '/login',
+  failureFlash: true,
+  successFlash: 'Welcome!'
+}));
+
+router.get('/logout', (req, res, next) => {
+  req.logout();
+  res.redirect('/');
 });
 
 router.get('/join', (req, res, next) => {
-  const errorMessage = req.flash('errorMessage')[0] || null;
-  res.render('join', { errorMessage });
+  res.render('join', { error: req.flash('error')[0] });
 });
 
 router.post('/join', validateUser, async (req, res, next) => {
@@ -25,15 +40,16 @@ router.post('/join', validateUser, async (req, res, next) => {
       password
     } = req.body;
 
-    const salt = crypto.randomBytes(8).toString('hex').slice(0, 16);
-    const hashPassword = (salt) => crypto.createHash('sha512').update(password + salt).digest('hex');
+    const saltRounds = 10;
+    const hash = bcrypt.hashSync(password, saltRounds);
 
     await new User({
       email,
       name,
-      password: hashPassword(salt),
-      salt
+      password: hash
     }).save();
+
+    req.flash('joinMessage', '회원가입이 완료되었습니다.');
 
     return res.redirect("/login");
   } catch (err) {
@@ -42,7 +58,7 @@ router.post('/join', validateUser, async (req, res, next) => {
     const dbValidationError = err.errors.name || err.errors.password || err.errors.email;
 
     if (dbValidationError) {
-      req.flash('errorMessage', dbValidationError.message);
+      req.flash('error', dbValidationError.message);
     }
 
     return res.redirect("/join");

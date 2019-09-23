@@ -4,7 +4,6 @@
     <% include ./partials/head %>
   </head>
   <body>
-    <% include ./partials/header %>
     <h2>Join</h2>
     <form method="POST" action="/join">
       <label>
@@ -30,10 +29,10 @@
       </button>
     </form>
     <script>
-      const errorMessage = '<%= errorMessage %>';
+      var message = '<%= error %>';
 
-      if (errorMessage) {
-        alert(errorMessage);
+      if (message) {
+        alert(message);
       }
     </script>
   </body>
