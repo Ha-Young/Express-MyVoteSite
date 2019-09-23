@@ -11,8 +11,7 @@ const userSchema = new Schema({
   password: {
     type: String,
     trim: true,
-    required: [true, 'Password required'],
-    match: [/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/, 'Not a valid password']
+    required: [true, 'Password required']
   },
   name: {
     type: String,

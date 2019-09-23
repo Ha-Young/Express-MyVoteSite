@@ -6,6 +6,35 @@
   <body>
     <% include ./partials/header %>
     <h2>Join</h2>
-    <p></p>
+    <form method="POST" action="/join">
+      <label>
+        <span>Email</span>
+        <input type="email" name="email" />
+      </label>
+      <label>
+        <span>Password</span>
+        <span>Should be minimum 6 characters of alphabet & number & special character combination</span>
+        <input type="password" name="password" />
+      </label>
+      <label>
+        <span>Confirm Password</span>
+        <input type="password" name="password_confirm" />
+      </label>
+      <label>
+        <span>Name</span>
+        <span>Should be 2~4 of Hangeul or 2~20 of alphabet</span>
+        <input type="text" name="name" />
+      </label>
+      <button type="submit">
+        JOIN
+      </button>
+    </form>
+    <script>
+      const errorMessage = '<%= errorMessage %>';
+
+      if (errorMessage) {
+        alert(errorMessage);
+      }
+    </script>
   </body>
 </html>
