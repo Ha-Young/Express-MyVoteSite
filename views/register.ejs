@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <form action='/register' method='POST'>
+      <h2>Register</h2>
+      <label for='name'>Name</label>
+      <input type='text' name='name'>
+      <label for='email'>Email</label>
+      <input type='text' name='email'>
+      <label for='password'>Password</label>
+      <input type='password' name='password'>
+      <label for='password-confirm'>Confirm password</label>
+      <input type='password' name='password-confirm'>
+      <input type='submit' value='Register' class='button'>
+    </form>
+  </body>
+</html>
