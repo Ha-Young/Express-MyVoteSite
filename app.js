@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const lessMiddleware = require('less-middleware');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
@@ -28,6 +29,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+
+require('./config/passport');
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', index);
 app.use('/users', users);
