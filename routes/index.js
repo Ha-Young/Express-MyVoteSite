@@ -10,13 +10,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-  console.log("ddddd", req.flash('message'));
   res.render('login', { title: 'Login', message: null });
 });
 
 router.post('/login', function(req, res, next) {
   passport.authenticate('local', (err, user, info) => {
     if (user) {
+      req.session.email = user.email;
       res.redirect('/');
     } else {
       res.render('login', { title: 'Loign', message: info.message });
