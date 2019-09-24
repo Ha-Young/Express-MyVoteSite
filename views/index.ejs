@@ -1,11 +1,51 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Votins</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div class='navbar'>
+      <%if(1){%>
+        <%-include('navbar')%>
+      <%}%>
+    </div>
+    <div class='main-section'>
+      <div class='header'>
+        <h1>VOTINGS</h1>
+        <h2>투표 전쟁이 일어난다. 모든 대원들, 투표 준비!</h2>
+      </div>
+      <div class='item-section'>
+        <ul class='voting-list'>
+          <%if(votings){
+            for(let i = 0; i < votings.length; i++){%>
+              <li class='voting'>
+                <a href='/votings/<%=votings[i]._id %>'>
+                  <p>
+                    <span>진행중여부</span>
+                    <span>진행중??</span>
+                  </p>
+                  <p class='type'>VOTING</p>
+                  <h2><%= votings[i].title %></h2>
+                  <p>
+                    <span>CREATOR</span>
+                    <span><%= votings[i].creator %></span>
+                  </p>
+                  <p>
+                    <span>CREATED AT</span>
+                    <span><%= votings[i].created_at %></span>
+                  </p>
+                  <p>
+                    <span>EXPIRRED DATE</span>
+                    <span><%= votings[i].expiresAt %></span>
+                  </p>
+                </a>
+              </li>
+            <%}}%>
+          </ul>
+          <a href='/votings/new'>CREATE NEW</a>
+          <a href='/votings'>MY VOTINGS</a>
+      </div>
+    </div>
   </body>
 </html>
