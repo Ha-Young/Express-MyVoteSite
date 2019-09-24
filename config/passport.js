@@ -12,7 +12,7 @@ passport.serializeUser((user, done) => {
 
 // 사용자 정보 조회 조회한 정보를 req.user에 저장
 passport.deserializeUser((email, done) => {
-  User.find({ email: email })
+  User.findOne({ email })
       .then(user => {
         console.log('deserializeUser');
         done(null, user);
@@ -26,12 +26,12 @@ passport.use(new LocalStrategy({
 },
 async (email, password, done) => {
   try {
-    const exUser = await User.findOne({ email: email });
+    const user = await User.findOne({ email });
 
-    if (exUser) {
-      bcrypt.compare(password, exUser.password, (err, res) => {
+    if (user) {
+      bcrypt.compare(password, user.password, (err, res) => {
         if(res) {
-          return done(null, exUser);
+          return done(null, user);
         } else {
           done(null, false, { message: '비밀번호가 일치하지 않습니다.' });
         }

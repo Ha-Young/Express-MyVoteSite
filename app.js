@@ -57,7 +57,7 @@ app.use(validator());
 /*app.use((req, res, next) => {
   res.locals.flashes = req.flash();
   res.locals.success_massage = req.flash('success_msg');
-  res.locals.err0r = req.flash('error');
+  res.locals.error = req.flash('error');
   //res.locals.currentPath = req.path;
   next();
 });*/

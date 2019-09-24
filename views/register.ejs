@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Register</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
+    <h1>aaa</h1>
+    <%if (flashes) { %>
+        <div><%= JSON.stringify(flashes, null, 2) %></div>
+    <% } %>
     <form action='/register' method='POST'>
       <h2>Register</h2>
       <label for='name'>Name</label>

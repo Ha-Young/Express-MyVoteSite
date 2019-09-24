@@ -1,4 +1,7 @@
 const passport = require('passport');
+const bcrypt = require('bcrypt');
+
+const User = require('../../models/User');
 
 exports.isLoggedIn = (req, res, next) => {
   if(req.isAuthenticated()) return next();
@@ -6,10 +9,43 @@ exports.isLoggedIn = (req, res, next) => {
   res.status(301).redirect('/login');
 };
 
-exports.isNotLoggedIn = (req, res, next) => {
+/*exports.isNotLoggedIn = (req, res, next) => {
   if(req.isAuthenticated()) return res.status(301).redirect('/');
 
   next();
+};*/
+
+exports.loginForm = (req, res) => {
+  res.render('login', { title: 'Login', flashes: req.flash() });
+};
+
+exports.login = (req, res, next) => {
+  passport.authenticate('local', (authError, user, info) => {
+    if (authError) {
+      console.log('authError', authError);
+      return next(authError);
+    }
+    if (!user) {
+      req.flash('error', '없는 email 입니다.');
+      return res.redirect('/login');
+    }
+    return req.login(user, (loginError) => {
+      if (loginError) {
+        console.error(loginError);
+        return next(loginError);
+      }
+
+      req.flash('success', '로그인에 성공하였습니다.');
+      return res.redirect('/');
+    });
+  })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
+}
+
+exports.registerForm = (req, res) => {
+  res.render('register', {
+    title: 'Register',
+    flashes: null,
+  });
 };
 
 exports.validateRegister = (req, res, next) => {
@@ -28,13 +64,42 @@ exports.validateRegister = (req, res, next) => {
   const errors = req.validationErrors();
   if (errors) {
     req.flash('error', errors.map(err => err.msg));
-    res.render('register', {titler: 'Register', body: req.body, flashes: req.flash() });
+    res.render('register', {titler: 'aa', body: req.body, flashes: req.flash() });
     return;
   }
 
   next();
 };
 
-exports.renderLogin = (req, res) => {
-res.render('login');
+exports.register = async (req, res, next) => {
+  const { email, password, name } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (user) {
+      req.flash('error', '이미 가입된 이메일입니다.');
+      res.render('register', {titler: 'Register', flashes: req.flash() });
+    }
+    await bcrypt.genSalt(10, function(err, salt) {
+      bcrypt.hash(password, salt, function(err, hash) {
+        User.create({
+          name,
+          email,
+          password: hash,
+        });
+      });
+    });
+
+    req.flash('success', '가입에 성공하였습니다');
+    return res.redirect('/');
+  } catch (error) {
+    return next(error);
+  }
+};
+
+exports.logout = (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.redirect('/');
 };
