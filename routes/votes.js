@@ -3,7 +3,21 @@ const router = express.Router();
 const Vote = require('../models/Vote');
 
 router.get('/', async (req, res, next) => {
-  
+  try {
+    await Vote.find({
+      user_id: req.user._id,
+    })
+    .populate('user_id')
+    .exec((err, votes) => {
+      if (err) return handleError(err);
+
+      console.log(votes);
+      return res.render('index', { votes, loginMessage: null });
+    });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
 });
 
 router.get('/new', async (req, res, next) => {
