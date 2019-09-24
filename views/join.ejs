@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <form action='/auth/join' method='post'>
+      email <input type='email' name='email' required>
+      <br>
+      nickname <input type='text' name='nickname' required>
+      <br>
+      password <input type='password' name='password' required>
+      <br>
+
+      <p><%= error %></p>
+      <input type='submit' value='회원가입'>
+    </form>
+
+    <a href='/login'>로그인</a>
+  </body>
+</html>

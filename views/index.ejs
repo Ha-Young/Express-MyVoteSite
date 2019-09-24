@@ -5,7 +5,13 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
+      <%- include('partials/header') %>
+
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+
+
+        <a href='/votings/new'>투표 생성하기</a>
+        <a href='/votings'>내 투표보기</a>
+
   </body>
 </html>

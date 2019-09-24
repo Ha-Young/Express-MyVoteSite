@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+      <%- include('partials/header') %>
+
+    <h1><%= title %></h1>
+
+    <form action='/votings/new' method='post'>
+      제목 <input type='text' name='title' required>
+
+      <ul class='options-list'>
+        <li>
+          <input type='text' name='opts-0' required>
+        </li>
+        <li>
+          <input type='text' name='opts-1' required>
+        </li>
+      </ul>
+
+      <button type='button' class='add-option'>항목 추가</button>
+      <br>
+
+      <input type='datetime-local' name='expired'>
+      <br>
+      <br>
+      <input type='submit' value='투표 생성'>
+    </form>
+    <script>
+    const $ul = document.querySelector('.options-list');
+    const $newOption = document.querySelector('.add-option');
+    let count = 2;
+
+    $newOption.addEventListener('click', () => {
+      const $li = document.createElement('li');
+      const $input = document.createElement('input');
+      const $chkBox = document.createElement('input');
+      const $btnDestroy = document.createElement('button');
+      const $btnDestroyText = document.createTextNode('x');
+
+
+      $input.setAttribute('type', 'text');
+      $input.setAttribute('name', `opts-${count}`);
+      $btnDestroy.setAttribute('class', `btn-destroy-${count}`);
+      $btnDestroy.appendChild($btnDestroyText);
+      $li.appendChild($input);
+      $li.appendChild($btnDestroy);
+      $ul.appendChild($li);
+
+      const $del = document.querySelector(`.btn-destroy-${count}`);
+
+
+      $del.addEventListener('click', (ev) => {
+        ev.currentTarget.parentElement.remove();
+      });
+
+      count++;
+    });
+
+
+    </script>
+  </body>
+</html>

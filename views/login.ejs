@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <form action='/auth/login' method='post'>
+      email <input type='email' name='email' required>
+      <br>
+      password <input type='password' name='password' required>
+      <br>
+      <p><%= error %></p>
+
+      <input type='submit' value='로그인'>
+    </form>
+
+    <a href='/join'>회원가입</a>
+
+    <a href="/auth/github">GITHUB LOG IN</a>
+
+  </body>
+</html>
