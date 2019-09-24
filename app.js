@@ -6,6 +6,8 @@ const lessMiddleware = require('less-middleware');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const session = require('express-session');
+const flash = require('connect-flash');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
@@ -22,6 +24,15 @@ db.once('open', function() {
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+app.use(flash());
+app.use(
+  session({
+    secret: 'vanillacoding',
+    resave: false,
+    saveUninitialized: true
+  })
+);
 
 app.use(logger('dev'));
 app.use(express.json());
