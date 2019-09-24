@@ -8,7 +8,7 @@ const optionSchema = new Schema({
     required: [true, 'Option title required']
   },
   voted_user: [{type: Schema.Types.ObjectId, ref: 'User'}]
-}, { _id: false });
+});
 
 const voteSchema = new Schema({
   user_id: {

@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const { validateUser } = require('./middleware/validation');
 const { isAuthenticated } = require('./middleware/authentication');
+const { convertDate } = require('../utils/utils');
 
 router.get('/', isAuthenticated, async (req, res, next) => {
   try {
@@ -14,7 +15,12 @@ router.get('/', isAuthenticated, async (req, res, next) => {
     .exec((err, votes) => {
       if (err) return handleError(err);
 
-      return res.render('index', { votes, loginMessage: req.flash('success')[0] });
+      const voteCollection = votes.map(vote => {
+        vote.converted_date = convertDate(vote.expired_at);
+        return vote;
+      });
+
+      return res.render('index', { votes: voteCollection, loginMessage: req.flash('success')[0] });
     });
   } catch (err) {
     console.error(err);

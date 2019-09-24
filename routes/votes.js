@@ -1,18 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const Vote = require('../models/Vote');
+const { convertDate } = require('../utils/utils');
 
-router.get('/', async (req, res, next) => {
+router.get('/', (req, res, next) => {
   try {
-    await Vote.find({
+    Vote.find({
       user_id: req.user._id,
     })
     .populate('user_id')
     .exec((err, votes) => {
       if (err) return handleError(err);
 
-      console.log(votes);
-      return res.render('index', { votes, loginMessage: null });
+      const voteCollection = votes.map(vote => {
+        vote.converted_date = convertDate(vote.expired_at);
+        return vote;
+      });
+
+      return res.render('index', { votes: voteCollection, loginMessage: null });
     });
   } catch (err) {
     console.log(err);
@@ -61,13 +66,52 @@ router.post('/new', async (req, res, next) => {
   }
 });
 
-router.get('/:voteId', (req, res, next) => {
+router.put('/vote', async (req, res, next) => {
   try {
-    console.log(req.params)
+    const { voteId, optionId } = req.body;
+    const { _id: userId } = req.user;
+
+    const targetVote = await Vote.findById(voteId);
+    const hasDuplicateVote = targetVote.options.find(option => option.voted_user.indexOf(userId) > -1);
+
+    console.log('optionId1111',hasDuplicateVote);
+
+    if (!hasDuplicateVote) {
+      const targetIndex = targetVote.options.findIndex(option => option._id.toString() === optionId);
+      targetVote.options[targetIndex].voted_user.push(userId);
+
+      await targetVote.save();
+      return res.json({ success: 'ok' });
+    }
+
+    return res.json({ fail: 'Already voted!' });
   } catch (err) {
     console.error(err);
     next(err);
   }
 });
+
+
+router.get('/:voteId', (req, res, next) => {
+  try {
+    console.log(req.params)
+    const { voteId } = req.params;
+
+    Vote.findById(voteId)
+    .populate('user_id')
+    .exec((err, vote) => {
+      if (err) return handleError(err);
+
+      vote.converted_date = convertDate(vote.expired_at);
+
+      console.log(vote);
+      return res.render('votings_detail', { vote });
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+
 
 module.exports = router;

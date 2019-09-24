@@ -11,14 +11,17 @@
         <li>
           <a href="/votings/<%= votes[i]._id %>">
             <div>
-              <span><%= votes[i].title %></span>
-              <span class="<%= (new Date(votes[i].expired_at) - new Date() > 0) ? 'active' : 'inactive' %>">
-                ON
-              </span>
+              <h3>
+                <%= votes[i].title %>
+                <% var isExpired = (new Date() - new Date(votes[i].expired_at) > 0); %>
+                <span class="<%= isExpired ? 'inactive' : 'active' %>">
+                  ON
+                </span>
+              </h3>
             </div>
             <ul>
               <li><%= votes[i].user_id.name %></li>
-              <li><%= votes[i].expired_at %></li>
+              <li><%= votes[i].converted_date %></li>
             </ul>
           </a>
         </li>

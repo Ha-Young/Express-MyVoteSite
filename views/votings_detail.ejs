@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ./partials/head %>
+  </head>
+  <body>
+    <% include ./partials/header %>
+    <% include ./partials/nav %>
+    <div>
+      <a href="/">목록으로</a>
+      <h3>
+        <%= vote.title %>
+        <% var isExpired = (new Date() - new Date(vote.expired_at) > 0); %>
+        <span class="<%= isExpired ? 'inactive' : 'active' %>">
+          ON
+        </span>
+      </h3>
+      <ul>
+        <li><%= vote.user_id.name %></li>
+        <li><%= vote.converted_date %></li>
+      </ul>
+    </div>
+    <form class="voting-form">
+      <ul>
+        <% for (var i = 0; i < vote.options.length; i++) { %>
+          <li>
+            <label data-vote-id="<%= vote._id %>">
+              <span><%= vote.options[i].title %></span>
+              <input type="radio" name="option" data-option-id="<%= vote.options[i]._id %>" />
+            </label>
+          </li>
+        <% } %>
+      </ul>
+      <button type="submit">투표하기</button>
+    </form>
+    <div class="<%= isExpired ? 'result-box' : 'result-box hide' %>">
+      <ul>
+        <% for (var i = 0; i < vote.options.length; i++) { %>
+          <li>
+            <div><%= vote.options[i].title %></div>
+            <div><%= vote.options[i].voted_user.length %></div>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+
+    <script>
+      function sendVoteApi (voteId, optionId) {
+        return fetch('/votings/vote', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ voteId, optionId })
+        })
+        .then(function (res) {
+          return res.json();
+        });
+      }
+
+      var $votingForm = document.querySelector('.voting-form');
+
+      $votingForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (!$votingForm.option.value) {
+          alert('Please vote before submit!');
+        }
+
+        var $checkedRadio = document.querySelector('input[type="radio"]:checked');
+        var $checkedLabel = $checkedRadio.parentElement;
+        var optionId = $checkedRadio.dataset.optionId;
+        var voteId = $checkedLabel.dataset.voteId;
+
+        sendVoteApi(voteId, optionId)
+          .then(function (res) {
+            if (res.fail) {
+              alert(res.fail);
+            }
+          })
+          .catch(function (err) {
+            console.error(err);
+          });
+      });
+    </script>
+  </body>
+</html>
