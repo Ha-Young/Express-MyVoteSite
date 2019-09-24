@@ -24,6 +24,12 @@ router.post('/login', function(req, res, next) {
   })(req, res, next);
 })
 
+router.get('/logout', function(req, res, next) {
+  req.session.destroy();
+  res.clearCookie('vanillacoding');
+  res.redirect('/login');
+})
+
 router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Register', message: req.flash('message') });
 });
