@@ -1,0 +1,45 @@
+<form
+  class="signup-form"
+  action="/signup"
+  method="POST"
+>
+  <div class="signup-email">
+    email
+    <input type="email" name="email" autocomplete="off" required />
+  </div>
+  <div class="signup-name">
+    name
+    <input type="text" name="name" autocomplete="off" required />
+  </div>
+  <div class="signup-password">
+    password
+    <input
+      type="password"
+      name="password"
+      autocomplete="off"
+      style="ime-mode:disabled"
+      minlength="6"
+      required
+    />
+    repeat password
+    <input
+      type="password"
+      name="repeatedPassword"
+      autocomplete="off"
+      style="ime-mode:disabled"
+      minlength="6"
+      required
+    />
+  </div>
+  <div class="signup-profile-img">
+    profileurl
+    <input type="url" name="profileImgUrl" autocomplete="off" />
+  </div>
+  <div class="signup-button">
+    <input type="submit" value="submit" />
+  </div>
+  <div><%= message %></div>
+</form>
+
+<button class="button">++++++</button>
+<script src="/javascripts/index.js"></script>
