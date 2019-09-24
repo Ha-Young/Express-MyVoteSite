@@ -1,13 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Vote = require('../models/Vote');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const { validateUser } = require('./middleware/validation');
 const { isAuthenticated } = require('./middleware/authentication');
 
-router.get('/', isAuthenticated, (req, res, next) => {
-  res.render('index', { title: 'Express', loginMessage: req.flash('success')[0] });
+router.get('/', isAuthenticated, async (req, res, next) => {
+  try {
+    await Vote.find()
+    .populate('user_id')
+    .exec((err, votes) => {
+      if (err) return handleError(err);
+
+      return res.render('index', { votes, loginMessage: req.flash('success')[0] });
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 });
 
 router.get('/login', (req, res, next) => {
@@ -40,8 +52,8 @@ router.post('/join', validateUser, async (req, res, next) => {
       password
     } = req.body;
 
-    const saltRounds = 10;
-    const hash = bcrypt.hashSync(password, saltRounds);
+    const SALT_ROUNDS = 10;
+    const hash = bcrypt.hashSync(password, SALT_ROUNDS);
 
     await new User({
       email,

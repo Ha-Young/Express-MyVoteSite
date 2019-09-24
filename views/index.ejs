@@ -5,8 +5,25 @@
   </head>
   <body>
     <% include ./partials/header %>
-    <h2><%= title %></h2>
-    <p>Welcome to <%= title %></p>
+    <% include ./partials/nav %>
+    <ul>
+      <% for (var i = 0; i < votes.length; i++) { %>
+        <li>
+          <a href="/votings/<%= votes[i]._id %>">
+            <div>
+              <span><%= votes[i].title %></span>
+              <span class="<%= (new Date(votes[i].expired_at) - new Date() > 0) ? 'active' : 'inactive' %>">
+                ON
+              </span>
+            </div>
+            <ul>
+              <li><%= votes[i].user_id.name %></li>
+              <li><%= votes[i].expired_at %></li>
+            </ul>
+          </a>
+        </li>
+      <% } %>
+    </ul>
   </body>
   <script>
     var message = '<%= loginMessage %>';

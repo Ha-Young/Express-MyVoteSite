@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ./partials/head %>
+  </head>
+  <body>
+    <% include ./partials/header %>
+    <% include ./partials/nav %>
+    <form method="POST" action="/votings/new">
+      <fieldset>
+        <ul>
+          <li>
+            <label>
+              <span>Title</span>
+              <input type="text" name="title" required />
+            </label>
+          </li>
+          <li>
+            <label>
+              <span>Expiry Date</span>
+              <input type="number" class="date yy" placeholder="YYYY" name="expired_at" required />
+              <input type="number" class="date mm" placeholder="MM" name="expired_at" required />
+              <input type="number" class="date dd" placeholder="DD" name="expired_at" required />
+              <input type="number" class="date hh" placeholder="hh" name="expired_at" required />
+              <input type="number" class="date ss" placeholder="mm" name="expired_at" required />
+            </label>
+          </li>
+        </ul>
+      </fieldset>
+      <fieldset>
+        <legend>Options</legend>
+        <button type="button" class="btn-more">+</button>
+        <ul class="options-list">
+          <li>
+            <label>
+              <input type="text" name="options" required />
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="text" name="options" required />
+            </label>
+          </li>
+        </ul>
+      </fieldset>
+      <button type="submit">CREATE</button>
+    </form>
+    <script>
+      var message = '<%= message %>';
+
+      if (message) {
+        alert(message);
+      }
+
+      var $btnMore = document.querySelector('.btn-more');
+      var $optionList = document.querySelector('.options-list');
+
+      $btnMore.addEventListener('click', function () {
+        var optionsCount = $optionList.children.length;
+
+        if (optionsCount >= 10) {
+          return;
+        }
+
+        var $li = document.createElement('li');
+        var $label = '<label><input type="text" name="options" /></label>';
+
+        var $button = document.createElement('button');
+        $button.setAttribute('class', 'btn-del');
+        $button.setAttribute('type', 'button');
+        $button.textContent = 'X';
+
+        $li.innerHTML = $label;
+        $li.appendChild($button);
+        $optionList.appendChild($li);
+
+        $button.addEventListener('click', function () {
+          $optionList.removeChild($li);
+        });
+      });
+    </script>
+  </body>
+</html>
