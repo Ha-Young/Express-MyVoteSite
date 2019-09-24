@@ -7,11 +7,23 @@
   </head>
   <body>
     <h1 class="page-title"><%= title %></h1>
-    <div class="login-box">
-      <input />
-      <input />
-      <input />
-      <button>Register</button>
+    <div class="register-box">
+      <form action="/register" method="POST">
+        <div class="form">
+          <label>email</label>
+          <input type="email" name="email">
+        </div>
+        <div class="form">
+          <label>name</label>
+          <input type="text" name="name">
+        </div>
+        <div class="form">
+          <label>password</label>
+          <input type="password" name="password">
+        </div>
+        <button class="submit-button" type="submit">가입</button>
+      </form>
+      <div><%= message %></div>
     </div>
   </body>
 </html>
