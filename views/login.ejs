@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Codewars</title>
+    <title>Voting</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link href="https://fonts.googleapis.com/css?family=Lobster|Ubuntu&display=swap" rel="stylesheet">
   </head>
   <body>
     <h1 class="page-title"><%= title %></h1>
     <div class="login-box">
-      <input />
-      <input />
-      <button>Login</button>
+      <form action="/login" method="POST">
+        <div class="form">
+          <label>email</label>
+          <input type="email" name="email">
+        </div>
+        <div class="form">
+          <label>password</label>
+          <input type="password" name="password">
+        </div>
+        <button class="submit-button" type="submit">로그인</button>
+      </form>
     </div>
+    <p><%= message %></p>
     <p>No Account?<a href="/register">Register</a></p>
   </body>
 </html>

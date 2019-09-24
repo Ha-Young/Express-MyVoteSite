@@ -2,15 +2,27 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const passport = require('passport');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express', message: req.flash('message') });
+  res.render('index', { title: 'Express' });
 });
 
 router.get('/login', function(req, res, next) {
-  res.render('login', { title: 'Login' });
+  console.log("ddddd", req.flash('message'));
+  res.render('login', { title: 'Login', message: null });
 });
+
+router.post('/login', function(req, res, next) {
+  passport.authenticate('local', (err, user, info) => {
+    if (user) {
+      res.redirect('/');
+    } else {
+      res.render('login', { title: 'Loign', message: info.message });
+    }
+  })(req, res, next);
+})
 
 router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Register', message: req.flash('message') });
