@@ -16,8 +16,9 @@ router.get('/login', function(req, res, next) {
 router.post('/login', function(req, res, next) {
   passport.authenticate('local', (err, user, info) => {
     if (user) {
-      req.session.email = user.email;
-      res.redirect('/');
+      req.login(user, function (err) {
+        res.redirect('/');
+      });
     } else {
       res.render('login', { title: 'Loign', message: info.message });
     }
@@ -25,6 +26,7 @@ router.post('/login', function(req, res, next) {
 })
 
 router.get('/logout', function(req, res, next) {
+  req.logout();
   req.session.destroy();
   res.clearCookie('vanillacoding');
   res.redirect('/login');

@@ -8,11 +8,15 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
 const flash = require('connect-flash');
+const bodyparser = require('body-parser');
+const passportConfig = require('./passport');
 
 const index = require('./routes/index');
 const votings = require('./routes/votings');
 
 const app = express();
+
+passportConfig(passport);
 
 mongoose.connect('mongodb://localhost/test', { useNewUrlParser: true });
 const db = mongoose.connection;
@@ -36,6 +40,7 @@ app.use(
     }
   })
 );
+app.use(bodyparser.urlencoded({ extended: true }));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -44,7 +49,6 @@ app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-require('./config/passport');
 app.use(passport.initialize());
 app.use(passport.session());
 
