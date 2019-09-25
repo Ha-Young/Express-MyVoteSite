@@ -37,6 +37,7 @@ app.use((err, req, res, next) => {
     res.render('login', { title: 'Invalid email or wrong password' })
   }
 });
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));

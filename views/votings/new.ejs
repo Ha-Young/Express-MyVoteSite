@@ -7,6 +7,13 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+    <form id ='newVoting' action='/votings/new' method='POST'>
+      title: <input type='text' name='title' /><br>
+      description: <input type='text' name='description' /><br>
+      option1: <input type='text' name='options' /><br>
+      option2: <input type='text' name='options' /><br>
+      <input type='submit' value='Submit' />
+    </form>
     <a href='/votings'>my votings</a>
     <a href='/logout'>logout</a>
   </body>
