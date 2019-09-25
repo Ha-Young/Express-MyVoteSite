@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/stylesheets/common.css" />
+  </head>
+  <body>
+    <h1>각각가각구툐페이지</h1>
+    <div>투표타이틀 <%= voting.title  %></div>
+    <div>투표설명 <%= voting.description  %></div>
+    <div>만료날자 <%= voting.expiration  %></div>
+    <div>진행여부</div>
+    <form>
+      <% for(let i = 0; i < voting.items.length; i++) {%>
+        <input type="radio" value="<%= voting.items[i].option%>" ><%= voting.items[i].option %></input>
+      <%}%>
+    </form>
+    <a href="/">돌아가기</a>
+
+  </body>
+</html>

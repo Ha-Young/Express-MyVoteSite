@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Votings = require('../models/Voting');
+const Voting = require('../models/Voting');
 const mongoose = require('mongoose');
 
 router.get('/new', function(req, res, next) {
@@ -22,7 +22,7 @@ router.post('/new', function(req, res, next) {
     let opt = { option: option[i], voters: [] };
     item.push(opt);
   }
-  const newVoting = new Votings({
+  const newVoting = new Voting({
     title,
     description,
     user: req.user._id,
@@ -37,6 +37,19 @@ router.post('/new', function(req, res, next) {
     .catch(err => {
       res.redirect('/votings/error');
     });
+});
+
+router.get('/:voting_id', function(req, res, next) {
+  if (!mongoose.Types.ObjectId.isValid(req.params.voting_id)) {
+    return next();
+  }
+  Voting.findOne({ _id: req.params.voting_id }, function(err, voting) {
+    if (!err) {
+      res.render('voting', { user: req.user, voting });
+    } else {
+      next(err);
+    }
+  });
 });
 
 module.exports = router;
