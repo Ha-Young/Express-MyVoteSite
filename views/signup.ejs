@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+	<body>
+		<div id="app" class="container">
+        <div>
+          <div style="color:red"><%= error %></div>
+          <form className="form-signin" action="/register" method="POST">
+            <h2 className="form-signin-heading">Please sign up</h2>
+            <label htmlFor="inputName" className="sr-only">
+              Name
+            </label>
+            <input
+              type="name"
+              id="inputName"
+              className="form-control"
+              placeholder="Name"
+              required
+              autoFocus
+              name="name"
+            />
+            <label htmlFor="inputPassword" className="sr-only">
+              Password
+            </label>
+            <input
+              type="text"
+              id="inputPassword"
+              className="form-control"
+              placeholder="Password"
+              required
+              name = "password"
+            />
+            <input type = "submit" value = "submit"/>
+          </form>
+          <div>
+            <span><a href="/login">Signin</a></span>
+          </div>
+        </div>
+    </div>
+	</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>내가 만든 투표</title>
+</head>
+<body>
+  <div>내가 만든 투표보기</div>
+
+  <span><a href="/#"; onClick='history.go(-1);'>목록으로</a></span>
+  <% for(let i=0; i<myVotes.length; i++ ){%>
+    <div>
+      <li class="description-context"><%= "제목 : " + myVotes[i].title %></li>
+      <li class="description-context"><%= "작성자 : " + myVotes[i].creator %></li>
+      <li class="description-context"><%= "마감일 : " + myVotes[i].date %></li>
+      <% if(myVotes[i].proceeding){ %>
+        <li class="description-context"><%= "진행중" %></li>
+        <div><a href="/votings/<%= myVotes[i]._id%>">투표하기</a></div>
+      <% } else { %>
+        <li class="description-context"><%= "마감" %></li>
+        <div><a href="/votings/<%= myVotes[i]._id%>">결과보기</a></div>
+      <% } %>
+    </div>
+  <%}%>
+</body>
+</html>

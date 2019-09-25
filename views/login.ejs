@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>바닐라코딩 프로그래머스</title>
+    <link rel="stylesheet" href="/stylesheets/login.css" />
+  </head>
+  <body>
+    <h1><a href="/login/github">git hub 로그인</h1></a>
+    <div id="app" class="container">
+      <div>
+        <div style="color:red"><%= error %></div>
+        <form class="form-signin" action="/login/local" method="POST">
+          <label htmlFor="inputName" class="sr-only">
+            Name
+          </label>
+          <input
+            type="name"
+            id="inputName"
+            class="form-control"
+            placeholder="Name"
+            required
+            autoFocus
+            name="name"
+          />
+          <label htmlFor="inputPassword" class="sr-only">
+            Password
+          </label>
+          <input
+            type="password"
+            id="inputPassword"
+            class="form-control"
+            placeholder="Password"
+            required
+            name="password"
+          />
+          <input type="submit" value="submit" />
+        </form>
+      </div>
+    </div>
+    <span><a href="/signup">회원가입</a></span>
+  </body>
+</html>

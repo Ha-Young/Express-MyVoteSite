@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>투표페이지</title>
+</head>
+<body>
+  <div><%= voteInfo[0].title + "에 대한 투표"%></div>
+  <ul>
+      <div>
+        <li class="description-context"><%= "제목 : " + voteInfo[0].title %></li>
+        <li class="description-context"><%= "생성자 : " + voteInfo[0].creator %></li>
+        <li class="description-context"><%= "만료일 : " + voteInfo[0].date %></li>
+        <% if(voteInfo[0].proceeding){ %>
+          <li class="description-context"><%= "진행중" %></li>
+          <% if(isVoted){ %>
+            <form action="/votings/<%= voteInfo[0]._id %>" method="POST">
+                <select name='optionsChoice'>
+                    <option value='' selected>-- 선택 --</option>
+                  <% for(let i =0; i<voteInfo[0].options.length; i++){%>
+                    <option value='<%= voteInfo[0].options[i]._id %>'>
+                      <%= voteInfo[0].options[i].name %>
+                    </option>
+                  <% } %>
+                </select>
+                <input type = "submit" value = "투표하기"/>
+            </form>
+          <% } else { %>
+            <div><span>이미 투표했습니다</span></div>
+          <% } %>
+        <% } else { %>
+          <li class="description-context"><%= "마감" %></li>
+          <div class="description-context"><%= "결과" %>
+            <% for(let i =0; i<winner.name.length; i++){%>
+              <li class="description-context"><%= winner.name[i] + " : " + winner.count + "득표"%></li>
+            <% } %>
+          </div>
+        <% } %>
+
+        <% if(name === voteInfo[0].creator && voteInfo[0].proceeding){ %>
+          <div>현재 투표 상황</div>
+          <% for(let i =0; i<voteInfo[0].options.length; i++){%>
+              <li>
+                <%= voteInfo[0].options[i].name + " : " + voteInfo[0].options[i].member.length + "득표"%>
+              </li>
+          <% } %>
+          <form method="POST" action="/votings/delete/<%= voteInfo[0]._id %>?_method=DELETE">
+            <input type = "submit" value = "지우기"/>
+          </form>
+        <% } %>
+        <span><a href="/#"; onClick='history.go(-1);'>목록으로</a></span>
+      </div>
+  </ul>
+</body>
+</html>

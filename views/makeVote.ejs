@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>투펴ㅛ만들기</title>
+  </head>
+  <body>
+    <div>
+      <form className="form-signin" action="/votings/new" method="POST">
+        <h2 className="form-signin-heading">Please sign up</h2>
+        <label htmlFor="inputName" className="sr-only">
+          제목
+        </label>
+        <input
+          type="name"
+          id="inputName"
+          className="form-control"
+          placeholder="Name"
+          required
+          autoFocus
+          name="title"
+        />
+        <label htmlFor="inputPassword" className="sr-only">
+          마감시간
+        </label>
+        <input
+          type="datetime-local"
+          id="inputPassword"
+          className="form-control"
+          required
+          name="date"
+        />
+        <label htmlFor="inputPassword" className="sr-only">
+          요약내용
+        </label>
+        <input
+          type="text"
+          id="inputPassword"
+          className="form-control"
+          required
+          name="description"
+        />
+        <div name="creator"><%= name %></div>
+        <span>옵션 2개 이상 입력해주세요</span>
+        <div id="options-box">
+          <input type="text" name="options" placeholder="옵션" required />
+          <input type="text" name="options" placeholder="옵션" required />
+        </div>
+        <input type="submit" value="submit" />
+      </form>
+      <div>
+        <div id="optionPlus">옵션 추가 버튼</div>
+        <div id="optionDel">옵션 제거 버튼</div>
+        <span><a href="/login">Signin</a></span>
+      </div>
+    </div>
+
+    <script>
+      (function() {
+        var optionBox = document.getElementById('options-box');
+
+        function plusOption() {
+          var createInput = document.createElement('input');
+          createInput.setAttribute('type', 'text');
+          createInput.setAttribute('name', 'options');
+          createInput.setAttribute('placeholder', '옵션');
+          createInput.setAttribute('required', '');
+          optionBox.appendChild(createInput);
+        }
+        function delOption(e) {
+          if (optionBox.children.length > 2) {
+            optionBox.removeChild(optionBox.lastChild);
+          }
+        }
+        document
+          .getElementById('optionPlus')
+          .addEventListener('click', plusOption);
+
+        document
+          .getElementById('optionDel')
+          .addEventListener('click', delOption);
+      })();
+    </script>
+  </body>
+</html>

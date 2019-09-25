@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Codewars</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="header">
+      <h1 class="title"><%= "투표" %></h1>
+      <div>
+        <span><%= name %></span>
+        <span><a href="/logout">로그아웃</a></span>
+      </div>
+    </div>
+    <div class="main-body">
+      <div>
+        <div>투표목록</div>
+        <ul>
+          <% for(let i=0; i<allVotes.length; i++ ){%>
+            <div>
+              <li class="description-context"><%= allVotes[i].title %></li>
+              <li class="description-context"><%= allVotes[i].creator %></li>
+              <li class="description-context"><%= allVotes[i].date %></li>
+              <li class="description-context"><%= allVotes[i]._id %></li>
+              <% if(allVotes[i].proceeding){ %>
+                <li class="description-context"><%= "진행중" %></li>
+              <% } else { %>
+                <li class="description-context"><%= "마감" %></li>
+              <% } %>
+              <% if(allVotes[i].proceeding){ %>
+                <div><a href="/votings/<%= allVotes[i]._id%>">투표하기</a></div>
+              <% } else { %>
+                <div><a href="/votings/<%= allVotes[i]._id%>">결과보기</a></div>
+              <% } %>
+            </div>
+          <%}%>
+        </ul>
+      </div>
+
+      <div style="margin-top: 100px">
+        <div>내꺼</div>
+        <div><a href="/votings/new">투표생성</a></div>
+        <div><a href="/votings">내투표로 이동하기</a></div>
+      </div>
+    </div>
+  </body>
+</html>
