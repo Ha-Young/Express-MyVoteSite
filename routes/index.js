@@ -21,8 +21,14 @@ router.post('/login',
 router.get('/logout', authController.logout);
 
 router.get('/votings/:id',
+  authController.isLoggedIn,
   votingController.getVoting
 );
+router.put('/votings/:id',
+  authController.isLoggedIn,
+  votingController.vote
+);
+
 router.get('/votings/new',
   votingController.newVotingForm
 );
@@ -31,8 +37,8 @@ router.post('/votings/new',
   votingController.saveNewVoting
 );
 
-router.get('/votings/success',
+/*router.get('/votings/success',
   votingController.success
-);
+);*/
 
 module.exports = router;

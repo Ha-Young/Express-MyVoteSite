@@ -34,12 +34,40 @@ exports.getAll = async (req, res) => {
 };
 
 exports.getVoting = async (req, res) => {
+  console.log('getVoting');
+  const voting = await Voting.findOne({ _id: req.params.id });
+  const newVoting = {...voting._doc};
+  const user = await User.findOne({ _id: newVoting.author });
+  const currentDate = new Date();
+  const expirationDate = new Date(newVoting.expiration);
+  const isValid = currentDate.getTime() < expirationDate.getTime();
+  const newDate = moment(newVoting.expiration).format('YYYY MMM ddd, ahh:mm');
+  const isMine = String(voting.author) === String(req.user._id);
+
+  newVoting.expiration = newDate;
+  newVoting.isValid = isValid;
+  newVoting.author = user.name;
+  newVoting.isMine = isMine;
+
   res.render('voting', {
     user: req.user,
-    votings: votings,
-    flashes: req.flash()
+    flashes: null,
+    voting: newVoting,
   });
-}
+};
+
+exports.vote = async (req, res) => {
+  // 여기다가 추가만 하믄 된다 'ㅁ'/
+  await Voting.update(
+    {
+      _id: req.params.id,
+      'options': { '$elemMatch': { _id: req.body.option } }
+    },
+    { '$push': { 'options.$.selected_user': req.user._id } }
+  );
+
+  res.status(301).redirect(`/votings/${req.params.id}`);
+};
 
 exports.newVotingForm = (req, res, next) => {
   res.render('newVoting', {

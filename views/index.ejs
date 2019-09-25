@@ -36,18 +36,17 @@
         <h3>Survey</h3>
         <ul class='list'>
           <%if (votings) { %>
-            <% for(var i=0; i<votings.length; i++) {%>
+            <% for(var i = 0; i < votings.length; i++) {%>
                 <li>
-                    <a href='/votings/<%= votings[i]._id %>'>
-                      <span class='title'><%= votings[i].title %></span>
-                      <span class='expiration'><%= votings[i].expiration %></span>
-                      <span class='status'></span>
-                      <span class='author'><%= votings[i].author %></span>
-                    </a>
-                  </li>
+                  <a href='/votings/<%= votings[i]._id %>'>
+                    <span class='title'><%= votings[i].title %></span>
+                    <span class='expiration'><%= votings[i].expiration %></span>
+                    <span class='status'><%= votings[i].isValid ? '진행중':'종료' %></span>
+                    <span class='author'><%= votings[i].author %></span>
+                  </a>
+                </li>
              <% } %>
           <% } %>
-          <div>​<%= JSON.stringify(votings, null, 2) %></div>
         </ul>
       </section>
     </main>
