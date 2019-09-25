@@ -2,11 +2,12 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/common.css' />
   </head>
   <body>
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div>Welcome to <%= title %></div>
     <button class="logout-button" onClick="location.href='/logout'">Logout</button>
+    <button class="creat-button" onClick="location.href='/votings/new'">새로운 투표</button>
   </body>
 </html>

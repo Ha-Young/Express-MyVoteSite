@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>새로운투표만들기</h1>
+    <div>Welcome to <%=  %></div>
+    <div class="new-box">
+      <form action="/votings/new" method="POST">
+        <div class="form">
+          <label>title</label>
+          <input type="text" name="title">
+        </div>
+        <div class="form">
+          <label>description</label>
+          <input type="text" name="description">
+        </div>
+        <div class="form">
+          <label>expiration</label>
+          <input type="date" name="expiration">
+          <!-- <input type="time" name="time"> -->
+        </div>
+        <div class="form" id="in">
+          <label>options</label>
+          <input type="text" name="option">
+          <input type="text" name="option">
+          <button id='add-button'>add options</button>
+        </div>
+        <button id="submit-button" type="submit">새로운 투표 생성</button>
+      </form>
+    </div>
+    <script>
+      function addInput() {
+        const addedInput = document.createElement("input");
+        const button = document.getElementById("add-button");
+        document.getElementById("in").insertBefore(addedInput, button);
+        addedInput.setAttribute("type", "text");
+        addedInput.setAttribute("name", "option");
+      }
+      document.getElementById("add-button").addEventListener("click", addInput);
+    </script>
+  </body>
+</html>
