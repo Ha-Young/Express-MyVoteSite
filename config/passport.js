@@ -4,11 +4,13 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
 passport.serializeUser((user, done) => {
-  console.log('seri');
-  done(null, user);
+  done(null, user.email);
 });
-passport.deserializeUser((user, done) => {
-  console.log('deseri');
+
+passport.deserializeUser((email, done) => {
+  User.findOne({ email })
+    .then(user => done(null, user))
+    .catch(done(err));
   done(null, user);
 });
 
@@ -26,10 +28,10 @@ passport.use('local',
           if (result) {
             done(null, exUser);
           } else {
-            done(null, false, { message: '비밀번호가 일치하지 않습니다' });
+            done(null, false, { message: '비밀번호가 일치하지 않습니다.' });
           }
         } else {
-          done(null, false, { message: '가입되지 않은 회원번호입니다' });
+          done(null, false, { message: '가입되지 않은 회원번호입니다.' });
         }
       } catch (err) {
         done(err);
