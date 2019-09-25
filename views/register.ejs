@@ -5,21 +5,33 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>aaa</h1>
-    <%if (flashes) { %>
-        <div><%= JSON.stringify(flashes, null, 2) %></div>
-    <% } %>
-    <form action='/register' method='POST'>
-      <h2>Register</h2>
-      <label for='name'>Name</label>
-      <input type='text' name='name'>
-      <label for='email'>Email</label>
-      <input type='text' name='email'>
-      <label for='password'>Password</label>
-      <input type='password' name='password'>
-      <label for='password-confirm'>Confirm password</label>
-      <input type='password' name='password-confirm'>
-      <input type='submit' value='Register' class='button'>
-    </form>
+    <div class='user-wrap'>
+      <div class='user-form'>
+        <div class='tab'>
+          <h2 class='on'><a href='/register'>Register</a></h2>
+          <h2><a href='/login'>Login</a></h2>
+        </div>
+        <% if (flashes) { %>
+          <ul class='flash-messages'>
+            <% for (var i=0; i < flashes.error.length; i++) { %>
+              <li  class='flash flash-error'>
+                  <p class='text'><%= flashes.error[i] %></p>
+              </li>
+            <% } %>
+          </ul>
+        <% } %>
+        <form action='/register' method='POST'>
+          <label for='name'>Name</label>
+          <input type='text' name='name'>
+          <label for='email'>Email</label>
+          <input type='text' name='email'>
+          <label for='password'>Password</label>
+          <input type='password' name='password'>
+          <label for='password-confirm'>Confirm password</label>
+          <input type='password' name='password-confirm'>
+          <input type='submit' value='Register' class='button'>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

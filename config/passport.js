@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 
 // req.session 객체에 어떤데이터를 저장할지.
 passport.serializeUser((user, done) => {
-  //console.log(user);
+  console.log(user);
   done(null, user.email);
 });
 
@@ -30,11 +30,9 @@ async (email, password, done) => {
 
     if (user) {
       bcrypt.compare(password, user.password, (err, res) => {
-        if(res) {
-          return done(null, user);
-        } else {
-          done(null, false, { message: '비밀번호가 일치하지 않습니다.' });
-        }
+        if(res) return done(null, user);
+
+        done(null, false, { message: '비밀번호가 일치하지 않습니다.' });
       });
     } else {
       done(null, false, { message: '가입되지 않은 회원입니다.' });

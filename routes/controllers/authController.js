@@ -16,7 +16,22 @@ exports.isLoggedIn = (req, res, next) => {
 };*/
 
 exports.loginForm = (req, res) => {
-  res.render('login', { title: 'Login', flashes: req.flash() });
+  res.render('login', { title: 'Login', flashes: null });
+};
+
+exports.validateLogin = (req, res, next) => {
+  req.sanitizeBody('name');
+  req.checkBody('email', 'Email is not valid').isEmail();
+  req.checkBody('password', 'Password is required').notEmpty();
+
+  const errors = req.validationErrors();
+  if (errors) {
+    req.flash('error', errors.map(err => err.msg));
+    res.render('login', { flashes: req.flash() });
+    return;
+  }
+
+  next();
 };
 
 exports.login = (req, res, next) => {
@@ -25,20 +40,21 @@ exports.login = (req, res, next) => {
       console.log('authError', authError);
       return next(authError);
     }
+
     if (!user) {
-      req.flash('error', '없는 email 입니다.');
-      return res.redirect('/login');
+      req.flash('error', info.message);
+      return res.render('login', { flashes: req.flash() });
     }
+
     return req.login(user, (loginError) => {
       if (loginError) {
-        console.error(loginError);
         return next(loginError);
       }
 
       req.flash('success', '로그인에 성공하였습니다.');
       return res.redirect('/');
     });
-  })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
+  })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙인다.
 }
 
 exports.registerForm = (req, res) => {
@@ -64,7 +80,7 @@ exports.validateRegister = (req, res, next) => {
   const errors = req.validationErrors();
   if (errors) {
     req.flash('error', errors.map(err => err.msg));
-    res.render('register', {titler: 'aa', body: req.body, flashes: req.flash() });
+    res.render('register', { flashes: req.flash() });
     return;
   }
 
@@ -79,7 +95,7 @@ exports.register = async (req, res, next) => {
 
     if (user) {
       req.flash('error', '이미 가입된 이메일입니다.');
-      res.render('register', {titler: 'Register', flashes: req.flash() });
+      res.render('register', {  flashes: req.flash() });
     }
     await bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(password, salt, function(err, hash) {
