@@ -4,21 +4,25 @@
     <% include ./partials/head %>
   </head>
   <body>
-    <h2>Login</h2>
-    <form method="POST" action="/login">
-      <label>
-        <span>Email</span>
-        <input type="email" name="email" required />
-      </label>
-      <label>
-        <span>Password</span>
-        <input type="password" name="password" required />
-      </label>
-      <button type="submit">
-        Login
-      </button>
-    </form>
-    <a href="/join">회원가입</a>
+    <div class="main-box">
+      <h2 class="main-title">
+        LOGIN
+      </h2>
+      <form method="POST" action="/login" class="form-main">
+        <label class="label-basic">
+          <span class="label-txt">Email</span>
+          <input type="email" name="email" class="basic-txt" required />
+        </label>
+        <label class="label-basic">
+          <span class="label-txt">Password</span>
+          <input type="password" name="password" class="basic-txt" required />
+        </label>
+        <button type="submit" class="btn-main">
+          Login
+        </button>
+      </form>
+      <a href="/join" class="btn-black">Sign Up</a>
+    </div>
     <script>
       var message = '<%= message %>';
 

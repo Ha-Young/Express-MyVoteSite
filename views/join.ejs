@@ -4,30 +4,32 @@
     <% include ./partials/head %>
   </head>
   <body>
-    <h2>Join</h2>
-    <form method="POST" action="/join">
-      <label>
-        <span>Email</span>
-        <input type="email" name="email" required />
-      </label>
-      <label>
-        <span>Password</span>
-        <span>Should be minimum 6 characters of alphabet & number & special character combination</span>
-        <input type="password" name="password" required />
-      </label>
-      <label>
-        <span>Confirm Password</span>
-        <input type="password" name="password_confirm" required />
-      </label>
-      <label>
-        <span>Name</span>
-        <span>Should be 2~4 of Hangeul or 2~20 of alphabet</span>
-        <input type="text" name="name" required />
-      </label>
-      <button type="submit">
-        JOIN
-      </button>
-    </form>
+    <div class="main-box">
+      <h2 class="main-title">Join</h2>
+      <form method="POST" action="/join" class="form-main">
+        <label class="label-basic">
+          <span class="label-txt">Email</span>
+          <input type="email" name="email" class="basic-txt" autocomplete="off" required />
+        </label>
+        <label class="label-basic">
+          <span class="label-txt">Password</span>
+          <input type="password" name="password" class="basic-txt show-infotxt" autocomplete="off" required />
+          <span class="info-txt">Should be minimum 6 characters of alphabet & number & special character combination</span>
+        </label>
+        <label class="label-basic">
+          <span class="label-txt">Confirm Password</span>
+          <input type="password" name="password_confirm" class="basic-txt" autocomplete="off" required />
+        </label>
+        <label class="label-basic">
+          <span class="label-txt">Name</span>
+          <input type="text" name="name" class="basic-txt show-infotxt" autocomplete="off" required />
+          <span class="info-txt">Should be 2~4 of Hangeul or 2~20 of alphabet</span>
+        </label>
+        <button type="submit" class="btn-main">
+          JOIN
+        </button>
+      </form>
+    </div>
     <script>
       var message = '<%= error %>';
 

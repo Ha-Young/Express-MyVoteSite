@@ -6,45 +6,47 @@
   <body>
     <% include ./partials/header %>
     <% include ./partials/nav %>
-    <form method="POST" action="/votings/new">
-      <fieldset>
-        <ul>
-          <li>
-            <label>
-              <span>Title</span>
-              <input type="text" name="title" required />
-            </label>
-          </li>
-          <li>
-            <label>
-              <span>Expiry Date</span>
-              <input type="number" class="date yy" placeholder="YYYY" name="expired_at" required />
-              <input type="number" class="date mm" placeholder="MM" name="expired_at" required />
-              <input type="number" class="date dd" placeholder="DD" name="expired_at" required />
-              <input type="number" class="date hh" placeholder="hh" name="expired_at" required />
-              <input type="number" class="date ss" placeholder="mm" name="expired_at" required />
-            </label>
-          </li>
-        </ul>
-      </fieldset>
-      <fieldset>
-        <legend>Options</legend>
-        <button type="button" class="btn-more">+</button>
-        <ul class="options-list">
-          <li>
-            <label>
-              <input type="text" name="options" required />
-            </label>
-          </li>
-          <li>
-            <label>
-              <input type="text" name="options" required />
-            </label>
-          </li>
-        </ul>
-      </fieldset>
-      <button type="submit">CREATE</button>
-    </form>
+    <div class="container">
+      <form method="POST" action="/votings/new">
+        <fieldset class="vote-box-wrap top">
+          <ul class="input-list">
+            <li>
+              <label class="label-vote">
+                <span class="label-txt">Title</span>
+                <input type="text" name="title" class="basic-txt" required />
+              </label>
+            </li>
+            <li>
+              <label class="label-vote">
+                <span class="label-txt">Expiry Date</span>
+                <input type="number" class="basic-txt date yy" placeholder="YYYY" name="expired_at" required />
+                <span>-</span>
+                <input type="number" class="basic-txt date mm" placeholder="MM" name="expired_at" required />
+                <span>-</span>
+                <input type="number" class="basic-txt date dd" placeholder="DD" name="expired_at" required />
+                <input type="number" class="basic-txt date hh show-infotxt" placeholder="hh" name="expired_at" required />
+                <span>:</span>
+                <input type="number" class="basic-txt date ss" placeholder="mm" name="expired_at" required />
+                <span class="info-txt">Time should be in 24-hour format</span>
+              </label>
+            </li>
+          </ul>
+        </fieldset>
+        <fieldset class="vote-box-wrap btm">
+          <h2 class="legend-title">Options</h2>
+          <button type="button" class="btn-more">+</button>
+          <ul class="input-list options-list">
+            <li>
+              <input type="text" name="options" class="basic-txt" required />
+            </li>
+            <li>
+              <input type="text" name="options" class="basic-txt" required />
+            </li>
+          </ul>
+        </fieldset>
+        <button type="submit" class="btn-main">CREATE</button>
+      </form>
+    </div>
     <script>
       var message = '<%= message %>';
 
@@ -63,14 +65,13 @@
         }
 
         var $li = document.createElement('li');
-        var $label = '<label><input type="text" name="options" /></label>';
-
+        var $input = '<input type="text" name="options" class="basic-txt double-txt" />';
         var $button = document.createElement('button');
         $button.setAttribute('class', 'btn-del');
         $button.setAttribute('type', 'button');
         $button.textContent = 'X';
 
-        $li.innerHTML = $label;
+        $li.innerHTML = $input;
         $li.appendChild($button);
         $optionList.appendChild($li);
 

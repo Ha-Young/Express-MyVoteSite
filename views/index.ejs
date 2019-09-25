@@ -6,27 +6,27 @@
   <body>
     <% include ./partials/header %>
     <% include ./partials/nav %>
-    <ul>
-      <% for (var i = 0; i < votes.length; i++) { %>
-        <li>
-          <a href="/votings/<%= votes[i]._id %>">
-            <div>
-              <h3>
-                <%= votes[i].title %>
+    <div class="container">
+      <ul class="main-list">
+        <% for (var i = 0; i < votes.length; i++) { %>
+          <li>
+            <a href="/votings/<%= votes[i]._id %>">
+              <h3 class="vote-title">
                 <% var isExpired = (new Date() - new Date(votes[i].expired_at) > 0); %>
-                <span class="<%= isExpired ? 'inactive' : 'active' %>">
-                  ON
+                <span class="mark-vote <%= isExpired ? 'inactive' : 'active' %>">
+                  <%= isExpired ? 'OFF' : 'ON' %>
                 </span>
+                <%= votes[i].title %>
               </h3>
-            </div>
-            <ul>
-              <li><%= votes[i].user_id.name %></li>
-              <li><%= votes[i].converted_date %></li>
-            </ul>
-          </a>
-        </li>
-      <% } %>
-    </ul>
+              <ul class="vote-detail-list">
+                <li><%= votes[i].user_id.name %></li>
+                <li><%= votes[i].converted_date %></li>
+              </ul>
+            </a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
   </body>
   <script>
     var message = '<%= loginMessage %>';

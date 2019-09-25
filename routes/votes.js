@@ -109,15 +109,17 @@ router.get('/:voteId', (req, res, next) => {
         return handleError(err);
       }
 
-      let isSameUser = false;
+      let isAuthorizedUser = false;
 
       if (userId.toString() === vote.user_id._id.toString()) {
-        isSameUser = true;
+        isAuthorizedUser = true;
       }
+
+      const allVoteCount = vote.options.reduce((ac, cv) => ac += cv.voted_user.length, 0);
 
       vote.converted_date = convertDate(vote.expired_at);
 
-      return res.render('votings_detail', { vote, isSameUser });
+      return res.render('votings_detail', { vote, isAuthorizedUser, allVoteCount });
     });
   } catch (err) {
     console.error(err);

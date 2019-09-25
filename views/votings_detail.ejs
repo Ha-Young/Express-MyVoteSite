@@ -6,50 +6,67 @@
   <body>
     <% include ./partials/header %>
     <% include ./partials/nav %>
-    <div>
-      <a href="/">목록으로</a>
-      <% if (isSameUser) { %>
-        <button type="button" class="btn-del-vote">삭제</button>
-      <% } %>
-      <h3>
-        <%= vote.title %>
-        <% var isExpired = (new Date() - new Date(vote.expired_at) > 0); %>
-        <span class="<%= isExpired ? 'inactive' : 'active' %>">
-          ON
-        </span>
-      </h3>
-      <ul>
-        <li><%= vote.user_id.name %></li>
-        <li><%= vote.converted_date %></li>
-      </ul>
-    </div>
-    <form class="voting-form">
-      <ul>
-        <% for (var i = 0; i < vote.options.length; i++) { %>
-          <li>
-            <label data-vote-id="<%= vote._id %>">
-              <span><%= vote.options[i].title %></span>
-              <input type="radio" name="option" data-option-id="<%= vote.options[i]._id %>" />
-            </label>
-          </li>
-        <% } %>
-      </ul>
-      <button type="submit">투표하기</button>
-    </form>
-    <% if (isSameUser || isExpired) { %>
-      <div class="result-box">
-        <ul>
-          <% for (var i = 0; i < vote.options.length; i++) { %>
-            <li>
-              <div><%= vote.options[i].title %></div>
-              <div><%= vote.options[i].voted_user.length %></div>
-            </li>
+    <div class="container">
+      <div class="vote-box-wrap vote-detail-box top">
+        <div class="btn-box">
+          <a href="/" class="btn-more">List</a>
+          <% if (isAuthorizedUser) { %>
+            <button type="button" class="btn-del btn-del-vote">Delete</button>
           <% } %>
+        </div>
+        <h2 class="vote-title">
+          <% var isExpired = (new Date() - new Date(vote.expired_at) > 0); %>
+          <span class="mark-vote <%= isExpired ? 'inactive' : 'active' %>">
+            <%= isExpired ? 'OFF' : 'ON' %>
+          </span>
+          <%= vote.title %>
+        </h2>
+        <ul class="vote-detail-list">
+          <li><%= vote.user_id.name %></li>
+          <li><%= vote.converted_date %></li>
         </ul>
+        <form class="voting-form">
+          <ul class="options-box-list">
+            <% for (var i = 0; i < vote.options.length; i++) { %>
+              <li>
+                <label class="option-label" data-vote-id="<%= vote._id %>">
+                  <input type="radio" name="option" class="option-radio" data-option-id="<%= vote.options[i]._id %>" />
+                  <span class="option-txt"><%= vote.options[i].title %></span>
+                </label>
+              </li>
+            <% } %>
+          </ul>
+          <button type="submit" class="btn-main">Vote!</button>
+        </form>
       </div>
-    <% } %>
+      <% if (isAuthorizedUser || isExpired) { %>
+        <div class="vote-box-wrap btm">
+          <h3 class="legend-title">Result</h3>
+          <div class="result-box">
+            <ul class="graph-box">
+              <% for (var i = 0; i < vote.options.length; i++) { %>
+                <li class="graph-bar">
+                  <div class="color-bar" data-vote-count="<%= vote.options[i].voted_user.length %>"></div>
+                  <div><%= vote.options[i].title %></div>
+                  <div><%= vote.options[i].voted_user.length %></div>
+                </li>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+      <% } %>
+    </div>
 
     <script>
+      var allVoteCount = '<%= allVoteCount %>';
+
+      $colorBar = document.querySelectorAll('.color-bar');
+      $colorBar.forEach(function (bar) {
+        var voteCount = bar.dataset.voteCount;
+        var percentage = parseInt(voteCount / allVoteCount * 100);
+        bar.classList.add('percent-' + percentage);
+      });
+
       function sendVoteApi (voteId, optionId) {
         return fetch('/votings/vote', {
           method: 'PUT',
@@ -63,8 +80,8 @@
         });
       }
 
-      function delVoteApi (voteId) {
-        return fetch('/votings/' + voteId, {
+      function delVoteApi (path) {
+        return fetch(path, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -105,7 +122,7 @@
 
       if ($btnDelVote) {
         $btnDelVote.addEventListener('click', function () {
-          delVoteApi(getVotingId())
+          delVoteApi(location.pathname)
             .then(function (res) {
               console.log(res)
               if (res.success) {
@@ -117,11 +134,6 @@
               console.error(err);
             })
         });
-      }
-
-      function getVotingId () {
-        var index = location.pathname.lastIndexOf('/');
-        return location.pathname.slice(index + 1);
       }
     </script>
   </body>
