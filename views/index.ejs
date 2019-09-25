@@ -21,7 +21,7 @@
               var progressClass;
               var endTime = new Date(votings[i].end_at);
               var createTime = new Date(votings[i].created_at);
-              var endYear = [endTime.getFullYear(), endTime.getMonth(), endTime.getDate()].join('/'
+              var endYearMonthDate = [endTime.getFullYear(), endTime.getMonth(), endTime.getDate()].join('/'
               );
               var createTime = [createTime.getFullYear(), createTime.getMonth(), createTime.getDate()].join('/'
               );
@@ -34,7 +34,7 @@
                 <a href='/votings/<%=votings[i]._id %>'>
                   <p>
                     <span>EXPIRATION DATE</span>
-                    <span><%= endYear %></span>
+                    <span><%= endYearMonthDate %></span>
                   </p>
                   <p class='type'>VOTING</p>
                     <h2><%= votings[i].title %></h2>

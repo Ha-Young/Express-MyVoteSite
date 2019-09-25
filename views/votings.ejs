@@ -13,42 +13,40 @@
       <div class='header'>
         <h1>My Votings</h1>
       </div>
+      <div class='item-section'>
+        <ul class='voting-list'>
+          <%if(votings){
+            for(var i = 0; i < votings.length; i++){
+              var progressClass;
+              var endTime = new Date(votings[i].end_at);
+              var createTime = new Date(votings[i].created_at);
+              var endYear = [endTime.getFullYear(), endTime.getMonth(), endTime.getDate()].join('/'
+              );
+              var createTime = [createTime.getFullYear(), createTime.getMonth(), createTime.getDate()].join('/'
+              );
+              if(votings[i].isOnProgress){
+                progressClass = 'ingColor';
+              }else{
+                progressClass = 'endColor';
+              }%>
+              <li class='voting <%=progressClass%>'>
+                <a href='/votings/<%=votings[i]._id %>'>
+                  <p>
+                    <span>EXPIRATION DATE</span>
+                    <span><%= endYear %></span>
+                  </p>
+                  <p class='type'>VOTING</p>
+                    <h2><%= votings[i].title %></h2>
+                    <span><%= votings[i].descritpion %></span>
+                  <p>
+                    <span>CREATED AT</span>
+                    <span><%= createTime %></span>
+                  </p>
+                </a>
+              </li>
+            <%}}%>
+          </ul>
+        </div>
     </div>
-    <div class='item-section'>
-      <ul class='voting-list'>
-        <%if(votings){
-          for(var i = 0; i < votings.length; i++){
-            var progressClass;
-            var endTime = new Date(votings[i].end_at);
-            var createTime = new Date(votings[i].created_at);
-            var endYear = [endTime.getFullYear(), endTime.getMonth(), endTime.getDate()].join('/'
-            );
-            var createTime = [createTime.getFullYear(), createTime.getMonth(), createTime.getDate()].join('/'
-            );
-            if(votings[i].isOnProgress){
-              progressClass = 'ingColor';
-            }else{
-              progressClass = 'endColor';
-            }%>
-            <li class='voting <%=progressClass%>'>
-              <a href='/votings/<%=votings[i]._id %>'>
-                <p>
-                  <span>EXPIRATION DATE</span>
-                  <span><%= endYear %></span>
-                </p>
-                <p class='type'>VOTING</p>
-                  <h2><%= votings[i].title %></h2>
-                  <span><%= votings[i].descritpion %></span>
-                <p>
-                  <span>CREATED AT</span>
-                  <span><%= createTime %></span>
-                </p>
-              </a>
-            </li>
-          <%}}%>
-        </ul>
-        <a href='/votings/new'>CREATE NEW</a>
-        <a href='/votings'>MY VOTINGS</a>
-      </div>
   </body>
 </html>

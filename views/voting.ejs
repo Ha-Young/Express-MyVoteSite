@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VOTING</title>
+    <link rel='stylesheet' href='/stylesheets/common.css' />
+    <link rel='stylesheet' href='/stylesheets/voting.css' />
+  </head>
+  <body>
+    <div class='navbar'>
+      <%-include('navbar')%>
+    </div>
+    <div class='main-section'>
+      <div class='header'>
+        <h1>VOTING</h1>
+      </div>
+      <div class='item-section'>
+        <div class='voting-list <%=progressClass%>'>
+          <%if(voting){
+            var progressClass;
+            var progressDescription;
+            var endTime = new Date(voting.end_at);
+            var createTime = new Date(voting.created_at);
+            endYearMonthDate = [endTime.getFullYear(), endTime.getMonth(), endTime.getDate()].join('/'
+            );
+            createYearMonthDate = [createTime.getFullYear(), createTime.getMonth(), createTime.getDate()].join('/'
+            );
+            if(voting.isOnProgress){
+              progressClass = 'ingColor';
+              progressDescription = 'ON';
+            }else{
+              progressClass = 'endColor';
+            }
+            const items = voting.items;%>
+            <span><%= endYearMonthDate %></span>
+            <form action='/votings/submit' method='POST' id='voting-form'>
+              <ul>
+                <%for(var i = 0; i < items.length; i++){%>
+                <li class='item'>
+                  <label for=<%= items[i]._id %> >
+                    <h2><%= items[i].text %></h2>
+                  </label>
+                  <input type='radio' name='option' id=<%= items[i]._id %> value=<%= items[i].text %>>
+                  <%if(isCreator){%>
+                    <div>
+                      <span>득표수 - 생성자만 볼 수 있음:</span>
+                      <span><%= items[i].voters.length %></span>
+                    </div>
+                    <%}%>
+                </li>
+                <%}}%>
+                </ul>
+                <input id='submit-my-vote-button' type='submit' form='voting-form'>submit</input>
+                <input id='delete-voting-button' type='button' form='voting-form'>delete</input>
+            </form>
+          </div>
+        </div>
+    </div>
+    <script src='/javascripts/voting.js'>
+      document.querySelector('form').setAttribute('action', 'URL');
+      document.querySelector('#delete-voting-button').addEventListener('click', deleteVoting);
+
+      // function deleteVoting(){
+      //   fetch(endpointURL, { method: 'delete' })
+      //     .then((response.ok) => {
+      //       alert('succesfully deleted');
+      //       window.location.href = '/'
+      //     })
+      // }
+    </script>
+  </body>
+</html>
