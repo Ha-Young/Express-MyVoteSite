@@ -18,6 +18,7 @@
     "express-session": "^1.16.2",
     "http-errors": "~1.6.3",
     "install": "^0.13.0",
+    "less-middleware": "^3.1.0",
     "mongoose": "^5.7.1",
     "morgan": "~1.9.1",
     "node": "^12.10.0",

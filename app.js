@@ -2,9 +2,10 @@ const createError = require('http-errors');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const lessMiddleware = require('less-middleware');
 const passport = require('passport');//passport.initialize -> req에 passport설정을 심고, passport.session()은 req.session passport정보를 저장하므로, passport는 express-session 보다 위에 연결되어야..
 const session = require('express-session');
-const cookieParser = require('cookie-parser');
 const passportConfig = require('./passport');
 passportConfig(passport);
 //after session, cookieparse // req.flash
@@ -16,7 +17,7 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 // const usersRouter = require('./routes/users');
-const votingRouter = require('./routes/voting');
+const votingRouter = require('./routes/votings');
 
 const app = express();
 
@@ -53,6 +54,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(

@@ -2,7 +2,7 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/common.css' />
   </head>
   <body>
     <h1><%= title %></h1>
@@ -10,7 +10,7 @@
     <div>
       <form action='/auth/login' method='post' id='login-form'>
         <%if(message){%>
-          <div> <%= message %> </div>
+          <div><%= message %></div>
         <%}%>
         <div>
             <label>Email:</label>

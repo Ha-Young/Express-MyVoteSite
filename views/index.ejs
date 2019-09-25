@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Votins</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <title>Votings</title>
+    <link rel='stylesheet' href='/stylesheets/common.css' />
+    <link rel='stylesheet' href='/stylesheets/home.css' />
   </head>
   <body>
     <div class='navbar'>
-      <%if(1){%>
-        <%-include('navbar')%>
-      <%}%>
+      <%-include('navbar')%>
     </div>
     <div class='main-section'>
       <div class='header'>
@@ -18,27 +17,37 @@
       <div class='item-section'>
         <ul class='voting-list'>
           <%if(votings){
-            for(let i = 0; i < votings.length; i++){%>
-              <li class='voting'>
+            for(var i = 0; i < votings.length; i++){
+              var progressClass;
+              var endTime = new Date(votings[i].end_at);
+              var createTime = new Date(votings[i].created_at);
+              var endYear = [endTime.getFullYear(), endTime.getMonth(), endTime.getDate()].join('/'
+              );
+              var createTime = [createTime.getFullYear(), createTime.getMonth(), createTime.getDate()].join('/'
+              );
+              if(votings[i].isOnProgress){
+                progressClass = 'ingColor';
+              }else{
+                progressClass = 'endColor';
+              }%>
+              <li class='voting <%=progressClass%>'>
                 <a href='/votings/<%=votings[i]._id %>'>
                   <p>
-                    <span>진행중여부</span>
-                    <span>진행중??</span>
+                    <span>EXPIRATION DATE</span>
+                    <span><%= endYear %></span>
                   </p>
                   <p class='type'>VOTING</p>
-                  <h2><%= votings[i].title %></h2>
+                    <h2><%= votings[i].title %></h2>
+                    <span><%= votings[i].descritpion %></span>
                   <p>
                     <span>CREATOR</span>
                     <span><%= votings[i].creator %></span>
                   </p>
                   <p>
                     <span>CREATED AT</span>
-                    <span><%= votings[i].created_at %></span>
+                    <span><%= createTime %></span>
                   </p>
-                  <p>
-                    <span>EXPIRRED DATE</span>
-                    <span><%= votings[i].expiresAt %></span>
-                  </p>
+
                 </a>
               </li>
             <%}}%>

@@ -6,10 +6,11 @@ const votingSchema = new mongoose.Schema({
     required: true,
     type: String
   },
-  createdAt: {
+  description: {
     required: true,
+    type: String
   },
-  expiresAt: {
+  end_at: {
     required: false,
     type: Date
   },
@@ -20,9 +21,12 @@ const votingSchema = new mongoose.Schema({
   items: [
     {
       text: String,
-      voters: [ { voter_id: Types.ObjectId } ]
+      voters: [ Types.ObjectId ]
     }
   ]
-}, { timestamps: { createdAt: 'created_at' } });
+}, { timestamps: {
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
+}});
 
 module.exports = mongoose.model('Voting', votingSchema);

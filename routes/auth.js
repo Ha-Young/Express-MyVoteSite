@@ -21,7 +21,10 @@ router.post('/login', (req, res, next) => {
       req.flash('loginError', info.message);
       return res.redirect('/login');
     }
-    return res.redirect('/');
+
+    req.login(user, (err) => {
+      return res.redirect('/');
+    });
   })(req, res, next);
 });
 
@@ -35,12 +38,13 @@ router.get('/register', (req, res, next) => {
 
 router.post('/register', async(req, res, next) => {
   try{
-    const exUser = await User.find({ email: req.body.email });
-    if (exUser.length !== 0) {
-      req.flash('emailDuplicationError', 'The email already exists');
+    const exUser = await User.findOne({ email: req.body.email });
+    console.log(exUser);
+    if(exUser){
+      req.flash('DuplicateEmailError', 'The email already exists');
       return res.render('register', {
         title: 'Register',
-        message: req.flash('emailDuplicationError')[0]
+        message: req.flash('DuplicateEmailError')[0]
       });
     }
     const hash = await bcrypt.hash(req.body.password, 10);
@@ -49,8 +53,8 @@ router.post('/register', async(req, res, next) => {
       name: req.body.username,
       password: hash
     });
-    res.redirect('/');
-  }catch(error){
+    res.redirect('/auth/login');
+  }catch{
     const err = new Error('Internal Server Error');
     err.status = 500;
     next(err);

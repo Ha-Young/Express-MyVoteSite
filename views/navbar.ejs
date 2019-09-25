@@ -6,7 +6,9 @@
   <body>
     <div class='navbar'>
       <div class='user-info'>
-        <span id='user-name'>Hi, username</span>
+        <%if(user){%>
+          <span id='user-name'>Hi, <%= user.name%></span>
+        <%}%>
         <a id='logout' href='/auth/logout' >SIGN OUT</a>
       </div>
     </div>

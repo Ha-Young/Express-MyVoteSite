@@ -2,20 +2,19 @@
 <html>
   <head>
     <title>Create New</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/new.css' />
+    <link rel='stylesheet' href='/stylesheets/common.css' />
   </head>
   <body>
     <div class='navbar'>
-      <%if(1){%>
-        <%-include('navbar')%>
-      <%}%>
+      <%-include('navbar')%>
     </div>
     <div class='main-section'>
       <div class='header'>
         <h1>Create New</h1>
       </div>
       <div>
-        <form action='/' method='post' id='new-voting-form'>
+        <form action='/votings/new' method='post' id='new-voting-form'>
           <%if(1){%>
             <div> <%= 1 %> </div>
           <%}%>
@@ -23,28 +22,40 @@
             <label>Title:</label>
             <input type='text' name='title'/>
           </div>
-          <div>
+          <div class='description'>
             <label>Description:</label>
-            <input type='text' name='title'/>
+            <input type='text' name='description'/>
           </div>
           <div>
             <label>Closing Time:</label>
-            <input type='date' name='closing-date'/>
-            <input type='time' name='closing-time'/>
+            <input type='date' name='closingDate'/>
+            <input type='time' name='closingTime'/>
           </div>
           <div>
             <p>Options</p>
-            <ul>
-              <li><input type='text' name='option' placeholder='Enter an option'/></li>
-              <li><input type='text' name='option' placeholder='Enter an option'/></li>
-              <li><input type='button' name='add-button' value='+ Add an option'/></li>
+            <ul id='option-list'>
+              <li id='list-model' class='hide'>
+                <input type='text' name='' placeholder='Enter an option'/>
+              </li>
+              <li>
+                <input type='text' name='option' placeholder='Enter an option'/>
+              </li>
+              <li>
+                <input type='text' name='option' placeholder='Enter an option'/>
+              </li>
+              <li id='add-list-button-wrapper'>
+                <input type='button' name='add-button' value='+ Add an option'/>
+              </li>
             </ul>
           </div>
           <div>
-            <input type='submit' form='login-form' value='Log In'/>
+            <input type='submit' form='new-voting-form' value='Create'/>
           </div>
         </form>
-        </div>
+      </div>
+      <div>
+        <a href='/votings'>BACK TO MY VOTING</a>
+      </div>
     </div>
     <script src='/javascripts/new.js'></script>
   </body>
