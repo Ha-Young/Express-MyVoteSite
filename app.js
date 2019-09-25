@@ -18,6 +18,7 @@ const app = express();
 require('./config/passport');
 require('dotenv').config({ path: '.env' });
 
+mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE_URI, { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true });
 
 const db = mongoose.connection;
@@ -38,7 +39,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser('asdsadasdsdasdasd'));
 
 app.use(session({
-  maxAge: 24 * 60 * 60 * 1000,
+  maxAge:  7 * 24 * 60 * 60,
   secret: 'asdsadasdsdasdasd',
   resave: false,
   saveUninitialized: false,

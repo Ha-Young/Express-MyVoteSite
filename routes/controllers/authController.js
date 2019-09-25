@@ -51,7 +51,6 @@ exports.login = (req, res, next) => {
         return next(loginError);
       }
 
-      req.flash('success', '로그인에 성공하였습니다.');
       return res.redirect('/');
     });
   })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙인다.
@@ -65,7 +64,7 @@ exports.registerForm = (req, res) => {
 };
 
 exports.validateRegister = (req, res, next) => {
-  req.sanitizeBody('name');
+  req.sanitizeBody('title');
   req.checkBody('name', 'Name is required').notEmpty();
   req.checkBody('email', 'Email is not valid').isEmail();
   /*req.sanitizeBody('email').normalizeEmail({

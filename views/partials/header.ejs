@@ -1,0 +1,14 @@
+<header>
+  <h1 class='logo'><a href='/'><i class="fas fa-vote-yea fa-xs"></i><span>Voting Platform</span></a></h1>
+  <nav>
+    <ul>
+      <% if (user) { %>
+        <li><a href='/logout'><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+        <li><%= user.name %></li>
+      <% } else { %>
+        <li><a href='/register'>Register</a></li>
+        <li><a href='/login'><i class="fas fa-sign-in-alt fa-xs"></i>Login</a></li>
+      <% } %>
+    </ul>
+  </nav>
+</header>

@@ -2,10 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 const authController = require('./controllers/authController');
+const votingController = require('./controllers/votingController');
 
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express', flashes: req.flash() });
-});
+router.get('/', votingController.getAll);
 
 router.get('/register', authController.registerForm);
 router.post('/register',
@@ -13,10 +12,27 @@ router.post('/register',
   authController.register
 );
 
-router.get('/login',authController.loginForm);
-router.post('/login', authController.login);
+router.get('/login', authController.loginForm);
+router.post('/login',
+  authController.validateLogin,
+  authController.login
+);
 
 router.get('/logout', authController.logout);
 
+router.get('/votings/:id',
+  votingController.getVoting
+);
+router.get('/votings/new',
+  votingController.newVotingForm
+);
+router.post('/votings/new',
+  votingController.validateNewVoting,
+  votingController.saveNewVoting
+);
+
+router.get('/votings/success',
+  votingController.success
+);
 
 module.exports = router;

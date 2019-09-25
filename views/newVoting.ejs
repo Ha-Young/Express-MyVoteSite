@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>투표 생성하기</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>투표 생성하기</h1>
+    <% if (flashes) { %>
+      <ul class='flash-messages'>
+        <% if (flashes.error) { %>
+          <% for(var i=0; i < flashes.error.length; i++) { %>
+            <li class='flash flash-error'>
+                <p class='text'><%= flashes.error[i] %></p>
+            </li>
+          <% } %>
+        <% } %>
+        <% if (flashes.date) { %>
+          <li class='flash flash-error'>
+            <p class='text'><%= flashes.date %></p>
+          </li>
+        <% } %>
+      </ul>
+    <% } %>
+    <p><%= user %></p>
+    <form action='/votings/new' method='POST'>
+      <label for='title'>Title</label>
+      <input type='text' name='title'>
+      <label for='date'>만료 날짜 및 시간 </label>
+      <input type='datetime-local' name='date'>
+      <p>선택사항</p>
+      <a href='#' class='add-option'>+</a>
+      <ul class='options'>
+        <li>
+          <label for='option0'></label>
+          <input type='text' name='option' class='option' id='option0'>
+        </li>
+        <li>
+            <label for='option1'></label>
+            <input type='text' name='option' class='option' id='option1'>
+          </li>
+      </ul>
+      <br>
+      <br>
+      <input type='submit' value='Submit →' class=''>
+    </form>
+
+    <script>
+      const options = document.querySelector('.options');
+      const addButton = document.querySelector('.add-option');
+
+      let optionIndex = 2;
+
+      const addOption = () => {
+        const LIMIT = 6;
+        let li = document.createElement('li');
+
+        if(optionIndex === LIMIT) return alert('제한을 넘었습니다');
+
+        li.innerHTML = `
+          <label for='optin${optionIndex}'></label>
+          <input type='text' name='option' class='option' id='option${optionIndex}'>
+          <a href='#' class='delete${optionIndex}'>-</a>
+        `;
+
+        options.appendChild(li);
+
+        const deleteButton = document.querySelector(`.delete${optionIndex}`);
+        deleteButton.addEventListener('click', removeOption);
+
+        optionIndex++;
+      }
+
+      const removeOption = (ev) => {
+        ev.currentTarget.parentElement.remove();
+        optionIndex--;
+      }
+
+      addButton.addEventListener('click', addOption);
+    </script>
+  </body>
+</html>

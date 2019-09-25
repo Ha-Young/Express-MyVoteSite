@@ -1,16 +1,57 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Voting Platform</title>
+    <script src="https://kit.fontawesome.com/ce204b133d.js" crossorigin="anonymous"></script>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p><%= user %></p>
+    <header>
+      <h1 class='logo'><a href='/'><i class="fas fa-vote-yea fa-xs"></i><span>Voting Platform</span></a></h1>
+      <nav>
+        <ul>
+          <% if (user) { %>
+            <li><a href='/logout'><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+            <li><%= user.name %></li>
+          <% } else { %>
+            <li><a href='/register'>Register</a></li>
+            <li><a href='/login'><i class="fas fa-sign-in-alt fa-xs"></i>Login</a></li>
+          <% } %>
+        </ul>
+      </nav>
+    </header>
+
     <%if (flashes) { %>
-        <div><%= JSON.stringify(flashes, null, 2) %></div>
-    <% } %>
-    <p>Welcome to <%= title %></p>
-    <a href='/votings/new'>투표 생성하기</a>
+      <p><%= flashes.success %></p>
+    <% } %>
+
+    <main>
+      <section class='home-banner'>
+        <p class='title'>필요한 답을 얻으세요.</p>
+        <p class='text'>대치동을 선도하는 설문조사 소프트웨어로 필요한 피드백을 얻으세요.</p>
+        <a href='/votings/new' class='button'>시작하기</a>
+      </section>
+
+      <section class='home-survey-list'>
+        <h3>Survey</h3>
+        <ul class='list'>
+          <%if (votings) { %>
+            <% for(var i=0; i<votings.length; i++) {%>
+                <li>
+                    <a href='/votings/<%= votings[i]._id %>'>
+                      <span class='title'><%= votings[i].title %></span>
+                      <span class='expiration'><%= votings[i].expiration %></span>
+                      <span class='status'></span>
+                      <span class='author'><%= votings[i].author %></span>
+                    </a>
+                  </li>
+             <% } %>
+          <% } %>
+          <div>​<%= JSON.stringify(votings, null, 2) %></div>
+        </ul>
+      </section>
+    </main>
+
+
   </body>
 </html>

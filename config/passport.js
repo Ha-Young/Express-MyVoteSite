@@ -6,7 +6,6 @@ const bcrypt = require('bcrypt');
 
 // req.session 객체에 어떤데이터를 저장할지.
 passport.serializeUser((user, done) => {
-  console.log(user);
   done(null, user.email);
 });
 

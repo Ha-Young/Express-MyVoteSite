@@ -7,8 +7,8 @@ html {
   padding: 0;
   box-sizing: border-box;
   color: #303030;
-  font-family: 'Nanum Gothic', -apple-system, sans-serif, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: 'Helvetica Neue','Nanum Gothic', -apple-system, sans-serif, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
 }
 
@@ -16,8 +16,8 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: inherit;
-  line-height: inherit;
-  font-weight: 300;
+  font-size: 16px;
+  line-height: 1;
   word-break: break-all;
 }
 
@@ -27,6 +27,102 @@ a {
 
 li {
   list-style: none;
+}
+
+header {
+  display: flex;
+  padding: 15px;
+  background-color: #f8f8f8;
+  font-family: 'Helvetica Neue';
+  color: #777777;
+  border-color: #e7e7e7;
+
+  h1 {
+  a {
+    color: #777777;
+    &:hover {
+      color: #4e4e4e
+    }
+    i {
+      font-size: 20px;
+      color: #777777;
+    }
+  }
+
+  span {
+    color: inherit;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+}
+
+  nav {
+    margin-left: auto;
+
+    ul {
+      display: flex;
+
+      li {
+        font-size: 15px;
+        padding-left: 10px;
+      }
+
+      a {
+        color: #777777;
+        font-size: inherit;
+
+        &:hover {
+          color: #4e4e4e;
+        }
+      }
+    }
+  }
+}
+
+.home-banner {
+  padding: 70px 0 45px;
+  text-align: center;
+  background: linear-gradient(50deg, #f3c680, #a1e3e2);
+
+  p {
+    color: #fff;
+    font-size: 20px;
+
+    &.title {
+      font-size: 65px;
+      font-weight: 600;
+    }
+
+    &.text {
+      padding-top: 25px;
+      font-size: 18px;
+    }
+  }
+
+  .button {
+    display: inline-block;
+    width:200px;
+    margin-top: 50px;
+    background: #1ab188;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 50px;
+    text-align: center;
+    color: #ffffff;
+    border-radius: 5px;
+  }
+}
+
+.home-survey-list {
+  max-width: 1170px;
+  margin: 0 auto;
+  padding-top: 50px;
+
+  h3 {
+    font-size: 38px;
+    color: #777777;
+  }
 }
 
 /* register, login */
@@ -50,32 +146,32 @@ li {
 
       h2 {
         width: 50%;
-      }
 
-      a {
-        display: block;
-        padding: 15px;
-        font-size: 20px;
-        text-align: center;
-        color: #a0b3b0;
-        background: rgba(160, 179, 176, 0.25);
-        cursor: pointer;
-        transition: .5s ease;
-      }
+        a {
+          display: block;
+          padding: 15px;
+          font-size: 20px;
+          text-align: center;
+          color: #a0b3b0;
+          background: rgba(160, 179, 176, 0.25);
+          cursor: pointer;
+          transition: .5s ease;
 
-      h2.on a{
-        color: #ffffff;
-        background: #1ab188;
-      }
+          a:hover {
+            color: #ffffff;
+            background: #179b77;
+          }
+        }
 
-      a:hover {
-        color: #ffffff;
-        background: #179b77;
-      }
+        &.on a{
+          color: #ffffff;
+          background: #1ab188;
 
-      h2.on a:hover {
-        color: #ffffff;
-        background: #1ab188;
+          &:hover {
+            color: #ffffff;
+            background: #1ab188;
+          }
+        }
       }
     }
 
@@ -94,28 +190,30 @@ li {
       border: 1px solid #a0b3b0;
       border-radius: 0;
       transition: border-color .25s ease, box-shadow .25s ease;
-    }
 
-    input:focus {
-      outline: 0;
-      border-color: #1ab188;
-    }
+      &:focus {
+        outline: 0;
+        border-color: #1ab188;
+      }
 
-    input.button {
-      margin-top: 40px;
-      padding: 15px 0;
-      font-size: 2rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      color: #ffffff;
-      letter-spacing: .1em;
-      background: #1ab188;
-      border: 0;
-      border-radius: 0;
-      outline: none;
-      transition: all 0.5s ease;
-      -webkit-appearance: none;
-      cursor: pointer;
+      &.button {
+        margin-top: 40px;
+        padding: 15px 0;
+        font-size: 2rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #ffffff;
+        letter-spacing: .1em;
+        background: #1ab188;
+        border: 0;
+        border-radius: 0;
+        outline: none;
+        transition: all 0.5s ease;
+        -webkit-appearance: none;
+        cursor: pointer;
+
+
+      }
     }
 
     input.button:hover {
