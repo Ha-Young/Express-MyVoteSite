@@ -67,7 +67,7 @@ router.post('/join', validateUser, async (req, res, next) => {
       password: hash
     }).save();
 
-    req.flash('joinMessage', '회원가입이 완료되었습니다.');
+    req.flash('joinMessage', "You've successfully signed up!");
 
     return res.redirect("/login");
   } catch (err) {

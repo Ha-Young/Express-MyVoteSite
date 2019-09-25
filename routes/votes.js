@@ -10,7 +10,9 @@ router.get('/', (req, res, next) => {
     })
     .populate('user_id')
     .exec((err, votes) => {
-      if (err) return handleError(err);
+      if (err) {
+        return handleError(err);
+      }
 
       const voteCollection = votes.map(vote => {
         vote.converted_date = convertDate(vote.expired_at);
@@ -45,11 +47,17 @@ router.post('/new', async (req, res, next) => {
     let { expired_at } = req.body;
 
     if (!DATE_REGEX.test(expired_at.join(''))) {
-      req.flash('errorMessage', 'date should be YYYY MM DD hh mm format');
+      req.flash('errorMessage', 'Not a valid date or time format');
       return res.redirect("/votings/new");
     }
 
     const dates = expired_at.map((date, i) => (i === 1) ? Number(date) - 1 : Number(date));
+
+    if (new Date() - new Date(...dates) > 0) {
+      req.flash('errorMessage', 'Expiry date should be greater than current date');
+      return res.redirect("/votings/new");
+    }
+
     const isoFormat = new Date(...dates).toISOString();
 
     await new Vote({
@@ -74,14 +82,12 @@ router.put('/vote', async (req, res, next) => {
     const targetVote = await Vote.findById(voteId);
     const hasDuplicateVote = targetVote.options.find(option => option.voted_user.indexOf(userId) > -1);
 
-    console.log('optionId1111',hasDuplicateVote);
-
     if (!hasDuplicateVote) {
       const targetIndex = targetVote.options.findIndex(option => option._id.toString() === optionId);
       targetVote.options[targetIndex].voted_user.push(userId);
 
       await targetVote.save();
-      return res.json({ success: 'ok' });
+      return res.json({ success: 'Voted Successfully!' });
     }
 
     return res.json({ fail: 'Already voted!' });
@@ -91,21 +97,27 @@ router.put('/vote', async (req, res, next) => {
   }
 });
 
-
 router.get('/:voteId', (req, res, next) => {
   try {
-    console.log(req.params)
     const { voteId } = req.params;
+    const { _id: userId } = req.user;
 
     Vote.findById(voteId)
     .populate('user_id')
     .exec((err, vote) => {
-      if (err) return handleError(err);
+      if (err) {
+        return handleError(err);
+      }
+
+      let isSameUser = false;
+
+      if (userId.toString() === vote.user_id._id.toString()) {
+        isSameUser = true;
+      }
 
       vote.converted_date = convertDate(vote.expired_at);
 
-      console.log(vote);
-      return res.render('votings_detail', { vote });
+      return res.render('votings_detail', { vote, isSameUser });
     });
   } catch (err) {
     console.error(err);
@@ -113,5 +125,15 @@ router.get('/:voteId', (req, res, next) => {
   }
 });
 
+router.delete('/:voteId', async (req, res, next) => {
+  try {
+    await Vote.findByIdAndDelete(req.params.voteId);
+
+    res.json({ success: 'Deleted Successfully!' });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
 
 module.exports = router;

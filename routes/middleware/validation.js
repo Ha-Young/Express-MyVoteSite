@@ -10,12 +10,12 @@ exports.validateUser = async (req, res, next) => {
     const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
 
     if (!passwordConfirmation.trim()) {
-      req.flash('errorMessage', 'password confirmation required');
+      req.flash('errorMessage', 'Password confirmation required');
       return res.redirect("/join");
     }
 
     if (password !== passwordConfirmation) {
-      req.flash('errorMessage', 'password confirmation does not match');
+      req.flash('errorMessage', 'Password confirmation does not match');
       return res.redirect("/join");
     }
 

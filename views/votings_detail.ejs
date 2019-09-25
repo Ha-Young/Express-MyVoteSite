@@ -8,6 +8,9 @@
     <% include ./partials/nav %>
     <div>
       <a href="/">목록으로</a>
+      <% if (isSameUser) { %>
+        <button type="button" class="btn-del-vote">삭제</button>
+      <% } %>
       <h3>
         <%= vote.title %>
         <% var isExpired = (new Date() - new Date(vote.expired_at) > 0); %>
@@ -33,16 +36,18 @@
       </ul>
       <button type="submit">투표하기</button>
     </form>
-    <div class="<%= isExpired ? 'result-box' : 'result-box hide' %>">
-      <ul>
-        <% for (var i = 0; i < vote.options.length; i++) { %>
-          <li>
-            <div><%= vote.options[i].title %></div>
-            <div><%= vote.options[i].voted_user.length %></div>
-          </li>
-        <% } %>
-      </ul>
-    </div>
+    <% if (isSameUser || isExpired) { %>
+      <div class="result-box">
+        <ul>
+          <% for (var i = 0; i < vote.options.length; i++) { %>
+            <li>
+              <div><%= vote.options[i].title %></div>
+              <div><%= vote.options[i].voted_user.length %></div>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+    <% } %>
 
     <script>
       function sendVoteApi (voteId, optionId) {
@@ -52,6 +57,18 @@
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ voteId, optionId })
+        })
+        .then(function (res) {
+          return res.json();
+        });
+      }
+
+      function delVoteApi (voteId) {
+        return fetch('/votings/' + voteId, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          }
         })
         .then(function (res) {
           return res.json();
@@ -74,14 +91,38 @@
 
         sendVoteApi(voteId, optionId)
           .then(function (res) {
-            if (res.fail) {
-              alert(res.fail);
+            if (res.fail || res.success) {
+              alert(res.fail || res.success);
+              location.reload();
             }
           })
           .catch(function (err) {
             console.error(err);
           });
       });
+
+      var $btnDelVote = document.querySelector('.btn-del-vote');
+
+      if ($btnDelVote) {
+        $btnDelVote.addEventListener('click', function () {
+          delVoteApi(getVotingId())
+            .then(function (res) {
+              console.log(res)
+              if (res.success) {
+                alert(res.success);
+              }
+              location.href = '/';
+            })
+            .catch(function (err) {
+              console.error(err);
+            })
+        });
+      }
+
+      function getVotingId () {
+        var index = location.pathname.lastIndexOf('/');
+        return location.pathname.slice(index + 1);
+      }
     </script>
   </body>
 </html>
