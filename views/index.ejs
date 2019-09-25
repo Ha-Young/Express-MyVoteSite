@@ -9,5 +9,13 @@
     <div>Welcome to <%= title %></div>
     <button class="logout-button" onClick="location.href='/logout'">Logout</button>
     <button class="creat-button" onClick="location.href='/votings/new'">새로운 투표</button>
+    <% for(let i = 0; i < voting.length; i++) {%>
+      <li class="voting">
+        <a href="/votings/<%= voting[i].id%>">
+          <div class="title">투표타이틀 : <%= voting[i].title%></div>
+          <div class="date">유효기간: <%= voting[i].expiration%></div>
+        </a>
+      </li>
+    <%}%>
   </body>
 </html>

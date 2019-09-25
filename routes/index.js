@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Voting = require('../models/Voting');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  Voting.find().then(voting => {
+    res.render('index', { title: 'Voting', voting });
+  })
 });
 
 router.get('/login', function(req, res, next) {
