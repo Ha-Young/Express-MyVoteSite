@@ -18,6 +18,8 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
+    minlength: 6,
+    maxlength: 16,
     required: true,
   },
   profile_img_url: {
@@ -33,10 +35,9 @@ const SALT_ROUNDS = 10;
 
 userSchema.pre('save', async function(next) {
   try {
-    const user = this;
     const salt = await bcrypt.genSalt(SALT_ROUNDS);
-    const hash = await bcrypt.hash(user.password, salt);
-    user.password = hash;
+    const hash = await bcrypt.hash(this.password, salt);
+    this.password = hash;
     next();
   } catch (err) {
     next(err);
@@ -45,8 +46,7 @@ userSchema.pre('save', async function(next) {
 
 userSchema.methods.validatePassword = async function(password) {
   try {
-    const user = this;
-    const isValidPassword = await bcrypt.compare(password, user.password);
+    const isValidPassword = await bcrypt.compare(password, this.password);
     return isValidPassword;
   } catch (error) {
     next(error);

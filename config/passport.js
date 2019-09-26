@@ -12,7 +12,7 @@ const setPassport = passport => {
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' });
       }
-      const isValidPassword = await user.validatePassword(password, user.password);
+      const isValidPassword = await user.validatePassword(password);
       if (!isValidPassword) {
         return done(null, false, { message: 'Incorrect password.' });
       }
@@ -23,16 +23,17 @@ const setPassport = passport => {
   }));
 
   passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user);
   });
 
-  passport.deserializeUser(async (id, done) => {
-    try {
-      const user = await User.findById(id);
-      done(null, user);
-    } catch (err) {
-      done(err);
-    }
+  passport.deserializeUser(async (user, done) => {
+    done(null, user)
+    // try {
+    //   const user = await User.findById(id);
+    //   done(null, user);
+    // } catch (err) {
+    //   done(err);
+    // }
   });
 };
 

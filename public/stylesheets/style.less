@@ -1,8 +1,41 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+@import 'common.less';
+@import 'main.less';
+@import 'newVote.less';
+
+body, html {
+  margin: 0px;
+  padding: 0px;
+	box-sizing: border-box;
+  background-color: @backColor;
+  color: @textColor;
+  div {
+    // border: 1px solid @textColor;
+  }
 }
 
 a {
-  color: #00B7FF;
+  color: @textColor;
+  text-decoration: none;
+  &:focus {
+    outline: none !important;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+  &:visited {
+    color: @textColor;
+    text-decoration: none;
+  }
+}
+
+header {
+  background-color: @headerColor;
+  text-align: center;
+  padding: 20px;
+
+  h1 {
+    margin: 0;
+    padding: 0;
+    color: #B9C8E0;
+  }
 }

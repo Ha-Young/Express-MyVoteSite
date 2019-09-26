@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <% include ./partial/head %>
+  <body>
+    <% include ./partial/header %>
+    <div class="main">
+      <div class="main-sidebar">
+        <% include ./partial/userProfile %>
+        <div class="main-menu">
+          <div class="main-menu-title">
+            <h2>MENU</h2>
+          </div>
+          <a href="/votings/new">
+            <div class="main-menu-new">
+              <span>Create New Voting</span>
+            </div>
+          </a>
+          <a href="/votings">
+            <div class="main-menu-myvotings">
+              <span>My Votings</span>
+            </div>
+          </a>
+          <a href="/logout">
+            <div class="main-menu-logout">
+              <span>LogOut</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="content-container">
+        <div class="main-subtitle">
+          <h2><i class="fas fa-poll"></i> Voting List</h2>
+        </div>
+        <hr>
+        <% votings.forEach(function(vote){ %>
+          <div class="voting">
+            <a href="/votings/<%= vote._id %>">
+              <div class="content-top">
+                <span class="content-title"><%= vote.title %></span>
+              </div>
+              <div class="content-bottom">
+                <div class="content-creator">
+                  Creator :
+                  <%= vote.creator.name %>
+                </div>
+                <div class="content-status">
+                  <% if (vote.status === 'INPROGRESS') { %>
+                    <i class="fas fa-play">In Progress</i>
+                  <% } else { %>
+                    <i class="fas fa-stop">Expired</i>
+                  <% } %>
+                </div>
+                <div class="content-expired-date">
+                    Expired At :
+                    <br>
+                    <%= vote.fomattedExpirationDate %>
+                </div>
+              </div>
+            </a>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </body>
+</html>

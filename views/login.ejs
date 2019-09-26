@@ -1,31 +1,41 @@
-<form
-  class="login-form"
-  action="/login"
-  method="POST"
->
-  <div class="login-email">
-    email
-    <input
-      type="email"
-      name="email"
-      autocomplete="off"
-      required
-    />
-  </div>
-  <div class="login-password">
-    password(minlength = 6)
-    <input
-      type="password"
-      name="password"
-      autocomplete="off"
-      style="ime-mode:disabled"
-      minlength="6"
-      required
-    />
-  </div>
-  <div class="login-button">
-    <input type="submit" value="submit" />
-  </div>
-  <div><%= message %></div>
-</form>
-<a href="/signup"><button>signup</button></a>
+<!DOCTYPE html>
+<html>
+  <% include ./partial/head %>
+  <body>
+    <form
+    class="login-form"
+    action="/login"
+    method="POST"
+  >
+    <div class="login-email">
+      email
+      <input
+        type="email"
+        name="email"
+        autocomplete="off"
+        required
+      />
+    </div>
+    <div class="login-password">
+      password(minlength = 6)
+      <input
+        type="password"
+        name="password"
+        autocomplete="off"
+        style="ime-mode:disabled"
+        minlength="6"
+        required
+      />
+    </div>
+    <div class="login-button">
+      <input type="submit" value="submit" />
+    </div>
+    <div class="auto-login-check">
+      Remember Me<input type="checkbox" value="true" name="autoLogin"/>
+    </div>
+    <div><%= message %></div>
+  </form>
+  <a href="/signup"><button>signup</button></a>
+  </body>
+</html>
+

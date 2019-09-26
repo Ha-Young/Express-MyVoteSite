@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <% include ./partial/head %>
+  <body>
+    <div class="problem-body">
+      <div class="problem-title">
+        <a href="/"><button class="gobackbtn">목록으로</button></a>
+        <h1><%= voting.title %></h1>
+      </div>
+      <div class="voting-container">
+        <div>title : <%= voting.description %></div>
+          <div class="complete-users">
+            <span>creator : <%= voting.creator %></span>
+          </div>
+          <div class="complete-users">
+            <span>status : <%= voting.status %></span>
+          </div>
+          <div class="complete-users">
+            <span>expired_at : <%= voting.expired_at %></span>
+          </div>
+          <div class="complete-users">
+            <span>created_at : <%= voting.created_at %></span>
+          </div>
+          <form action="/votings/<%= voting._id %>", method="POST">
+          <% voting.selections.forEach(function(selection){ %>
+              <div class="testcase-wrap">
+                <div class="selection">
+                  <input type="radio" class="vote-selection" name="selection" value="<%= selection._id %>" />
+                  <div><%= selection.name %></div>
+                </div>
+                <% if (voting.status === 'EXPIRED' || (isCreator)) { %>
+                  <div class="vote-result">
+                    <div><%= selection.voter.length %></div>
+                  </div>
+                <% } %>
+              </div>
+          <% }) %>
+          <% if (isVoted) { %>
+            <input type="submit" class="vote-selection" disabled>제출이 완료되었습니다.</input>
+          <% } else if (voting.status === 'EXPIRED'){ %>
+            <input type="submit" class="vote-selection" disabled>만료된 투표입니다.</input>
+          <% } else { %>
+            <input type="submit" class="vote-selection">투표하기</input>
+          <% } %>
+          </form>
+        </div>
+      </div>
+      <% if (isCreator) { %>
+        <button class="delete-voting" data-id="<%= voting._id %>">삭제하기</button>
+      <% } %>
+    </div>
+    <script src="/javascripts/voting.js" ></script>
+  </body>
+</html>
+<!-- {
+  title: 'Voting Platform',
+  voting: {
+    status: 'ONGOING',
+    _id: 5d8b007925ff3b81b80c5c8b,
+    title: 'lkdsjag;kj',
+    description: 'lkajsdgf;kladsg',
+    expired_at: 2019-09-26T19:52:00.000Z,
+    selections: [ [Object], [Object], [Object], [Object] ],
+    creator: 5d8b006325ff3b81b80c5c8a,
+    createdAt: 2019-09-25T05:51:53.593Z,
+    updatedAt: 2019-09-25T05:55:12.901Z,
+    __v: 1
+  },
+  winner: 5d8b007925ff3b81b80c5c8c,
+  isVoted: false
+} -->

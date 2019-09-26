@@ -12,14 +12,16 @@ const passport = require('passport');
 const setPassport = require('./config/passport');
 const flash = require('connect-flash');
 
-const indexRouter = require('./routes/index');
+const router = require('./routes/main');
 
 const app = express();
 
 const db = mongoose.connection;
 const MONGODB_SERVER_URL = 'mongodb://localhost:27017/votingplatform';
 
-mongoose.connect(MONGODB_SERVER_URL);
+mongoose.connect(MONGODB_SERVER_URL, {
+  useFindAndModify: false
+});
 
 db.on('error', function() {
   console.error.bind(console, 'connection error:');
@@ -40,6 +42,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
   secret: 'SECRET',
+  cookie: { maxAge: 60 * 60 * 1000 },
   resave: false,
   saveUninitialized: false
 }));
@@ -49,7 +52,7 @@ app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 
-app.use('/', indexRouter);
+app.use('/', router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

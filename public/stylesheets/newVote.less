@@ -1,0 +1,58 @@
+@import 'common.less';
+
+.create-vote-form {
+  width: 500px;
+  border-radius: 20px;
+  border: 1px solid @borderColor;
+  padding: 20px;
+  margin: auto;
+}
+
+.form-inputs, .form-captions {
+  display: inline-block;
+  vertical-align: top;
+
+  .newvote-selections {
+    height: auto;
+  }
+  & > div {
+    margin-top: 10px;
+  }
+}
+
+.form-inputs {
+  width: 300px;
+
+  input {
+    height: 20px;
+		border: 2px solid @borderColor;
+		border-radius: 20px;
+		background-color: white;
+		padding: 5px 15px 5px 10px;
+    margin: 0 auto;
+    font-size: 13px;
+  }
+}
+
+.form-captions {
+  text-align: center;
+  width: 150px;
+
+  & > div {
+    line-height: 35px;
+  }
+}
+
+.newvote-description > input {
+  width: 250px;
+}
+
+.newvote-button > input {
+  padding: 10px 20px 25px 20px;
+  transition: 0.5s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: @hoverColor;
+  }
+}
