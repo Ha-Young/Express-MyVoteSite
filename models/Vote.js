@@ -12,7 +12,7 @@ const voteSchema = new mongoose.Schema({
   description: {
     type: String
   },
-  expiredAt: {
+  expired_at: {
     type: Date,
     required: true
   },

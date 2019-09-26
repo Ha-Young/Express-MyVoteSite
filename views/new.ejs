@@ -14,25 +14,29 @@
 
       <ul class='options-list'>
         <li>
-          <input type='text' name='opts-0' required>
+          <input type='text' name='options' required>
         </li>
         <li>
-          <input type='text' name='opts-1' required>
+          <input type='text' name='options' required>
         </li>
       </ul>
 
       <button type='button' class='add-option'>항목 추가</button>
       <br>
 
-      <input type='datetime-local' name='expired'>
+      <input type='datetime-local' name='expired' required>
       <br>
       <br>
       <input type='submit' value='투표 생성'>
+
+      <a href='/'>투표 목록보기</a>
+
     </form>
+
     <script>
     const $ul = document.querySelector('.options-list');
     const $newOption = document.querySelector('.add-option');
-    let count = 2;
+    let count = 0;
 
     $newOption.addEventListener('click', () => {
       const $li = document.createElement('li');
@@ -41,9 +45,9 @@
       const $btnDestroy = document.createElement('button');
       const $btnDestroyText = document.createTextNode('x');
 
-
       $input.setAttribute('type', 'text');
-      $input.setAttribute('name', `opts-${count}`);
+      $input.setAttribute('name', 'options');
+      $input.setAttribute('required', '');
       $btnDestroy.setAttribute('class', `btn-destroy-${count}`);
       $btnDestroy.appendChild($btnDestroyText);
       $li.appendChild($input);
@@ -51,7 +55,6 @@
       $ul.appendChild($li);
 
       const $del = document.querySelector(`.btn-destroy-${count}`);
-
 
       $del.addEventListener('click', (ev) => {
         ev.currentTarget.parentElement.remove();

@@ -9,9 +9,52 @@
 
     <h1><%= title %></h1>
 
+        <ul class='votes'>
+
+        <% if (votes !== null) {
+          for (var i = 0; i < votes.length; i++) { %>
+            <li>
+              <a href='/votings/<%= votes[i]._id %>'>
+                <p class='tit'>제목 <%= votes[i].title %></p>
+                <p class='tit'>생성자 <%= votes[i].name %></p>
+                <p class='tit'>생성일 <%= votes[i].created_at %></p>
+                <p class='tit'>만료일 <%= votes[i].expired_at %></p>
+                <p class='tit'>상태: <%= votes[i].status %></p>
+
+                <% if (votes[i].isUser) { %>
+                  <a href='/votings/<%= votes[i]._id %>/result'>투표 결과보기</a>
+                  <button class='deleteVote' id='<%= votes[i]._id %>'>삭제</button>
+                <% } %>
+              </a>
+            </li>
+        <% }} %>
+
+        </ul>
 
         <a href='/votings/new'>투표 생성하기</a>
         <a href='/votings'>내 투표보기</a>
+
+        <script>
+            let dels = document.querySelectorAll('.deleteVote');
+
+            dels.forEach($del => {
+              $del.addEventListener('click', ev => {
+                fetch(`/votings/${ev.currentTarget.id}`, {
+                  method: 'DELETE'
+                })
+                  .then(res => {
+                    if (res.ok) {
+                      window.location.href='/'
+                    } else {
+                      throw new Error();
+                    }
+                  })
+                  .catch(err => {
+                    console.error(err);
+                  });
+              });
+            });
+        </script>
 
   </body>
 </html>

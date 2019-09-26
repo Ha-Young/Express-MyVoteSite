@@ -10,7 +10,7 @@ module.exports = passport => {
   async (accessToken, refreshToken, profile, done) => {
     try {
       const exUser = await User.findOne({
-        githubId: profile.id,
+        name: profile.username,
         provider: 'github'
       });
 
@@ -18,8 +18,7 @@ module.exports = passport => {
         done(null, exUser);
       } else {
         const newUser = new User({
-          username: profile.username,
-          githubId: profile.id,
+          name: profile.username,
           provider: 'github'
         });
 

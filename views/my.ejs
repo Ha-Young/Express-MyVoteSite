@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <%- include('partials/header') %>
+
+    <ul>
+      <% for (var i = 0; i < votes.length; i++) { %>
+          <li>
+            <a href='/votings/<%= votes[i]._id %>'>
+              <p>제목: <%= votes[i].title %></p>
+              <p>만료 날짜 및 시간: <%= votes[i].expired_at %></p>
+              <p>진행 중 여부: <%= votes[i].status %></p>
+            </a>
+          </li>
+      <% } %>
+    </ul>
+
+
+
+  </body>
+</html>

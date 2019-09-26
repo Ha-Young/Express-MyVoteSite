@@ -6,10 +6,10 @@ const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const User = require('../models/User');
 
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
-  const { email, nickname, password } = req.body;
+  const { email, name, password } = req.body;
 
   try {
-    const exUser = await User.findOne({ email });
+    const exUser = await User.findOne({ name });
 
     if (exUser) {
       req.flash('joinError', '이미 가입된 이메일입니다.');
@@ -19,7 +19,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
     const hash = await bcrypt.hash(password, 12);
     await User.create({
       email,
-      nickname,
+      name,
       password: hash
     });
 

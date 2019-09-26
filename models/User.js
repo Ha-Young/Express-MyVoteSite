@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String
   },
-  nickname: {
+  name: {
     type: String
   },
   password: {
@@ -13,12 +13,6 @@ const userSchema = new mongoose.Schema({
   provider: {
     type: String,
     default: 'local'
-  },
-  username: {
-    type: String
-  },
-  githubId: {
-    type: Number
   }
 });
 
