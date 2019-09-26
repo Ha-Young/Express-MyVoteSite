@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <%- include('./partials/head') %>
+  <body>
+    <header>
+      <div class="header">
+        <div> <span>Voting</span> </div>
+        <div>
+          이미 계정이 있습니다
+          <a href="/login" class="sign-up">Login</a>
+        </div>
+      </div>
+    </header>
+    <div class="join-wrapper">
+      <div class="join-image">
+        <% if (err) {%>
+          <div><%= err %></div>
+        <% } %>
+        <form action="/auth/join" method="post" class="join-form">
+          <div class="join-input">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="example@example.com"
+              autocomplete="off"
+              required
+            >
+          </div>
+          <div class="join-input">
+            <label>Username</label>
+            <input
+              type="text"
+              name="username"
+              maxlength="10"
+              autocomplete="off"
+              required
+            >
+          </div>
+          <div class="join-input">
+            <label>Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              autocomplete="off"
+              required
+            >
+          </div>
+          <div class="join-input">
+            <label></label>
+            <input
+              type="password"
+              id="verify-password"
+              name="password"
+              autocomplete="off"
+              required
+            >
+            <span>대문자, 소문자, 숫자 조합 7-14</span>
+          </div>
+          <div class="login-join-submit">
+            <input type="submit" value="Join" id="join-bottom">
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

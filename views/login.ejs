@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <%- include('./partials/head')%>
+  <body>
+    <header>
+      <div class="header">
+        <div> <span>Voting</span> </div>
+        <div><a href="/join" class="sign-up">Sign up</a></div>
+      </div>
+    </header>
+    <div class="login-wrapper">
+      <div class="login-image">
+        <form action="/auth/login" method="post" class="login-form">
+          <% if (message) {%>
+            <span><%= message %></span>
+          <% } %>
+          <div>
+            <label for="email">Email</label>
+            <input
+              type="text"
+              name="email"
+              id="email"
+              placeholder="example@example.com"
+              autocomplete="off"
+              required
+            >
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              autocomplete="off"
+              required
+            >
+          </div>
+          <div class="login-join-submit">
+            <input
+              type="submit"
+              value="Log In"
+              id="submit-button"
+              required
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

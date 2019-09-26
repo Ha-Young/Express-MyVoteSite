@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <%- include('./partials/head') %>
+  <body>
+    <%- include('./partials/header') %>
+    <div class="vote-wrapper">
+      <div class="vote-box">
+        <div>
+          <div class="vote-title"><%= vote.title %></div>
+          <div>by <%= vote.creator_id.name %></div>
+          <form action="/votings/<%= vote._id %>" method="post">
+            <% vote.options.map(option => { %>
+              <label>
+                <input
+                  type="radio"
+                  name="optionId"
+                  class="option-radio"
+                  value="<%= option._id %>"
+                  required
+                  >
+                  <span class="option"><%= option.text %></span>
+              </label>
+            <% }) %>
+            <% if (message || !isInProgress) { %>
+              <div><%= !isInProgress ? '투표가 마감되었습니다' : '투표 사항을 변경할 수 없습니다' %></div>
+            <% } else { %>
+              <input type="submit" class="vote-submit" value="Submit">
+            <% } %>
+          </form>
+          <% if (isCreator) { %>
+            <button id="delete-vote">Delete</button>
+          <% } %>
+        </div>
+      </div>
+      <% if (isCreator || !isInProgress) { %>
+        <div class="result-box">
+          <div class="vote-result-box">
+            <span class="vote-result-title">Vote Result</span>
+            <div class="vote-results">
+              <% counts.map((count, i) => { %>
+                <div class="graph-box">
+                  <div class="graph" data-count="<%= count.length %>"></div>
+                  <div class="vote-result">
+                    <div class="result-option">option<%= vote.options[i].text %></div>
+                    <div><%= count.length %>표</div>
+                  </div>
+              </div>
+              <% }) %>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+    <script>
+      const $graphs = document.querySelectorAll('.graph');
+      const isCreator = '<%= isCreator %>';
+      const totalContributors = '<%= totalContributors%>';
+
+      $graphs.forEach(graph => {
+        const percent = graph.dataset.count / totalContributors * 100;
+        if (!percent) {
+          graph.style.height = '8%';
+        } else {
+          graph.style.height = `${percent}%`;
+        }
+      });
+
+      if (isCreator) {
+        const $deleteVote = document.getElementById('delete-vote');
+
+        $deleteVote.addEventListener('click', async() => {
+          try {
+            const res = await fetch('/votings/<%= vote._id %>', {
+              method: 'delete'
+            });
+            window.location.href = res.url;
+          } catch(err) {
+            console.log(err);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

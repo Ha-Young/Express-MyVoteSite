@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <%- include('./partials/head') %>
+  <body>
+    <%- include('./partials/header') %>
+    <div class="create-vote-wrapper">
+      <div class="create-vote-box">
+        <div class="create-title">Create New Vote</div>
+        <form action="/votings/new" method="post" id="voting-form">
+          <div>
+            <input
+              type="text"
+              name="title"
+              id="title"
+              maxlength="30"
+              autocomplete="off"
+              placeholder="Title"
+              required
+            >
+          </div>
+          <div>
+            <input
+              type="datetime-local"
+              name="endDate"
+              id="end-date"
+              autocomplete="off"
+              required
+            >
+          </div>
+          <span id="remove-option">-</span>
+          <span id="add-option">+</span>
+          <div id="options-wrapper">
+            <div id="option0">
+              <input
+                type="text"
+                name="options"
+                id="option"
+                autocomplete="off"
+                placeholder="option"
+                required
+              >
+            </div>
+            <div id="option0">
+              <input
+                type="text"
+                name="options"
+                autocomplete="off"
+                placeholder="option"
+                required
+              >
+            </div>
+          </div>
+          <div>
+            <input
+              type="submit"
+              value="Create"
+              id="submit-button"
+            >
+          </div>
+        </form>
+        <div>** 투표 생성 후 수정이 불가합니다. **</div>
+      </div>
+    </div>
+    <script src="/javascripts/index.js"></script>
+  </body>
+</html>

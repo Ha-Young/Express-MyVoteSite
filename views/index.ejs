@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <%- include('./partials/head') %>
+  <body>
+    <%- include('./partials/header') %>
+    <div class="index-wrapper">
+      <div class="index-image">
+        <h1>Online Voting Platform</h1>
+      </div>
+      <div class="votes-wrapper">
+        <% if (myVote) { %>
+          <div class="vote-title">My Votes</div>
+        <% } else { %>
+          <div class="vote-title">Vote Lists</div>
+        <% } %>
+        <div class="vote-lists">
+          <% if (votes) { %>
+            <% votes.map((vote, i) => { %>
+              <a href="/votings/<%= vote._id %>" class="vote">
+                <% if (isInProgress[i]) { %>
+                  <span class="in-progress progress">in progress</span>
+                <% } else { %>
+                  <span class="not-in-progress progress">ended</span>
+                <% } %>
+                <div><%= vote.title %></div>
+                <div class="end-date">end date: <%= times[i] %></div>
+              </a>
+            <% }) %>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
