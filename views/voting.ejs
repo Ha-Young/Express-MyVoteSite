@@ -16,6 +16,9 @@
       <div class='item-section'>
         <div class='voting-list <%=progressClass%>'>
           <%if(voting){
+            var voteCount = 0;
+            var voteArr = [];
+            var voteTextArr = [];
             var progressClass;
             var progressDescription;
             var endTime = new Date(voting.end_at);
@@ -34,24 +37,35 @@
             <span><%= endYearMonthDate %></span>
             <form action='/votings/<%= voting_id %>/update' method='POST' id='voting-form'>
               <ul>
-                <%for(var i = 0; i < items.length; i++){%>
+                <% for(var i = 0; i < items.length; i++){%>
                 <li class='item'>
                   <label for=<%= items[i]._id %> >
                     <h2><%= items[i].text %></h2>
                   </label>
-                  <input type='radio' name='option' id=<%= items[i]._id %> value=<%= items[i]._id %>>
-                  <%if(isCreator){%>
+                  <input type='radio' name='option' id=<%= items[i]._id %> value=<%= items[i]._id %> >
+                  <% voteCount += items[i].voters.length;
+                    voteArr[i] = items[i].voters.length;
+                    voteTextArr[i] = items[i].text;%>
                     <div>
-                      <span>득표수 - 생성자만 볼 수 있음:</span>
+                      <span>득표수 - 생성자 또는 투표가 끝났을 때만 볼 수 있음:</span>
                       <span><%= items[i].voters.length %></span>
                     </div>
                     <%}%>
-                </li>
-                <%}}%>
+                  </li>
                 </ul>
+                <%}%>
                 <input id='submit-my-vote-button' type='submit' form='voting-form'>submit</input>
                 <input id='delete-voting-button' type='button'>delete</input>
             </form>
+            <% if(isCreator || !voting.isOnProgress) { %>
+              <ul>
+                <% for(var i = 0; i < voteArr.length; i++) { %>
+                  <li>득표수 - 생성자 또는 투표가 끝났을 때만 볼 수 있음:</li>
+                  <li><%= voteTextArr[i] %>: <%= voteArr[i] %></li>
+                <%}%>
+                <li>Total: <%= voteCount %></li>
+              </ul>
+            <%}%>
           </div>
         </div>
     </div>

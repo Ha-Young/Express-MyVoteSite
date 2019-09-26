@@ -32,7 +32,8 @@ if(process.env.NODE_ENV === 'development'){
 // mongoose setup
 mongoose.connect(
   process.env.MONGOOSE_URL, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true
   }
 );
 

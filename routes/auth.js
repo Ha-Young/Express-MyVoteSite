@@ -4,7 +4,9 @@ const User = require('../models/Users');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 
+
 // Login router
+
 router.get('/login', (req, res, next) => {
   res.render('login', {
     title: 'Log In',
@@ -28,7 +30,9 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
+
 // Register router
+
 router.get('/register', (req, res, next) => {
   res.render('register', {
     title: 'Register',
@@ -39,7 +43,6 @@ router.get('/register', (req, res, next) => {
 router.post('/register', async(req, res, next) => {
   try{
     const exUser = await User.findOne({ email: req.body.email });
-    console.log(exUser);
     if(exUser){
       req.flash('DuplicateEmailError', 'The email already exists');
       return res.render('register', {
@@ -61,16 +64,14 @@ router.post('/register', async(req, res, next) => {
   }
 });
 
+
 // Logout router
+
 router.get('/logout', (req, res, next) => {
   if(req.session){
-    req.session.destroy((err) => {
-      if(err){
-        return next(err);
-      }else{
-        return res.redirect('/login');
-      }
-    });
+    req.logout();
+    req.session.destroy();
+    res.redirect('/auth/login');
   }
 });
 

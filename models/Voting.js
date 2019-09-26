@@ -11,7 +11,7 @@ const votingSchema = new mongoose.Schema({
     type: String
   },
   end_at: {
-    required: false,
+    required: true,
     type: Date
   },
   creator: {

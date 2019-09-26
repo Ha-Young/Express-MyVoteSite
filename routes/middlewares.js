@@ -1,12 +1,7 @@
-exports.isNotLoggedIn = (res, req, next) => {
-  console.log(req,'route middlewares');
-  if(!req.isAuthenticated()){
-    console.log('eq.isAuthenticated');
+exports.isLoggedIn = (req, res, next) => {
+  if(req.isAuthenticated()){
     next();
   } else {
-    console.log('hi');
-    res.redirect('/login');
+    res.redirect('/auth/login');
   }
 }
-
-//현재 사용하지 않음.

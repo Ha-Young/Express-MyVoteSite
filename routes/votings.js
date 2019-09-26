@@ -1,18 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const Voting = require('../models/Voting');
-const { addIsOnProgressPropertyTo } = require('../util');
+const { addIsOnProgressPropertyTo, switchIdToName } = require('../util');
 
 
 // votings router
 
 router.get('/', async(req, res, next) => {
   const myVotings = await Voting.find({ creator: req.user._id });
-  const editedMyVotings = await Promise.all(await myVotings.map(async(voting) => {
-    const editedVoting = JSON.parse(JSON.stringify(voting._doc));
-    addIsOnProgressPropertyTo(editedVoting, voting);
-    return editedVoting;
-  }));
+  const editedMyVotings = await Promise.all(
+    await myVotings.map(async(myVoting) => {
+      const editedMyVoting = JSON.parse(JSON.stringify(myVoting._doc));
+      await addIsOnProgressPropertyTo(editedMyVoting, myVoting);
+      return editedMyVoting;
+    }
+  ));
   res.render(('votings'), {
     user: req.user,
     votings: editedMyVotings
@@ -42,7 +44,7 @@ router.post('/new', async(req, res, next) => {
     await Voting.create({
       title: req.body.title,
       description: req.body.description,
-      end_At: req.body.closingDate,
+      end_at: new Date(`${req.body.closingDate}T${req.body.closingTime}`),
       creator: req.user._id,
       items
     });

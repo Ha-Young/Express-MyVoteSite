@@ -1,5 +1,3 @@
-
-var $submitingButton = document.querySelector('#submit-my-vote-button');
 var $deletingButton = document.querySelector('#delete-voting-button');
 
 $deletingButton.addEventListener('click', deleteVoting);
