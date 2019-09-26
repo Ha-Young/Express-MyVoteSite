@@ -6,8 +6,33 @@
   <body>
     <%- include("partials/header") %>
 
-    <h1>내투표들</h1>
+    <h1><%= title %></h1>
+    <% for(let i = 0; i < voting.length; i++) {%>
+      <li class="voting">
+        <a href="/votings/<%= voting[i].id%>">
+          <div class="title">투표타이틀 : <%= voting[i].title%></div>
+          <div class="date">유효기간: <%= voting[i].expiration%></div>
+        </a>
+        <button class="del" id="<%= voting[i].id%>" type="submit">삭제</button>
+      </li>
+    <%}%>
     <a href="/">돌아가기</a>
-
+    <script>
+      document.querySelectorAll(".del").forEach(del => {
+        del.addEventListener("click", ev => {
+          fetch(`/votings/${ev.currentTarget.id}`,{ method: "DELETE" })
+            .then(res => {
+              if(res.ok) {
+                window.location.href="/"
+              } else {
+                throw new Error();
+              }
+            })
+            .catch(err => {
+              console.error(err);
+            })
+          });
+      })
+    </script>
   </body>
 </html>

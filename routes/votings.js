@@ -4,8 +4,21 @@ const Voting = require('../models/Voting');
 const mongoose = require('mongoose');
 
 router.get('/', function(req, res, next) {
-  res.render('my', { user: req.user });
+  Voting.find()
+  .populate('creator', 'name')
+  .exec((err, voting) => {
+    res.render('my', { user: req.user, title: 'my votings', voting });
+  });
 });
+
+router.delete('/:voting_id', async function(req, res, next) {
+  try {
+    await Voting.findByIdAndDelete({_id: req.params.voting_id });
+    res.status(201).end();
+  } catch (error) {
+    next(err);
+  }
+})
 
 router.get('/new', function(req, res, next) {
   res.render('new');
