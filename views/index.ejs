@@ -8,6 +8,14 @@
     <% include ./partials/nav %>
     <div class="container">
       <ul class="main-list">
+        <% if (!votes.length) { %>
+          <li class="no-data">
+            <div class="wrap">
+              NO DATA
+              <p>Create New Vote!</p>
+            </div>
+          </li>
+        <% } %>
         <% for (var i = 0; i < votes.length; i++) { %>
           <li>
             <a href="/votings/<%= votes[i]._id %>">

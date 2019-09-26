@@ -7,5 +7,7 @@ exports.convertDate = (isoString) => {
   const hours = date.getHours();
   const min = date.getMinutes();
 
-  return `${yy}/${mm}/${dd} ${hours}:${min}`;
+  const addZero = (num) => num < 10 ? '0' + num : num;
+
+  return `${yy}/${addZero(mm)}/${addZero(dd)} ${addZero(hours)}:${addZero(min)}`;
 };

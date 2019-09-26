@@ -44,11 +44,13 @@
           <h3 class="legend-title">Result</h3>
           <div class="result-box">
             <ul class="graph-box">
-              <% for (var i = 0; i < vote.options.length; i++) { %>
+              <% for (var i = 0; i < sortedOptions.length; i++) { %>
                 <li class="graph-bar">
-                  <div class="color-bar" data-vote-count="<%= vote.options[i].voted_user.length %>"></div>
-                  <div><%= vote.options[i].title %></div>
-                  <div><%= vote.options[i].voted_user.length %></div>
+                  <div class="static-info">
+                    <span class="title"><%= sortedOptions[i].title %></span>
+                    <span class="score"><%= sortedOptions[i].voted_user.length %> / <%= allVoteCount %></span>
+                  </div>
+                  <div class="color-bar" data-vote-count="<%= sortedOptions[i].voted_user.length %>"></div>
                 </li>
               <% } %>
             </ul>
@@ -58,12 +60,12 @@
     </div>
 
     <script>
-      var allVoteCount = '<%= allVoteCount %>';
+      var allVoteCount = Number('<%= allVoteCount %>');
 
       $colorBar = document.querySelectorAll('.color-bar');
       $colorBar.forEach(function (bar) {
-        var voteCount = bar.dataset.voteCount;
-        var percentage = parseInt(voteCount / allVoteCount * 100);
+        var voteCount = Number(bar.dataset.voteCount);
+        var percentage = Math.floor(voteCount / allVoteCount * 100) || 0;
         bar.classList.add('percent-' + percentage);
       });
 

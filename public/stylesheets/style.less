@@ -34,6 +34,9 @@ h1, h2, h3, p {
   margin: 0;
 }
 
+.txt-center {
+  text-align: center;
+}
 .main-box {
   position: absolute;
   top: 50%;
@@ -82,14 +85,15 @@ h1, h2, h3, p {
 .btn-black {
   display: inline-block;
   margin-top: 25px;
-  padding: 10px 80px;
+  padding: 12px 75px;
+  font-size: 12px;
   border: 1px solid #000;
 }
 .info-txt {
   display: block;
   height: 0px;
   margin-bottom: 10px;
-  padding: 0 10px;
+  padding: 0 5px;
   text-align: left;
   font-size: 13px;
   color: @deepgreen;
@@ -97,7 +101,7 @@ h1, h2, h3, p {
   transition: 0.3s;
 }
 .show-infotxt:focus ~ .info-txt {
-  height: 40px;
+  height: 30px;
   opacity: 1;
 }
 
@@ -105,12 +109,30 @@ h1, h2, h3, p {
   width: 100%;
   text-align: center;
   padding: 15px 0;
-}
-.logo {
-  font-size: 14px;
-  a {
-    color: @deepgrey;
-    letter-spacing: 3px;
+
+  .logo {
+    position: relative;
+    font-size: 14px;
+    a {
+      color: @deepgrey;
+      letter-spacing: 3px;
+    }
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      width: 14px;
+      height: 1px;
+      margin-left: -7px;
+      background: @midgray;
+    }
+  }
+  .user-name {
+    margin-top: 17px;
+    font-size: 14px;
+    color: @midgray;
   }
 }
 
@@ -170,6 +192,23 @@ h1, h2, h3, p {
     width: 100%;
     height: 100%;
     padding: 15px 20px;
+  }
+
+  &.no-data {
+    display: table;
+    width: 100%;
+    height: 200px;
+    padding: 0;
+    text-align: center;
+    font-size: 50px;
+    color: @lightgray;
+  }
+  &.no-data .wrap {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  &.no-data p {
+    font-size: 28px;
   }
 }
 .main-list > li:last-child {
@@ -266,6 +305,7 @@ h1, h2, h3, p {
   background: @deepgreen;
   position: absolute;
   top: 30px;
+  right: 45px;
   padding: 0px 12px;
   line-height: 28px;
   font-weight: 900;
@@ -298,8 +338,7 @@ h1, h2, h3, p {
     display: inline-block;
     position: relative;
     top: auto;
-    left: auto;
-
+    right: auto;
   }
   .btn-del-vote {
     margin-left: 5px;
@@ -350,14 +389,97 @@ h1, h2, h3, p {
   }
 }
 
-.color-bar {
-  width: 5px;
-  height: 20px;
-  background: @deepyellow;
+.graph-box {
+  .color-bar {
+    position: relative;
+    height: 20px;
+    background: @lightgray;
+  }
+  .color-bar:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: @deepgrey;
+  }
+  .graph-bar {
+    margin-bottom: 10px;
+  }
+  .graph-bar:last-child {
+    margin-bottom: 0;
+  }
+  .graph-bar:first-child {
+    .color-bar:after {
+      background: @deepgreen;
+    }
+    .title {
+      color: @deepgreen;
+    }
+  }
+  .graph-bar:nth-child(2) {
+    .color-bar:after {
+      background: @midgreen;
+    }
+    .title {
+      color: @midgreen;
+    }
+  }
+  .static-info {
+    margin-bottom: 5px;
+
+    .title {
+      font-size: 18px;
+      color: @deepgrey;
+    }
+    .score {
+      font-size: 15px;
+      color: @midgray;
+    }
+    .score:before {
+      content: 'score: ';
+      margin-left: 5px;
+    }
+  }
 }
+
+@-webkit-keyframes bar-race {
+  from {width: 100%;}
+}
+@keyframes bar-race {
+  from {width: 100%;}
+}
+
 each(range(100), {
-  .percent-@{value} {
+  .graph-box .percent-0:after,
+  .graph-box .percent-@{value}:after {
+    -webkit-animation: bar-race 0.8s ease-in-out;
+    animation: bar-race 0.8s ease-in-out;
     width: (@value * 1%);
-    
+  }
+  .graph-box .percent-0:after {
+    width: 1px;
   }
 });
+
+.message-box {
+  padding-top: 130px;
+  background: url('/images/success.png') no-repeat center top / 100px;
+
+  &.fail {
+    color: #ecc53b;
+    background: url('/images/error.png') no-repeat center top / 100px;
+  }
+  .info-message {
+    margin-bottom: 30px;
+    font-weight: 700;
+    font-size: 20px;
+  }
+  .txt-success {
+    color: @midgreen;
+  }
+  .status-fail {
+    margin-bottom: 10px;
+  }
+}

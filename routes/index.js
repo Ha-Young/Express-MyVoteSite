@@ -20,7 +20,11 @@ router.get('/', isAuthenticated, async (req, res, next) => {
         return vote;
       });
 
-      return res.render('index', { votes: voteCollection, loginMessage: req.flash('success')[0] });
+      return res.render('index', {
+        userName: req.user.name,
+        votes: voteCollection,
+        loginMessage: req.flash('success')[0]
+      });
     });
   } catch (err) {
     console.error(err);

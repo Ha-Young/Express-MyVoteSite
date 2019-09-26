@@ -4,8 +4,13 @@
     <% include ./partials/head %>
   </head>
   <body>
-    <h1><%= message %></h1>
-    <h2><%= error.status %></h2>
-    <pre><%= error.stack %></pre>
+    <% include ./partials/header %>
+    <div class="container txt-center">
+      <div class="message-box fail">
+        <p class="info-message status-fail"><%= errorStatus %></p>
+        <p class="info-message txt-fail">Error</p>
+        <a href="/" class="btn-black">LIST</a>
+      </div>
+    </div>
   </body>
 </html>

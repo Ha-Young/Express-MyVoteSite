@@ -8,7 +8,7 @@ router.get('/', (req, res, next) => {
     Vote.find({
       user_id: req.user._id,
     })
-    .populate('user_id')
+    .populate('user_id', 'name')
     .exec((err, votes) => {
       if (err) {
         return handleError(err);
@@ -19,7 +19,11 @@ router.get('/', (req, res, next) => {
         return vote;
       });
 
-      return res.render('index', { votes: voteCollection, loginMessage: null });
+      return res.render('index', {
+        userName: req.user.name,
+        votes: voteCollection,
+        loginMessage: null
+      });
     });
   } catch (err) {
     console.log(err);
@@ -29,7 +33,14 @@ router.get('/', (req, res, next) => {
 
 router.get('/new', async (req, res, next) => {
   res.render('votings_new', {
+    userName: req.user.name,
     message: req.flash('errorMessage')[0]
+  });
+});
+
+router.get('/success', async (req, res, next) => {
+  res.render('success', {
+    userName: req.user.name
   });
 });
 
@@ -67,7 +78,7 @@ router.post('/new', async (req, res, next) => {
       options
     }).save();
 
-    res.render('success');
+    res.redirect('/votings/success');
   } catch (err) {
     console.error(err);
     next(err);
@@ -103,7 +114,7 @@ router.get('/:voteId', (req, res, next) => {
     const { _id: userId } = req.user;
 
     Vote.findById(voteId)
-    .populate('user_id')
+    .populate('user_id', 'name')
     .exec((err, vote) => {
       if (err) {
         return handleError(err);
@@ -116,10 +127,17 @@ router.get('/:voteId', (req, res, next) => {
       }
 
       const allVoteCount = vote.options.reduce((ac, cv) => ac += cv.voted_user.length, 0);
-
       vote.converted_date = convertDate(vote.expired_at);
 
-      return res.render('votings_detail', { vote, isAuthorizedUser, allVoteCount });
+      const sortedOptions = vote.options.slice().sort((l, r) => r.voted_user.length - l.voted_user.length);
+
+      return res.render('votings_detail', {
+        userName: req.user.name,
+        vote,
+        sortedOptions,
+        isAuthorizedUser,
+        allVoteCount
+      });
     });
   } catch (err) {
     console.error(err);
