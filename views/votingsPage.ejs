@@ -1,57 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>투표페이지</title>
+  <link rel='stylesheet' href='/stylesheets/header.css' />
+  <link rel='stylesheet' href='/stylesheets/mainpage.css' />
+  <link rel='stylesheet' href='/stylesheets/votingsPage.css' />
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+  <title>VC-Vote-platform</title>
 </head>
 <body>
-  <div><%= voteInfo[0].title + "에 대한 투표"%></div>
-  <ul>
+  <div class="header">
+    <div class="header-logo">
+      <img src="https://raw.githubusercontent.com/Kyounghwan01/Hyperledger-building-security-app/master/assets/icLogo.png"/>
+      <div class="title"><span><a href="/"><%= "VC-Voting" %></a></span></div>
+    </div>
+    <div class="header-info">
       <div>
-        <li class="description-context"><%= "제목 : " + voteInfo[0].title %></li>
-        <li class="description-context"><%= "생성자 : " + voteInfo[0].creator %></li>
-        <li class="description-context"><%= "만료일 : " + voteInfo[0].date %></li>
-        <% if(voteInfo[0].proceeding){ %>
-          <li class="description-context"><%= "진행중" %></li>
-          <% if(isVoted){ %>
-            <form action="/votings/<%= voteInfo[0]._id %>" method="POST">
-                <select name='optionsChoice'>
-                    <option value='' selected>-- 선택 --</option>
-                  <% for(let i =0; i<voteInfo[0].options.length; i++){%>
-                    <option value='<%= voteInfo[0].options[i]._id %>'>
-                      <%= voteInfo[0].options[i].name %>
-                    </option>
-                  <% } %>
-                </select>
-                <input type = "submit" value = "투표하기"/>
-            </form>
-          <% } else { %>
-            <div><span>이미 투표했습니다</span></div>
-          <% } %>
-        <% } else { %>
-          <li class="description-context"><%= "마감" %></li>
-          <div class="description-context"><%= "결과" %>
-            <% for(let i =0; i<winner.name.length; i++){%>
-              <li class="description-context"><%= winner.name[i] + " : " + winner.count + "득표"%></li>
-            <% } %>
-          </div>
-        <% } %>
-
-        <% if(name === voteInfo[0].creator && voteInfo[0].proceeding){ %>
-          <div>현재 투표 상황</div>
-          <% for(let i =0; i<voteInfo[0].options.length; i++){%>
-              <li>
-                <%= voteInfo[0].options[i].name + " : " + voteInfo[0].options[i].member.length + "득표"%>
-              </li>
-          <% } %>
-          <form method="POST" action="/votings/delete/<%= voteInfo[0]._id %>?_method=DELETE">
-            <input type = "submit" value = "지우기"/>
-          </form>
-        <% } %>
-        <span><a href="/#"; onClick='history.go(-1);'>목록으로</a></span>
+        <i class="fas fa-user-alt"></i>
+        <span><%= ": " + name %></span>
       </div>
-  </ul>
+      <div class="header-slider">
+        <input id="hamburger" type="checkbox" /><label for="hamburger">&equiv;</label>
+        <nav>
+          <div>메뉴</div>
+          <ul>
+            <li><a href="/votings/new">투표 생성</a></li>
+            <li><a href="/votings">내 투표</a></li>
+            <li><a href="/logout">로그아웃</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="main-container">
+    <div class="list-container"><span>V O T E</span></div>
+    <div class="vote-container">
+      <ul>
+        <div class="vote-list">
+          <li class="title"><span><%= voteInfo[0].title %></span></li>
+          <li class="description-context">
+            <span><%= "creator : " %></span>
+            <span class="description"><%= voteInfo[0].creator %></span>
+          </li>
+          <li class="description-context">
+            <span class="description"><%= deadLine[0] %></span>
+          </li>
+          <% if(voteInfo[0].proceeding){ %>
+            <li class="context proceeding"><span><%= "진행중" %></span></li>
+            <% if(!isVoted){ %>
+              <div class="already-vote"><span>이미 투표했습니다</span></div>
+            <% } %>
+          <% } else { %>
+            <li class="context proceeding-end"><span><%= "마감" %></span></li>
+            <div class="procedding-end-result"><span><%= "결과" %></span>
+              <% for(let i =0; i<winner.name.length; i++){%>
+                <li class="description-context">
+                  <p><%= winner.name[i] %></p>
+                  <p><%= " : " %></p>
+                  <p><%= winner.count + " Votes"%></p>
+                </li>
+              <% } %>
+            </div>
+          <% } %>
+        </div>
+      </ul>
+
+      <% if(voteInfo[0].proceeding){ %>
+        <div class="next-container">
+          <ul>
+            <% if(isVoted){ %>
+              <div class="option-title"><span>항목</span></div>
+              <form action="/votings/<%= voteInfo[0]._id %>" method="POST">
+                <% for(let i =0; i<voteInfo[0].options.length; i++){%>
+                  <div class="option-radio">
+                    <input type="radio" name="optionsChoice" value='<%= voteInfo[0].options[i]._id %>'><span><%= " " + voteInfo[0].options[i].name %></span><br>
+                  </div>
+                <% } %>
+                <div class="button-center">
+                  <input class="submit-button" type = "submit" value = "vote"/>
+                </div>
+              </form>
+            <% } %>
+            <% if(name === voteInfo[0].creator && voteInfo[0].proceeding){ %>
+              <div class="current-container"><span>현재 투표 상황</span></div>
+              <% for(let i =0; i<voteInfo[0].options.length; i++){%>
+                <div class="current-vote">
+                  <span><%= voteInfo[0].options[i].name + " : "%></span>
+                  <span><%= voteInfo[0].options[i].member.length + " Votes"%></span>
+                </div>
+              <% } %>
+              <form method="POST" action="/votings/delete/<%= voteInfo[0]._id %>?_method=DELETE">
+                <div class="button-center">
+                  <input type = "submit" class="delete-button" value = "지우기"/>
+                </div>
+              </form>
+            <% } %>
+          </ul>
+        </div>
+      <% } %>
+
+    </div>
+  </div>
 </body>
 </html>

@@ -15,7 +15,7 @@ router.post('/', async (req, res, next) => {
     return res.redirect('/signup');
   }
   if (req.body.password !== req.body.password2) {
-    req.flash('error', '패스워드가 같지 않습니다');
+    req.flash('error', '패스워드가 다릅니다');
     return res.redirect('/signup');
   }
   const hash = await bcrypt.hash(req.body.password, 10);

@@ -1,0 +1,107 @@
+@key-color : #6276c9;
+@font-color : #303033;
+
+.procedding-end-result {
+  text-align: center;
+  span {
+    font-size: 25px;
+    color: @key-color;
+  }
+}
+
+.main-container {
+  padding-top: 50px;
+  width: 100%;
+  background-color: rgb(244, 244, 244);
+  height: 100vh;
+}
+
+.vote-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  ul {
+    // text-align: center;
+    display: inline-block;
+  }
+}
+
+.procedding-end-result {
+  padding: 30px 0 0 0;
+  li {
+    padding: 10px 10px 0 10px;
+  }
+}
+
+.next-container {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  .option-title{
+    text-align: center;
+    margin-bottom: 10px;
+    span {
+      font-size: 20px;
+      color: @key-color;
+    }
+  }
+}
+.option-radio{
+  text-align: left;
+  padding: 10px;
+}
+
+.submit-button {
+  background: #0066a2;
+  color: white;
+  border-style: outset;
+  border-color: #0066a2;
+  height: 30px;
+  width: 80px;
+  font: bold 15px arial, sans-serif;
+  text-shadow: none;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+.delete-button{
+  background-color: rgba(232, 93, 87, 0.8);
+  border: none;
+  color: white;
+  height: 30px;
+  width: 80px;
+  font: bold 15px arial, sans-serif;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+.already-vote {
+  text-align: center;
+  padding-top: 10px;
+  span {
+    color: red;
+  }
+}
+
+.description-context p {
+  font-size: 20px;
+}
+.current-container{
+  text-align: center;
+  padding: 10px;
+  span {
+    color: @key-color;
+  }
+}
+
+.current-vote{
+  width: 100%;
+  padding: 10px;
+  span{
+    text-align: left
+  }
+}
+.button-center{
+  text-align: center;
+}

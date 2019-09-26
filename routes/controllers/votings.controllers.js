@@ -10,19 +10,19 @@ exports.getAllVoteInfo = async (req, res, next) => {
     }
 
     const allVotes = await Vote.find({});
-    let dealLine = [];
+    let deadLine = [];
 
     for (let i = 0; i < allVotes.length; i++) {
       if (allVotes[i].date < new Date()) {
         allVotes[i].proceeding = false;
       }
-      dealLine.push(moment(allVotes[i].date).format("YYYY.MM.DD HH:mm"));
+      deadLine.push(moment(allVotes[i].date).format("YYYY.MM.DD HH:mm"));
     }
 
     res.render('index', {
       name: req.user.name || req.user.username,
       allVotes: allVotes,
-      dealLine : dealLine
+      deadLine : deadLine
     });
   } catch (error) {
     if (error.name === 'CastError') {
@@ -37,11 +37,13 @@ exports.getVoteInfo = async (req, res, next) => {
   try {
     const userInfo = await User.findOne({ _id: req.user._id });
     const voteInfo = await Vote.find({ _id: req.params.id });
+    let deadLine = [];
 
     if (voteInfo) {
       if (voteInfo[0].date < new Date()) {
         voteInfo[0].proceeding = false;
       }
+      deadLine.push(moment(voteInfo[0].date).format("YYYY.MM.DD HH:mm"));
     }
 
     let result = showResult(voteInfo, userInfo);
@@ -50,6 +52,7 @@ exports.getVoteInfo = async (req, res, next) => {
       name: userInfo.name,
       voteInfo: voteInfo,
       isVoted: result[2],
+      deadLine : deadLine,
       winner: { count: result[0], name: result[1] }
     });
   } catch (error) {
@@ -64,14 +67,16 @@ exports.getVoteInfo = async (req, res, next) => {
 exports.viewMyVote = async (req, res, next) => {
   try {
     const myVotes = await Vote.find({ creator: req.user.name });
+    let deadLine = [];
 
     for (let i = 0; i < myVotes.length; i++) {
       if (myVotes[i].date < new Date()) {
         myVotes[i].proceeding = false;
       }
+      deadLine.push(moment(myVotes[i].date).format("YYYY.MM.DD HH:mm"));
     }
 
-    res.render('viewMyVote', { myVotes: myVotes });
+    res.render('viewMyVote', { myVotes: myVotes, name : req.user.name, deadLine : deadLine });
   } catch (error) {
     if (error.name === 'CastError') {
       return next();
@@ -82,7 +87,8 @@ exports.viewMyVote = async (req, res, next) => {
 };
 
 exports.viewmakeVote = async (req, res, next) => {
-  res.render('makeVote', { name: req.user.name });
+  let now = moment(new Date()).format("YYYY-MM-DDTHH:mm");
+  res.render('makeVote', { name: req.user.name, now : now});
 };
 
 exports.makeVote = async (req, res, next) => {

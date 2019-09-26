@@ -1,37 +1,118 @@
-.main-body{
-  padding-top: 50px;
-  height: 1000vh;
-  background-color: rgb(244,244,244);
+@key-color : #6276c9;
+@font-color : #303033;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
 }
-.list-container{
-  height: 100px;
+
+.main-body {
+  padding-top: 50px;
+  background-color: rgb(244, 244, 244);
+}
+.list-container {
+  height: 150px;
   width: 100%;
-  // background-image: url("https://www.skhynix.com/resource/images/common/visual_sustain_dbl.jpg");
-  background-color: grey;
-  background-size: 1000px;
+  background: url('http://www.themashabrand.com/scripts/Voting/source/admin/uploads/1517252709.jpg');
   text-align: center;
-  line-height: 100px;
-  span{
+  line-height: 150px;
+  span {
     font-size: 30px;
     font-weight: bold;
+    color: white
   }
 }
 
-.vote-container{
-  ul{
+.vote-container {
+  padding: 50px 100px 0 100px;
+  ul {
     list-style: none;
     padding: 0;
-    .vote-list{
+    li {
+      margin-bottom: 30px;
+    }
+    .vote-list {
       display: inline-block;
       margin: 40px;
-      padding: 20px;
+      padding: 30px;
       background-color: #fff;
       border-radius: 10px;
-      .title{
-        span{
-          font-size: 20px;
-          font-weight: bold;
+      .title {
+        text-align: center;
+        span {
+          font-size: 25px;
+          color: @key-color;
         }
+      }
+    }
+    .description-context {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #c7c7c9;
+      span {
+        color : @font-color;
+      }
+    }
+    .context {
+      display: flex;
+      justify-content: center;
+      padding: 3px 5px 3px 5px;
+      margin: 0 30px 10px 30px;
+      span{
+        color: white;
+      }
+    }
+    .proceeding {
+      background-color: rgba(87, 193, 205, 0.8);
+      height: 30px;
+      width: 80px;
+      line-height: 30px;
+      border-radius: 5px;
+      a{
+        text-decoration: none;
+        color : white;
+      }
+    }
+    .proceeding-end {
+      background-color: rgba(232, 93, 87, 0.8);
+      height: 30px;
+      width: 80px;
+      line-height: 30px;
+      border-radius: 5px;
+      a {
+        text-decoration: none;
+        color : white;
+      }
+    }
+  }
+}
+
+.description {
+  color: white;
+  font-size: 20px;
+}
+
+.make-success{
+  padding: 20px;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  img{
+    border-radius: 10px;
+  }
+  .go-to-list{
+    padding-top: 250px;
+    span{
+      background-color: rgb(87,193,205);
+      padding: 15px 30px 15px 30px;
+      border-radius: 10px;
+      a{
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        font-size: 15px;
       }
     }
   }

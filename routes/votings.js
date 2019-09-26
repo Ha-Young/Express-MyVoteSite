@@ -5,7 +5,7 @@ const {getAllVoteInfo, getVoteInfo, viewMyVote, viewmakeVote, makeVote, vote, de
 const { ensureGuest } = require('./middleware/auth');
 
 router.get('/success', ensureGuest, (req,res,next) => {
-  res.render('success');
+  res.render('success', {name : req.user.name});
 });
 
 router.get('/new', ensureGuest, viewmakeVote);

@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>바닐라코딩 투표 놀이 </title>
     <link rel='stylesheet' href='/stylesheets/header.css' />
     <link rel='stylesheet' href='/stylesheets/mainpage.css' />
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+    <title>VC-Vote-platform</title>
   </head>
   <body>
     <div class="header">
       <div class="header-logo">
         <img src="https://raw.githubusercontent.com/Kyounghwan01/Hyperledger-building-security-app/master/assets/icLogo.png"/>
-        <div class="title"><span><%= "투표" %></span></div>
+        <div class="title"><span><a href="/"><%= "VC-Voting" %></a></span></div>
       </div>
       <div class="header-info">
         <div>
@@ -23,7 +23,7 @@
             <div>메뉴</div>
             <ul>
               <li><a href="/votings/new">투표 생성</a></li>
-              <li><a href="/votings">내 투표로</a></li>
+              <li><a href="/votings">내 투표</a></li>
               <li><a href="/logout">로그아웃</a></li>
             </ul>
           </nav>
@@ -31,10 +31,9 @@
       </div>
     </div>
 
-
     <div class="main-body">
       <div class="list-container">
-        <span>투표목록</span>
+        <span>VC-Voting-Platform</span>
       </div>
 
       <div class="vote-container">
@@ -42,17 +41,19 @@
           <% for(let i=0; i<allVotes.length; i++ ){%>
             <div class="vote-list">
               <li class="title"><span><%= allVotes[i].title %></span></li>
-              <li class="description-context"><%= allVotes[i].creator %></li>
-              <li class="description-context"><%= dealLine[i] %></li>
+              <li class="description-context">
+                <span><%= "creator : " %></span>
+                <span class="description"><%= allVotes[i].creator %></span>
+              </li>
+              <li class="description-context">
+                <span class="description"><%= deadLine[i] %></span>
+              </li>
               <% if(allVotes[i].proceeding){ %>
-                <li class="description-context"><%= "진행중" %></li>
+                <li class="context proceeding"><span><%= "진행중" %></span></li>
+                <div class="context proceeding"><a href="/votings/<%= allVotes[i]._id%>">투표하기</a></div>
               <% } else { %>
-                <li class="description-context"><%= "마감" %></li>
-              <% } %>
-              <% if(allVotes[i].proceeding){ %>
-                <div><a href="/votings/<%= allVotes[i]._id%>">투표하기</a></div>
-              <% } else { %>
-                <div><a href="/votings/<%= allVotes[i]._id%>">결과보기</a></div>
+                <li class="context proceeding-end"><span><%= "마감" %></span></li>
+                <div class="context proceeding-end"><a href="/votings/<%= allVotes[i]._id%>">결과보기</a></div>
               <% } %>
             </div>
           <%}%>
