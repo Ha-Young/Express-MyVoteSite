@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Vote = require('../models/Vote');
-const { validateExpiryDate } = require('./middleware/validation');
+const { validateVote } = require('./middleware/validation');
 const { convertDate } = require('../utils/utils');
 
 router.get('/', (req, res, next) => {
@@ -54,7 +54,7 @@ router.get('/error', async (req, res, next) => {
   });
 });
 
-router.post('/new', validateExpiryDate, async (req, res, next) => {
+router.post('/new', validateVote, async (req, res, next) => {
   try {
     const options = req.body.options.map((option) => {
       return {

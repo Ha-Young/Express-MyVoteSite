@@ -19,7 +19,7 @@
         <% for (var i = 0; i < votes.length; i++) { %>
           <li>
             <a href="/votings/<%= votes[i]._id %>">
-              <h3 class="vote-title">
+              <h3 class="vote-title txt-over">
                 <% var isExpired = (new Date() - new Date(votes[i].expired_at) > 0); %>
                 <span class="mark-vote <%= isExpired ? 'inactive' : 'active' %>">
                   <%= isExpired ? 'OFF' : 'ON' %>

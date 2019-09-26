@@ -13,6 +13,11 @@ exports.validateUser = async (req, res, next) => {
     const EMAIL_REGEX = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     const NAME_REGEX = /^[가-힣]{2,4}|[a-zA-Z]{2,20}$/;
 
+    if (!email.trim() || !name.trim() || !password.trim()) {
+      req.flash('validationError', 'All fields are required');
+      return res.redirect("/join");
+    }
+
     if (!passwordConfirmation.trim()) {
       req.flash('validationError', 'Password confirmation required');
       return res.redirect("/join");
@@ -52,10 +57,39 @@ exports.validateUser = async (req, res, next) => {
   }
 };
 
-exports.validateExpiryDate = (req, res, next) => {
+exports.validateVote = (req, res, next) => {
   try {
+    const {
+      title,
+      expired_at,
+      options
+    } = req.body;
+
     const DATE_REGEX = /^(19|20)\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[0-1])([1-9]|[01][0-9]|2[0-3])([0-5][0-9])$/;
-    const { expired_at } = req.body;
+
+    if (!title.trim()) {
+      req.flash('validationError', 'Title required!');
+      return res.redirect('/votings/new');
+    }
+
+    const isOptionTitleExist = options.every(option => option.trim());
+
+    if (!isOptionTitleExist) {
+      req.flash('validationError', 'You must provide at least 2 options!');
+      return res.redirect('/votings/new');
+    }
+
+    if (title.trim().length > 50) {
+      req.flash('validationError', 'Maximum 50 characters are allowed for title!');
+      return res.redirect('/votings/new');
+    }
+
+    const isOptionLengthValid = options.every(option => option.trim().length <= 80);
+
+    if (!isOptionLengthValid) {
+      req.flash('validationError', 'Maximum 80 characters are allowed for options!');
+      return res.redirect('/votings/new');
+    }
 
     if (!DATE_REGEX.test(expired_at.join(''))) {
       req.flash('validationError', 'Not a valid date or time format');
