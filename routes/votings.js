@@ -19,13 +19,13 @@ router.post('/new', function(req, res, next) {
   const { title, expiration, option, description } = req.body;
   const item = [];
   for (let i = 0; i < option.length; i++) {
-    let opt = { option: option[i], voters: [] };
-    item.push(opt);
+    let optionObj = { option: option[i], voters: [] };
+    item.push(optionObj);
   }
   const newVoting = new Voting({
     title,
     description,
-    user: req.user._id,
+    creator: req.user._id,
     expiration,
     items: item
   });
