@@ -5,20 +5,20 @@ const mongoose = require('mongoose');
 
 router.get('/', function(req, res, next) {
   Voting.find()
-  .populate('creator', 'name')
-  .exec((err, voting) => {
-    res.render('my', { user: req.user, title: 'my votings', voting });
-  });
+    .populate('creator', 'name')
+    .exec((err, voting) => {
+      res.render('my', { user: req.user, title: 'my votings', voting });
+    });
 });
 
 router.delete('/:voting_id', async function(req, res, next) {
   try {
-    await Voting.findByIdAndDelete({_id: req.params.voting_id });
+    await Voting.findByIdAndDelete({ _id: req.params.voting_id });
     res.status(201).end();
   } catch (error) {
     next(err);
   }
-})
+});
 
 router.get('/new', function(req, res, next) {
   res.render('new');
@@ -67,6 +67,19 @@ router.get('/:voting_id', function(req, res, next) {
       next(err);
     }
   });
+});
+
+router.post('/:voting_id', async function(req, res, next) {
+  const voteId = req.params.voting_id;
+  const selectedOption = `items.${req.body.option}.voters`;
+  try {
+    await Voting.findByIdAndUpdate(voteId, {
+      $addToSet: { [selectedOption]: req.user._id }
+    });
+    res.render('success', { message: '투표완료' });
+  } catch (error) {
+    next(err);
+  }
 });
 
 module.exports = router;
