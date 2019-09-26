@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const lessmiddleware = require('less-middleware');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const falsh = require("connect-flash");
@@ -26,7 +27,9 @@ db.once('open', () => {
   console.log('connected to mongodb server');
 });
 
+app.use(lessmiddleware('public'));
 app.use(express.static('public'));
+
 app.use(methodOverride('_method'));
 
 app.use(bodyParser.json());
@@ -63,6 +66,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
+  console.log(err.status, err.message, err.stack);
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 

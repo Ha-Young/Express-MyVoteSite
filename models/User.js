@@ -11,8 +11,6 @@ const userSchema = new Schema({
     required: true,
     unique: true
   },
-  voted_list: [],
-  created_vote_list: [],
   password : {
     type: String
   }

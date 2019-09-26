@@ -1,39 +1,43 @@
 <!DOCTYPE html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>바닐라코딩 프로그래머스</title>
+    <link rel="stylesheet" href="/stylesheets/login.css" />
+  </head>
 	<body>
 		<div id="app" class="container">
-        <div>
-          <div style="color:red"><%= error %></div>
-          <form className="form-signin" action="/register" method="POST">
-            <h2 className="form-signin-heading">Please sign up</h2>
-            <label htmlFor="inputName" className="sr-only">
-              Name
-            </label>
-            <input
-              type="name"
-              id="inputName"
-              className="form-control"
-              placeholder="Name"
-              required
-              autoFocus
-              name="name"
-            />
-            <label htmlFor="inputPassword" className="sr-only">
-              Password
-            </label>
-            <input
-              type="text"
-              id="inputPassword"
-              className="form-control"
-              placeholder="Password"
-              required
-              name = "password"
-            />
-            <input type = "submit" value = "submit"/>
-          </form>
-          <div>
-            <span><a href="/login">Signin</a></span>
-          </div>
+      <img
+        class="logo-img"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9sIfYViz3GayTv5_1AwPN7Csv1zcGkyVyaZA521BhlWxr4a8L"/>
+      <% if(error) { %>
+        <div class="error-message"><%= error %></div>
+      <% } else { %>
+        <div class="nonerror-message"><%= "이름과 비밀번호를 입력해주세요!" %></div>
+      <% } %>
+      <form class="form-signin" action="/register" method="POST">
+        <div class="group">
+          <input type="text" required autoFocus name="name" required />
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label>Name</label>
         </div>
+        <div class="group">
+          <input type="text" required name="password" />
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label>password</label>
+        </div>
+        <div class="group">
+          <input type="text" required name="password2" />
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label>재입력 password</label>
+        </div>
+        <input type="submit" value="회원가입" />
+      </form>
+      <div class="signup"><a href="/login">로그인</a></div>
     </div>
 	</body>
 </html>

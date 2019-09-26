@@ -4,57 +4,39 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>투펴ㅛ만들기</title>
+    <link rel="stylesheet" href="/stylesheets/login.css" />
+    <title>바닐라코딩 투표 플렛폼</title>
   </head>
   <body>
-    <div>
+    <div class="container">
+      <div style="text-align: center;"><h2 className="form-signin-heading">투표 만들기</h2></div>
       <form className="form-signin" action="/votings/new" method="POST">
-        <h2 className="form-signin-heading">Please sign up</h2>
-        <label htmlFor="inputName" className="sr-only">
-          제목
-        </label>
-        <input
-          type="name"
-          id="inputName"
-          className="form-control"
-          placeholder="Name"
-          required
-          autoFocus
-          name="title"
-        />
-        <label htmlFor="inputPassword" className="sr-only">
-          마감시간
-        </label>
-        <input
-          type="datetime-local"
-          id="inputPassword"
-          className="form-control"
-          required
-          name="date"
-        />
-        <label htmlFor="inputPassword" className="sr-only">
-          요약내용
-        </label>
-        <input
-          type="text"
-          id="inputPassword"
-          className="form-control"
-          required
-          name="description"
-        />
-        <div name="creator"><%= name %></div>
-        <span>옵션 2개 이상 입력해주세요</span>
-        <div id="options-box">
-          <input type="text" name="options" placeholder="옵션" required />
-          <input type="text" name="options" placeholder="옵션" required />
+        <div class="group">
+          <input type="name" required autoFocus name="title" />
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label>투표 이름</label>
         </div>
-        <input type="submit" value="submit" />
+        <div class="group">
+          <input type="datetime-local" required name="date" />
+          <span class="highlight"></span>
+          <span class="bar"></span>
+        </div>
+
+        <div class="option-title">
+          <span>항목은 2개 이상 입력해주세요</span>
+        </div>
+        <div id="options-box">
+          <input type="text" name="options" placeholder="항목" required />
+          <input type="text" name="options" placeholder="항목" required />
+        </div>
+        <div class="button-group">
+          <div id="optionPlus"><span>항목 추가</span></div>
+          <div id="optionDel"><span>항목 제거</span></div>
+          <div style="display: inline-block"><input class="vote-submit" type="submit" value="제출" /></div>
+        </div>
+        <div class="go-to-list"><a href="/"><span>투표목록으로</span></a></div>
       </form>
-      <div>
-        <div id="optionPlus">옵션 추가 버튼</div>
-        <div id="optionDel">옵션 제거 버튼</div>
-        <span><a href="/login">Signin</a></span>
-      </div>
     </div>
 
     <script>
@@ -65,7 +47,7 @@
           var createInput = document.createElement('input');
           createInput.setAttribute('type', 'text');
           createInput.setAttribute('name', 'options');
-          createInput.setAttribute('placeholder', '옵션');
+          createInput.setAttribute('placeholder', '항목');
           createInput.setAttribute('required', '');
           optionBox.appendChild(createInput);
         }

@@ -1,21 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const {getProblemList} = require('./controllers/authenticate');
-const {getVoteInfo, viewMyVote, viewmakeVote, makeVote, vote, deleteVote} = require('./controllers/votings.controllers');
+const {getAllVoteInfo, getVoteInfo, viewMyVote, viewmakeVote, makeVote, vote, deleteVote} = require('./controllers/votings.controllers');
 
+const { ensureGuest } = require('./middleware/auth');
 
-const { ensureAuthenticated } = require('./middleware/auth');
+router.get('/success', ensureGuest, (req,res,next) => {
+  res.render('success');
+});
 
+router.get('/new', ensureGuest, viewmakeVote);
+router.post('/new', ensureGuest, makeVote ,getAllVoteInfo);
 
-router.get('/new', ensureAuthenticated, viewmakeVote);
-router.post('/new', makeVote ,getProblemList);
-
-router.get('/', ensureAuthenticated, viewMyVote);
+router.get('/', ensureGuest, viewMyVote);
 
 router.delete('/delete/:id', deleteVote);
 
-router.get('/:id', ensureAuthenticated, getVoteInfo);
-
-router.post('/:id', ensureAuthenticated, vote);
+router.get('/:id', ensureGuest, getVoteInfo);
+router.post('/:id', ensureGuest, vote);
 
 module.exports = router;

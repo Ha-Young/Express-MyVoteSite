@@ -14,6 +14,10 @@ router.post('/', async (req, res, next) => {
     req.flash('error', 'name이 중복됩니다. 다른 name을 사용하세요');
     return res.redirect('/signup');
   }
+  if (req.body.password !== req.body.password2) {
+    req.flash('error', '패스워드가 같지 않습니다');
+    return res.redirect('/signup');
+  }
   const hash = await bcrypt.hash(req.body.password, 10);
   await User.create({
     github_id: shortid.generate(),

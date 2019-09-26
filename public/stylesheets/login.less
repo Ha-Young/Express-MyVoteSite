@@ -1,0 +1,167 @@
+* {
+  box-sizing: border-box;
+}
+
+@underline : #5264ae;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 97vh;
+  align-items: center;
+  font-family: 'Roboto';
+  background-color: #fff;
+  width: 50%;
+  margin: 0 auto;
+}
+.logo-img {
+  margin-bottom: 50px;
+  border-radius: 50%;
+}
+.group {
+  position: relative;
+  margin-bottom: 45px;
+}
+input,
+.signup {
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 300px;
+  border: none;
+  border-bottom: 1px solid #757575;
+  color: @underline;
+}
+.signup {
+  margin-top: 20px;
+  text-align: center;
+  a {
+    text-decoration: none;
+    color: @underline;
+  }
+}
+
+input:focus {
+  outline: none;
+}
+.error-message {
+  color: red;
+  margin-bottom: 20px;
+}
+.nonerror-message {
+  color: @underline;
+  margin-bottom: 20px;
+}
+
+/* LABEL ======================================= */
+label {
+  color: #999;
+  font-size: 18px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+/* active state */
+input:focus ~ label,
+input:valid ~ label {
+  top: -20px;
+  font-size: 14px;
+  color: @underline;
+}
+
+/* BOTTOM BARS ================================= */
+.bar {
+  position: relative;
+  display: block;
+  width: 300px;
+}
+.bar:before,
+.bar:after {
+  content: '';
+  height: 2px;
+  width: 0;
+  bottom: 1px;
+  position: absolute;
+  background-color: @underline;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+.bar:before {
+  left: 50%;
+}
+.bar:after {
+  right: 50%;
+}
+
+/* active state */
+input:focus ~ .bar:before,
+input:focus ~ .bar:after {
+  width: 50%;
+}
+.button-group {
+  width: 100%;
+  margin-top: 30px;
+}
+
+#optionPlus,
+#optionDel,
+.vote-submit
+{
+  background-color: @underline;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 10px;
+  width: 85px;
+  text-align: center;
+  display: inline-block;
+}
+
+#optionPlus span,
+#optionDel span {
+  color: white;
+}
+
+.option-title {
+  text-align: center;
+  span {
+    color: @underline;
+    font-weight: bold;
+  }
+}
+
+.vote-submit{
+  color: white;
+}
+.go-to-list{
+  margin-top: 20px;
+  text-align: center;
+  a{
+    text-decoration: none;
+    color: @underline;
+  }
+}
+
+/* active state */
+input:focus ~ .highlight {
+  -webkit-animation: inputHighlighter 0.3s ease;
+  -moz-animation: inputHighlighter 0.3s ease;
+  animation: inputHighlighter 0.3s ease;
+}
+
+@-webkit-keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}

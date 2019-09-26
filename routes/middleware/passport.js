@@ -35,13 +35,9 @@ module.exports = function passport(passport) {
 };
 
 passport.serializeUser((user, done) => {
-  //done(null, user.id);
   done(null, user);
 });
 
 passport.deserializeUser((user, done) => {
-  // User.findOne({github_id : user})
-  //     .then(user => done(null, user))
-  //     .catch(err => done(err));
   done(null, user);
 });

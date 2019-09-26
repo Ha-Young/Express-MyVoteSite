@@ -19,10 +19,10 @@ module.exports = function passport(passport) {
             if (result) {
               return done(null, loginUser);
             } else {
-              return done(null, false, { message: 'Incorrect password.' });
+              return done(null, false, { message: '비밀번호가 틀렸습니다' });
             }
           } else {
-            return done(null, false, { message: 'Incorrect username.' });
+            return done(null, false, { message: '이름이 틀렸습니다' });
           }
         } catch (error) {
           if (error.name === 'CastError') {

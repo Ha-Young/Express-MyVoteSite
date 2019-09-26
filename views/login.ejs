@@ -1,45 +1,42 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>바닐라코딩 프로그래머스</title>
     <link rel="stylesheet" href="/stylesheets/login.css" />
   </head>
   <body>
-    <h1><a href="/login/github">git hub 로그인</h1></a>
+    <!-- <h1><a href="/login/github">git hub 로그인</h1></a> -->
+
     <div id="app" class="container">
-      <div>
-        <div style="color:red"><%= error %></div>
-        <form class="form-signin" action="/login/local" method="POST">
-          <label htmlFor="inputName" class="sr-only">
-            Name
-          </label>
-          <input
-            type="name"
-            id="inputName"
-            class="form-control"
-            placeholder="Name"
-            required
-            autoFocus
-            name="name"
-          />
-          <label htmlFor="inputPassword" class="sr-only">
-            Password
-          </label>
-          <input
-            type="password"
-            id="inputPassword"
-            class="form-control"
-            placeholder="Password"
-            required
-            name="password"
-          />
-          <input type="submit" value="submit" />
-        </form>
-      </div>
+      <img
+        class="logo-img"
+        src="data:image/png;base64,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"
+      />
+      <% if(error) { %>
+        <div class="error-message"><%= error %></div>
+      <% } else { %>
+        <div class="nonerror-message"><%= "안녕하세요!" %></div>
+      <% } %>
+      <form class="form-signin" action="/login/local" method="POST">
+        <div class="group">
+          <input type="text" required autoFocus name="name" required />
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label>Name</label>
+        </div>
+        <div class="group">
+          <input type="password" required name="password" />
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label>password</label>
+        </div>
+
+        <input type="submit" value="로그인" />
+      </form>
+      <div class="signup"><a href="/signup">회원가입</a></div>
     </div>
-    <span><a href="/signup">회원가입</a></span>
   </body>
 </html>

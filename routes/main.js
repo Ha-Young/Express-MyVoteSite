@@ -1,42 +1,32 @@
 const express = require('express');
 const router = express.Router();
-const { ensureAuthenticated } = require('./middleware/auth');
+const { ensureAuthenticated, ensureGuest } = require('./middleware/auth');
+const { getAllVoteInfo } = require('./controllers/votings.controllers');
 
 const {
-  getProblemList,
   login,
   loginGithub,
   githubCallback,
   logout,
   signup,
-  loginLocal,
+  loginLocal
 } = require('./controllers/authenticate');
 
-router.get('/', ensureAuthenticated, getProblemList);
+router.get('/', ensureAuthenticated, getAllVoteInfo);
 router.get('/signup', signup);
 router.get('/login', login);
 
-router.post('/login/local',loginLocal,
-  (req, res) => {
-    req.session.save(function() {
-      res.redirect('/');
-    });
-  }
-);
-
-// router.post('/newproblem', function (req, res, next) {
-//   const Vote = require('../models/Vote');
-//   const newVote = new Vote(req.body);
-//   console.log(newVote);
-//   newVote.save();
-//   res.send(newVote)
-// })
+router.post('/login/local', loginLocal, (req, res) => {
+  req.session.save(function() {
+    res.redirect('/');
+  });
+});
 
 router.get('/login/github', loginGithub);
 router.get('/login/github/callback', githubCallback, (req, res) => {
   res.redirect('/');
 });
 
-router.get('/logout', logout);
+router.get('/logout', ensureGuest, logout);
 
 module.exports = router;
