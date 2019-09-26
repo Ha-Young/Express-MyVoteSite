@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const authCheck = require('../middlewares/authCheck')
 
 router.get('/', authCheck, function(req, res, next) {
-  Voting.find()
+  Voting.find({ creator: req.user._id })
     .populate('creator', 'name')
     .exec((err, voting) => {
       res.render('my', { user: req.user, title: 'my votings', voting });
