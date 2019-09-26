@@ -13,20 +13,29 @@
     <p>생성자 <%= voting.author %></p>
     <p>기한 <%= voting.expiration %></p>
     <p class='status'><%= voting.isValid ? '진행중':'종료' %></p>
+    
+    <% if (voting.isValid) { %>
+      <form action='/votings/<%= voting._id %>?_method=PUT' method='POST'>
+        <ul class='options'>
+          <% for (var i = 0; i < voting.options.length; i++) {%>
+            <li>
+              <input
+                type='radio'
+                name='option'
+                id='option<%= i %>'
+                value=<%= voting.options[i]._id %>
+                <%= votedIndex === i ? 'checked' : '' %>
+                <%= isVoted ? 'disabled' : '' %>
+              >
+              <label for='option<%= i %>'><%= voting.options[i].text %></label>
+            </li>
+          <% } %>
+        </ul>
+        <input type='submit' class='submit-button' value='Submit'>
+      </form>
+    <% } %>
 
-    <form action='/votings/<%= voting._id %>?_method=PUT' method='POST'>
-      <ul class='options'>
-        <% for (var i = 0; i < voting.options.length; i++) {%>
-          <li>
-            <input type='radio' name='option' id='option<%= i %>' value=<%= voting.options[i]._id %>>
-            <label for='option<%= i %>'><%= voting.options[i].text %></label>
-          </li>
-        <% } %>
-      </ul>
-      <input type='submit' class='submit-button' value='Submit'>
-    </form>
-
-    <%if (voting.isMine) { %>
+    <% if (voting.isMine) { %>
       <form action='/votings/<%= voting._id %>?_method=DELETE' method='POST'>
         <input type='submit' class='submit-button' value='Delete'>
       </form>

@@ -33,7 +33,10 @@
       </section>
 
       <section class='home-survey-list'>
-        <h3>Survey</h3>
+        <div class="top">
+          <h3>Survey</h3>
+          <a href='/votings'>내 투표보기</a>
+        </div>
         <ul class='list'>
           <%if (votings) { %>
             <% for(var i = 0; i < votings.length; i++) {%>

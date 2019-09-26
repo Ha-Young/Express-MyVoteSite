@@ -4,7 +4,7 @@ const moment = require('moment');
 
 exports.getAll = async (req, res) => {
   try {
-    const votings = await Voting.find();
+    const votings = await Voting.find().sort({created_at: -1});
 
     const newVotings = await Promise.all(votings.map(async (voting) => {
       const newVoting = {...voting._doc};
@@ -21,7 +21,7 @@ exports.getAll = async (req, res) => {
       return newVoting;
     }));
 
-    //console.log(newVotings);
+    console.log('회원가입후', req.user);
 
     res.render('index', {
       user: req.user,
@@ -33,6 +33,31 @@ exports.getAll = async (req, res) => {
   }
 };
 
+// TODO 내 목록 불러오기
+exports.getMyVoting = async (req, res) => {
+  // TODO 1 Myvoting List 가져오기
+  const myVotings = await Voting.find({ author: req.user._id }).sort({created_at: -1});
+
+  const newVotings = await Promise.all(myVotings.map(async (voting) => {
+    const newVoting = {...voting._doc};
+    const user = await User.findOne({ _id: voting.author });
+    const currentDate = new Date();
+    const expirationDate = new Date(newVoting.expiration);
+    const isValid = currentDate.getTime() < expirationDate.getTime();
+    const newDate = moment(newVoting.expiration).format('YYYY MMM ddd, ahh:mm');
+
+    newVoting.isValid = isValid;
+    newVoting.expiration = newDate;
+    newVoting.author = user.name
+
+    return newVoting;
+  }));
+
+  res.render('votings', {
+    user: req.user,
+    votings: newVotings
+  });
+}
 
 exports.vote = async (req, res) => {
   // 여기다가 추가만 하믄 된다 'ㅁ'/
@@ -112,12 +137,16 @@ exports.saveNewVoting = async (req, res, next) => {
   }
 };
 
-
+// TODO 투표했는지 확인한다.
 exports.getVoting = async (req, res) => {
   console.log('getVoting');
   const voting = await Voting.findOne({ _id: req.params.id });
   const newVoting = {...voting._doc};
+
+  const votedIndex = voting.options.findIndex(option => option.selected_user.includes(req.user._id));
+
   const user = await User.findOne({ _id: newVoting.author });
+
   const currentDate = new Date();
   const expirationDate = new Date(newVoting.expiration);
   const isValid = currentDate.getTime() < expirationDate.getTime();
@@ -133,6 +162,8 @@ exports.getVoting = async (req, res) => {
     user: req.user,
     flashes: null,
     voting: newVoting,
+    isVoted: votedIndex >= 0,
+    votedIndex,
   });
 };
 

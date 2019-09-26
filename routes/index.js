@@ -21,13 +21,18 @@ router.post('/login',
 router.get('/logout', authController.logout);
 
 router.get('/votings/new',
-  authController.validateLogin,
+  authController.isLoggedIn,
   votingController.newVotingForm
 );
 
 router.post('/votings/new',
   votingController.validateNewVoting,
   votingController.saveNewVoting
+);
+
+router.get('/votings',
+authController.isLoggedIn,
+  votingController.getMyVoting
 );
 
 router.get('/votings/:id',

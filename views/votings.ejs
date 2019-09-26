@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <% include ./partials/head %>
+  </head>
+  <body>
+    <% include ./partials/header %>
+
+    <%if (votings.length) { %>
+      <% include ./partials/votingList %>
+    <% } else { %>
+      <p>내 투표가 없습니다. 투표를 만들어 보세요~</p>
+      <a href='/votings/new'>투표 만들기</a>
+    <% } %>
+  </body>
+</html>
