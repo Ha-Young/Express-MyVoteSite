@@ -36,7 +36,7 @@ router.get('/', (req, res, next) => {
 router.get('/new', async (req, res, next) => {
   res.render('votings_new', {
     userName: req.user.name,
-    message: req.flash('validationError')[0]
+    message: req.flash('validationError')[0] || null
   });
 });
 
@@ -49,7 +49,7 @@ router.get('/success', async (req, res, next) => {
 router.get('/error', async (req, res, next) => {
   res.render('error', {
     userName: '',
-    message: 'Internal Server Error',
+    message:  'Internal Server Error',
     errorStatus: 500
   });
 });
@@ -58,7 +58,7 @@ router.post('/new', validateExpiryDate, async (req, res, next) => {
   try {
     const options = req.body.options.map((option) => {
       return {
-        title: option,
+        title: option.toString(),
         voted_user: []
       };
     });
@@ -90,6 +90,11 @@ router.put('/vote', async (req, res, next) => {
     const { _id: userId } = req.user;
 
     const targetVote = await Vote.findById(voteId);
+
+    if (!targetVote) {
+      return res.json({ fail: '이미 삭제된 투표입니다.' });
+    }
+
     const isExpired = new Date() - new Date(targetVote.expired_at) > 0;
 
     if (isExpired) {
@@ -118,6 +123,10 @@ router.get('/:voteId', (req, res, next) => {
   try {
     const { voteId } = req.params;
     const { _id: userId } = req.user;
+
+    if (!userId) {
+      return next(err);
+    }
 
     Vote.findById(voteId)
     .populate('user_id', 'name')

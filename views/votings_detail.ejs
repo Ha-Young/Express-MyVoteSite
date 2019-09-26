@@ -112,8 +112,12 @@
 
         sendVoteApi(voteId, optionId)
           .then(function (res) {
-            if (res.fail || res.success) {
-              alert(res.fail || res.success);
+            if (res.fail) {
+              alert(res.fail);
+              window.history.back();
+            }
+            if (res.success) {
+              alert(res.success);
               location.reload();
             }
           })
