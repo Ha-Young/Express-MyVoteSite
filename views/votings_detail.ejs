@@ -36,7 +36,9 @@
               </li>
             <% } %>
           </ul>
-          <button type="submit" class="btn-main">Vote!</button>
+          <% if (!isExpired) { %>
+            <button type="submit" class="btn-main">Vote!</button>
+          <% } %>
         </form>
       </div>
       <% if (isAuthorizedUser || isExpired) { %>

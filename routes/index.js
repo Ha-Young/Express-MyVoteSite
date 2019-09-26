@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const Vote = require('../models/Vote');
-const bcrypt = require('bcrypt');
 const passport = require('passport');
 const { validateUser } = require('./middleware/validation');
 const { isAuthenticated } = require('./middleware/authentication');
@@ -23,7 +22,7 @@ router.get('/', isAuthenticated, async (req, res, next) => {
       return res.render('index', {
         userName: req.user.name,
         votes: voteCollection,
-        loginMessage: req.flash('success')[0]
+        message: req.flash('success')[0]
       });
     });
   } catch (err) {
@@ -41,8 +40,8 @@ router.get('/login', (req, res, next) => {
 router.post('/login', passport.authenticate('local', {
   successRedirect : '/',
   failureRedirect: '/login',
-  failureFlash: true,
-  successFlash: 'Welcome!'
+  successFlash: 'Welcome!',
+  failureFlash: true
 }));
 
 router.get('/logout', (req, res, next) => {
@@ -51,27 +50,14 @@ router.get('/logout', (req, res, next) => {
 });
 
 router.get('/join', (req, res, next) => {
-  res.render('join', { error: req.flash('error')[0] });
+  res.render('join', { message: req.flash('validationError')[0] });
 });
 
 router.post('/join', validateUser, async (req, res, next) => {
   try {
-    const {
-      email,
-      name,
-      password
-    } = req.body;
+    await new User(req.body).save();
 
-    const SALT_ROUNDS = 10;
-    const hash = bcrypt.hashSync(password, SALT_ROUNDS);
-
-    await new User({
-      email,
-      name,
-      password: hash
-    }).save();
-
-    req.flash('joinMessage', "You've successfully signed up!");
+    req.flash('joinMessage', 'Sign up complete!');
 
     return res.redirect("/login");
   } catch (err) {
@@ -80,7 +66,7 @@ router.post('/join', validateUser, async (req, res, next) => {
     const dbValidationError = err.errors.name || err.errors.password || err.errors.email;
 
     if (dbValidationError) {
-      req.flash('error', dbValidationError.message);
+      req.flash('validationError', dbValidationError.message);
     }
 
     return res.redirect("/join");

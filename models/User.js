@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -18,6 +19,19 @@ const userSchema = new Schema({
     trim: true,
     required: [true, 'Name required'],
     match: [/^[가-힣]{2,4}|[a-zA-Z]{2,20}$/, 'Not a valid name']
+  }
+});
+
+userSchema.pre('save', function (next) {
+  try {
+    const SALT_ROUNDS = 10;
+    const hash = bcrypt.hashSync(this.password, SALT_ROUNDS);
+
+    this.password = hash;
+    next();
+  } catch (err) {
+    console.error(err);
+    next(err);
   }
 });
 

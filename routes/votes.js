@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Vote = require('../models/Vote');
+const { validateExpiryDate } = require('./middleware/validation');
 const { convertDate } = require('../utils/utils');
 
 router.get('/', (req, res, next) => {
@@ -11,7 +12,7 @@ router.get('/', (req, res, next) => {
     .populate('user_id', 'name')
     .exec((err, votes) => {
       if (err) {
-        return handleError(err);
+        return next(err);
       }
 
       const voteCollection = votes.map(vote => {
@@ -22,7 +23,7 @@ router.get('/', (req, res, next) => {
       return res.render('index', {
         userName: req.user.name,
         votes: voteCollection,
-        loginMessage: null
+        message: null
       });
     });
   } catch (err) {
@@ -44,7 +45,7 @@ router.get('/success', async (req, res, next) => {
   });
 });
 
-router.post('/new', async (req, res, next) => {
+router.post('/new', validateExpiryDate, async (req, res, next) => {
   try {
     const options = req.body.options.map((option) => {
       return {
@@ -53,28 +54,10 @@ router.post('/new', async (req, res, next) => {
       };
     });
 
-    const DATE_REGEX = /^(19|20)\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[0-1])([1-9]|[01][0-9]|2[0-3])([0-5][0-9])$/;
-
-    let { expired_at } = req.body;
-
-    if (!DATE_REGEX.test(expired_at.join(''))) {
-      req.flash('errorMessage', 'Not a valid date or time format');
-      return res.redirect("/votings/new");
-    }
-
-    const dates = expired_at.map((date, i) => (i === 1) ? Number(date) - 1 : Number(date));
-
-    if (new Date() - new Date(...dates) > 0) {
-      req.flash('errorMessage', 'Expiry date should be greater than current date');
-      return res.redirect("/votings/new");
-    }
-
-    const isoFormat = new Date(...dates).toISOString();
-
     await new Vote({
       user_id: req.user._id,
       ...req.body,
-      expired_at: isoFormat,
+      expired_at: res.locals.isoDate,
       options
     }).save();
 
@@ -91,17 +74,24 @@ router.put('/vote', async (req, res, next) => {
     const { _id: userId } = req.user;
 
     const targetVote = await Vote.findById(voteId);
-    const hasDuplicateVote = targetVote.options.find(option => option.voted_user.indexOf(userId) > -1);
+    const isExpired = new Date() - new Date(targetVote.expired_at) > 0;
 
-    if (!hasDuplicateVote) {
-      const targetIndex = targetVote.options.findIndex(option => option._id.toString() === optionId);
-      targetVote.options[targetIndex].voted_user.push(userId);
-
-      await targetVote.save();
-      return res.json({ success: 'Voted Successfully!' });
+    if (isExpired) {
+      return res.json({ fail: 'Expired!' });
     }
 
-    return res.json({ fail: 'Already voted!' });
+    const isDuplicateVote = targetVote.options.find(option => option.voted_user.indexOf(userId) > -1);
+
+    if (isDuplicateVote) {
+      return res.json({ fail: 'Already voted!' });
+    }
+
+    const targetIndex = targetVote.options.findIndex(option => option._id.toString() === optionId);
+    targetVote.options[targetIndex].voted_user.push(userId);
+
+    await targetVote.save();
+
+    return res.json({ success: 'Voted Successfully!' });
   } catch (err) {
     console.error(err);
     next(err);
@@ -117,7 +107,7 @@ router.get('/:voteId', (req, res, next) => {
     .populate('user_id', 'name')
     .exec((err, vote) => {
       if (err) {
-        return handleError(err);
+        return next(err);
       }
 
       let isAuthorizedUser = false;

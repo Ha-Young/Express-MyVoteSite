@@ -10,27 +10,52 @@ exports.validateUser = async (req, res, next) => {
     const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
 
     if (!passwordConfirmation.trim()) {
-      req.flash('errorMessage', 'Password confirmation required');
+      req.flash('validationError', 'Password confirmation required');
       return res.redirect("/join");
     }
 
     if (password !== passwordConfirmation) {
-      req.flash('errorMessage', 'Password confirmation does not match');
+      req.flash('validationError', 'Password confirmation does not match');
       return res.redirect("/join");
     }
 
     if (!PASSWORD_REGEX.test(password)) {
-      req.flash('errorMessage', 'Not a valid password');
+      req.flash('validationError', 'Not a valid password');
       return res.redirect("/join");
     }
 
     const user = await User.findOne({ email: req.body.email });
 
     if (user) {
-      req.flash('errorMessage', 'A user already exists with this email');
+      req.flash('validationError', 'A user already exists with this email');
       return res.redirect("/join");
     }
 
+    next();
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+exports.validateExpiryDate = (req, res, next) => {
+  try {
+    const DATE_REGEX = /^(19|20)\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[0-1])([1-9]|[01][0-9]|2[0-3])([0-5][0-9])$/;
+    const { expired_at } = req.body;
+
+    if (!DATE_REGEX.test(expired_at.join(''))) {
+      req.flash('errorMessage', 'Not a valid date or time format');
+      return res.redirect("/votings/new");
+    }
+
+    const dates = expired_at.map((date, i) => (i === 1) ? Number(date) - 1 : Number(date));
+
+    if (new Date() - new Date(...dates) > 0) {
+      req.flash('errorMessage', 'Expiry date should be greater than current date');
+      return res.redirect("/votings/new");
+    }
+
+    res.locals.isoDate = new Date(...dates).toISOString();
     next();
   } catch (err) {
     console.error(err);
