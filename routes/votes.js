@@ -3,8 +3,9 @@ const router = express.Router();
 const Vote = require('../models/Vote');
 const { validateVote } = require('./middleware/validation');
 const { convertDate } = require('../utils/utils');
+const { isAuthenticated, isAuthenticatedAjax } = require('../routes/middleware/authentication');
 
-router.get('/', (req, res, next) => {
+router.get('/', isAuthenticated, (req, res, next) => {
   try {
     Vote.find({
       user_id: req.user._id,
@@ -33,20 +34,20 @@ router.get('/', (req, res, next) => {
   }
 });
 
-router.get('/new', async (req, res, next) => {
+router.get('/new', isAuthenticated, async (req, res, next) => {
   res.render('votings_new', {
     userName: req.user.name,
     message: req.flash('validationError')[0] || null
   });
 });
 
-router.get('/success', async (req, res, next) => {
+router.get('/success', isAuthenticated, async (req, res, next) => {
   res.render('success', {
     userName: ''
   });
 });
 
-router.get('/error', async (req, res, next) => {
+router.get('/error', isAuthenticated, async (req, res, next) => {
   res.render('error', {
     userName: '',
     message:  'Internal Server Error',
@@ -54,7 +55,7 @@ router.get('/error', async (req, res, next) => {
   });
 });
 
-router.post('/new', validateVote, async (req, res, next) => {
+router.post('/new', isAuthenticated, validateVote, async (req, res, next) => {
   try {
     const options = req.body.options.map((option) => {
       return {
@@ -84,7 +85,7 @@ router.post('/new', validateVote, async (req, res, next) => {
   }
 });
 
-router.put('/vote', async (req, res, next) => {
+router.put('/vote', isAuthenticatedAjax, async (req, res, next) => {
   try {
     const { voteId, optionId } = req.body;
     const { _id: userId } = req.user;
@@ -119,7 +120,7 @@ router.put('/vote', async (req, res, next) => {
   }
 });
 
-router.get('/:voteId', (req, res, next) => {
+router.get('/:voteId', isAuthenticated, (req, res, next) => {
   try {
     const { voteId } = req.params;
     const { _id: userId } = req.user;
@@ -162,7 +163,7 @@ router.get('/:voteId', (req, res, next) => {
   }
 });
 
-router.delete('/:voteId', async (req, res, next) => {
+router.delete('/:voteId', isAuthenticatedAjax, async (req, res, next) => {
   try {
     await Vote.findByIdAndDelete(req.params.voteId);
 

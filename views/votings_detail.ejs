@@ -114,7 +114,7 @@
           .then(function (res) {
             if (res.fail) {
               alert(res.fail);
-              window.history.back();
+              location.href = '/';
             }
             if (res.success) {
               alert(res.success);
@@ -132,7 +132,10 @@
         $btnDelVote.addEventListener('click', function () {
           delVoteApi(location.pathname)
             .then(function (res) {
-              console.log(res)
+              if (res.fail) {
+                alert(res.fail);
+                location.href = '/';
+              }
               if (res.success) {
                 alert(res.success);
               }
