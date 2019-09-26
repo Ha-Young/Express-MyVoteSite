@@ -32,14 +32,14 @@
             }
             const items = voting.items;%>
             <span><%= endYearMonthDate %></span>
-            <form action='/votings/submit' method='POST' id='voting-form'>
+            <form action='/votings/<%= voting_id %>/update' method='POST' id='voting-form'>
               <ul>
                 <%for(var i = 0; i < items.length; i++){%>
                 <li class='item'>
                   <label for=<%= items[i]._id %> >
                     <h2><%= items[i].text %></h2>
                   </label>
-                  <input type='radio' name='option' id=<%= items[i]._id %> value=<%= items[i].text %>>
+                  <input type='radio' name='option' id=<%= items[i]._id %> value=<%= items[i]._id %>>
                   <%if(isCreator){%>
                     <div>
                       <span>득표수 - 생성자만 볼 수 있음:</span>

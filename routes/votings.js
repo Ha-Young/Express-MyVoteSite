@@ -18,6 +18,7 @@ router.get('/', async(req, res, next) => {
   });
 });
 
+
 // votings/:id router
 router.get('/:id', async(req, res, next) => {
   const votingId = req.params.id;
@@ -26,18 +27,29 @@ router.get('/:id', async(req, res, next) => {
   const editedVoting = JSON.parse(JSON.stringify(voting._doc));
   addIsOnProgressPropertyTo(editedVoting, voting);
   res.render(('voting'), {
+    voting_id: votingId,
     user: req.user,
     voting: editedVoting,
     isCreator
   });
 });
-//ajax는 데이터를 다루고 화면을 보내주는 것은 아님 client에서..
-//ajax delete method ets vs form get/post
+
+router.post('/:id/update', async(req, res, next) => {
+  const votingId = req.url.slice(1, req.url.lastIndexOf('/'));
+  await Voting.update(
+    { '_id': votingId, 'items._id': req.body.option },
+    { $push: { 'items.$.voters': req.user._id } }
+  );
+  res.redirect('/');
+});
+
 router.delete('/:id', async(req, res, next) => {
-  console.log(req.params, '확인해보기');
-  await Voting.findByIdAndDelete({_id: req.params.id});
+  await Voting.findByIdAndDelete({
+    _id: req.params.id
+  });
   res.status(201).end();
 });
+
 
 // votings/new router
 router.get('/new', (req, res, next) => {
