@@ -3,6 +3,10 @@ const router = express.Router();
 const Voting = require('../models/Voting');
 const mongoose = require('mongoose');
 
+router.get('/', function(req, res, next) {
+  res.render('my', { user: req.user });
+});
+
 router.get('/new', function(req, res, next) {
   res.render('new');
 });
