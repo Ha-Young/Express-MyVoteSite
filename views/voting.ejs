@@ -13,7 +13,7 @@
     <p>생성자 <%= voting.author %></p>
     <p>기한 <%= voting.expiration %></p>
     <p class='status'><%= voting.isValid ? '진행중':'종료' %></p>
-    
+
     <% if (voting.isValid) { %>
       <form action='/votings/<%= voting._id %>?_method=PUT' method='POST'>
         <ul class='options'>
@@ -31,11 +31,24 @@
             </li>
           <% } %>
         </ul>
-        <input type='submit' class='submit-button' value='Submit'>
+        <% if (!isVoted) { %>
+          <input type='submit' class='submit-button' value='Submit'>
+        <% } %>
       </form>
     <% } %>
-
-    <% if (voting.isMine) { %>
+    <% if (!voting.isValid || voting.isAuthor) { %>
+      <div  class='result'>
+        <p>총 투표자 수: <%= totalVotes %></p>
+        <ul>
+          <% for (let i = 0; i < voting.options.length; i++) { %>
+            <li>
+              <span><%= voting.options[i].text %></span>
+              <span><%= voting.options[i].selected_user.length %></span>
+          <% } %>
+        </ul>
+      </div>
+    <% } %>
+    <% if (voting.isauthor) { %>
       <form action='/votings/<%= voting._id %>?_method=DELETE' method='POST'>
         <input type='submit' class='submit-button' value='Delete'>
       </form>

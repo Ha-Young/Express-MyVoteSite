@@ -48,10 +48,12 @@ router.delete('/votings/:id',
   votingController.deleteVoting
 );
 
+router.get('/votings/success',
+  votingController.RenderSuccess
+);
 
-
-/*router.get('/votings/success',
-  votingController.success
-);*/
+router.get('/votings/error',
+  votingController.RenderError
+);
 
 module.exports = router;

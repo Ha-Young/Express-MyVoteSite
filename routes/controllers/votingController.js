@@ -110,18 +110,12 @@ exports.validateNewVoting = (req, res, next) => {
 };
 
 exports.saveNewVoting = async (req, res, next) => {
-  console.log('saveNewVoting');
   const options = req.body.option.filter(el => el).map(el => {
     return ({
       text: el,
       selected_user: []
     });
   });
-
-  console.log('title', req.body.title);
-  console.log('author', req.user._id);
-  console.log('expiration', req.body.date);
-  console.log('options', options);
 
   try{
     await (new Voting({
@@ -131,32 +125,34 @@ exports.saveNewVoting = async (req, res, next) => {
       options
     })).save();
 
-    res.status(301).redirect('/');
+    res.status(301).redirect('/votings/success');
   } catch(e) {
-    next(e);
+    // TODO 에러 메시지 넣기
+    res.status(500).redirect('/votings/error');
   }
 };
 
-// TODO 투표했는지 확인한다.
 exports.getVoting = async (req, res) => {
-  console.log('getVoting');
   const voting = await Voting.findOne({ _id: req.params.id });
   const newVoting = {...voting._doc};
 
   const votedIndex = voting.options.findIndex(option => option.selected_user.includes(req.user._id));
-
+  const totalVotes = voting.options.reduce((prev, curr) => {
+    return prev + curr.selected_user.length;
+  },0);
+  console.log('totalVotes',totalVotes);
   const user = await User.findOne({ _id: newVoting.author });
 
   const currentDate = new Date();
   const expirationDate = new Date(newVoting.expiration);
   const isValid = currentDate.getTime() < expirationDate.getTime();
   const newDate = moment(newVoting.expiration).format('YYYY MMM ddd, ahh:mm');
-  const isMine = String(voting.author) === String(req.user._id);
+  const isAuthor = String(voting.author) === String(req.user._id);
 
   newVoting.expiration = newDate;
   newVoting.isValid = isValid;
   newVoting.author = user.name;
-  newVoting.isMine = isMine;
+  newVoting.isAuthor = isAuthor;
 
   res.render('voting', {
     user: req.user,
@@ -164,10 +160,15 @@ exports.getVoting = async (req, res) => {
     voting: newVoting,
     isVoted: votedIndex >= 0,
     votedIndex,
+    totalVotes,
   });
 };
 
-exports.success = (req, res, next) => {
-  
+exports.RenderSuccess = (req, res) => {
+  res.render('success', { user: req.user });
 };
 
+
+exports.RenderError = (req, res) => {
+  res.render('error', { user: req.user });
+};
