@@ -3,11 +3,15 @@ const User = require('../../models/User');
 exports.validateUser = async (req, res, next) => {
   try {
     const {
+      email,
+      name,
       password,
       password_confirm: passwordConfirmation
     } = req.body;
 
     const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
+    const EMAIL_REGEX = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    const NAME_REGEX = /^[가-힣]{2,4}|[a-zA-Z]{2,20}$/;
 
     if (!passwordConfirmation.trim()) {
       req.flash('validationError', 'Password confirmation required');
@@ -19,8 +23,18 @@ exports.validateUser = async (req, res, next) => {
       return res.redirect("/join");
     }
 
+    if (!EMAIL_REGEX.test(email)) {
+      req.flash('validationError', 'Not a valid email');
+      return res.redirect("/join");
+    }
+
     if (!PASSWORD_REGEX.test(password)) {
       req.flash('validationError', 'Not a valid password');
+      return res.redirect("/join");
+    }
+
+    if (!NAME_REGEX.test(name)) {
+      req.flash('validationError', 'Not a valid name');
       return res.redirect("/join");
     }
 
