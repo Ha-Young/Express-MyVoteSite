@@ -3,12 +3,13 @@ const { authCheck, saveSession } = require('./middlewares/auth');
 const User = require('../models/User');
 
 router.get('/', authCheck, (req, res, next) => {
-
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Welcome to Vote' });
 });
 
 router.get('/login', (req, res, next) => {
-  res.render('login', { title: 'Express' });
+  res.render('login', {
+    title: 'Welcome to Vote',
+    message: '' });
 });
 
 router.post('/login', (req, res, next) => {
@@ -16,8 +17,15 @@ router.post('/login', (req, res, next) => {
     User.authenticate(req.body.email,
       req.body.password,
       (err, user) => {
-        saveSession(err, user, req, res, next);
-        res.redirect('/');
+        if (err) {
+          res.render('login', {
+            title: 'Welcome to Vote',
+            message: 'Invalid email or password'
+          });
+        } else {
+          saveSession(err, user, req, res, next);
+          res.redirect('/');
+        }
       }
     );
   } catch(err) {

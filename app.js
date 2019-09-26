@@ -31,13 +31,6 @@ app.use('/', indexRouter);
 app.use('/signup/', signupRouter);
 app.use('/votings', votingsRouter);
 
-
-app.use((err, req, res, next) => {
-  if (err.status === 401) {
-    res.render('login', { title: 'Invalid email or wrong password' })
-  }
-});
-
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));

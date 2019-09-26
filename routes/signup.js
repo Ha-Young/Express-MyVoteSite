@@ -4,21 +4,33 @@ const email = require('email-validator');
 const User = require('../models/User');
 
 router.get('/', (req, res, next) => {
-  res.render('signup/signup', { title: 'Please signup!' });
+  res.render('signup/signup', {
+    title: 'Please Signup to Vote',
+    message: ''
+  });
 });
 
 router.post('/', async (req, res, next) => {
   try {
     if (!email.validate(req.body.email)) {
-      res.redirect('/signup/invalidEmail');
+      res.render('signup/signup', {
+        title: 'Please Signup to Vote',
+        message: 'Invalid email'
+      });
     }
     if (req.body.password !== req.body.confirmPassword) {
-      res.redirect('/signup/invalidPassword');
+      res.render('signup/signup', {
+        title: 'Please Signup to Vote',
+        message: 'Invalid password'
+      });
     }
 
     const user = await User.findOne({ email: req.body.email });
     if (user) {
-      res.status(400).send({ error: 'existing email' });
+      res.render('signup/signup', {
+        title: 'Please Signup to Vote',
+        message: 'Email already exists'
+      });
     } else {
       const newUser = new User({
         email: req.body.email,
@@ -26,29 +38,15 @@ router.post('/', async (req, res, next) => {
       });
       await newUser.save();
       saveSession(null, newUser, req, res, next);
-      res.redirect('/signup/complete');
+
+      res.status(201).render('signup/complete', {
+        title: 'Please Signup to Vote',
+        message: 'Now you are signed-up!'
+      });
     }
   } catch(err) {
     next(err);
   }
 });
 
-router.get('/complete', (req, res, next) => {
-  res.status(201).render('signup/complete', { title: 'signup complete!!' });
-});
-
-router.get('/invalidEmail', (req, res, next) => {
-  res.send('invaild email');
-});
-
-router.get('/invalidPassword', (req, res, next) => {
-  res.send('invalid password');
-});
-
 module.exports = router;
-
-// signup
-// - /signup
-// - /signup/complete
-// - /signup/invalidmail
-// - /signup/invalidpass 

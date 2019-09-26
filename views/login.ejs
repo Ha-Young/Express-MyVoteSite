@@ -1,18 +1,31 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <p>Please login </p>
-    <form action='/login' method='POST'>
-      email: <input type='text' name='email'><br>
-      password: <input type='text' name='password'><br>
-      <input type='submit' value='Submit'>
-    </form>
-    <a href='/signup/'>signup</a>
+<% include ./partials/header %>
+    <div class='smallbox-container'>
+      <div class='smallbox-contents'>
+        <form action='/login' method='POST'>
+          <div class='smallbox-contents-name'>
+            email:
+          </div>
+          <input class='smallbox-contents-box' type='text' name='email' />
+          <div class='smallbox-contents-name'>
+            password:
+          </div>
+          <input class='smallbox-contents-box' type='text' name='password' />
+          <div id='smallbox-contents-message'>
+          </div>
+          <input class='smallbox-button' type='submit' value='Login' />
+        </form>
+        <div class='smallbox-button' onClick='location.href="/signup/"' >
+          Signup
+        </div>
+      </div>
+    </div>
   </body>
+  <script>
+    var message = '<%= message %>';
+    if (message !== '') {
+      var el = document.getElementById('smallbox-contents-message');
+      el.textContent = message;
+      el.style.visibility = 'visible';
+    }
+  </script>
 </html>

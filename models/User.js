@@ -30,7 +30,7 @@ UserSchema.statics.authenticate = (email, password, callback) => {
     if (err) {
       return callback(err)
     } else if (!user) {
-      let err = new Error('Invalid email or wrong password');
+      let err = new Error('Invalid email or password');
       err.status = 401;
       return callback(err);
     }

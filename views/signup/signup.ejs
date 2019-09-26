@@ -1,19 +1,35 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <p>Please signup </p>
-    <a href='/login'>back to login</a>
-    <form action='/signup' method='POST'>
-      email: <input type='text' name='email'><br>
-      password: <input type='text' name='password'><br>
-      confirm password: <input type='text' name='confirmPassword'><br>
-      <input type='submit' value='Submit'>
-    </form>
+<% include ../partials/header %>
+    <div class='smallbox-container-signup'>
+      <div class='smallbox-contents'>
+        <form action='/signup' method='POST'>
+          <div class='smallbox-contents-name-signup'>
+            email:
+          </div>
+          <input class='smallbox-contents-box-signup' type='text' name='email' />
+          <div class='smallbox-contents-name-signup'>
+            password:
+          </div>
+          <input class='smallbox-contents-box-signup' type='text' name='password' />
+          <div class='smallbox-contents-name-signup'>
+            confirm password:
+          </div>
+          <input class='smallbox-contents-box-signup' type='text' name='confirmPassword' />
+          <div id='smallbox-contents-message'>
+          </div>
+          <input class='smallbox-button' type='submit' value='Submit' />
+        </form>
+        <div class='smallbox-button' onClick='location.href="/login"' >
+          Back to Login
+        </div>
+      </div>
+    </div>
   </body>
+  <script>
+    var message = '<%= message %>';
+    if (message !== '') {
+      var el = document.getElementById('smallbox-contents-message');
+      el.textContent = message;
+      el.style.visibility = 'visible';
+    }
+  </script>
 </html>
