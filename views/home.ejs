@@ -1,0 +1,33 @@
+<% include partials/header %>
+<% var weekday = ["일","월","화","수","목","금","토"] %>
+<div class="poll-list-container">
+  <div class="jumbotron">
+    <h1 class="display-4">Welcome <%= name %></h1>
+    <p class="lead">Your vote is your voice !</p>
+    <hr class="my-4">
+    <p>If you haven't shared your vote yet, please do!</p>
+  </div>
+
+  <div class="card-deck">
+    <% polls.forEach(function (poll) { %>
+      <a href="/polls/<%= poll._id %>">
+        <div class="card" style="width: 18rem; height: 27rem;">
+            <img
+              src="https://images2.minutemediacdn.com/image/upload/c_crop,h_1193,w_2121,x_0,y_64/f_auto,q_auto,w_1100/v1565279671/shape/mentalfloss/578211-gettyimages-542930526.jpg"
+              class="card-img-top" alt="...">
+            <div class="card-body">
+              <h6 class="card-title"><%= poll.title %></h6>
+              <p class="card-text">
+                <p class="author">By <%= poll.authorname %></p>
+                <p class="expiry-date">Poll Open Until <%= poll.expirydate %></p>
+                <p class="status"><%= poll.isOpen ? 'Open' : 'Closed' %></p>
+              </p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div>    
+      </a>
+    <% }) %>
+  </div>
+</div>

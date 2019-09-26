@@ -1,0 +1,71 @@
+<% include partials/header %>
+
+<div class="newpoll-container">
+  <form action="/polls/new" method="POST">
+
+    <div>
+      <p>Set Poll Title: </p>
+      <input type="text" name="pollTitle" placeholder="title" required>
+    </div>
+
+    <div class="expiry-container">
+      Select Expiry Date: <input type="date" name="expireDate" id="date-input" required>
+      Select Expiry Time: <input type="time" name="expireTime" id="time-input" required>
+    </div>
+
+    <div class="options-container">
+      <p>Set Poll Options:</p>
+      <i class="fas fa-plus" id="add-options-button">Options</i>
+      <div class="options-list">
+        <li class="options-list-item">
+          <input type="text" name="optionElements" required>
+        </li>
+        <li class="options-list-item">
+          <input type="text" name="optionElements" required>
+        </li>
+      </div>
+    </div>
+
+    <div>
+      <input type="submit">
+    </div>
+  </form>
+    <script>
+      document.querySelector('#add-options-button').addEventListener('click', addOptions);
+
+      let deleteOptionElements = document.querySelectorAll('.delete-option');
+
+      deleteOptionElements.forEach((deleteOptionElement) => {
+        deleteOptionElement.addEventListener('click', deleteOption);
+      })
+
+      setMinimumDateAndTime();
+
+      function addOptions() {
+        var newOption = document.createElement('li');
+        newOption.classList.add('options-list-item');
+        newOption.innerHTML = '<input type="text" name="optionElement" required> <i class="far fa-trash-alt" onclick=deleteOption(event)></i>';
+        document.querySelector('.options-list').appendChild(newOption);
+      }
+      function deleteOption(e) {
+        e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+      }
+
+      function setMinimumDateAndTime() {
+        let today = new Date(),
+          day = today.getDate(),
+          month = today.getMonth() + 1,
+          year = today.getFullYear()
+        if (day < 10) {
+          day = '0' + day
+        }
+        if (month < 10) {
+          month = '0' + month
+        }
+        today = year + '-' + month + '-' + day;
+        document.querySelector('#date-input').setAttribute('min', today);
+      }
+    </script>
+</div>
+</form>
+</div>

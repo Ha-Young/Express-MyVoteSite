@@ -1,0 +1,29 @@
+<% include partials/header %>
+
+<div class="card-deck">
+  <% if (myPollsList.length) { %>
+    <% myPollsList.forEach(function (poll) { %>
+      <a href="/polls/<%= poll._id %>">
+        <div class="card" style="width: 18rem; height: 27rem;">
+            <img
+              src="https://images2.minutemediacdn.com/image/upload/c_crop,h_1193,w_2121,x_0,y_64/f_auto,q_auto,w_1100/v1565279671/shape/mentalfloss/578211-gettyimages-542930526.jpg"
+              class="card-img-top" alt="...">
+            <div class="card-body">
+              <h6 class="card-title"><%= poll.title %></h6>
+              <p class="card-text">
+                <p class="author">By <%= poll.authorname %></p>
+                <p class="expiry-date">Poll Open Until <%= poll.expirydate %></p>
+                <p class="status"><%= poll.isOpen ? 'Open' : 'Closed' %></p>
+              </p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div>    
+      </a>
+    <% }) %>
+  <% } else { %>
+    <p> you have no polls to display</p>
+  <% } %>
+  </div>
+  
