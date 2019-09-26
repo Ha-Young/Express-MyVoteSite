@@ -5,6 +5,7 @@ const { addIsOnProgressPropertyTo } = require('../util');
 
 
 // votings router
+
 router.get('/', async(req, res, next) => {
   const myVotings = await Voting.find({ creator: req.user._id });
   const editedMyVotings = await Promise.all(await myVotings.map(async(voting) => {
@@ -19,39 +20,8 @@ router.get('/', async(req, res, next) => {
 });
 
 
-// votings/:id router
-router.get('/:id', async(req, res, next) => {
-  const votingId = req.params.id;
-  const voting = await Voting.findOne({ _id: votingId });
-  const isCreator = String(voting.creator) === String(req.user._id);
-  const editedVoting = JSON.parse(JSON.stringify(voting._doc));
-  addIsOnProgressPropertyTo(editedVoting, voting);
-  res.render(('voting'), {
-    voting_id: votingId,
-    user: req.user,
-    voting: editedVoting,
-    isCreator
-  });
-});
-
-router.post('/:id/update', async(req, res, next) => {
-  const votingId = req.url.slice(1, req.url.lastIndexOf('/'));
-  await Voting.update(
-    { '_id': votingId, 'items._id': req.body.option },
-    { $push: { 'items.$.voters': req.user._id } }
-  );
-  res.redirect('/');
-});
-
-router.delete('/:id', async(req, res, next) => {
-  await Voting.findByIdAndDelete({
-    _id: req.params.id
-  });
-  res.status(201).end();
-});
-
-
 // votings/new router
+
 router.get('/new', (req, res, next) => {
   res.render('new', {
     user: req.user,
@@ -81,6 +51,45 @@ router.post('/new', async(req, res, next) => {
     const err = new Error('Cannot create voting in DB');
     next(err);
   }
+});
+
+
+// votings/:voting_id router
+
+router.get('/:voting_id', async(req, res, next) => {
+  const voting = await Voting.find({ _id: req.params.voting_id });
+  const isCreator = String(voting.creator) === String(req.user._id);
+  const editedVoting = JSON.parse(JSON.stringify(voting[0]));
+  addIsOnProgressPropertyTo(editedVoting, voting);
+  res.render(('voting'), {
+    voting_id: req.params.voting_id,
+    user: req.user,
+    voting: editedVoting,
+    isCreator
+  });
+});
+
+router.post('/:voting_id/update', async(req, res, next) => {
+  const votingId = req.url.slice(1, req.url.lastIndexOf('/'));
+  await Voting.update(
+    {
+      '_id': votingId,
+      'items._id': req.body.option
+    },
+    {
+      $push: {
+        'items.$.voters': req.user._id
+      }
+    }
+  );
+  res.redirect('/');
+});
+
+router.delete('/:voting_id', async(req, res, next) => {
+  await Voting.findByIdAndDelete({
+    _id: req.params.voting_id
+  });
+  res.status(201).end();
 });
 
 module.exports = router;

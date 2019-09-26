@@ -6,7 +6,7 @@ $deletingButton.addEventListener('click', deleteVoting);
 
 function deleteVoting(){
   const votingId = window.location.pathname;
-  fetch(votingId, { method:'DELETE' })
+  fetch(votingId, { method: 'DELETE' })
     .then(function(response){
       if(response.ok){
         alert('Successfully deleted');

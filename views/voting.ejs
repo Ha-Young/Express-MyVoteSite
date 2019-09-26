@@ -50,22 +50,11 @@
                 <%}}%>
                 </ul>
                 <input id='submit-my-vote-button' type='submit' form='voting-form'>submit</input>
-                <input id='delete-voting-button' type='button' form='voting-form'>delete</input>
+                <input id='delete-voting-button' type='button'>delete</input>
             </form>
           </div>
         </div>
     </div>
-    <script src='/javascripts/voting.js'>
-      document.querySelector('form').setAttribute('action', 'URL');
-      document.querySelector('#delete-voting-button').addEventListener('click', deleteVoting);
-
-      // function deleteVoting(){
-      //   fetch(endpointURL, { method: 'delete' })
-      //     .then((response.ok) => {
-      //       alert('succesfully deleted');
-      //       window.location.href = '/'
-      //     })
-      // }
-    </script>
+    <script src='/javascripts/voting.js'></script>
   </body>
 </html>
