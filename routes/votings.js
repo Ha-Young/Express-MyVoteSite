@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Voting = require('../models/Voting');
 const mongoose = require('mongoose');
+const authCheck = require('../middlewares/authCheck')
 
-router.get('/', function(req, res, next) {
+router.get('/', authCheck, function(req, res, next) {
   Voting.find()
     .populate('creator', 'name')
     .exec((err, voting) => {
@@ -20,15 +21,15 @@ router.delete('/:voting_id', async function(req, res, next) {
   }
 });
 
-router.get('/new', function(req, res, next) {
+router.get('/new', authCheck, function(req, res, next) {
   res.render('new');
 });
 
-router.get('/success', function(req, res, next) {
+router.get('/success', authCheck, function(req, res, next) {
   res.render('success', { message: '투표생성성공' });
 });
 
-router.get('/error', function(req, res, next) {
+router.get('/error', authCheck, function(req, res, next) {
   res.render('error', { message: '투표생성실패' });
 });
 
@@ -56,7 +57,7 @@ router.post('/new', function(req, res, next) {
     });
 });
 
-router.get('/:voting_id', function(req, res, next) {
+router.get('/:voting_id', authCheck, function(req, res, next) {
   if (!mongoose.Types.ObjectId.isValid(req.params.voting_id)) {
     return next();
   }

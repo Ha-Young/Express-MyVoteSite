@@ -4,16 +4,8 @@ const User = require('../models/User');
 const Voting = require('../models/Voting');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
+const authCheck = require('../middlewares/authCheck')
 
-const authCheck = (req, res, next) => {
-  if (!req.isAuthenticated()) {
-    res.redirect('/login');
-  } else {
-    next();
-  }
-};
-
-/* GET home page. */
 router.get('/', authCheck, function(req, res, next) {
   Voting.find()
     .populate('creator', 'name')
