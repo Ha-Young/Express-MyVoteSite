@@ -7,8 +7,8 @@
     <% include ./partials/header %>
     <div class="container txt-center">
       <div class="message-box fail">
-        <p class="info-message status-fail"><%= errorStatus %></p>
-        <p class="info-message txt-fail">Error</p>
+        <p class="info-message status-fail"><%= errorStatus || 'Error' %></p>
+        <p class="info-message txt-fail"><%= message %></p>
         <a href="/" class="btn-black">LIST</a>
       </div>
     </div>

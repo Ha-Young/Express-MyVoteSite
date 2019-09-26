@@ -12,6 +12,7 @@ router.get('/', (req, res, next) => {
     .populate('user_id', 'name')
     .exec((err, votes) => {
       if (err) {
+        console.error(err);
         return next(err);
       }
 
@@ -35,13 +36,21 @@ router.get('/', (req, res, next) => {
 router.get('/new', async (req, res, next) => {
   res.render('votings_new', {
     userName: req.user.name,
-    message: req.flash('errorMessage')[0]
+    message: req.flash('validationError')[0]
   });
 });
 
 router.get('/success', async (req, res, next) => {
   res.render('success', {
-    userName: req.user.name
+    userName: ''
+  });
+});
+
+router.get('/error', async (req, res, next) => {
+  res.render('error', {
+    userName: '',
+    message: 'Internal Server Error',
+    errorStatus: 500
   });
 });
 
@@ -64,7 +73,14 @@ router.post('/new', validateExpiryDate, async (req, res, next) => {
     res.redirect('/votings/success');
   } catch (err) {
     console.error(err);
-    next(err);
+    const dbValidationError = err.errors.title || err.errors.expired_at;
+
+    if (dbValidationError) {
+      req.flash('validationError', dbValidationError.message);
+      return res.redirect('/votings/new');
+    }
+
+    res.redirect('/votings/error');
   }
 });
 
@@ -107,6 +123,8 @@ router.get('/:voteId', (req, res, next) => {
     .populate('user_id', 'name')
     .exec((err, vote) => {
       if (err) {
+        console.error(err);
+        err.status = 404;
         return next(err);
       }
 

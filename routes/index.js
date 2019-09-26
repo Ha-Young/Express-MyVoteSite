@@ -12,7 +12,10 @@ router.get('/', isAuthenticated, async (req, res, next) => {
     await Vote.find()
     .populate('user_id')
     .exec((err, votes) => {
-      if (err) return handleError(err);
+      if (err) {
+        console.error(err);
+        return next(err);
+      };
 
       const voteCollection = votes.map(vote => {
         vote.converted_date = convertDate(vote.expired_at);

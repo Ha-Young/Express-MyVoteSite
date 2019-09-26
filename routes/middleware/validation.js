@@ -44,15 +44,15 @@ exports.validateExpiryDate = (req, res, next) => {
     const { expired_at } = req.body;
 
     if (!DATE_REGEX.test(expired_at.join(''))) {
-      req.flash('errorMessage', 'Not a valid date or time format');
-      return res.redirect("/votings/new");
+      req.flash('validationError', 'Not a valid date or time format');
+      return res.redirect('/votings/new');
     }
 
     const dates = expired_at.map((date, i) => (i === 1) ? Number(date) - 1 : Number(date));
 
     if (new Date() - new Date(...dates) > 0) {
-      req.flash('errorMessage', 'Expiry date should be greater than current date');
-      return res.redirect("/votings/new");
+      req.flash('validationError', 'Expiry date should be greater than current date');
+      return res.redirect('/votings/new');
     }
 
     res.locals.isoDate = new Date(...dates).toISOString();
