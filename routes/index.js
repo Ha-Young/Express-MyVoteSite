@@ -20,6 +20,16 @@ router.post('/login',
 
 router.get('/logout', authController.logout);
 
+router.get('/votings/new',
+  authController.validateLogin,
+  votingController.newVotingForm
+);
+
+router.post('/votings/new',
+  votingController.validateNewVoting,
+  votingController.saveNewVoting
+);
+
 router.get('/votings/:id',
   authController.isLoggedIn,
   votingController.getVoting
@@ -28,14 +38,12 @@ router.put('/votings/:id',
   authController.isLoggedIn,
   votingController.vote
 );
+router.delete('/votings/:id',
+  authController.isLoggedIn,
+  votingController.deleteVoting
+);
 
-router.get('/votings/new',
-  votingController.newVotingForm
-);
-router.post('/votings/new',
-  votingController.validateNewVoting,
-  votingController.saveNewVoting
-);
+
 
 /*router.get('/votings/success',
   votingController.success

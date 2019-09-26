@@ -9,7 +9,6 @@
     <%if (flashes) { %>
       <p><%= flashes.error %></p>
     <% } %>
-    <div style='padding:20px'>​<%= JSON.stringify(voting, null, 2) %></div>
     <p><%= voting.title %></p>
     <p>생성자 <%= voting.author %></p>
     <p>기한 <%= voting.expiration %></p>
@@ -24,7 +23,13 @@
           </li>
         <% } %>
       </ul>
-      <input type='submit' class='submit-button'>
+      <input type='submit' class='submit-button' value='Submit'>
     </form>
 
+    <%if (voting.isMine) { %>
+      <form action='/votings/<%= voting._id %>?_method=DELETE' method='POST'>
+        <input type='submit' class='submit-button' value='Delete'>
+      </form>
+    <% } %>
+  </body>
 </html>
