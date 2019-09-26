@@ -2,20 +2,24 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/common.css' />
+    <link rel="stylesheet" href="/stylesheets/common.css" />
+    <link rel="stylesheet" href="/stylesheets/index.css" />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <div>Welcome to <%= title %></div>
-    <button class="logout-button" onClick="location.href='/logout'">Logout</button>
-    <button class="creat-button" onClick="location.href='/votings/new'">새로운 투표</button>
-    <% for(let i = 0; i < voting.length; i++) {%>
-      <li class="voting">
-        <a href="/votings/<%= voting[i].id%>">
-          <div class="title">투표타이틀 : <%= voting[i].title%></div>
-          <div class="date">유효기간: <%= voting[i].expiration%></div>
-        </a>
-      </li>
-    <%}%>
+    <%- include("partials/header") %>
+    <div class="container">
+      <div class="votings">
+        <a class="button new" href="/votings/new">NEW VOTE</a>
+        <% for(let i = 0; i < voting.length; i++) {%>
+          <li class="voting">
+            <a href="/votings/<%= voting[i].id%>">
+              <div class="title">투표타이틀 : <%= voting[i].title%></div>
+              <div class="date">유효기간: <%= voting[i].expiration%></div>
+              <div class="name">이름: <%= voting[i].creator.name%></div>
+            </a>
+          </li>
+        <%}%>
+      </div>
+    </div>
   </body>
 </html>

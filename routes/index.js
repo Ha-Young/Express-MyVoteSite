@@ -5,11 +5,21 @@ const Voting = require('../models/Voting');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
+const authCheck = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    res.redirect('/login');
+  } else {
+    next();
+  }
+};
+
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  Voting.find().then(voting => {
-    res.render('index', { title: 'Voting', voting });
-  })
+router.get('/', authCheck, function(req, res, next) {
+  Voting.find()
+    .populate('creator', 'name')
+    .exec((err, voting) => {
+      res.render('index', { user: req.user, title: 'Voting', voting });
+    });
 });
 
 router.get('/login', function(req, res, next) {
@@ -19,21 +29,21 @@ router.get('/login', function(req, res, next) {
 router.post('/login', function(req, res, next) {
   passport.authenticate('local', (err, user, info) => {
     if (user) {
-      req.login(user, function (err) {
+      req.login(user, function(err) {
         res.redirect('/');
       });
     } else {
       res.render('login', { title: 'Loign', message: info.message });
     }
   })(req, res, next);
-})
+});
 
 router.get('/logout', function(req, res, next) {
   req.logout();
   req.session.destroy();
   res.clearCookie('vanillacoding');
   res.redirect('/login');
-})
+});
 
 router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Register', message: req.flash('message') });
