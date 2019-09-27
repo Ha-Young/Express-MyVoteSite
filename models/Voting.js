@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const votingSchema = new mongoose.Schema(
   {
@@ -6,18 +6,23 @@ const votingSchema = new mongoose.Schema(
     description: { type: String },
     creator: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true
     },
     expiration: { type: String, required: true },
     items: [
       {
         option: { type: String, required: true },
-        voters: [ {type: mongoose.Schema.Types.ObjectId } ]
+        voters: [
+          {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+          }
+        ]
       }
     ]
   },
-  { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
+  { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );
 
-module.exports = mongoose.model("Voting", votingSchema);
+module.exports = mongoose.model('Voting', votingSchema);
