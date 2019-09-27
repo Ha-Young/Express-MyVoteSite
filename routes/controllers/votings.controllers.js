@@ -11,11 +11,12 @@ exports.getAllVoteInfo = async (req, res, next) => {
 
     const allVotes = await Vote.find({});
     const voteMap = await voteMapping(allVotes);
-
+    const profile = await User.find({ name: req.user.name });
     res.status(201).render('index', {
       name: req.user.name,
       voteMap: voteMap,
-      allVotes: allVotes
+      allVotes: allVotes,
+      profile_image: profile[0].profile_image
     });
   } catch (error) {
     if (error.name === 'CastError') {
@@ -71,10 +72,15 @@ exports.viewmakeVote = async (req, res) => {
 };
 
 exports.makeVote = async (req, res, next) => {
+  if (!req.body.options || !req.body.title || !req.body.date) {
+    throw new Error('투표 생성에 필요한 데이터가 없습니다.');
+  }
+
   let newOptions = [];
   for (let i = 0; i < req.body.options.length; i++) {
     newOptions.push({ name: req.body.options[i], member: [] });
   }
+
   try {
     const newVote = new Vote({
       title: req.body.title,

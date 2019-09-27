@@ -13,7 +13,7 @@
       <% } else { %>
         <div class='nonerror-message'><%= '이름과 비밀번호를 입력해주세요!' %></div>
       <% } %>
-      <form class='form-signin' action='/register' method='POST'>
+      <form class='form-signin' action='/register' method='POST' enctype="multipart/form-data">
         <div class='group'>
           <input type='text' required autoFocus name='name' required />
           <span class='highlight'></span>
@@ -25,6 +25,10 @@
           <span class='highlight'></span>
           <span class='bar'></span>
           <label class='label-login'>password</label>
+        </div>
+        <div class='group'>
+          <input type='file' name='file' id="file" />
+          <label class='label-login' for="file">프로필 업로드</label>
         </div>
         <div class='group'>
           <input type='text' required name='password2' />
