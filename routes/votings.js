@@ -3,7 +3,7 @@ const router = express.Router();
 const Voting = require('../models/Voting');
 const { addIsOnProgressPropertyTo, switchIdToName } = require('../util');
 
-// votings router
+// My Votings router
 
 router.get('/', async (req, res, next) => {
   const myVotings = await Voting.find({ creator: req.user._id });
@@ -20,7 +20,7 @@ router.get('/', async (req, res, next) => {
   });
 });
 
-// votings/new router
+// New router
 
 router.get('/new', (req, res, next) => {
   res.render('new', {
@@ -54,7 +54,7 @@ router.post('/new', async (req, res, next) => {
 });
 
 
-// votings/:voting_id router
+// One voting router
 
 router.get('/:voting_id', async (req, res, next) => {
   const voting = await Voting.find({ _id: req.params.voting_id });
