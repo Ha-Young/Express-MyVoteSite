@@ -4,7 +4,7 @@ const { isLoggedIn } = require('./middlewares');
 const Voting = require('../models/Voting');
 const User = require('../models/User');
 const { koLocale } = require('date-fns/locale/ko');
-var format = require('date-fns/format');
+const format = require('date-fns/format');
 
 /* GET home page. */
 router.get('/', isLoggedIn, async (req, res, next) => {
