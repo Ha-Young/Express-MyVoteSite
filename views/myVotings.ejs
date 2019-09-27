@@ -2,7 +2,7 @@
 <html>
   <head>
     <% include ./partial/head %>
-    <link rel='stylesheet' href='/stylesheets/main.css' />
+    <link rel="stylesheet" href="/stylesheets/main.css" />
   </head>
   <body>
     <% include ./partial/header %>
@@ -25,7 +25,7 @@
                   <%= vote.created_by.name %>
                 </div>
                 <div class="content-status">
-                  <% if (vote.status === 'INPROGRESS') { %>
+                  <% if (vote.status === "INPROGRESS") { %>
                     <i class="fas fa-play">In Progress</i>
                   <% } else { %>
                     <i class="fas fa-stop">Expired</i>

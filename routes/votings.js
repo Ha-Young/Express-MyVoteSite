@@ -8,7 +8,8 @@ router.get('/new', authorizeUser, votingController.renderVotingForm);
 router.post('/new',
   authorizeUser,
   votingController.validateSelections,
-  votingController.createVoting);
+  votingController.createVoting
+);
 
 router.get('/success', authorizeUser, votingController.renderCreateSuccess);
 router.get('/error', votingController.renderCreateError);

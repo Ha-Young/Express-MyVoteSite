@@ -3,8 +3,8 @@
   var $addButton = document.querySelector('.selection-add-btn');
   var $removeButton = document.querySelector('.selection-remove-btn');
 
-  $addButton.addEventListener('click', function(e) {
-    e.preventDefault();
+  $addButton.addEventListener('click', function(event) {
+    event.preventDefault();
 
     var $newSelection = document.createElement('div');
     var $newInput = document.createElement('input');
@@ -19,8 +19,8 @@
     $selectionList.appendChild($newSelection);
   });
 
-  $removeButton.addEventListener('click', function(e) {
-    e.preventDefault();
+  $removeButton.addEventListener('click', function(event) {
+    event.preventDefault();
     var $selections = document.querySelectorAll('.selection');
     if ($selections.length < 3) {
       return;

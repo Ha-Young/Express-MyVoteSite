@@ -2,7 +2,7 @@
 <html>
   <head>
     <% include ./partial/head %>
-    <link rel='stylesheet' href='/stylesheets/voting.css' />
+    <link rel="stylesheet" href="/stylesheets/voting.css" />
   </head>
   <body>
     <% include ./partial/header %>
@@ -25,7 +25,7 @@
           <span>Created by <%= voting.created_by.name %></span>
         </div>
         <div class="voting-status">
-            <% if (voting.status === 'INPROGRESS') { %>
+            <% if (voting.status === "INPROGRESS") { %>
               <i class="fas fa-play">In Progress</i>
             <% } else { %>
               <i class="fas fa-stop">Expired</i>
@@ -63,7 +63,7 @@
               <% if (hasVoted) { %>
                 제출이 완료되었습니다.
                 <input type="submit" class="vote-submit-button submit-disabled" disabled></input>
-              <% } else if (voting.status === 'EXPIRED'){ %>
+              <% } else if (voting.status === "EXPIRED"){ %>
                 만료된 투표입니다.
                 <input type="submit" class="vote-submit-button submit-disabled" disabled></input>
               <% } else { %>
@@ -82,12 +82,12 @@
             <% voting.selections.forEach(function(selection){ %>
               <% if (!winner) { %>
                 <div class="result-wrap">
-              <% } else if ((voting.status === 'EXPIRED' || isCreator) && selection._id.toString() === winner._id.toString()) { %>
+              <% } else if ((voting.status === "EXPIRED" || isCreator) && selection._id.toString() === winner._id.toString()) { %>
                 <div class="result-wrap winner">
               <% } else { %>
                 <div class="result-wrap ">
               <% } %>
-                <% if (voting.status === 'EXPIRED' || isCreator) { %>
+                <% if (voting.status === "EXPIRED" || isCreator) { %>
                   <div class="vote-result-name">
                     <%= selection.name %>
                   </div>
