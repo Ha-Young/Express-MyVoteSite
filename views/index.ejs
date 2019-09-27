@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vote</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+    <%- include('./partials/header') %>
+
+    <div class='title'>poll straw</div>
+    <div class='buttons-container'>
+      <a href='/votings/new' target="_self">
+        <button class='voting-create-button'>투표생성</button>
+      </a>
+      <a href='/votings' target="_self">
+        <button class='voting-create-button'>내투표보기</button>
+      </a>
+    </div>
+    <div class='voting-body'>
+      <ul class='votings-list'>
+        <% votings.forEach((voting) => { %>
+          <li class='voting-list'>
+            <div class='voting-title-div'><%= voting.title %></div>
+            <div class="votings-description">
+              작성자: <%= voting.creator %></br>
+              완료예정일: <%= voting.completeDate %></br>
+              <% if(todayDate > voting.complete_at ){ %>
+                <span>마감</span>
+              <%} else {%>
+                <span>진행중</span>
+                <%}%>
+                
+            </div>
+            <div class='to-voting-div'><a  href='/votings/<%=voting._id%>' target='_self'><button class='to-voting-button'>투표하기</button></a></div>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+</body>
+
+</html>

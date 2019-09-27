@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vote</title>
+  <link rel="stylesheet" href="/stylesheets/createvote.css" />
+</head>
+
+<body>
+    <%- include("./partials/header") %>
+    <div class='title'>투표생성하기</div>
+    <div class='options-body'>
+        <button class="add-option-button">+</button>
+    <div class="options-container">
+    <form name="option-form" method="post" action="/votings/new">
+    <div class="option-title-div"><input class="option-title-input" name="title" placeholder="제목을 입력해주세요 :)" required>
+    </div>
+    <div id="option-list">
+    <div class="option-div">
+        <input class="option-default-input" name="options" placeholder="항목을 입력해주세요 :D" required>
+    </div>
+    <div class="option-div">
+        <input class="option-default-input" name="options" placeholder="항목을 입력해주세요 :D" required>
+    </div>
+    </div>
+    <div class="option-div">
+        <input class="option-default-input" name="date" type="datetime-local" min="<%= date%>" value="<%= date%>" required>
+    </div>
+    </div>
+    <button class="submit-button" type="submit">제출하기</button>
+</form>
+</div>
+<script src="/javascripts/voting.js"></script>
+</body>
+
+</html>

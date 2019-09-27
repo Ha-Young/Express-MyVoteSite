@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Login</title>
+    <link rel='stylesheet' href='/stylesheets/login.css' />
+  </head>
+  
+  <body>
+    <form class='login-form' name="login-form" method="POST" action="/auth/login">
+      <div class='login-table'>
+ 
+        
+        <div class='login-title'>로그인</div>
+        <div class='login-box'>
+        <div class='login-id-pw'>이메일  <span class="star">  *</span></div>
+        <input class="login-input" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" name="email">
+        <div class='login-id-pw'>비밀번호  <span class="star">  *</span></div>
+        <input class="login-input" type="password" name="password"></br>
+        <div class="login-button-div"><button class="login-button" type="submit">로그인 하기</button></div>
+        <div class="login-button-div"><a href='/auth/kakao' target='_self'>
+          <div class="kakao-login-div">
+          <span class='kakao-login-span'>kakao 로그인</span>
+          <img class='kakaoImg' src='https://upload.wikimedia.org/wikipedia/commons/e/e3/KakaoTalk_logo.svg'></a>
+        </div>
+        <span class="join-description">아직 계정이 없으신가요?</span> <a class="join-link" href="/join" target="_self">계정만들기</a>
+      </div>
+      </div>
+    </form>
+  </body>
+  
+  </html>

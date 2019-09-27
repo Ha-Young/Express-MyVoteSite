@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Login</title>
+    <link rel='stylesheet' href='/stylesheets/voting.css' />
+  </head>
+
+<body>
+        <%- include("./partials/header") %>
+        <div class="title"><%= title%></div>
+        <div class='voting-body'>
+         <div class='voting-description-div'><span>작성자: <%= author%></span><span>완료예정일</span></div>
+        <div class='voting-container'>
+        <form class='voting-form' method='POST' action='/votings/<%= path%>'>
+                <% options.forEach((option, index) => { %>
+                    <div class="option-div">
+                           <input class='option-input' type='radio' name='option' value='<%= index%>'>
+                            <label for='option_name'><%= option.content %></label>
+                    </div>
+                <% }) %>
+        <div class='voting-summit-div'>
+        <%if(!wasVoting && !wasCompleted){%>
+            <input type='submit' value='투표하기' class='voting-summit-button'>
+        <%}else{%>
+        <%}%>
+        </form>
+    </div>
+    </div>
+    </div>
+</div>
+
+<div class="buttons-container">
+    <% console.log(wasCompleted, isAuthor)%>
+<%if(wasCompleted || isAuthor){%>
+    <div class='button-container'><a href='/votings/result/<%=path%>'><button class='to-result-button'>결과보기</button></a></div>
+    <%}else{%>
+    <div class='button-container'><button class='to-result-button not-active-button'>결과보기</button></div>
+<%}%>
+
+<%if(isAuthor){%>
+    <div class='button-container'>
+    <form method="POST" action="/votings/<%= path%>?_method=DELETE">
+        <button type="submit" class='to-delete-button'>삭제하기</button>
+    </form>
+</div>
+    <%}else{%>
+        <div class='button-container'>
+    <button class='to-delete-button not-active-button'>삭제하기</button>
+        </div>
+<%}%>
+
+</div>
+    
+</body>
+</html>
+

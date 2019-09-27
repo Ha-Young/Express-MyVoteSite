@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>vote</title>
+    <link rel="stylesheet" href="/stylesheets/uservoting.css" />
+  </head>
+
+  <body>
+    <%- include('./partials/header') %>
+
+    <div class="title">poll straw</div>
+    <div class="buttons-container">
+      <a href="/votings/new" target="_self">
+        <button class="voting-create-button">투표생성</button>
+      </a>
+      <a href="/" target="_self">
+        <button class="voting-create-button">홈으로</button>
+      </a>
+    </div>
+    <div class="voting-body">
+      <ul class="votings-list">
+        <% votings.forEach((voting) => { %>
+        <li class="voting-list">
+          <div class="voting-title-div"><%= voting.title %></div>
+          <div class="votings-description">
+            작성자: <%= creator%>
+          </div>
+          <div class="to-voting-div">
+            <a href="/votings/<%=voting._id%>" target="_self"
+              ><button class="to-voting-button">투표하기</button></a
+            >
+          </div>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+  </body>
+</html>
