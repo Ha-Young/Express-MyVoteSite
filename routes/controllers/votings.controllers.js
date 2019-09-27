@@ -12,6 +12,7 @@ exports.getAllVoteInfo = async (req, res, next) => {
     const allVotes = await Vote.find({});
     const voteMap = await voteMapping(allVotes);
     const profile = await User.find({ name: req.user.name });
+
     res.status(201).render('index', {
       name: req.user.name,
       voteMap: voteMap,
@@ -53,10 +54,7 @@ exports.viewMyVote = async (req, res, next) => {
   try {
     const myVotes = await Vote.find({ creator: req.user._id });
     const voteMap = await voteMapping(myVotes);
-
-    res
-      .status(201)
-      .render('viewMyVote', { voteMap: voteMap, name: req.user.name });
+    res.status(201).render('viewMyVote', { voteMap: voteMap, name: req.user.name });
   } catch (error) {
     if (error.name === 'CastError') {
       return next();
