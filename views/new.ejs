@@ -36,7 +36,8 @@
   </form>
 
   <script>
-    const dateInit = new Date().toISOString().slice(0, 16);
+    const tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    const dateInit = (new Date(Date.now() - tzoffset)).toISOString().slice(0, 16);
     const $setDate = document.querySelector('.setDate');
     const $ul = document.querySelector('.options-list');
     const $addOption = document.querySelector('.add-option');
