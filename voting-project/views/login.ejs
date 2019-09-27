@@ -2,15 +2,18 @@
 <html>
   <head>
     <title>vote platform</title>
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Roboto&display=swap" rel="stylesheet">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/login.css' />
+    <link
+      href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/login.css" />
   </head>
   <body>
     <div class="main-wrapper">
       <div class="main">
         <div>
-          <div>  
+          <div>
             <div class="login-register-header">
               <div class="login-text-wrapper">
                 <p class="login-text">로그인</p>
@@ -24,24 +27,38 @@
             <div style="color:red"><%= error %></div>
             <div class="email-wrapper">
               <form action="/login" method="POST">
-                <label class="email-text" >이메일을 입력하세요</label><br>
-                <input class="input-email-form" type="text" name="username" placeholder="example@gmail.com"/>
-                <br>
-                <label class="email-text" >비밀번호를 입력하세요 (6자 이상)</label><br>
-                <input class="input-email-form" type="password" name="password" placeholder="ex)12abc34"/>
+                <label class="email-text">이메일을 입력하세요</label><br />
+                <input
+                  class="input-email-form"
+                  type="text"
+                  name="username"
+                  placeholder="example@gmail.com"
+                />
+                <br />
+                <label class="email-text"
+                  >비밀번호를 입력하세요 (6자 이상)</label
+                ><br />
+                <input
+                  class="input-email-form"
+                  type="password"
+                  name="password"
+                  placeholder="ex)12abc34"
+                />
                 <div class="input-email-btn-wrapper">
-                    <button class="input-email-btn" type="submit">이메일로 로그인하기</button>
+                  <button class="input-email-btn" type="submit">
+                    이메일로 로그인하기
+                  </button>
                 </div>
               </form>
             </div>
             <div class="sns-border">
-                <div class="sns-border-text">SNS계정으로 시작하기</div>
+              <div class="sns-border-text">SNS계정으로 시작하기</div>
             </div>
             <div class="input-google-wrapper">
-               <a class="input-google-text" href="/login/google">
-                <img class="google-logo" src="/images/Google-Plus-icon.png"/>
+              <a class="input-google-text" href="/login/google">
+                <img class="google-logo" src="/images/Google-Plus-icon.png" />
                 구글로 시작하기
-              </a>    
+              </a>
             </div>
           </div>
         </div>

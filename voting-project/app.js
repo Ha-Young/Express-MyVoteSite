@@ -7,7 +7,7 @@ var session = require("express-session");
 var FileStore = require("session-file-store")(session);
 var methodOverride = require("method-override");
 var flash = require("connect-flash");
-var lessMiddleware = require('less-middleware');
+var lessMiddleware = require("less-middleware");
 require("dotenv").config();
 
 var connect = require("./schemas");
@@ -16,7 +16,7 @@ var app = express();
 connect();
 
 // view engine setup
-app.use(lessMiddleware(__dirname + '/public'));
+app.use(lessMiddleware(__dirname + "/public"));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
