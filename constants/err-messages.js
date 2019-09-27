@@ -7,3 +7,4 @@ exports.incorrectName = 'Incorrect username.';
 exports.userNotFound = 'User Not Found';
 exports.failedToCreate = 'Failed to create a new vote';
 exports.deletedVote = 'The vote is deleted';
+exports.invalidOption = 'Invalid option';

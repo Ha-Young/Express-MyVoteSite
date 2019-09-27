@@ -1,6 +1,6 @@
 const Vote = require('../../models/Vote');
 const dateFormat = require('dateformat');
-const { failedToCreate } = require('../../constants/err-messages');
+const { failedToCreate, invalidOption } = require('../../constants/err-messages');
 
 exports.getAll = async function(req, res, next) {
   try {
@@ -56,6 +56,10 @@ exports.update = async function(req, res, next) {
     const vote = await Vote.findById(req.params.id);
     const selectedOption = vote.options.find(option => option.id === req.body.option_id);
 
+    if (!selectedOption) {
+      return next(invalidOption);
+    }
+
     selectedOption.count.push(req.user._id);
     await vote.save();
 
@@ -91,7 +95,10 @@ exports.delete = async function(req, res, next) {
 };
 
 exports.typeForm = function(req, res) {
-  res.render('create-vote');
+  const tomorrow = new Date().setDate(new Date().getDate() + 1);
+  const minTime = dateFormat(tomorrow, "yyyy-mm-dd'T'HH:00");
+
+  res.render('create-vote', { minTime });
 };
 
 exports.success = function(req, res) {
