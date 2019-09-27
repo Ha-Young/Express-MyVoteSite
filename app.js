@@ -39,7 +39,7 @@ app.use(methodOverride('_method'));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.use(session({
-  maxAge:  7 * 24 * 60 * 60,
+  maxAge: 7 * 24 * 60 * 60 * 1000,
   secret: process.env.COOKIE_SECRET,
   resave: false,
   saveUninitialized: false,
