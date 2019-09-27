@@ -21,6 +21,14 @@ const renderSuccess = (req, res, next) => {
 };
 
 const handleDeletePoll = async (req, res, next) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.poll_id)) {
+    try {
+      throw new Error('Poll Not Found');
+    } catch (error) {
+      error.status = 404;
+      return next(error);
+    }
+  }
   try {
     const deletedPoll = await Poll.findByIdAndDelete(req.params.poll_id);
     if (deletedPoll) {
@@ -34,6 +42,17 @@ const handleDeletePoll = async (req, res, next) => {
 };
 
 const handleVoteSubmit = async (req, res, next) => {
+  if (
+    !mongoose.Types.ObjectId.isValid(req.body.optionID) ||
+    !mongoose.Types.ObjectId.isValid(req.user._id)
+  ) {
+    try {
+      throw new Error('Option / User Not Found');
+    } catch (error) {
+      error.status = 404;
+      return next(error);
+    }
+  }
   try {
     const reqOptionID = req.body.optionID;
     const promisePollDoc = Poll.findOne({ 'options._id': reqOptionID });
@@ -66,9 +85,12 @@ const handleVoteSubmit = async (req, res, next) => {
 };
 
 const handleGetPoll = async (req, res, next) => {
-  if (!mongoose.Types.ObjectId.isValid(req.params.poll_id)) {
+  if (
+    !mongoose.Types.ObjectId.isValid(req.params.poll_id) ||
+    !mongoose.Types.ObjectId.isValid(req.user._id)
+  ) {
     try {
-      throw new Error('Poll Not Found');
+      throw new Error('Poll / User Not Found');
     } catch (error) {
       error.status = 404;
       return next(error);

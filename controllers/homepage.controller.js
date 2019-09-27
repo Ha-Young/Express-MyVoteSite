@@ -3,7 +3,7 @@ const { isOpenPoll, formatDateTimeDisplay } = require('../helpers');
 
 const handleGetHomepage = async (req, res, next) => {
   try {
-    var pollDocs = await Poll.find({});
+    const pollDocs = await Poll.find({});
 
     pollDocs.forEach(pollDoc => {
       pollDoc.isOpen = isOpenPoll(pollDoc.expirydate);
