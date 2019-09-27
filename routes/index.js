@@ -62,7 +62,7 @@ router.post('/join', validateUser, async (req, res, next) => {
 
     const error = newUser.validateSync();
 
-    if (error.name === 'ValidationError') {
+    if (error && error.name === 'ValidationError') {
       const errorObj = error.errors.name
         || error.errors.password
         || error.errors.email;

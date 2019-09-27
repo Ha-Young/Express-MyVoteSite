@@ -73,7 +73,7 @@ router.post('/new', isAuthenticated, validateVote, async (req, res, next) => {
 
     const error = newVote.validateSync();
 
-    if (error.name === 'ValidationError') {
+    if (error && error.name === 'ValidationError') {
       const errorObj = error.errors.title || error.errors.expired_at;
       const errorMessage = errorObj ? errorObj.message : '투표 생성에 실패하였습니다.';
 
