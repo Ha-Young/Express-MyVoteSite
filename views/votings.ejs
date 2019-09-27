@@ -6,28 +6,30 @@
     <link rel='stylesheet' href='/stylesheets/votings.css' />
   </head>
   <body>
-    <div class='navbar'>
+    <div class='navbar-wrapper'>
       <%-include('navbar')%>
     </div>
-    <div class='main-section'>
-      <div class='header'>
-        <h1>My Votings</h1>
-      </div>
-      <div class='item-section'>
+    <div class='main-container'>
+      <div>
+        <div class='header'>
+          <h1>My Votings</h1>
+        </div>
         <ul class='voting-list'>
           <%if(votings){
             for(var i = 0; i < votings.length; i++){
               var progressClass;
-              var endTime = new Date(votings[i].end_at);
-              var createTime = new Date(votings[i].created_at);
-              var endYearMonthDate = [endTime.getFullYear(), endTime.getMonth(), endTime.getDate()].join('/'
-              );
-              var createTime = [createTime.getFullYear(), createTime.getMonth(), createTime.getDate()].join('/'
-              );
+              var endYearMonthDate;
+              var createTime;
+              function toYYYYMMDD(time){
+                var formedTime = new Date(time);
+                return timeString = [formedTime.getFullYear(), formedTime.getMonth() + 1, formedTime.getDate()].join('/');
+              }
+              endYearMonthDate = toYYYYMMDD(votings[i].end_at);
+              createTime = toYYYYMMDD(votings[i].created_at);
               if(votings[i].isOnProgress){
-                progressClass = 'ingColor';
+                progressClass = 'coloredOn';
               }else{
-                progressClass = 'endColor';
+                progressClass = 'coloredOff';
               }%>
               <li class='voting <%=progressClass%>'>
                 <a href='/votings/<%=votings[i]._id %>'>

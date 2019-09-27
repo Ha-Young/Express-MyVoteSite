@@ -1,88 +1,85 @@
-@ingColor: red;
-@endColor: gray;
-
+@ingColor: #1ad5b7;
+@endColor: #808080;
 @red: #f13a51;
 @darkred: #d93449;
 
-.navbar {
-  padding-left: 20px;
-}
-
 .main-section {
-  display: flex;
-  flex-wrap: wrap;
-  height: 100vh;
+  height: 50vh;
+  color: #fff;
 }
 
-.endColor{
-  background-color: @endColor;
-}
-
-.ingColor{
-  background-color: @ingColor;
-}
-
-.header {
-  width: 100%;
-  border-bottom: 1px solid #2a42ac44;
-  text-align: center;
-  background-color: @red;
-  color: white;
-}
-
-.info-section {
-  width: 30%;
-  height: calc(100vh - 230px);
-  padding: 30px;
-}
-
-.info-wrapper {
-  background-color: #2a42ac44;
-  border-radius: 3px;
+.main-section .header {
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  background-image: url('../images/background.jpg');
 }
 
-.level-list {
-  margin: 30px;
-  padding: 10px;
-  color: #4164fb;
-  list-style: none;
+.main-section .title {
+  margin-bottom: 30px;
+  width: 100%;
 }
 
-.level-list li {
-  display: inline-block;
-}
-
-.level-style {
-  color: #4164fb;
-  border: 3px solid #4164fb;
-  border-radius: 3px;
-  padding: 0 10px;
-  margin-left: 5px;
-}
-
-.item-section {
-  width: 60%;
-  height: calc(100vh - 230px);
-}
-
-.problem-list {
-  list-style: none;
+.voting-list {
   padding-inline-start: 0;
   padding: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
 }
 
-.problem-list .problem {
+.voting-list li {
+  width: 350px;
+  margin: 0 30px;
+  padding: 10px;
+  border-radius: 3px;
   border-bottom: 1px solid #2a42ac44;
-  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.head-voting-info {
+  margin-bottom: 30px;
+}
+
+.coloredOn {
+  color: @ingColor;
+}
+
+.coloredOff {
+  color: @endColor;
+}
+
+.creator-wrapper,
+.created-at-wrapper {
+  text-align: right;
 }
 
 .type {
-  color: #2a42ac44;
-  font-size: 16px;
+  color: #c4c4c6;
 }
 
-.problem:hover{
-  background-color: rgba(65,99,251,.1);
+.margin-left {
+  margin-left: 20px;
+}
+
+.button-wrapper {
+  width: 500px;
+  height: 80px;
+}
+
+.button-wrapper .button-style {
+  padding: 10px 30px;
+  margin: 10px;
+  border: 1px solid #fff;
+  border-radius: 30px;
+  color: #fff !important;
+}
+
+.button-wrapper .button-style:hover {
+  background-color: #fff;
+  color: @red !important;
 }

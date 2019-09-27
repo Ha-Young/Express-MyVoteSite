@@ -1,60 +1,62 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Votings</title>
+    <title>VOTINGS</title>
     <link rel='stylesheet' href='/stylesheets/common.css' />
     <link rel='stylesheet' href='/stylesheets/home.css' />
   </head>
   <body>
-    <div class='navbar'>
+    <div class='navbar-wrapper'>
       <%-include('navbar')%>
     </div>
     <div class='main-section'>
       <div class='header'>
-        <h1>VOTINGS</h1>
-        <h2>투표 전쟁이 일어난다. 모든 대원들, 투표 준비!</h2>
-      </div>
+        <div class='title'>
+          <h1>Voting Platform</h1>
+          <h2>자유롭게 '투표하기' 를 만들어 투표하세요</h2>
+        </div>
+        <div class='button-wrapper'>
+          <a class='button-style' href='/votings/new'>CREATE NEW</a>
+          <a class='button-style' href='/votings'>MY VOTINGS</a>
+        </div><!--button-wrapper-->
+      </div><!--header-->
       <div class='item-section'>
         <ul class='voting-list'>
           <%if(votings){
             for(var i = 0; i < votings.length; i++){
               var progressClass;
-              var endTime = new Date(votings[i].end_at);
-              var createTime = new Date(votings[i].created_at);
-              var endYearMonthDate = [endTime.getFullYear(), endTime.getMonth(), endTime.getDate()].join('/'
-              );
-              var createTime = [createTime.getFullYear(), createTime.getMonth(), createTime.getDate()].join('/'
-              );
+              var endYearMonthDate;
+              var createTime;
+              function toYYYYMMDD(time){
+                var formedTime = new Date(time);
+                return timeString = [formedTime.getFullYear(), formedTime.getMonth() + 1, formedTime.getDate()].join('/');
+              }
+              endYearMonthDate = toYYYYMMDD(votings[i].end_at);
+              createTime = toYYYYMMDD(votings[i].created_at);
               if(votings[i].isOnProgress){
-                progressClass = 'ingColor';
+                progressClass = 'coloredOn';
               }else{
-                progressClass = 'endColor';
+                progressClass = 'coloredOff';
               }%>
-              <li class='voting <%=progressClass%>'>
-                <a href='/votings/<%=votings[i]._id %>'>
-                  <p>
-                    <span>EXPIRATION DATE</span>
-                    <span><%= endYearMonthDate %></span>
+              <li class='voting'>
+                <a href='/votings/<%= votings[i]._id %>'>
+                  <p class='head-voting-info'>
+                    <span class='type'>VOTING</span>
+                    <span class=<%= progressClass%> >~ <%= endYearMonthDate %></span>
                   </p>
-                  <p class='type'>VOTING</p>
-                    <h2><%= votings[i].title %></h2>
-                    <span><%= votings[i].descritpion %></span>
-                  <p>
-                    <span>CREATOR</span>
-                    <span><%= votings[i].creator %></span>
+                  <h2><%= votings[i].title %></h2>
+                  <p class='coloredOff margin-left'><%= votings[i].description %></p>
+                  <p class='creator-wrapper'>
+                    <span><%= votings[i].creator.name %></span>
                   </p>
-                  <p>
-                    <span>CREATED AT</span>
+                  <p class='created-at-wrapper'>
                     <span><%= createTime %></span>
                   </p>
-
                 </a>
               </li>
             <%}}%>
           </ul>
-          <a href='/votings/new'>CREATE NEW</a>
-          <a href='/votings'>MY VOTINGS</a>
-      </div>
-    </div>
+      </div><!--item-section-->
+    </div><!--main-section-->
   </body>
 </html>

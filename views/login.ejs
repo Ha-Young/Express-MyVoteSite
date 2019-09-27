@@ -3,28 +3,46 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/common.css' />
+    <link rel='stylesheet' href='/stylesheets/login.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <div>
-      <form action='/auth/login' method='post' id='login-form'>
-        <%if(message){%>
-          <div><%= message %></div>
-        <%}%>
-        <div>
-            <label>Email:</label>
-            <input type='email' name='email'/>
+    <div class='main-container'>
+      <div class='center-container'>
+        <h1>
+          <%= title %> to
+          <span>Voting Platform</span>
+        </h1>
+        <div class='form-wrapper'>
+          <form action='/auth/login' method='post' id='login-form'>
+            <%if(message){%>
+            <div><%= message %></div>
+            <%}%>
+            <div class='input-wrapper'>
+              <label>Email</label>
+              <input type='email' name='email' />
+            </div>
+            <div class='input-wrapper'>
+              <label>Password</label>
+              <input type='password' name='password' />
+            </div>
+            <div class='submit-wrapper'>
+              <input
+                type='submit'
+                form='login-form'
+                value='Log In'
+                id='login-button'
+              />
+            </div>
+            <div class='register-wrapper'>
+              <span>Not a member?</span>
+              <a href='/auth/register'>Register now</a>
+            </div>
+          </form>
         </div>
-        <div>
-            <label>Password:</label>
-            <input type='password' name='password'/>
-        </div>
-        <div>
-            <input type='submit' form='login-form' value='Log In'/>
-            <a href='/auth/register'>REGISTER</a>
-        </div>
-      </form>
+        <!--form-wrapper-->
+      </div>
+      <!--center-container-->
     </div>
+    <!--main-container-->
   </body>
 </html>

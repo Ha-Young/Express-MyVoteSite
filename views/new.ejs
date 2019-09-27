@@ -6,55 +6,71 @@
     <link rel='stylesheet' href='/stylesheets/common.css' />
   </head>
   <body>
-    <div class='navbar'>
+    <div class='navbar-wrapper'>
       <%-include('navbar')%>
     </div>
-    <div class='main-section'>
-      <div class='header'>
-        <h1>Create New</h1>
-      </div>
-      <div>
-        <form action='/votings/new' method='post' id='new-voting-form'>
-          <%if(1){%>
-            <div> <%= 1 %> </div>
-          <%}%>
-          <div>
-            <label>Title:</label>
-            <input type='text' name='title'/>
+    <div class='main-container'>
+      <div class='center-container'>
+        <div class='form-wrapper'>
+          <div class='header'>
+            <h1>Create New</h1>
           </div>
-          <div class='description'>
-            <label>Description:</label>
-            <input type='text' name='description'/>
-          </div>
-          <div>
-            <label>Closing Time:</label>
-            <input type='date' name='closingDate'/>
-            <input type='time' name='closingTime'/>
-          </div>
-          <div>
-            <p>Options</p>
-            <ul id='option-list'>
-              <li id='list-model' class='hide'>
-                <input type='text' name='' placeholder='Enter an option'/>
-              </li>
-              <li>
-                <input type='text' name='option' placeholder='Enter an option'/>
-              </li>
-              <li>
-                <input type='text' name='option' placeholder='Enter an option'/>
-              </li>
-              <li id='add-list-button-wrapper'>
-                <input type='button' name='add-button' value='+ Add an option'/>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <input type='submit' form='new-voting-form' value='Create'/>
-          </div>
-        </form>
-      </div>
-      <div>
-        <a href='/votings'>BACK TO MY VOTING</a>
+          <form action='/votings/new' method='post' id='new-voting-form'>
+            <div class='input-wrapper'>
+              <label>Title:</label>
+              <input type='text' name='title' />
+            </div>
+            <div class='input-wrapper description'>
+              <label>Description:</label>
+              <input type='text' name='description' />
+            </div>
+            <div class='input-wrapper description'>
+              <label>Closing Time:</label>
+              <input type='date' name='closingDate' />
+              <input type='time' name='closingTime' />
+            </div>
+            <div class='input-wrapper description'>
+              <label>Options</label>
+              <ul id='option-list'>
+                <li id='list-model' class='hide'>
+                  <input type='text' name='' placeholder='Enter an option' />
+                </li>
+                <li>
+                  <input
+                    type='text'
+                    name='option'
+                    placeholder='Enter an option'
+                  />
+                </li>
+                <li>
+                  <input
+                    type='text'
+                    name='option'
+                    placeholder='Enter an option'
+                  />
+                </li>
+                <li id='add-list-button-wrapper'>
+                  <input
+                    type='button'
+                    name='add-button'
+                    value='+ Add an option'
+                  />
+                </li>
+              </ul>
+            </div>
+            <div>
+              <input
+                type='submit'
+                form='new-voting-form'
+                value='Create'
+                id='create-new-vote'
+              />
+            </div>
+          </form>
+        </div>
+        <div>
+          <a href='/votings'>BACK TO MY VOTING</a>
+        </div>
       </div>
     </div>
     <script src='/javascripts/new.js'></script>

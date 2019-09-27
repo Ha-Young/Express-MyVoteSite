@@ -11,22 +11,22 @@
       <form action='/auth/register' method='post' id='register-form'>
         <div>
           <label>Username:</label>
-          <input type='text' name='username'/>
+          <input type='text' name='username' />
         </div>
         <div>
           <label>Email:</label>
-          <input type='text' name='email'/>
+          <input type='text' name='email' />
           <%if(message){%>
-            <div><%= message %></div>
+          <div><%= message %></div>
           <%}%>
         </div>
         <div>
           <label>Password:</label>
-          <input type='password' name='password' id='password-input'/>
-          <input type='checkbox' onclick='showPassword()'>Show Password
+          <input type='password' name='password' id='password-input' />
+          <input type='checkbox' onclick='showPassword()' />Show Password
         </div>
         <div>
-            <input type='submit' form='register-form' value='Register'/>
+          <input type='submit' form='register-form' value='Register' />
         </div>
       </form>
     </div>

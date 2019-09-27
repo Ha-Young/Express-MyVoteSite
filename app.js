@@ -4,40 +4,36 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const lessMiddleware = require('less-middleware');
-const passport = require('passport');//passport.initialize -> req에 passport설정을 심고, passport.session()은 req.session passport정보를 저장하므로, passport는 express-session 보다 위에 연결되어야..
+const passport = require('passport');
 const session = require('express-session');
 const passportConfig = require('./passport');
 passportConfig(passport);
-//after session, cookieparse // req.flash
 const flash = require('connect-flash');
-
 const path = require('path');
 const logger = require('morgan');
-
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
-// const usersRouter = require('./routes/users');
 const votingRouter = require('./routes/votings');
-
 const app = express();
 
 // dotenv requring in only development env
-if(process.env.NODE_ENV === 'development'){
+
+if (process.env.NODE_ENV === 'development') {
   const dotenv = require('dotenv');
   dotenv.config({
-    path:'./.env'
+    path: './.env'
   });
 }
 
 // mongoose setup
-mongoose.connect(
-  process.env.MONGOOSE_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-);
+
+mongoose.connect(process.env.MONGOOSE_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 // mongoose connecton
+
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
@@ -49,7 +45,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -74,10 +69,10 @@ app.use(passport.initialize());
 // save passport info to session
 app.use(passport.session());
 
-
 // routers
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+
 // app.use('/users', usersRouter);
 app.use('/votings', votingRouter);
 

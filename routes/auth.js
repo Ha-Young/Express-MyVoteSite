@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/Users');
+const User = require('../models/User');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-
 
 // Login router
 
@@ -16,20 +15,19 @@ router.get('/login', (req, res, next) => {
 
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (authError, user, info) => {
-    if(authError){
+    if (authError) {
       return next(authError);
     }
-    if(!user){
+    if (!user) {
       req.flash('loginError', info.message);
       return res.redirect('/login');
     }
 
-    req.login(user, (err) => {
+    req.login(user, err => {
       return res.redirect('/');
     });
   })(req, res, next);
 });
-
 
 // Register router
 
@@ -40,10 +38,10 @@ router.get('/register', (req, res, next) => {
   });
 });
 
-router.post('/register', async(req, res, next) => {
-  try{
+router.post('/register', async (req, res, next) => {
+  try {
     const exUser = await User.findOne({ email: req.body.email });
-    if(exUser){
+    if (exUser) {
       req.flash('DuplicateEmailError', 'The email already exists');
       return res.render('register', {
         title: 'Register',
@@ -57,18 +55,17 @@ router.post('/register', async(req, res, next) => {
       password: hash
     });
     res.redirect('/auth/login');
-  }catch{
+  } catch {
     const err = new Error('Internal Server Error');
     err.status = 500;
     next(err);
   }
 });
 
-
 // Logout router
 
 router.get('/logout', (req, res, next) => {
-  if(req.session){
+  if (req.session) {
     req.logout();
     req.session.destroy();
     res.redirect('/auth/login');

@@ -1,3 +1,126 @@
-.description{
+@ingColor: #1ad5b7;
+@endColor: #808080;
+@red: #f13a51;
+@darkred: #d93449;
 
+#bundle() {
+  .bordered {
+    border-radius: 3px;
+    border-bottom: 1px solid #2a42ac44;
+    box-shadow: 0 10px 10px -5px;
+    margin: 0 30px;
+    padding: 10px;
+  }
+
+  .centered-contents {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .labeled {
+    display: block;
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .styledInput {
+    width: 100%;
+    padding: 9px 15px;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 6px;
+    background-color: #f5f6f7;
+    box-shadow: inset 0px 2px 3px rgba(0, 0, 0, 0.03);
+    outline: none;
+    color: #444;
+    font-size: 18px;
+  }
+
+  .styledbutton {
+    padding: 3% 10%;
+    margin: 10px;
+    background-color: @red;
+    border-radius: 3px;
+    border-style: none;
+    color: #fff;
+  }
+
+  .styledHoveredButton {
+    padding: 3% 10%;
+    margin: 10px;
+    background-color: @darkred;
+    border-radius: 3px;
+    border-style: none;
+    color: #fff;
+  }
+}
+.navbar-wrapper {
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  top: 0;
+}
+
+.main-container {
+  width: 100%;
+  height: 100vh;
+  #bundle.centered-contents();
+  background-image: url('../images/background.jpg');
+}
+
+.center-container {
+  width: 50%;
+  background-color: #fff;
+  #bundle.bordered();
+  #bundle.centered-contents();
+}
+
+.center-container h1 span {
+  color: #f13a51;
+}
+
+.form-wrapper {
+  width: 100%;
+  #bundle.centered-contents();
+}
+
+.form-wrapper form {
+  width: 60%;
+}
+
+.input-wrapper {
+  margin-bottom: 20px;
+}
+
+.input-wrapper label {
+  margin-bottom: 4px;
+  #bundle.labeled();
+}
+
+.input-wrapper input {
+  #bundle.styledInput();
+}
+
+.submit-wrapper #login-button {
+  font-size: 16px;
+  #bundle.styledbutton();
+}
+
+#login-button:hover {
+  #bundle.styledHoveredButton();
+}
+
+.register-wrapper {
+  text-align: right;
+}
+
+.register-wrapper a {
+  color: @red;
+}
+
+.option-list li {
+  margin-bottom: 4px;
 }

@@ -3,48 +3,6 @@
 @red: #f13a51;
 @darkred: #d93449;
 
-/*
-  tag
-*/
-body {
-  margin: 0;
-  padding: 0;
-  font: 16px 'Lucida Grande', Helvetica, Arial, sans-serif;
-}
-
-ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-a {
-  text-decoration: none !important;
-}
-
-a:link {
-  color: black;
-}
-
-a:visited {
-  color: black;
-}
-
-a:hover {
-  color: black;
-}
-
-.hide {
-  display: none;
-}
-
-.show {
-  display: block;
-}
-
-/*
-  bundle
-*/
 #bundle() {
   .bordered {
     border-radius: 3px;
@@ -67,7 +25,7 @@ a:hover {
   .styledInput {
     width: 100%;
     padding: 9px 15px;
-    margin-bottom: 8px;
+    margin-right: 8px;
     box-sizing: border-box;
     border: none;
     border-radius: 6px;
@@ -95,16 +53,6 @@ a:hover {
   }
 }
 
-/*
-  class, id
-*/
-.navbar-wrapper {
-  width: 100%;
-  height: 50px;
-  position: absolute;
-  top: 0;
-}
-
 .main-container {
   width: 100%;
   height: 100vh;
@@ -114,6 +62,8 @@ a:hover {
 
 .center-container {
   width: 50%;
+  height: 500px;
+  flex-wrap: wrap;
   background-color: #fff;
   #bundle.bordered();
   #bundle.centered-contents();
@@ -160,8 +110,4 @@ a:hover {
 
 .register-wrapper a {
   color: @red;
-}
-
-.option-list li {
-  margin-bottom: 4px;
 }

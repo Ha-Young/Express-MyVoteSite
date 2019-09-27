@@ -6,69 +6,71 @@
     <link rel='stylesheet' href='/stylesheets/voting.css' />
   </head>
   <body>
-    <div class='navbar'>
-      <%-include('navbar')%>
+    <div class='navbar-wrapper'>
+      <%-include('navbar') %>
     </div>
-    <div class='main-section'>
-      <div class='header'>
+    <div class='main-container'>
+      <div class='centered-container'>
         <h1>VOTING</h1>
-      </div>
-      <div class='item-section'>
-        <div class='voting-list <%=progressClass%>'>
-          <%if(voting){
+        <div class='<%= progressClass %>'>
+          <%
             var voteCount = 0;
             var voteArr = [];
             var voteTextArr = [];
             var progressClass;
             var progressDescription;
-            var endTime = new Date(voting.end_at);
-            var createTime = new Date(voting.created_at);
-            endYearMonthDate = [endTime.getFullYear(), endTime.getMonth(), endTime.getDate()].join('/'
-            );
-            createYearMonthDate = [createTime.getFullYear(), createTime.getMonth(), createTime.getDate()].join('/'
-            );
+            var items = voting.items;
+
+            function toYYYYMMDD(time){
+              var formedTime = new Date(time);
+              return timeString = [formedTime.getFullYear(), formedTime.getMonth() + 1, formedTime.getDate()].join('/');
+            }
+
+            endYearMonthDate = toYYYYMMDD(voting.end_at);
+            createTime = toYYYYMMDD(voting.created_at);
+
             if(voting.isOnProgress){
-              progressClass = 'ingColor';
+              progressClass = 'coloredOn';
               progressDescription = 'ON';
             }else{
-              progressClass = 'endColor';
+              progressClass = 'coloredOff';
+              progressDescription = 'OFF';
             }
-            const items = voting.items;%>
-            <span><%= endYearMonthDate %></span>
-            <form action='/votings/<%= voting_id %>/update' method='POST' id='voting-form'>
-              <ul>
-                <% for(var i = 0; i < items.length; i++){%>
+          %>
+          <span class='<%= progressClass %>'>~ <%= endYearMonthDate %></span>
+          <form action='/votings/<%= voting_id %>/update' method='POST' id='voting-form'>
+            <ul>
+              <% for(var i = 0; i < items.length; i++){ %>
                 <li class='item'>
-                  <label for=<%= items[i]._id %> >
+                  <% voteTextArr.push(items[i].text); %>
+                  <% voteArr.push(items[i].voters.length); %>
+                  <label for='<%= items[i]._id %>' >
                     <h2><%= items[i].text %></h2>
                   </label>
-                  <input type='radio' name='option' id=<%= items[i]._id %> value=<%= items[i]._id %> >
-                  <% voteCount += items[i].voters.length;
-                    voteArr[i] = items[i].voters.length;
-                    voteTextArr[i] = items[i].text;%>
-                    <div>
-                      <span>득표수 - 생성자 또는 투표가 끝났을 때만 볼 수 있음:</span>
-                      <span><%= items[i].voters.length %></span>
-                    </div>
-                    <%}%>
-                  </li>
-                </ul>
-                <%}%>
-                <input id='submit-my-vote-button' type='submit' form='voting-form'>submit</input>
-                <input id='delete-voting-button' type='button'>delete</input>
-            </form>
-            <% if(isCreator || !voting.isOnProgress) { %>
-              <ul>
-                <% for(var i = 0; i < voteArr.length; i++) { %>
-                  <li>득표수 - 생성자 또는 투표가 끝났을 때만 볼 수 있음:</li>
-                  <li><%= voteTextArr[i] %>: <%= voteArr[i] %></li>
-                <%}%>
-                <li>Total: <%= voteCount %></li>
-              </ul>
+                  <%if(!voting.isOnProgress){%>
+                    <input type='radio' name='option' id='<%= items[i]._id %>' value='<%= items[i]._id %>'>
+                  <%}%>
+                  <div class='result-wrapper'>
+                    <span class='item-vote-count-result'><%= items[i].voters.length %></span>
+                  </div>
+                  <%voteCount += items[i].voters.length;%>
+                </li>
+              <%}%>
+            </ul>
+            <input id='submit-my-vote-button' type='submit' form='voting-form'>
+            <input id='delete-voting-button' type='button' value='Delete'>
+          </form>
+          <ul class=result-list>
+            <%if(isCreator || !voting.isOnProgress){%>
+              <%for(var i = 0; i < voteArr.length; i++){%>
+                <li><%= voteTextArr[i] %>: <%= voteArr[i] %></li>
+              <%}%>
+              <li>Total: <%= voteCount %></li>
             <%}%>
-          </div>
-        </div>
-    </div>
+          </ul>
+          </div><!--votinglist-->
+        </div><!--centered-continer-->
+      </div><!--main-section-->
     <script src='/javascripts/voting.js'></script>
   </body>
 </html>

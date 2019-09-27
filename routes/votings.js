@@ -3,24 +3,22 @@ const router = express.Router();
 const Voting = require('../models/Voting');
 const { addIsOnProgressPropertyTo, switchIdToName } = require('../util');
 
-
 // votings router
 
-router.get('/', async(req, res, next) => {
+router.get('/', async (req, res, next) => {
   const myVotings = await Voting.find({ creator: req.user._id });
   const editedMyVotings = await Promise.all(
-    await myVotings.map(async(myVoting) => {
+    await myVotings.map(async myVoting => {
       const editedMyVoting = JSON.parse(JSON.stringify(myVoting._doc));
       await addIsOnProgressPropertyTo(editedMyVoting, myVoting);
       return editedMyVoting;
-    }
-  ));
-  res.render(('votings'), {
+    })
+  );
+  res.render('votings', {
     user: req.user,
     votings: editedMyVotings
   });
 });
-
 
 // votings/new router
 
@@ -31,7 +29,7 @@ router.get('/new', (req, res, next) => {
   });
 });
 
-router.post('/new', async(req, res, next) => {
+router.post('/new', async (req, res, next) => {
   const options = req.body.option;
   const items = [];
   options.forEach(option => {
@@ -40,7 +38,7 @@ router.post('/new', async(req, res, next) => {
       voters: []
     });
   });
-  try{
+  try {
     await Voting.create({
       title: req.body.title,
       description: req.body.description,
@@ -49,7 +47,7 @@ router.post('/new', async(req, res, next) => {
       items
     });
     res.redirect('/');
-  }catch{
+  } catch {
     const err = new Error('Cannot create voting in DB');
     next(err);
   }
@@ -58,12 +56,12 @@ router.post('/new', async(req, res, next) => {
 
 // votings/:voting_id router
 
-router.get('/:voting_id', async(req, res, next) => {
+router.get('/:voting_id', async (req, res, next) => {
   const voting = await Voting.find({ _id: req.params.voting_id });
   const isCreator = String(voting.creator) === String(req.user._id);
   const editedVoting = JSON.parse(JSON.stringify(voting[0]));
   addIsOnProgressPropertyTo(editedVoting, voting);
-  res.render(('voting'), {
+  res.render('voting', {
     voting_id: req.params.voting_id,
     user: req.user,
     voting: editedVoting,
@@ -71,11 +69,11 @@ router.get('/:voting_id', async(req, res, next) => {
   });
 });
 
-router.post('/:voting_id/update', async(req, res, next) => {
+router.post('/:voting_id/update', async (req, res, next) => {
   const votingId = req.url.slice(1, req.url.lastIndexOf('/'));
   await Voting.update(
     {
-      '_id': votingId,
+      _id: votingId,
       'items._id': req.body.option
     },
     {
@@ -87,7 +85,7 @@ router.post('/:voting_id/update', async(req, res, next) => {
   res.redirect('/');
 });
 
-router.delete('/:voting_id', async(req, res, next) => {
+router.delete('/:voting_id', async (req, res, next) => {
   await Voting.findByIdAndDelete({
     _id: req.params.voting_id
   });
