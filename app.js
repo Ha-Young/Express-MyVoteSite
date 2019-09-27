@@ -16,9 +16,17 @@ const index = require('./routes/index');
 const app = express();
 
 require('./config/passport');
-require('dotenv').config({ path: '.env' });
 
-mongoose.connect(process.env.DATABASE_URI, { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true });
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config();
+}
+
+mongoose.connect(process.env.DATABASE_URI, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
