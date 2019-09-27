@@ -4,7 +4,7 @@ const { isNotLoggedIn } = require('./middlewares');
 
 /* GET home page. */
 router.get('/', isNotLoggedIn, (req, res, next) => {
-  res.render('login', { title: 'login' });
+  res.render('login');
 });
 
 module.exports = router;
