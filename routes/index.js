@@ -3,6 +3,7 @@ var router = express.Router();
 
 const authController = require('./controllers/authController');
 const votingController = require('./controllers/votingController');
+const errorController = require('./controllers/errorController');
 
 router.get('/', votingController.getAll);
 
@@ -35,6 +36,14 @@ authController.isLoggedIn,
   votingController.getMyVoting
 );
 
+router.get('/votings/success',
+  votingController.RenderSuccess
+);
+
+router.get('/votings/error',
+  votingController.RenderError
+);
+
 router.get('/votings/:id',
   authController.isLoggedIn,
   votingController.getVoting
@@ -46,14 +55,6 @@ router.put('/votings/:id',
 router.delete('/votings/:id',
   authController.isLoggedIn,
   votingController.deleteVoting
-);
-
-router.get('/votings/success',
-  votingController.RenderSuccess
-);
-
-router.get('/votings/error',
-  votingController.RenderError
 );
 
 module.exports = router;

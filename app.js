@@ -1,16 +1,15 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const passport = require('passport');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const lessMiddleware = require('less-middleware');
-const bodyParser = require('body-parser');
-const logger = require('morgan');
 const session = require('express-session');
 const validator = require('express-validator');
-const MongoStore = require('connect-mongo')(session);
-const flash = require('connect-flash');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const lessMiddleware = require('less-middleware');
 const methodOverride = require('method-override');
+const flash = require('connect-flash');
+const logger = require('morgan');
+const path = require('path');
 
 const index = require('./routes/index');
 
@@ -19,7 +18,6 @@ const app = express();
 require('./config/passport');
 require('dotenv').config({ path: '.env' });
 
-mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE_URI, { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true });
 
 const db = mongoose.connection;
@@ -28,7 +26,6 @@ db.once('open', () => console.log('connection'));
 
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,11 +36,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-app.use(cookieParser('asdsadasdsdasdasd'));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.use(session({
   maxAge:  7 * 24 * 60 * 60,
-  secret: 'asdsadasdsdasdasd',
+  secret: process.env.COOKIE_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -57,15 +54,6 @@ app.use(passport.session());
 
 app.use(flash());
 app.use(validator());
-
-// Gloval vars
-/*app.use((req, res, next) => {
-  res.locals.flashes = req.flash();
-  res.locals.success_massage = req.flash('success_msg');
-  res.locals.error = req.flash('error');
-  //res.locals.currentPath = req.path;
-  next();
-});*/
 
 app.use('/', index);
 

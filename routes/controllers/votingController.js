@@ -1,84 +1,102 @@
+const mongoose = require('mongoose');
 const Voting = require('../../models/Voting');
 const User = require('../../models/User');
 const moment = require('moment');
 
-exports.getAll = async (req, res) => {
+exports.getAll = async (req, res, next) => {
   try {
     const votings = await Voting.find().sort({created_at: -1});
 
     const newVotings = await Promise.all(votings.map(async (voting) => {
-      const newVoting = {...voting._doc};
+      if(!mongoose.Types.ObjectId.isValid(voting.author)) return next();
+
       const user = await User.findOne({ _id: voting.author });
+      const newVoting = JSON.parse(JSON.stringify(voting._doc));
       const currentDate = new Date();
       const expirationDate = new Date(newVoting.expiration);
-      const isValid = currentDate.getTime() < expirationDate.getTime();
-      const newDate = moment(newVoting.expiration).format('YYYY MMM ddd, ahh:mm');
+      const isOpen = currentDate.getTime() < expirationDate.getTime();
+      const formattingDate = moment(newVoting.expiration).format('YYYY MMM ddd, ahh:mm');
 
-      newVoting.isValid = isValid;
-      newVoting.expiration = newDate;
+      newVoting.isOpen = isOpen;
+      newVoting.expiration = formattingDate;
       newVoting.author = user.name
 
       return newVoting;
     }));
-
-    console.log('회원가입후', req.user);
 
     res.render('index', {
       user: req.user,
       votings: newVotings,
       flashes: req.flash()
     });
-  } catch(e) {
+  } catch(err) {
     next(err);
   }
 };
 
-// TODO 내 목록 불러오기
-exports.getMyVoting = async (req, res) => {
-  // TODO 1 Myvoting List 가져오기
-  const myVotings = await Voting.find({ author: req.user._id }).sort({created_at: -1});
+exports.getMyVoting = async (req, res, next) => {
+  try {
+    if(!mongoose.Types.ObjectId.isValid(req.user._id)) return next();
+    const myVotings = await Voting.find({ author: req.user._id }).sort({created_at: -1});
 
-  const newVotings = await Promise.all(myVotings.map(async (voting) => {
-    const newVoting = {...voting._doc};
-    const user = await User.findOne({ _id: voting.author });
-    const currentDate = new Date();
-    const expirationDate = new Date(newVoting.expiration);
-    const isValid = currentDate.getTime() < expirationDate.getTime();
-    const newDate = moment(newVoting.expiration).format('YYYY MMM ddd, ahh:mm');
+    const newVotings = await Promise.all(myVotings.map(async (voting) => {
+      if(!mongoose.Types.ObjectId.isValid(voting.author)) return next();
 
-    newVoting.isValid = isValid;
-    newVoting.expiration = newDate;
-    newVoting.author = user.name
+      const newVoting = JSON.parse(JSON.stringify(voting._doc));
+      const user = await User.findOne({ _id: voting.author });
+      const currentDate = new Date();
+      const expirationDate = new Date(newVoting.expiration);
+      const isOpen = currentDate.getTime() < expirationDate.getTime();
+      const formattingDate = moment(newVoting.expiration).format('YYYY MMM ddd, ahh:mm');
 
-    return newVoting;
-  }));
+      newVoting.isOpen = isOpen;
+      newVoting.expiration = formattingDate;
+      newVoting.author = user.name
 
-  res.render('votings', {
-    user: req.user,
-    votings: newVotings
-  });
+      return newVoting;
+    }));
+
+    res.render('votings', {
+      user: req.user,
+      votings: newVotings
+    });
+  } catch(err) {
+    next(err);
+  }
 }
 
-exports.vote = async (req, res) => {
-  // 여기다가 추가만 하믄 된다 'ㅁ'/
-  await Voting.update(
-    {
+exports.vote = async (req, res, next) => {
+  if(!mongoose.Types.ObjectId.isValid(req.user._id)) return next();
+  if(!mongoose.Types.ObjectId.isValid(req.body.option)) return next();
+
+  try {
+    await Voting.findOneAndUpdate({
       _id: req.params.id,
       'options': { '$elemMatch': { _id: req.body.option } }
     },
-    { '$push': { 'options.$.selected_user': req.user._id } }
-  );
+    {
+      '$push': { 'options.$.selected_user': req.user._id }
+    });
 
-  res.status(301).redirect(`/votings/${req.params.id}`);
+    res.status(200).redirect(`/votings/${req.params.id}`);
+  } catch(err) {
+    next(err);
+  }
 };
 
-exports.deleteVoting = async (req, res) => {
-  await Voting.deleteOne({ _id: req.params.id });
-  res.status(301).redirect(`/`);
+exports.deleteVoting = async (req, res, next) => {
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) return next();
+
+  try {
+    await Voting.deleteOne({ _id: req.params.id });
+
+    res.status(200).redirect('/');
+  } catch(err) {
+    next(err);
+  }
 };
 
-exports.newVotingForm = (req, res, next) => {
-  console.log('a');
+exports.newVotingForm = (req, res) => {
   res.render('newVoting', {
     user: req.user,
     flashes: null
@@ -86,31 +104,35 @@ exports.newVotingForm = (req, res, next) => {
 };
 
 exports.validateNewVoting = (req, res, next) => {
-  const currentDate = new Date();
-  const expirationDate = new Date(req.body.date);
-  const isNext = currentDate.getTime() < expirationDate.getTime();
+  try {
+    const currentDate = new Date();
+    const expirationDate = new Date(req.body.date);
+    const isValid = currentDate.getTime() < expirationDate.getTime();
 
-  req.checkBody('title', 'title is required').notEmpty();
-  req.checkBody('date', 'Invalid date').isDate();
-  req.checkBody('option', 'option is required').isLength({ min: 2 });
+    req.checkBody('title', 'title을 입력해주세요.').notEmpty();
+    req.checkBody('date', 'date가 유효하지 않습니다.').isDate();
+    req.checkBody('option', 'option을 2개 이상 입력해주세요.').isLength({ min: 2 });
 
-  const errors = req.validationErrors();
+    const errors = req.validationErrors();
 
-  if (errors || !isNext) {
-    if(errors) req.flash('error', errors.map(err => err.msg));
+    if (errors || !isValid) {
+      if(errors) req.flash('error', errors.map(err => err.msg));
 
-    if(!isNext) req.flash('date', '만료 날짜가 현재보다 ...');
+      if(!isValid) req.flash('date', '만료날짜가 현재날짜보다 이전입니다.');
 
-    res.render('newVoting', { flashes: req.flash(), user: req.user });
+      res.render('newVoting', { flashes: req.flash(), user: req.user });
 
-    return;
+      return;
+    }
+  } catch(err) {
+    next(err);
   }
 
   next();
 };
 
-exports.saveNewVoting = async (req, res, next) => {
-  const options = req.body.option.filter(el => el).map(el => {
+exports.saveNewVoting = async (req, res) => {
+  const filterOptions = req.body.option.filter(el => el).map(el => {
     return ({
       text: el,
       selected_user: []
@@ -122,25 +144,23 @@ exports.saveNewVoting = async (req, res, next) => {
       title: req.body.title,
       author: req.user._id,
       expiration: req.body.date,
-      options
+      options: filterOptions
     })).save();
 
-    res.status(301).redirect('/votings/success');
-  } catch(e) {
-    // TODO 에러 메시지 넣기
+    res.status(200).redirect('/votings/success');
+  } catch {
     res.status(500).redirect('/votings/error');
   }
 };
 
 exports.getVoting = async (req, res) => {
   const voting = await Voting.findOne({ _id: req.params.id });
-  const newVoting = {...voting._doc};
+  const newVoting =  JSON.parse(JSON.stringify(voting._doc));
 
   const votedIndex = voting.options.findIndex(option => option.selected_user.includes(req.user._id));
   const totalVotes = voting.options.reduce((prev, curr) => {
     return prev + curr.selected_user.length;
   },0);
-  console.log('totalVotes',totalVotes);
   const user = await User.findOne({ _id: newVoting.author });
 
   const currentDate = new Date();

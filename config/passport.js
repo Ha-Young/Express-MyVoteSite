@@ -13,7 +13,6 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((email, done) => {
   User.findOne({ email })
       .then(user => {
-        console.log('deserializeUser');
         done(null, user);
       })
       .catch(err => done(err));

@@ -7,7 +7,7 @@
   </head>
   <body>
     <header>
-      <h1 class='logo'><a href='/'><i class="fas fa-vote-yea fa-xs"></i><span>Voting Platform</span></a></h1>
+      <h1 class='logo'><a href='/'><i class="fas fa-vote-yea fa-xs"></i> Voting Platform</a></h1>
       <nav>
         <ul>
           <% if (user) { %>
@@ -27,7 +27,7 @@
 
     <main>
       <section class='home-banner'>
-        <i class="fas fa-vote-yea fa-7x"></i>
+        <i class="fas fa-vote-yea fa-5x"></i>
         <p class='title'>필요한 답을 얻으세요.</p>
         <p class='text'>대치동을 선도하는 설문조사 소프트웨어로 필요한 피드백을 얻으세요.</p>
         <a href='/votings/new' class='button'>시작하기</a>
@@ -36,16 +36,18 @@
       <section class='home-survey-list'>
         <div class="top">
           <h3>Survey</h3>
-          <a href='/votings'>내 투표보기</a>
+          <a href='/votings' class='go-button'>내 투표보기</a>
         </div>
         <ul class='list'>
           <%if (votings) { %>
             <% for(var i = 0; i < votings.length; i++) {%>
                 <li>
                   <a href='/votings/<%= votings[i]._id %>'>
+                    <span class='status <%= votings[i].isOpen ? 'open':'close' %>'>
+                      <%= votings[i].isOpen ? '진행중':'종료' %>
+                    </span>
                     <span class='title'><%= votings[i].title %></span>
-                    <span class='expiration'><%= votings[i].expiration %></span>
-                    <span class='status'><%= votings[i].isValid ? '진행중':'종료' %></span>
+                    <span class='expiration'><%= votings[i].expiration %>까지</span>
                     <span class='author'><%= votings[i].author %></span>
                   </a>
                 </li>
@@ -54,7 +56,5 @@
         </ul>
       </section>
     </main>
-
-
   </body>
 </html>

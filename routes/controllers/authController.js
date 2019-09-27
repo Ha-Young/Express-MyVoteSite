@@ -9,22 +9,17 @@ exports.isLoggedIn = (req, res, next) => {
   res.status(301).redirect('/login');
 };
 
-/*exports.isNotLoggedIn = (req, res, next) => {
-  if(req.isAuthenticated()) return res.status(301).redirect('/');
-
-  next();
-};*/
-
 exports.loginForm = (req, res) => {
-  res.render('login', { title: 'Login', flashes: null });
+  res.render('login', { flashes: null });
 };
 
 exports.validateLogin = (req, res, next) => {
-  req.sanitizeBody('name');
-  req.checkBody('email', 'Email is not valid').isEmail();
-  req.checkBody('password', 'Password is required').notEmpty();
+  req.checkBody('email', '이메일 형식으로 입력해주세요.').isEmail();
+  req.checkBody('email', '이메일을 입력해주세요.').notEmpty();
+  req.checkBody('password', '비밀번호를 입력해주세요.').notEmpty();
 
   const errors = req.validationErrors();
+
   if (errors) {
     req.flash('error', errors.map(err => err.msg));
     res.render('login', { flashes: req.flash() });
@@ -36,24 +31,20 @@ exports.validateLogin = (req, res, next) => {
 
 exports.login = (req, res, next) => {
   passport.authenticate('local', (authError, user, info) => {
-    if (authError) {
-      console.log('authError', authError);
-      return next(authError);
-    }
+    if (authError) return next(authError);
 
     if (!user) {
       req.flash('error', info.message);
-      return res.render('login', { flashes: req.flash() });
+      res.render('login', { flashes: req.flash() });
+      return;
     }
 
     return req.login(user, (loginError) => {
-      if (loginError) {
-        return next(loginError);
-      }
+      if (loginError) return next(loginError);
 
       return res.redirect('/');
     });
-  })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙인다.
+  })(req, res, next);
 }
 
 exports.registerForm = (req, res) => {
@@ -65,16 +56,11 @@ exports.registerForm = (req, res) => {
 
 exports.validateRegister = (req, res, next) => {
   req.sanitizeBody('title');
-  req.checkBody('name', 'Name is required').notEmpty();
-  req.checkBody('email', 'Email is not valid').isEmail();
-  /*req.sanitizeBody('email').normalizeEmail({
-    remove_dots: false,
-    remove_extendsion: false,
-    gmail_remove_subaddress: false,
-  });*/
-  req.checkBody('password', 'Password is required').notEmpty();
-  req.checkBody('password-confirm', 'Confirm password is required').notEmpty();
-  req.checkBody('password-confirm', 'Passwords do not match').equals(req.body.password);
+  req.checkBody('name', 'name을 입력해주세요.').notEmpty();
+  req.checkBody('email', 'Email 형식이 아닙니다.').isEmail();
+  req.checkBody('password', 'Password을 입력해주세요.').notEmpty();
+  req.checkBody('password-confirm', '비밀번호 재확인을 입력해주세요.').notEmpty();
+  req.checkBody('password-confirm', '비밀번호가 일치하지 않습니다.').equals(req.body.password);
 
   const errors = req.validationErrors();
   if (errors) {
@@ -94,8 +80,9 @@ exports.register = async (req, res, next) => {
 
     if (user) {
       req.flash('error', '이미 가입된 이메일입니다.');
-      res.render('register', {  flashes: req.flash() });
+      return res.render('register', {  flashes: req.flash() });
     }
+
     await bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(password, salt, function(err, hash) {
         User.create({
@@ -107,14 +94,14 @@ exports.register = async (req, res, next) => {
     });
 
     req.flash('success', '가입에 성공하였습니다');
-    return res.redirect('/');
+    res.status(200).redirect('/');
   } catch (error) {
-    return next(error);
+    next(error);
   }
 };
 
 exports.logout = (req, res) => {
   req.logout();
   req.session.destroy();
-  res.redirect('/');
+  res.status(200).redirect('/');
 };

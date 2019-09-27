@@ -1,3 +1,7 @@
+@link-color: #1ab188;
+@link-color-hover: #179b77;
+@hover-transition: .2s cubic-bezier(.215,.61,.355,1);
+
 body,
 html {
   position: relative;
@@ -16,7 +20,6 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: inherit;
-  font-size: 16px;
   line-height: 1;
   word-break: break-all;
 }
@@ -31,6 +34,7 @@ li {
 
 header {
   display: flex;
+  align-items: center;
   padding: 15px;
   background-color: #f8f8f8;
   font-family: 'Helvetica Neue';
@@ -38,22 +42,21 @@ header {
   border-color: #e7e7e7;
 
   h1 {
-  a {
-    color: #777777;
-    &:hover {
-      color: #4e4e4e
-    }
+    font-size: 20px;
+    font-weight: 400;
+
+    a {
+      display: block;
+      color: #777777;
+
+      &:hover {
+        color: #4e4e4e
+      }
+
     i {
       font-size: 20px;
       color: #777777;
     }
-  }
-
-  span {
-    color: inherit;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 20px;
   }
 }
 
@@ -85,6 +88,11 @@ header {
   text-align: center;
   background: linear-gradient(50deg, #f3c680, #a1e3e2);
 
+  i {
+    color: #f8f8f8;
+    padding-bottom: 30px;
+  }
+
   p {
     color: #fff;
     font-size: 20px;
@@ -104,14 +112,23 @@ header {
     display: inline-block;
     width:200px;
     margin-top: 50px;
-    background: #1ab188;
+    background: @link-color;
     font-size: 20px;
     font-weight: 600;
     line-height: 50px;
     text-align: center;
     color: #ffffff;
     border-radius: 5px;
+    transition: @hover-transition;
+
+    &:hover {
+      background: @link-color-hover;
+    }
   }
+}
+
+main {
+  background-color: #F3F3F3;
 }
 
 .home-survey-list {
@@ -119,9 +136,97 @@ header {
   margin: 0 auto;
   padding-top: 50px;
 
-  h3 {
-    font-size: 38px;
-    color: #777777;
+
+  .top {
+    display: flex;
+    align-items: center;
+
+    h3 {
+      font-size: 38px;
+      color: #777777;
+    }
+
+    .go-button {
+      display: block;
+      margin-left: auto;
+      font-weight: 600;
+      color: @link-color;
+      transition: @hover-transition;
+
+      &:hover {
+        color: @link-color-hover;
+      }
+    }
+  }
+
+  .list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: 60px auto 0;
+
+    li {
+      flex-basis: 33.3333333333%;
+      width: 33.3333333333%;
+      padding: 0 10px;
+      box-sizing: border-box;
+
+      a {
+        display: block;
+        height: 260px;
+        margin: 0 0 20px;
+        padding: 20px;
+        background: #FFF;
+        border-radius: 2px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transition: @hover-transition;
+        cursor: pointer;
+
+        &:hover {
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2),
+                      0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        span {
+          display: block;
+        }
+
+        .status {
+          width: 120px;
+          text-align: center;
+          line-height: 28px;
+          color: #ffffff;
+          background: @link-color;
+        }
+
+        .close {
+          background: #777777;
+        }
+
+        .title {
+          display: -webkit-box;
+          margin-top: 25px;
+          padding: 10px 0;
+          font-family: 'Nanum Gothic';
+          font-size: 23px;
+          line-height: 38px;
+          font-weight: 300;
+          text-align: left;
+          color: #999;
+          border-width: 1px 0;
+          border-color: @link-color;
+          border-style: solid;
+          overflow: hidden;
+          -webkit-box-orient: vertical;
+          text-overflow: ellipsis;
+          word-break: keep-all;
+          word-wrap: break-word;
+          -webkit-line-clamp: 2;
+        }
+        
+      }
+    }
   }
 }
 
@@ -212,12 +317,10 @@ header {
         -webkit-appearance: none;
         cursor: pointer;
 
-
+        &:hover {
+          background: @link-color-hover;
+        }
       }
-    }
-
-    input.button:hover {
-      background: #179b77;
     }
   }
 }
@@ -235,5 +338,120 @@ header {
 
   .flash-error {
     border: 8px solid #c80000;
+  }
+}
+
+.top-banner {
+  padding: 40px 0 90px;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(50deg, #f3c680, #a1e3e2);
+
+  h3 {
+    font-size: 35px;
+    padding: 20px;
+  }
+}
+
+.content {
+  width: 1170px;
+  margin: -60px auto 0;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.15);
+
+}
+
+.single-details {
+  h2 {
+    border-bottom: 1px solid #e6e6e6;
+    padding-bottom: 20px;
+  }
+
+  .info {
+    text-align: right;
+    padding: 10px;
+    color: #777777;
+
+    .status {
+      font-weight: 600;
+    }
+  }
+
+  .voting-form {
+
+    .options {
+      li {
+        padding: 4px 0;
+
+        input[type='radio'] {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          margin: -1px;
+          padding: 0;
+          border: 0;
+          overflow: hidden;
+          clip:rect(0,0,0,0);
+
+          & + label {
+            display: inline-block;
+            position: relative;
+            width: 600px;
+            padding: 10px 3px;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+
+            &:hover {
+              background: rgba(119, 119, 119, 0.2);
+              border-radius: 5px;
+            }
+
+            &:before {
+              content: ' ';
+              display:inline-block;
+              width: 21px;
+              height: 21px;
+              line-height: 21px;
+              margin: -2px 8px 0 0;
+              text-align: center;
+              vertical-align: middle;
+              background: #ffffff;
+              border: 1px solid #cacece;
+              border-radius: 50%;
+              box-shadow: 0px 1px 2px rgba(0,0,0,0.05),
+                          inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+            }
+
+            &:active:before {
+              box-shadow: 0 1px 2px rgba(0,0,0,0.05),
+              inset 0px 1px 3px rgba(0,0,0,0.1);
+            }
+          }
+
+          &:checked + label {
+            background: rgba(119, 119, 119, 0.2);
+            border-radius: 5px;
+
+            &:active:before {
+              box-shadow: 0 1px 2px rgba(0,0,0,0.05),
+              inset 0px 1px 3px rgba(0,0,0,0.1);
+            }
+
+            &:before {
+              content: '\2714';
+              color: #ffffff;
+              text-shadow: 1px 1px #fff;
+              background: #000000;
+              border-color: #000000;
+              box-shadow: 0px 1px 2px rgba(0,0,0,0.05),
+                          inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+            }
+          }
+        }
+      }
+    }
   }
 }
