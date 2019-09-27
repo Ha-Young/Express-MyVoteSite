@@ -17,11 +17,12 @@
           <label>expiration</label>
           <input type="datetime-local" name="expiration">
         </div>
-        <div class="form" id="in">
+        <div class="form">
           <label>options</label>
           <input type="text" name="option" required>
           <input type="text" name="option" required>
         </div>
+          <div id="in"></div>
         <div id="add-button">++options</div>
         <div id="remove-button">--options</div>
         <button id="submit-button" type="submit">새로운 투표 생성</button>
@@ -31,7 +32,6 @@
     <script>
       function addInput() {
         const addedInput = document.createElement("input");
-        const button = document.getElementById("add-button");
         document.getElementById("in").appendChild(addedInput);
         addedInput.setAttribute("type", "text");
         addedInput.setAttribute("name", "option");
