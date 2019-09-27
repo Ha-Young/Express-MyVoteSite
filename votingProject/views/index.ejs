@@ -19,9 +19,9 @@
         <a class="create-vote" href="/votings/new">투표 생성</a>
         <ul class="navigation-login-list">
           <% if (user) { %>
-          <li><a href="/auth/logout">Logout</a></li>
+          <li><a href="/auth/logout">로그아웃</a></li>
           <% } else { %>
-          <li><a href="/auth/login">Login</a></li>
+          <li><a href="/auth/login">로그인</a></li>
           <% } %>
         </ul>
       </div>
@@ -33,7 +33,7 @@
           <a href="/votings/<%= vote._id %>">
             <div class="voting-title"><%= vote.title %></div>
             <div class="voting-created-by"><%= vote.created_by %></div>
-            <div class="voting-expired-date"><%= vote.expired_date %></div>
+            <div class="voting-expired-date"><%= vote.expired_date %> 마감</div>
             <% if(vote.inProgress) { %>
             <div class="voting-inProgress">투표 진행중</div>
             <% } else { %>

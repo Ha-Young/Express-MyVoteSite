@@ -3,7 +3,7 @@ const router = express.Router();
 const votingController = require('./controllers/voting.controller');
 
 router.get('/new', (req, res, next) => {
-  res.render('createVote');
+  res.render('createVote', { user: req.user });
 });
 
 router.post('/new', votingController.createVote);

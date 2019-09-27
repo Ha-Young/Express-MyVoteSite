@@ -1,5 +1,19 @@
 @import "common.scss";
 
+@mixin navigationButton {
+  display: inline-block;
+  background-color: #bf6cde;
+  font-size: 20px;
+  color: white;
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin-left: 20px;
+  transition: all ease 0.5s;
+  &:hover {
+    background-color: #e26072;
+  }
+}
+
 .navigation {
   width: 100%;
   background-color: #f6f6f6;
@@ -24,28 +38,14 @@
   .navigation-btn {
     text-align: center;
     margin-left: auto;
+    .come-back-home {
+      @include navigationButton();
+    }
     .my-vote {
-      display: inline-block;
-      background-color: #bf6cde;
-      font-size: 20px;
-      color: white;
-      border-radius: 10px;
-      padding: 5px 10px;
-      &:hover {
-        background-color: #e26072;
-      }
+      @include navigationButton();
     }
     .create-vote {
-      display: inline-block;
-      margin-left: 40px;
-      background-color: #bf6cde;
-      font-size: 20px;
-      color: white;
-      border-radius: 10px;
-      padding: 5px 10px;
-      &:hover {
-        background-color: #e26072;
-      }
+      @include navigationButton();
     }
     .navigation-login-list {
       display: inline-block;
@@ -58,6 +58,7 @@
         color: white;
         border-radius: 10px;
         padding: 5px 10px;
+        transition: all ease 0.5s;
         &:hover {
           background-color: #e26072;
         }
@@ -67,7 +68,7 @@
 }
 .vote-container {
   width: 20%;
-  min-height: 500px;
+  min-height: 300px;
   position: relative;
   transform: translate(-50%, -50%);
   top: 40%;
@@ -110,29 +111,72 @@
     font-size: 15px;
     color: #53626e;
   }
-  .vote-inProgress span{
+  .vote-inProgress span {
     display: inline-block;
     position: relative;
     left: 250px;
     margin: 0px 10px 20px 0px;
-    padding: 1%;
+    padding: 2%;
     font-size: 15px;
     background-color: #0097fe;
     border-radius: 10px;
     color: #ffffff;
   }
-  .end span{
-    background-color: #E85D5B;
+  .end span {
+    background-color: #e85d5b;
   }
-  .vote-option {
-    padding: 10px 0 10px 0;
-    input {
-      margin: 0 0 0 20px;
+  .option-form-container {
+    .vote-option {
+      padding: 10px 0 10px 0;
+      input {
+        margin: 0 0 0 20px;
+      }
+      label,
+      span {
+        margin-left: 5px;
+        font-size: 15px;
+        color: #53626e;
+      }
     }
-    label, span {
+    button {
+      display: block;
+      width: 94%;
+      margin: 3%;
+      padding: 3%;
+      font-size: 20px;
+      color: #dc617f;
+      cursor: pointer;
+      background-color: transparent;
+      border: 2px solid #dc617f;
+      transition: all ease 0.5s;
+      &:hover {
+        color: #ffffff;
+        background-color: #dc617f;
+      }
+    }
+  }
+  .hasVoted {
+    margin-top: 40px;
+    color: #f0506e;
+    text-align: center;
+    font-size: 30px;
+  }
+  .result-title {
+    margin: 0 0 20px 10px;
+    color: #53626e;
+    font-size: 25px;
+    font-weight: bold;
+  }
+  .vote-result {
+    margin: 3%;
+    span {
       margin-left: 5px;
-      font-size: 15px;
+      font-size: 20px;
       color: #53626e;
+    }
+    .numOfPeople {
+      float: right;
+      margin-right: 10px;
     }
   }
 }

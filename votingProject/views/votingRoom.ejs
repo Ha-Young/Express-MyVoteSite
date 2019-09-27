@@ -11,18 +11,18 @@
       /></a>
       <span class="navigation-text">투표합시다!</span>
       <div class="navigation-btn">
+        <a class="come-back-home" href="/">목록보기</a>
         <a class="my-vote" href="/votings">내 투표</a>
         <a class="create-vote" href="/votings/new">투표 생성</a>
         <ul class="navigation-login-list">
           <% if (user) { %>
-          <li><a href="/auth/logout">Logout</a></li>
+          <li><a href="/auth/logout">로그아웃</a></li>
           <% } else { %>
-          <li><a href="/auth/login">Login</a></li>
+          <li><a href="/auth/login">로그인</a></li>
           <% } %>
         </ul>
       </div>
     </div>
-
     <div class="vote-container">
       <% if(selectedVoteDoc.created_by === user) { %>
       <div class="vote-delete">
@@ -34,7 +34,6 @@
         </form>
       </div>
       <% } %>
-
       <div class="vote-title"><%= selectedVoteDoc.title %></div>
       <div class="vote-expired-date">
         <%= selectedVoteDoc.expired_date %> 까지
@@ -42,7 +41,7 @@
       <% if(selectedVoteDoc.inProgress) { %>
       <div class="vote-inProgress"><span>투표 진행중</span></div>
       <% if(!selectedVoteDoc.hasVoted) { %>
-      <div>
+      <div class="option-form-container">
         <form action="/votings/<%= selectedVoteDoc._id %>" method="POST">
           <% selectedVoteDoc.options.forEach(option => { %>
           <div class="vote-option">
@@ -62,19 +61,17 @@
         </form>
       </div>
       <% } else { %>
-      <div>이미 투표하셨습니다.</div>
+      <div class="hasVoted">이미 투표하셨습니다.</div>
       <% }%> <% } else { %>
       <div class="vote-inProgress end"><span>투표 종료</span></div>
-      <div>투표 결과</div>
+      <div class="result-title">투표 결과 &darr;</div>
       <% if(selectedVoteDoc.titleOfResult.length > 1) { %>
-      <div>동점입니다.</div>
-      <% } %> <% selectedVoteDoc.titleOfResult.forEach(result => { %>
-      <div>
-        <span><%= result.title %></span>
-        <span><%= result.people.length%>명</span>
+      <% } %> <% selectedVoteDoc.titleOfResult.forEach((result, index) => { %>
+      <div class="vote-result">
+        <span><%= index + 1%>. <%= result.title %></span>
+        <span class="numOfPeople"><%= result.people.length%>명</span>
       </div>
       <%});%> <% } %>
-      <a href="/">목록으로 돌아가기</a>
     </div>
   </body>
 </html>

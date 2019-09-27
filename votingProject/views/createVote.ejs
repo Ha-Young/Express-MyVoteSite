@@ -2,50 +2,90 @@
 <html>
   <head>
     <title>투표 생성하기</title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/createVote.css" />
   </head>
 
   <body>
-    <h1>투표 생성하기</h1>
-    <a href="/">목록으로 돌아가기...</a>
+    <div class="navigation">
+      <a href="/"
+        ><img class="navigation-logo" src="/images/vote.png" alt="vote logo"
+      /></a>
+      <span class="navigation-text">투표합시다!</span>
+      <div class="navigation-btn">
+        <a class="come-back-home" href="/">목록보기</a>
+        <a class="my-vote" href="/votings">내 투표</a>
+        <a class="create-vote" href="/votings/new">투표 생성</a>
+        <ul class="navigation-login-list">
+          <% if (user) { %>
+          <li><a href="/auth/logout">로그아웃</a></li>
+          <% } else { %>
+          <li><a href="/auth/login">로그인</a></li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
 
-    <form action="/votings/new" method="POST">
-      <div class="form-group">
-        <label>제목</label>
-        <input type="text" class="form-control" name="title" />
-      </div>
-      <div class="form-group">
-        <label>만료일</label>
-        <input type="datetime-local" class="expired-date" name="expired_date" />
-      </div>
-      <label>투표 선택 사항</label>
-      <div class="options-container">
-        <div>
-          <input type="text" class="form-control" name="options" />
-          <input type="button" class="delete" value="Delete" />
+    <div class="create-vote-container">
+      <div class="create-vote-title">투표 생성</div>
+      <form action="/votings/new" method="POST">
+        <div class="form-group">
+          <label>제목</label>
+          <div>
+            <input
+              type="text"
+              class="create-title"
+              name="title"
+              placeholder="제목"
+            />
+          </div>
         </div>
-        <div>
-          <input type="text" class="form-control" name="options" />
-          <input type="button" class="delete" value="Delete" />
+        <div class="form-group">
+          <label>만료일</label>
+          <div>
+            <input
+              type="datetime-local"
+              class="create-expired-date"
+              name="expired_date"
+            />
+          </div>
         </div>
-      </div>
-      <div>
-        <button type="button" class="add-option-button" style="color: red;">
-          항목 추가
+        <div class="options-title">투표 선택 사항</div>
+        <div class="options-container">
+          <div class="options-wrapper">
+            <input
+              type="text"
+              class="option"
+              name="options"
+              placeholder="항목"
+            />
+            <input type="button" class="delete" value="Delete" />
+          </div>
+          <div class="options-wrapper">
+            <input
+              type="text"
+              class="option"
+              name="options"
+              placeholder="항목"
+            />
+            <input type="button" class="delete" value="Delete" />
+          </div>
+        </div>
+        <button type="button" class="add-option-button" >
+          + 항목 추가
         </button>
-      </div>
-
-      <button type="submit" class="button">투표 생성</button>
-    </form>
+        <button type="submit" class="create-button">투표 생성</button>
+      </form>
+    </div>
   </body>
   <script>
     const $addOptionButton = document.querySelector(".add-option-button");
     const $options = document.querySelector(".options-container");
-    const $expiredDate = document.querySelector(".expired-date");
-    const today = new Date().toISOString().slice(0, 16);
+    const $expiredDate = document.querySelector(".create-expired-date");
+    const timeZoneOffset = (new Date()).getTimezoneOffset() * 60000;
+    const today = (new Date(Date.now() - timeZoneOffset)).toISOString().slice(0, 16);
 
-    $expiredDate.setAttribute('value', today);
-    $expiredDate.setAttribute('min', today);
+    $expiredDate.setAttribute("value", today);
+    $expiredDate.setAttribute("min", today);
 
     $options.addEventListener("click", () => {
       if (event.target.getAttribute("class") === "delete") {
@@ -55,11 +95,13 @@
 
     $addOptionButton.addEventListener("click", () => {
       const $div = document.createElement("div");
+      $div.className = "options-wrapper";
 
       const $newOption = document.createElement("input");
       $newOption.type = "text";
-      $newOption.className = "form-control";
+      $newOption.className = "option";
       $newOption.name = "options";
+      $newOption.placeholder = "항목";
       $div.appendChild($newOption);
 
       const $deleteButton = document.createElement("input");

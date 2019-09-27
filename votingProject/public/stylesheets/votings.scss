@@ -1,5 +1,19 @@
 @import "common.scss";
 
+@mixin navigationButton {
+  display: inline-block;
+  background-color: #bf6cde;
+  font-size: 20px;
+  color: white;
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin-left: 20px;
+  transition: all ease 0.5s;
+  &:hover {
+    background-color: #e26072;
+  }
+}
+
 .navigation {
   width: 100%;
   background-color: #f6f6f6;
@@ -24,28 +38,14 @@
   .navigation-btn {
     text-align: center;
     margin-left: auto;
+    .come-back-home {
+      @include navigationButton();
+    }
     .my-vote {
-      display: inline-block;
-      background-color: #bf6cde;
-      font-size: 20px;
-      color: white;
-      border-radius: 10px;
-      padding: 5px 10px;
-      &:hover {
-        background-color: #e26072;
-      }
+      @include navigationButton();
     }
     .create-vote {
-      display: inline-block;
-      margin-left: 40px;
-      background-color: #bf6cde;
-      font-size: 20px;
-      color: white;
-      border-radius: 10px;
-      padding: 5px 10px;
-      &:hover {
-        background-color: #e26072;
-      }
+      @include navigationButton();
     }
     .navigation-login-list {
       display: inline-block;
@@ -58,6 +58,7 @@
         color: white;
         border-radius: 10px;
         padding: 5px 10px;
+        transition: all ease 0.5s;
         &:hover {
           background-color: #e26072;
         }
@@ -89,10 +90,6 @@
         font-size: 20px;
         color: #263747;
         margin-bottom: 10px;
-      }
-      .voting-created-by {
-        color: #b2c0cc;
-        font-size: 14px;
       }
       .voting-expired-date {
         color: #b2c0cc;

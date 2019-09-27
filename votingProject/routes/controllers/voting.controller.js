@@ -1,5 +1,6 @@
 const User = require("../../models/User");
 const Voting = require("../../models/Voting");
+const formatRelative = require('date-fns/formatRelative');
 
 exports.getAll = async function(req, res, next) {
   try {
@@ -11,8 +12,10 @@ exports.getAll = async function(req, res, next) {
         const expiredDate = new Date(vote.expired_date);
         const now = new Date();
         const inProgress = Boolean(expiredDate - now > 0);
+        const formatDate = formatRelative(expiredDate, new Date());
 
         voteDoc["created_by"] = createUser.name;
+        voteDoc["expired_date"] = formatDate;
         voteDoc.inProgress = inProgress;
 
         return voteDoc;
@@ -37,8 +40,10 @@ exports.getMyVote = async function(req, res, next) {
         const expiredDate = new Date(vote.expired_date);
         const now = new Date();
         const inProgress = Boolean(expiredDate - now > 0);
+        const formatDate = formatRelative(expiredDate, new Date());
 
         voteDoc.inProgress = inProgress;
+        voteDoc["expired_date"] = formatDate;
 
         return voteDoc;
       })
@@ -60,6 +65,7 @@ exports.getSelectedVote = async function(req, res, next) {
     const expiredDate = new Date(selectedVote.expired_date);
     const now = new Date();
     const inProgress = Boolean(expiredDate - now > 0);
+    const formatDate = formatRelative(expiredDate, new Date());
     let numberOfResult = 0;
     let hasVoted = false;
 
@@ -81,6 +87,7 @@ exports.getSelectedVote = async function(req, res, next) {
     selectedVoteDoc.inProgress = inProgress;
     selectedVoteDoc.titleOfResult = titleOfResult;
     selectedVoteDoc.hasVoted = hasVoted;
+    selectedVoteDoc["expired_date"] = formatDate;
 
     res.render("votingRoom", { user: String(req.user._id), selectedVoteDoc });
   } catch (err) {
