@@ -67,9 +67,10 @@ exports.renderVotingForm = (req, res) => {
   };
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
-  const nowDatetime = dateFormat(tomorrow, "yyyy-mm-dd'T'HH:MM");
+  const tomorrowDatetime = dateFormat(tomorrow, "yyyy-mm-dd'T'HH:MM");
+  const nowDatetime = dateFormat(new Date(), "yyyy-mm-dd'T'HH:MM");
 
-  res.render('newVote', { title: 'New Voting Form', user, nowDatetime });
+  res.render('newVote', { title: 'New Voting Form', user, nowDatetime, tomorrowDatetime });
 };
 
 exports.validateSelections = (req, res, next) => {
@@ -115,6 +116,9 @@ exports.renderCreateError = (req, res, next) => {
 
 exports.checkHasVoted = async (req, res, next) => {
   try {
+    if (!ObjectId.isValid(req.params.id)) {
+      return next();
+    }
     const voting = await Voting.findById(req.params.id).populate('created_by', 'name');
 
     res.locals.voting = voting;
@@ -150,8 +154,8 @@ exports.getVotingById = async (req, res, next) => {
     }
     const isCreator = voting.created_by._id.toString() === req.user._id.toString();
     const formattedVoting = voting.toObject();
-    formattedVoting.fomattedExpiredDate = dateFormat(new Date(voting.expired_at), 'yy/mm/dd hh:mm');
-    formattedVoting.fomattedCreatedDate = dateFormat(new Date(voting.createdAt), 'yy/mm/dd hh:mm');
+    formattedVoting.fomattedExpiredDate = dateFormat(new Date(voting.expired_at), 'yy/mm/dd HH:MM');
+    formattedVoting.fomattedCreatedDate = dateFormat(new Date(voting.createdAt), 'yy/mm/dd HH:MM');
     res.render(
       'voting',
       {
@@ -170,8 +174,8 @@ exports.getVotingById = async (req, res, next) => {
 
 exports.voteSelection = async (req, res, next) => {
   try {
-    if (!ObjectId.isValid(req.params.id)) {
-      const error = new Error('This voting is not valid');
+    if (!ObjectId.isValid(req.body.selection)) {
+      const error = new Error('This selection is not valid');
       error.status = 400;
       return next(error);
     }
