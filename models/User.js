@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-// const findOrCreate = require('mongoose-findorcreate');
 const Schema = mongoose.Schema;
+const { EMAIL_RULE, IMG_URL_RULE, SALT_ROUNDS } = require('./constants/constants');
 
 const userSchema = new Schema({
   email: {
@@ -9,7 +9,8 @@ const userSchema = new Schema({
     unique: true,
     required: true,
     lowercase: true,
-    trim: true
+    trim: true,
+    match: [ EMAIL_RULE, 'Please fill a valid email address']
   },
   name: {
     type: String,
@@ -21,17 +22,17 @@ const userSchema = new Schema({
     minlength: 6,
     maxlength: 16,
     required: true,
+    trim: true
   },
   profile_img_url: {
     type: String,
+    trim: true,
+    match: [ IMG_URL_RULE, 'Please fill a valid Image Url'],
     default: 'https://image.flaticon.com/icons/svg/74/74472.svg'
   }
 }, {
   timestamps: true
 });
-
-// userSchema.plugin(findOrCreate);
-const SALT_ROUNDS = 10;
 
 userSchema.pre('save', async function(next) {
   try {
@@ -45,12 +46,8 @@ userSchema.pre('save', async function(next) {
 });
 
 userSchema.methods.validatePassword = async function(password) {
-  try {
-    const isValidPassword = await bcrypt.compare(password, this.password);
-    return isValidPassword;
-  } catch (error) {
-    next(error);
-  }
+  const isValidPassword = await bcrypt.compare(password, this.password);
+  return isValidPassword;
 };
 
 module.exports = mongoose.model('User', userSchema);

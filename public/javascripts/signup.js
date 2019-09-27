@@ -14,19 +14,23 @@
       },
       body: JSON.stringify({ email: $emailId.value })
     })
-    .then(function(res) {return res.json();})
-    .then(function(res) {
-      if (res.hasUser) {
-        $resultMessage.textContent = 'The email is already in use.';
-        $resultMessage.classList.add('disabled');
-        return;
-      }
-      $resultMessage.classList.remove('disabled');
-      $resultMessage.textContent = 'The email is available.';
-    })
-    .catch(function(error) {
-      console.error('Error:', error);
-    });
+      .then(function(res) {return res.json();})
+      .then(function(res) {
+        if (res.hasUser) {
+          $resultMessage.textContent = 'This email is already in use.';
+          $resultMessage.classList.add('disabled');
+          return;
+        } else if (!res.isMatched) {
+          $resultMessage.textContent = 'This email is not in a valid format.';
+          $resultMessage.classList.add('disabled');
+          return;
+        }
+        $resultMessage.classList.remove('disabled');
+        $resultMessage.textContent = 'This email is available.';
+      })
+      .catch(function(error) {
+        console.error('Error:', error);
+      });
   });
 
   $repeatedPassword.addEventListener('keyup', function(event) {

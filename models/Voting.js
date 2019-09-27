@@ -1,42 +1,40 @@
 const mongoose = require('mongoose');
+const { votingStatus } = require('./constants/constants');
 
 const votingSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
+    trim: true
   },
   description: {
     type: String
   },
-  creator: {
+  created_by: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
   status: {
     type: String,
-    validate: {
-      validator: function(status) {
-        return status === 'INPROGRESS' || status === 'EXPIRED';
-      }
-    },
-    default: 'INPROGRESS'
+    enum: [votingStatus.EXPIRED, votingStatus.INPROGRESS],
+    default: votingStatus.INPROGRESS
   },
   expired_at: {
     type: Date,
-    required: true
+    required: true,
+    validate: (date) => new Date() < new Date(date)
   },
   selections: [{
     name: {
       type: String,
-      required: true
+      required: true,
+      trim: true
     },
-    voter: {
-      type: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-      }]
-    }
+    voter: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }]
   }]
 }, {
   timestamps: true

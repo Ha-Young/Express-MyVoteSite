@@ -2,7 +2,7 @@
 <html>
   <head>
     <% include ./partial/head %>
-    <link rel='stylesheet' href='/stylesheets/main.css' />
+    <link rel='stylesheet' href='/stylesheets/pages/main.css' />
   </head>
   <body>
     <% include ./partial/header %>
@@ -21,8 +21,8 @@
               </div>
               <div class="content-bottom">
                 <div class="content-creator">
-                  Creator :
-                  <%= vote.creator.name %>
+                  Created by
+                  <%= vote.created_by.name %>
                 </div>
                 <div class="content-status">
                   <% if (vote.status === 'INPROGRESS') { %>

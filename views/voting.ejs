@@ -2,7 +2,7 @@
 <html>
   <head>
     <% include ./partial/head %>
-    <link rel='stylesheet' href='/stylesheets/voting.css' />
+    <link rel='stylesheet' href='/stylesheets/pages/voting.css' />
   </head>
   <body>
     <% include ./partial/header %>
@@ -12,7 +12,7 @@
           <a href="/"><button class="gobackbtn">목록으로</button></a>
         </div>
         <div class="delete-button-wrap">
-          <% if (isMatchedCreator) { %>
+          <% if (isCreator) { %>
             <button class="delete-voting" data-id="<%= voting._id %>">삭제하기</button>
           <% } %>
         </div>
@@ -22,7 +22,7 @@
       </div>
       <div class="voting-info">
         <div class="voting-creator">
-          <span>Creator : <%= voting.creator.name %></span>
+          <span>Created by <%= voting.created_by.name %></span>
         </div>
         <div class="voting-status">
             <% if (voting.status === 'INPROGRESS') { %>
@@ -80,12 +80,12 @@
           </div>
           <div class="result-voting" data-totalVoter="<%= totalVoter %>">
             <% voting.selections.forEach(function(selection){ %>
-              <% if ((voting.status === 'EXPIRED' || isMatchedCreator) && selection._id.toString() === winner.toString()) { %>
+              <% if ((voting.status === 'EXPIRED' || isCreator) && selection._id.toString() === winner.toString()) { %>
                 <div class="result-wrap winner">
               <% } else { %>
                 <div class="result-wrap ">
               <% } %>
-                <% if (voting.status === 'EXPIRED' || isMatchedCreator) { %>
+                <% if (voting.status === 'EXPIRED' || isCreator) { %>
                   <div class="vote-result-name">
                     <%= selection.name %>
                   </div>
@@ -105,20 +105,3 @@
     <script src="/javascripts/voting.js" ></script>
   </body>
 </html>
-<!-- {
-  title: 'Voting Platform',
-  voting: {
-    status: 'ONGOING',
-    _id: 5d8b007925ff3b81b80c5c8b,
-    title: 'lkdsjag;kj',
-    description: 'lkajsdgf;kladsg',
-    expired_at: 2019-09-26T19:52:00.000Z,
-    selections: [ [Object], [Object], [Object], [Object] ],
-    creator: 5d8b006325ff3b81b80c5c8a,
-    createdAt: 2019-09-25T05:51:53.593Z,
-    updatedAt: 2019-09-25T05:55:12.901Z,
-    __v: 1
-  },
-  winner: 5d8b007925ff3b81b80c5c8c,
-  hasVoted: false
-} -->

@@ -10,12 +10,12 @@
         fetch(`/votings/${event.target.dataset.id}`, {
           method: 'DELETE'
         })
-        .then(function() {
-          window.location = '/';
-        })
-        .catch(function(error) {
-          console.error('Error:', error);
-        });
+          .then(function() {
+            window.location = '/';
+          })
+          .catch(function(error) {
+            console.error('Error:', error);
+          });
       }
     });
 
@@ -26,7 +26,6 @@
         return;
       }
       var voters = result.dataset.voter;
-      console.log(voters)
       resultBar.style.width = `${(voters / totalVoting) * 100}%`;
     });
 

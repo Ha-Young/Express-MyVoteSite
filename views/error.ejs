@@ -2,17 +2,21 @@
 <html>
   <head>
     <title>Error</title>
-    <link rel='stylesheet' href='/stylesheets/error.css' />
+    <link rel='stylesheet' href='/stylesheets/pages/error.css' />
     <script src="https://kit.fontawesome.com/fd4b58f98f.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <% include ./partial/header %>
     <div class="error-container">
-      <h1><%= error.status %></h1>
-      <h2><%= message %></h2>
-      <% if (error.status === 401) { %>
+      <h1><%= err.status %></h1>
+      <h2><%= err.message %></h2>
+      <% if (err.status === 401) { %>
         <a href="/login">
           <button>Go Login Page</button>
+        </a>
+      <% } else if (err.status === 400){ %>
+        <a href="javascript:history.back()">
+          <button>Go Back</button>
         </a>
       <% } else { %>
         <a href="/">

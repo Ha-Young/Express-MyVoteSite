@@ -1,13 +1,22 @@
 const passport = require('passport');
 const User = require('../../models/User');
+const { EMAIL_RULE } = require('../../models/constants/constants');
 
-exports.getSignupPage = (req, res, next) => {
+exports.getSignupPage = (req, res) => {
   res.render('signup', { title: 'signup', message : ''});
 };
 
 exports.validateUserData = async (req, res, next) => {
   try {
     const hasUser = await User.exists({ email: req.body.email });
+    const newUser = Object.assign({}, req.body);
+
+    for (let key in newUser) {
+      newUser[key] = newUser[key].trim();
+    }
+    if (!newUser.profileImgUrl) {
+      delete newUser.profileImgUrl;
+    }
 
     if (hasUser) {
       req.flash('error', 'Email address already subscribed.');
@@ -19,6 +28,8 @@ exports.validateUserData = async (req, res, next) => {
       return res.render('signup', { title: 'signup', message: req.flash('error') });
     }
 
+    res.locals.newUser = newUser;
+
     next();
   } catch (error) {
     next(error);
@@ -27,35 +38,32 @@ exports.validateUserData = async (req, res, next) => {
 
 exports.createUserData = async (req, res, next) => {
   try {
-    const newUser = {
-      email: req.body.email,
-      name: req.body.name,
-      password: req.body.password,
-    };
+    const user = new User(res.locals.newUser);
+    await user.validate();
+    await user.save();
 
-    if (req.body.profileImgUrl) {
-      newUser.profile_img_url = req.body.profileImgUrl;
+    res.status(302).redirect('/login');
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      error.status = 400;
+      return next(error);
     }
+    next(error);
+  }
+};
 
-    await new User(newUser).save();
+exports.checkEmailValidation = async (req, res, next) => {
+  try {
+    const hasUser = await User.exists({ email: req.body.email });
+    const isMatched = EMAIL_RULE.test(req.body.email);
 
-    res.status(302).redirect('/');
+    res.send({ hasUser, isMatched });
   } catch (error) {
     next(error);
   }
 };
 
-exports.checkDuplicateId = async (req, res, next) => {
-  try {
-    const hasUser = await User.exists({ email: req.body.email });
-
-    res.send({ hasUser });
-  } catch (error) {
-    next(error);
-  }
-}
-
-exports.getLoginPage = (req, res, next) => {
+exports.getLoginPage = (req, res) => {
   res.render('login', { title: 'login', message: req.flash('error') });
 };
 
@@ -64,7 +72,7 @@ exports.loginFailure = passport.authenticate('local', {
   failureFlash: true
 });
 
-exports.loginSuccess = (req, res, next) => {
+exports.loginSuccess = (req, res) => {
   if (req.body.autoLogin) {
     req.session.cookie.maxAge = 7 * 24 * 60 * 60 * 1000;
   } else {
