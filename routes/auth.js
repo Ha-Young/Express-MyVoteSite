@@ -18,7 +18,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
     await User.create(
       {
         email: req.body.email,
-        nickname: req.body.nickname1,
+        nickname: req.body.nickname,
         password: hash,
         provider: 'local'
       }
