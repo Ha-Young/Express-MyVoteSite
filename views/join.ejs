@@ -4,19 +4,21 @@
   <body>
     <header>
       <div class="header">
-        <div> <span>Voting</span> </div>
-        <div>
-          이미 계정이 있습니다
-          <a href="/login" class="sign-up">Login</a>
+        <div class="header-wrapper">
+          <span>Voting</span>
+          <div>
+            이미 계정이 있습니다
+            <a href="/login" class="sign-up">Login</a>
+          </div>
         </div>
       </div>
     </header>
     <div class="join-wrapper">
       <div class="join-image">
-        <% if (err) {%>
-          <div><%= err %></div>
-        <% } %>
         <form action="/auth/join" method="post" class="join-form">
+          <% if (message) { %>
+            <span class="join-inform-error"><%= message %></span>
+          <% } %>
           <div class="join-input">
             <label>Email</label>
             <input
@@ -48,21 +50,28 @@
             >
           </div>
           <div class="join-input">
-            <label></label>
+            <label>Confirm Password</label>
             <input
               type="password"
-              id="verify-password"
-              name="password"
+              id="confirm-password"
+              name="confirm_password"
               autocomplete="off"
               required
             >
-            <span>대문자, 소문자, 숫자 조합 7-14</span>
-          </div>
+            <% if (err) { %>
+              <div class="join-inform-error join-inform">
+            <% } else { %>
+              <div class="join-inform">
+            <% } %>
+              7 - 14 charactors with numbers, upper and lower letters
+              </div>
+            </div>
           <div class="login-join-submit">
             <input type="submit" value="Join" id="join-bottom">
           </div>
         </form>
       </div>
     </div>
+    <script src="/javascripts/join-vote.js"></script>
   </body>
 </html>

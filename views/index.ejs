@@ -23,7 +23,8 @@
                   <span class="not-in-progress progress">ended</span>
                 <% } %>
                 <div><%= vote.title %></div>
-                <div class="end-date">end date: <%= times[i] %></div>
+                <span class="vote-info">by <%= vote.creator_id.name%> /</span>
+                <span class="vote-info">end date: <%= times[i] %></span>
               </a>
             <% }) %>
           <% } %>

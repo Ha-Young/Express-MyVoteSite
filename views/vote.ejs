@@ -13,7 +13,7 @@
               <label>
                 <input
                   type="radio"
-                  name="optionId"
+                  name="option_id"
                   class="option-radio"
                   value="<%= option._id %>"
                   required
@@ -41,7 +41,7 @@
                 <div class="graph-box">
                   <div class="graph" data-count="<%= count.length %>"></div>
                   <div class="vote-result">
-                    <div class="result-option">option<%= vote.options[i].text %></div>
+                    <div class="result-option"><%= vote.options[i].text %></div>
                     <div><%= count.length %>표</div>
                   </div>
               </div>

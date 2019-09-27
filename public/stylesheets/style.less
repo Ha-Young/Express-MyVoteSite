@@ -1,7 +1,7 @@
 @notoSansKr: 'Noto Sans KR', sans-serif;
 @notoSans: 'Noto Sans', sans-serif;
 @serif: 'Noto Serif', serif;
-@indexImg: 'https://miro.medium.com/max/2560/1*XoX170OB7K5bRm6z24DysQ.jpeg';
+@indexImg: 'https://fsmedia.imgix.net/1e/f5/34/a5/14e1/4a98/b0b7/2c38cc3cf00a.jpeg?rect=0%2C0%2C3984%2C1991&auto=format%2Ccompress&dpr=2&w=650';
 @loginImg: 'https://miro.medium.com/max/12000/0*PsTrUH8UelbNzlXm';
 @voteImg: 'https://images.unsplash.com/photo-1517586979036-b7d1e86b3345?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80';
 @successImg: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80';
@@ -21,6 +21,9 @@ body {
   font-family: @serif;
   background-color: @backgroundColor;
 }
+h1 {
+  padding-left: 200px;
+}
 a {
   font-size: 25px;
   text-decoration: none;
@@ -33,7 +36,6 @@ input, button {
   padding-left: 10px;
   font-size: 18px;
   border-radius: 5px;
-  // background-color: @backgroundColor;
 }
 input:focus {
   outline: #573838;
@@ -50,7 +52,15 @@ input:focus {
   background-color: @backgroundColor;
   z-index: 1;
 
+  .header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 1280px;
+    margin: 0 auto;
+  }
+
   div {
+    display: inline-block;
     padding: 0 30px;
     line-height: 65px;
 
@@ -96,7 +106,6 @@ input:focus {
 
     .login-form, .join-form  {
       width: 600px;
-      height: 600px;
       padding: 90px 120px;
       box-sizing: border-box;
       border-radius: 3px;
@@ -117,6 +126,16 @@ input:focus {
           width: 100%;
         }
       }
+
+      .join-inform {
+        margin-top: 0;
+        padding-left: 15px;
+        word-break: keep-all;
+      }
+
+      .join-inform-error {
+        color:rgb(255, 157, 157);
+      }
     }
   }
 }
@@ -129,13 +148,10 @@ input:focus {
     display: table;
     width: 100%;
     height: 450px;
-    text-align: center;
     background:
-      @backgroundOpacity,
       url(@indexImg)
       no-repeat;
     background-size: cover;
-    // filter: grayscale(20%);
 
     h1 {
       display: table-cell;
@@ -153,7 +169,7 @@ input:focus {
       width: 1200px;
       padding-bottom: 30px;
       margin: 0 auto 35px;
-      font-size: 25px;
+      font-size: 40px;
       text-align: center;
     }
 
@@ -195,7 +211,7 @@ input:focus {
           background: @darkColor;
         }
 
-        .end-date {
+        .vote-info {
           font-size: 15px;
         }
       }
@@ -250,10 +266,6 @@ input:focus {
     font-family: 'Noto Serif',serif;
     box-shadow: 0 0 5px @darkColor;
     background-color: #ffffff;
-
-    .vote-title {
-      font-size: 40px;
-    }
 
     .create-title {
       font-size: 30px;

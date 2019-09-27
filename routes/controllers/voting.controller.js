@@ -1,7 +1,7 @@
 const Vote = require('../../models/Vote');
 const dateFormat = require('dateformat');
 
-exports.getAll = async(req, res, next) => {
+exports.getAll = async function(req, res, next) {
   try {
     const votes = await Vote.find({ creator_id: req.user._id });
     const now = new Date();
@@ -23,7 +23,7 @@ exports.getAll = async(req, res, next) => {
   }
 };
 
-exports.getOne = (req, res, next) => {
+exports.getOne = function(req, res, next) {
   try {
     const {
       vote,
@@ -50,26 +50,26 @@ exports.getOne = (req, res, next) => {
   }
 };
 
-exports.update = async(req, res, next) => {
+exports.update = async function(req, res, next) {
   try {
-    const vote = await Vote.findById(voteId);
-    const voteId = req.params.id;
-    const selectedOption = vote.options.find(option => option.id === req.body.optionId);
+    const vote = await Vote.findById(req.params.id);
+    const selectedOption = vote.options.find(option => option.id === req.body.option_id);
 
     selectedOption.count.push(req.user._id);
     await vote.save();
-    res.redirect(`/votings/${voteId}`);
+
+    res.redirect(`/votings/${req.params.id}`);
   } catch(err) {
     next(err);
   }
 };
 
-exports.create = async(req, res, next) => {
+exports.create = async function(req, res, next) {
   try {
     await new Vote({
       title: req.body.title,
       creator_id: req.user._id,
-      end_date: req.body.endDate,
+      end_date: req.body.end_date,
       options: req.body.options.map(option => ({ text: option }))
     }).save();
 
@@ -79,7 +79,7 @@ exports.create = async(req, res, next) => {
   }
 };
 
-exports.delete = async(req, res, next) => {
+exports.delete = async function(req, res, next) {
   try {
     await Vote.findByIdAndDelete(req.params.id);
 
@@ -89,14 +89,14 @@ exports.delete = async(req, res, next) => {
   }
 };
 
-exports.typeForm = (req, res, next) => {
-  res.render('createVote');
+exports.typeForm = function(req, res, next) {
+  res.render('create-vote');
 };
 
-exports.success = (req, res, next) => {
+exports.success = function(req, res, next) {
   res.render('success');
 };
 
-exports.error = (req, res, next) => {
+exports.error = function(req, res, next) {
   res.render('error', { message: '투표 생성에 실패하였습니다' });
 };

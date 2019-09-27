@@ -5,9 +5,9 @@ const Vote = require('../models/Vote');
 const dateFormat = require('dateformat');
 
 /* GET home page. */
-router.get('/', authentication.ensureLoggedIn, async(req, res, next) => {
+router.get('/', authentication.ensureLoggedIn, async function(req, res, next) {
   try {
-    const votes = await Vote.find();
+    const votes = await Vote.find().populate('creator_id', 'name');
     const now = new Date();
     const isInProgress = votes.map(vote => vote.end_date > now);
     const times = votes.map(vote => dateFormat(vote.end_date, 'yy-mm-dd hTT'));

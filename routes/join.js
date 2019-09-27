@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-  res.render('join', { err: null });
+router.get('/', function(req, res, next) {
+  res.render('join', { message: null, err: null });
 });
 
 module.exports = router;

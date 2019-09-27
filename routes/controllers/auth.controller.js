@@ -1,6 +1,6 @@
 const passport = require('passport');
-const bcrypt = require('bcrypt');
 const User = require('../../models/User');
+const regExp = require('../../constants/reg-exp');
 
 exports.login = passport.authenticate('local', {
   successRedirect: '/',
@@ -8,35 +8,45 @@ exports.login = passport.authenticate('local', {
   failureFlash: true
 });
 
-exports.join = async(req, res, next) => {
+exports.join = async function(req, res, next) {
   try {
-    const { email, username, password } = req.body;
-    const validPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+    const { email, username, password, confirm_password } = req.body;
+    const user = await User.findOne({ email: email });
 
-    if (password.match(validPassword)) {
-      const existedUser = await User.findOne({ email: email });
+    if (user) {
+      return res.render('join', { message: '이미 가입한 회원입니다', err: null });
+    }
 
-      if (existedUser) {
-        return res.send({ result: '이미 가입한 회원입니다' });
+    if (!regExp.vaildEmail.test(email)) {
+      return res.render('join', { message: '이메일 형식이 맞지 않습니다', err: null });
+    }
+
+    if (regExp.vaildPassword.test(password)) {
+      if (password !== confirm_password) {
+        return res.render('join', { message: '비밀번호가 일치하지 않습니다', err: null });
       }
 
-      const hash = await bcrypt.hash(password, 12);
-
-      await User.create({
+      const newUser = await new User({
         email: email,
         name: username,
-        password: hash
+        password: password
       });
+
+      newUser.validate(function(err) {
+        return res.render('join', { message: err, err: null });
+      });
+
+      await newUser.save();
       return res.redirect('/');
     }
 
-    return res.render('join', { err: '대문자, 소문자, 숫자 조합하여 7-14자의 비밀번호를 입력 해주세요' })
+    res.render('join', { message: null, err: true });
   } catch(err) {
     next(err);
   }
 };
 
-exports.logout = (req, res, err) => {
+exports.logout = function(req, res, err) {
   req.logout();
   req.session.destroy();
   res.redirect('/');

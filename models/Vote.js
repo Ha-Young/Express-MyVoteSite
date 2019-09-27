@@ -5,6 +5,7 @@ const voteSchema = new mongoose.Schema(
   {
     title: {
       type: String,
+      trim: true,
       required: true
     },
     creator_id: {
@@ -19,6 +20,7 @@ const voteSchema = new mongoose.Schema(
     options: [{
       text: {
         type: String,
+        trim: true,
         required: true
       },
       count: [{
