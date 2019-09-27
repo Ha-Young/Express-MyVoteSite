@@ -6,7 +6,7 @@ exports.login = (req, res) => {
   if (flashMessage.error) {
     feedback = flashMessage.error[0];
   }
-  res.render('login', { error: feedback });
+  res.status(200).render('login', { error: feedback });
 };
 
 exports.signup = (req, res) => {
@@ -15,7 +15,7 @@ exports.signup = (req, res) => {
   if (flashMessage.error) {
     feedback = flashMessage.error[0];
   }
-  res.render('signup', { error: feedback });
+  res.status(200).render('signup', { error: feedback });
 };
 
 exports.loginLocal = passport.authenticate('local', {
@@ -33,5 +33,5 @@ exports.githubCallback = passport.authenticate('github', {
 
 exports.logout = (req, res) => {
   req.logOut();
-  res.status(301).redirect('/login');
+  res.status(302).redirect('/login');
 };

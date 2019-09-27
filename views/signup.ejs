@@ -1,43 +1,40 @@
 <!DOCTYPE html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>바닐라코딩 프로그래머스</title>
-    <link rel="stylesheet" href="/stylesheets/login.css" />
+    <link rel='stylesheet' href='/stylesheets/login.css' />
   </head>
 	<body>
-		<div id="app" class="container">
+		<div id='app' class='container'>
       <img
-        class="logo-img"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9sIfYViz3GayTv5_1AwPN7Csv1zcGkyVyaZA521BhlWxr4a8L"/>
+        class='logo-img'
+        src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9sIfYViz3GayTv5_1AwPN7Csv1zcGkyVyaZA521BhlWxr4a8L'/>
       <% if(error) { %>
-        <div class="error-message"><%= error %></div>
+        <div class='error-message'><%= error %></div>
       <% } else { %>
-        <div class="nonerror-message"><%= "이름과 비밀번호를 입력해주세요!" %></div>
+        <div class='nonerror-message'><%= '이름과 비밀번호를 입력해주세요!' %></div>
       <% } %>
-      <form class="form-signin" action="/register" method="POST">
-        <div class="group">
-          <input type="text" required autoFocus name="name" required />
-          <span class="highlight"></span>
-          <span class="bar"></span>
-          <label class="label-login">Name</label>
+      <form class='form-signin' action='/register' method='POST'>
+        <div class='group'>
+          <input type='text' required autoFocus name='name' required />
+          <span class='highlight'></span>
+          <span class='bar'></span>
+          <label class='label-login'>Name</label>
         </div>
-        <div class="group">
-          <input type="text" required name="password" />
-          <span class="highlight"></span>
-          <span class="bar"></span>
-          <label class="label-login">password</label>
+        <div class='group'>
+          <input type='text' required name='password' />
+          <span class='highlight'></span>
+          <span class='bar'></span>
+          <label class='label-login'>password</label>
         </div>
-        <div class="group">
-          <input type="text" required name="password2" />
-          <span class="highlight"></span>
-          <span class="bar"></span>
-          <label class="label-login">재입력 password</label>
+        <div class='group'>
+          <input type='text' required name='password2' />
+          <span class='highlight'></span>
+          <span class='bar'></span>
+          <label class='label-login'>재입력 password</label>
         </div>
-        <input type="submit" value="회원가입" />
+        <input type='submit' value='회원가입' />
       </form>
-      <div class="signup"><a href="/login">로그인</a></div>
+      <div class='signup'><a href='/login'>로그인</a></div>
     </div>
 	</body>
 </html>

@@ -1,97 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel='stylesheet' href='/stylesheets/header.css' />
-    <link rel="stylesheet" href="/stylesheets/login.css" />
-    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+    <link rel='stylesheet' href='/stylesheets/login.css' />
+    <script src='https://use.fontawesome.com/releases/v5.2.0/js/all.js'></script>
     <title>VC-Voting-Platform</title>
   </head>
   <body>
-    <div class="header">
-      <div class="header-logo">
-        <img src="https://raw.githubusercontent.com/Kyounghwan01/Hyperledger-building-security-app/master/assets/icLogo.png"/>
-        <div class="title"><span><a href="/"><%= "VC-Voting" %></a></span></div>
+    <div class='header'>
+      <div class='header-logo'>
+        <img src='https://raw.githubusercontent.com/Kyounghwan01/Hyperledger-building-security-app/master/assets/icLogo.png'/>
+        <div class='title'><span><a href='/'><%= 'VC-Voting' %></a></span></div>
       </div>
-      <div class="header-info">
+      <div class='header-info'>
         <div>
-          <i class="fas fa-user-alt"></i>
-          <span><%= ": " + name %></span>
+          <i class='fas fa-user-alt'></i>
+          <span><%= ': ' + name %></span>
         </div>
-        <div class="header-slider">
-          <input id="hamburger" type="checkbox" /><label id = "hamburger1" for="hamburger">&equiv;</label>
+        <div class='header-slider'>
+          <input id='hamburger' type='checkbox' /><label id = 'hamburger1' for='hamburger'>&equiv;</label>
           <nav>
             <div>메뉴</div>
             <ul>
-              <li><a href="/">투표 목록</a></li>
-              <li><a href="/votings">내 투표</a></li>
-              <li><a href="/logout">로그아웃</a></li>
+              <li><a href='/'>투표 목록</a></li>
+              <li><a href='/votings'>내 투표</a></li>
+              <li><a href='/logout'>로그아웃</a></li>
             </ul>
           </nav>
         </div>
       </div>
     </div>
-
-    <div class="list-container">
+    <div class='list-container'>
       <span>투표 만들기</span>
     </div>
-
-    <div class="container">
-      <form className="form-signin" action="/votings/new" method="POST">
-        <div class="group">
-          <input type="name" required autoFocus name="title" />
-          <span class="highlight"></span>
-          <span class="bar"></span>
-          <label class="label-login">투표 이름</label>
+    <div class='container'>
+      <form className='form-signin' action='/votings/new' method='POST'>
+        <div class='group'>
+          <input type='name' required autoFocus name='title' />
+          <span class='highlight'></span>
+          <span class='bar'></span>
+          <label class='label-login'>투표 이름</label>
         </div>
-        <div class="group">
-          <input type="datetime-local" required name="date" min="<%= now %>"/>
-          <span class="highlight"></span>
-          <span class="bar"></span>
+        <div class='group'>
+          <input type='datetime-local' required name='date' min='<%= now %>'/>
+          <span class='highlight'></span>
+          <span class='bar'></span>
         </div>
-
-        <div class="option-title">
+        <div class='option-title'>
           <span>항목은 2개 이상 입력해주세요</span>
         </div>
-        <div id="options-box">
-          <input type="text" name="options" placeholder="항목" required />
-          <input type="text" name="options" placeholder="항목" required />
+        <div id='options-box'>
+          <input type='text' name='options' placeholder='항목' required />
+          <input type='text' name='options' placeholder='항목' required />
         </div>
-        <div class="button-group">
-          <div id="optionPlus"><span>항목 추가</span></div>
-          <div id="optionDel"><span>항목 제거</span></div>
-          <div style="display: inline-block"><input class="vote-submit" type="submit" value="제출" /></div>
+        <div class='button-group'>
+          <div id='optionPlus'><span>항목 추가</span></div>
+          <div id='optionDel'><span>항목 제거</span></div>
+          <div style='display: inline-block'><input class='vote-submit' type='submit' value='제출' /></div>
         </div>
       </form>
     </div>
-
-    <script>
-      (function() {
-        var optionBox = document.getElementById('options-box');
-
-        function plusOption() {
-          var createInput = document.createElement('input');
-          createInput.setAttribute('type', 'text');
-          createInput.setAttribute('name', 'options');
-          createInput.setAttribute('placeholder', '항목');
-          createInput.setAttribute('required', '');
-          optionBox.appendChild(createInput);
-        }
-        function delOption(e) {
-          if (optionBox.children.length > 2) {
-            optionBox.removeChild(optionBox.lastChild);
-          }
-        }
-        document
-          .getElementById('optionPlus')
-          .addEventListener('click', plusOption);
-
-        document
-          .getElementById('optionDel')
-          .addEventListener('click', delOption);
-      })();
-    </script>
+    <script src='/javascripts/index.js'></script>
   </body>
 </html>

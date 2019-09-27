@@ -1,46 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <link rel='stylesheet' href='/stylesheets/header.css' />
-  <link rel='stylesheet' href='/stylesheets/mainpage.css' />
-  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-  <title>VC-Voting-Platform</title>
-</head>
-<body>
-  <div class="header">
-    <div class="header-logo">
-      <img src="https://raw.githubusercontent.com/Kyounghwan01/Hyperledger-building-security-app/master/assets/icLogo.png"/>
-      <div class="title"><span><a href="/"><%= "VC-Voting" %></a></span></div>
-    </div>
-    <div class="header-info">
-      <div>
-        <i class="fas fa-user-alt"></i>
-        <span><%= ": " + name %></span>
+<html lang='en'>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/header.css' />
+    <link rel='stylesheet' href='/stylesheets/mainpage.css' />
+    <script src='https://use.fontawesome.com/releases/v5.2.0/js/all.js'></script>
+    <title>VC-Voting-Platform</title>
+  </head>
+  <body>
+    <div class='header'>
+      <div class='header-logo'>
+        <img src='https://raw.githubusercontent.com/Kyounghwan01/Hyperledger-building-security-app/master/assets/icLogo.png'/>
+        <div class='title'><span><a href='/'><%= 'VC-Voting' %></a></span></div>
       </div>
-      <div class="header-slider">
-        <input id="hamburger" type="checkbox" /><label for="hamburger">&equiv;</label>
-        <nav>
-          <div>메뉴</div>
-          <ul>
-            <li><a href="/">투표 목록</a></li>
-            <li><a href="/votings">내 투표</a></li>
-            <li><a href="/logout">로그아웃</a></li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-  </div>
-
-  <div class="main-body">
-    <div class="list-container">
-      <span>투표 생성을 성공하였습니다.</span>
-    </div>
-    <div class="make-success">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5XBz8bMd_T6GEUNuXoPFziNiWiFcD-8e5PL8K5ehAzQBVFFROVw"/>
-      <div class="go-to-list">
-        <span><a href="/">목록으로</a></span>
+      <div class='header-info'>
+        <div>
+          <i class='fas fa-user-alt'></i>
+          <span><%= ': ' + name %></span>
+        </div>
+        <div class='header-slider'>
+          <input id='hamburger' type='checkbox' /><label for='hamburger'>&equiv;</label>
+          <nav>
+            <div>메뉴</div>
+            <ul>
+              <li><a href='/'>투표 목록</a></li>
+              <li><a href='/votings'>내 투표</a></li>
+              <li><a href='/logout'>로그아웃</a></li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </div>
-  </div>
-</body>
+    <div class='main-body'>
+      <div class='list-container'>
+        <span>투표 생성을 성공하였습니다.</span>
+      </div>
+      <div class='make-success'>
+        <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5XBz8bMd_T6GEUNuXoPFziNiWiFcD-8e5PL8K5ehAzQBVFFROVw'/>
+        <div class='go-to-list'>
+          <span><a href='/'>목록으로</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

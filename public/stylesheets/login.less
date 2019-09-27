@@ -1,9 +1,7 @@
+@underline : #5264ae;
 * {
   box-sizing: border-box;
 }
-
-@underline : #5264ae;
-
 .container {
   display: flex;
   padding-top: 80px;
@@ -41,7 +39,6 @@ input,
     color: @underline;
   }
 }
-
 input:focus {
   outline: none;
 }
@@ -53,8 +50,6 @@ input:focus {
   color: @underline;
   margin-bottom: 20px;
 }
-
-/* LABEL ======================================= */
 .label-login {
   color: #999;
   font-size: 18px;
@@ -67,16 +62,12 @@ input:focus {
   -moz-transition: 0.2s ease all;
   -webkit-transition: 0.2s ease all;
 }
-
-/* active state */
 input:focus ~ .label-login,
 input:valid ~ .label-login {
   top: -20px;
   font-size: 14px;
   color: @underline;
 }
-
-/* BOTTOM BARS ================================= */
 .bar {
   position: relative;
   display: block;
@@ -100,8 +91,6 @@ input:valid ~ .label-login {
 .bar:after {
   right: 50%;
 }
-
-/* active state */
 input:focus ~ .bar:before,
 input:focus ~ .bar:after {
   width: 50%;
@@ -110,11 +99,9 @@ input:focus ~ .bar:after {
   width: 100%;
   margin-top: 30px;
 }
-
 #optionPlus,
 #optionDel,
-.vote-submit
-{
+.vote-submit {
   background-color: @underline;
   padding: 10px;
   margin: 5px;
@@ -123,12 +110,10 @@ input:focus ~ .bar:after {
   text-align: center;
   display: inline-block;
 }
-
 #optionPlus span,
 #optionDel span {
   color: white;
 }
-
 .option-title {
   text-align: center;
   span {
@@ -136,29 +121,14 @@ input:focus ~ .bar:after {
     font-weight: bold;
   }
 }
-
-.vote-submit{
+.vote-submit {
   color: white;
 }
-
-
-/* active state */
 input:focus ~ .highlight {
   -webkit-animation: inputHighlighter 0.3s ease;
   -moz-animation: inputHighlighter 0.3s ease;
   animation: inputHighlighter 0.3s ease;
 }
-
-@-webkit-keyframes inputHighlighter {
-  from {
-    background: #5264ae;
-  }
-  to {
-    width: 0;
-    background: transparent;
-  }
-}
-
 .list-container {
   height: 150px;
   width: 100%;
@@ -169,6 +139,15 @@ input:focus ~ .highlight {
   span {
     font-size: 30px;
     font-weight: bold;
-    color: white
+    color: white;
+  }
+}
+@-webkit-keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
   }
 }

@@ -1,58 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
   <head>
     <link rel='stylesheet' href='/stylesheets/header.css' />
     <link rel='stylesheet' href='/stylesheets/mainpage.css' />
-    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+    <script src='https://use.fontawesome.com/releases/v5.2.0/js/all.js'></script>
     <title>VC-Vote-platform</title>
   </head>
   <body>
-    <div class="header">
-      <div class="header-logo">
-        <img src="https://raw.githubusercontent.com/Kyounghwan01/Hyperledger-building-security-app/master/assets/icLogo.png"/>
-        <div class="title"><span><a href="/"><%= "VC-Voting" %></a></span></div>
+    <div class='header'>
+      <div class='header-logo'>
+        <img src='https://raw.githubusercontent.com/Kyounghwan01/Hyperledger-building-security-app/master/assets/icLogo.png'/>
+        <div class='title'><span><a href='/'><%= 'VC-Voting' %></a></span></div>
       </div>
-      <div class="header-info">
+      <div class='header-info'>
         <div>
-          <i class="fas fa-user-alt"></i>
-          <span><%= ": " + name %></span>
+          <i class='fas fa-user-alt'></i>
+          <span><%= ': ' + name %></span>
         </div>
-        <div class="header-slider">
-          <input id="hamburger" type="checkbox" /><label for="hamburger">&equiv;</label>
+        <div class='header-slider'>
+          <input id='hamburger' type='checkbox' /><label for='hamburger'>&equiv;</label>
           <nav>
             <div>메뉴</div>
             <ul>
-              <li><a href="/votings/new">투표 생성</a></li>
-              <li><a href="/">투표 목록</a></li>
-              <li><a href="/logout">로그아웃</a></li>
+              <li><a href='/votings/new'>투표 생성</a></li>
+              <li><a href='/'>투표 목록</a></li>
+              <li><a href='/logout'>로그아웃</a></li>
             </ul>
           </nav>
         </div>
       </div>
     </div>
 
-    <div class="main-body">
-      <div class="list-container">
+    <div class='main-body'>
+      <div class='list-container'>
         <span>내 투표 목록!</span>
       </div>
-      <div class="vote-container">
+      <div class='vote-container'>
         <ul>
           <% for(let i=0; i<voteMap.length; i++ ){%>
-            <div class="vote-list">
-              <li class="title"><span><%= voteMap[i].title %></span></li>
-              <li class="description-context">
-                <span><%= "creator : " %></span>
-                <span class="description"><%= voteMap[i].username %></span>
+            <div class='vote-list'>
+              <li class='title'><span><%= voteMap[i].title %></span></li>
+              <li class='description-context'>
+                <span><%= 'creator : ' %></span>
+                <span class='description'><%= voteMap[i].username %></span>
               </li>
-              <li class="description-context">
-                <span class="description"><%= voteMap[i].date %></span>
+              <li class='description-context'>
+                <span class='description'><%= voteMap[i].date %></span>
               </li>
               <% if(voteMap[i].proceeding){ %>
-                <li class="context proceeding"><span><%= "진행중" %></span></li>
-                <div class="context proceeding"><a href="/votings/<%= voteMap[i]._id%>">투표하기</a></div>
+                <li class='context proceeding'><span><%= '진행중' %></span></li>
+                <div class='context proceeding'><a href='/votings/<%= voteMap[i]._id%>'>투표하기</a></div>
               <% } else { %>
-                <li class="context proceeding-end"><span><%= "마감" %></span></li>
-                <div class="context proceeding-end"><a href="/votings/<%= voteMap[i]._id%>">결과보기</a></div>
+                <li class='context proceeding-end'><span><%= '마감' %></span></li>
+                <div class='context proceeding-end'><a href='/votings/<%= voteMap[i]._id%>'>결과보기</a></div>
               <% } %>
             </div>
           <%}%>
