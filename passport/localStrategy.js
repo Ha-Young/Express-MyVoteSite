@@ -17,10 +17,10 @@ module.exports = passport => {
             if (result) {
               done(null, exUser);
             } else {
-              done(null, false, { message: 'unmatchPW' });
+              done(null, false, { message: 'password error' });
             }
           } else {
-            done(null, false, { message: 'unmatchedID' });
+            done(null, false, { message: 'id error' });
           }
         } catch (error) {
           console.error(error);
