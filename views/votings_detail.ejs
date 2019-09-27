@@ -36,8 +36,11 @@
               </li>
             <% } %>
           </ul>
-          <% if (!isExpired) { %>
+          <% if (!isExpired && !isAlreadyVoted) { %>
             <button type="submit" class="btn-main">Vote!</button>
+          <% } %>
+          <% if (isAlreadyVoted) { %>
+            <button type="submit" class="btn-main btn-disable" disabled>Already Voted</button>
           <% } %>
         </form>
       </div>
@@ -106,24 +109,27 @@
         }
 
         var $checkedRadio = document.querySelector('input[type="radio"]:checked');
-        var $checkedLabel = $checkedRadio.parentElement;
-        var optionId = $checkedRadio.dataset.optionId;
-        var voteId = $checkedLabel.dataset.voteId;
 
-        sendVoteApi(voteId, optionId)
-          .then(function (res) {
-            if (res.fail) {
-              alert(res.fail);
-              location.href = '/';
-            }
-            if (res.success) {
-              alert(res.success);
-              location.reload();
-            }
-          })
-          .catch(function (err) {
-            console.error(err);
-          });
+        if ($checkedRadio) {
+          var $checkedLabel = $checkedRadio.parentElement;
+          var optionId = $checkedRadio.dataset.optionId;
+          var voteId = $checkedLabel.dataset.voteId;
+
+          sendVoteApi(voteId, optionId)
+            .then(function (res) {
+              if (res.fail) {
+                alert(res.fail);
+                location.href = '/';
+              }
+              if (res.success) {
+                alert(res.success);
+                location.reload();
+              }
+            })
+            .catch(function (err) {
+              console.error(err);
+            });
+        }
       });
 
       var $btnDelVote = document.querySelector('.btn-del-vote');

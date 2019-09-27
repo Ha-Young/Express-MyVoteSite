@@ -144,6 +144,8 @@ router.get('/:voteId', isAuthenticated, (req, res, next) => {
         return next(err);
       }
 
+      const isAlreadyVoted = !!vote.options.find(option => option.voted_user.indexOf(userId) > -1);
+
       let isAuthorizedUser = false;
 
       if (userId.toString() === vote.user_id._id.toString()) {
@@ -159,6 +161,7 @@ router.get('/:voteId', isAuthenticated, (req, res, next) => {
         userName: req.user.name,
         vote,
         sortedOptions,
+        isAlreadyVoted,
         isAuthorizedUser,
         allVoteCount
       });
