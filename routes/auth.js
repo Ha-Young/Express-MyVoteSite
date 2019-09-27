@@ -9,22 +9,18 @@ const router = express.Router();
 
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
   try {
-    // const exUser = await User.find({ email: req.body.email });
-    // if (exUser.length !== 0) {
-    //   // 추후 추가 필요 req.flash('joinError', '이미 가입된 이메일입니다');
-    //   res.redirect('/join');
-    // }
-
+    const exUser = await User.find({ email: req.body.email });
+    if (exUser.length !== 0) {
+      req.flash('joinError', '이미 가입된 이메일입니다');
+      res.redirect('/join');
+    }
     const hash = await bcrypt.hash(req.body.password, 12);
     await User.create(
       {
         email: req.body.email,
-        nickname: req.body.nickname,
+        nickname: req.body.nickname1,
         password: hash,
         provider: 'local'
-      },
-      function(err) {
-        console.log(err);
       }
     );
     res.redirect('/');
@@ -41,8 +37,6 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
       console.error(authError);
       next(authError);
     }
-    //추후 추가 필요 if(info.message === 'unmatchPW'){
-    // }
     if (!user) {
       return res.redirect('/login');
     }

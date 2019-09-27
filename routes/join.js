@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const { isNotLoggedIn } = require('./middlewares');
 
 /* GET home page. */
 router.get('/', isNotLoggedIn, (req, res, next) => {
-  res.render('join', { title: 'join' });
+  // console.log(JSON.parse(JSON.stringify(req.flash())).joinError);
+  res.render('join', {
+    message: req.flash('joinError')
+  });
 });
 
 module.exports = router;

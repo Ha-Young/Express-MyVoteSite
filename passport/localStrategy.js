@@ -17,7 +17,7 @@ module.exports = passport => {
             if (result) {
               done(null, exUser);
             } else {
-              done(null, false, { message: 'password error' });
+              done(null, false, { message: 'pw error' });
             }
           } else {
             done(null, false, { message: 'id error' });

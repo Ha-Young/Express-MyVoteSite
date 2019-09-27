@@ -12,11 +12,17 @@ const {
 } = require('../public/javascripts/utils');
 
 router.get('/', isLoggedIn, async function(req, res, next) {
-  const votings = await Voting.find({ created_by_id: req.user._id });
-  res.render('userVoting', {
-    votings,
-    creator: req.user.nickname
-  });
+  try {
+    const votings = await Voting.find({ created_by_id: req.user._id });
+    res.render('userVoting', {
+      votings,
+      creator: req.user.nickname
+    });
+  } catch (error) {
+    const err = new Error('Internal Server Error');
+    err.status = 500;
+    next(err);
+  }
 });
 
 router.post('/new', isLoggedIn, async function(req, res, next) {
@@ -27,9 +33,14 @@ router.post('/new', isLoggedIn, async function(req, res, next) {
     is_completed: false,
     options: makeOptionObject(req.body.options)
   };
-
-  await Voting.create(newVoting);
-  res.redirect('/');
+  try {
+    await Voting.create(newVoting);
+    res.redirect('/');
+  } catch (error) {
+    const err = new Error('Internal Server Error');
+    err.status = 500;
+    next(err);
+  }
 });
 
 router.get('/new', isLoggedIn, function(req, res, next) {
@@ -48,7 +59,6 @@ router.get('/error', function(req, res, next) {
 });
 
 router.get('/result/:voting_id', isLoggedIn, async function(req, res, next) {
-  console.log(req.params.voting_id);
   const voting = await Voting.findOne({ _id: req.params.voting_id });
   const options = makeOptionsData(voting.options);
   res.render('votingChart', { data: options });

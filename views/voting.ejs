@@ -10,7 +10,7 @@
         <%- include("./partials/header") %>
         <div class="title"><%= title%></div>
         <div class='voting-body'>
-         <div class='voting-description-div'><span>작성자: <%= author%></span><span>완료예정일</span></div>
+         <div class='voting-description-div'><span>작성자: <%= author%></span></div>
         <div class='voting-container'>
         <form class='voting-form' method='POST' action='/votings/<%= path%>'>
                 <% options.forEach((option, index) => { %>
@@ -54,4 +54,3 @@
     
 </body>
 </html>
-
