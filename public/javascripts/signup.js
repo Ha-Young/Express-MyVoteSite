@@ -21,7 +21,7 @@
           $resultMessage.classList.add('disabled');
           return;
         } else if (!res.isMatched) {
-          $resultMessage.textContent = 'This email is not in a valid format.';
+          $resultMessage.textContent = 'This email is disavailable.';
           $resultMessage.classList.add('disabled');
           return;
         }

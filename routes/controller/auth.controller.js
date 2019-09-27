@@ -45,6 +45,7 @@ exports.createUserData = async (req, res, next) => {
     res.status(302).redirect('/login');
   } catch (error) {
     if (error.name === 'ValidationError') {
+      error.message = 'Your Informaion is Not Valid';
       error.status = 400;
       return next(error);
     }
