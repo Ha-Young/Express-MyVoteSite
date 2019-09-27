@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
 const Voting = require('../../models/Voting');
 const User = require('../../models/User');
-const moment = require('moment');
 
 exports.getAll = async (req, res, next) => {
   try {
@@ -165,12 +165,12 @@ exports.getVoting = async (req, res) => {
 
   const currentDate = new Date();
   const expirationDate = new Date(newVoting.expiration);
-  const isValid = currentDate.getTime() < expirationDate.getTime();
-  const newDate = moment(newVoting.expiration).format('YYYY MMM ddd, ahh:mm');
+  const isOpen = currentDate.getTime() < expirationDate.getTime();
+  const formattingDate = moment(newVoting.expiration).format('YYYY MMM ddd, ahh:mm');
   const isAuthor = String(voting.author) === String(req.user._id);
 
-  newVoting.expiration = newDate;
-  newVoting.isValid = isValid;
+  newVoting.expiration = formattingDate;
+  newVoting.isOpen = isOpen;
   newVoting.author = user.name;
   newVoting.isAuthor = isAuthor;
 

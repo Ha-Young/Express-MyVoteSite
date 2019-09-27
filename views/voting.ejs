@@ -10,18 +10,18 @@
     <% } %>
     <div class='top-banner'>
       <i class="fas fa-check fa-3x"></i>
-      <% if (voting.isValid) { %>
+      <% if (voting.isOpen) { %>
         <h3>투표하세요!</h3>
       <% } else { %>
         <h3>필요한 답을 얻으세요!</h3>
       <% } %>
     </div>
     <div class='voting-wrap single-details content'>
-      <% if (voting.isValid) { %>
+      <% if (voting.isOpen) { %>
         <form action='/votings/<%= voting._id %>?_method=PUT' method='POST' class='voting-form'>
           <h2><%= voting.title %></h2>
           <p class='info'>
-            <span class='status'><%= voting.isValid ? '진행중':'종료' %></span>
+            <span class='status'><%= voting.isOpen ? '진행중':'종료' %></span>
             <span class='expiration'><%= voting.expiration %></span>
             <span class='author'><%= voting.author %></span>
           </p>
@@ -46,11 +46,11 @@
         </form>
       <% } %>
       <p></p>
-      <% if (!voting.isValid || voting.isAuthor) { %>
+      <% if (!voting.isOpen || voting.isAuthor) { %>
         <div  class='result'>
           <h2><%= voting.title %></h2>
           <p class='info'>
-            <span class='status'><%= voting.isValid ? '진행중':'종료' %></span>
+            <span class='status'><%= voting.isOpen ? '진행중':'종료' %></span>
             <span class='expiration'><%= voting.expiration %></span>
             <span class='author'><%= voting.author %></span>
           </p>
