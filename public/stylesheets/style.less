@@ -92,7 +92,6 @@ h1, h2, h3, p {
 .info-txt {
   display: block;
   height: 0px;
-  margin-bottom: 10px;
   padding: 0 5px;
   text-align: left;
   font-size: 13px;
@@ -100,8 +99,12 @@ h1, h2, h3, p {
   opacity: 0;
   transition: 0.3s;
 }
+.warn-txt {
+  color: #b10131 !important;
+}
 .show-infotxt:focus ~ .info-txt {
   height: 30px;
+  margin-bottom: 10px;
   opacity: 1;
 }
 

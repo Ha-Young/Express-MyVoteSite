@@ -9,21 +9,23 @@
       <form method="POST" action="/join" class="form-main">
         <label class="label-basic">
           <span class="label-txt">Email</span>
-          <input type="email" name="email" class="basic-txt" autocomplete="off" required />
+          <input type="email" name="email" class="basic-txt show-infotxt" autocomplete="off" required />
+          <span class="info-txt warn-txt">Should be a valid email</span>
         </label>
         <label class="label-basic">
           <span class="label-txt">Password</span>
           <input type="password" name="password" class="basic-txt show-infotxt" autocomplete="off" required />
-          <span class="info-txt">Should be minimum 6 characters of alphabet & number & special character combination</span>
+          <span class="info-txt warn-txt">Should be minimum 6 characters of alphabet & number & special character combination</span>
         </label>
         <label class="label-basic">
           <span class="label-txt">Confirm Password</span>
-          <input type="password" name="password_confirm" class="basic-txt" autocomplete="off" required />
+          <input type="password" name="password_confirm" class="basic-txt show-infotxt" autocomplete="off" required />
+          <span class="info-txt warn-txt">Password confirmation does not match</span>
         </label>
         <label class="label-basic">
           <span class="label-txt">Name</span>
           <input type="text" name="name" class="basic-txt show-infotxt" autocomplete="off" required />
-          <span class="info-txt">Should be 2~4 of Hangeul or 2~20 of alphabet</span>
+          <span class="info-txt warn-txt">Should be 2~4 of Hangeul or 2~20 of alphabet</span>
         </label>
         <button type="submit" class="btn-main">
           Join
@@ -31,12 +33,25 @@
       </form>
       <a href="/login" class="btn-black">Login</a>
     </div>
+    <script src="/javascripts/validation.js"></script>
     <script>
       var message = '<%= message %>';
 
       if (message) {
         alert(message);
       }
+
+      var $email = document.querySelector('input[name="email"]');
+      var $password = document.querySelector('input[name="password"]');
+      var $pwConfirm = document.querySelector('input[name="password_confirm"]');
+      var $name = document.querySelector('input[name="name"]');
+      var $form = document.querySelector('.form-main');
+
+      onKeyupValidate($email, EMAIL_REGEX);
+      onKeyupValidate($password, PASSWORD_REGEX);
+      onKeyupValidate($name, NAME_REGEX);
+      onKeyupPwConfirmation($password, $pwConfirm);
+      onSubmitValidate($form, $email, $password, $pwConfirm, $name);
     </script>
   </body>
 </html>
