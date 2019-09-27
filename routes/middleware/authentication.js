@@ -3,7 +3,7 @@ exports.isAuthenticated = function (req, res, next) {
     return next();
   }
 
-  res.redirect('/login');
+  return res.redirect('/login');
 };
 
 exports.isAuthenticatedAjax = function (req, res, next) {
@@ -11,5 +11,5 @@ exports.isAuthenticatedAjax = function (req, res, next) {
     return next();
   }
 
-  res.json({ fail: '로그아웃 되었습니다. 다시 로그인해주세요.' });
+  return res.json({ fail: '로그아웃 되었습니다. 다시 로그인해주세요.' });
 };
