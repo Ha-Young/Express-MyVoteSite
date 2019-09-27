@@ -8,34 +8,38 @@ const Poll = require('../models/Poll');
 const User = require('../models/User');
 
 const {
-  parseStringToDate,
+  formatDateTimeString,
   isOwner,
   isOpenPoll,
-  formatTime,
+  formatDateTimeDisplay,
 } = require('../helpers');
 
-router.get('/', ensureAuthenticated, (req, res, next) => {
-  Poll.find({ authorid: req.user._id })
-    .then(myPollDocs => {
-      myPollDocs.forEach(pollDoc => {
-        pollDoc.isOpen = isOpenPoll(pollDoc.expirydate);
-        pollDoc.expirydate = formatTime(pollDoc.expirydate);
-      });
-
-      res.status(200).render('mypolls', {
-        name: req.user.name,
-        myPollsList: myPollDocs,
-      });
-    })
-    .catch(error => {
-      error.status = 500;
-      error.message = 'Error occurred while retrieving my polls';
-      next(error);
+router.get('/', ensureAuthenticated, async (req, res, next) => {
+  // TODO: mongoose check if object id exists in database
+  if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
+    try {
+      throw new Error('User Not Found');
+    } catch (error) {
+      error.status = 404;
+      return next(error);
+    }
+  }
+  try {
+    const myPollDocs = await Poll.find({ authorid: req.user._id });
+    myPollDocs.forEach(pollDoc => {
+      pollDoc.isOpen = isOpenPoll(pollDoc.expirydate);
+      pollDoc.expirydate = formatDateTimeDisplay(pollDoc.expirydate);
     });
-});
-
-router.get('/newpollerror', ensureAuthenticated, (req, res, next) => {
-  res.status(200).render('newpollerror');
+    res.status(200).render('mypolls', {
+      name: req.user.name,
+      myPollsList: myPollDocs,
+    });
+  } catch (error) {
+    error.status = 404;
+    error.message =
+      'Error: Could not find user data while loading my polls page.';
+    next(error);
+  }
 });
 
 router.get('/success', ensureAuthenticated, (req, res, next) => {
@@ -53,47 +57,42 @@ router.get('/new', ensureAuthenticated, (req, res, next) => {
 router.post('/new', ensureAuthenticated, async (req, res, next) => {
   let { pollTitle, expireDate, expireTime, optionElements } = req.body;
 
-  const isValidated =
+  const pollValidated =
     pollTitle !== undefined &&
     expireDate !== undefined &&
     expireTime !== undefined &&
     optionElements !== undefined;
 
-  if (isValidated) {
-    const expiryDateTime = parseStringToDate(expireDate, expireTime);
-
-    optionElements = optionElements.map(value => {
-      return { name: value };
-    });
-
-    const poll = new Poll({
-      title: pollTitle,
-      authorname: req.user.name,
-      authorid: req.user._id,
-      expirydate: expiryDateTime,
-      options: optionElements,
-    });
-
+  if (pollValidated) {
     try {
+      const expiryDateTime = formatDateTimeString(expireDate, expireTime);
+      optionElements = optionElements.map(value => {
+        return { name: value };
+      });
+      const poll = new Poll({
+        title: pollTitle,
+        authorname: req.user.name,
+        authorid: req.user._id,
+        expirydate: expiryDateTime,
+        options: optionElements,
+      });
       await poll.save();
+      req.flash(
+        'success_msg',
+        'You have successfully created a new poll! check it out at home page.'
+      );
+      res.status(200).redirect('/polls/success');
     } catch (error) {
-      if (error) {
-        req.flash('error_msg', 'Failed at creating a new poll.');
-        return res.status(500).redirect('/polls/failure');
-      }
+      req.flash('error_msg', 'Failed attempt at creating a new poll.');
+      res.status(500).redirect('/polls/failure');
     }
-    req.flash(
-      'success_msg',
-      'You have successfully created a new poll! check it out at home page.'
-    );
-    return res.status(201).redirect('/polls/success');
-  }
-
-  try {
-    throw new Error('Validation failed while creating a new poll.');
-  } catch (error) {
-    error.status(400);
-    next(error);
+  } else {
+    try {
+      throw new Error('Validation failed while creating a new poll.');
+    } catch (error) {
+      error.status(400);
+      next(error);
+    }
   }
 });
 
@@ -106,84 +105,62 @@ router.get('/:poll_id', ensureAuthenticated, async (req, res, next) => {
       return next(error);
     }
   }
+  try {
+    const promisePollDoc = Poll.findById(req.params.poll_id);
+    const promiseUser = User.findById(req.user._id);
+    const [user, pollDoc] = await Promise.all([promiseUser, promisePollDoc]);
 
-  const pollDoc = await Poll.findById(req.params.poll_id).catch(error => {
+    pollDoc.isOpen = isOpenPoll(pollDoc.expirydate);
+    pollDoc.expirydate = formatDateTimeDisplay(pollDoc.expirydate);
+
+    res.status(200).render('poll', {
+      pollDoc: pollDoc,
+      isOwner: isOwner(req.user._id, pollDoc.authorid),
+      hasVoted: user.votedpolls.indexOf(`${pollDoc._id}`),
+    });
+  } catch (error) {
     error.status = 500;
     next(error);
-  });
-
-  const user = await User.findById(req.user._id).catch(error => {
-    error.status = 500;
-    next(error);
-  });
-
-  pollDoc.isOpen = isOpenPoll(pollDoc.expirydate);
-  pollDoc.expirydate = formatTime(pollDoc.expirydate);
-
-  res.status(200).render('poll', {
-    pollDoc: pollDoc,
-    isOwner: isOwner(req.user._id, pollDoc.authorid),
-    hasVoted: user.votedpolls.indexOf(`${pollDoc._id}`),
-  });
+  }
 });
 
 router.post('/:poll_id', ensureAuthenticated, async (req, res, next) => {
-  const reqOptionID = req.body.optionID;
+  try {
+    const reqOptionID = req.body.optionID;
+    const promisePollDoc = Poll.findOne({ 'options._id': reqOptionID });
+    const promiseUser = User.findById(req.user._id);
+    const [user, pollDoc] = await Promise.all([promiseUser, promisePollDoc]);
+    const hasVoted = user.votedpolls.indexOf(`${pollDoc._id}`);
 
-  const poll = await Poll.findOne({ 'options._id': reqOptionID }).catch(
-    error => {
-      error.status = 500;
-      error.message = 'Error occurred while finding poll';
-      next(error);
+    if (hasVoted < 0) {
+      const votedOption = pollDoc.options.find(dbOption => {
+        return `${dbOption._id}` === reqOptionID;
+      });
+
+      votedOption.count = votedOption.count + 1;
+      pollDoc.options[pollDoc.options.indexOf(votedOption)] = votedOption;
+      user.votedpolls.push(pollDoc._id);
+
+      await Promise.all([user.save(), pollDoc.save()]);
+      res.status(200).redirect(req.params.poll_id);
     }
-  );
-
-  const user = await User.findById(req.user._id).catch(error => {
+  } catch (error) {
     error.status = 500;
     next(error);
-  });
-
-  const hasVoted = user.votedpolls.indexOf(`${poll._id}`);
-
-  if (hasVoted < 0) {
-    // TODO: mongoose find and update ... add to set?
-    const foundOption = poll.options.find(dbOption => {
-      return `${dbOption._id}` === reqOptionID;
-    });
-
-    foundOption.count = foundOption.count + 1;
-
-    poll.options[poll.options.indexOf(foundOption)] = foundOption;
-
-    user.votedpolls.push(poll._id);
-
-    await poll.save().catch(error => {
-      error.status = 500;
-      error.message = 'Error occurred while updating poll data';
-      next(error);
-    });
-
-    await user.save().catch(error => {
-      error.status = 500;
-      error.message = 'Error occurred while updating user data';
-      next(error);
-    });
-
-    res.redirect(req.params.poll_id);
   }
 });
 
 router.delete('/:poll_id', ensureAuthenticated, async (req, res, next) => {
-  const deletedPoll = await Poll.findByIdAndDelete(req.params.poll_id).catch(
-    error => {
-      error.status = 500;
-      error.message = 'Error occurred during poll deletion';
-      next(error);
+  try {
+    const deletedPoll = await Poll.findByIdAndDelete(req.params.poll_id)
+    if (deletedPoll) {
+      return res.status(200).end();
     }
-  );
-
-  if (deletedPoll) {
-    return res.status(200).end();
+  }
+  catch (error) {
+    error.status = 500;
+    error.message = 'Error occurred during poll deletion';
+    next(error);
   }
 });
 

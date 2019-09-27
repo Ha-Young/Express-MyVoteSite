@@ -4,9 +4,11 @@ const User = require('../models/User');
 
 const passport = passportModule => {
   passportModule.use(
-    new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-      User.findOne({ email: email })
-        .then(user => {
+    new LocalStrategy(
+      { usernameField: 'email' },
+      async (email, password, done) => {
+        try {
+          const user = await User.findOne({ email: email });
           if (!user) {
             return done(null, false, {
               message: 'That email is not registered',
@@ -21,9 +23,11 @@ const passport = passportModule => {
               return done(null, false, { message: 'Password incorrect' });
             }
           });
-        })
-        .catch(error => done(error));
-    })
+        } catch (error) {
+          done(error);
+        }
+      }
+    )
   );
 
   passportModule.serializeUser((user, done) => {

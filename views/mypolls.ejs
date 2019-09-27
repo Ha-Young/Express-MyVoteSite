@@ -11,13 +11,12 @@
             <div class="card-body">
               <h6 class="card-title"><%= poll.title %></h6>
               <p class="card-text">
-                <p class="author">By <%= poll.authorname %></p>
                 <p class="expiry-date">Poll Open Until <%= poll.expirydate %></p>
                 <p class="status"><%= poll.isOpen ? 'Open' : 'Closed' %></p>
               </p>
             </div>
             <div class="card-footer">
-              <small class="text-muted">Last updated 3 mins ago</small>
+              <small class="text-muted">By <%= poll.authorname %></small>
             </div>
           </div>    
       </a>

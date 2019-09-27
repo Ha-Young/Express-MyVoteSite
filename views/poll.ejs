@@ -2,30 +2,29 @@
 
 <div class="poll-container">
 
-  <p>Title: <%= pollDoc.title %>
-    <% if (isOwner) { %>
-    <p>Wanna Delete this Poll? Click -> <i id="delete-poll-button" class="far fa-trash-alt"></i></p>
-    <p> You're the owner of this poll! you should be able to view the current process this poll</p>
-    <% } %>
+  <% if (isOwner) { %>
+  <p>투표를 지우고 싶으시다면 클릭 해주세요. -> <i id="delete-poll-button" class="far fa-trash-alt"></i></p>
+  <% } %>
+  <p>투표 제목: <%= pollDoc.title %>
   </p>
-  <p>Status: <%= pollDoc.isOpen ? 'Open' : 'Closed' %></p>
-  <p>Author: <%= pollDoc.authorname %></p>
-  <p>Expiry Date:
-    <%= pollDoc.expirydate %></p>
+  <p>투표 상태: <%= pollDoc.isOpen ? '투표 가능' : '투표 불가능' %></p>
+  <p>만든이: <%= pollDoc.authorname %></p>
+  <p>투표 기간:
+    <span id="poll-expiry-datetime"><%= pollDoc.expirydate %></span> 까지</p>
   <div class="poll-options-container">
     <form id="vote-form" name="vote-form" action="" method="POST">
       <% pollDoc.options.forEach(function(option) { %>
       <label for="<%= option.name %>"><%= option.name %></label>
       <% if (isOwner || !pollDoc.isOpen  ) { %>
-      <span>Count: <%= option.count %></span>
+      <span>득표 수: <%= option.count %></span>
       <% } %>
       <% if (hasVoted < 0 && pollDoc.isOpen) { %>
       <input type="radio" name="optionID" id="<%= option.name %>" value="<%= option._id %>">
       <% } %>
       <br>
       <% }) %>
-      <% if (hasVoted < 0 && pollDoc.isOpen) { %>
-      <input type="submit" value="Submit">
+      <% if (hasVoted < 0 && pollDoc.isOpen ) { %>
+      <input id="submit-button" type="submit" value="투표하기">
       <% } %>
       <% if (hasVoted >= 0) { %>
       <p>You have already voted for this poll</p>
@@ -34,20 +33,33 @@
   </div>
 
   <script>
+    const { isOpenPoll } = require('/helpers/index');
+    const submitButton = document.querySelector('#submit-button');
+    const pollExpiryDateTime = document.querySelector('#poll-expiry-datetime').innerHTML;
     const deletePollButton = document.querySelector('#delete-poll-button');
-    deletePollButton.addEventListener('click', deletePoll);
 
+    submitButton.addEventListener('click', checkExpired(pollExpiryDateTime));
+
+    if (deletePollButton) {
+      deletePollButton.addEventListener('click', deletePoll);
+    }
     const voteForm = document.querySelector('#vote-form');
     voteForm.setAttribute('action', window.location.pathname);
 
-    function deletePoll() {
+    function checkExpired (date) {
+      if (!isOpenPoll(pollExpiryDateTime)) {
+        submitButton.disabled = true;
+      }
+    }
+
+    function deletePoll () {
       const params = window.location.pathname;
       fetch(params, {
         method: 'DELETE'
       })
         .then((response) => {
           if (response.ok) {
-            alert('poll deleted. will now redirect to homepage')
+            alert('투표가 삭제되었습니다. 홈페이지로 이동합니다.')
             window.location.href = 'http://localhost:5000/'
           }
         })

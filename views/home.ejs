@@ -1,30 +1,28 @@
 <% include partials/header %>
-<% var weekday = ["일","월","화","수","목","금","토"] %>
 <div class="poll-list-container">
   <div class="jumbotron">
-    <h1 class="display-4">Welcome <%= name %></h1>
-    <p class="lead">Your vote is your voice !</p>
+    <h1 class="display-4">환영합니다 <%= name %>님</h1>
+    <p class="lead">투표는 곧 당신의 목소리 입니다!</p>
     <hr class="my-4">
-    <p>If you haven't shared your vote yet, please do!</p>
+    <p>아직 참여하지 않으셨다면, 투표를 통해 <%= name %>님의 의견을 알려주세요!</p>
   </div>
 
   <div class="card-deck">
     <% polls.forEach(function (poll) { %>
       <a href="/polls/<%= poll._id %>">
-        <div class="card" style="width: 18rem; height: 27rem;">
+        <div class="card" style="width: 16rem; height: 27rem;">
             <img
               src="https://images2.minutemediacdn.com/image/upload/c_crop,h_1193,w_2121,x_0,y_64/f_auto,q_auto,w_1100/v1565279671/shape/mentalfloss/578211-gettyimages-542930526.jpg"
               class="card-img-top" alt="...">
             <div class="card-body">
               <h6 class="card-title"><%= poll.title %></h6>
               <p class="card-text">
-                <p class="author">By <%= poll.authorname %></p>
-                <p class="expiry-date">Poll Open Until <%= poll.expirydate %></p>
-                <p class="status"><%= poll.isOpen ? 'Open' : 'Closed' %></p>
+                <p class="expiry-date"><%= poll.expirydate %> 까지</p>
+                <p class="status"><%= poll.isOpen ? '투표 가능' : '투표 불가능' %></p>
               </p>
             </div>
             <div class="card-footer">
-              <small class="text-muted">Last updated 3 mins ago</small>
+              <small class="text-muted">By <%= poll.authorname %></small>
             </div>
           </div>    
       </a>

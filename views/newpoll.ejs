@@ -2,20 +2,20 @@
 
 <div class="newpoll-container">
   <form action="/polls/new" method="POST">
-
     <div>
-      <p>Set Poll Title: </p>
-      <input type="text" name="pollTitle" placeholder="title" required>
+      <p>투표 제목 작성하기: </p>
+      <input type="text" name="pollTitle" placeholder="투표 제목" required>
     </div>
 
     <div class="expiry-container">
-      Select Expiry Date: <input type="date" name="expireDate" id="date-input" required>
-      Select Expiry Time: <input type="time" name="expireTime" id="time-input" required>
+      투표가 유효한 날짜 및 시간 정하기:
+      <input type="date" name="expireDate" id="date-input" required>
+      <input type="time" name="expireTime" id="time-input" required>
     </div>
 
     <div class="options-container">
-      <p>Set Poll Options:</p>
-      <i class="fas fa-plus" id="add-options-button">Options</i>
+      <p>투표 항목:</p>
+      <span>새로운 투표 항목 추가하기 => </span><i class="fas fa-plus" id="add-options-button"></i>
       <div class="options-list">
         <li class="options-list-item">
           <input type="text" name="optionElements" required>
@@ -25,47 +25,47 @@
         </li>
       </div>
     </div>
-
     <div>
-      <input type="submit">
+      <input type="submit" value="투표 만들기!">
     </div>
   </form>
-    <script>
-      document.querySelector('#add-options-button').addEventListener('click', addOptions);
+  <script>
+    let buttonAddOption = document.querySelector('#add-options-button')
+    let buttonDeleteOption = document.querySelectorAll('.delete-option');
 
-      let deleteOptionElements = document.querySelectorAll('.delete-option');
+    buttonAddOption.addEventListener('click', addOptions);
+    buttonDeleteOption.forEach((deleteOptionElement) => {
+      deleteOptionElement.addEventListener('click', deleteOption);
+    })
 
-      deleteOptionElements.forEach((deleteOptionElement) => {
-        deleteOptionElement.addEventListener('click', deleteOption);
-      })
+    setMinimumDateAndTime();
 
-      setMinimumDateAndTime();
+    function addOptions() {
+      var newOption = document.createElement('li');
+      newOption.classList.add('options-list-item');
+      newOption.innerHTML = '<input type="text" name="optionElements" required> <i class="far fa-trash-alt" onclick=deleteOption(event)></i>';
+      document.querySelector('.options-list').appendChild(newOption);
+    }
+    
+    function deleteOption(e) {
+      e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+    }
 
-      function addOptions() {
-        var newOption = document.createElement('li');
-        newOption.classList.add('options-list-item');
-        newOption.innerHTML = '<input type="text" name="optionElement" required> <i class="far fa-trash-alt" onclick=deleteOption(event)></i>';
-        document.querySelector('.options-list').appendChild(newOption);
+    function setMinimumDateAndTime() {
+      let today = new Date(),
+        day = today.getDate(),
+        month = today.getMonth() + 1,
+        year = today.getFullYear()
+      if (day < 10) {
+        day = '0' + day
       }
-      function deleteOption(e) {
-        e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+      if (month < 10) {
+        month = '0' + month
       }
-
-      function setMinimumDateAndTime() {
-        let today = new Date(),
-          day = today.getDate(),
-          month = today.getMonth() + 1,
-          year = today.getFullYear()
-        if (day < 10) {
-          day = '0' + day
-        }
-        if (month < 10) {
-          month = '0' + month
-        }
-        today = year + '-' + month + '-' + day;
-        document.querySelector('#date-input').setAttribute('min', today);
-      }
-    </script>
+      today = year + '-' + month + '-' + day;
+      document.querySelector('#date-input').setAttribute('min', today);
+    }
+  </script>
 </div>
 </form>
 </div>
