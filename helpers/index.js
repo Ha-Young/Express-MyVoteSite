@@ -2,7 +2,7 @@ const moment = require('moment');
 
 const formatDateTimeString = (dateString, timeString) => {
   const formattedDateTime = moment(`${dateString} ${timeString}`).format();
-  return formattedDateTime
+  return formattedDateTime;
 };
 
 const isOwner = (userID, authorID) => {
@@ -12,7 +12,9 @@ const isOwner = (userID, authorID) => {
 const isOpenPoll = date => {
   const expireDateTimeInUnixMilliseconds = moment(date).valueOf();
   const timeNowInUnixMilliseconds = moment();
-  return expireDateTimeInUnixMilliseconds > timeNowInUnixMilliseconds ? true : false;
+  return expireDateTimeInUnixMilliseconds > timeNowInUnixMilliseconds
+    ? true
+    : false;
 };
 
 const formatDateTimeDisplay = date => {
@@ -26,5 +28,5 @@ module.exports = {
   isOwner,
   isOpenPoll,
   formatDateTimeDisplay,
-  weekInMilliseconds
+  weekInMilliseconds,
 };

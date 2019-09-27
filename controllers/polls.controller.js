@@ -43,10 +43,7 @@ const handleVoteSubmit = async (req, res, next) => {
     const isPollOpen = isOpenPoll(pollDoc.expirydate);
 
     if (!isPollOpen) {
-      req.flash(
-        'error_msg',
-        '투표가 만료되어서 반영되지 않았습니다.'
-      );
+      req.flash('error_msg', '투표가 만료되어서 반영되지 않았습니다.');
       return res.status(400).redirect('/polls/failure');
     }
 
