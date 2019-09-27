@@ -9,14 +9,13 @@ const cookieSession = require('cookie-session');
 const flash = require('connect-flash');
 const passport = require('passport');
 const sass = require('node-sass-middleware');
+const methodOverride = require('method-override');
 
 const index = require('./routes/index');
 const login = require('./routes/login');
 const votings = require('./routes/votings');
-const users = require('./routes/users');
-const passportConfig = require('./config/passport');
-const methodOverride = require('method-override');
 
+const passportConfig = require('./config/passport');
 require('dotenv').config();
 const DATABASE_URI = process.env.DATABASE_URI;
 const SESSION_COOKIE_KEY = process.env.SESSION_COOKIE_KEY;
@@ -69,7 +68,6 @@ app.use(passport.session());
 app.use('/', index);
 app.use('/login', login);
 app.use('/votings', votings);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
