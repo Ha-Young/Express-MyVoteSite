@@ -10,9 +10,9 @@ exports.formatDate = (date) => {
   return {
     isOpen,
     expiration,
-  }
-}
+  };
+};
 
 exports.isValidId = (id) => {
   return mongoose.Types.ObjectId.isValid(id);
-}
+};
