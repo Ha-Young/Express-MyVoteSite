@@ -77,7 +77,7 @@ router.post('/join', validateUser, async (req, res, next) => {
 
     req.flash('joinMessage', 'Sign up complete!');
 
-    return res.redirect("/login");
+    return res.redirect('/login');
   } catch (err) {
     console.error(err);
     res.render('error', {

@@ -6,6 +6,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const lessMiddleware = require('less-middleware');
 const logger = require('morgan');
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 const indexRouter = require('./routes/index');
 const votesRouter = require('./routes/votes');
@@ -27,6 +28,11 @@ db.once('open', function () {
   console.log('vote DB connected!!!');
 });
 
+const store = new MongoDBStore({
+  uri: 'mongodb://localhost:27017/vote',
+  collection: 'mySessions'
+});
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -35,20 +41,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(session({
+app.use(lessMiddleware(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
+
+store.on('error', function (error) {
+  console.error(error);
+});
+
+app.use(require('express-session')({
   secret: process.env.SESSION_SECRET_KEY,
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 3600000 * 7 * 24 }
+  cookie: { maxAge: 3600000 * 7 * 24 },
+  store: store,
+  resave: true,
+  saveUninitialized: true,
 }));
 
 require('./config/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-
-app.use(lessMiddleware(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/votings', votesRouter);
@@ -61,7 +72,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
