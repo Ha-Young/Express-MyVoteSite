@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+    <title>VOTEVOTE</title>
+  </head>
+  <body>
+    <header>
+      <a class="my-vote" href="/votings">
+        <img src="<%= user.thumbnail %>" title="my vote" alt="my vote" />
+        <p><%= user.name %> 님, <br />안녕하세요!</p>
+      </a>
+      <nav>
+        <a class="list-vote" href="/">투표 목록</a>
+        <a class="create-vote" href="/votings/new">투표 생성</a>
+        <a class="logout" href="/login/logout">
+          <img
+            src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/225/waving-hand-sign_emoji-modifier-fitzpatrick-type-1-2_1f44b-1f3fb_1f3fb.png"
+            title="logout"
+            alt="logout"
+        /></a>
+      </nav>
+    </header>
+    <section class="list-vote">
+      <ul>
+        <% voteList.forEach(function(vote){ %>
+        <li class="item-vote <%= vote.progress ? '' : 'finished' %>">
+          <a href="/votings/<%= vote._id %>">
+            <p class="title"><%= vote.title %></p>
+            <p class="creator"><%= vote.creatorName %></p>
+            <p class="expiration"><%= vote.expiration_date %></p>
+            <p class="progress"><%= vote.progress? "진행" : "완료" %></p>
+          </a>
+        </li>
+        <% }) %>
+      </ul>
+    </section>
+  </body>
+</html>
