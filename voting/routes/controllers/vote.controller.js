@@ -42,7 +42,6 @@ exports.getVote = async function(req, res, next) {
       hasVoted = el.people.includes(req.user.id);
     });
 
-    console.log('useruser', req.user.id, hasVoted);
     const maxLength = Math.max(
       ...processedVote.options.map(el => el.people.length)
     );

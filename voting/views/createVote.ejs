@@ -8,26 +8,39 @@
     <title>VOTEVOTE</title>
   </head>
   <body>
-    <nav>
-      <a href="/">투표 목록</a>
-    </nav>
+    <% include ./header %>
     <section class="create">
-      <h1>투표생성</h1>
       <form action="/votings/new" method="post">
-        <input type="text" name="title" placeholder="title" />
-        <input type="datetime-local" name="expiration" class="date-setting" />
-        <input type="submit" value="create" />
-        <div id="container">
-          <div>
-            <input type="text" name="options" />
-            <input type="button" value="Delete" class="delete" />
+        <div class="form-list">
+          <h1>투표생성</h1>
+          <div class="row">
+            <span>제목</span>
+            <input type="text" name="title" placeholder="title" />
           </div>
-          <div>
-            <input type="text" name="options" />
-            <input type="button" value="Delete" class="delete" />
+          <div class="row">
+            <span>만료시간</span>
+            <input
+              type="datetime-local"
+              name="expiration"
+              class="date-setting"
+            />
+          </div>
+          <div class="row">
+            <span>선택항목</span>
+            <div id="container">
+              <div class="option">
+                <input type="text" name="options" />
+                <input type="button" value="Delete" class="delete" />
+              </div>
+              <div class="option">
+                <input type="text" name="options" />
+                <input type="button" value="Delete" class="delete" />
+              </div>
+            </div>
+            <input type="button" value="Add" id="add" class="add" />
           </div>
         </div>
-        <input type="button" value="add" id="add" />
+        <input type="submit" value="Create" />
       </form>
     </section>
     <script>
@@ -49,6 +62,7 @@
 
         document.getElementById('add').addEventListener('click', function() {
           var div = document.createElement('div');
+          div.setAttribute('class', 'option');
 
           var option = document.createElement('input');
           option.setAttribute('type', 'text');
@@ -65,6 +79,5 @@
         });
       });
     </script>
-    <style></style>
   </body>
 </html>

@@ -15,17 +15,14 @@ router.get('/logout', (req, res) => {
 router.post('/', (req, res, next) => {
   passport.authenticate('local', (error, user, info) => {
     if (error) {
-      console.error(error);
       return next(error);
     }
     if (!user) {
       req.flash('error', info.message);
-      console.log(info.message);
       return res.redirect('/');
     }
     return req.login(user, error => {
       if (error) {
-        console.error(error);
         return next(error);
       }
       return res.redirect('/');
@@ -39,7 +36,6 @@ router.get('/signup', (req, res) => {
 
 router.post('/signup', async (req, res, next) => {
   const { email, name, password } = req.body;
-  //console.log(email, name, password);
   try {
     const user = await User.findOne({ email });
     if (user) {

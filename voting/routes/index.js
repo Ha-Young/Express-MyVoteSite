@@ -3,7 +3,6 @@ const voteController = require('./controllers/vote.controller');
 
 const checkAuthorization = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    console.log('non auth');
     res.redirect('/login');
   } else {
     next();

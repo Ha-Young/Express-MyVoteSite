@@ -8,24 +8,9 @@
     <title>VOTEVOTE</title>
   </head>
   <body>
-    <header>
-      <a class="my-vote" href="/votings">
-        <img src="<%= user.thumbnail %>" title="my vote" alt="my vote" />
-        <p><%= user.name %> 님, <br />안녕하세요!</p>
-      </a>
-      <nav>
-        <a class="list-vote" href="/">투표 목록</a>
-        <a class="create-vote" href="/votings/new">투표 생성</a>
-        <a class="logout" href="/login/logout">
-          <img
-            src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/225/waving-hand-sign_emoji-modifier-fitzpatrick-type-1-2_1f44b-1f3fb_1f3fb.png"
-            title="logout"
-            alt="logout"
-        /></a>
-      </nav>
-    </header>
+    <% include ./header %>
     <section class="info-vote">
-      <div class="item-vote">
+      <div class="item-vote <%= vote.progress ? '' : 'finished' %>">
         <p class="title"><%= vote.title %></p>
         <p class="creator"><%= vote.creatorName %></p>
         <p class="expiration"><%= vote.expiration_date %></p>
@@ -33,6 +18,23 @@
       </div>
       <div>
         <% if(vote.progress) { %>
+        <div class="options">
+          <form method="POST" action="/votings/<%= vote._id %>?_method=PUT">
+            <ul>
+              <% vote.options.forEach(function(option){ %>
+              <li>
+                <input type="radio" id="<%= option.title %>" value="<%=
+                option._id%>" name="option" <%= hasVoted ? 'disabled' : '' %> />
+                <label for="<%= option.title %>"><%= option.title %></label>
+                <% if(String(user._id) === String(vote.creator)) { %>
+                <span><%= option.people.length %> 명</span>
+                <% } %>
+              </li>
+              <% }) %>
+            </ul>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
         <div class="admin">
           <% if(String(user._id) === String(vote.creator)) { %>
           <p>투표 생성자만 투표 진행상황을 확인할 수 있습니다.</p>
@@ -48,38 +50,27 @@
           </div>
           <% } %>
         </div>
-        <form method="POST" action="/votings/<%= vote._id %>?_method=PUT">
-          <ul class="options">
+        <% } else { %>
+        <div class="result-vote">
+          <div class="result-option">
+            <p>최종결과</p>
+            <% results.forEach(function(result){ %>
+            <span><%= result.title %></span>
+            <% }) %>
+          </div>
+          <ul class="options finished">
             <% vote.options.forEach(function(option){ %>
-            <li>
-              <input type="radio" id="<%= option.title %>" value="<%=
-              option._id%>" name="option" <%= hasVoted ? 'disabled' : '' %> />
-              <label for="<%= option.title %>"><%= option.title %></label>
-              <% if(String(user._id) === String(vote.creator)) { %>
-              <span><%= option.people.length %> 명</span>
-              <% } %>
+            <li
+              class="<%= option.people.length === maxLength ? 'result' : '' %>"
+            >
+              <p>
+                <%= option.title %>
+                <span><%= option.people.length %> 명</span>
+              </p>
             </li>
             <% }) %>
           </ul>
-          <button type="submit">Submit</button>
-        </form>
-        <% } else { %>
-        <div>
-          <p>투표 결과</p>
-          <% results.forEach(function(result){ %>
-          <p><%= result.title %></p>
-          <% }) %>
         </div>
-        <ul class="options complete">
-          <% vote.options.forEach(function(option){ %>
-          <li class="<%= option.people.length === maxLength ? 'result' : '' %>">
-            <p>
-              <%= option.title %>
-              <span><%= option.people.length %> 명</span>
-            </p>
-          </li>
-          <% }) %>
-        </ul>
         <% } %>
       </div>
     </section>

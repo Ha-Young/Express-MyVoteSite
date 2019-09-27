@@ -1,0 +1,17 @@
+<header>
+  <div class="profile">
+    <img src="<%= user.thumbnail %>" title="my vote" alt="my vote" />
+    <p><span> <%= user.name %></span> 님, <br />안녕하세요!</p>
+  </div>
+  <nav>
+    <a class="my-vote" href="/votings">내 투표</a>
+    <a class="list-vote" href="/">투표 목록</a>
+    <a class="create-vote" href="/votings/new">투표 생성</a>
+    <a class="logout" href="/login/logout">
+      <img
+        src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/225/waving-hand-sign_emoji-modifier-fitzpatrick-type-1-2_1f44b-1f3fb_1f3fb.png"
+        title="logout"
+        alt="logout"
+    /></a>
+  </nav>
+</header>

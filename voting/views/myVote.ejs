@@ -8,15 +8,11 @@
     <title>VOTEVOTE</title>
   </head>
   <body>
-    <nav>
-      <a href="/votings/new">투표 생성</a>
-      <a href="/">투표목록</a>
-      <a href="/login/logout">로그아웃</a>
-    </nav>
+    <% include ./header %>
     <section class="list-vote">
       <ul>
         <% voteList.forEach(function(vote){ %>
-        <li>
+        <li class="item-vote <%= vote.progress ? '' : 'finished' %>">
           <a href="/votings/<%= vote._id %>">
             <p class="title"><%= vote.title %></p>
             <p class="creator"><%= vote.creatorName %></p>
