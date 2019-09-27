@@ -122,7 +122,7 @@ router.put('/vote', isAuthenticatedAjax, async (req, res, next) => {
     return res.json({ success: 'Voted Successfully!' });
   } catch (err) {
     console.error(err);
-    next(err);
+    res.json({ fail: 'Something went wrong! Please try again!' });
   }
 });
 
@@ -179,7 +179,7 @@ router.delete('/:voteId', isAuthenticatedAjax, async (req, res, next) => {
     res.json({ success: 'Deleted Successfully!' });
   } catch (err) {
     console.error(err);
-    next(err);
+    res.json({ fail: 'Something went wrong! Please try again!' });
   }
 });
 
