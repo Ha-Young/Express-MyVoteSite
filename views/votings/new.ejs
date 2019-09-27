@@ -27,11 +27,11 @@
             <div class='smallbox-votings-name'>
               option:
             </div>
-            <input class='smallbox-votings-box' type='password' name='option' />
+            <input class='smallbox-votings-box' type='text' name='options' />
             <div class='smallbox-votings-name'>
               option:
             </div>
-            <input class='smallbox-votings-box' type='password' name='option' />
+            <input class='smallbox-votings-box' type='text' name='options' />
           </div>
           <div id='smallbox-message'>
           </div>
@@ -47,10 +47,17 @@
       </div>
   </body>
   <script>
+    var message = '<%= message %>';
+    if (message !== '') {
+      var el = document.getElementById('smallbox-message');
+      el.textContent = message;
+      el.style.visibility = 'visible';
+    }
+
     var addOptionButton = document.getElementById('add-option');
     var el = document.getElementById('smallbox-votings-options');
     var addOption = function() {
-      var newHtml = "<div class='smallbox-votings-name'>option:</div> <input class='smallbox-votings-box' type='password' name='option' />";
+      var newHtml = "<div class='smallbox-votings-name'>option:</div> <input class='smallbox-votings-box' type='text' name='options' />";
       el.insertAdjacentHTML('beforeEnd', newHtml);
     }
     addOptionButton.addEventListener('click', addOption);

@@ -58,7 +58,7 @@ router.get('/logout', (req, res, next) => {
       if (err) {
         next(err);
       } else {
-        res.status(200).render('complete', {
+        res.status(200).render('success', {
           title: 'Vote',
           message: 'You have logged-out!'
         });
