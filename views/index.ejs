@@ -2,20 +2,20 @@
 <html>
   <head>
     <title>Voting Platform</title>
-    <script src="https://kit.fontawesome.com/ce204b133d.js" crossorigin="anonymous"></script>
+    <script src='https://kit.fontawesome.com/ce204b133d.js' crossorigin='anonymous'></script>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
     <header>
-      <h1 class='logo'><a href='/'><i class="fas fa-vote-yea fa-xs"></i> Voting Platform</a></h1>
+      <h1 class='logo'><a href='/'><i class='fas fa-vote-yea fa-xs'></i> Voting Platform</a></h1>
       <nav>
         <ul>
           <% if (user) { %>
-            <li><a href='/logout'><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+            <li><a href='/logout'><i class='fas fa-sign-out-alt'></i>Logout</a></li>
             <li><%= user.name %></li>
           <% } else { %>
             <li><a href='/register'>Register</a></li>
-            <li><a href='/login'><i class="fas fa-sign-in-alt fa-xs"></i>Login</a></li>
+            <li><a href='/login'><i class='fas fa-sign-in-alt fa-xs'></i>Login</a></li>
           <% } %>
         </ul>
       </nav>
@@ -27,14 +27,14 @@
 
     <main>
       <section class='home-banner'>
-        <i class="fas fa-vote-yea fa-5x"></i>
+        <i class='fas fa-vote-yea fa-5x'></i>
         <p class='title'>필요한 답을 얻으세요.</p>
         <p class='text'>대치동을 선도하는 설문조사 소프트웨어로 필요한 피드백을 얻으세요.</p>
         <a href='/votings/new' class='button'>시작하기</a>
       </section>
 
       <section class='home-survey-list'>
-        <div class="top">
+        <div class='top'>
           <h3>Survey</h3>
           <a href='/votings' class='go-button'>내 투표보기</a>
         </div>
