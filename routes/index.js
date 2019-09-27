@@ -4,13 +4,18 @@ const User = require('../models/User');
 const Voting = require('../models/Voting');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const authCheck = require('../middlewares/authCheck')
+const authCheck = require('../middlewares/authCheck');
+const isOpen = require('../middlewares/isOpen');
 
 router.get('/', authCheck, function(req, res, next) {
   Voting.find()
     .populate('creator', 'name')
     .exec((err, voting) => {
-      res.render('index', { user: req.user, title: 'Voting', voting });
+      const open = [];
+      for (let i = 0; i < voting.length; i++) {
+        open.push(isOpen(voting[i].expiration));
+      }
+      res.render('index', { user: req.user, title: 'Voting', voting, open });
     });
 });
 

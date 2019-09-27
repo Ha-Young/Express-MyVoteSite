@@ -12,6 +12,7 @@
         <a href="/votings/<%= voting[i].id%>">
           <div class="title">투표타이틀 : <%= voting[i].title%></div>
           <div class="date">유효기간: <%= voting[i].expiration%></div>
+          <div class="open">가능여부: <%- open[i] ? '가능' : '불가능' %></div>
         </a>
         <button class="del" id="<%= voting[i].id%>" type="submit">삭제</button>
       </li>

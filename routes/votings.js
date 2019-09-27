@@ -2,13 +2,18 @@ const express = require('express');
 const router = express.Router();
 const Voting = require('../models/Voting');
 const mongoose = require('mongoose');
-const authCheck = require('../middlewares/authCheck')
+const authCheck = require('../middlewares/authCheck');
+const isOpen = require('../middlewares/isOpen');
 
 router.get('/', authCheck, function(req, res, next) {
   Voting.find({ creator: req.user._id })
     .populate('creator', 'name')
     .exec((err, voting) => {
-      res.render('my', { user: req.user, title: 'my votings', voting });
+      const open = [];
+      for (let i = 0; i < voting.length; i++) {
+        open.push(isOpen(voting[i].expiration));
+      }
+      res.render('my', { user: req.user, title: 'my votings', voting, open });
     });
 });
 

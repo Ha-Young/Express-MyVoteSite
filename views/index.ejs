@@ -7,19 +7,19 @@
   </head>
   <body>
     <%- include("partials/header") %>
-    <div class="container">
+      <div class="main"></div>
       <div class="votings">
         <a class="button new" href="/votings/new">NEW VOTE</a>
         <% for(let i = 0; i < voting.length; i++) {%>
           <li class="voting">
             <a href="/votings/<%= voting[i].id%>">
-              <div class="title">투표타이틀 : <%= voting[i].title%></div>
-              <div class="date">유효기간: <%= voting[i].expiration%></div>
-              <div class="name">이름: <%= voting[i].creator.name%></div>
+              <div class="title">투표타이틀 : <%= voting[i].title %></div>
+              <div class="date">유효기간: <%= voting[i].expiration %></div>
+              <div class="open">가능여부: <%- open[i] ? '가능' : '불가능' %></div>
+              <div class="name">이름: <%= voting[i].creator.name %></div>
             </a>
           </li>
         <%}%>
       </div>
-    </div>
   </body>
 </html>
