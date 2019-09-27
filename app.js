@@ -11,6 +11,9 @@ const flash = require('connect-flash');
 const bodyparser = require('body-parser');
 const passportConfig = require('./passport');
 
+require('dotenv').config();
+const MONGODB_ATLAS = process.env.MONGODB_ATLAS;
+
 const index = require('./routes/index');
 const votings = require('./routes/votings');
 
@@ -18,7 +21,7 @@ const app = express();
 
 passportConfig(passport);
 
-mongoose.connect('mongodb://localhost/test', { useNewUrlParser: true });
+mongoose.connect(MONGODB_ATLAS, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
