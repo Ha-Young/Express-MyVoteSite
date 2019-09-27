@@ -1,0 +1,41 @@
+@import url('./header.less');
+@import url('./var.less');
+@import url('./tags.less');
+
+.success-wrapper, .err-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 70px;
+  text-align: center;
+  background:
+  @backgroundOpacity,
+  url(@successImg)
+  no-repeat;
+  background-size: cover;
+
+
+  .success-box {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    width: 580px;
+    padding: 30px 0;
+    margin: 100px auto 0;
+    transform: translate(-50%, -50%);
+    border-radius: 3px;
+    font-family: @serif;
+    box-shadow: 0 0 5px @darkColor;
+    background-color: #ffffff;
+  }
+
+  .success-box, .err-box {
+    .info-message {
+      font-size: 35px;
+    }
+
+    div {
+      margin: 15px 0;
+    }
+  }
+}

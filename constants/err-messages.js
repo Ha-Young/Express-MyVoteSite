@@ -1,0 +1,9 @@
+exports.existedUser = 'This account already exists.';
+exports.invalidEmail = 'Invalid email format.';
+exports.invalidPassword = 'Password does not meet the requirements';
+exports.confirmPassword = 'Your password and confirmation password do not match.';
+exports.incorrectPassword = 'Incorrect password.';
+exports.incorrectName = 'Incorrect username.';
+exports.userNotFound = 'User Not Found';
+exports.failedToCreate = 'Failed to create a new vote';
+exports.deletedVote = 'The vote is deleted';

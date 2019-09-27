@@ -1,5 +1,6 @@
 const Vote = require('../../models/Vote');
 const dateFormat = require('dateformat');
+const { failedCreate } = require('../../constants/err-messages');
 
 exports.getAll = async function(req, res, next) {
   try {
@@ -98,5 +99,5 @@ exports.success = function(req, res, next) {
 };
 
 exports.error = function(req, res, next) {
-  res.render('error', { message: '투표 생성에 실패하였습니다' });
+  res.render('error', { message: failedToCreate });
 };

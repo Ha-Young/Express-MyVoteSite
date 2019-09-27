@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
-  <%- include('./partials/head')%>
+  <head>
+    <title>Voting Platform</title>
+    <link rel='stylesheet' href='/stylesheets/success-error.css' />
+  </head>
   <body>
     <%- include('./partials/header') %>
-    <div class="success-wrapper">
-      <div class="success-box">
-        <h1><%= message %></h1>
+    <div class="err-wrapper">
+      <div class="err-box">
+        <div class="info-message"><%= message %></div>
         <a href="/">MAIN</a>
       </div>
     </div>

@@ -1,6 +1,11 @@
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const {
+  userNotFound,
+  incorrectName,
+  incorrectPassword
+} = require('../constants/err-messages');
 
 module.exports = function(passport) {
   passport.serializeUser((user, done) => {
@@ -15,7 +20,7 @@ module.exports = function(passport) {
         return done(null, user);
       }
 
-      return done(new Error('User Not Found'));
+      done(new Error(userNotFound));
     } catch(err) {
       done(err);
     }
@@ -35,13 +40,13 @@ module.exports = function(passport) {
 
           return result ?
             done(null, user) :
-            done(null, false, { message: 'Incorrect password.' });
+            done(null, false, { message: incorrectPassword });
         }
 
-        return done(null, false, { message: 'Incorrect username.' });
+        done(null, false, { message: incorrectName });
       } catch(err) {
         done(err);
       }
     }
   ));
-}
+};

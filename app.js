@@ -32,6 +32,9 @@ const votings = require('./routes/votings');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(lessMiddleware(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -46,9 +49,6 @@ require('./config/passport')(passport);
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(lessMiddleware(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/login', login);

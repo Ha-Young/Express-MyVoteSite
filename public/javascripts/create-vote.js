@@ -23,8 +23,8 @@ if (hour > 23) {
 if (hour < 10) {
   hour = `0${hour}`;
 }
+
 const minTime = `${year}-${month}-${day}T${hour}:00`;
-const setTime = `${year}-${month}-${day}T${hour}:00`;
 
 $endDate.setAttribute('min', minTime);
 $endDate.setAttribute('value', minTime);

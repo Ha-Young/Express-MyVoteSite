@@ -12,7 +12,7 @@ router.get('/', authentication.ensureLoggedIn, async function(req, res, next) {
     const isInProgress = votes.map(vote => vote.end_date > now);
     const times = votes.map(vote => dateFormat(vote.end_date, 'yy-mm-dd hTT'));
 
-    res.render('index', { votes, isInProgress, times, myVote: false });
+    res.render('main', { votes, isInProgress, times, myVote: false });
 
   } catch(err) {
     next(err);

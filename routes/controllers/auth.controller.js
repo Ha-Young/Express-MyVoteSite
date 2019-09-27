@@ -1,6 +1,12 @@
 const passport = require('passport');
 const User = require('../../models/User');
 const regExp = require('../../constants/reg-exp');
+const {
+  existedUser,
+  invalidEmail,
+  invalidPassword,
+  confirmPassword
+} = require('../../constants/err-messages');
 
 exports.login = passport.authenticate('local', {
   successRedirect: '/',
@@ -14,39 +20,39 @@ exports.join = async function(req, res, next) {
     const user = await User.findOne({ email: email });
 
     if (user) {
-      return res.render('join', { message: '이미 가입한 회원입니다', err: null });
+      return res.render('join', { message: existedUser, err: null });
     }
 
     if (!regExp.vaildEmail.test(email)) {
-      return res.render('join', { message: '이메일 형식이 맞지 않습니다', err: null });
+      return res.render('join', { message: invalidEmail, err: null });
     }
 
-    if (regExp.vaildPassword.test(password)) {
-      if (password !== confirm_password) {
-        return res.render('join', { message: '비밀번호가 일치하지 않습니다', err: null });
-      }
-
-      const newUser = await new User({
-        email: email,
-        name: username,
-        password: password
-      });
-
-      newUser.validate(function(err) {
-        return res.render('join', { message: err, err: null });
-      });
-
-      await newUser.save();
-      return res.redirect('/');
+    if (!regExp.vaildPassword.test(password)) {
+      return res.render('join', { message: invalidPassword, err: true });
     }
 
-    res.render('join', { message: null, err: true });
+    if (password !== confirm_password) {
+      return res.render('join', { message: confirmPassword, err: null });
+    }
+
+    const newUser = await new User({
+      email: email,
+      name: username,
+      password: password
+    });
+
+    newUser.validate(function(err) {
+      return res.render('join', { message: err, err: null });
+    });
+
+    await newUser.save();
+    res.redirect('/');
   } catch(err) {
     next(err);
   }
 };
 
-exports.logout = function(req, res, err) {
+exports.logout = function(req, res) {
   req.logout();
   req.session.destroy();
   res.redirect('/');

@@ -1,4 +1,5 @@
 const Vote = require('../../models/Vote');
+const { deletedVote } = require('../../constants/err-messages');
 
 exports.isDeleted = async function(req, res, next) {
   try {
@@ -8,7 +9,7 @@ exports.isDeleted = async function(req, res, next) {
       res.locals.vote = vote;
       next();
     } else {
-      throw '삭제된 투표입니다';
+      throw new Error(deletedVote);
     }
   } catch(err) {
     next(err);
@@ -19,7 +20,7 @@ exports.isVoted = async function(req, res, next) {
   try {
     const { vote } = res.locals;
     const voted = vote.options.find(option => option.count.includes(req.user._id) === true);
-    const totalContributors = vote.options.reduce((a, option) => { return a + option.count.length }, 0);
+    const totalContributors = vote.options.reduce((a, option) => { return a + option.count.length; }, 0);
     const now = new Date();
     const isInProgress = vote.end_date > now;
     const isCreator = req.user._id.toString() === vote.creator_id._id.toString();

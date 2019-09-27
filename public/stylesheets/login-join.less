@@ -1,0 +1,67 @@
+@import url('./header.less');
+@import url('./var.less');
+@import url('./tags.less');
+
+.login-wrapper, .join-wrapper {
+  padding-top: 70px;
+
+  .login-image, .join-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 810px;
+    margin: 0 auto;
+    background:
+      @backgroundOpacity,
+      url(@loginImg)
+      no-repeat;
+    background-size: cover;
+
+    .login-form, .join-form  {
+      width: 600px;
+      padding: 90px 120px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      background: @backgroundOpacity;
+      color: #ffffff;
+
+      .join-input {
+        margin-top: 0;
+        height: 90px;
+      }
+
+      div {
+        width: 100%;
+        height: 100px;
+        margin-top: 30px;
+
+        label input {
+          width: 100%;
+        }
+      }
+
+      .join-inform {
+        margin-top: 0;
+        padding-left: 15px;
+        word-break: keep-all;
+      }
+
+      .join-inform-error {
+        color:rgb(255, 157, 157);
+      }
+    }
+  }
+}
+
+.login-join-submit {
+  text-align: center;
+}
+
+#submit-button, #join-bottom, .vote-submit {
+  border: 0;
+  text-align: center;
+  font-family: @serif;
+  background-color: @color;
+  color: #ffffff;
+}
