@@ -13,7 +13,7 @@ exports.getAll = async (req, res, next) => {
     const formatting = formatDate(newVoting.expiration);
 
     Object.assign(newVoting, formatting);
-    newVoting.author = user.name
+    newVoting.author = user.name;
 
     return newVoting;
   }));
@@ -37,7 +37,7 @@ exports.getMyVoting = async (req, res, next) => {
     const formatting = formatDate(newVoting.expiration);
 
     Object.assign(newVoting, formatting);
-    newVoting.author = user.name
+    newVoting.author = user.name;
 
     return newVoting;
   }));
@@ -46,7 +46,7 @@ exports.getMyVoting = async (req, res, next) => {
     user: req.user,
     votings: newVotings
   });
-}
+};
 
 exports.vote = async (req, res, next) => {
   if (!isValidId(req.user._id) || !isValidId(req.body.option)) {
