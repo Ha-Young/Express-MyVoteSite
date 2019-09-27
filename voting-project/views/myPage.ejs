@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>vote platform</title>
+      <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Roboto&display=swap" rel="stylesheet">
+      <link rel='stylesheet' href='/stylesheets/style.css' />
+      <link rel='stylesheet' href='/stylesheets/myPage.css' />
+  </head>
+  <body>
+    <%- include('header') %>
+    <div class="main-wrapper">
+        <div class="main-content-wrapper">
+          <p class="my-vote-title">My <strong class="my-vote-title-strong">Vote</strong> List</p>
+            <% for(var i = 0; i < vote.length; i++) { %>
+              <div class="main-content">
+                <a class="main-content-link" href="/votings/<%=vote[i]._id %>">
+                  <div class="my-vote-title-inner"><%= vote[i].title %></div>
+                  <% var exdate = new Date(vote[i].expiration) %>
+                  <% var nowdate = new Date() %>
+                  <div class="expiration"><%= new Intl.DateTimeFormat('ko-KR').format(vote[i].expiration) %></div>
+                  <% if (new Date() - vote[i].expiration > 0) { %> 
+                    <div class="complete">완료</div>  
+                    <% } else { %>
+                    <div class="progress">진행 중</div>
+                    <% } %>
+                  <% for(var j = 0; j < vote[i].options.length; j++)  {%>
+                    <div class="result-wrapper">
+                        <div class="result-title"><%= vote[i].options[j].title %> </div>
+                        <% if (vote[i].options[j].people.length !== 0) { %> 
+                        <div class="result<%= j +1 %>"></div>
+                        <% } else { %>
+                        <div class="result"></div>
+                        <% } %>
+                        <div class="result-number"><%= vote[i].options[j].people.length %></div>
+                    </div>
+                  <% } %>
+                </a>
+              </div>
+            <% } %>
+        </div>
+    </div>
+  </body>
+</html>

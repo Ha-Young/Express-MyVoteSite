@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>vote platform</title>
+      <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Roboto&display=swap" rel="stylesheet">
+      <link rel='stylesheet' href='/stylesheets/style.css' />
+      <link rel='stylesheet' href='/stylesheets/voteDetailAdmin.css' />
+  </head>
+  <body>
+    <%- include('header') %>
+    <div class="main-wrapper">
+        <div class="main-content-wrapper">
+          <p class="my-vote-title">Go <strong class="my-vote-title-strong">Vote!!</strong></p>
+          <div class="main-content">
+              <a class="main-content-link" href="/votings/<%=vote[0]._id %>">
+                <div class="my-vote-title-inner"><%= vote[0].title %></div>
+                <% var exdate = new Date(vote[0].expiration) %>
+                <% var nowdate = new Date() %>
+                <div class="expiration"><%= new Intl.DateTimeFormat('ko-KR').format(vote[0].expiration) %></div>
+                <% if (new Date() - vote[0].expiration > 0) { %> 
+                <div class="complete">완료</div>  
+                <% } else { %>
+                <div class="progress">진행 중</div>
+                <% } %>
+                <div style="color: red"><%= error %></div>
+                <form action="/votings/<%=vote[0]._id %>" method="POST">
+                <% for(var j = 0; j < vote[0].options.length; j++)  {%>
+                  <div class="result-wrapper">
+                    <input 
+                    class="result-btn"
+                    type="radio" 
+                    name="select" 
+                    value="<%= vote[0].options[j].title %>"
+                    id="<%= vote[0].options[j].title %>"
+                    />
+                    <label class="result-title"><%= vote[0].options[j].title %> </label>
+                  </div>
+                  <% } %>
+                  <div>
+                    <button class="vote-btn" type="submit">투표하기</button>
+                  </div>
+                </form>
+              </a>
+          </div>
+        </div>
+      </div>
+  </body>
+</html>

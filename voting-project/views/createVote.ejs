@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>vote platform</title>
+      <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Roboto&display=swap" rel="stylesheet">
+      <link rel='stylesheet' href='/stylesheets/style.css' />
+      <link rel='stylesheet' href='/stylesheets/createVote.css' />
+  </head>
+  <body>
+    <%- include('header') %>
+    <div class="main-wrapper">
+      <div class="main">
+        <div>
+          <div>
+              <div class="make-vote-header">
+                <div class="make-vote-text-wrapper">
+                  <p class="make-vote-text">
+                    Make a Vote
+                  </p>
+                </div>
+              </div>
+              <div class="make-vote-wrapper">
+                <form action="/votings/new" method="post">
+                  <div>
+                    <label class="make-vote-text" >제목을 입력하세요</label><br>
+                    <input class="input-vote-form" type="text" name="title" placeholder="ex)나이키 vs 아디다스"/>
+                  </div>
+                  <div>
+                    <label class="make-vote-text" >마감시간(몇 시간 후)</label>
+                    <input id="datefield" class="input-vote-form" type="date" name="expiration" placeholder="ex)12"/>
+                  </div>
+                  <div>
+                    <p>
+                      <strong>투표 항목을 입력하세요(최대 5가지)</strong>
+                    </p>
+                    <div id="frist">
+                      <div>
+                        <label class="" >
+                          <input class="input-vote-form" type="text" name="options" placeholder="ex)나이키"/>
+                        </label>
+                        </div>
+                      <div>
+                        <label class="" >
+                          <input class="input-vote-form" type="text" name="options" placeholder="ex)아디다스"/>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <button class="input-add-btn" type="button" id="plus">Add</button>
+                    <button class="input-add-btn" type="submit">Make</button>
+                  </div>
+                </form>
+              </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </body>
+  <script src="/javascripts/createVote.js"></script>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>vote platform</title>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Roboto&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/register.css' />
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <div class="main">
+        <div class="">
+          <div class="">  
+            <div class="login-register-header">
+              <div class="login-text-wrapper">
+                <p class="login-text">
+                  <a class="login-text-inner" href="/login">로그인</a>
+                </p>
+              </div>
+              <div class="register-text-wrapper">
+                <p class="register-text">
+                  회원가입
+                </p>
+              </div>
+            </div>
+            <div style="color:red"><%= error %></div>
+            <div class="email-wrapper">
+                <form action="/register" method="post">
+                <label class="email-text" >이메일을 입력하세요</label><br>
+                <input class="input-email-form" type="text" name="email" placeholder="example@gmail.com"/>
+                <br>
+                <label class="email-text" >비밀번호를 입력하세요 (6자 이상)</label><br>
+                <input class="input-email-form" type="password" name="password" placeholder="ex)12abc34"/>
+                <br>
+                <label class="email-text" >비밀번호를 다시 한 번 입력하세요 </label><br>
+                <input class="input-email-form" type="password" name="password2" placeholder="ex)12abc34"/>
+                <br>
+                <label class="input-email-text" >닉네임을 입력하세요 </label><br>
+                <input class="input-email-form" type="text" name="name" placeholder="ex)바닐라똥코드"/>
+                <div>
+                  <button class="input-email-btn" type="submit">이메일로 가입하기</button>
+                </div>
+              </form>
+            </div>
+            <div class="sns-border">
+                <div class="sns-border-text">SNS계정으로 시작하기</div>
+            </div>
+            <div class="input-google-wrapper">
+               <a class="input-google-text" href="/login/google">
+                <img class="google-logo" src="/images/Google-Plus-icon.png"/>
+                구글로 시작하기
+              </a>    
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+.main-wrapper {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  padding: 100px 0 0 0;
+}
+.main-wrapper:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: center/ cover no-repeat url("../images/success.jpg");
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+  z-index: -1;
+}
+.main {
+  width: 40%;
+  min-width: 500px;
+  height: 40vh;
+  position: absolute;
+  top: 20%;
+  left: 35%;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  border-radius: 20px;
+}
+.success-message {
+  margin-top: 100px;
+  color: #f83b3b;
+  font-size: 75px;
+}
+.thanks-message {
+  margin-top: 30px;
+  color: #0091ea;
+  font-size: 55px;
+}
