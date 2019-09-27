@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title><%= title %>-Profile</title>
+    <link href='/stylesheets/style.css' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <% if (user) { %>
+        <li><a href='/auth/logout'>Logout</a></li>
+        <li><a href='/'>Homepage</a></li>
+        <li><a href='/profile'>Profile</a></li>
+        <% } else { %>
+        <li><a href='/auth/login'>Login</a></li>
+        <% } %>
+      </ul>
+    </nav>
+    <% if (user) { %>
+    <header>
+      <h1>Welcome to your profile, <%= user.userName %></h1>
+    </header>
+    <main>
+      <img src='<%= user.thumbnail %>' height='464px' />
+      <p>This is your profile thumbnail.</p>
+      <p>Your Locale is '<%= user.locale %>'.</p>
+    </main>
+    <% } else { %>
+    <header>
+      <h1>You can use our services after Login.</h1>
+      <h2>If you want to use our page Press the Button above.</h2>
+      <img src='https://images.unsplash.com/photo-1459347268516-3ed71100e718?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80' height='500px' />
+    </header>
+    <% } %>
+  </body>
+</html>

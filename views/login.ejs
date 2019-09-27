@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title><%= title %>-Login</title>
+    <link href='/stylesheets/style.css' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <% if (user) { %>
+        <li><a href='/auth/logout'>Logout</a></li>
+        <li><a href='/'>Homepage</a></li>
+        <li><a href='/profile'>Profile</a></li>
+        <% } else { %>
+        <li><a href='/auth/login'>Login</a></li>
+        <% } %>
+      </ul>
+    </nav>
+    <% if (user) { %>
+    <header>
+      <h1>You are already Logged in.</h1>
+    </header>
+    <% } else { %>
+    <header>
+      <h1>Welcome to swnam-voting-platform</h1>
+      <h2>Login with Google and Local</h2>
+      <h2>Press the Button below.</h2>
+    </header>
+    <main>
+      <a class='google-button' href='/auth/google'>Google+ Login</a>
+      <a class='local-button' href='/auth/localLoginPage'>Local Login</a>
+      <p>
+        <img src='https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60' height='450px' />
+      </p>
+    </main>
+    <% } %>
+  </body>
+</html>

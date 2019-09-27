@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title><%= title %>-Local-Login</title>
+    <link href='/stylesheets/style.css' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <% if (user) { %>
+        <li><a href='/auth/logout'>Logout</a></li>
+        <li><a href='/'>Homepage</a></li>
+        <li><a href='/profile'>Profile</a></li>
+        <% } else { %>
+        <li><a href='/auth/login'>Login</a></li>
+        <% } %>
+      </ul>
+    </nav>
+    <% if (user) { %>
+    <header>
+      <h1>You are already Logged in.</h1>
+    </header>
+    <% } else { %>
+    <header>
+      <h1>Welcome to swnam-voting-platform</h1>
+      <h2>Login with Local.</h2>
+      <h3>Put your ID and Password and press the 'Login' Button below.</h3>
+    </header>
+    <main>
+      <form class='form' action='/auth/local' method='post' >
+        <div class='answer'>
+          <input type='text' name='username' placeholder='ID를 입력하세요. ID는 이메일 형식입니다!!' />
+          <input type='password' name='password' placeholder='비밀번호를 입력하세요. 비밀번호는 숫자4자리 입니다!!' />
+          <button class='local-button' type='submit'>Local Login</button>
+        </div>
+      </form>
+    </main>
+    <header>
+      <h2>If you don't have ID, press the 'Sign-up' Button below.</h2>
+    </header>
+    <main>
+      <div class='answer'>
+        <a class='register-button' href='/auth/sign-up'>Sign-up</a>
+      </div>
+    </main>
+    <% } %>
+  </body>
+</html>
