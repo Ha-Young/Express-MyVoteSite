@@ -5,16 +5,22 @@
   </head>
   <body>
     <%- include("partials/header") %>
-    <h1>투표페이지</h1>
-    <div>투표타이틀 <%= voting.title  %></div>
-    <div>투표설명 <%= voting.description  %></div>
+    <h1>내가만든페이지,만료페이지</h1>
+    <div>투표타이틀 <%= voting.title %></div>
+    <div>투표설명 <%= voting.description %></div>
     <div>만료날자 <%= voting.expiration %></div>
     <form action="/votings/<%= voting._id %>" method="POST">
       <% for(let i = 0; i < voting.items.length; i++) {%>
         <input type="radio" name="option" value="<%= i %>" ><%= voting.items[i].option %></input>
-      <%}%>
+      <% } %>
       <button class="submit-button" type="submit">투표하기</button>
     </form>
+    <div class="result">
+      <% for(let i = 0; i < voting.items.length; i++) { %>
+        <div><%= voting.items[i].option %></div>
+        <div>카운트 <%= voting.items[i].voters.length %></div>
+      <% } %>
+    </div>
     <a href="/">돌아가기</a>
   </body>
 </html>

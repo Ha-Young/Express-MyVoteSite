@@ -2,25 +2,31 @@
 <html>
   <head>
     <title>Voting</title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Lobster|Ubuntu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/common.css">
+    <link rel="stylesheet" href="/stylesheets/login.css">
   </head>
   <body>
-    <h1 class="page-title"><%= title %></h1>
     <div class="login-box">
+      <div class="page-title">WELCOME BACK</div>
       <form action="/login" method="POST">
         <div class="form">
-          <label>email</label>
-          <input type="email" name="email">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+          />
         </div>
         <div class="form">
-          <label>password</label>
-          <input type="password" name="password">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+          />
         </div>
         <button class="submit-button" type="submit">로그인</button>
       </form>
+      <div class="message"><%= message %></div>
+      <div class="no-account">No Account?<a href="/register">Register</a></div>
     </div>
-    <p><%= message %></p>
-    <p>No Account?<a href="/register">Register</a></p>
   </body>
 </html>
