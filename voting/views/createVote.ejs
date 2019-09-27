@@ -46,11 +46,13 @@
     <script>
       window.addEventListener('load', function() {
         var dateSetting = document.querySelector('.date-setting');
-        dateSetting.setAttribute('min', new Date().toISOString().slice(0, 16));
-        dateSetting.setAttribute(
-          'value',
-          new Date().toISOString().slice(0, 16)
-        );
+        var timeZoneOffset = new Date().getTimezoneOffset() * 60000;
+        var localISODate = new Date(Date.now() - timeZoneOffset)
+          .toISOString()
+          .slice(0, 16);
+
+        dateSetting.setAttribute('min', localISODate);
+        dateSetting.setAttribute('value', localISODate);
 
         document
           .getElementById('container')
