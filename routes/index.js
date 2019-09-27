@@ -80,11 +80,7 @@ router.post('/join', validateUser, async (req, res, next) => {
     return res.redirect('/login');
   } catch (err) {
     console.error(err);
-    res.render('error', {
-      userName: '',
-      message:  'Internal Server Error',
-      errorStatus: 500
-    });
+    next(err);
   }
 });
 

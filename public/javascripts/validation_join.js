@@ -1,6 +1,19 @@
+
+var $email = document.querySelector('input[name="email"]');
+var $password = document.querySelector('input[name="password"]');
+var $pwConfirm = document.querySelector('input[name="password_confirm"]');
+var $name = document.querySelector('input[name="name"]');
+var $form = document.querySelector('.form-main');
+
 var PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
 var EMAIL_REGEX = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 var NAME_REGEX = /^[가-힣]{2,4}|[a-zA-Z]{2,20}$/;
+
+onKeyupValidate($email, EMAIL_REGEX);
+onKeyupValidate($password, PASSWORD_REGEX);
+onKeyupValidate($name, NAME_REGEX);
+onKeyupPwConfirmation($password, $pwConfirm);
+onSubmitValidate($form, $email, $password, $pwConfirm, $name);
 
 function onKeyupValidate (elem, regex) {
   elem.addEventListener('keyup', function (e) {
@@ -55,32 +68,6 @@ function onSubmitValidate (form, email, password, pwConfirm, name) {
       name.focus();
       e.preventDefault();
       return;
-    }
-  });
-}
-
-function onKeyupCheckLength (elem, max) {
-  elem.addEventListener('keyup', function (e) {
-    var target = e.currentTarget;
-    var targetLen = target.value.trim().length;
-    var $info = target.parentElement.querySelector('.info-txt');
-
-    if (targetLen > max || targetLen < 1) {
-      $info.classList.add('warn-txt');
-    } else {
-      $info.classList.remove('warn-txt');
-    }
-  });
-}
-
-function onBlurAddZero (elem) {
-  elem.addEventListener('blur', function (e) {
-    var targetVal = e.currentTarget.value;
-
-    if (targetVal.length < 2) {
-      e.currentTarget.value = '0' + targetVal;
-    } else {
-      e.currentTarget.value = targetVal.slice(0, 2);
     }
   });
 }

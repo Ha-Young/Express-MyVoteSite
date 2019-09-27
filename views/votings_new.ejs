@@ -7,7 +7,7 @@
     <% include ./partials/header %>
     <% include ./partials/nav %>
     <div class="container">
-      <form method="POST" action="/votings/new">
+      <form method="POST" action="/votings/new" class="vote-form">
         <fieldset class="vote-box-wrap top">
           <ul class="input-list">
             <li>
@@ -55,27 +55,13 @@
         <button type="submit" class="btn-main">CREATE</button>
       </form>
     </div>
-    <script src="/javascripts/validation.js"></script>
+    <script src="/javascripts/validation_vote.js"></script>
     <script>
       var message = '<%= message %>';
 
       if (message) {
         alert(message);
       }
-
-      var $voteTitle = document.querySelector('.title-txt');
-      var $voteOptions = document.querySelectorAll('input[name="options"]');
-
-      onKeyupCheckLength($voteTitle, 50);
-      $voteOptions.forEach(function (elem) {
-        onKeyupCheckLength(elem, 80);
-      });
-
-      var $date = document.querySelectorAll('.date');
-
-      $date.forEach(function (elem) {
-        onBlurAddZero(elem);
-      });
 
       var $btnMore = document.querySelector('.btn-more');
       var $optionList = document.querySelector('.options-list');

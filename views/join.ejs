@@ -33,25 +33,13 @@
       </form>
       <a href="/login" class="btn-black">Login</a>
     </div>
-    <script src="/javascripts/validation.js"></script>
+    <script src="/javascripts/validation_join.js"></script>
     <script>
       var message = '<%= message %>';
 
       if (message) {
         alert(message);
       }
-
-      var $email = document.querySelector('input[name="email"]');
-      var $password = document.querySelector('input[name="password"]');
-      var $pwConfirm = document.querySelector('input[name="password_confirm"]');
-      var $name = document.querySelector('input[name="name"]');
-      var $form = document.querySelector('.form-main');
-
-      onKeyupValidate($email, EMAIL_REGEX);
-      onKeyupValidate($password, PASSWORD_REGEX);
-      onKeyupValidate($name, NAME_REGEX);
-      onKeyupPwConfirmation($password, $pwConfirm);
-      onSubmitValidate($form, $email, $password, $pwConfirm, $name);
     </script>
   </body>
 </html>
