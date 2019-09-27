@@ -54,7 +54,7 @@ router.post('/new', async (req, res, next) => {
 });
 
 
-// One voting router
+// Each voting router
 
 router.get('/:voting_id', async (req, res, next) => {
   const voting = await Voting.find({ _id: req.params.voting_id });
