@@ -41,12 +41,13 @@ exports.join = async function(req, res, next) {
       password: password
     });
 
-    newUser.validate(function(err) {
-      return res.render('join', { message: err, err: null });
+    newUser.validate(async function(err) {
+      if (err) {
+        return next(err);
+      }
+      await newUser.save();
+      res.redirect('/');
     });
-
-    await newUser.save();
-    res.redirect('/');
   } catch(err) {
     next(err);
   }
