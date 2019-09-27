@@ -1,42 +1,40 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <div>
-      <a href='/votings'>my votings</a>
-    </div>
+<% include ../partials/header %>
+        <div class='top-bar-button-container'>
+          <div class='top-bar-button' onClick='location.href="/"'>
+            To Main
+          </div>
+          <div class='top-bar-button' onClick='location.href="/votings/new"'>
+            Create Voting
+          </div>
+          <div class='top-bar-button' onClick='location.href="/logout"'>
+            Logout
+          </div>
+        </div>
+      </div>
     <div id='voting-list'>
-      voting id?
     </div>
-    <div>
-      <a href='/votings/new'>new voting</a>
-    </div>
-
-    <a href='/'>to main</a>
-    <a href='/logout'>logout</a>
   </body>
   <script>
-    console.log('<%= title %>');
     var allVotings = <%-JSON.stringify(allVotings)%>;
     var el = document.getElementById('voting-list');
 
     for (var i = 0; i < allVotings.length; i++) {
-      console.log(allVotings[i]);
+      if (allVotings[i]) {
+        var newHtml = "<div class='voting-list-content' onclick='location.href=" + "%link%" +
+        "'><div class='voting-list-title'>%title%</div><div class='voting-list-status'>%status%</div><div class='voting-list-creator'>%creator%</div><div class='voting-list-expire'>%expire%</div></div>";
 
-      var newHtml = '<div onclick="location.href=' + "'/votings/%id%'"
-      + '">Title: %value%</div>';
-      newHtml = newHtml.replace('%id%', allVotings[i]._id);
-      newHtml = newHtml.replace('%value%', allVotings[i].title);
+        newHtml = newHtml.replace('%link%', '"/votings/' + allVotings[i]._id + '"');
+        newHtml = newHtml.replace('%title%', allVotings[i].title);
+        newHtml = newHtml.replace('%status%', allVotings[i].status);
+        newHtml = newHtml.replace('%creator%', allVotings[i].creator);
+        newHtml = newHtml.replace('%expire%', allVotings[i].expire);
 
-      el.insertAdjacentHTML('beforeEnd', newHtml);
+        el.insertAdjacentHTML('beforeEnd', newHtml);
+      }
     }
   </script>
 </html>
+
 
 <!-- // 현재 로그인한 사용자가 만든 투표 목록이 보여야 합니다.
 // 전체 투표 목록(제목, 만료 날짜 및 시간, 진행 중 여부)이 보여야 합니다.

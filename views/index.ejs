@@ -1,11 +1,33 @@
 <% include ./partials/header %>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <a href='/votings'>my votings</a>
-    <a href='/logout'>logout</a>
+        <div class='top-bar-button-container'>
+          <div class='top-bar-button' onClick='location.href="/votings"'>
+            My Votings
+          </div>
+          <div class='top-bar-button' onClick='location.href="/votings/new"'>
+            Create Voting
+          </div>
+          <div class='top-bar-button' onClick='location.href="/logout"'>
+            Logout
+          </div>
+        </div>
+      </div>
+    <div id='voting-list'>
+    </div>
   </body>
   <script>
-    console.log('<%= title %>');
-    console.log(new Date());
+    var allVotings = <%-JSON.stringify(allVotings)%>;
+    var el = document.getElementById('voting-list');
+
+    for (var i = 0; i < allVotings.length; i++) {
+      var newHtml = "<div class='voting-list-content' onclick='location.href=" + "%link%" +
+      "'><div class='voting-list-title'>%title%</div><div class='voting-list-status'>%status%</div><div class='voting-list-creator'>%creator%</div><div class='voting-list-expire'>%expire%</div></div>";
+      newHtml = newHtml.replace('%link%', '"/votings/' + allVotings[i]._id + '"');
+      newHtml = newHtml.replace('%title%', allVotings[i].title);
+      newHtml = newHtml.replace('%status%', allVotings[i].status);
+      newHtml = newHtml.replace('%creator%', allVotings[i].creator);
+      newHtml = newHtml.replace('%expire%', allVotings[i].expire);
+
+      el.insertAdjacentHTML('beforeEnd', newHtml);
+    }
   </script>
 </html>

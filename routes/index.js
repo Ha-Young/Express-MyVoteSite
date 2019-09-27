@@ -1,15 +1,34 @@
 const router = require('express').Router();
 const { authCheck, saveSession } = require('./middlewares/auth');
 const User = require('../models/User');
+const Voting = require('../models/Voting');
 
-router.get('/', authCheck, (req, res, next) => {
-  res.render('index', { title: 'Welcome to Vote' });
+router.get('/', authCheck, async (req, res, next) => {
+  const votings = await Voting.find();
+  const allVotings = await Promise.all(votings.map(async (voting) => {
+    const user = await User.findOne({ _id: voting.creator_id });
+    const userName = user.email;
+    const current = new Date();
+    let status = 'Open';
+    if (current > voting.expireDate) status = 'Closed';
+
+    return {
+      _id: voting._id,
+      creator: userName,
+      title: voting.title,
+      expire: voting.expireDate,
+      status
+    };
+  }));
+
+  res.render('index', { title: 'Welcome to Vote', allVotings });
 });
 
 router.get('/login', (req, res, next) => {
   res.render('login', {
     title: 'Welcome to Vote',
-    message: '' });
+    message: ''
+  });
 });
 
 router.post('/login', (req, res, next) => {
@@ -39,7 +58,10 @@ router.get('/logout', (req, res, next) => {
       if (err) {
         next(err);
       } else {
-        res.redirect('/');
+        res.status(200).render('complete', {
+          title: 'Vote',
+          message: 'You have logged-out!'
+        });
       }
     });
   }

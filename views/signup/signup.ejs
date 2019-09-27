@@ -1,20 +1,22 @@
 <% include ../partials/header %>
-    <div class='smallbox-container-signup'>
+      </div>
+    </div>
+    <div class='smallbox-signup-container'>
       <div class='smallbox-contents'>
         <form action='/signup' method='POST'>
-          <div class='smallbox-contents-name-signup'>
+          <div class='smallbox-signup-name'>
             email:
           </div>
-          <input class='smallbox-contents-box-signup' type='text' name='email' />
-          <div class='smallbox-contents-name-signup'>
+          <input class='smallbox-signup-box' type='text' name='email' />
+          <div class='smallbox-signup-name'>
             password:
           </div>
-          <input class='smallbox-contents-box-signup' type='text' name='password' />
-          <div class='smallbox-contents-name-signup'>
+          <input class='smallbox-signup-box' type='password' name='password' />
+          <div class='smallbox-signup-name'>
             confirm password:
           </div>
-          <input class='smallbox-contents-box-signup' type='text' name='confirmPassword' />
-          <div id='smallbox-contents-message'>
+          <input class='smallbox-signup-box' type='password' name='confirmPassword' />
+          <div id='smallbox-message'>
           </div>
           <input class='smallbox-button' type='submit' value='Submit' />
         </form>
@@ -27,7 +29,7 @@
   <script>
     var message = '<%= message %>';
     if (message !== '') {
-      var el = document.getElementById('smallbox-contents-message');
+      var el = document.getElementById('smallbox-message');
       el.textContent = message;
       el.style.visibility = 'visible';
     }

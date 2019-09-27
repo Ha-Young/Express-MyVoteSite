@@ -1,24 +1,58 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <form id ='newVoting' action='/votings/new' method='POST'>
-      title: <input type='text' name='title' /><br>
-      description: <input type='text' name='description' /><br>
-      option1: <input type='text' name='options' /><br>
-      option2: <input type='text' name='options' /><br>
-      <input type='submit' value='Submit' />
-    </form>
-    <a href='/votings'>my votings</a>
-    <a href='/logout'>logout</a>
+<% include ../partials/header %>
+      <div class='top-bar-button-container'>
+        <div class='top-bar-button' onClick='location.href="/"'>
+          To Main
+        </div>
+        <div class='top-bar-button' onClick='location.href="/logout"'>
+          Logout
+        </div>
+      </div>
+    </div>
+    <div class='smallbox-votings-container'>
+      <div class='smallbox-contents'>
+        <form action='/votings/new' method='POST'>
+          <div class='smallbox-votings-name'>
+            title:
+          </div>
+          <input class='smallbox-votings-box' type='text' name='title' />
+          <div class='smallbox-votings-name'>
+            description:
+          </div>
+          <input class='smallbox-votings-box' type='text' name='description' />
+          <div class='smallbox-votings-name'>
+            voting hours:
+          </div>
+          <input class='smallbox-votings-box' type='number' name='duration' />
+          <div id='smallbox-votings-options'>
+            <div class='smallbox-votings-name'>
+              option:
+            </div>
+            <input class='smallbox-votings-box' type='password' name='option' />
+            <div class='smallbox-votings-name'>
+              option:
+            </div>
+            <input class='smallbox-votings-box' type='password' name='option' />
+          </div>
+          <div id='smallbox-message'>
+          </div>
+          <div class='smallbox-button' id='add-option'>
+            Add Option
+          </div>
+          <input class='smallbox-button' type='submit' value='Submit' />
+        </form>
+
+        <div class='smallbox-button' onClick='location.href="/login"' >
+          Back to Login
+        </div>
+      </div>
   </body>
   <script>
-    console.log('<%= title %>');
-    console.log(new Date());
+    var addOptionButton = document.getElementById('add-option');
+    var el = document.getElementById('smallbox-votings-options');
+    var addOption = function() {
+      var newHtml = "<div class='smallbox-votings-name'>option:</div> <input class='smallbox-votings-box' type='password' name='option' />";
+      el.insertAdjacentHTML('beforeEnd', newHtml);
+    }
+    addOptionButton.addEventListener('click', addOption);
   </script>
 </html>

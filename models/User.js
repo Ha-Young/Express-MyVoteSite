@@ -11,15 +11,18 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  votings: Array
+  votings: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Voting'
+    }
+  ]
 });
 
 // Schema.pre needs regular function for callback
 UserSchema.pre('save', function (next) {
   bcrypt.hash(this.password, 10, (err, hash) => {
-    if (err) {
-      return next(err);
-    }
+    if (err) return next(err);
     this.password = hash;
     next();
   });
@@ -27,19 +30,17 @@ UserSchema.pre('save', function (next) {
 
 UserSchema.statics.authenticate = (email, password, callback) => {
   User.findOne({ email: email }).exec((err, user) => {
-    if (err) {
-      return callback(err)
-    } else if (!user) {
+    const returnErr = () => {
       let err = new Error('Invalid email or password');
       err.status = 401;
-      return callback(err);
+      return err;
     }
+    if (err) return callback(err);
+    if (!user) return callback(returnErr);
+
     bcrypt.compare(password, user.password, (err, result) => {
-      if (result === true) {
-        return callback(null, user);
-      } else {
-        return false;
-      }
+      if (result === true) return callback(null, user);
+      else return callback(returnErr);
     });
   });
 };

@@ -4,31 +4,42 @@ const Voting = require('../models/Voting');
 const User = require('../models/User');
 
 router.get('/', authCheck, async (req, res, next) => {
-  // 내 투표 보기
-  // 현재 로그인한 사용자가 만든 투표 목록이 보여야 합니다.
-  // 전체 투표 목록(제목, 만료 날짜 및 시간, 진행 중 여부)이 보여야 합니다.
-  // 투표를 클릭할 경우, /votings/:id로 이동합니다.
-  const allVotings = await Voting.find();
+  const votings = await Voting.find();
+  const allVotings = await Promise.all(votings.map(async (voting) => {
+    if (JSON.stringify(req.session.userId) === JSON.stringify(voting.creator_id)) {
+      const user = await User.findOne({ _id: voting.creator_id });
+      const userName = user.email;
+      const current = new Date();
+      let status = 'Open';
+      if (current > voting.expireDate) status = 'Closed';
 
-  res.render('votings/index', {
-    title: 'Express??',
-    allVotings: allVotings
-  });
+      return {
+        _id: voting._id,
+        creator: userName,
+        title: voting.title,
+        expire: voting.expireDate,
+        status
+      };
+    }
+  }));
+
+  res.render('votings/index', { title: 'Your Votes', allVotings });
 });
 
 router.get('/new', authCheck, (req, res, next) => {
-// 투표 제목, 투표 선택 사항, 만료 날짜 및 시간을 입력할 수 있어야 합니다.
-// 투표 목록으로 돌아갈 수 있는 버튼이 있어야 합니다.
-// 선택 사항은 반드시 2개 이상이어야 생성이 가능합니다.
-// 투표를 생성하게 되면 메인 페이지의 전체 투표 목록에 반영되고 누구나 투표가 가능합니다.
-// 투표 생성 직후 사용자는 메인 페이지로 이동합니다.
-  res.render('votings/new', { title: 'lets create a new voting' });
+  res.render('votings/new', { title: 'A New Voting' });
 });
 
 router.post('/new', authCheck, async (req, res, next) => {
-  // new voting create
+  if (req.body.options.length < 2) {
+    res.render('votings/new', {
+      title: 'A New Voting',
+      message: 'You need at least two options'
+    });
+  }
+
   let expireDate = new Date();
-  expireDate.setDate(expireDate.getDate() + 3);
+  expireDate.setDate(expireDate.getDate() + req.body.duration);
 
   try {
     const voting = new Voting({
@@ -51,14 +62,11 @@ router.post('/new', authCheck, async (req, res, next) => {
 });
 
 router.get('/success', authCheck, (req, res, next) => {
-  res.render('votings/success', { title: 'success' });
+  res.render('votings/success', { title: 'Success' });
 });
 
 router.get('/error', authCheck, (req, res, next) => {
-// 투표 생성을 하지 못했다는 실패 메시지가 표기 되어야 합니다.
-// 메인 페이지로 돌아갈 수 있는 버튼 혹은 링크가 있어야 합니다.
-// 상세 에러 내용(Stack 정보 등)을 사용자에게 보여주어선 안됩니다.
-  res.render('votings/error', { title: 'failed to create a new voting'})
+  res.render('votings/error', { title: 'Failed to create a new voting'})
 });
 
 router.get('/:id', authCheck, async (req, res, next) => {
@@ -88,10 +96,3 @@ router.get('/:id', authCheck, async (req, res, next) => {
 });
 
 module.exports = router;
-
-//  votings
-// - /votings/
-// - /votings/:id
-// - /votings/new
-// - /votings/success
-// - /votings/error

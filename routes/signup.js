@@ -39,7 +39,7 @@ router.post('/', async (req, res, next) => {
       await newUser.save();
       saveSession(null, newUser, req, res, next);
 
-      res.status(201).render('signup/complete', {
+      res.status(201).render('complete', {
         title: 'Please Signup to Vote',
         message: 'Now you are signed-up!'
       });
