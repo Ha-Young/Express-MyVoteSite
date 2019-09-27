@@ -58,3 +58,29 @@ function onSubmitValidate (form, email, password, pwConfirm, name) {
     }
   });
 }
+
+function onKeyupCheckLength (elem, max) {
+  elem.addEventListener('keyup', function (e) {
+    var target = e.currentTarget;
+    var targetLen = target.value.trim().length;
+    var $info = target.parentElement.querySelector('.info-txt');
+
+    if (targetLen > max || targetLen < 1) {
+      $info.classList.add('warn-txt');
+    } else {
+      $info.classList.remove('warn-txt');
+    }
+  });
+}
+
+function onBlurAddZero (elem) {
+  elem.addEventListener('blur', function (e) {
+    var targetVal = e.currentTarget.value;
+
+    if (targetVal.length < 2) {
+      e.currentTarget.value = '0' + targetVal;
+    } else {
+      e.currentTarget.value = targetVal.slice(0, 2);
+    }
+  });
+}

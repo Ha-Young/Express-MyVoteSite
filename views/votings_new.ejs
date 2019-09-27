@@ -13,17 +13,23 @@
             <li>
               <label class="label-vote">
                 <span class="label-txt">Title</span>
-                <input type="text" name="title" class="basic-txt" required />
+                <input type="text" name="title" class="title-txt basic-txt show-infotxt" required />
+                <span class="info-txt">Minimum 1 / Maximum 50 characters are allowed for title</span>
               </label>
             </li>
             <li>
               <label class="label-vote">
                 <span class="label-txt">Expiry Date</span>
-                <input type="number" class="basic-txt date yy" placeholder="YYYY" name="expired_at" required />
+                <% var yy = new Date().getFullYear(); %>
+                <input type="number" class="basic-txt date yy" value="<%= yy %>" name="expired_at" required />
                 <span>-</span>
-                <input type="number" class="basic-txt date mm" placeholder="MM" name="expired_at" required />
+                <% var mm = new Date().getMonth() + 1; %>
+                <% var mm = mm < 10 ? '0' + mm : mm; %>
+                <input type="number" class="basic-txt date mm" value="<%= mm %>" name="expired_at" required />
                 <span>-</span>
-                <input type="number" class="basic-txt date dd" placeholder="DD" name="expired_at" required />
+                <% var dd = new Date().getDate(); %>
+                <% var dd = dd < 10 ? '0' + dd : dd; %>
+                <input type="number" class="basic-txt date dd" value="<%= dd %>" name="expired_at" required />
                 <input type="number" class="basic-txt date hh show-infotxt" placeholder="hh" name="expired_at" required />
                 <span>:</span>
                 <input type="number" class="basic-txt date ss" placeholder="mm" name="expired_at" required />
@@ -37,22 +43,39 @@
           <button type="button" class="btn-more">+</button>
           <ul class="input-list options-list">
             <li>
-              <input type="text" name="options" class="basic-txt" required />
+              <input type="text" name="options" class="basic-txt show-infotxt" required />
+              <span class="info-txt">Minimum 1 / Maximum 80 characters are allowed for title</span>
             </li>
             <li>
-              <input type="text" name="options" class="basic-txt" required />
+              <input type="text" name="options" class="basic-txt show-infotxt" required />
+              <span class="info-txt">Minimum 1 / Maximum 80 characters are allowed for title</span>
             </li>
           </ul>
         </fieldset>
         <button type="submit" class="btn-main">CREATE</button>
       </form>
     </div>
+    <script src="/javascripts/validation.js"></script>
     <script>
       var message = '<%= message %>';
 
       if (message) {
         alert(message);
       }
+
+      var $voteTitle = document.querySelector('.title-txt');
+      var $voteOptions = document.querySelectorAll('input[name="options"]');
+
+      onKeyupCheckLength($voteTitle, 50);
+      $voteOptions.forEach(function (elem) {
+        onKeyupCheckLength(elem, 80);
+      });
+
+      var $date = document.querySelectorAll('.date');
+
+      $date.forEach(function (elem) {
+        onBlurAddZero(elem);
+      });
 
       var $btnMore = document.querySelector('.btn-more');
       var $optionList = document.querySelector('.options-list');
@@ -65,13 +88,24 @@
         }
 
         var $li = document.createElement('li');
-        var $input = '<input type="text" name="options" class="basic-txt double-txt" required />';
+        var $input = document.createElement('input');
+        $input.setAttribute('type', 'text');
+        $input.setAttribute('name', 'options');
+        $input.setAttribute('required', '');
+        $input.className = 'basic-txt double-txt show-infotxt';
+        onKeyupCheckLength($input, 80);
+
+        var $span = document.createElement('span');
+        $span.className = 'info-txt';
+        $span.textContent = 'Minimum 1 / Maximum 80 characters are allowed for title';
+
         var $button = document.createElement('button');
         $button.setAttribute('class', 'btn-del');
         $button.setAttribute('type', 'button');
         $button.textContent = 'X';
 
-        $li.innerHTML = $input;
+        $li.appendChild($input);
+        $li.appendChild($span);
         $li.appendChild($button);
         $optionList.appendChild($li);
 
