@@ -1,9 +1,8 @@
 const passport = require('passport');
 
-
 exports.login = (req, res) => {
-  var flashMessage = req.flash();
-  var feedback = '';
+  let flashMessage = req.flash();
+  let feedback = '';
   if (flashMessage.error) {
     feedback = flashMessage.error[0];
   }
@@ -11,8 +10,8 @@ exports.login = (req, res) => {
 };
 
 exports.signup = (req, res) => {
-  var flashMessage = req.flash();
-  var feedback = '';
+  let flashMessage = req.flash();
+  let feedback = '';
   if (flashMessage.error) {
     feedback = flashMessage.error[0];
   }

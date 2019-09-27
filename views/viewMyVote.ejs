@@ -37,22 +37,22 @@
       </div>
       <div class="vote-container">
         <ul>
-          <% for(let i=0; i<myVotes.length; i++ ){%>
+          <% for(let i=0; i<voteMap.length; i++ ){%>
             <div class="vote-list">
-              <li class="title"><span><%= myVotes[i].title %></span></li>
+              <li class="title"><span><%= voteMap[i].title %></span></li>
               <li class="description-context">
                 <span><%= "creator : " %></span>
-                <span class="description"><%= myVotes[i].creator %></span>
+                <span class="description"><%= voteMap[i].username %></span>
               </li>
               <li class="description-context">
-                <span class="description"><%= deadLine[i] %></span>
+                <span class="description"><%= voteMap[i].date %></span>
               </li>
-              <% if(myVotes[i].proceeding){ %>
+              <% if(voteMap[i].proceeding){ %>
                 <li class="context proceeding"><span><%= "진행중" %></span></li>
-                <div class="context proceeding"><a href="/votings/<%= myVotes[i]._id%>">투표하기</a></div>
+                <div class="context proceeding"><a href="/votings/<%= voteMap[i]._id%>">투표하기</a></div>
               <% } else { %>
                 <li class="context proceeding-end"><span><%= "마감" %></span></li>
-                <div class="context proceeding-end"><a href="/votings/<%= myVotes[i]._id%>">결과보기</a></div>
+                <div class="context proceeding-end"><a href="/votings/<%= voteMap[i]._id%>">결과보기</a></div>
               <% } %>
             </div>
           <%}%>

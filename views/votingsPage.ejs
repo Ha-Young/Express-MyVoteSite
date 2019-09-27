@@ -38,15 +38,15 @@
     <div class="vote-container">
       <ul>
         <div class="vote-list">
-          <li class="title"><span><%= voteInfo[0].title %></span></li>
+          <li class="title"><span><%= voteMap.title %></span></li>
           <li class="description-context">
             <span><%= "creator : " %></span>
-            <span class="description"><%= voteInfo[0].creator %></span>
+            <span class="description"><%= voteMap.username %></span>
           </li>
           <li class="description-context">
-            <span class="description"><%= deadLine[0] %></span>
+            <span class="description"><%= voteMap.date %></span>
           </li>
-          <% if(voteInfo[0].proceeding){ %>
+          <% if(voteMap.proceeding){ %>
             <li class="context proceeding"><span><%= "진행중" %></span></li>
             <% if(!isVoted){ %>
               <div class="already-vote"><span>이미 투표했습니다</span></div>
@@ -66,15 +66,15 @@
         </div>
       </ul>
 
-      <% if(voteInfo[0].proceeding){ %>
+      <% if(voteMap.proceeding){ %>
         <div class="next-container">
           <ul>
             <% if(isVoted){ %>
               <div class="option-title"><span>항목</span></div>
-              <form action="/votings/<%= voteInfo[0]._id %>" method="POST">
-                <% for(let i =0; i<voteInfo[0].options.length; i++){%>
+              <form action="/votings/<%= voteMap._id %>" method="POST">
+                <% for(let i =0; i<voteMap.options.length; i++){%>
                   <div class="option-radio">
-                    <input type="radio" name="optionsChoice" value='<%= voteInfo[0].options[i]._id %>'><span><%= " " + voteInfo[0].options[i].name %></span><br>
+                    <input type="radio" name="optionsChoice" value='<%= voteMap.options[i]._id %>'><span><%= " " + voteMap.options[i].name %></span><br>
                   </div>
                 <% } %>
                 <div class="button-center">
@@ -82,15 +82,15 @@
                 </div>
               </form>
             <% } %>
-            <% if(name === voteInfo[0].creator && voteInfo[0].proceeding){ %>
+            <% if(name === voteMap.username && voteMap.proceeding){ %>
               <div class="current-container"><span>현재 투표 상황</span></div>
-              <% for(let i =0; i<voteInfo[0].options.length; i++){%>
+              <% for(let i =0; i<voteMap.options.length; i++){%>
                 <div class="current-vote">
-                  <span><%= voteInfo[0].options[i].name + " : "%></span>
-                  <span><%= voteInfo[0].options[i].member.length + " Votes"%></span>
+                  <span><%= voteMap.options[i].name + " : "%></span>
+                  <span><%= voteMap.options[i].member.length + " Votes"%></span>
                 </div>
               <% } %>
-              <form method="POST" action="/votings/delete/<%= voteInfo[0]._id %>?_method=DELETE">
+              <form method="POST" action="/votings/delete/<%= voteMap._id %>?_method=DELETE">
                 <div class="button-center">
                   <input type = "submit" class="delete-button" value = "지우기"/>
                 </div>
@@ -99,7 +99,6 @@
           </ul>
         </div>
       <% } %>
-
     </div>
   </div>
 </body>

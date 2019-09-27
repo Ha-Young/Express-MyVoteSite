@@ -6,7 +6,7 @@ const VoteSchema = new mongoose.Schema({
     required: true
   },
   creator: {
-    type: String,
+    type: mongoose.Types.ObjectId,
     required: true
   },
   description: {
