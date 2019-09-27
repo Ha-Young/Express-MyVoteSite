@@ -5,7 +5,7 @@ const authController = require('./controllers/authController');
 const votingController = require('./controllers/votingController');
 const errorController = require('./controllers/errorController');
 
-router.get('/', votingController.getAll);
+router.get('/', errorController.catchErrors(votingController.getAll));
 
 router.get('/register', authController.registerForm);
 router.post('/register',
@@ -32,8 +32,8 @@ router.post('/votings/new',
 );
 
 router.get('/votings',
-authController.isLoggedIn,
-  votingController.getMyVoting
+  authController.isLoggedIn,
+  errorController.catchErrors(votingController.getMyVoting)
 );
 
 router.get('/votings/success',
@@ -46,11 +46,11 @@ router.get('/votings/error',
 
 router.get('/votings/:id',
   authController.isLoggedIn,
-  votingController.getVoting
+  errorController.catchErrors(votingController.getVoting)
 );
 router.put('/votings/:id',
   authController.isLoggedIn,
-  votingController.vote
+  errorController.catchErrors(votingController.vote)
 );
 router.delete('/votings/:id',
   authController.isLoggedIn,

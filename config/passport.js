@@ -4,12 +4,10 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
-// req.session 객체에 어떤데이터를 저장할지.
 passport.serializeUser((user, done) => {
   done(null, user.email);
 });
 
-// 사용자 정보 조회 조회한 정보를 req.user에 저장
 passport.deserializeUser((email, done) => {
   User.findOne({ email })
       .then(user => {

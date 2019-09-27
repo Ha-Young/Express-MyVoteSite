@@ -1,99 +1,75 @@
-const mongoose = require('mongoose');
-const moment = require('moment');
 const Voting = require('../../models/Voting');
 const User = require('../../models/User');
+const { formatDate, isValidId } = require('../../public/javascripts/helpers');
 
 exports.getAll = async (req, res, next) => {
-  try {
-    const votings = await Voting.find().sort({created_at: -1});
+  const votings = await Voting.find().sort({ created_at: -1 });
 
-    const newVotings = await Promise.all(votings.map(async (voting) => {
-      if(!mongoose.Types.ObjectId.isValid(voting.author)) return next();
+  const newVotings = await Promise.all(votings.map(async (voting) => {
+    if(!isValidId(voting.author)) return next();
 
-      const user = await User.findOne({ _id: voting.author });
-      const newVoting = JSON.parse(JSON.stringify(voting._doc));
-      const currentDate = new Date();
-      const expirationDate = new Date(newVoting.expiration);
-      const isOpen = currentDate.getTime() < expirationDate.getTime();
-      const formattingDate = moment(newVoting.expiration).format('YYYY MMM ddd, ahh:mm');
+    const user = await User.findOne({ _id: voting.author });
+    const newVoting = JSON.parse(JSON.stringify(voting._doc));
+    const formatting = formatDate(newVoting.expiration);
 
-      newVoting.isOpen = isOpen;
-      newVoting.expiration = formattingDate;
-      newVoting.author = user.name
+    Object.assign(newVoting, formatting);
+    newVoting.author = user.name
 
-      return newVoting;
-    }));
+    return newVoting;
+  }));
 
-    res.render('index', {
-      user: req.user,
-      votings: newVotings,
-      flashes: req.flash()
-    });
-  } catch(err) {
-    next(err);
-  }
+  res.render('index', {
+    user: req.user,
+    votings: newVotings,
+    flashes: req.flash()
+  });
 };
 
 exports.getMyVoting = async (req, res, next) => {
-  try {
-    if(!mongoose.Types.ObjectId.isValid(req.user._id)) return next();
-    const myVotings = await Voting.find({ author: req.user._id }).sort({created_at: -1});
+  if(!isValidId(req.user._id)) return next();
+  const myVotings = await Voting.find({ author: req.user._id }).sort({created_at: -1});
 
-    const newVotings = await Promise.all(myVotings.map(async (voting) => {
-      if(!mongoose.Types.ObjectId.isValid(voting.author)) return next();
+  const newVotings = await Promise.all(myVotings.map(async (voting) => {
+    if(!isValidId(voting.author)) return next();
 
-      const newVoting = JSON.parse(JSON.stringify(voting._doc));
-      const user = await User.findOne({ _id: voting.author });
-      const currentDate = new Date();
-      const expirationDate = new Date(newVoting.expiration);
-      const isOpen = currentDate.getTime() < expirationDate.getTime();
-      const formattingDate = moment(newVoting.expiration).format('YYYY MMM ddd, ahh:mm');
+    const newVoting = JSON.parse(JSON.stringify(voting._doc));
+    const user = await User.findOne({ _id: voting.author });
+    const formatting = formatDate(newVoting.expiration);
 
-      newVoting.isOpen = isOpen;
-      newVoting.expiration = formattingDate;
-      newVoting.author = user.name
+    Object.assign(newVoting, formatting);
+    newVoting.author = user.name
 
-      return newVoting;
-    }));
+    return newVoting;
+  }));
 
-    res.render('votings', {
-      user: req.user,
-      votings: newVotings
-    });
-  } catch(err) {
-    next(err);
-  }
+  res.render('votings', {
+    user: req.user,
+    votings: newVotings
+  });
 }
 
 exports.vote = async (req, res, next) => {
-  if(!mongoose.Types.ObjectId.isValid(req.user._id)) return next();
-  if(!mongoose.Types.ObjectId.isValid(req.body.option)) return next();
-
-  try {
-    await Voting.findOneAndUpdate({
-      _id: req.params.id,
-      'options': { '$elemMatch': { _id: req.body.option } }
-    },
-    {
-      '$push': { 'options.$.selected_user': req.user._id }
-    });
-
-    res.status(200).redirect(`/votings/${req.params.id}`);
-  } catch(err) {
-    next(err);
+  if (!isValidId(req.user._id) || !isValidId(req.body.option)) {
+    return next();
   }
+
+  await Voting.findOneAndUpdate({
+    _id: req.params.id,
+    'options': { '$elemMatch': { _id: req.body.option } }
+  },
+  {
+    '$push': { 'options.$.selected_user': req.user._id }
+  });
+
+  res.status(200).redirect(`/votings/${req.params.id}`);
 };
 
 exports.deleteVoting = async (req, res, next) => {
-  if(!mongoose.Types.ObjectId.isValid(req.params.id)) return next();
+  if(!isValidId(req.params.id)) return next();
 
-  try {
-    await Voting.deleteOne({ _id: req.params.id });
+  await Voting.deleteOne({ _id: req.params.id });
 
-    res.status(200).redirect('/');
-  } catch(err) {
-    next(err);
-  }
+  res.status(200).redirect('/');
 };
 
 exports.newVotingForm = (req, res) => {
@@ -105,9 +81,7 @@ exports.newVotingForm = (req, res) => {
 
 exports.validateNewVoting = (req, res, next) => {
   try {
-    const currentDate = new Date();
-    const expirationDate = new Date(req.body.date);
-    const isValid = currentDate.getTime() < expirationDate.getTime();
+    const formatting = formatDate(req.body.date);
 
     req.checkBody('title', 'title을 입력해주세요.').notEmpty();
     req.checkBody('date', 'date가 유효하지 않습니다.').isDate();
@@ -115,13 +89,12 @@ exports.validateNewVoting = (req, res, next) => {
 
     const errors = req.validationErrors();
 
-    if (errors || !isValid) {
+    if (errors || !formatting.isOpen) {
       if(errors) req.flash('error', errors.map(err => err.msg));
 
-      if(!isValid) req.flash('date', '만료날짜가 현재날짜보다 이전입니다.');
+      if(!formatting.isOpen) req.flash('date', '만료날짜가 현재날짜보다 이전입니다.');
 
       res.render('newVoting', { flashes: req.flash(), user: req.user });
-
       return;
     }
   } catch(err) {
@@ -139,7 +112,7 @@ exports.saveNewVoting = async (req, res) => {
     });
   });
 
-  try{
+  try {
     await (new Voting({
       title: req.body.title,
       author: req.user._id,
@@ -153,26 +126,24 @@ exports.saveNewVoting = async (req, res) => {
   }
 };
 
-exports.getVoting = async (req, res) => {
+exports.getVoting = async (req, res, next) => {
+  if (!isValidId(req.params.id) || !isValidId(req.user._id)) return next();
+
   const voting = await Voting.findOne({ _id: req.params.id });
   const newVoting =  JSON.parse(JSON.stringify(voting._doc));
-
-  const votedIndex = voting.options.findIndex(option => option.selected_user.includes(req.user._id));
+  const votedIndex = voting.options.findIndex(option => (
+    option.selected_user.includes(req.user._id)
+  ));
   const totalVotes = voting.options.reduce((prev, curr) => {
     return prev + curr.selected_user.length;
   },0);
   const user = await User.findOne({ _id: newVoting.author });
+  const formatting = formatDate(newVoting.expiration);
 
-  const currentDate = new Date();
-  const expirationDate = new Date(newVoting.expiration);
-  const isOpen = currentDate.getTime() < expirationDate.getTime();
-  const formattingDate = moment(newVoting.expiration).format('YYYY MMM ddd, ahh:mm');
-  const isAuthor = String(voting.author) === String(req.user._id);
+  Object.assign(newVoting, formatting);
 
-  newVoting.expiration = formattingDate;
-  newVoting.isOpen = isOpen;
   newVoting.author = user.name;
-  newVoting.isAuthor = isAuthor;
+  newVoting.isAuthor = String(voting.author) === String(req.user._id);
 
   res.render('voting', {
     user: req.user,
@@ -187,7 +158,6 @@ exports.getVoting = async (req, res) => {
 exports.RenderSuccess = (req, res) => {
   res.render('success', { user: req.user });
 };
-
 
 exports.RenderError = (req, res) => {
   res.render('error', { user: req.user });
