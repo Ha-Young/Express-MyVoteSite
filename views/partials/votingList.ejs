@@ -1,14 +1,16 @@
 <ul class='voting-list'>
   <%if (votings) { %>
     <% for(var i = 0; i < votings.length; i++) {%>
-        <li>
-          <a href='/votings/<%= votings[i]._id %>'>
-            <span class='title'><%= votings[i].title %></span>
-            <span class='expiration'><%= votings[i].expiration %></span>
-            <span class='status'><%= votings[i].isOpen ? '진행중':'종료' %></span>
-            <span class='author'><%= votings[i].author %></span>
-          </a>
-        </li>
-      <% } %>
+      <li>
+        <a href='/votings/<%= votings[i]._id %>'>
+          <span class='status <%= votings[i].isOpen ? 'open':'close' %>'>
+            <%= votings[i].isOpen ? '진행중':'종료' %>
+          </span>
+          <span class='title'><%= votings[i].title %></span>
+          <span class='expiration'><%= votings[i].expiration %>까지</span>
+          <span class='author'><%= votings[i].author %></span>
+        </a>
+      </li>
+    <% } %>
   <% } %>
 </ul>

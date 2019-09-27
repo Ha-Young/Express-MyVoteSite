@@ -157,73 +157,72 @@ main {
       }
     }
   }
+}
 
-  .list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 90%;
-    margin: 60px auto 0;
+.voting-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 90%;
+  margin: 60px auto 0;
 
-    li {
-      flex-basis: 33.3333333333%;
-      width: 33.3333333333%;
-      padding: 0 10px;
-      box-sizing: border-box;
+  li {
+    flex-basis: 33.3333333333%;
+    width: 33.3333333333%;
+    padding: 0 10px;
+    box-sizing: border-box;
 
-      a {
+    a {
+      display: block;
+      height: 260px;
+      margin: 0 0 20px;
+      padding: 20px;
+      background: #FFF;
+      border-radius: 2px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: @hover-transition;
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2),
+                    0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      span {
         display: block;
-        height: 260px;
-        margin: 0 0 20px;
-        padding: 20px;
-        background: #FFF;
-        border-radius: 2px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        transition: @hover-transition;
-        cursor: pointer;
+      }
 
-        &:hover {
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2),
-                      0 4px 8px rgba(0, 0, 0, 0.2);
-        }
+      .status {
+        width: 120px;
+        text-align: center;
+        line-height: 28px;
+        color: #ffffff;
+        background: @link-color;
+      }
 
-        span {
-          display: block;
-        }
+      .close {
+        background: #777777;
+      }
 
-        .status {
-          width: 120px;
-          text-align: center;
-          line-height: 28px;
-          color: #ffffff;
-          background: @link-color;
-        }
-
-        .close {
-          background: #777777;
-        }
-
-        .title {
-          display: -webkit-box;
-          margin-top: 25px;
-          padding: 10px 0;
-          font-family: 'Nanum Gothic';
-          font-size: 23px;
-          line-height: 38px;
-          font-weight: 300;
-          text-align: left;
-          color: #999;
-          border-width: 1px 0;
-          border-color: @link-color;
-          border-style: solid;
-          overflow: hidden;
-          -webkit-box-orient: vertical;
-          text-overflow: ellipsis;
-          word-break: keep-all;
-          word-wrap: break-word;
-          -webkit-line-clamp: 2;
-        }
-        
+      .title {
+        display: -webkit-box;
+        margin-top: 25px;
+        padding: 10px 0;
+        font-family: 'Nanum Gothic';
+        font-size: 23px;
+        line-height: 38px;
+        font-weight: 300;
+        text-align: left;
+        color: #999;
+        border-width: 1px 0;
+        border-color: @link-color;
+        border-style: solid;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        word-break: keep-all;
+        word-wrap: break-word;
+        -webkit-line-clamp: 2;
       }
     }
   }

@@ -105,12 +105,13 @@ exports.validateNewVoting = (req, res, next) => {
 };
 
 exports.saveNewVoting = async (req, res) => {
-  const filterOptions = req.body.option.filter(el => el).map(el => {
-    return ({
-      text: el,
-      selected_user: []
+  const filterOptions = req.body.option.filter(el => el)
+    .map(text => {
+      return ({
+        selected_user: [],
+        text
+      });
     });
-  });
 
   try {
     await (new Voting({

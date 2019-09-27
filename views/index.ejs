@@ -23,22 +23,7 @@
           <h3>Survey</h3>
           <a href='/votings' class='go-button'>내 투표보기</a>
         </div>
-        <ul class='list'>
-          <%if (votings) { %>
-            <% for(var i = 0; i < votings.length; i++) {%>
-                <li>
-                  <a href='/votings/<%= votings[i]._id %>'>
-                    <span class='status <%= votings[i].isOpen ? 'open':'close' %>'>
-                      <%= votings[i].isOpen ? '진행중':'종료' %>
-                    </span>
-                    <span class='title'><%= votings[i].title %></span>
-                    <span class='expiration'><%= votings[i].expiration %>까지</span>
-                    <span class='author'><%= votings[i].author %></span>
-                  </a>
-                </li>
-             <% } %>
-          <% } %>
-        </ul>
+        <% include ./partials/votingList %>
       </section>
     </main>
   </body>
