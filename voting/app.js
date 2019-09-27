@@ -7,8 +7,8 @@ const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const flash = require('connect-flash');
 const passport = require('passport');
-const sass = require('node-sass-middleware');
 const methodOverride = require('method-override');
+const sass = require('node-sass-middleware');
 
 const index = require('./routes/index');
 const login = require('./routes/login');
