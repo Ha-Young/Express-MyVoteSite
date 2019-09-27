@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const moment = require('moment');
 
 const { ensureAuthenticated } = require('../config/authentication');
 const Poll = require('../models/Poll');
@@ -15,7 +14,6 @@ const {
 } = require('../helpers');
 
 router.get('/', ensureAuthenticated, async (req, res, next) => {
-  // TODO: mongoose check if object id exists in database
   if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
     try {
       throw new Error('User Not Found');
@@ -61,11 +59,12 @@ router.post('/new', ensureAuthenticated, async (req, res, next) => {
     pollTitle !== undefined &&
     expireDate !== undefined &&
     expireTime !== undefined &&
-    optionElements !== undefined;
+    optionElements !== undefined
 
   if (pollValidated) {
     try {
       const expiryDateTime = formatDateTimeString(expireDate, expireTime);
+      if (expiryDateTime)
       optionElements = optionElements.map(value => {
         return { name: value };
       });
@@ -83,15 +82,17 @@ router.post('/new', ensureAuthenticated, async (req, res, next) => {
       );
       res.status(200).redirect('/polls/success');
     } catch (error) {
-      req.flash('error_msg', 'Failed attempt at creating a new poll.');
-      res.status(500).redirect('/polls/failure');
+      error.status = 500;
+      next(error);
     }
   } else {
     try {
-      throw new Error('Validation failed while creating a new poll.');
+      throw new Error('Failed attempt at creating a new poll.');
     } catch (error) {
-      error.status(400);
-      next(error);
+      error.status = 400;
+      console.error(error);
+      req.flash('error_msg', 'Failed attempt at creating a new poll.');
+      res.status(400).redirect('/polls/failure');
     }
   }
 });
@@ -131,6 +132,12 @@ router.post('/:poll_id', ensureAuthenticated, async (req, res, next) => {
     const promiseUser = User.findById(req.user._id);
     const [user, pollDoc] = await Promise.all([promiseUser, promisePollDoc]);
     const hasVoted = user.votedpolls.indexOf(`${pollDoc._id}`);
+    const isPollOpen = isOpenPoll(pollDoc.expirydate);
+
+    if (!isPollOpen) {
+      req.flash('error_msg', 'This poll has expired. Your vote has not been submitted');
+      return res.status(400).redirect('/polls/failure');
+    }
 
     if (hasVoted < 0) {
       const votedOption = pollDoc.options.find(dbOption => {
