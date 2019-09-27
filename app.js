@@ -37,7 +37,7 @@ db.once('open', () => {
   console.log('We are connected!');
 });
 
-// modules
+// basic modules
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('views', path.join(__dirname, 'views'));
