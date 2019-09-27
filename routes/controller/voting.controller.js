@@ -171,9 +171,17 @@ exports.getVotingById = async (req, res, next) => {
 exports.voteSelection = async (req, res, next) => {
   try {
     if (!ObjectId.isValid(req.params.id)) {
-      return next();
+      const error = new Error('This voting is not valid');
+      error.status = 400;
+      return next(error);
     }
     const voting = await Voting.findById(req.params.id);
+
+    if (new Date() > new Date(voting.expired_at)) {
+      const error = new Error('This Voting is already expired');
+      error.status = 400;
+      return next(error);
+    }
 
     voting.selections.forEach(selection => {
       if (selection._id.toString() === req.body.selection) {
@@ -192,7 +200,9 @@ exports.voteSelection = async (req, res, next) => {
 exports.deleteVoting = async (req, res, next) => {
   try {
     if (!ObjectId.isValid(req.params.id)) {
-      return next();
+      const error = new Error('This voting is not valid');
+      error.status = 400;
+      return next(error);
     }
     const voting = await Voting.findById(req.params.id);
     const isCreator = voting.creator.toString() === req.user._id;
