@@ -4,7 +4,7 @@ const { isNotLoggedIn } = require('./middlewares');
 
 router.get('/', isNotLoggedIn, (req, res, next) => {
   res.render('login', {
-    title: '로그인',
+    layout: 'layoutLogin',
     error: req.flash('loginError')
   });
 });

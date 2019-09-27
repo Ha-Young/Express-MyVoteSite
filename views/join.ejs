@@ -1,24 +1,18 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
+<div class='login'>
+  <div class='inner'>
+    <h2>회원가입</h2>
+
+    <p class='message'><%= error %></p>
 
     <form action='/auth/join' method='post'>
-      email <input type='email' name='email' required>
-      <br>
-      name <input type='text' name='name' required>
-      <br>
-      password <input type='password' name='password' required>
-      <br>
+      <input type='email' name='email' placeholder='email' required>
+      <input type='text' name='name' placeholder='name' required>
+      <input type='password' name='password' placeholder='password' required>
 
-      <p><%= error %></p>
       <input type='submit' value='회원가입'>
+
+      <a href='/login'>Sign in</a>
     </form>
 
-    <a href='/login'>로그인</a>
-  </body>
-</html>
+  </div>
+</div>

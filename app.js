@@ -2,9 +2,11 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
+const sass = require('node-sass-middleware');
 const passport = require('passport');
 const passportConfig = require('./passport');
 passportConfig(passport);
@@ -16,12 +18,12 @@ const login = require('./routes/login');
 const join = require('./routes/join');
 const auth = require('./routes/auth');
 const votings = require('./routes/votings');
-
 var app = express();
 
 // view engine setup
 app.set('views', './views');
 app.set('view engine', 'ejs');
+app.use(expressLayouts);
 
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
@@ -39,7 +41,6 @@ db.once('open', function() {
 });
 
 app.use(morgan('dev'));
-app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -56,6 +57,17 @@ app.use(session({
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(
+  sass({
+    src: ('public/stylesheets'),
+    dest: ('public/stylesheets'),
+    debug: true,
+    outputStyle: 'compressed',
+    prefix: '/stylesheets'
+  })
+);
+app.use(express.static('public'));
 
 app.use('/', index);
 app.use('/login', login);

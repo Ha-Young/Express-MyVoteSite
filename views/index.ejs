@@ -1,60 +1,55 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-      <%- include('partials/header') %>
+<% if (votes.length) { %>
+  <ul class='vote-list'>
+    <% for (var i = 0; i < votes.length; i++) { %>
+      <% if (votes[i].status === '진행중') { %>
+        <li class='ing'>
+      <% } else { %>
+        <li class='done'>
+      <% } %>
 
-    <h1><%= title %></h1>
+      <a href='/votings/<%= votes[i]._id %>'>
+        <p class='tit'><%= votes[i].title %></p>
+        <% if (votes[i].description) { %>
+          <p class='desc'>설명: <%= votes[i].description %></p>
+        <% } %>
+        <p class='creator'>생성자: <%= votes[i].name %></p>
+        <p class='created'>생성일: <%= votes[i].created_at %></p>
+        <p class='expired'>만료일: <%= votes[i].expired_at %></p>
+        <p class='status'>상태: <%= votes[i].status %></p>
+      </a>
 
-        <ul class='votes'>
+      <% if (votes[i].isUser) { %>
+        <div class='buttons'>
+          <a href='/votings/<%= votes[i]._id %>/result'>투표 결과보기</a>
+          <button class='deleteVote' id='<%= votes[i]._id %>'>삭제</button>
+        </div>
+      <% } %>
 
-        <% if (votes !== null) {
-          for (var i = 0; i < votes.length; i++) { %>
-            <li>
-              <a href='/votings/<%= votes[i]._id %>'>
-                <p class='tit'>제목 <%= votes[i].title %></p>
-                <p class='tit'>생성자 <%= votes[i].name %></p>
-                <p class='tit'>생성일 <%= votes[i].created_at %></p>
-                <p class='tit'>만료일 <%= votes[i].expired_at %></p>
-                <p class='tit'>상태: <%= votes[i].status %></p>
+      </li>
+    <% } %>
+  </ul>
+<% } else { %>
+  <p class='nodata'>데이터가 없습니다.</p>
+<% } %>
 
-                <% if (votes[i].isUser) { %>
-                  <a href='/votings/<%= votes[i]._id %>/result'>투표 결과보기</a>
-                  <button class='deleteVote' id='<%= votes[i]._id %>'>삭제</button>
-                <% } %>
-              </a>
-            </li>
-        <% }} %>
+<script>
+  let dels = document.querySelectorAll('.deleteVote');
 
-        </ul>
-
-        <a href='/votings/new'>투표 생성하기</a>
-        <a href='/votings'>내 투표보기</a>
-
-        <script>
-            let dels = document.querySelectorAll('.deleteVote');
-
-            dels.forEach($del => {
-              $del.addEventListener('click', ev => {
-                fetch(`/votings/${ev.currentTarget.id}`, {
-                  method: 'DELETE'
-                })
-                  .then(res => {
-                    if (res.ok) {
-                      window.location.href='/'
-                    } else {
-                      throw new Error();
-                    }
-                  })
-                  .catch(err => {
-                    console.error(err);
-                  });
-              });
-            });
-        </script>
-
-  </body>
-</html>
+  dels.forEach($del => {
+    $del.addEventListener('click', ev => {
+      fetch(`/votings/${ev.currentTarget.id}`, {
+        method: 'DELETE'
+      })
+        .then(res => {
+          if (res.ok) {
+            window.location.href='/'
+          } else {
+            throw new Error();
+          }
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    });
+  });
+</script>

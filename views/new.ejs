@@ -1,16 +1,19 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-      <%- include('partials/header') %>
+<div class='vote-new'>
+  <form action='/votings/new' method='post'>
+    <label>
+      <p>제목</p>
+      <input type='text' name='title' required>
+    </label>
+    <label>
+      <p>설명</p>
+      <input type='text' name='description'>
+    </label>
 
-    <h1><%= title %></h1>
-
-    <form action='/votings/new' method='post'>
-      제목 <input type='text' name='title' required>
+    <div class='options'>
+      <label>
+        <p>항목</p>
+      </label>
+      <button type='button' class='add-option'>+</button>
 
       <ul class='options-list'>
         <li>
@@ -20,25 +23,29 @@
           <input type='text' name='options' required>
         </li>
       </ul>
+    </div>
 
-      <button type='button' class='add-option'>항목 추가</button>
-      <br>
+    <label>
+      <p>만료일</p>
+      <input type='datetime-local' class='setDate' name='expired' required>
+    </label>
 
-      <input type='datetime-local' name='expired' required>
-      <br>
-      <br>
+    <div class='buttons'>
       <input type='submit' value='투표 생성'>
+    </div>
+  </form>
 
-      <a href='/'>투표 목록보기</a>
-
-    </form>
-
-    <script>
+  <script>
+    const dateInit = new Date().toISOString().slice(0, 16);
+    const $setDate = document.querySelector('.setDate');
     const $ul = document.querySelector('.options-list');
-    const $newOption = document.querySelector('.add-option');
+    const $addOption = document.querySelector('.add-option');
     let count = 0;
 
-    $newOption.addEventListener('click', () => {
+    $setDate.setAttribute('min', dateInit);
+    $setDate.setAttribute('value', dateInit);
+
+    $addOption.addEventListener('click', () => {
       const $li = document.createElement('li');
       const $input = document.createElement('input');
       const $chkBox = document.createElement('input');
@@ -48,13 +55,13 @@
       $input.setAttribute('type', 'text');
       $input.setAttribute('name', 'options');
       $input.setAttribute('required', '');
-      $btnDestroy.setAttribute('class', `btn-destroy-${count}`);
+      $btnDestroy.setAttribute('id', `btn-destroy-${count}`);
       $btnDestroy.appendChild($btnDestroyText);
       $li.appendChild($input);
       $li.appendChild($btnDestroy);
       $ul.appendChild($li);
 
-      const $del = document.querySelector(`.btn-destroy-${count}`);
+      const $del = document.querySelector(`#btn-destroy-${count}`);
 
       $del.addEventListener('click', (ev) => {
         ev.currentTarget.parentElement.remove();
@@ -62,8 +69,5 @@
 
       count++;
     });
-
-
-    </script>
-  </body>
-</html>
+  </script>
+</div>

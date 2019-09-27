@@ -13,3 +13,8 @@ exports.isNotLoggedIn = (req, res, next) => {
 
   res.status(301).redirect('/login');
 }
+
+exports.convertDate = date => {
+  let convertedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+  return convertedDate;
+}

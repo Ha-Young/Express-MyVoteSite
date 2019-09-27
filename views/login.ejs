@@ -1,24 +1,16 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
+<div class='login'>
+  <div class='inner'>
+    <h2>Sign in</h2>
+
+    <p class='message'><%= error %></p>
+
     <form action='/auth/login' method='post'>
-      email <input type='email' name='email' required>
-      <br>
-      password <input type='password' name='password' required>
-      <br>
-      <p><%= error %></p>
+      <input type='email' name='email' placeholder='email' required>
+      <input type='password' name='password' placeholder='password' required>
 
-      <input type='submit' value='로그인'>
+      <input type='submit' value='Sign in'>
+
+      <a href='/join'>Sign up</a> | <a href="/auth/github">Github Sign in</a>
     </form>
-
-    <a href='/join'>회원가입</a>
-
-    <a href="/auth/github">GITHUB LOG IN</a>
-
-  </body>
-</html>
+  </div>
+</div>
