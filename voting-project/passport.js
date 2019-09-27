@@ -1,5 +1,4 @@
 const User = require("./models/user");
-// const shortid = require("shortid");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 
