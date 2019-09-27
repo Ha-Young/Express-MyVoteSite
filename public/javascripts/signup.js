@@ -45,6 +45,4 @@
     $checkMessage.classList.remove('disabled');
     $checkMessage.textContent = 'Good!';
   });
-
-
 })();

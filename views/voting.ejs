@@ -2,7 +2,7 @@
 <html>
   <head>
     <% include ./partial/head %>
-    <link rel='stylesheet' href='/stylesheets/pages/voting.css' />
+    <link rel='stylesheet' href='/stylesheets/voting.css' />
   </head>
   <body>
     <% include ./partial/header %>
@@ -80,7 +80,9 @@
           </div>
           <div class="result-voting" data-totalVoter="<%= totalVoter %>">
             <% voting.selections.forEach(function(selection){ %>
-              <% if ((voting.status === 'EXPIRED' || isCreator) && selection._id.toString() === winner.toString()) { %>
+              <% if (!winner) { %>
+                <div class="result-wrap">
+              <% } else if ((voting.status === 'EXPIRED' || isCreator) && selection._id.toString() === winner._id.toString()) { %>
                 <div class="result-wrap winner">
               <% } else { %>
                 <div class="result-wrap ">
@@ -90,7 +92,9 @@
                     <%= selection.name %>
                   </div>
                   <div class="vote-result" data-voter="<%= selection.voter.length %>">
+                    <% if (winner) { %>
                     <div class="vote-result-bar"></div>
+                    <% } %>
                   </div>
                   <div class="vote-result-number">
                     <span><%= selection.voter.length %> 표</span>

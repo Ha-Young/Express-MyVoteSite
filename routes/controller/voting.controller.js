@@ -27,7 +27,7 @@ exports.getAllVotings = async (req, res, next) => {
     };
     const votings = votingList.map(voting => {
       const formattedVoting = voting.toObject();
-      formattedVoting.fomattedExpirationDate = dateFormat(new Date(voting.expired_at), "yyyy-mm-dd h:MM");
+      formattedVoting.fomattedExpirationDate = dateFormat(new Date(voting.expired_at), 'yyyy-mm-dd h:MM');
 
       return formattedVoting;
     });
@@ -139,14 +139,16 @@ exports.getVotingById = async (req, res, next) => {
       totalVoter += selection.voter.length;
     });
 
-    const winner = voting.selections.reduce((win, selection) => {
-      if (win.voter.length >= selection.voter.length) {
-        return win;
-      }
-      return selection;
-    });
-
-    const isCreator = voting.created_by._id.toString() === req.user._id;
+    let winner;
+    if (totalVoter) {
+      winner = voting.selections.reduce((win, selection) => {
+        if (win.voter.length >= selection.voter.length) {
+          return win;
+        }
+        return selection;
+      });
+    }
+    const isCreator = voting.created_by._id.toString() === req.user._id.toString();
     const formattedVoting = voting.toObject();
     formattedVoting.fomattedExpiredDate = dateFormat(new Date(voting.expired_at), 'yy/mm/dd hh:mm');
     formattedVoting.fomattedCreatedDate = dateFormat(new Date(voting.createdAt), 'yy/mm/dd hh:mm');
@@ -156,7 +158,7 @@ exports.getVotingById = async (req, res, next) => {
         title: formattedVoting.title,
         voting: formattedVoting,
         totalVoter,
-        winner: winner._id,
+        winner,
         hasVoted: res.locals.hasVoted,
         isCreator
       }

@@ -21,6 +21,9 @@
 
     $results.forEach(function(result) {
       var resultBar = result.children[0];
+      if (!resultBar) {
+        return;
+      }
       if (Number(totalVoting) === 0) {
         resultBar.style.width = '0%';
         return;
@@ -28,8 +31,5 @@
       var voters = result.dataset.voter;
       resultBar.style.width = `${(voters / totalVoting) * 100}%`;
     });
-
   }
-
-
 })();
