@@ -1,0 +1,38 @@
+<div class="main-sidebar">
+  <div class="main-profile">
+    <div class="user-title">
+      <h2>USER</h2>
+    </div>
+    <div class="user-img">
+      <img src="<%= user.profileImgUrl %>" alt="userProfileImg">
+    </div>
+    <div class="user-name">
+      <span><%= user.name %></span>
+    </div>
+  </div>
+  <div class="main-menu">
+    <div class="main-menu-title">
+      <h2>MENU</h2>
+    </div>
+    <a href="/">
+      <div class="main-menu-main">
+        <span>Main</span>
+      </div>
+    </a>
+    <a href="/votings">
+      <div class="main-menu-myvotings">
+        <span>My Votings</span>
+      </div>
+    </a>
+    <a href="/votings/new">
+      <div class="main-menu-new">
+        <span>Create New Voting</span>
+      </div>
+    </a>
+    <a href="/logout">
+      <div class="main-menu-logout">
+        <span>LogOut</span>
+      </div>
+    </a>
+  </div>
+</div>

@@ -10,7 +10,7 @@ const setPassport = passport => {
     try {
       const user = await User.findOne({ email });
       if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false, { message: 'Incorrect E-mail.' });
       }
       const isValidPassword = await user.validatePassword(password);
       if (!isValidPassword) {

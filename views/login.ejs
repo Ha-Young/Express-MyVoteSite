@@ -1,41 +1,57 @@
 <!DOCTYPE html>
 <html>
-  <% include ./partial/head %>
+  <head>
+    <% include ./partial/head %>
+    <link rel='stylesheet' href='/stylesheets/login.css' />
+  </head>
   <body>
-    <form
-    class="login-form"
-    action="/login"
-    method="POST"
-  >
-    <div class="login-email">
-      email
-      <input
-        type="email"
-        name="email"
-        autocomplete="off"
-        required
-      />
+    <% include ./partial/header %>
+    <div class="login-container">
+      <div class="login-subtitle">
+        <h2>Log-In</h2>
+      </div>
+      <form
+        class="login-form"
+        action="/login"
+        method="POST"
+      >
+        <div class="login-form-captions">
+          <div class="captions-email">E-mail(ID)</div>
+          <div class="captions-password">Password</div>
+        </div>
+        <div class="login-form-inputs">
+          <div class="login-email">
+            <input
+              type="email"
+              name="email"
+              autocomplete="off"
+              required
+            />
+          </div>
+          <div class="login-password">
+            <input
+              type="password"
+              name="password"
+              autocomplete="off"
+              style="ime-mode:disabled"
+              minlength="6"
+              required
+            />
+          </div>
+          <div class="auto-login-check">
+            <span>Remember me</span>
+            <input class="auto-login-checkbox" type="checkbox" value="true" name="autoLogin"/>
+          </div>
+          <div class="login-button-wrap">
+            <input class="login-button" type="submit" value="submit" />
+          </div>
+          <div class="flash-message"><%= message %></div>
+        </div>
+      </form>
+      <div class="signup-message">
+        Not Registered? <a href="/signup">Create an Account</a>
+      </div>
     </div>
-    <div class="login-password">
-      password(minlength = 6)
-      <input
-        type="password"
-        name="password"
-        autocomplete="off"
-        style="ime-mode:disabled"
-        minlength="6"
-        required
-      />
-    </div>
-    <div class="login-button">
-      <input type="submit" value="submit" />
-    </div>
-    <div class="auto-login-check">
-      Remember Me<input type="checkbox" value="true" name="autoLogin"/>
-    </div>
-    <div><%= message %></div>
-  </form>
-  <a href="/signup"><button>signup</button></a>
   </body>
 </html>
 

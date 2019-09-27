@@ -1,32 +1,13 @@
 <!DOCTYPE html>
 <html>
-  <% include ./partial/head %>
+  <head>
+    <% include ./partial/head %>
+    <link rel='stylesheet' href='/stylesheets/newVote.css' />
+  </head>
   <body>
     <% include ./partial/header %>
     <div class="new-voting">
-      <div class="main-sidebar">
-        <% include ./partial/userProfile %>
-        <div class="main-menu">
-          <div class="main-menu-title">
-            <h2>MENU</h2>
-          </div>
-          <a href="/">
-            <div class="main-menu-main">
-              <span>Main</span>
-            </div>
-          </a>
-          <a href="/votings">
-            <div class="main-menu-myvotings">
-              <span>My Votings</span>
-            </div>
-          </a>
-          <a href="/logout">
-            <div class="main-menu-logout">
-              <span>LogOut</span>
-            </div>
-          </a>
-        </div>
-      </div>
+      <% include ./partial/sideBar %>
       <div class="content-container">
         <div class="main-subtitle">
           <h2>New Voting</h2>
@@ -38,7 +19,7 @@
             action="/votings/new"
             method="POST"
           >
-            <div class="form-captions">
+            <div class="create-form-captions">
               <div class="captions-title">Title</div>
               <div class="captions-description">Description</div>
               <div class="captions-expired">Expired Date</div>
@@ -53,7 +34,7 @@
                 </button>
               </div>
             </div>
-            <div class="form-inputs">
+            <div class="create-form-inputs">
               <div class="newvote-title">
                 <input type="text" name="title" autocomplete="off" required />
               </div>

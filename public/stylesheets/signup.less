@@ -1,0 +1,80 @@
+@import 'newVote.less';
+@import 'common.less';
+
+.signup-container {
+  margin-top: 30px;
+
+  .signup-form {
+    width: 400px;
+  }
+
+  .signup-subtitle {
+    text-align: center;
+  }
+}
+
+.signup-form {
+  .create-vote-form();
+
+  & > .signup-form-inputs {
+    width: 200px;
+  }
+}
+
+.signup-form-captions {
+  .create-form-captions();
+}
+
+.signup-form-inputs {
+  .create-form-inputs();
+}
+
+.signup-button-wrap > input {
+  width: 150px;
+  padding: 10px 20px 25px 20px;
+  transition: 0.5s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: @hoverColor;
+  }
+}
+
+.signup-form-email, .signup-captions-email,
+.signup-captions-password-repeat, .signup-form-password-repeat {
+  height: 80px;
+
+  .email-id {
+    margin-bottom: 10px;
+  }
+
+  .check-result, .check-password {
+    font-size: 11px;
+  }
+
+  .disabled {
+    color: @flashMessageColor;
+  }
+}
+
+.check-duplicate-email {
+  border-radius: 5px;
+  border-color: #1D365D;
+  cursor: pointer;
+}
+
+.signup-captions-password > span {
+  font-size: 12px;
+}
+
+.signup-message {
+  width: 400px;
+  text-align: center;
+  font-size: 15px;
+  margin: auto;
+
+  a {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}

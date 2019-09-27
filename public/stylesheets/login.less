@@ -1,0 +1,61 @@
+@import 'newVote.less';
+@import 'common.less';
+
+.login-container {
+  margin-top: 30px;
+
+  .login-form {
+    width: 350px;
+  }
+
+  .login-subtitle {
+    text-align: center;
+  }
+}
+
+.login-form {
+  .create-vote-form();
+
+  & > .login-form-captions {
+    width: 100px;
+  }
+
+  & > .login-form-inputs {
+    width: 200px;
+  }
+}
+
+.login-form-captions {
+  .create-form-captions();
+}
+
+.login-form-inputs {
+  .create-form-inputs();
+}
+
+.login-button-wrap > input {
+  width: 150px;
+  padding: 10px 20px 25px 20px;
+  transition: 0.5s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: @hoverColor;
+  }
+}
+
+.auto-login-check > input {
+  width: 30px;
+}
+
+.signup-message {
+  width: 400px;
+  text-align: center;
+  font-size: 15px;
+  margin: auto;
+
+  a {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}

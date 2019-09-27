@@ -1,11 +1,6 @@
+const ObjectId = require('mongoose').Types.ObjectId;
 const dateFormat = require('dateformat');
 const Voting = require('../../models/Voting');
-
-const checkIsVoted = (voting, userId) => {
-  return voting.selections.some(selection =>
-    selection.voter.includes(userId)
-  );
-};
 
 exports.updateVotingStatus = async (req, res, next) => {
   try {
@@ -13,7 +8,6 @@ exports.updateVotingStatus = async (req, res, next) => {
       { expired_at: { $lte: new Date().toISOString() } },
       { status: 'EXPIRED' }
     );
-
     next();
   } catch (error) {
     next(error);
@@ -33,7 +27,6 @@ exports.getAllVotings = async (req, res, next) => {
 
       return formattedVoting;
     });
-    console.log(votings);
 
     res.render('main', { title: 'Voting Platform', votings, user });
   } catch (error) {
@@ -51,7 +44,7 @@ exports.getMyVotings = async (req, res, next) => {
 
     const votings = votingList.map(voting => {
       const formattedVoting = voting.toObject();
-      formattedVoting.fomattedExpirationDate = dateFormat(new Date(voting.expired_at), "yyyy-mm-dd h:MM:ss");
+      formattedVoting.fomattedExpirationDate = dateFormat(new Date(voting.expired_at), 'yyyy-mm-dd h:MM:ss');
 
       return formattedVoting;
     });
@@ -62,26 +55,98 @@ exports.getMyVotings = async (req, res, next) => {
   }
 };
 
-exports.getOneVotingById = async (req, res, next) => {
+
+exports.renderVotingForm = (req, res, next) => {
+  const user = {
+    profileImgUrl: req.user.profile_img_url,
+    name: req.user.name
+  };
+  const nowDatetime = dateFormat(new Date(), "yyyy-mm-dd'T'hh:MM");
+
+  res.render('newVote', { title: 'Voting Platform', user, nowDatetime });
+};
+
+
+exports.createVoting = async (req, res, next) => {
   try {
-    const voting = await Voting.findById(req.params.id);
-    const winner = voting.selections.reduce((acc, el) => {
-      if (acc.voter.length > el.voter.length) {
-        return acc;
-      }
-      return el;
+    const newVote = Object.assign({}, req.body);
+
+    if (newVote.selections.length < 2) {
+      throw new Error();
+    }
+
+    newVote.selections = newVote.selections.map(selection => {
+      return {
+        name: selection,
+        voter: []
+      };
     });
-    const isVoted = checkIsVoted(voting, req.user._id);
-    const isCreator = voting.creator.toString() === req.user._id;
+    newVote.creator = req.user._id
+
+    await new Voting(newVote).save();
+    res.redirect('/votings/success');
+  } catch (error) {
+    res.redirect('/votings/error');
+  }
+};
+
+exports.renderCreateSuccess = (req, res, next) => {
+  res.render('success', { title: 'Voting Platform' });
+};
+
+exports.renderCreateError = (req, res, next) => {
+  const error = new Error('Bad Request');
+  error.status = 400;
+  next(error);
+};
+
+exports.checkHasVoted = async (req, res, next) => {
+  try {
+    const voting = await Voting.findById(req.params.id).populate('creator', 'name');
+
+    res.locals.voting = voting;
+    res.locals.hasVoted = voting.selections.some(selection =>
+      selection.voter.includes(req.user._id)
+    );
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getVotingById = async (req, res, next) => {
+  try {
+    if (!ObjectId.isValid(req.params.id)) {
+      return next();
+    }
+    const voting = res.locals.voting;
+    let totalVoter = 0;
+    voting.selections.forEach(selection => {
+      totalVoter += selection.voter.length;
+    });
+
+    const winner = voting.selections.reduce((win, selection) => {
+      if (win.voter.length >= selection.voter.length) {
+        return win;
+      }
+      return selection;
+    });
+
+    const isMatchedCreator = voting.creator._id.toString() === req.user._id;
+    const formattedVoting = voting.toObject();
+    formattedVoting.fomattedExpiredDate = dateFormat(new Date(voting.expired_at), 'yy/mm/dd hh:mm');
+    formattedVoting.fomattedCreatedDate = dateFormat(new Date(voting.createdAt), 'yy/mm/dd hh:mm');
 
     res.render(
       'voting',
       {
         title: 'Voting Platform',
-        voting,
+        voting: formattedVoting,
+        totalVoter,
         winner: winner._id,
-        isVoted,
-        isCreator
+        hasVoted: res.locals.hasVoted,
+        isMatchedCreator
       }
     );
   } catch (error) {
@@ -89,54 +154,11 @@ exports.getOneVotingById = async (req, res, next) => {
   }
 };
 
-exports.getNewVotingForm = async (req, res, next) => {
-  const user = {
-    profileImgUrl: req.user.profile_img_url,
-    name: req.user.name
-  };
-  const nowDatetime = dateFormat(new Date(), "yyyy-mm-dd'T'hh:MM");
-  console.log(nowDatetime)
-  res.render('newVote', { title: 'Voting Platform', user, nowDatetime });
-};
-
-exports.createVoting = async (req, res, next) => {
-  try {
-    const newVote = req.body;
-    newVote.selections = newVote.selections.map(selection => {
-      return {
-        name: selection,
-        voter: []
-      };
-    });
-
-    newVote.creator = req.user._id
-
-    await new Voting(newVote).save();
-    res.status(302).redirect('/');
-  } catch (error) {
-    next(error);
-  }
-};
-
-exports.deleteVoting = async (req, res, next) => {
-  try {
-    const voting = await Voting.findById(req.params.id);
-    const isCreator = voting.creator.toString() === req.user._id;
-    if(!isCreator) {
-      const error = new Error('not authenticated');
-      error.status = 401;
-      return next(error);
-    }
-
-    await Voting.findByIdAndDelete(req.params.id);
-    res.json({ result: 'ok' });
-  } catch (error) {
-    next(error);
-  }
-};
-
 exports.voteSelection = async (req, res, next) => {
   try {
+    if (!ObjectId.isValid(req.params.id)) {
+      return next();
+    }
     const voting = await Voting.findById(req.params.id);
 
     voting.selections.forEach(selection => {
@@ -148,6 +170,26 @@ exports.voteSelection = async (req, res, next) => {
     await voting.save();
 
     res.status(302).redirect(`/votings/${req.params.id}`);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.deleteVoting = async (req, res, next) => {
+  try {
+    if (!ObjectId.isValid(req.params.id)) {
+      return next();
+    }
+    const voting = await Voting.findById(req.params.id);
+    const isCreator = voting.creator.toString() === req.user._id;
+    if(!isCreator) {
+      const error = new Error('not authenticated');
+      error.status = 401;
+      return next(error);
+    }
+
+    await Voting.findByIdAndDelete(req.params.id);
+    res.json({ result: 'ok' });
   } catch (error) {
     next(error);
   }

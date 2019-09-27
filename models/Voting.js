@@ -31,10 +31,12 @@ const votingSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    voter: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    }]
+    voter: {
+      type: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      }]
+    }
   }]
 }, {
   timestamps: true

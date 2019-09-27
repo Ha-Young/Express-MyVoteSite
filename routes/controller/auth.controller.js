@@ -45,6 +45,16 @@ exports.createUserData = async (req, res, next) => {
   }
 };
 
+exports.checkDuplicateId = async (req, res, next) => {
+  try {
+    const hasUser = await User.exists({ email: req.body.email });
+
+    res.send({ hasUser });
+  } catch (error) {
+    next(error);
+  }
+}
+
 exports.getLoginPage = (req, res, next) => {
   res.render('login', { title: 'login', message: req.flash('error') });
 };

@@ -2,5 +2,7 @@ exports.authorizeUser = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.status(302).redirect('/login');
+  const error = new Error('Unauthorized');
+  error.status = 401;
+  next(error);
 };

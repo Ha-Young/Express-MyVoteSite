@@ -1,51 +1,75 @@
 <!DOCTYPE html>
 <html>
-  <% include ./partial/head %>
+  <head>
+    <% include ./partial/head %>
+    <link rel='stylesheet' href='/stylesheets/signup.css' />
+  </head>
   <body>
-    <form
-      class="signup-form"
-      action="/signup"
-      method="POST"
-    >
-      <div class="signup-email">
-        email
-        <input type="email" name="email" autocomplete="off" required />
+    <% include ./partial/header %>
+    <div class="signup-container">
+      <div class="signup-subtitle">
+        <h2>Sign-Up</h2>
       </div>
-      <div class="signup-name">
-        name
-        <input type="text" name="name" autocomplete="off" required />
+      <form
+        class="signup-form"
+        action="/signup"
+        method="POST"
+      >
+        <div class="signup-form-captions">
+          <div class="signup-captions-email">E-mail(ID)</div>
+          <div class="signup-captions-name">name</div>
+          <div class="signup-captions-password">
+            Password
+            <span>(min-length : 6)</span>
+          </div>
+          <div class="signup-captions-password-repeat">Repeat Password</div>
+          <div class="signup-captions-profile-img">Profile Image Url</div>
+        </div>
+        <div class="signup-form-inputs">
+          <div class="signup-form-email">
+            <input class="email-id" type="email" name="email" autocomplete="off" required />
+            <button class="check-duplicate-email">Check Id</button>
+            <span class="check-result"></span>
+          </div>
+          <div class="signup-form-name">
+            <input type="text" name="name" autocomplete="off" required />
+          </div>
+          <div class="signup-form-password">
+            <input
+              class="password"
+              type="password"
+              name="password"
+              autocomplete="off"
+              style="ime-mode:disabled"
+              minlength="6"
+              required
+            />
+          </div>
+          <div class="signup-form-password-repeat">
+            <input
+              class="password-repeat"
+              type="password"
+              name="repeatedPassword"
+              autocomplete="off"
+              style="ime-mode:disabled"
+              minlength="6"
+              required
+            />
+            <span class="check-password"></span>
+          </div>
+          <div class="signup-profile-img">
+            <input type="url" name="profileImgUrl" autocomplete="off" />
+          </div>
+          <div class="signup-button-wrap">
+            <input class="siginup-button" type="submit" value="submit" />
+          </div>
+          <div class="flash-message"><%= message %></div>
+        </div>
+      </form>
+      <div class="signup-message">
+        Did Registered? <a href="/login">Log In!</a>
       </div>
-      <div class="signup-password">
-        password
-        <input
-          type="password"
-          name="password"
-          autocomplete="off"
-          style="ime-mode:disabled"
-          minlength="6"
-          required
-        />
-        repeat password
-        <input
-          type="password"
-          name="repeatedPassword"
-          autocomplete="off"
-          style="ime-mode:disabled"
-          minlength="6"
-          required
-        />
-      </div>
-      <div class="signup-profile-img">
-        profileurl
-        <input type="url" name="profileImgUrl" autocomplete="off" />
-      </div>
-      <div class="signup-button">
-        <input type="submit" value="submit" />
-      </div>
-      <div><%= message %></div>
-    </form>
-
-    <button class="button">++++++</button>
-    <script src="/javascripts/index.js"></script>
+    </div>
+    <script src="/javascripts/signup.js"></script>
   </body>
 </html>

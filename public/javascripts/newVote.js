@@ -14,17 +14,15 @@
     $newInput.setAttribute('autocomplete', 'off');
 
     $newSelection.appendChild($newInput);
+    $newSelection.classList.add('selection');
 
     $selectionList.appendChild($newSelection);
   });
 
   $removeButton.addEventListener('click', function(e) {
     e.preventDefault();
-    //2개 이상 input으로 고정시키기
     var $selections = document.querySelectorAll('.selection');
-    console.log($selections)
-    console.log($selections.length);
-    if ($selections.length < 2) {
+    if ($selections.length < 3) {
       return;
     }
     $selectionList.removeChild($selectionList.lastChild);

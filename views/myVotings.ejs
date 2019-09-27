@@ -1,39 +1,20 @@
 <!DOCTYPE html>
 <html>
-  <% include ./partial/head %>
+  <head>
+    <% include ./partial/head %>
+    <link rel='stylesheet' href='/stylesheets/main.css' />
+  </head>
   <body>
     <% include ./partial/header %>
     <div class="main">
-      <div class="main-sidebar">
-        <% include ./partial/userProfile %>
-        <div class="main-menu">
-          <div class="main-menu-title">
-            <h2>MENU</h2>
-          </div>
-          <a href="/">
-            <div class="main-menu-main">
-              <span>Main</span>
-            </div>
-          </a>
-          <a href="/votings/new">
-            <div class="main-menu-new">
-              <span>Create New Voting</span>
-            </div>
-          </a>
-          <a href="/logout">
-            <div class="main-menu-logout">
-              <span>LogOut</span>
-            </div>
-          </a>
-        </div>
-      </div>
+      <% include ./partial/sideBar %>
       <div class="content-container">
         <div class="main-subtitle">
           <h2><i class="fas fa-poll"></i> Voting List</h2>
         </div>
         <hr>
         <% votings.forEach(function(vote){ %>
-          <div class="voting">
+          <div class="voting-thumnail">
             <a href="/votings/<%= vote._id %>">
               <div class="content-top">
                 <span class="content-title"><%= vote.title %></span>

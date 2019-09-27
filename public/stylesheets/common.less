@@ -8,3 +8,122 @@
 @buttonColor: #333333;
 @borderColor: #E6E6E6;
 @inputColor: #F7F7F7;
+@flashMessageColor: #D64F00;
+
+@sidebarWidth: 230px;
+@sidebarLineHeight: 50px;
+
+body, html {
+  margin: 0px;
+  padding: 0px;
+	box-sizing: border-box;
+  background-color: @backColor;
+  color: @textColor;
+}
+
+a {
+  color: @textColor;
+  text-decoration: none;
+  &:focus {
+    outline: none !important;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+  &:visited {
+    color: @textColor;
+    text-decoration: none;
+  }
+}
+
+header {
+  background-color: @headerColor;
+  text-align: center;
+  padding: 20px;
+
+  h1 {
+    margin: 0;
+    padding: 0;
+    color: #B9C8E0;
+  }
+}
+
+.main {
+  width: 100%;
+
+  &-sidebar {
+    display: inline-block;
+    width: @sidebarWidth;
+    min-height: calc(~"100vh - 80px");
+    border-right: 1px solid @borderColor;
+  }
+
+  &-menu {
+    text-align: center;
+  }
+
+  &-subtitle {
+    text-align: center;
+  }
+}
+
+.content-container {
+  display: inline-block;
+  vertical-align: top;
+  width: calc(~"100% - 1em -"@sidebarWidth);
+}
+
+.main-menu div {
+  line-height: @sidebarLineHeight;
+  transition: 0.5s ease;
+
+  &:hover {
+    background-color: @hoverColor;
+  }
+}
+
+.main-menu-title {
+  border-top: 1px solid @borderColor;
+
+  & > h2 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.user-title {
+  text-align: center;
+}
+
+.user-img {
+  width: 100px;
+  margin: auto;
+  background-color: @contentColor;
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.user-name {
+  text-align: center;
+  line-height: @sidebarLineHeight;
+}
+
+.voting-thumnail {
+  display: inline-block;
+  vertical-align: top;
+  width: 200px;
+  text-align: center;
+  background-color: @contentColor;
+  border: 1px solid @borderColor;
+  border-radius: 20px;
+  transition: 0.5s ease;
+
+  &:hover {
+    background-color: @hoverColor;
+  }
+}
+
+.flash-message {
+  color: @flashMessageColor;
+  font-size: 12px;
+}

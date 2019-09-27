@@ -1,53 +1,106 @@
 <!DOCTYPE html>
 <html>
-  <% include ./partial/head %>
+  <head>
+    <% include ./partial/head %>
+    <link rel='stylesheet' href='/stylesheets/voting.css' />
+  </head>
   <body>
-    <div class="problem-body">
-      <div class="problem-title">
-        <a href="/"><button class="gobackbtn">목록으로</button></a>
-        <h1><%= voting.title %></h1>
+    <% include ./partial/header %>
+    <div class="voting-container">
+      <div class="voting-top">
+        <div class="goback-button-wrap">
+          <a href="/"><button class="gobackbtn">목록으로</button></a>
+        </div>
+        <div class="delete-button-wrap">
+          <% if (isMatchedCreator) { %>
+            <button class="delete-voting" data-id="<%= voting._id %>">삭제하기</button>
+          <% } %>
+        </div>
+        <div class="voting-title">
+          <h1><%= voting.title %></h1>
+        </div>
       </div>
-      <div class="voting-container">
-        <div>title : <%= voting.description %></div>
-          <div class="complete-users">
-            <span>creator : <%= voting.creator %></span>
+      <div class="voting-info">
+        <div class="voting-creator">
+          <span>Creator : <%= voting.creator.name %></span>
+        </div>
+        <div class="voting-status">
+            <% if (voting.status === 'INPROGRESS') { %>
+              <i class="fas fa-play">In Progress</i>
+            <% } else { %>
+              <i class="fas fa-stop">Expired</i>
+            <% } %>
+        </div>
+        <div class="voting-description">
+          <span><%= voting.description %></span>
+        </div>
+        <div class="voting-date-info">
+          <div class="voting-created-date">
+            <span>
+              <i class="fas fa-vote-yea"></i>
+              Created : <%= voting.fomattedCreatedDate %>
+            </span>
           </div>
-          <div class="complete-users">
-            <span>status : <%= voting.status %></span>
+          <div class="voting-expired-date">
+            <span>
+              <i class="fas fa-times"></i>
+              End : <%= voting.fomattedExpiredDate %>
+            </span>
           </div>
-          <div class="complete-users">
-            <span>expired_at : <%= voting.expired_at %></span>
-          </div>
-          <div class="complete-users">
-            <span>created_at : <%= voting.created_at %></span>
+        </div>
+        <div class="selection-container">
+          <div class="selection-title">
+            <h2>Selection</h2>
           </div>
           <form action="/votings/<%= voting._id %>", method="POST">
-          <% voting.selections.forEach(function(selection){ %>
-              <div class="testcase-wrap">
-                <div class="selection">
-                  <input type="radio" class="vote-selection" name="selection" value="<%= selection._id %>" />
-                  <div><%= selection.name %></div>
-                </div>
-                <% if (voting.status === 'EXPIRED' || (isCreator)) { %>
-                  <div class="vote-result">
-                    <div><%= selection.voter.length %></div>
+            <% voting.selections.forEach(function(selection){ %>
+              <div class="selection-wrap ">
+                <input type="radio" class="vote-selection" name="selection" value="<%= selection._id %>" />
+                <div class="selection-name"><%= selection.name %></div>
+              </div>
+            <% }) %>
+            <div class="vote-button-wrap">
+              <% if (hasVoted) { %>
+                제출이 완료되었습니다.
+                <input type="submit" class="vote-submit-button submit-disabled" disabled></input>
+              <% } else if (voting.status === 'EXPIRED'){ %>
+                만료된 투표입니다.
+                <input type="submit" class="vote-submit-button submit-disabled" disabled></input>
+              <% } else { %>
+                투표하기
+                <input type="submit" class="vote-submit-button"></input>
+              <% } %>
+            </div>
+          </form>
+        </div>
+        <hr>
+        <div class="result-container">
+          <div class="result-title">
+            <h2>Result</h2>
+          </div>
+          <div class="result-voting" data-totalVoter="<%= totalVoter %>">
+            <% voting.selections.forEach(function(selection){ %>
+              <% if ((voting.status === 'EXPIRED' || isMatchedCreator) && selection._id.toString() === winner.toString()) { %>
+                <div class="result-wrap winner">
+              <% } else { %>
+                <div class="result-wrap ">
+              <% } %>
+                <% if (voting.status === 'EXPIRED' || isMatchedCreator) { %>
+                  <div class="vote-result-name">
+                    <%= selection.name %>
+                  </div>
+                  <div class="vote-result" data-voter="<%= selection.voter.length %>">
+                    <div class="vote-result-bar"></div>
+                  </div>
+                  <div class="vote-result-number">
+                    <span><%= selection.voter.length %> 표</span>
                   </div>
                 <% } %>
               </div>
-          <% }) %>
-          <% if (isVoted) { %>
-            <input type="submit" class="vote-selection" disabled>제출이 완료되었습니다.</input>
-          <% } else if (voting.status === 'EXPIRED'){ %>
-            <input type="submit" class="vote-selection" disabled>만료된 투표입니다.</input>
-          <% } else { %>
-            <input type="submit" class="vote-selection">투표하기</input>
-          <% } %>
-          </form>
+            <% }) %>
+          </div>
         </div>
       </div>
-      <% if (isCreator) { %>
-        <button class="delete-voting" data-id="<%= voting._id %>">삭제하기</button>
-      <% } %>
     </div>
     <script src="/javascripts/voting.js" ></script>
   </body>
@@ -67,5 +120,5 @@
     __v: 1
   },
   winner: 5d8b007925ff3b81b80c5c8c,
-  isVoted: false
+  hasVoted: false
 } -->

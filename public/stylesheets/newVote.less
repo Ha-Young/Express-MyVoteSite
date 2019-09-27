@@ -8,19 +8,7 @@
   margin: auto;
 }
 
-.form-inputs, .form-captions {
-  display: inline-block;
-  vertical-align: top;
-
-  .newvote-selections {
-    height: auto;
-  }
-  & > div {
-    margin-top: 10px;
-  }
-}
-
-.form-inputs {
+.create-form-inputs {
   width: 300px;
 
   input {
@@ -34,12 +22,24 @@
   }
 }
 
-.form-captions {
+.create-form-captions {
   text-align: center;
   width: 150px;
 
   & > div {
     line-height: 35px;
+  }
+}
+
+.create-form-inputs, .create-form-captions {
+  display: inline-block;
+  vertical-align: top;
+
+  .newvote-selections {
+    height: auto;
+  }
+  & > div {
+    margin-top: 10px;
   }
 }
 
