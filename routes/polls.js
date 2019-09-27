@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const { ensureAuthenticated } = require('../config/authentication');
-
 const {
   handleGetMyPolls,
   handleGetPoll,

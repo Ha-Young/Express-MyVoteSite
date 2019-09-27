@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const { forwardAuthenticated } = require('../config/authentication');
 const {
   registerUser,
   handleLogin,
@@ -9,7 +10,6 @@ const {
   renderRegisterPage,
 } = require('../controllers/users.controllers');
 
-const { forwardAuthenticated } = require('../config/authentication');
 
 // Login Page
 router.get('/login', forwardAuthenticated, renderLoginPage);
