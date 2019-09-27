@@ -1,3 +1,6 @@
 /passport/keys.js
 /routes/users.js
 /routes/middlewares.js
+
+# Dependency directories
+node_modules/
