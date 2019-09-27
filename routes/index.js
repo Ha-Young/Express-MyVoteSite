@@ -10,7 +10,7 @@ router.get('/', errorController.catchErrors(votingController.getAll));
 router.get('/register', authController.registerForm);
 router.post('/register',
   authController.validateRegister,
-  authController.register
+  errorController.catchErrors(authController.register)
 );
 
 router.get('/login', authController.loginForm);

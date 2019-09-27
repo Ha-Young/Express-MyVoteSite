@@ -72,32 +72,27 @@ exports.validateRegister = (req, res, next) => {
   next();
 };
 
-exports.register = async (req, res, next) => {
+exports.register = async (req, res) => {
   const { email, password, name } = req.body;
+  const user = await User.findOne({ email });
 
-  try {
-    const user = await User.findOne({ email });
+  if (user) {
+    req.flash('error', '이미 가입된 이메일입니다.');
+    return res.render('register', {  flashes: req.flash() });
+  }
 
-    if (user) {
-      req.flash('error', '이미 가입된 이메일입니다.');
-      return res.render('register', {  flashes: req.flash() });
-    }
-
-    await bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash(password, salt, function(err, hash) {
-        User.create({
-          name,
-          email,
-          password: hash,
-        });
+  await bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.hash(password, salt, function(err, hash) {
+      User.create({
+        name,
+        email,
+        password: hash,
       });
     });
+  });
 
-    req.flash('success', '가입에 성공하였습니다');
-    res.status(200).redirect('/');
-  } catch (error) {
-    next(error);
-  }
+  req.flash('success', '가입에 성공하였습니다');
+  res.status(200).redirect('/');
 };
 
 exports.logout = (req, res) => {
