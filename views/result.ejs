@@ -2,7 +2,7 @@
   <ul>
   <% for (var i = 0; i < vote.options.length; i++) { %>
     <li>
-      <span style='width: <%= (Number(vote.options[i].voted_users.length) / Number(voterAll)) * 100 %>%; background: #f00;'>
+      <span style='width: <%= (Number(vote.options[i].voted_users.length) / Number(voterAll)) * 100 %>%;'>
         <p class='text'><%= vote.options[i].text %></p>
         <p class='count'><%= vote.options[i].voted_users.length %></p>
       </span>

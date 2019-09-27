@@ -130,6 +130,10 @@ router.get('/:id/result', isLoggedIn, async (req, res, next) => {
       voterAll += vote.options[i].voted_users.length;
     }
 
+    if (voterAll === 0) {
+      voterAll = 1;
+    }
+
     res.render('result', {
       vote,
       voterAll
