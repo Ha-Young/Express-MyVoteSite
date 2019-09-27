@@ -26,7 +26,6 @@
   "devDependencies": {
     "dateformat": "^3.0.3",
     "eslint": "^6.4.0",
-    "mocha": "^6.2.0",
     "nodemon": "^1.19.2"
   }
 }
