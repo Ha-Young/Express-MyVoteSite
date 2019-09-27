@@ -3,7 +3,7 @@ exports.convertDate = (isoString) => {
   const date = new Date(isoString);
   const yy = date.getFullYear();
   const mm = date.getMonth() + 1;
-  const dd = date.getDay();
+  const dd = date.getDate();
   const hours = date.getHours();
   const min = date.getMinutes();
 
