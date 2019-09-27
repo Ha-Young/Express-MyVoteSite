@@ -27,7 +27,7 @@ exports.getAll = async function(req, res, next) {
       user: req.user,
       voteList: processedVoteList
     });
-  } catch {
+  } catch (error) {
     next();
   }
 };
@@ -38,8 +38,12 @@ exports.getVote = async function(req, res, next) {
     const [processedVote] = await process([vote]);
     let hasVoted = false;
 
-    processedVote.options.forEach(el => {
-      hasVoted = el.people.includes(req.user.id);
+    processedVote.options.forEach(option => {
+      option.people.forEach(person => {
+        if (person === String(req.user._id)) {
+          hasVoted = true;
+        }
+      });
     });
 
     const maxLength = Math.max(

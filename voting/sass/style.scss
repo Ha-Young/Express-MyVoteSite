@@ -207,10 +207,6 @@ header {
   }
 }
 
-.result {
-  color: #ff0000;
-}
-
 .error {
   color: #ff0000;
 }
@@ -290,6 +286,18 @@ header {
       background: #20c997;
       border-bottom-right-radius: 20px;
       border-bottom-left-radius: 20px;
+    }
+    &.done {
+      color: lighten($mono-color, 30%);
+      ul {
+        background: lighten($mono-color, 50%);
+      }
+      input {
+        cursor: not-allowed;
+      }
+      input[type='submit'] {
+        background: lighten($mono-color, 30%);
+      }
     }
   }
 }
@@ -373,6 +381,8 @@ header {
 }
 
 .result-vote {
+  width: 50%;
+  margin: 0 auto;
   .result-option {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -391,10 +401,19 @@ header {
     background: #fff;
     padding: 20px;
     li {
+      &.result {
+        color: #ff6b6b;
+      }
       border-bottom: 1px solid #eee;
     }
     p {
       margin: 0;
     }
+  }
+}
+
+@media (max-width: 800px) {
+  .result-vote {
+    width: 100%;
   }
 }

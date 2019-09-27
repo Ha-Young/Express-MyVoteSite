@@ -18,21 +18,33 @@
       </div>
       <div>
         <% if(vote.progress) { %>
-        <div class="options">
+        <div class="options  <%= hasVoted ? 'done' : '' %>">
           <form method="POST" action="/votings/<%= vote._id %>?_method=PUT">
             <ul>
               <% vote.options.forEach(function(option){ %>
               <li>
-                <input type="radio" id="<%= option.title %>" value="<%=
-                option._id%>" name="option" <%= hasVoted ? 'disabled' : '' %> />
-                <label for="<%= option.title %>"><%= option.title %></label>
+                <input
+                  type="radio"
+                  id="<%= option.title %>"
+                  value="<%= option._id%>"
+                  name="option"
+                  <%= hasVoted ? 'disabled' : '' %>
+                />
+                <label
+                  for="<%= option.title %>">
+                  <%= option.title %>
+                </label>
                 <% if(String(user._id) === String(vote.creator)) { %>
                 <span><%= option.people.length %> 명</span>
                 <% } %>
               </li>
               <% }) %>
             </ul>
-            <input type="submit" value="Submit" />
+            <input
+              type="submit"
+              value="Submit"
+              <%= hasVoted ? 'disabled' : ''%>
+            />
           </form>
         </div>
         <div class="admin">
