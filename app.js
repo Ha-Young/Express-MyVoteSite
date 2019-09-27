@@ -17,7 +17,6 @@ const votingRouter = require('./routes/votings');
 const app = express();
 
 // dotenv requring in only development env
-
 if (process.env.NODE_ENV === 'development') {
   const dotenv = require('dotenv');
   dotenv.config({
@@ -26,34 +25,29 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // mongoose setup
-
 mongoose.connect(process.env.MONGOOSE_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
 
 // mongoose connecton
-
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('We are connected!');
 });
 
-// view engine setup
+// modules
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(
   session({
     secret: 'cat runner',
@@ -61,19 +55,13 @@ app.use(
     saveUninitialized: true
   })
 );
-
 app.use(flash());
-
-//input passport to req
 app.use(passport.initialize());
-// save passport info to session
 app.use(passport.session());
 
 // routers
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-
-// app.use('/users', usersRouter);
 app.use('/votings', votingRouter);
 
 // catch 404 and forward to error handler
@@ -83,6 +71,7 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
+
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
