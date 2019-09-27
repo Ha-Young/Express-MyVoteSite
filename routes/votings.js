@@ -94,18 +94,26 @@ router.post('/:id', isLoggedIn, async (req, res, next) => {
   }
 
   const voteId = req.params.id;
+  const vote = await Vote.findOne({ _id: voteId });
   const selectedIndex = `options.${req.body.voteOptions}.voted_users`;
+  const nowDate = new Date();
 
-  try {
-    await Vote.findByIdAndUpdate(voteId, { $addToSet: { [selectedIndex]: req.user._id }});
+  if (vote.expired_at - nowDate > 0) {
+    try {
+      await Vote.findByIdAndUpdate(voteId, { $addToSet: { [selectedIndex]: req.user._id }});
 
+      res.render('success', {
+        message: '투표가 완료되었습니다.'
+      });
+    } catch (error) {
+      const err = new Error('Internal Server Error');
+      err.status = 500;
+      next(err);
+    }
+  } else {
     res.render('success', {
-      message: '투표가 완료되었습니다.'
+      message: `투표가 만료되었습니다.`,
     });
-  } catch (error) {
-    const err = new Error('Internal Server Error');
-    err.status = 500;
-    next(err);
   }
 });
 
