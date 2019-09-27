@@ -1,6 +1,6 @@
 const Vote = require('../../models/Vote');
 const dateFormat = require('dateformat');
-const { failedCreate } = require('../../constants/err-messages');
+const { failedToCreate } = require('../../constants/err-messages');
 
 exports.getAll = async function(req, res, next) {
   try {
@@ -65,7 +65,7 @@ exports.update = async function(req, res, next) {
   }
 };
 
-exports.create = async function(req, res, next) {
+exports.create = async function(req, res) {
   try {
     await new Vote({
       title: req.body.title,
@@ -90,14 +90,14 @@ exports.delete = async function(req, res, next) {
   }
 };
 
-exports.typeForm = function(req, res, next) {
+exports.typeForm = function(req, res) {
   res.render('create-vote');
 };
 
-exports.success = function(req, res, next) {
+exports.success = function(req, res) {
   res.render('success');
 };
 
-exports.error = function(req, res, next) {
+exports.error = function(req, res) {
   res.render('error', { message: failedToCreate });
 };

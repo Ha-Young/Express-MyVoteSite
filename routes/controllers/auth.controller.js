@@ -45,6 +45,7 @@ exports.join = async function(req, res, next) {
       if (err) {
         return next(err);
       }
+
       await newUser.save();
       res.redirect('/');
     });
