@@ -48,7 +48,7 @@ exports.getMyVotings = async (req, res, next) => {
 
     const votings = votingList.map(voting => {
       const formattedVoting = voting.toObject();
-      formattedVoting.fomattedExpirationDate = dateFormat(new Date(voting.expired_at), 'yyyy-mm-dd h:MM:');
+      formattedVoting.fomattedExpirationDate = dateFormat(new Date(voting.expired_at), 'yyyy-mm-dd h:MM');
 
       return formattedVoting;
     });
