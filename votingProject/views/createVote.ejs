@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>투표 생성하기</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+
+  <body>
+    <h1>투표 생성하기</h1>
+    <a href="/">목록으로 돌아가기...</a>
+
+    <form action="/votings/new" method="POST">
+      <div class="form-group">
+        <label>제목</label>
+        <input type="text" class="form-control" name="title" />
+      </div>
+      <div class="form-group">
+        <label>만료일</label>
+        <input type="datetime-local" class="expired-date" name="expired_date" />
+      </div>
+      <label>투표 선택 사항</label>
+      <div class="options-container">
+        <div>
+          <input type="text" class="form-control" name="options" />
+          <input type="button" class="delete" value="Delete" />
+        </div>
+        <div>
+          <input type="text" class="form-control" name="options" />
+          <input type="button" class="delete" value="Delete" />
+        </div>
+      </div>
+      <div>
+        <button type="button" class="add-option-button" style="color: red;">
+          항목 추가
+        </button>
+      </div>
+
+      <button type="submit" class="button">투표 생성</button>
+    </form>
+  </body>
+  <script>
+    const $addOptionButton = document.querySelector(".add-option-button");
+    const $options = document.querySelector(".options-container");
+    const $expiredDate = document.querySelector(".expired-date");
+    const today = new Date().toISOString().slice(0, 16);
+
+    $expiredDate.setAttribute('value', today);
+    $expiredDate.setAttribute('min', today);
+
+    $options.addEventListener("click", () => {
+      if (event.target.getAttribute("class") === "delete") {
+        event.target.parentNode.remove();
+      }
+    });
+
+    $addOptionButton.addEventListener("click", () => {
+      const $div = document.createElement("div");
+
+      const $newOption = document.createElement("input");
+      $newOption.type = "text";
+      $newOption.className = "form-control";
+      $newOption.name = "options";
+      $div.appendChild($newOption);
+
+      const $deleteButton = document.createElement("input");
+      $deleteButton.type = "button";
+      $deleteButton.className = "delete";
+      $deleteButton.value = "Delete";
+      $div.appendChild($deleteButton);
+
+      $options.appendChild($div);
+    });
+  </script>
+</html>

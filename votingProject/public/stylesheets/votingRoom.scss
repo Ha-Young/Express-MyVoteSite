@@ -1,0 +1,138 @@
+@import "common.scss";
+
+.navigation {
+  width: 100%;
+  background-color: #f6f6f6;
+  border-radius: 10px;
+  display: flex;
+  padding: 10px 50px;
+  position: relative;
+  margin-bottom: 40px;
+  .navigation-logo {
+    width: 74px;
+    height: 33px;
+  }
+  .navigation-text {
+    font-size: 20px;
+    color: #afb1be;
+    line-height: 35px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .navigation-btn {
+    text-align: center;
+    margin-left: auto;
+    .my-vote {
+      display: inline-block;
+      background-color: #bf6cde;
+      font-size: 20px;
+      color: white;
+      border-radius: 10px;
+      padding: 5px 10px;
+      &:hover {
+        background-color: #e26072;
+      }
+    }
+    .create-vote {
+      display: inline-block;
+      margin-left: 40px;
+      background-color: #bf6cde;
+      font-size: 20px;
+      color: white;
+      border-radius: 10px;
+      padding: 5px 10px;
+      &:hover {
+        background-color: #e26072;
+      }
+    }
+    .navigation-login-list {
+      display: inline-block;
+      margin: 0;
+      a {
+        display: block;
+        width: 100%;
+        background-color: #bf6cde;
+        font-size: 20px;
+        color: white;
+        border-radius: 10px;
+        padding: 5px 10px;
+        &:hover {
+          background-color: #e26072;
+        }
+      }
+    }
+  }
+}
+.vote-container {
+  width: 20%;
+  min-height: 500px;
+  position: relative;
+  transform: translate(-50%, -50%);
+  top: 40%;
+  left: 50%;
+  padding-top: 1%;
+  border: #bfccd6 3px solid;
+  border-radius: 5px;
+  background: -webkit-gradient(
+    linear,
+    left bottom,
+    right top,
+    color-stop(0%, #ffffff),
+    color-stop(100%, #d1d4d4)
+  );
+  .vote-delete button {
+    display: block;
+    width: 94%;
+    margin: 3%;
+    padding: 3%;
+    font-size: 20px;
+    color: #dc617f;
+    cursor: pointer;
+    background-color: transparent;
+    border: 2px solid #dc617f;
+    transition: all ease 0.5s;
+    &:hover {
+      color: white;
+      background-color: #dc617f;
+    }
+  }
+  .vote-title {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: #53626e;
+  }
+  .vote-expired-date {
+    margin: 20px 10px 10px 0px;
+    text-align: right;
+    font-size: 15px;
+    color: #53626e;
+  }
+  .vote-inProgress span{
+    display: inline-block;
+    position: relative;
+    left: 250px;
+    margin: 0px 10px 20px 0px;
+    padding: 1%;
+    font-size: 15px;
+    background-color: #0097fe;
+    border-radius: 10px;
+    color: #ffffff;
+  }
+  .end span{
+    background-color: #E85D5B;
+  }
+  .vote-option {
+    padding: 10px 0 10px 0;
+    input {
+      margin: 0 0 0 20px;
+    }
+    label, span {
+      margin-left: 5px;
+      font-size: 15px;
+      color: #53626e;
+    }
+  }
+}

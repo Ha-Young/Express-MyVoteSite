@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>내 투표보기</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <h1>내 투표보기</h1>
+
+    <div class="votings-container">
+      <ul>
+        <% voteInfo.forEach(vote => { %>
+        <li class="voting-lists">
+          <a href="/votings/<%= vote._id %>">
+            <div class="voting-title"><%= vote.title %></div>
+            <div class="voting-expired-date"><%= vote.expired_date %></div>
+            <% if(vote.inProgress) { %>
+            <div class="voting-expired-date">투표 진행중...</div>
+            <% } else { %>
+            <div class="voting-expired-date">투표 종료...</div>
+            <% } %>
+          </a>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+  </body>
+</html>

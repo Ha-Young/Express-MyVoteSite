@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>메인페이지</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/index.css" />
+  </head>
+
+  <body>
+    <div class="navigation">
+      <a href="/"
+        ><img
+          class="navigation-logo"
+          src="/images/vote.png"
+          alt="vote logo"
+      /></a>
+      <span class="navigation-text">투표합시다!</span>
+      <div class="navigation-btn">
+        <a class="my-vote" href="/votings">내 투표</a>
+        <a class="create-vote" href="/votings/new">투표 생성</a>
+        <ul class="navigation-login-list">
+          <% if (user) { %>
+          <li><a href="/auth/logout">Logout</a></li>
+          <% } else { %>
+          <li><a href="/auth/login">Login</a></li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+    <div class="votings-container">
+      <ul>
+        <% voteInfo.forEach(vote => { %>
+        <li class="voting-lists">
+          <a href="/votings/<%= vote._id %>">
+            <div class="voting-title"><%= vote.title %></div>
+            <div class="voting-created-by"><%= vote.created_by %></div>
+            <div class="voting-expired-date"><%= vote.expired_date %></div>
+            <% if(vote.inProgress) { %>
+            <div class="voting-inProgress">투표 진행중</div>
+            <% } else { %>
+            <div class="voting-inProgress end">투표 종료</div>
+            <% } %>
+          </a>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+  </body>
+</html>

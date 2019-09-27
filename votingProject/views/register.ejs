@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width = device-width, height = device-height, initial-scale = 1"
+    />
+    <title>회원가입</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/register.css" />
+  </head>
+
+  <body>
+    <div class="register-container">
+        <div class="register-title">회원가입</div>
+        <div class="error"><%= error %></div>
+        <form action="/auth/register" method="POST">
+          <div class="form-group email">
+            <label>이메일</label>
+            <input type="email" class="form-control" name="email" placeholder="E-mail" />
+          </div>
+          <div class="form-group password">
+            <label>비밀번호</label>
+            <input type="password" class="form-control" name="password" placeholder="Password" />
+          </div>
+          <div class="form-group name">
+            <label>이름</label>
+            <input type="text" class="form-control" name="name" placeholder="Name" />
+          </div>
+          <button type="submit" class="register-button">회원가입</button>
+        </form>
+        <div class="ask-account">이미 계정이 있으신가요?</div>
+        <a class="login" href="/login">로그인하기</a></p>
+    </div>
+  </body>
+</html>
