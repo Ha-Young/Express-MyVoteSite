@@ -9,7 +9,7 @@ const renderLoginPage = (req, res, next) => res.status(200).render('login');
 
 const handleLogout = (req, res, next) => {
   req.logout();
-  req.flash('success_msg', 'You are logged out');
+  req.flash('success_msg', '로그아웃 되었습니다.');
   res.status(200).redirect('/users/login');
 };
 
@@ -70,7 +70,7 @@ const registerUser = async (req, res, next) => {
           if (error) throw error;
           newUser.password = hash;
           await newUser.save();
-          req.flash('success_msg', 'You are now registered and can log in');
+          req.flash('success_msg', '회원가입이 완료되었습니다. 이제 로그인 할 수 있습니다!');
           res.status(200).redirect('/users/login');
         });
       });

@@ -45,7 +45,7 @@ const handleVoteSubmit = async (req, res, next) => {
     if (!isPollOpen) {
       req.flash(
         'error_msg',
-        'This poll has expired. Your vote has not been submitted'
+        '투표가 만료되어서 반영되지 않았습니다.'
       );
       return res.status(400).redirect('/polls/failure');
     }
@@ -122,7 +122,7 @@ const handlePostNewPoll = async (req, res, next) => {
       await poll.save();
       req.flash(
         'success_msg',
-        'You have successfully created a new poll! check it out at home page.'
+        '투표가 생성되었습니다. 홈페이지에서 확인하세요!'
       );
       res.status(200).redirect('/polls/success');
     } catch (error) {
@@ -131,11 +131,11 @@ const handlePostNewPoll = async (req, res, next) => {
     }
   } else {
     try {
-      throw new Error('Failed attempt at creating a new poll.');
+      throw new Error('투표를 생성하는데 실패하였습니다.');
     } catch (error) {
       error.status = 400;
       console.error(error);
-      req.flash('error_msg', 'Failed attempt at creating a new poll.');
+      req.flash('error_msg', '투표를 생성하는데 실패하였습니다.');
       res.status(400).redirect('/polls/failure');
     }
   }
