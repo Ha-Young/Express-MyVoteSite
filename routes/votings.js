@@ -68,7 +68,20 @@ router.get('/:voting_id', authCheck, function(req, res, next) {
   }
   Voting.findOne({ _id: req.params.voting_id }, function(err, voting) {
     if (!err) {
-      res.render('voting', { user: req.user, voting });
+      const creatorId = voting.creator.toString();
+      const loginId = req.user._id.toString();
+      if (creatorId === loginId || !isOpen(voting.expiration)) {
+        res.render('myVoting', { user: req.user, voting });
+      } else {
+        for (let i = 0; i < voting.items.length; i++) {
+          for (let j = 0; j < voting.items[i].voters.length; j++) {
+            if (voting.items[i].voters[j].toString() === loginId) {
+              res.render('success', { message: "이미투표" })
+            }
+          }
+        }
+        res.render('voting', { user: req.user, voting });
+      }
     } else {
       next(err);
     }
