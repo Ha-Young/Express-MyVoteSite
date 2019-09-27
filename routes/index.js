@@ -58,21 +58,33 @@ router.get('/join', (req, res, next) => {
 
 router.post('/join', validateUser, async (req, res, next) => {
   try {
-    await new User(req.body).save();
+    const newUser = new User(req.body);
+
+    const error = newUser.validateSync();
+
+    if (error.name === 'ValidationError') {
+      const errorObj = error.errors.name
+        || error.errors.password
+        || error.errors.email;
+
+      const errorMessage = errorObj ? errorObj.message : '가입에 실패하였습니다.';
+
+      req.flash('validationError', errorMessage);
+      return res.redirect('/join');
+    }
+
+    await newUser.save();
 
     req.flash('joinMessage', 'Sign up complete!');
 
     return res.redirect("/login");
   } catch (err) {
     console.error(err);
-
-    const dbValidationError = err.errors.name || err.errors.password || err.errors.email;
-
-    if (dbValidationError) {
-      req.flash('validationError', dbValidationError.message);
-    }
-
-    return res.redirect("/join");
+    res.render('error', {
+      userName: '',
+      message:  'Internal Server Error',
+      errorStatus: 500
+    });
   }
 });
 

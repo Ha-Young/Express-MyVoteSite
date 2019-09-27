@@ -64,22 +64,28 @@ router.post('/new', isAuthenticated, validateVote, async (req, res, next) => {
       };
     });
 
-    await new Vote({
+    const newVote = new Vote({
       user_id: req.user._id,
       ...req.body,
       expired_at: res.locals.isoDate,
       options
-    }).save();
+    });
+
+    const error = newVote.validateSync();
+
+    if (error.name === 'ValidationError') {
+      const errorObj = error.errors.title || error.errors.expired_at;
+      const errorMessage = errorObj ? errorObj.message : '투표 생성에 실패하였습니다.';
+
+      req.flash('validationError', errorMessage);
+      return res.redirect('/votings/new');
+    }
+
+    await newVote.save();
 
     res.redirect('/votings/success');
   } catch (err) {
     console.error(err);
-    const dbValidationError = err.errors.title || err.errors.expired_at;
-
-    if (dbValidationError) {
-      req.flash('validationError', dbValidationError.message);
-      return res.redirect('/votings/new');
-    }
 
     res.redirect('/votings/error');
   }
