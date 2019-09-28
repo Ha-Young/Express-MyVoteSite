@@ -17,12 +17,16 @@ const votingSchema = new mongoose.Schema(
     },
     creator: {
       required: true,
-      type: Types.ObjectId
+      type: Types.ObjectId,
+      ref: 'User'
     },
     items: [
       {
         text: String,
-        voters: [Types.ObjectId]
+        voters: [ {
+          type: Types.ObjectId,
+          ref: 'User'
+        }]
       }
     ]
   },
