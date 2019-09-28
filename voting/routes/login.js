@@ -50,7 +50,6 @@ router.post('/signup', async (req, res, next) => {
     });
     return res.redirect('/');
   } catch (error) {
-    //console.error(error);
     return next(error);
   }
 });
