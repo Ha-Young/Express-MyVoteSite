@@ -10,44 +10,44 @@ router.get('/', isAuthenticated, (req, res, next) => {
     Vote.find({
       user_id: req.user._id,
     })
-    .populate('user_id', 'name')
-    .exec((err, votes) => {
-      if (err) {
-        console.error(err);
-        return next(err);
-      }
+      .populate('user_id', 'name')
+      .exec((err, votes) => {
+        if (err) {
+          console.error(err);
+          return next(err);
+        }
 
-      const voteCollection = votes.map(vote => {
-        vote.converted_date = convertDate(vote.expired_at);
-        return vote;
-      });
+        const voteCollection = votes.map(vote => {
+          vote.converted_date = convertDate(vote.expired_at);
+          return vote;
+        });
 
-      return res.render('index', {
-        userName: req.user.name,
-        votes: voteCollection,
-        message: null
+        return res.render('index', {
+          userName: req.user.name,
+          votes: voteCollection,
+          message: null
+        });
       });
-    });
   } catch (err) {
     console.log(err);
     next(err);
   }
 });
 
-router.get('/new', isAuthenticated, async (req, res, next) => {
+router.get('/new', isAuthenticated, async (req, res) => {
   res.render('votings_new', {
     userName: req.user.name,
     message: req.flash('validationError')[0] || null
   });
 });
 
-router.get('/success', isAuthenticated, async (req, res, next) => {
+router.get('/success', isAuthenticated, async (req, res) => {
   res.render('success', {
     userName: ''
   });
 });
 
-router.get('/error', isAuthenticated, async (req, res, next) => {
+router.get('/error', isAuthenticated, async (req, res) => {
   res.render('error', {
     userName: '',
     message:  'Internal Server Error',
@@ -55,7 +55,7 @@ router.get('/error', isAuthenticated, async (req, res, next) => {
   });
 });
 
-router.post('/new', isAuthenticated, validateVote, async (req, res, next) => {
+router.post('/new', isAuthenticated, validateVote, async (req, res) => {
   try {
     const options = req.body.options.map((option) => {
       return {
@@ -91,7 +91,7 @@ router.post('/new', isAuthenticated, validateVote, async (req, res, next) => {
   }
 });
 
-router.put('/vote', isAuthenticatedAjax, async (req, res, next) => {
+router.put('/vote', isAuthenticatedAjax, async (req, res) => {
   try {
     const { voteId, optionId } = req.body;
     const { _id: userId } = req.user;
@@ -126,7 +126,7 @@ router.put('/vote', isAuthenticatedAjax, async (req, res, next) => {
   }
 });
 
-router.get('/:voteId', isAuthenticated, (req, res, next) => {
+router.get('/:voteId', isAuthenticated, (req, res) => {
   try {
     const { voteId } = req.params;
     const { _id: userId } = req.user;
@@ -136,43 +136,43 @@ router.get('/:voteId', isAuthenticated, (req, res, next) => {
     }
 
     Vote.findById(voteId)
-    .populate('user_id', 'name')
-    .exec((err, vote) => {
-      if (err) {
-        console.error(err);
-        err.status = 404;
-        return next(err);
-      }
+      .populate('user_id', 'name')
+      .exec((err, vote) => {
+        if (err) {
+          console.error(err);
+          err.status = 404;
+          return next(err);
+        }
 
-      const isAlreadyVoted = !!vote.options.find(option => option.voted_user.indexOf(userId) > -1);
+        const isAlreadyVoted = !!vote.options.find(option => option.voted_user.indexOf(userId) > -1);
 
-      let isAuthorizedUser = false;
+        let isAuthorizedUser = false;
 
-      if (userId.toString() === vote.user_id._id.toString()) {
-        isAuthorizedUser = true;
-      }
+        if (userId.toString() === vote.user_id._id.toString()) {
+          isAuthorizedUser = true;
+        }
 
-      const allVoteCount = vote.options.reduce((ac, cv) => ac += cv.voted_user.length, 0);
-      vote.converted_date = convertDate(vote.expired_at);
+        const allVoteCount = vote.options.reduce((ac, cv) => ac += cv.voted_user.length, 0);
+        vote.converted_date = convertDate(vote.expired_at);
 
-      const sortedOptions = vote.options.slice().sort((l, r) => r.voted_user.length - l.voted_user.length);
+        const sortedOptions = vote.options.slice().sort((l, r) => r.voted_user.length - l.voted_user.length);
 
-      return res.render('votings_detail', {
-        userName: req.user.name,
-        vote,
-        sortedOptions,
-        isAlreadyVoted,
-        isAuthorizedUser,
-        allVoteCount
+        return res.render('votings_detail', {
+          userName: req.user.name,
+          vote,
+          sortedOptions,
+          isAlreadyVoted,
+          isAuthorizedUser,
+          allVoteCount
+        });
       });
-    });
   } catch (err) {
     console.error(err);
     next(err);
   }
 });
 
-router.delete('/:voteId', isAuthenticatedAjax, async (req, res, next) => {
+router.delete('/:voteId', isAuthenticatedAjax, async (req, res) => {
   try {
     await Vote.findByIdAndDelete(req.params.voteId);
 

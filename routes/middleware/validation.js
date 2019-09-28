@@ -15,39 +15,39 @@ exports.validateUser = async (req, res, next) => {
 
     if (!email.trim() || !name.trim() || !password.trim()) {
       req.flash('validationError', 'All fields are required');
-      return res.redirect("/join");
+      return res.redirect('/join');
     }
 
     if (!passwordConfirmation.trim()) {
       req.flash('validationError', 'Password confirmation required');
-      return res.redirect("/join");
+      return res.redirect('/join');
     }
 
     if (password !== passwordConfirmation) {
       req.flash('validationError', 'Password confirmation does not match');
-      return res.redirect("/join");
+      return res.redirect('/join');
     }
 
     if (!EMAIL_REGEX.test(email)) {
       req.flash('validationError', 'Not a valid email');
-      return res.redirect("/join");
+      return res.redirect('/join');
     }
 
     if (!PASSWORD_REGEX.test(password)) {
       req.flash('validationError', 'Not a valid password');
-      return res.redirect("/join");
+      return res.redirect('/join');
     }
 
     if (!NAME_REGEX.test(name)) {
       req.flash('validationError', 'Not a valid name');
-      return res.redirect("/join");
+      return res.redirect('/join');
     }
 
     const user = await User.findOne({ email: req.body.email });
 
     if (user) {
       req.flash('validationError', 'A user already exists with this email');
-      return res.redirect("/join");
+      return res.redirect('/join');
     }
 
     next();

@@ -10,31 +10,31 @@ const { convertDate } = require('../utils/utils');
 router.get('/', isAuthenticated, async (req, res, next) => {
   try {
     await Vote.find()
-    .populate('user_id')
-    .exec((err, votes) => {
-      if (err) {
-        console.error(err);
-        return next(err);
-      };
+      .populate('user_id')
+      .exec((err, votes) => {
+        if (err) {
+          console.error(err);
+          return next(err);
+        };
 
-      const voteCollection = votes.map(vote => {
-        vote.converted_date = convertDate(vote.expired_at);
-        return vote;
-      });
+        const voteCollection = votes.map(vote => {
+          vote.converted_date = convertDate(vote.expired_at);
+          return vote;
+        });
 
-      return res.render('index', {
-        userName: req.user.name,
-        votes: voteCollection,
-        message: req.flash('success')[0]
+        return res.render('index', {
+          userName: req.user.name,
+          votes: voteCollection,
+          message: req.flash('success')[0]
+        });
       });
-    });
   } catch (err) {
     console.error(err);
     next(err);
   }
 });
 
-router.get('/login', (req, res, next) => {
+router.get('/login', (req, res) => {
   res.render('login', {
     message: req.flash('joinMessage')[0] || req.flash('error')[0]
   });
@@ -47,12 +47,12 @@ router.post('/login', passport.authenticate('local', {
   failureFlash: true
 }));
 
-router.get('/logout', (req, res, next) => {
+router.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
 
-router.get('/join', (req, res, next) => {
+router.get('/join', (req, res) => {
   res.render('join', { message: req.flash('validationError')[0] });
 });
 
