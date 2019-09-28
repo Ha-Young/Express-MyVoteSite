@@ -18,8 +18,8 @@ passport.use(
     clientID: keys.google.clientID,
     clientSecret: keys.google.clientSecret,
     callbackURL: '/auth/google/redirect'
-  }, (accessToken, refreshToken, profile, done) => {
-    GoogleUser.findOne({ googleId: profile.id }).then((currentUser) => {
+  }, async(accessToken, refreshToken, profile, done) => {
+    await GoogleUser.findOne({ googleId: profile.id }).then((currentUser) => {
       if (currentUser) {
         done(null, currentUser);
       } else {

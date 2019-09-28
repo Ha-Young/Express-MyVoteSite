@@ -51,7 +51,7 @@ router.post('/sign-up',
       await LocalUser.create({
         username: req.body.username,
         password: hash
-      })
+      });
       return res.redirect('/');
     } catch(error) {
       next(error);
