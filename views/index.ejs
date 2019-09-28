@@ -22,21 +22,27 @@
       <h1>swnam-voting-platform</h1>
       <img src='https://cdn.uwec.edu/athena/images/9688/SC_vote_760x267-full-width-tall.jpg' width='958px' />
 
-      <h2>일단 투표를 만드세요!!</h2>
-      <a class='local-button' href='/votings/new'>투표 생성하기</a>
-
-      <h2>니가 생성한 투표 목록</h2>
-      <div class='votes'>
-        <ul>
-          <a href='/votes'>
-            <li>Title: </li>
-            <li>Description: </li>
-            <li>정답자: </li>
-            <li>난이도: </li>
-          </a>
-        </ul>
+      <div class='votings-new'>
+        <h2>일단 투표를 만드세요!!</h2>
+        <p class='votings-new-p-tag'>
+          <a class='votings-new-button' href='/votings/new'>투표 생성하기</a>
+        </p>
       </div>
-      <a class='local-button' href='/votings'>내 투표 보기</a>
+
+      <div class='votings-list'>
+        <h2>내가 생성한 투표 목록 간단히 보기</h2>
+        <% for (let i = 0; i < votings.length; i++) { %>
+          <ul>
+            <a href='/votings/<%= votings[i].id %>'>
+              <li>ID: <%= votings[i].id %></li>
+              <li>Vote Title: <%= votings[i].voteTitle %></li>
+              <li>Expiry Date: <%= votings[i].expiryDate %></li>
+              <li>Vote Options1: <%= votings[i].voteOptions1 %></li>
+              <li>Vote Options2: <%= votings[i].voteOptions2 %></li>
+            </a>
+          </ul>
+        <% } %>
+      </div>
     </main>
     <% } else { %>
     <header>

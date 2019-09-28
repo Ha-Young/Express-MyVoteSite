@@ -12,36 +12,31 @@ const authCheck = function (req, res, next) {
 };
 
 router.get('/login', (req, res) => {
-  res.render('login', { title: 'voting-platform', user: req.user });
+  res.render('login', {
+    title: 'voting-platform',
+    user: req.user
+  });
 });
 
 router.get('/localLoginPage', (req, res) => {
-  res.render('localLoginPage', { title: 'voting-platform', user: req.user });
+  res.render('localLoginPage', {
+    title: 'voting-platform',
+    user: req.user
+  });
 });
 
-router.post('/local', (req, res, next) => {
-  passport.authenticate('local', (error, user, info) => {
-    if (error) {
-      console.error(error);
-      return next(error);
-    }
-    if (!user) {
-      req.flash('error', info.message);
-      console.log(info.message);
-      return res.redirect('/');
-    }
-    return req.login(user, error => {
-      if (error) {
-        console.error(error);
-        return next(error);
-      }
-      return res.redirect('/');
-    });
-  })(req, res, next);
+router.post('/local', (req,res,next) => {
+  passport.authenticate('local', {
+    failureRedirect: '/auth/localLoginPage',
+    successRedirect: '/'
+  })(req,res,next);
 });
 
 router.get('/sign-up', (req, res) => {
-  res.render('sign-up', { title: 'voting-platform', user: req.user });
+  res.render('sign-up', {
+    title: 'voting-platform',
+    user: req.user
+  });
 });
 
 router.post('/sign-up',
@@ -66,7 +61,10 @@ router.post('/sign-up',
 
 router.get('/logout', (req, res) => {
   req.logout();
-  res.render('logout', { title: 'voting-platform', user: req.user });
+  res.render('logout', {
+    title: 'voting-platform',
+    user: req.user
+  });
 });
 
 router.get('/google', authCheck, passport.authenticate('google', {

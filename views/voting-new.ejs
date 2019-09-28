@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title><%= title %>-Sign-up</title>
+    <link href='/stylesheets/style.css' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <% if (user) { %>
+        <li><a href='/auth/logout'>Logout</a></li>
+        <li><a href='/'>Homepage</a></li>
+        <li><a href='/profile'>Profile</a></li>
+        <% } else { %>
+        <li><a href='/auth/login'>Login</a></li>
+        <% } %>
+      </ul>
+    </nav>
+    <% if (user) { %>
+    <header>
+      <h1>swnam-voting-platform</h1>
+      <h2>Create New Voting</h2>
+      <h3>Fill out the form below and press the 'Register' Button below.</h3>
+    </header>
+    <main>
+      <form class='form' action='/votings/new' method='post' >
+        <div class='answer'>
+          <label class='label'>Vote Title
+            <input type='text' name='voteTitle' placeholder='투표 제목을 입력하세요. Ex>타요와 띠띠뽀 중 누가 더 빠를까요?' required />
+          </label>
+          <label class='label'>Expiry Date
+            <input type='text' name='expiryDate' placeholder='투표 만료일을 입력하세요. Ex>2019-10-01' required />
+          </label>
+          <label class='label'>Vote Options
+            <input type="text" name="voteOptions1" placeholder='투표 선택지를 입력하세요. Ex>타요' required />
+            <input type="text" name="voteOptions2" placeholder='투표 선택지를 입력하세요. Ex>띠띠뽀' required />
+          </label>
+          <button class='register-button' type='submit'>Register</button>
+        </div>
+      </form>
+    </main>
+    <% } else { %>
+    <header>
+      <h1>You can use our services after Login.</h1>
+      <h2>If you want to use our page Press the Button above.</h2>
+
+      <img src='https://images.unsplash.com/photo-1459347268516-3ed71100e718?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80' height='500px' />
+    </header>
+    <% } %>
+  </body>
+</html>

@@ -18,7 +18,7 @@ const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
 const profileRouter = require('./routes/profile');
-const votesRouter = require('./routes/votes');
+const votingsRouter = require('./routes/votings');
 
 const app = express();
 
@@ -48,14 +48,13 @@ mongoose.connect(keys.mongodb.dbURI, () => {
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 app.use('/profile', profileRouter);
-app.use('/votes', votesRouter);
+app.use('/votings', votingsRouter);
 
 app.use(function(req, res, next) {
   next(createError(404));
