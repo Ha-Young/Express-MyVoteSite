@@ -33,6 +33,10 @@ const store = new MongoDBStore({
   collection: 'mySessions'
 });
 
+store.on('error', function (error) {
+  console.error(error);
+});
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -43,10 +47,6 @@ app.use(cookieParser());
 
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-
-store.on('error', function (error) {
-  console.error(error);
-});
 
 app.use(require('express-session')({
   secret: process.env.SESSION_SECRET_KEY,

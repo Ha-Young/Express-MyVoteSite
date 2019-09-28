@@ -4,11 +4,11 @@ const User = require('../models/User');
 
 module.exports = (passport) => {
   passport.serializeUser((user, done) => {
-    done(null, user);
+    done(null, user._id);
   });
 
-  passport.deserializeUser((user, done) => {
-    User.findById(user._id, function(err, user) {
+  passport.deserializeUser((id, done) => {
+    User.findById(id, function(err, user) {
       done(err, user);
     });
   });
@@ -23,7 +23,7 @@ module.exports = (passport) => {
       return done(null, false, { message: 'Incorrect username or password' });
     }
 
-    const isValidPassword = bcrypt.compareSync(password, user.password);
+    const isValidPassword = await bcrypt.compare(password, user.password);
 
     if (!isValidPassword) {
       return done(null, false, { message: 'Incorrect username or password' });
