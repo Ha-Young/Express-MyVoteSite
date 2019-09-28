@@ -81,9 +81,9 @@ exports.register = async (req, res) => {
     return res.render('register', {  flashes: req.flash() });
   }
 
-  await bcrypt.genSalt(10, function(err, salt) {
-    bcrypt.hash(password, salt, function(err, hash) {
-      User.create({
+  await bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(password, salt, async (err, hash) => {
+      await User.create({
         name,
         email,
         password: hash,
