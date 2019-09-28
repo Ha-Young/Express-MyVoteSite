@@ -23,11 +23,11 @@ exports.join = async function(req, res, next) {
       return res.render('join', { message: existedUser, err: null });
     }
 
-    if (vaildEmail.test(email)) {
+    if (!vaildEmail.test(email)) {
       return res.render('join', { message: invalidEmail, err: null });
     }
 
-    if (vaildPassword.test(password)) {
+    if (!vaildPassword.test(password)) {
       return res.render('join', { message: invalidPassword, err: true });
     }
 
