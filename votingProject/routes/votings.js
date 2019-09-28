@@ -9,11 +9,11 @@ router.get('/new', (req, res, next) => {
 router.post('/new', votingController.createVote);
 
 router.get('/success', (req, res, next) => {
-  res.render('success');
+  res.render('success', { user: req.user });
 });
 
 router.get('/error', (req, res, next) => {
-  res.render('failure');
+  res.render('failure', { user: req.user });
 });
 
 router.get('/:id', votingController.getSelectedVote);

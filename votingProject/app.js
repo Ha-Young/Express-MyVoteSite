@@ -11,7 +11,7 @@ const methodOverride = require('method-override');
 const sass = require('node-sass-middleware');
 require('dotenv').config();
 
-const connect = require('./schemas');
+const connect = require('./config');
 
 const index = require('./routes/index');
 const login = require('./routes/login');
