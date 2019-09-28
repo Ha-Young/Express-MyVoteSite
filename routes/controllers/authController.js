@@ -45,7 +45,7 @@ exports.login = (req, res, next) => {
       return res.redirect('/');
     });
   })(req, res, next);
-}
+};
 
 exports.registerForm = (req, res) => {
   res.render('register', {
