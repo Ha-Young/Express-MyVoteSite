@@ -59,13 +59,15 @@ router.post('/new', async (req, res, next) => {
 router.get('/:voting_id', async (req, res, next) => {
   const voting = await Voting.findOne({ _id: req.params.voting_id });
   const isCreator = String(voting.creator) === String(req.user._id);
+  const isVoted = !!voting.items.find(item => item.voters.includes(String(req.user._id)));
   const editedVoting = JSON.parse(JSON.stringify(voting));
   addIsOnProgressPropertyTo(editedVoting, voting);
   res.render('voting', {
     voting_id: req.params.voting_id,
     user: req.user,
     voting: editedVoting,
-    isCreator
+    isCreator,
+    isVoted
   });
 });
 

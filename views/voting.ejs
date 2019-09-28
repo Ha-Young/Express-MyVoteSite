@@ -47,7 +47,7 @@
                   <label for='<%= items[i]._id %>' >
                     <h2><%= items[i].text %></h2>
                   </label>
-                  <%if(!voting.isOnProgress){%>
+                  <%if(voting.isOnProgress && !isVoted){%>
                     <input type='radio' name='option' id='<%= items[i]._id %>' value='<%= items[i]._id %>'>
                   <%}%>
                   <div class='result-wrapper'>
@@ -57,7 +57,9 @@
                 </li>
               <%}%>
             </ul>
-            <input id='submit-my-vote-button' type='submit' form='voting-form'>
+            <%if(!isVoted){%>
+              <input id='submit-my-vote-button' type='submit' form='voting-form'>
+            <%}%>
             <input id='delete-voting-button' type='button' value='Delete'>
           </form>
           <ul class=result-list>
