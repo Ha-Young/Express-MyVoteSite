@@ -11,15 +11,15 @@ module.exports = passport => {
       const exUser = await User.findOne({ email });
 
       if (exUser) {
-        const result = await bcrypt.compare(password, exUser.password, (err, result) => {
-          if (result) {
-            done(null, exUser);
-          } else {
-            done(null, false, {
-              message: '비밀번호가 일치하지 않습니다.'
-            });
-          }
-        });
+        const match = await bcrypt.compare(password, exUser.password);
+
+        if (match) {
+          done(null, exUser);
+        } else {
+          done(null, false, {
+            message: '비밀번호가 일치하지 않습니다.'
+          });
+        }
       } else {
         done(null, false, {
           message: '가입되지 않은 회원입니다.'

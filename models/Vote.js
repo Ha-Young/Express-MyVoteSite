@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { Types } = mongoose.Schema;
 
 const voteSchema = new mongoose.Schema({
   title: {
@@ -6,7 +7,7 @@ const voteSchema = new mongoose.Schema({
     required: true
   },
   created_by: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: 'User'
   },
   description: {

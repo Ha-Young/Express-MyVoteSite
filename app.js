@@ -9,21 +9,14 @@ const morgan = require('morgan');
 const sass = require('node-sass-middleware');
 const passport = require('passport');
 const passportConfig = require('./passport');
-passportConfig(passport);
 const session = require('express-session');
 const flash = require('connect-flash');
-
 const index = require('./routes/index');
-const login = require('./routes/login');
-const join = require('./routes/join');
 const auth = require('./routes/auth');
 const votings = require('./routes/votings');
-var app = express();
+passportConfig(passport);
 
-// view engine setup
-app.set('views', './views');
-app.set('view engine', 'ejs');
-app.use(expressLayouts);
+var app = express();
 
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
@@ -40,6 +33,11 @@ db.once('open', function() {
   console.log('we are connected!');
 });
 
+// view engine setup
+app.set('views', './views');
+app.set('view engine', 'ejs');
+
+app.use(expressLayouts);
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -70,8 +68,6 @@ app.use(
 app.use(express.static('public'));
 
 app.use('/', index);
-app.use('/login', login);
-app.use('/join', join);
 app.use('/auth', auth);
 app.use('/votings', votings);
 

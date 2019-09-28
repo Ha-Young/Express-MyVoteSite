@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const { isLoggedIn, convertDate } = require('./middlewares');
+const { isLoggedIn } = require('./middlewares');
+const { convertDate } = require('../utils');
 const Vote = require('../models/Vote');
 const User = require('../models/User');
 
@@ -34,11 +35,11 @@ router.post('/new', isLoggedIn, async (req, res, next) => {
     });
 
     return res.render('success', {
-      message: `투표가 성공적으로 생성되었습니다.`
+      message: '투표가 성공적으로 생성되었습니다.'
     });
   } catch (error) {
     return res.render('error', {
-      message: `투표생성이 실패했습니다.`,
+      message: '투표생성이 실패했습니다.',
       error
     });
   }
@@ -124,15 +125,9 @@ router.get('/:id/result', isLoggedIn, async (req, res, next) => {
 
   try {
     const vote = await Vote.findOne({_id: req.params.id});
-    let voterAll = 0;
 
-    for (let i = 0; i < vote.options.length; i++) {
-      voterAll += vote.options[i].voted_users.length;
-    }
-
-    if (voterAll === 0) {
-      voterAll = 1;
-    }
+    let voterAll = vote.options.reduce((acc, curr) => acc.voted_users.length + curr.voted_users.length);
+    voterAll = (voterAll === 0) ? 1 : voterAll;
 
     res.render('result', {
       vote,

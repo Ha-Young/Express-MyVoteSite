@@ -3,7 +3,7 @@ exports.isLoggedIn = (req, res, next) => {
     return next();
   }
 
-  res.status(301).redirect('/login');
+  res.status(301).redirect('/auth/login');
 }
 
 exports.isNotLoggedIn = (req, res, next) => {
@@ -11,7 +11,7 @@ exports.isNotLoggedIn = (req, res, next) => {
     return next();
   }
 
-  res.status(301).redirect('/login');
+  res.status(301).redirect('/auth/login');
 }
 
 exports.convertDate = date => {

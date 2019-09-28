@@ -5,6 +5,55 @@ const bcrypt = require('bcrypt');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const User = require('../models/User');
 
+router.get('/login', isNotLoggedIn, (req, res, next) => {
+  res.render('login', {
+    layout: 'layoutLogin',
+    error: req.flash('loginError')
+  });
+});
+
+router.post('/login', isNotLoggedIn, (req, res, next) => {
+  passport.authenticate('local', (authError, user, info) => {
+    if (authError) {
+      return next(authError);
+    }
+
+    if (!user) {
+      req.flash('loginError', info.message);
+      return res.status(301).redirect('/auth/login');
+    }
+
+    return req.login(user, loginError => {
+      if (loginError) {
+        next(loginError);
+      }
+
+      return res.status(301).redirect('/');
+    });
+  })(req, res, next);
+});
+
+router.get('/logout', isLoggedIn, (req, res, next) => {
+  req.logout();
+  req.session.destroy();
+  res.status(301).redirect('/');
+});
+
+router.get('/github', passport.authenticate('github'));
+
+router.get('/github/callback', passport.authenticate('github', {
+  failureRedirect: '/auth/login'
+}), (req, res) => {
+  res.status(301).redirect('/');
+});
+
+router.get('/join', isNotLoggedIn, (req, res) => {
+  res.render('join', {
+    layout: 'layoutLogin',
+    error: req.flash('joinError')
+  });
+});
+
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
   const { email, name, password } = req.body;
 
@@ -29,41 +78,6 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
     err.status = 500;
     return next(err);
   }
-});
-
-router.post('/login', isNotLoggedIn, (req, res, next) => {
-  passport.authenticate('local', (authError, user, info) => {
-    if (authError) {
-      return next(authError);
-    }
-
-    if (!user) {
-      req.flash('loginError', info.message);
-      return res.status(301).redirect('/login');
-    }
-
-    return req.login(user, loginError => {
-      if (loginError) {
-        next(loginError);
-      }
-
-      return res.status(301).redirect('/');
-    });
-  })(req, res, next);
-});
-
-router.get('/logout', isLoggedIn, (req, res, next) => {
-  req.logout();
-  req.session.destroy();
-  res.status(301).redirect('/');
-});
-
-router.get('/github', passport.authenticate('github'));
-
-router.get('/github/callback', passport.authenticate('github', {
-  failureRedirect: '/auth/login'
-}), (req, res) => {
-    res.status(301).redirect('/');
 });
 
 module.exports = router;

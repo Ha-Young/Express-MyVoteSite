@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { isLoggedIn, convertDate } = require('./middlewares');
+const { isLoggedIn } = require('./middlewares');
+const { convertDate } = require('../utils');
 const Vote = require('../models/Vote');
 const User = require('../models/User');
 
@@ -23,11 +24,7 @@ router.get('/', isLoggedIn, async (req, res, next) => {
       voteDoc.created_at = convertDate(vote.created_at);
       voteDoc.expired_at = convertDate(vote.expired_at);
 
-      if (String(req.user._id) === String(vote.created_by)) {
-        voteDoc.isUser = true;
-      } else {
-        voteDoc.isUser = false;
-      }
+      voteDoc.isUser = String(req.user._id) === String(vote.created_by);
 
       return voteDoc;
     }));
