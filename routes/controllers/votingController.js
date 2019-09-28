@@ -131,7 +131,7 @@ exports.getVoting = async (req, res, next) => {
   if (!isValidId(req.params.id) || !isValidId(req.user._id)) return next();
 
   const voting = await Voting.findOne({ _id: req.params.id });
-  const newVoting =  JSON.parse(JSON.stringify(voting._doc));
+  const newVoting = JSON.parse(JSON.stringify(voting._doc));
   const votedIndex = voting.options.findIndex(option => (
     option.selected_user.includes(req.user._id)
   ));
