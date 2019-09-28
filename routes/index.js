@@ -5,6 +5,7 @@ const Vote = require('../models/Vote');
 const dateFormat = require('dateformat');
 
 /* GET home page. */
+
 router.get('/', authentication.ensureLoggedIn, async function(req, res, next) {
   try {
     const votes = await Vote.find().populate('creator_id', 'name');
@@ -17,6 +18,14 @@ router.get('/', authentication.ensureLoggedIn, async function(req, res, next) {
   } catch(err) {
     next(err);
   }
+});
+
+router.get('/login', function(req, res) {
+  res.render('login', { message: req.flash('error') });
+});
+
+router.get('/join', function(req, res) {
+  res.render('join', { message: null, err: null });
 });
 
 module.exports = router;

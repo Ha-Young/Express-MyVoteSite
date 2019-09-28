@@ -18,13 +18,12 @@ mongoose.connect(process.env.DATABASE_URL, {
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
-db.once('open', () => console.log('connected'));
+db.once('open', console.log.bind(console, 'connected'));
+
 
 const expire = 3600000 * 7 * 24;
 const app = express();
 const index = require('./routes/index');
-const login = require('./routes/login');
-const join = require('./routes/join');
 const auth = require('./routes/auth');
 const votings = require('./routes/votings');
 
@@ -51,8 +50,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', index);
-app.use('/login', login);
-app.use('/join', join);
 app.use('/auth', auth);
 app.use('/votings', votings);
 
@@ -62,7 +59,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

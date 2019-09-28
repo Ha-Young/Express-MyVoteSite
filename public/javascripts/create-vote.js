@@ -9,7 +9,7 @@ $addOption.addEventListener('click', () => {
 
   div.setAttribute('id', `option${optionNumber}`);
   input.setAttribute('type', 'text');
-  input.setAttribute('name', `options`);
+  input.setAttribute('name', 'options');
   input.setAttribute('required', 'true');
   input.setAttribute('placeholder', 'option');
   input.setAttribute('class', 'option-radio');

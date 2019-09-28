@@ -1,6 +1,6 @@
 const passport = require('passport');
 const User = require('../../models/User');
-const regExp = require('../../constants/reg-exp');
+const { vaildEmail, vaildPassword } = require('../../constants/reg-exp');
 const {
   existedUser,
   invalidEmail,
@@ -23,11 +23,11 @@ exports.join = async function(req, res, next) {
       return res.render('join', { message: existedUser, err: null });
     }
 
-    if (!regExp.vaildEmail.test(email)) {
+    if (vaildEmail.test(email)) {
       return res.render('join', { message: invalidEmail, err: null });
     }
 
-    if (!regExp.vaildPassword.test(password)) {
+    if (vaildPassword.test(password)) {
       return res.render('join', { message: invalidPassword, err: true });
     }
 

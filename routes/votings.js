@@ -1,43 +1,43 @@
 const express = require('express');
 const router = express.Router();
 const votingController = require('./controllers/voting.controller');
-const authentication = require('./middlewares/authentication');
-const vote = require('./middlewares/vote');
+const { ensureLoggedIn } = require('./middlewares/authentication');
+const vote = require('./middlewares/vote-validation');
 
 router.get(
   '/',
-  authentication.ensureLoggedIn,
+  ensureLoggedIn,
   votingController.getAll
 );
 
 router.get(
   '/new',
-  authentication.ensureLoggedIn,
+  ensureLoggedIn,
   votingController.typeForm
 );
 
 router.post(
   '/new',
-  authentication.ensureLoggedIn,
+  ensureLoggedIn,
   votingController.create
 );
 
 router.get(
   '/success',
-  authentication.ensureLoggedIn,
+  ensureLoggedIn,
   votingController.success
 );
 
 router.get(
   '/error',
-  authentication.ensureLoggedIn,
+  ensureLoggedIn,
   votingController.error
 );
 
 
 router.get(
   '/:id',
-  authentication.ensureLoggedIn,
+  ensureLoggedIn,
   vote.isDeleted,
   vote.isVoted,
   votingController.getOne
@@ -45,7 +45,7 @@ router.get(
 
 router.post(
   '/:id',
-  authentication.ensureLoggedIn,
+  ensureLoggedIn,
   vote.isDeleted,
   vote.isVoted,
   votingController.update
@@ -54,7 +54,7 @@ router.post(
 router.delete(
   '/:id',
   vote.isDeleted,
-  authentication.ensureLoggedIn,
+  ensureLoggedIn,
   votingController.delete
 );
 

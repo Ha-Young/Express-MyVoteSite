@@ -10,7 +10,7 @@ exports.getAll = async function(req, res, next) {
     const times = votes.map(vote => dateFormat(vote.end_date, 'yy-mm-dd hTT'));
 
     res.render(
-      'index',
+      'main',
       {
         votes,
         isInProgress,

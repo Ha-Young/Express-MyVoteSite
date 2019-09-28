@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const regExp = require('../constants/reg-exp');
+const { vaildEmail, vaildPassword } = require('../constants/reg-exp');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
-    match: regExp.vaildEmail,
+    match: vaildEmail,
     trim: true,
     required: true
   },
@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    match: regExp.vaildPassword,
+    match: vaildPassword,
     trim: true,
     required: true
   }
