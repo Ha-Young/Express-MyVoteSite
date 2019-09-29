@@ -54,7 +54,7 @@ router.put('/votings/:id',
 );
 router.delete('/votings/:id',
   authController.isLoggedIn,
-  votingController.deleteVoting
+  errorController.catchErrors(votingController.deleteVoting)
 );
 
 module.exports = router;
