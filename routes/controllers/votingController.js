@@ -10,9 +10,9 @@ exports.getAll = async (req, res, next) => {
 
     const user = await User.findOne({ _id: voting.author });
     const newVoting = JSON.parse(JSON.stringify(voting._doc));
-    const formatting = formatDate(newVoting.expiration);
+    const formatted = formatDate(newVoting.expiration);
 
-    Object.assign(newVoting, formatting);
+    Object.assign(newVoting, formatted);
     newVoting.author = user.name;
 
     return newVoting;
@@ -34,9 +34,9 @@ exports.getMyVoting = async (req, res, next) => {
 
     const newVoting = JSON.parse(JSON.stringify(voting._doc));
     const user = await User.findOne({ _id: voting.author });
-    const formatting = formatDate(newVoting.expiration);
+    const formatted = formatDate(newVoting.expiration);
 
-    Object.assign(newVoting, formatting);
+    Object.assign(newVoting, formatted);
     newVoting.author = user.name;
 
     return newVoting;
@@ -81,18 +81,19 @@ exports.newVotingForm = (req, res) => {
 
 exports.validateNewVoting = (req, res, next) => {
   try {
-    const formatting = formatDate(req.body.date);
-
+    const formatted = formatDate(req.body.date);
+    req.sanitizeBody('title');
+    req.sanitizeBody('option');
     req.checkBody('title', 'title을 입력해주세요.').notEmpty();
     req.checkBody('date', 'date가 유효하지 않습니다.').isDate();
     req.checkBody('option', 'option을 2개 이상 입력해주세요.').isLength({ min: 2 });
 
     const errors = req.validationErrors();
 
-    if (errors || !formatting.isOpen) {
+    if (errors || !formatted.isOpen) {
       if(errors) req.flash('error', errors.map(err => err.msg));
 
-      if(!formatting.isOpen) req.flash('date', '만료날짜가 현재날짜보다 이전입니다.');
+      if(!formatted.isOpen) req.flash('date', '만료날짜가 현재날짜보다 이전입니다.');
 
       res.render('newVoting', { flashes: req.flash(), user: req.user });
       return;
@@ -137,11 +138,11 @@ exports.getVoting = async (req, res, next) => {
   ));
   const totalVotes = voting.options.reduce((prev, curr) => {
     return prev + curr.selected_user.length;
-  },0);
+  }, 0);
   const user = await User.findOne({ _id: newVoting.author });
-  const formatting = formatDate(newVoting.expiration);
+  const formatted = formatDate(newVoting.expiration);
 
-  Object.assign(newVoting, formatting);
+  Object.assign(newVoting, formatted);
 
   newVoting.author = user.name;
   newVoting.isAuthor = String(voting.author) === String(req.user._id);
