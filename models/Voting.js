@@ -23,10 +23,12 @@ const votingSchema = new mongoose.Schema(
     items: [
       {
         text: String,
-        voters: [ {
-          type: Types.ObjectId,
-          ref: 'User'
-        }]
+        voters: [
+          {
+            type: Types.ObjectId,
+            ref: 'User'
+          }
+        ]
       }
     ]
   },
