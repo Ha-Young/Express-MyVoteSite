@@ -30,7 +30,7 @@ async (email, password, done) => {
 
     if (user) {
       bcrypt.compare(password, user.password, (err, res) => {
-        if(res) return done(null, user);
+        if (res) return done(null, user);
 
         done(null, false, { message: '비밀번호가 일치하지 않습니다.' });
       });
