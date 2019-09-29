@@ -6,10 +6,13 @@ module.exports = passport => {
     done(null, user.email);
   });
 
-  passport.deserializeUser((email, done) => {
-    User.findOne({ email })
-      .then(user => done(null, user))
-      .catch(err => done(err));
+  passport.deserializeUser(async(email, done) => {
+    try {
+      const user = await User.findOne({ email })
+      done(null, user);
+    } catch(err) {
+      done(err);
+    }
   });
 
   local(passport);
