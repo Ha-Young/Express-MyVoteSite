@@ -19,19 +19,12 @@ ul {
 
 a {
   text-decoration: none !important;
+  &:link, &:visited, &:hover{
+    color: black;
+  }
 }
 
-a:link {
-  color: black;
-}
-
-a:visited {
-  color: black;
-}
-
-a:hover {
-  color: black;
-}
+//util
 
 .hide {
   display: none;
@@ -44,6 +37,7 @@ a:hover {
 //bundle
 
 #bundle() {
+
   .bordered {
     border-radius: 3px;
     border-bottom: 1px solid #2a42ac44;
@@ -51,17 +45,20 @@ a:hover {
     margin: 0 30px;
     padding: 10px;
   }
+
   .centered-contents {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
   }
+
   .labeled {
     display: block;
     font-weight: 700;
     font-size: 20px;
   }
+
   .styledInput {
     width: 100%;
     padding: 9px 15px;
@@ -75,6 +72,7 @@ a:hover {
     color: #444;
     font-size: 18px;
   }
+
   .styledbutton {
     padding: 3% 10%;
     margin: 10px;
@@ -83,6 +81,7 @@ a:hover {
     border-style: none;
     color: #fff;
   }
+
   .styledHoveredButton {
     padding: 3% 10%;
     margin: 10px;
@@ -110,8 +109,8 @@ a:hover {
 }
 
 .center-container {
-  width: 50%;
   background-color: #fff;
+  padding: 30px;
   #bundle.bordered();
   #bundle.centered-contents();
 }
