@@ -11,14 +11,14 @@ module.exports = passport => {
       },
       async (email, password, done) => {
         try {
-          const exUser = await User.findOne({ email });
-          if (exUser) {
+          const existingUser = await User.findOne({ email });
+          if (existingUser) {
             const isCorrectPassword = await bcrypt.compare(
               password,
-              exUser.password
+              existingUser.password
             );
             if (isCorrectPassword) {
-              done(null, exUser);
+              done(null, existingUser);
             } else {
               done(null, false, { message: 'It is incorrected password' });
             }
