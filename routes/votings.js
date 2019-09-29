@@ -31,13 +31,13 @@ router.get('/new', (req, res, next) => {
 
 router.post('/new', async (req, res, next) => {
   const options = req.body.option;
-  const items = [];
-  options.forEach(option => {
-    items.push({
+  const items = options.map(option => {
+    return {
       text: option,
       voters: []
-    });
+    };
   });
+
   try {
     await Voting.create({
       title: req.body.title,
