@@ -16,7 +16,7 @@ module.exports = {
       2
     ],
     "semi": [
-      "error",
+      "error"
     ],
     "no-trailing-spaces": 0,
     "keyword-spacing": 0,

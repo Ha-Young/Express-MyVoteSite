@@ -19,12 +19,13 @@ exports.isDeleted = async function(req, res, next) {
 exports.isVoted = async function(req, res, next) {
   try {
     const { vote } = res.locals;
-    const voted = vote.options.find(option => option.count.includes(req.user._id) === true);
-    const totalContributors = vote.options.reduce((a, option) => { return a + option.count.length; }, 0);
+    console.log(req.user);
+    const voted = vote.options.find(option => option.voting_users.includes(req.user._id) === true);
+    const totalContributors = vote.options.reduce((a, option) => { return a + option.voting_users.length; }, 0);
     const now = new Date();
     const isInProgress = vote.end_date > now;
     const isCreator = req.user._id.toString() === vote.creator_id._id.toString();
-    const counts = vote.options.map(option => option.count);
+    const counts = vote.options.map(option => option.voting_users);
 
     res.locals = {
       vote: vote,

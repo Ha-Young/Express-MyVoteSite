@@ -23,7 +23,7 @@ const voteSchema = new mongoose.Schema(
         trim: true,
         required: true
       },
-      count: [{
+      voting_users: [{
         type: ObjectId,
         ref: 'User'
       }]

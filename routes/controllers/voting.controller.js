@@ -2,7 +2,7 @@ const Vote = require('../../models/Vote');
 const dateFormat = require('dateformat');
 const { failedToCreate, invalidOption } = require('../../constants/err-messages');
 
-exports.getAll = async function(req, res, next) {
+exports.getAllVoteById = async function(req, res, next) {
   try {
     const votes = await Vote.find({ creator_id: req.user._id });
     const now = new Date();
@@ -60,7 +60,7 @@ exports.update = async function(req, res, next) {
       return next(invalidOption);
     }
 
-    selectedOption.count.push(req.user._id);
+    selectedOption.voting_users.push(req.user._id);
     await vote.save();
 
     res.redirect(`/votings/${req.params.id}`);

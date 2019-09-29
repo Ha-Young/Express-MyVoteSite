@@ -7,7 +7,7 @@ const vote = require('./middlewares/vote-validation');
 router.get(
   '/',
   ensureLoggedIn,
-  votingController.getAll
+  votingController.getAllVoteById
 );
 
 router.get(
