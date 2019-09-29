@@ -55,7 +55,7 @@ exports.registerForm = (req, res) => {
 };
 
 exports.validateRegister = (req, res, next) => {
-  req.sanitizeBody('title');
+  req.sanitizeBody('name');
   req.checkBody('name', 'name을 입력해주세요.').notEmpty();
   req.checkBody('email', 'Email 형식이 아닙니다.').isEmail();
   req.checkBody('password', 'Password을 입력해주세요.').notEmpty();
