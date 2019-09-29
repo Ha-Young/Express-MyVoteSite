@@ -20,12 +20,11 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', console.log.bind(console, 'connected'));
 
-
-const expire = 3600000 * 7 * 24;
 const app = express();
 const index = require('./routes/index');
 const auth = require('./routes/auth');
 const votings = require('./routes/votings');
+const { EXPIRE } = require('./constants');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -42,7 +41,7 @@ app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: expire }
+  cookie: { maxAge: EXPIRE }
 }));
 require('./config/passport')(passport);
 app.use(flash());

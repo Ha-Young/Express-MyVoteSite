@@ -36,9 +36,9 @@ module.exports = function(passport) {
         const user = await User.findOne({ email: email });
 
         if (user) {
-          const result = await bcrypt.compare(password, user.password);
+          const match = await bcrypt.compare(password, user.password);
 
-          return result ?
+          return match ?
             done(null, user) :
             done(null, false, { message: incorrectPassword });
         }
