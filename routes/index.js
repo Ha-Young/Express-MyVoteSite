@@ -9,9 +9,11 @@ router.get('/', isLoggedIn, async (req, res, next) => {
   const editedVotings = await Promise.all(
     await votings.map(async voting => {
       const creatorUserId = voting.creator;
-      const editedVoting = JSON.parse(JSON.stringify(voting._doc));
-      await switchIdToName(creatorUserId, editedVoting);
-      await addIsOnProgressPropertyTo(editedVoting, voting);
+      const parsedVoting = JSON.parse(JSON.stringify(voting._doc));
+
+      await switchIdToName(creatorUserId, parsedVoting);
+      await addIsOnProgressPropertyTo(parsedVoting, voting);
+
       return editedVoting;
     })
   );
