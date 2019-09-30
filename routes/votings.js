@@ -6,8 +6,8 @@ const renderMessage = require('../utils/renderMessage');
 
 router.get('/', authCheck, async (req, res, next) => {
   const votings = await Voting.find();
-  const allVotings = await Promise.all(votings.map(async (voting) => {
-    if (JSON.stringify(req.session.userId) === JSON.stringify(voting.creator_id)) {
+  const allVotings = await Promise.all(votings.map(async voting => {
+    if (toString(req.session.userId) === toString(voting.creator_id)) {
       const user = await User.findOne({ _id: voting.creator_id });
       const current = new Date();
       let status = 'Open';

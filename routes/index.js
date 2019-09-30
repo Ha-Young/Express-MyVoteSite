@@ -8,14 +8,13 @@ router.get('/', authCheck, async (req, res, next) => {
   const votings = await Voting.find().lean();
   const allVotings = await Promise.all(votings.map(async voting => {
     const user = await User.findOne({ _id: voting.creator_id });
-    const userName = user.email;
     const current = new Date();
     let status = 'Open';
     if (current > voting.expireDate) status = 'Closed';
 
     return {
       _id: voting._id,
-      creator: userName,
+      creator: user.email,
       title: voting.title,
       expire: voting.expireDate,
       status
