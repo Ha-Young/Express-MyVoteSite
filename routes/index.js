@@ -9,14 +9,14 @@ const format = require('date-fns/format');
 /* GET home page. */
 router.get('/', isLoggedIn, async (req, res, next) => {
   try {
-    let votings = JSON.parse(JSON.stringify(await Voting.find()));
+    const votings = JSON.parse(JSON.stringify(await Voting.find()));
     const users = JSON.parse(JSON.stringify(await User.find()));
 
-    votings = votings.map(voting => {
-      const creator = users.find(user => voting.created_by_id === user._id);
+    const votingArr = votings.map(voting => {
+      const author = users.find(user => voting.created_by_id === user._id);
       return {
-        ...voting,
-        creator: creator.nickname,
+        ...votes,
+        author: author.nickname,
         completeDate: format(
           new Date(voting.complete_at),
           'yyyy년 MM월 dd일 hh시 mm분',
@@ -26,7 +26,7 @@ router.get('/', isLoggedIn, async (req, res, next) => {
     });
 
     res.render('index', {
-      votings,
+      votingArr,
       todayDate: new Date().toISOString()
     });
   } catch (error) {

@@ -20,11 +20,11 @@
     </div>
     <div class='voting-body'>
       <ul class='votings-list'>
-        <% votings.forEach((voting) => { %>
+        <% votingArr.forEach((voting) => { %>
           <li class='voting-list'>
             <div class='voting-title-div'><%= voting.title %></div>
             <div class="votings-description">
-              작성자: <%= voting.creator %></br>
+              작성자: <%= voting.author %></br>
               완료예정일: <%= voting.completeDate %></br>
               <% if(todayDate > voting.complete_at ){ %>
                 <span>마감</span>
