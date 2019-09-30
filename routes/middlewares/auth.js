@@ -1,6 +1,6 @@
 const session = require('express-session');
 
-exports.setSession = (app) => {
+exports.setSession = app => {
   app.use(session({
     secret: process.env.SECRETE,
     resave: false,

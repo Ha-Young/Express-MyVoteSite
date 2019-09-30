@@ -13,28 +13,25 @@
       </div>
     <div id='voting-list'>
     </div>
-  </body>
-  <script>
-    var allVotings = <%-JSON.stringify(allVotings)%>;
-    var el = document.getElementById('voting-list');
+    <script>
+      var allVotings = <%-JSON.stringify(allVotings)%>;
+      var el = document.getElementById('voting-list');
+      if (allVotings) {
+        for (var i = 0; i < allVotings.length; i++) {
+          var newHtml = "<div class='voting-list-content' onclick='location.href=" + "%link%" +
+          "'><div class='voting-list-title'>%title%</div><div class='voting-list-status'>%status%</div><div class='voting-list-creator'>%creator%</div><div class='voting-list-expire'>%expire%</div></div>";
 
-    for (var i = 0; i < allVotings.length; i++) {
-      if (allVotings[i]) {
-        var newHtml = "<div class='voting-list-content' onclick='location.href=" + "%link%" +
-        "'><div class='voting-list-title'>%title%</div><div class='voting-list-status'>%status%</div><div class='voting-list-creator'>%creator%</div><div class='voting-list-expire'>%expire%</div></div>";
+          newHtml = newHtml.replace('%link%', '"/votings/' + allVotings[i]._id + '"');
+          newHtml = newHtml.replace('%title%', allVotings[i].title);
+          newHtml = newHtml.replace('%status%', allVotings[i].status);
+          newHtml = newHtml.replace('%creator%', allVotings[i].creator);
+          newHtml = newHtml.replace('%expire%', allVotings[i].expire);
 
-        newHtml = newHtml.replace('%link%', '"/votings/' + allVotings[i]._id + '"');
-        newHtml = newHtml.replace('%title%', allVotings[i].title);
-        newHtml = newHtml.replace('%status%', allVotings[i].status);
-        newHtml = newHtml.replace('%creator%', allVotings[i].creator);
-        newHtml = newHtml.replace('%expire%', allVotings[i].expire);
-
-        el.insertAdjacentHTML('beforeEnd', newHtml);
+          el.insertAdjacentHTML('beforeEnd', newHtml);
+        }
       }
-    }
-
-
   </script>
+  </body>
 </html>
 
 

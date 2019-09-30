@@ -2,20 +2,20 @@ const router = require('express').Router();
 const { authCheck } = require('./middlewares/auth');
 const Voting = require('../models/Voting');
 const User = require('../models/User');
+const renderMessage = require('../utils/renderMessage');
 
 router.get('/', authCheck, async (req, res, next) => {
   const votings = await Voting.find();
   const allVotings = await Promise.all(votings.map(async (voting) => {
     if (JSON.stringify(req.session.userId) === JSON.stringify(voting.creator_id)) {
       const user = await User.findOne({ _id: voting.creator_id });
-      const userName = user.email;
       const current = new Date();
       let status = 'Open';
       if (current > voting.expireDate) status = 'Closed';
 
       return {
         _id: voting._id,
-        creator: userName,
+        creator: user.email,
         title: voting.title,
         expire: voting.expireDate,
         status
@@ -32,25 +32,13 @@ router.get('/new', authCheck, (req, res, next) => {
 
 router.post('/new', authCheck, async (req, res, next) => {
   if (!req.body.title) {
-    res.render('votings/new', {
-      title: 'A New Voting',
-      message: 'Please input title'
-    });
+    renderMessage.votings(res, 'Please input title');
   } else if (!req.body.description) {
-    res.render('votings/new', {
-      title: 'A New Voting',
-      message: 'Please input description'
-    });
+    renderMessage.votings(res, 'Please input description');
   } else if (!req.body.duration) {
-    res.render('votings/new', {
-      title: 'A New Voting',
-      message: 'Please input voting hours'
-    });
+    renderMessage.votings(res, 'Please input voting hours');
   } else if (!req.body.options || req.body.options.length < 1) {
-    res.render('votings/new', {
-      title: 'A New Voting',
-      message: 'You need at least two options'
-    });
+    renderMessage.votings(res, 'You need at least two options');
   } else {
     let expireDate = new Date();
     expireDate.setDate(expireDate.getDate() + req.body.duration);

@@ -2,10 +2,11 @@ const router = require('express').Router();
 const { authCheck, saveSession } = require('./middlewares/auth');
 const User = require('../models/User');
 const Voting = require('../models/Voting');
+const renderMessage = require('../utils/renderMessage');
 
 router.get('/', authCheck, async (req, res, next) => {
-  const votings = await Voting.find();
-  const allVotings = await Promise.all(votings.map(async (voting) => {
+  const votings = await Voting.find().lean();
+  const allVotings = await Promise.all(votings.map(async voting => {
     const user = await User.findOne({ _id: voting.creator_id });
     const userName = user.email;
     const current = new Date();
@@ -25,10 +26,7 @@ router.get('/', authCheck, async (req, res, next) => {
 });
 
 router.get('/login', (req, res, next) => {
-  res.render('login', {
-    title: 'Welcome to Vote',
-    message: ''
-  });
+  renderMessage.login(res, '');
 });
 
 router.post('/login', (req, res, next) => {
@@ -37,10 +35,7 @@ router.post('/login', (req, res, next) => {
       req.body.password,
       (err, user) => {
         if (err) {
-          res.render('login', {
-            title: 'Welcome to Vote',
-            message: 'Invalid email or password'
-          });
+          renderMessage.login(res, 'Invalid email or password');
         } else {
           saveSession(err, user, req, res, next);
           res.redirect('/');

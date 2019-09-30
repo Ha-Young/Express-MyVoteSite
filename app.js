@@ -16,8 +16,8 @@ mongoose.connect('mongodb://localhost/app', {
   useNewUrlParser: true,
 });
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() { console.log('connected') });
+db.on('error', () => console.log('connection error:'));
+db.once('open', () => console.log('connected'));
 
 app.set('views', 'views');
 app.set('view engine', 'ejs');

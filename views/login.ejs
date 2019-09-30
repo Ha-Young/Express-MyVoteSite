@@ -21,13 +21,13 @@
         </div>
       </div>
     </div>
+    <script>
+      var message = '<%= message %>';
+      if (message !== '') {
+        var el = document.getElementById('smallbox-message');
+        el.textContent = message;
+        el.style.visibility = 'visible';
+      }
+    </script>
   </body>
-  <script>
-    var message = '<%= message %>';
-    if (message !== '') {
-      var el = document.getElementById('smallbox-message');
-      el.textContent = message;
-      el.style.visibility = 'visible';
-    }
-  </script>
 </html>

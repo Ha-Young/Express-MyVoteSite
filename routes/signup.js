@@ -2,35 +2,24 @@ const router = require('express').Router();
 const { saveSession } = require('./middlewares/auth');
 const email = require('email-validator');
 const User = require('../models/User');
+const renderMessage = require('../utils/renderMessage');
 
 router.get('/', (req, res, next) => {
-  res.render('signup/signup', {
-    title: 'Please Signup to Vote',
-    message: ''
-  });
+  renderMessage.signup(res, '');
 });
 
 router.post('/', async (req, res, next) => {
   try {
     if (!email.validate(req.body.email)) {
-      res.render('signup/signup', {
-        title: 'Please Signup to Vote',
-        message: 'Invalid email'
-      });
+      renderMessage.signup(res, 'Invalid email');
     }
     if (req.body.password !== req.body.confirmPassword) {
-      res.render('signup/signup', {
-        title: 'Please Signup to Vote',
-        message: 'Invalid password'
-      });
+      renderMessage.signup(res, 'Invalid password');
     }
 
     const user = await User.findOne({ email: req.body.email });
     if (user) {
-      res.render('signup/signup', {
-        title: 'Please Signup to Vote',
-        message: 'Email already exists'
-      });
+      renderMessage.signup(res, 'Email already exists');
     } else {
       const newUser = new User({
         email: req.body.email,

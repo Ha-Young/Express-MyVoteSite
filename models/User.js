@@ -28,21 +28,25 @@ UserSchema.pre('save', function (next) {
   });
 });
 
-UserSchema.statics.authenticate = (email, password, callback) => {
-  User.findOne({ email: email }).exec((err, user) => {
+UserSchema.statics.authenticate = async (email, password, callback) => {
+  try {
     const returnErr = () => {
       let err = new Error('Invalid email or password');
       err.status = 401;
       return err;
     }
-    if (err) return callback(err);
-    if (!user) return callback(returnErr);
-
-    bcrypt.compare(password, user.password, (err, result) => {
-      if (result === true) return callback(null, user);
-      else return callback(returnErr);
-    });
-  });
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      throw err;
+    } else {
+      bcrypt.compare(password, user.password, (err, same) => {
+        if (same) return callback(null, user);
+        else return callback(returnErr);
+      });
+    }
+  } catch(err) {
+    callback(err);
+  }
 };
 
 const User = mongoose.model('User', UserSchema);
