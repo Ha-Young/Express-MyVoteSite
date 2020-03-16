@@ -1,0 +1,17 @@
+extends layouts/main
+
+block content
+    .signup-container
+        .form-box
+            .signup-title 회원가입
+            form(action="/signup" method="post")
+                .id-input-box
+                    input(type="email" name="email" placeholder="이메일" required=true value="q@q.q")
+                .pw-input-box
+                    input(type="password" name="password" placeholder="비밀번호" required=true value="qqqqqqqq")
+                .pw-input-box
+                    input(type="password" name="password2" placeholder="비밀번호 확인" required=true value="qqqqqqqq")
+                .name-input-box
+                    input(type="text" name="name" placeholder="이름" required=true value="qq")
+                .signup-button-input-box
+                    input(type="submit" value="가입하기")
