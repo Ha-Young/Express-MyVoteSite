@@ -1,9 +1,9 @@
 require('dotenv').config();
 
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const path = require('path');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -12,6 +12,7 @@ const homeRouter = require('./routes/home');
 const signupRouter = require('./routes/signup');
 const loginRouter = require('./routes/login');
 const usersRouter = require('./routes/users');
+
 const errors = require('./lib/errors');
 
 const app = express();
@@ -46,7 +47,7 @@ app.use('/users', usersRouter);
 
 // 이상한 url일 때 대응해주는 에러
 app.use((req, res, next) => {
-  next(new errors.InvalidUrl('Invalid url.'));
+  next(new errors.InvalidUrlError('Invalid url.'));
 });
 
 
@@ -58,7 +59,7 @@ app.use((req, res, next) => {
 // error handler
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
-  res.locals.message = err.message;
+  res.locals.message = err.displayMessage;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page

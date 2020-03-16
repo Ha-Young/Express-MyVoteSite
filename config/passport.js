@@ -6,18 +6,19 @@ const User = require('../models/Users');
 passport.use(new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password'
-}, async (username, password, done) => {
+}, async (email, password, done) => {
     try {
-      const user = await User.findOne({ email: username });
+      const user = await User.findOne({ email });
 
       if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false, 'Invalid email address.');
       }
 
       const { password: hashedPassword } = user;
       const isPasswordValid = await user.validatePassword(password, hashedPassword);
+
       if (!isPasswordValid) {
-        return done(null, false, { message: 'Incorrect password.' });
+        return done(null, false, 'Invalid password.');
       }
 
       return done(null, user);
