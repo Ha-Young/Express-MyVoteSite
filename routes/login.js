@@ -9,9 +9,6 @@ router.get('/', (req, res, next) => res.render('login'));
 
 router.post('/', (req, res, next) => {
   passport.authenticate('local', (err, validUser, authFailureMessage) => {
-    // console.log('err', err)
-    // console.log('validUser', validUser)
-    // console.log('authFailureMessage', authFailureMessage);
     if (err) {
       return next(new errors.GeneralError(err.message));
     }
