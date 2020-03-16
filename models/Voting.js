@@ -9,7 +9,7 @@ const votingSchema = new mongoose.Schema({
     type: mongoose.ObjectId,
     ref: 'User',
   },
-  expirationDate: {
+  expiration_date: {
     type: Date,
     required: true,
   },
