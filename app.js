@@ -1,21 +1,48 @@
 require('dotenv').config();
 
-const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const passport = require('passport');
 const mongoose = require('mongoose');
-
-const {
-  DB_URL,
-} = process.env;
+const MongoDBStore = require('connect-mongodb-session')(session);
+const createError = require('http-errors');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
 
 const app = express();
 
-mongoose.connect(DB_URL, {
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+const store = new MongoDBStore({
+  uri: process.env.DB_SESSION_URL,
+  collection: 'mySessions',
+});
+ 
+store.on('error', (error) => console.log('MongoDB session store error: ', error));
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  cookie: {
+    maxAge: 1000 * 60 * 60,
+  },
+  store,
+  resave: true,
+  saveUninitialized: true,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+mongoose.connect(process.env.DB_URL, {
   useNewUrlParser: true,
   useFindAndModify: false,
   useCreateIndex: true,
@@ -25,16 +52,6 @@ mongoose.connect(DB_URL, {
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => console.log('Connected to Mongo database..'));
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
 app.use('/', index);
 app.use('/users', users);
