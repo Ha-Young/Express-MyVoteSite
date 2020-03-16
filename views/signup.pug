@@ -1,12 +1,13 @@
 extends layout
 
 block content
-  h1 signup page
-
-   form.register-form
-        <input type="text" placeholder="name"/>
-        <input type="password" placeholder="password"/>
-        <input type="text" placeholder="email address"/>
-        <button>create</button>
-        <p class="message">Already registered? <a href="#">Sign In</a></p>
-      </form>
+  h1.register-title signup page
+  div.register-page
+    div.form
+      form.register-form
+        input(type="text" placeholder="name")
+        input(type="password" placeholder="password")
+        input(type="text" placeholder="email address")
+        button create
+        p.message Already registered? 
+          a.anchor(href="/login") Sign In

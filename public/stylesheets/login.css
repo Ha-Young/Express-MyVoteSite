@@ -1,7 +1,7 @@
-.login-title {
+.login-title, .register-title {
   text-align: center;
 }
-.login-page {
+.login-page, .register-page {
   width: 360px;
   padding: 8% 0 0;
   margin: auto;
@@ -42,6 +42,6 @@
   cursor: pointer;
 }
 
-.anchor-signup{
+.anchor{
   color:gray;
 }
