@@ -5,9 +5,9 @@
 	width: 980px;
   margin: auto;
 }
-.row {
+.layout-column {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 .buttons-wrap {
   margin-top: 21px;
@@ -26,13 +26,23 @@
   text-align: center;
   display: block;
   font-size: 16px;
+  border-radius: 4px;
   border: 1px solid #215ca0;
   background-color: #fff;
-  border-radius: 4px;
   color: #215ca0;
   line-height: 27px;
   padding: 0 10px;
   text-transform: uppercase;
+}
+.button:hover {
+  transition: all 0.3s;
+  background-color: #215ca0;
+  color: #fff;
+}
+.button.danger {
+  border: 0px;
+  background-color: #d45858;
+  color: #fff;
 }
 .box {
   background-color: #fff;
@@ -89,4 +99,46 @@ h2 {
 }
 .voting-detail fieldset p label {
   font-size: 16px;
+}
+
+/*
+  login
+*/
+.login {
+  height: 100%;
+  display: flex;
+}
+.login-box {
+  display: flex;
+  align-self: center;
+  margin: 0 auto;
+  min-width: 60%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 4px;
+}
+.login-box h3 {
+  font-size: 20px;
+  margin-bottom: 21px;
+}
+.login-box form {
+  margin-top: auto;
+}
+.login-box form p:first-child {
+  margin-bottom: 15px;
+}
+.login-box form label, .login-box form input {
+  display: block;
+}
+.login-box form label {
+  font-size: 16px;
+}
+.login-box form input {
+  width: 100%;
+  font-size: 16px;
+  padding: 0 10px;
+  line-height: 30px;
+  height: 30px;
+  border-radius: 4px;
+  border: 1px solid #ebebeb;
 }

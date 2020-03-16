@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <%- include('partial/head') -%>
+  <body>
+    <div class="container login">
+      <section class="login-box layout-column">
+        <h3>LOGIN</h3>
+        <form action="/login" method="POST">
+          <p>
+            <label for="email">EMAIL</label>
+            <input type="email" id="email" name="email" value="" />
+          </p>
+          <p>
+            <label for="password">PASSWORD</label>
+            <input type="password" id="password" name="password" value="" />
+          </p>
+          <div class="buttons-wrap">
+            <input type="submit" class="button" value="LOGIN" />
+            <a href="/" class="button danger">GO BACK</a>
+          </div>
+          <div class="buttons-wrap">
+            <a href="/signup" class="button">Register</a>
+          </div>
+        </form>
+      </section>
+    </div>
+    <%- include('partial/scripts') -%>
+  </body>
+</html>
