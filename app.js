@@ -3,13 +3,12 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import createError from 'http-errors';
-
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+import rootRouter from './routers/rootRouter';
+import authRouter from './routers/authRouter';
+import votingRouter from './routers/votingRouter';
 
 const app = express();
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -19,8 +18,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', rootRouter);
+app.use('/auth', authRouter);
+app.use('/votings', votingRouter);
+
 
 app.use((req, res, next) => {
   next(createError(404));
@@ -34,4 +35,4 @@ app.use((err, req, res) => {
   res.render('error');
 });
 
-export default app;
+module.exports = app;
