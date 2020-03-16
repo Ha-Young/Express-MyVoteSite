@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-  res.render('login', { title: 'voting-app' });
+  res.render('login', { style: 'login' ,title: 'voting-app' });
 });
 
 router.get('/signup', function(req, res, next) {

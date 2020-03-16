@@ -16,9 +16,14 @@ main{
   background-color: #333333;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.header > ul{
+  display: flex;
+  flex-direction: row;
   justify-content: flex-end;
 }
-
 
 .header > li ,a{
   display: block;
@@ -27,6 +32,17 @@ main{
   padding: 8px;
   text-decoration: none;
 }
+.icon{
+  width:30px;
+}
+
+.icon > img{
+  margin-bottom: 0;
+  margin-left: 20px;
+  width:50px;
+  background-color: whitesmoke;
+}
+
 
 .vote {
   border: solid 1px black;

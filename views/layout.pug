@@ -3,6 +3,9 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    case style
+      when 'login'
+        link(rel='stylesheet',href='stylesheets/login.css')
   body
     include header
     block content
