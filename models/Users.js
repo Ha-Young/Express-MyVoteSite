@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcyrpt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 
@@ -47,5 +48,10 @@ const UserSchema = new Schema({
     ref: 'Votes'
   }]
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
+
+UserSchema.methods.validatePassword = async (password, hashedPassword) => {
+  console.log('inside', await bcyrpt.compare(password, hashedPassword));
+  return await bcyrpt.compare(password, hashedPassword);
+};
 
 module.exports = mongoose.model('User', UserSchema);
