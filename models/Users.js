@@ -45,7 +45,7 @@ const UserSchema = new Schema({
     type: mongoose.Types.ObjectId,
     ref: 'Votes'
   }],
-  voted_voted: [{
+  votes_voted: [{
     type: mongoose.Types.ObjectId,
     ref: 'Votes'
   }]

@@ -1,0 +1,21 @@
+.sidebar {
+  background-color: lightblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5vh 0;
+  height: 90vh;
+  width: 30vw;
+}
+
+.profile-image {
+  height: 10rem;
+  width: 10rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
