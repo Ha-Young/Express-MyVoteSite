@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    link(rel="stylesheet", href="/stylesheets/signup.css")
+  body
+    nav
+      ul
+        li 
+          button Vote
+        li 
+          button New vote
+        li 
+          button My vote
+        li 
+          button login
+    main
+      h1 New User Sinup
+      form(action="" method="post" id="myForm")
+        input(id="email" type="text" name="email" placeholder="email")
+        p Email must be a valid addres ex) yoyoyo@google.com
+
+        input(id="password" type="password" name="password" placeholder="password")
+        p Password must be alphanumeric, and be 8 - 20 characters 
+
+        input(id="confirmPassword" type="text" name="confirmPassword" placeholder="confirm your password")
+        p You must put the same password
+        button(type="submit" class="submitButton") Sing up
+    script(src="/javascripts/signup.js" type="module")

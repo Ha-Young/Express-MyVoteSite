@@ -2,13 +2,15 @@ require('dotenv').config();
 const createError = require('http-errors')
 const express = require('express');
 const path = require('path');
+// const bodyParser = require('body-parser');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const signupRouter = require('./routes/signup');
 const mongoose = require('mongoose');
 
 mongoose.connect(
   process.env.DB_URI, 
-  { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }, 
+  { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true }, 
   () => {
     console.log('connected to mongodb');
   }
@@ -26,10 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
-
-
-
+app.use('/signup', signupRouter);
 
 
 
