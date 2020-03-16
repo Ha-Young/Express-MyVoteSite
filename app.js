@@ -3,10 +3,16 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const sassMiddleware = require('node-sass-middleware');
+const passport = require('passport');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const sassMiddleware = require('node-sass-middleware');
 
+const setLocals = require('./configs/setLocal');
+const passportConfig = require('./configs/passport');
 const indexRouter = require('./routes/index');
+const votingRouter = require('./routes/votings');
 
 const app = express();
 
@@ -25,6 +31,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 app.use(
   sassMiddleware({
     src: path.join(__dirname, 'public'),
@@ -34,8 +41,24 @@ app.use(
   })
 );
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  session({
+    secret: 'qwer',
+    resave: false,
+    saveUninitialized: true,
+    store: new MongoStore({
+      url: 'mongodb://localhost/voting-platform',
+      collection: 'sessions'
+    })
+  })
+);
+app.use(passportConfig);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(setLocals);
 
 app.use('/', indexRouter);
+app.use('/votings', votingRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

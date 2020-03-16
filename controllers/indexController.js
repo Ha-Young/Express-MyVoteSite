@@ -1,3 +1,4 @@
+const passport = require('passport');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const createError = require('http-errors');
@@ -7,12 +8,20 @@ const indexController = {
     res.render('index');
   },
 
+  getMyVotings: (req, res, next) => {
+    res.render('myVotings');
+  },
+
   getLogin: (req, res, next) => {
     res.render('login');
   },
 
-  postLogin: (req, res, next) => {
-    res.render('index');
+  postLogin: passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login' }),
+
+  getLogout: (req, res, next) => {
+    req.logout();
+    req.session.destroy();
+    res.redirect('/');
   },
 
   getSignup: (req, res, next) => {

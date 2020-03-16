@@ -58,23 +58,43 @@ table {
     font-weight: bold;
     font-size: 15px; }
   .header .header_box {
-    margin-left: 30px; }
-  .header .login-box {
-    font-size: 13px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #27b06e;
-    position: absolute;
-    right: 30px;
-    padding: 10px 20px;
-    border-radius: 2px;
-    color: #f9f9f9;
-    font-weight: bold; }
+    margin-left: 20px; }
+    .header .header_box a:not(:first-child) {
+      margin-left: 20px; }
+    .header .header_box .menu-list {
+      text-align: center;
+      min-width: 100px;
+      padding: 10px 5px; }
+    .header .header_box .menu-list:hover {
+      background-color: rgba(0, 0, 0, 0.05); }
+  .header .header-right-boxs {
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    margin-left: auto; }
+    .header .header-right-boxs .user-name-box {
+      margin-right: 10px;
+      font-size: 20px;
+      font-weight: bold; }
+    .header .header-right-boxs .login-box {
+      width: 80px;
+      font-size: 13px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #27b06e;
+      padding: 10px 0px;
+      border-radius: 2px;
+      color: #f9f9f9;
+      font-weight: bold;
+      margin-right: 30px; }
 
 .login-container {
   width: 100%;
-  min-height: 70%;
+  min-height: 80%;
   display: flex;
   justify-content: center;
   align-items: center; }
@@ -158,7 +178,7 @@ table {
 
 .signup-container {
   width: 100%;
-  min-height: 70%;
+  min-height: 80%;
   display: flex;
   justify-content: center;
   align-items: center; }

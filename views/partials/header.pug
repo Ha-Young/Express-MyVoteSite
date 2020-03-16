@@ -1,5 +1,16 @@
 header.header
     .header_box
         a(href="/").title Voting Platform
-    a(href="/login").login-box LOGIN
-    
+        a(href="/").menu-list
+            .menu Votings
+        a(href="/my-votings").menu-list
+            .menu My Votings
+        a(href="/votings/new").menu-list
+            .menu Open Voting
+    if loggedUser
+        .header-right-boxs
+            .user-name-box=loggedUser.name
+            a(href="/logout").login-box LOGOUT
+    else
+        .header-right-boxs
+            a(href="/login").login-box LOGIN
