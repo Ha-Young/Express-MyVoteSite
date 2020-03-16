@@ -1,8 +1,19 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 10px;
+  padding: 2vh 2vw;
+  margin: 0;
+  height: 96vh;
+  width: 96vw;
+  display: flex;
+  align-items: center;
+  font-family: 'Baloo 2', cursive;
 }
 
 a {
+  color: #00B7FF;
+  text-decoration: none;
+}
+
+a:visited, a:active {
   color: #00B7FF;
 }

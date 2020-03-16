@@ -1,0 +1,28 @@
+.signup {
+  border: 1px solid black;
+  text-align: center;
+  width: 50vw;
+  margin: 0 auto;
+  font-size: 1.3rem;
+}
+
+.signup-form {
+  padding: 1rem;
+}
+
+.signup-form > h1 {
+  margin: 0;
+}
+
+.signup-field {
+  margin: 1rem 0;
+}
+
+.signup-field > input {
+  margin-left: 1rem;
+}
+
+.login {
+  border: 1px solid blue;
+  font-size: 1rem;
+}

@@ -1,0 +1,36 @@
+extends layout
+
+block styles
+  link(rel="stylesheet", href="/stylesheets/signup.css")
+
+block content
+  .signup
+    form.signup-form(action="/signup" method="POST")
+      h1 Sign up
+      .signup-field
+        label(for="username" ) username:
+        input(type="text" name="username" id="username" required)
+      .signup-field
+        label(for="firstname") firstname:
+        input(type="text" name="firstname" id="firstname" required)
+      .signup-field
+        label(for="lastname") lastname:
+        input(type="text" name="lastname" id="lastname" required)
+      .signup-field
+        label(for="email") email:
+        input(type="email" name="email" id="email" required)
+      .signup-field
+        label(for="password") password:
+        input(type="password" name="password" id="password" required)
+      .signup-field
+        label(for="confirm_password") confirm password:
+        input(type="password" name="confirm_password" id="confirm_password" required)
+      .signup-field
+        label(for="gender") gender:
+        select(name="gender" id="gender-select")
+          option(value="male") male
+          option(value="female") female
+          option(value="etc.") etc.
+      input(type="submit" value="CREATE ACCOUNT")
+    .login Already have an account?
+      a(href="/login") LOGIN

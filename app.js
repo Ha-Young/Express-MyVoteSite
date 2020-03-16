@@ -8,7 +8,8 @@ const morgan = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
-const indexRouter = require('./routes/index');
+const homeRouter = require('./routes/home');
+const signupRouter = require('./routes/signup');
 const usersRouter = require('./routes/users');
 
 const app = express();
@@ -31,7 +32,8 @@ app.use(session({
   store: new MongoStore({ url: process.env.MONGODB_URI })
 }));
 
-app.use('/', indexRouter);
+app.use('/', homeRouter);
+app.use('/signup', signupRouter);
 app.use('/users', usersRouter);
 
 // 이상한 url일 때 대응해주는 에러

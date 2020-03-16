@@ -23,6 +23,7 @@ const UserSchema = new Schema({
   },
   email : {
     type: String,
+    minlength: 10,
     lowercase: true,
     unique: true,
     required: [ true, 'email can\'t be blank.' ],
