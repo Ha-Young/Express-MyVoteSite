@@ -4,6 +4,8 @@ const path = require('path');
 const logger = require('morgan');
 const session = require('express-session');
 const index = require('./routes/index');
+const signup = require('./routes/signup');
+const login = require('./routes/login');
 const users = require('./routes/users');
 const mongoose = require('mongoose');
 const db = mongoose.connection;
@@ -25,19 +27,21 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET_KEY,
-    resave: false,
-    saveUninitialized: true
-  })
-);
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET_KEY,
+//     resave: false,
+//     saveUninitialized: true
+//   })
+// );
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/signup', signup);
+app.use('/login', login);
 
 app.use(function(req, res, next) {
   next(createError(404));

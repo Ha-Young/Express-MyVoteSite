@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  link(rel='stylesheet', href='/stylesheets/signup.css')
+  form(class="signup-form" action="/signup", method="post")
+    h1(class="signup-title") Sign Up
+    div
+      label 이메일
+      input(type="text", name="email")
+    if (emailError)
+      p(class="error-message") #{emailError}.
+    div
+      label 닉네임
+      input(type="text", name="nickname")
+    if (nicknameError)
+      p(class="error-message") #{nicknameError}.
+    div
+      label 비밀번호
+      input(type="password", name="password")
+    div
+      label 비밀번호 확인
+      input(type="password", name="confirm")
+    if (passwordError)
+      p(class="error-message") #{passwordError}.
+    button(type="submit") Register
+    if (result)
+      p(class="success-message") 가입성공!!
+  script(src="/javascripts/signup.js")
+    

@@ -1,0 +1,55 @@
+form {
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+  width: 400px;
+  height: 550px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+form button {
+  margin-top: 10px;
+  width: 300px;
+  height: 30px;
+  border: 0;
+  border-radius: 5px;
+  background-color: rgb(26, 170, 85);
+  cursor: pointer;
+  color: #fff;
+}
+
+form button:hover {
+  margin-top: 10px;
+  width: 300px;
+  height: 30px;
+  border: 0;
+  border-radius: 5px;
+  background-color: rgb(22, 143, 72);
+  cursor: pointer;
+  color: #fff;
+}
+
+form label {
+  display: block;
+}
+
+form div {
+  margin: 30px 0;
+}
+
+input {
+  width: 300px;
+  height: 30px;
+  border-radius: 5px;
+  border: 0;
+  border: 1px solid rgb(219, 219, 219);
+}
+
+.signup-title {
+  font-size: 40px;
+}
+
+.error-message {
+  color: red;
+  margin: -28px 0;
+}
