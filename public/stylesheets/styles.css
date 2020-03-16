@@ -5,6 +5,9 @@
 	width: 980px;
   margin: auto;
 }
+.layout-row {
+  display: flex;
+}
 .layout-column {
   display: flex;
   flex-direction: column;
@@ -28,16 +31,16 @@
   font-size: 16px;
   border-radius: 4px;
   border: 1px solid #215ca0;
-  background-color: #fff;
-  color: #215ca0;
-  line-height: 27px;
+  background-color: #215ca0;
+  color: #fff;
+  line-height: 32px;
   padding: 0 10px;
   text-transform: uppercase;
 }
 .button:hover {
   transition: all 0.3s;
-  background-color: #215ca0;
-  color: #fff;
+  background-color: #fff;
+  color: #215ca0;
 }
 .button.danger {
   border: 0px;
@@ -49,6 +52,9 @@
   border-radius: 4px;
   border: 1px solid #215ca0;
   padding: 15px;
+}
+.sub-text {
+  color: #999;
 }
 /*
   header
@@ -69,7 +75,9 @@ h2 {
   font-size: 20px;
   margin-bottom: 21px;
 }
-
+body > header .layout-row {
+  justify-content: space-between;
+}
 /*
   home
 */
@@ -121,19 +129,22 @@ h2 {
   font-size: 20px;
   margin-bottom: 21px;
 }
-.login-box form {
+.form {
   margin-top: auto;
 }
-.login-box form p:first-child {
+.form p {
   margin-bottom: 15px;
 }
-.login-box form label, .login-box form input {
+.form p:last-child {
+  margin-bottom: 0;
+}
+.form label, .form input {
   display: block;
 }
-.login-box form label {
+.form label {
   font-size: 16px;
 }
-.login-box form input {
+.form input {
   width: 100%;
   font-size: 16px;
   padding: 0 10px;

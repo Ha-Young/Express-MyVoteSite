@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <%- include('partial/head') -%>
+  <body>
+    <%- include('partial/header') -%>
+    <div class="container">
+      <h2>Register</h2>
+      <form action="/signup" class="form" method="POST">
+        <p>
+          <label for="username">USER NAME</label>
+          <input type="text" id="username" name="username" value="" />
+        </p>
+        <p>
+          <label for="email">EMAIL</label>
+          <input type="email" id="email" name="email" value="" />
+        </p>
+        <p>
+          <label for="password">PASSWORD</label>
+          <input type="password" id="password" name="password" value="" minlength="8" />
+          <span class="sub-text">Minimum length is 8 characters</span>
+        </p>
+        <p>
+          <label for="password">PASSWORD CONFIRM</label>
+          <input type="password" id="password" name="password" value="" minlength="8" />
+        </p>
+        <div class="buttons-wrap">
+          <button type="submit" class="button">REGISTER</button>
+        </div>
+      </form>
+    </div>
+    <%- include('partial/scripts') -%>
+  </body>
+</html>
