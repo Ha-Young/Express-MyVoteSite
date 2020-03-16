@@ -1,6 +1,5 @@
 import express from 'express';
 import path from 'path';
-import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import createError from 'http-errors';
 import rootRouter from './routers/rootRouter';
@@ -15,8 +14,14 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.use(session({
+  secret: 'HELLO',
+  resave: false,
+  saveUninitialized: false
+}));
 
 app.use('/', rootRouter);
 app.use('/auth', authRouter);
