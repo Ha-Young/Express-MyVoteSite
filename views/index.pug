@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  main
+    h1= title
+    p Welcome to #{title}
+    -var values = [{title:"title", creator:"creator", due:"2020-03-20 3pm", state:"continue"   }];
+      each val in values
+        ul.vote
+          li.vote-title=val.title
+          li.vote-creator=val.creator
+          li.vote-due=val.due
+          li.vote-state=val.state

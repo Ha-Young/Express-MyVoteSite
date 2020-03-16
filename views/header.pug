@@ -1,0 +1,15 @@
+nav.header
+  //-로그인 상태에 따라 ( 로그인시 : 내투표보기  [user  로그아웃]  // 로그아웃시: 로그인 화원가입)
+  if login
+    p.uservote myvote
+    ul.header.header-user
+      li
+        a(onclick='') username
+      li
+        a(href='/signout') signout
+  else
+    ul.header.header-login
+      li
+        a(href='/login') login
+      li
+        a(href='/singup')  signup
