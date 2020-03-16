@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <%- include('partial/head') -%>
+  <body>
+    <%- include('partial/header') -%>
+    <div class="container">
+      <section class="voting-detail">
+        <h2>Title of Voting</h2>
+        <form action="/votings/id" method="POST">
+          <fieldset class="box">
+            <legend class="only_sound">Title of Voting</legend>
+            <p>
+              <input id="soso" type="radio" value="soso" name="value" />
+              <label for="soso">something</label>
+            </p>
+          </fieldset>
+          <div class="buttons-wrap">
+            <input type="submit" class="button" value="제출하기" />
+            <a href="/" class="button">돌아가기</a>
+          </div>
+        </form>
+      </section>
+    </div>
+    <%- include('partial/scripts') -%>
+  </body>
+</html>

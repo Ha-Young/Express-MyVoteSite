@@ -2,8 +2,8 @@ import express from 'express';
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send('Voting');
+router.get('/:id', (req, res) => {
+  res.render('votingDetail');
 });
 
 export default router;

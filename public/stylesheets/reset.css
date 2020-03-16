@@ -58,3 +58,7 @@ a {
 	text-decoration: none;
 	color: #215ca0;
 }
+.only_sound {
+	text-indent: -9999em;
+	font-size: 0;
+}
