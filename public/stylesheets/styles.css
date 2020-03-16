@@ -1,5 +1,55 @@
-body {
-  background-color: #ebebeb;
-  font-size: 14px;
-  line-height: 1.5;
+/*
+  common
+*/
+.container {
+	width: 980px;
+  margin: auto;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+}
+.button {
+  display: block;
+  font-size: 16px;
+  border: 1px solid #215ca0;
+  color: #215ca0;
+  line-height: 27px;
+  padding: 0 10px;
+  text-transform: uppercase;
+}
+
+/*
+  header
+*/
+body > header {
+  margin-bottom: 30px;
+  background-color: #f4f4f4;
+  padding: 15px 0;
+}
+body > header .row {
+  justify-content: space-between;
+  align-items: center;
+}
+body > header h1 {
+  font-size: 24px;
+}
+h2 {
+  font-size: 20px;
+  margin-bottom: 21px;
+}
+/*
+  home
+*/
+.vote-list li {
+  border-radius: 4px;
+  background-color: #f1f1f1;
+  padding: 15px;
+  margin-bottom: 21px;
+}
+.vote-list li:last-child {
+  margin-bottom: 0;
+}
+.vote-list li h3 {
+  margin-bottom: 10px;
 }
