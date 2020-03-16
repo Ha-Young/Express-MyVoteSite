@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>signup</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+
+<body>
+    <div>
+        <form action="/signup" method="post">
+            email <input type="email" name="userEmail"><br>
+            password <input type="password" name="userPassword">
+            confirm password <input type="password" name="userPassword">
+            <input type="submit" value="signup">
+        </form>
+    </div>
+    <div>
+        <% if (message) { %>
+            <%= message %>
+            <a href="/login" >로그인 페이지 이동</a>
+        <% } %>
+    </div>
+</body>
+
+</html>
