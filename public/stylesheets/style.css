@@ -4,8 +4,6 @@ body {
   margin: 0;
   height: 96vh;
   width: 96vw;
-  display: flex;
-  align-items: center;
   font-family: 'Baloo 2', cursive;
 }
 

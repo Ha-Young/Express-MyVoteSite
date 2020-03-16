@@ -1,23 +1,37 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
+const { HashGenerationError, DuplicateUserError } = require('../lib/errors');
 const User = require('../models/Users');
 
 exports.registerUser = async (req, res, next) => {
-  console.log('signup', req.body);
-  // 1. validation - email이 맞는지 등등...
-  // try {
-  //   const registeredUser = await User.findOne()
-  // } catch(err) {
-  //   console.log(err);
-  // }
+  const { username, firstname, lastname, email, password, gender } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      await bcrypt.hash(password, 12, async (err, hashedPassword) => {
+        if (err) {
+          return next(new HashGenerationError(err.message));
+        }
+
+        const newUser = new User({
+          username,
+          firstname,
+          lastname,
+          email,
+          password: hashedPassword,
+          gender
+        });
+
+        await newUser.save();
+        return res.redirect('/');
+      });
+    }
+
+    return next(new DuplicateUserError(err.message));
+  } catch(err) {
+    console.log(err); // mongoose에서 findOne에서 발생한 에러.
+  }
 };
-
-
-// req.body = {
-//   username: 'soldonii',
-//   firstname: 'hyunsol',
-//   lastname: 'do',
-//   email: 'dhs0113@naver.com',
-//   password: 'ehgusthf',
-//   confirm_password: 'ehgusthf',
-//   gender: 'male'
-// }

@@ -37,7 +37,7 @@ app.use('/signup', signupRouter);
 app.use('/users', usersRouter);
 
 // 이상한 url일 때 대응해주는 에러
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
@@ -48,14 +48,16 @@ app.use(function(req, res, next) {
 
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {
+    errMessage: err.displayMessage
+  });
 });
 
 module.exports = app;

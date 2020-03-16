@@ -1,27 +1,34 @@
 const { body, validationResult } = require('express-validator');
-// const { username, email, firstname, lastname, email, password, confirm_password, gender } = req.body;
+const { ValidationError } = require('../lib/errors');
 
 const userValidationRules = () => {
   return [
-    body('username').isLength({ min: 4 }),
-    body('firstname').isLength({ min: 1 }),
-    body('lastname').isLength({ min: 1 }),
-    body('email').isEmail(),
-    body('password').isLength({ min: 10 })
+    body('username').isLength({ min: 4 }).withMessage('username should be longer than 4 characters.'),
+    body('firstname').isLength({ min: 1 }).withMessage('firstname is required.'),
+    body('lastname').isLength({ min: 1 }).withMessage('lastname is required.'),
+    body('email').isEmail().withMessage('not a valid email.'),
+    body('password').isLength({ min: 10 }).withMessage('password should be longer than 10 characters.'),
+    body('confirm_password').custom((confirmationPassword, { req }) => {
+      if (confirmationPassword !== req.body.password) {
+        throw new Error('Password confirmation does not match password');
+      }
+
+      return true;
+    })
   ];
 };
 
-const validate = async (req, res, next) => {
+const validate = (req, res, next) => {
   const errors = validationResult(req);
-  console.log('bool', errors.isEmpty());
+
   if (errors.isEmpty()) {
     return next();
   }
 
-  const extractedErrors = [];
-  errors.array().map(err => extractedErrors.push({ [err.param]: err.msg }));
+  const errorMessages = [];
+  errors.array().map(err => errorMessages.push(err.msg));
 
-  return next(extractedErrors); // 에러가 발생하면 error를 넘겨주기
+  next(new ValidationError(errorMessages));
 };
 
 module.exports = {

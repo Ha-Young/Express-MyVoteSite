@@ -9,13 +9,13 @@ const UserSchema = new Schema({
     match: [/^[a-zA-Z0-9]+$/, 'only alphabets and numbers are allowed to username.'],
     minlength: 4
   },
-  first_name: {
+  firstname: {
     type: String,
     lowercase: true,
     required: [ true, 'first name can\'t be blank.' ],
     match: [/^[a-zA-Z]+$/, 'only alphabets are allowed to first name.']
   },
-  last_name: {
+  lastname: {
     type: String,
     lowercase: true,
     required: [ true, 'last name can\'t be blank.' ],
@@ -36,10 +36,6 @@ const UserSchema = new Schema({
   gender: {
     type: String,
     enum: [ 'male', 'female', 'etc.' ],
-    required: true
-  },
-  age: {
-    type: Number,
     required: true
   },
   votes_created: [{
