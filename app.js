@@ -6,7 +6,13 @@ const path = require('path');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const signupRouter = require('./routes/signup');
+const authRouter = require('./routes/auth');
 const mongoose = require('mongoose');
+const passport = require('passport');
+const session = require('express-session');
+
+
+require('./config/passport')(passport);
 
 mongoose.connect(
   process.env.DB_URI, 
@@ -26,9 +32,23 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/users', usersRouter);
 app.use('/signup', signupRouter);
+app.use('/auth', authRouter);
+app.use('/', indexRouter);
+
 
 
 

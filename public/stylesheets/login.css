@@ -1,0 +1,73 @@
+nav {
+  margin: 0 auto;
+  min-height: 100px;
+  width: 70%;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-between;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+ul li button {
+  padding: 8px 16px;
+  border-radius: 10px;
+}
+
+main {
+  margin: 0 auto;
+  width: 70%;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  width: 500px;
+  margin: 20px auto;
+}
+
+input {
+  display: block;
+  padding: 8px 16px;
+  font-size: 2em;
+  margin: 10x auto;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 3px solid #ccc;
+  outline: none !important;
+}
+
+.form {
+  border: 1px solid #ccc;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+.submitButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}

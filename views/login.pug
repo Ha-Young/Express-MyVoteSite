@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    link(rel="stylesheet", href="/stylesheets/login.css")
+  body
+    nav
+      ul
+        li 
+          button Vote
+        li 
+          button New vote
+        li 
+          button My vote
+        li 
+          button login
+    main
+      form(action="" method="post" class="form")
+        h1 Sign up
+        hr
+        label(for="email") Email
+        input(type="text" name="email" required)
+
+        label(for="password") Password
+        input(type="password" name="password" required)
+        button(type="submit" class="submitButton") Login
