@@ -71,9 +71,11 @@ body > header .row {
 body > header h1 {
   font-size: 24px;
 }
-h2 {
-  font-size: 20px;
-  margin-bottom: 21px;
+body > header ul {
+  display: flex;
+}
+body > header ul li {
+  margin-left: 15px;
 }
 body > header .layout-row {
   justify-content: space-between;
@@ -81,6 +83,10 @@ body > header .layout-row {
 /*
   home
 */
+h2 {
+  font-size: 20px;
+  margin-bottom: 21px;
+}
 .vote-list li {
   margin-bottom: 21px;
 }

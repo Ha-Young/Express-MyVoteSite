@@ -5,9 +5,18 @@
         <a href="/">Flower of democracy</a>
       </h1>
       <ul>
-        <li>
-          <a href="/login" class="button">Login</a>
-        </li>
+        <% if (user) { %>
+          <li>
+            <a href="/votings/new" class="button">Add vote</a>
+          </li>
+          <li>
+            <a href="/logout" class="button">Logout</a>
+          </li>
+        <% } else { %>
+          <li>
+            <a href="/login" class="button">Login</a>
+          </li>
+        <% } %>
       </ul>
     </div>
   </div>

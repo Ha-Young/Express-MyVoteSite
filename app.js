@@ -4,10 +4,10 @@ import logger from 'morgan';
 import session from 'express-session';
 import passport from 'passport';
 import createError from 'http-errors';
+import { localMiddleware } from './middlewares';
 import rootRouter from './routers/rootRouter';
 import authRouter from './routers/authRouter';
 import votingRouter from './routers/votingRouter';
-
 
 import './db';
 
@@ -21,21 +21,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 app.use(session({
   secret: 'HELLO',
   resave: false,
   saveUninitialized: false
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
-
-import './passport';
+app.use(localMiddleware)
 
 app.use('/', rootRouter);
 app.use('/auth', authRouter);
 app.use('/votings', votingRouter);
 
+import './passport';
 
 app.use((req, res, next) => {
   next(createError(404));

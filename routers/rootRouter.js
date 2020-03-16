@@ -1,9 +1,11 @@
 import express from 'express';
-import { getHome, getLogin, postLogin, getSignup, postSignup } from '../controls';
+import { getHome, getLogout, getLogin, postLogin, getSignup, postSignup } from '../controls';
 
 const router = express.Router();
 
 router.get('/', getHome);
+
+router.get('/logout', getLogout);
 
 router.get('/login', getLogin);
 

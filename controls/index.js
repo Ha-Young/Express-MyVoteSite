@@ -38,3 +38,8 @@ export const postSignup = async (req, res, next) => {
     }
   }
 };
+
+export const getLogout = (req, res) => {
+  req.logout();
+  res.redirect('/');
+}
