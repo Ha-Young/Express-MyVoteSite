@@ -1,10 +1,15 @@
 import express from 'express';
 import path from 'path';
 import logger from 'morgan';
+import session from 'express-session';
+import passport from 'passport';
 import createError from 'http-errors';
 import rootRouter from './routers/rootRouter';
 import authRouter from './routers/authRouter';
 import votingRouter from './routers/votingRouter';
+
+
+import './db';
 
 const app = express();
 
@@ -22,6 +27,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+import './passport';
 
 app.use('/', rootRouter);
 app.use('/auth', authRouter);
