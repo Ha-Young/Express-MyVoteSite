@@ -1,24 +1,16 @@
 import express from 'express';
-import passport from 'passport';
+import { getHome, getLogin, postLogin, getSignup, postSignup } from '../controls';
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.render('index');
-});
+router.get('/', getHome);
 
-router.get('/login', (req, res) => {
-  res.render('login');
-});
+router.get('/login', getLogin);
 
-router.post('/login',
-  passport.authenticate('local',
-    { successRedirect: '/', failureRedirect: '/login' }
-  )
-);
+router.post('/login', postLogin);
 
-router.get('/signup', (req, res) => {
-  res.render('signup');
-});
+router.get('/signup', getSignup);
+
+router.post('/signup', postSignup, postLogin);
 
 export default router;
