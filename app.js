@@ -4,11 +4,27 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const {
+  DB_URL,
+} = process.env;
 
 const index = require('./routes/index');
 const users = require('./routes/users');
 
 const app = express();
+
+mongoose.connect(DB_URL, {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => console.log('Connected to Mongo database..'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
