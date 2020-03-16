@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const { HashGenerationError, DuplicateUserError } = require('../lib/errors');
+const errors = require('../lib/errors');
 const User = require('../models/Users');
 
 exports.registerUser = async (req, res, next) => {
@@ -13,7 +13,7 @@ exports.registerUser = async (req, res, next) => {
     if (!user) {
       await bcrypt.hash(password, 12, async (err, hashedPassword) => {
         if (err) {
-          return next(new HashGenerationError(err.message));
+          return next(new errors.HashGenerationError(err.message));
         }
 
         const newUser = new User({
@@ -26,11 +26,11 @@ exports.registerUser = async (req, res, next) => {
         });
 
         await newUser.save();
-        return res.redirect('/');
+        return res.redirect('/login');
       });
+    } else {
+      next(new errors.DuplicateUserError('Duplicated user.'));
     }
-
-    return next(new DuplicateUserError(err.message));
   } catch(err) {
     console.log(err); // mongoose에서 findOne에서 발생한 에러.
   }
