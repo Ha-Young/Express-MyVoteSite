@@ -1,0 +1,19 @@
+<div>
+  <% votes.map(vote => { %>
+    <% href = `/votings/${vote._id}` %>
+    <a href="<%- href %>">
+      <div>
+        <%= vote.title %>
+      </div>
+      <div>
+        <%= vote.owner %>
+      </div>
+      <div>
+        <%= vote.expired_date %>
+      </div>
+      <div>
+        <%= vote.in_progress %>
+      </div>
+    </a>
+  <% }) %>
+</div>
