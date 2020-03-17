@@ -25,7 +25,7 @@ block content
                   label(for=option.description) #{option.description}
               input(type="submit", value="투표하기")
           .vote-bottom
-            button 목록으로
+            button.button.to-list 목록으로
             if currentUser === createdBy
-              button 투표 삭제
-  //- script(src="/javascripts/vote.js")
+              button.button.delete-vote 투표 삭제
+  script(src="/javascripts/vote.js")

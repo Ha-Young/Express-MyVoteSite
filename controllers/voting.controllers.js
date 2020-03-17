@@ -36,45 +36,31 @@ exports.registerVote = async (req, res, next) => {
   }
 };
 
-// const votesInfoForDisplay = votes.map(vote => {
-//   return makeDisplayInfo(vote);
-// });
-
 exports.renderVote = async (req, res, next) => {
   const { id: voteId } = req.params;
-  const currentVote = await Votes.findOne({ vote_id: voteId }).populate('created_by').lean();
 
-  const voteInfoForDisplay = makeDisplayInfo(currentVote);
+  try {
+    const currentVote = await Votes.findOne({ vote_id: voteId }).populate('created_by').lean();
 
-  res.render('vote', {
-    vote: voteInfoForDisplay,
-    createdBy: voteInfoForDisplay.created_by.toString(),
-    currentUser: req.user._id
-  });
+    const voteInfoForDisplay = makeDisplayInfo(currentVote);
+
+    res.render('vote', {
+      vote: voteInfoForDisplay,
+      createdBy: voteInfoForDisplay.created_by.toString(),
+      currentUser: req.user._id
+    });
+  } catch(err) {
+    next(new errors.GeneralError(err.message));
+  }
 };
 
+exports.deleteVote = async (req, res, next) => {
+  try {
+    const targetVoteId = req.body;
+    await Votes.findOneAndDelete({ vote_id: targetVoteId });
 
-// {
-// _id: 5e70c0e591229c21bde2290b,
-// title: '내일 커피, 사먹을 것인가!',
-// vote_id: 2,
-// select_options: [
-//   {
-//     vote_counter: 0,
-//     voter: [],
-//     _id: 5e70c0e591229c21bde2290c,
-//     description: '사먹자'
-//   },
-//   {
-//     vote_counter: 0,
-//     voter: [],
-//     _id: 5e70c0e591229c21bde2290d,
-//     description: '돈 아끼자!'
-//   }
-// ],
-// created_by: 5e70beb99448712166e94e80,
-// expires_at: 2020-03-18T00:09:00.000Z,
-// created_at: 2020-03-17T12:21:57.117Z,
-// updated_at: 2020-03-17T12:21:57.117Z,
-// __v: 0
-// }
+    res.redirect('/'); // 여기서 왜 에러가..?
+  } catch(err) {
+    next(new errors.GeneralError(err.message));
+  }
+};

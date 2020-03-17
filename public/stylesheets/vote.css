@@ -71,14 +71,17 @@ p {
   border: 1px solid black;
   border-radius: 0.5rem;
   margin-bottom: 1rem;
+  cursor: pointer;
 }
 
 .option > input {
   /* display: none; */
+  cursor: pointer;
 }
 
 .option > label {
   padding: 0 1rem;
+  cursor: pointer;
 }
 
 .option:hover {
@@ -89,4 +92,23 @@ p {
 .select {
   background-color: black;
   color: white;
+}
+
+.button {
+  margin: 0.5rem 1rem;
+  font-size: 1.5rem;
+  background-color: #1F2440;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.to-list:hover, .delete-vote:hover {
+  box-shadow: 1px 1px 1px black;
+}
+
+.delete-vote {
+  background-color: #E81E25;
 }
