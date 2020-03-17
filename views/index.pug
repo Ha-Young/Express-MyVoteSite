@@ -2,4 +2,16 @@ extends layout
 
 block content
   link(rel='stylesheet', href='/stylesheets/index.css')
-  h1 home
+  div(class="wrapper")
+    each voting in votings
+      div(class="voting-container")
+        div(class="nickname-container")
+          p #{voting.user.nickname}
+          if(voting.is_expired)
+            p 만료됨
+          else
+            p 진행중
+        h2 #{voting.title}
+        p(class="expiration-date") 만료일 #{moment(voting.created_at).format('YYYY-MM-DD hh:mm a')}
+        button
+          a 투표하기

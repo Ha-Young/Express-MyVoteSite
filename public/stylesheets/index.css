@@ -5,3 +5,40 @@
 .voting-creation-button .my-voting:visited {
   color: #fff;
 }
+
+.wrapper {
+  margin: 0 auto;
+  margin-top: 50px;
+  width: 700px;
+  line-height: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.voting-container {
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+  padding: 0 10px;
+  margin: 5px;
+}
+
+.nickname-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: -5px;
+}
+
+.expiration-date {
+  font-size: 10px;
+}
+
+.voting-container button {
+  margin-bottom: 10px;
+  width: 100px;
+  height: 20px;
+  border: 0;
+  border-radius: 5px;
+  background-color: rgb(26, 170, 85);
+  cursor: pointer;
+  color: #fff;
+}

@@ -22,12 +22,14 @@ router.post('/new', checkUser, async (req, res) => {
         count: 0
       };
     });
+    const creationDate = new Date(`${date} ${time}`);
+    console.log(creationDate);
 
     await new Voting({
       user,
       title,
       selection_items: selections,
-      created_at: date
+      created_at: creationDate.toISOString()
     }).save();
     res.redirect('/');
   } catch (err) {
