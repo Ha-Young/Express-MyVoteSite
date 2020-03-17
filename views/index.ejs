@@ -4,17 +4,33 @@
   <body>
     <%- include('partial/header') -%>
     <div class="container">
-      <h2>On Going Votes</h2>
-      <ul class="vote-list">
-        <% for (let i = 0; i < votes.length; i++) { %>
-          <li class="box">
-            <h3>
-              <a href="/votings/<%= votes[i].id %>"><%= votes[i].subject %></a>
-            </h3>
-            <div class="vote-info">생성자, 만료 날짜 및 시간, 진행 중 여부, 투표 선택 사항</div>
-          </li>
-        <% } %>
-      </ul>
+      <%
+        const expiratedVotes = [];
+        const unexpiratedVotes = [];
+
+        for (let i = 0; i < votes.length; i++) {
+          const { expirated } = votes[i];
+          const currentTime = new Date().getTime();
+          const expiratedTime = new Date(expirated).getTime();
+          const isExpirated = expiratedTime - currentTime < 0;
+
+          if (isExpirated) {
+            expiratedVotes.push(votes[i]);
+          } else {
+            unexpiratedVotes.push(votes[i]);
+          }
+        }
+      %>
+
+      <%- include('partial/votes', {
+        title: '진행중인 투표',
+        votes: unexpiratedVotes
+      }) -%>
+
+      <%- include('partial/votes', {
+        title: '만료된 투표',
+        votes: expiratedVotes
+      }) -%>
     </div>
     <%- include('partial/scripts') -%>
   </body>
