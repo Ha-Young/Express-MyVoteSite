@@ -54,26 +54,26 @@ header h1, header h2, header h4 {
   flex-direction: column;
 }
 
-/* [login] */
-.loginSection {
+/* [login], [sign up] */
+.loginSection, .signupSession {
   margin: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.loginSection h1 {
+.loginSection h1, .signupSession h1 {
   font-family: 'Lobster', cursive;
   font-size: 40px;
 }
 
-.loginForm {
+.loginForm, .signupForm {
   display: flex;
   flex-direction: column;
   width: 400px;
 }
 
-.loginForm input, .loginForm button {
+.loginForm input, .loginForm button, .signupForm input, .signupForm button {
   margin: 10px;
   padding: 10px;
   border-radius: 8px;
@@ -82,10 +82,22 @@ header h1, header h2, header h4 {
   color: white;
 }
 
-.loginForm input {
+.loginForm input, .signupForm input {
   background-color: #d1f5d3;
 }
 
-.loginForm button {
+.loginSubmit, .signupSubmit {
   background-color: #9dc6a7;
+}
+
+.loginSubmit:hover, .signupSubmit:hover {
+  background-color: #7bb088;
+}
+
+.goHome {
+  background-color: #bae5e5;
+}
+
+.goHome:hover {
+  background-color: #a2d4d4;
 }
