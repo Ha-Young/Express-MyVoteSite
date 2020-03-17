@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 pollSchema = new mongoose.Schema({
-  mypoll: {
+  myPoll: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Poll',
   }

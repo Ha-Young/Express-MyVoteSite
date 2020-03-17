@@ -7,20 +7,21 @@ html
       ul
         if hasLoggedIn
           li 
-            button Main
+            a(href="/") Main
           li 
-            button New vote
+            a(href="/votings/new") New vote
           li 
-            button My vote
+            a(href="") My vote
           li 
-            button Logout
+            a(href="/auth/logout") Logout
         else
           li 
-            button Main
+            a(href="/") Main
           li 
-            button New vote
+            a(href="/signup") Signup
           li 
-            button Logout
-          h1 Your vote has been created successfully
-          butotn Go to main
+            a(href="/auth/login") Login
+    main
+        h1 Your vote has been created successfully
+        a(href="/") Go to main
           

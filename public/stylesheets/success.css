@@ -25,3 +25,22 @@ main {
   background-color: #f2f2f2;
   padding: 20px;
 }
+
+h1 {
+  text-align: center;
+}
+
+main a {
+  display: block;
+  margin: 0 auto;
+  text-decoration: none;
+  /* display: flex; */
+  text-align: center;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+}
+
+main a:hover {
+  background-color: #45a049;
+}

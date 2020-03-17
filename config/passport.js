@@ -7,7 +7,7 @@ const initialize = (passport) => {
   try {
     const authenticateUser = async (email, password, done) => {
       const user = await User.findOne( { email });
-      if (!user) {
+      if (!user) { 
         return done(createError(404, "The user does not exist"), false);
       }
   
@@ -22,12 +22,10 @@ const initialize = (passport) => {
       authenticateUser));
   
     passport.serializeUser((user, done) => {
-      console.log('serial')
       done(null, user.id);
     });
   
     passport.deserializeUser(async (id, done) => {
-      console.log('deserial')
       const user = await User.findById(id);
       done(null, user);
     });

@@ -7,20 +7,20 @@ html
       ul
         if hasLoggedIn
           li 
-            button Main
+            a(href="/") Main
           li 
-            button New vote
+            a(href="/votings/new") New vote
           li 
-            button My vote
+            a(href="") My vote
           li 
-            button Logout
+            a(href="/auth/logout") Logout
         else
           li 
-            button Main
+            a(href="/") Main
           li 
-            button New vote
+            a(href="/signup") Signup
           li 
-            button Logout
+            a(href="/auth/login") Login
     main
      form(class="voteForm" method="post")
       label(for="topic") Topic

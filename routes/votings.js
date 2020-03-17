@@ -24,11 +24,9 @@ router.get('/new', function(req, res, next) {
 
 router.post('/new', async (req, res, next) => {
   try {
-    if (req.isAuthenticated()) {
       const time = `${req.body.date} ${req.body.time}`;
       if (new Date() > new Date(time)) {
         throw(createError(422, "Please select expring time for future"));
-        // alert('Inapproaite time');
       }
       
       const { topic } = req.body;
@@ -45,13 +43,16 @@ router.post('/new', async (req, res, next) => {
         creator: id, 
         expiringTime: new Date(time),
       }).save();
+
       const user = await User.findById(id);
-      user.myPolls.push(poll.id);
+      user.myPolls.push({ myPoll : poll.id })
+      await user.save();
       answers.forEach((answer) => {
         poll.answers.push({ answer })
       });
-      res.redirect('/sucess');
-    }
+
+      await poll.save();
+      res.redirect('/votings/success');
   } catch(e) {
     next(e);
   }

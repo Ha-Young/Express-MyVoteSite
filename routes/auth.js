@@ -30,6 +30,11 @@ router.post('/login', passport.authenticate('local', {
   failWithError: true,
 }));
 
+router.get('/logout', (req, res, next) => {
+  req.logOut();
+  res.redirect('/');
+});
+
 
 
   // try {

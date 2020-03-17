@@ -49,7 +49,6 @@ app.use('/', indexRouter);
 app.use('/votings', votingRouter);
 
 app.use(function(req, res, next) {
-  console.log(1111111)
   next(createError(404));
 });
 

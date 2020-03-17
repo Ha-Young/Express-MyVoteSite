@@ -7,23 +7,23 @@ html
       ul
         if hasLoggedIn
           li 
-            button Vote
+            a(href="/") Main
           li 
-            button New vote
+            a(href="/votings/new") New vote
           li 
-            button My vote
+            a(href="") My vote
           li 
-            button Logout
+            a(href="/auth/logout") Logout
         else
           li 
-            button Vote
+            a(href="/") Main
           li 
-            button New vote
+            a(href="/signup") Signup
           li 
-            button Login
+            a(href="/auth/login") Login
     main
       form(action="" method="post" class="form")
-        h1 Sign up
+        h1 Log in
         hr
         label(for="email") Email
         input(type="text" name="email" required)

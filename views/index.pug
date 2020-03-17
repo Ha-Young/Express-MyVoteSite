@@ -7,19 +7,29 @@ html
       ul
         if hasLoggedIn
           li 
-            button Vote
+            a(href="/") Main
           li 
-            button New vote
+            a(href="/votings/new") New vote
           li 
-            button My vote
+            a(href="") My vote
           li 
-            button Logout
+            a(href="/auth/logout") Logout
         else
           li 
-            button Vote
+            a(href="/") Main
           li 
-            button New vote
+            a(href="/signup") Signup
           li 
-            button Logout
+            a(href="/auth/login") Login
     main
-     
+      h1 메인이다 메인이다 메인이다
+        each val, index in polls
+          div
+            ul
+              li=`Topic: ${val.topic}`
+              li=`Creator: ${val.creator.email}`
+                if val.isInProgress
+                  li='Still Voting: on'
+                else
+                  li='Still Voting: off'
+              li=`Expring time: ${timeString[index][0]} ${timeString[index][1]}`
