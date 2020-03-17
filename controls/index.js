@@ -27,7 +27,7 @@ export const postSignup = async (req, res, next) => {
       });
 
       await User.register(user, password);
-      next();
+      res.redirect('/login');
     } catch (err) {
       // Error handling
       res.redirect('/');

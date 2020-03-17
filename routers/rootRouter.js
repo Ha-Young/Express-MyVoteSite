@@ -14,6 +14,6 @@ router.post('/login', postLogin);
 
 router.get('/signup', getSignup);
 
-router.post('/signup', postSignup, postLogin);
+router.post('/signup', postSignup);
 
 export default router;
