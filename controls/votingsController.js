@@ -1,5 +1,15 @@
 import Vote from '../models/vote';
 
+export const getHome = async (req, res) => {
+  try {
+    const votes = await Vote.find();
+
+    res.render('index', { votes });
+  } catch (err) {
+    // Error handling
+  }
+};
+
 export const getNewVote = (req, res) => {
   res.render('newVoting');
 };

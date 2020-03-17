@@ -1,5 +1,6 @@
 import express from 'express';
-import { getHome, getLogout, getLogin, postLogin, getSignup, postSignup } from '../controls';
+import { getLogout, getLogin, postLogin, getSignup, postSignup } from '../controls';
+import { getHome } from '../controls/votingsController';
 
 const router = express.Router();
 

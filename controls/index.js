@@ -1,10 +1,6 @@
 import passport from 'passport';
 import User from '../models/user';
 
-export const getHome = (req, res) => {
-  res.render('index');
-};
-
 export const getLogin = (req, res) => {
   res.render('login');
 };
