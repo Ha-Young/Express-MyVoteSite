@@ -9,11 +9,21 @@ block content
     .home
       include includes/sidebar.pug
       .vote-viewer
-        each vote in votes
-          .vote
-            span #{vote.title}
-            //- span #{vote.}
-            each option in vote.select_options
-              .vote-status
-                p #{option.description}
-                p #{option.vote_counter} 명
+        if message
+          h1.no-votes #{message}
+        else
+          each vote in votes
+            .vote
+              .vote-top
+                p #{vote.voteStatus}
+                p #{vote.title}
+              .scroll
+                .vote-mid
+                  each option in vote.options
+                    .option
+                      span #{option.description}
+                      span #{option.vote_counter} 명
+              .vote-bottom
+                p #{vote.totalVoters} 명 참여 중
+                button 투표 참여하기
+
