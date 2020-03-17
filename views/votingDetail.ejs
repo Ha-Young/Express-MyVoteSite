@@ -1,5 +1,5 @@
 <%
-  const { id, title, options, creator, expirated } = vote;
+  const { id, subject, options, creator, expirated } = vote;
 %>
 <!DOCTYPE html>
 <html>
@@ -8,15 +8,15 @@
     <%- include('partial/header') -%>
     <div class="container">
       <section class="voting-detail">
-        <h2><%= title %></h2>
+        <h2><%= subject %></h2>
         <p>Made by <%= creator.username %></p>
         <form action="/votings/<%= id %>" method="POST">
           <fieldset class="box">
-            <legend class="only_sound">Title of Voting</legend>
+            <legend class="only_sound"><%= subject %></legend>
             <% for (let i = 0; i < options.length; i++) { %>
               <p>
-                <input id="option<%= i %>" type="radio" value="<%= options[i].title %>" name="option" />
-                <label for="option<%= i %>"><%= options[i].title %></label>
+                <input id="option<%= i %>" type="radio" value="<%= options[i].value %>" name="option" />
+                <label for="option<%= i %>"><%= options[i].value %></label>
               </p>
             <% } %>
           </fieldset>

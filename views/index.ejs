@@ -9,7 +9,7 @@
         <% for (let i = 0; i < votes.length; i++) { %>
           <li class="box">
             <h3>
-              <a href="/votings/<%= votes[i].id %>"><%= votes[i].title %></a>
+              <a href="/votings/<%= votes[i].id %>"><%= votes[i].subject %></a>
             </h3>
             <div class="vote-info">생성자, 만료 날짜 및 시간, 진행 중 여부, 투표 선택 사항</div>
           </li>

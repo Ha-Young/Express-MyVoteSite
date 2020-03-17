@@ -34,9 +34,9 @@ export const postVotings = async (req, res) => {
       options
     } = req.body;
     const expirated = `${expiration_date}T${expiration_time}`;
-    const handledOptions = options.map((option) => ({ title: option }));
+    const handledOptions = options.map((option) => ({ value: option }));
     const vote = await Vote.create({
-      title: voting_name,
+      subject: voting_name,
       options: handledOptions,
       expirated,
       creator: req.user.id,
@@ -54,11 +54,11 @@ export const postVotingDetail = async (req, res) => {
     const userId = req.user.id;
     const value = req.body.option;
     const vote = await Vote.findById(voteId);
-    const targetOption = vote.options.find((option) => option.title === value);
+    const targetOption = vote.options.find((option) => option.value === value);
 
-    targetOption.received.push(userId);
+    targetOption.voter.push(userId);
     await vote.save();
-    res.redirect('success');
+    res.redirect('/success');
     // Redirect Success
   } catch (err) {
     // Error handling

@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 
 const schema = mongoose.Schema({
-  title: {
+  subject: {
     type: String,
     required: true
   },
   options: [
     {
-      title: { type: String, required: true },
-      received: {
+      value: { type: String, required: true },
+      voter: {
         type: [{
           type: mongoose.Types.ObjectId,
           ref: 'User'
