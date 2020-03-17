@@ -8,6 +8,7 @@ const votingSchema = new mongoose.Schema({
   made: {
     type: mongoose.ObjectId,
     ref: 'User',
+    required: true,
   },
   expiration_date: {
     type: Date,
@@ -19,6 +20,7 @@ const votingSchema = new mongoose.Schema({
   options: {
     type: Map,
     of: Number,
+    required: true,
   },
 });
 
