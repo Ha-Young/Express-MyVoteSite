@@ -12,9 +12,9 @@
   <div class="votings">
     <a href="/votings/<%= i.id %>">
       <div>투표제목 <%= i.title %></div>
-      <div>작성자 <%= i.constructor %></div>
+      <div>작성자 <%= i.writer %></div>
       <div>투표 설명 <%= i.description %></div>
-      <div>만료일 <%= i.expirationDate %></div>
+      <div>만료일 <%= i.expiration_date %></div>
       <% if(i.progress === true) { %>
       <div>진행여부: 진행 중</div>
       <% } %>
@@ -24,12 +24,14 @@
     </a>
   </div>
   <% } %>
-  <span>
-    <a href="/votings/new">투표 생성하기</a>
-  </span>
-  <span>
-    <a href="/my-votings">내 투표보기</a>
-  </span>
+  <div>
+    <span>
+      <a href="/votings/new">투표 생성하기</a>
+    </span>
+    <span>
+      <a href="/my-votings">내 투표보기</a>
+    </span>
+  </div>
 </body>
 
 </html>

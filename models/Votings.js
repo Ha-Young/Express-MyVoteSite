@@ -1,19 +1,22 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const { Types: ObjectId } = Schema;
 
 const votingsSchema = new Schema({
     id: {
-        type: ObjectId,
+        type: Number,
         required: true,
-        unique: true
+        unique: true,
     },
     title: {
         type: String,
         required: true
     },
-    constructor: {
+    writer: {
         type: String,
+        required: true
+    },
+    writerId: {
+        type: Schema.Types.ObjectId,
         required: true
     },
     description: {
@@ -28,10 +31,14 @@ const votingsSchema = new Schema({
         type: Date,
         required: true
     },
+    select_option: {
+        type:[String],
+        required: true
+    },
     progress: {
         type: Boolean,
         required: true
     }
 });
 
-mongoose.model('Votings', votingsSchema);
+module.exports = mongoose.model('Votings', votingsSchema);

@@ -7,24 +7,14 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    password: {
+    name: {
         type: String,
         required: true,
     },
-    voteList_created_byUser: [{
-        id: String,
-        title: String,
-        creation_date: Date,
-        expiration_date: Date,
-        progress: Boolean,
-    }],
-    user_voted_list: [{
-        id: String,
-        title: String,
-        creation_date: Date,
-        expiration_date: Date,
-        progress: Boolean,
-    }]
+    password: {
+        type: String,
+        required: true,
+    }
 });
 
 module.exports = mongoose.model('User', userSchema);

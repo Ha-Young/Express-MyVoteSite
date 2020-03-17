@@ -28,7 +28,7 @@ router.post('/login', (req, res, next) => {
         return next(err);
       }
       return res.redirect('/');
-    })
+    });
   })(req, res, next);
 });
 
@@ -40,9 +40,10 @@ router.get('/signup', (req, res, next) => {
 });
 
 router.post('/signup', async (req, res, next) => {
-  const { userEmail, userPassword } = req.body;
+  const { userName, userEmail, userPassword } = req.body;
 
   try {
+
     if (userPassword[0] !== userPassword[1]) {
       req.flash('joinError', '비밀번호가 일치하지 않습니다.');
       return res.render('signup', {
@@ -63,14 +64,17 @@ router.post('/signup', async (req, res, next) => {
       console.time('암호화 시간');
       await User.create({
         email_id: userEmail,
+        name: userName,
         password: hash
       });
       return res.redirect('/login');
     }
+
   } catch (err) {
     console.log(err);
     next(err);
   }
+
 });
 
 module.exports = router;

@@ -11,6 +11,7 @@ const passport = require('passport');
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
+const votingsRouter = require('./routes/votings');
 const schemas = require('./models');
 const passportConfig = require('./passport');
 schemas();
@@ -45,6 +46,7 @@ app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/', authRouter);
+app.use('/votings', votingsRouter);
 
 
 app.use(function (req, res, next) {
