@@ -1,9 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-router.get('/', function(req, res, next) {
-  console.log('votings')
-  res.render('vo');
+router.get('/new', function(req, res, next) {
+  res.render('newVoting');
 });
 
 module.exports = router;

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>new voting</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <div>
+    <h1>투표 만들기</h1>
+    <form action='/votings/new' method='POST'>
+      <div>투표 제목
+        <input type='text' name='title'>
+      </div>
+
+      <div class='items'>투표 항목
+        <input type='text' name='item1'>
+        <input type='text' name='item2'>
+      </div>
+      <div>
+        <button class='addItem'>항목 추가</button>
+        <button class='removeItem'>항목 제거</button>
+      </div>
+
+      <div>만료 날짜
+        <input type='date' name='endDate'>
+      </div>
+
+      <button type='submit'>투표 생성</button>
+      <button><a href='/'>투표 목록</a></button>
+    </form>
+  </div>
+  <script src='/javascripts/newVoting.js'></script>
+</body>
+
+</html>
