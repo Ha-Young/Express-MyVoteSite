@@ -29,6 +29,7 @@ exports.validation = async (req, res, next) => {
             new User({
               email,
               password: key.toString('base64'),
+              salt: buf.toString('base64')
             }).save();
             res.redirect('/login');
           } catch (err) {

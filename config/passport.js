@@ -1,32 +1,35 @@
 const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const crypto = require('crypto');
+
 const User = require('../models/User');
 
+passport.serializeUser(function (user, done) {
+  done(null, user)
+});
 
-// passport.use(User.createStrategy());
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
+passport.deserializeUser(function (user, done) {
+  done(null, user);
+});
 
-
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    User.findOne({ username: username }, function (err, user) {
+passport.use(new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password'
+},
+  (email, password, done) => {
+    User.findOne({ email }, function (err, user) {
       if (err) { return done(err); }
       if (!user) { return done(null, false); }
-      if (!user.verifyPassword(password)) { return done(null, false); }
-      return done(null, user);
+
+      crypto.randomBytes(64, (err, buf) => {
+        crypto.pbkdf2(password, user.salt, 14282, 64, 'sha512', (err, key) => {
+          if (user.password === key.toString('base64')) {
+            return done(null, user);
+          } else {
+            return done(null, false);
+          }
+        });
+      });
     });
   }
 ));
-// 유저라 로그인 했을 때 (에러가 날경우, 해당계정없음, 비밀번호 부적합, 로그인 성공)에 대한 처리
-
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-// user ID를 클라이언트한테 쿠키로 보내기 설정
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
-  });
-});
-// 쿠키로 인증 성공/실패시 처리

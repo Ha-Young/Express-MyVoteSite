@@ -1,9 +1,10 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const passport = require('passport');
+const router = express.Router();
 
-router.get('/', function(req, res, next) {
-  // 조건을 검사한 후 렌더
-  res.render('login');
-});
+const loginControllers = require('./controllers/login.controllers');
+
+router.get('/', (req, res, next) => res.render('login'));
+router.post('/', loginControllers.authenticate);
 
 module.exports = router;
