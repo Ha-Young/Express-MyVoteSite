@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible', content='ie=edge')
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    title Login
+  body
+    div.authwarp
+      h1 로그인
+      form(action='/login/auth' method='POST')
+        div.inputBox
+          input(type='text' name='username' placeholder='이메일')
+        div.inputBox
+          input(type='password' name='password' placeholder='비밀번호')
+        div.button-big
+          input(type='submit' value='로그인하기')
+      a(href='/signup') 회원가입하기 >

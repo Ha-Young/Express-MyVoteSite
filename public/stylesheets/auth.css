@@ -1,0 +1,12 @@
+.loginwarp {
+  margin: 4rem auto;
+  max-width: 400px;
+  text-align: center;
+}
+
+.inputBox {
+  margin: 10px, 0, 10px;
+  width: 100%;
+  height: 42px;
+  border: 1px solid #d4d4d4;
+}
