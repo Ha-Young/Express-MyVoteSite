@@ -1,17 +1,19 @@
 nav.header
   //-로그인 상태에 따라 ( 로그인시 : 내투표보기  [user  로그아웃]  // 로그아웃시: 로그인 화원가입)
-  div.icon
-    img(src='https://gitlab.com/uploads/-/system/project/avatar/13112262/vote.png?width=1' alt='home')
   if loginUser
-    p.uservote myvote
+    div.icon
+      img.home(src='https://gitlab.com/uploads/-/system/project/avatar/13112262/vote.png?width=1' alt='home' onclick='window.location.pathname = "/"')
+      span.uservote 내투표 관리
     ul.header.header-user
       li
-        a(onclick='') username
+        span 회원:#{loginUser}님
       li
-        a(href='/signout') signout
+        a(href='/signout') 로그아웃
   else
+    div.icon
+      img.home(src='https://gitlab.com/uploads/-/system/project/avatar/13112262/vote.png?width=1' alt='home' onclick='window.location.pathname = "/"')
     ul.header.header-login
       li
-        a(href='/login') login
+        a(href='/login') 로그인
       li
-        a(href='/signup')  signup
+        a(href='/signup')  회원가입

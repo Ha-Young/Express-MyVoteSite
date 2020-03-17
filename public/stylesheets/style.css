@@ -25,7 +25,7 @@ main{
   justify-content: flex-end;
 }
 
-.header > li ,a{
+.header > li ,a,span{
   display: block;
   color: white;
   text-align: center;
@@ -33,16 +33,20 @@ main{
   text-decoration: none;
 }
 .icon{
-  width:30px;
+  display: flex;
+  align-items: center;
 }
 
 .icon > img{
+  cursor: pointer;
   margin-bottom: 0;
   margin-left: 20px;
   width:50px;
   background-color: whitesmoke;
 }
-
+.uservote{
+  color:white;
+}
 .button-vote-creator{
   float:right;
   margin-top:-50px;

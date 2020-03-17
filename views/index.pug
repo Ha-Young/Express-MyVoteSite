@@ -3,9 +3,9 @@ extends layout
 block content
   main
     h1= title
-    p Welcome to voting-app
+    p 투표
     if loginUser
-      button.button-vote-creator 내투표 만들기
+      button.button-vote-creator(onclick="window.location.href = '/newVote';") 내투표 만들기
     -var values = [{title:"title", creator:"creator", due:"2020-03-20 3pm", state:"continue"   }];
       each val in values
         ul.vote

@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1.login-title 
+    if loginUser
+      #{loginUser} 님의 새로운 투표}
+    div.form
+      form.vote-form
+        input(type='text' placeholder="투표제목" maxlength=30 )
+        textarea(placeholder="투표를 설명해 주세요" maxlength=50 cols=30 rows=30)
+        p 투표종료일시 
+        input(type='date' placeholder='new Date()')
+        input(type='time' placeholder='new Date()')
+        div.option-wrapper
+          p.option-title 선택지
+          input(type='button' placeholder='+' onclick='addOption()')
+          input(type='text' placeholder='선택지1')
+          input(type='text' placeholder='선택지2')
+        button(type="submit") 투표생성하기
+  script(src='/javascripts/newVote.js')

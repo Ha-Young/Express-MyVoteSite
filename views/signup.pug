@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  h1.register-title signup page
+  h1.register-title 회원가입
   div.register-page
     div.form
       form.register-form
@@ -12,8 +12,8 @@ block content
         //- oninvalid="this.setCustomValidity('요구사항: 영문,숫자,특수기호를 포함한 7~15의 비밀번호')"
         //- onvalid="this.setCustomValidity('')")
         input(type="password" placeholder="password confirm" required)
-        button(onclick='confirm()') create
-        p.message Already registered?
-          a.anchor(href="/login") Login
+        button(onclick='confirm()') 가입하기
+        p.message 이미 회원이세요?
+          a.anchor(href="/login") 로그인
   script(src='/javascripts/signup.js')
 
