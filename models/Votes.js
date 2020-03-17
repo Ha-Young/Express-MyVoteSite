@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-
 const VoteSchema = new Schema({
   title: {
     type: String,
@@ -35,4 +34,4 @@ const VoteSchema = new Schema({
   }
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
-module.exports = mongoose.Model('Vote', VoteSchema);
+module.exports = mongoose.model('Votes', VoteSchema);

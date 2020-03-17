@@ -18,7 +18,7 @@ const userValidationRules = () => {
   ];
 };
 
-const validate = (req, res, next) => {
+const validateUser = (req, res, next) => {
   const errors = validationResult(req);
 
   if (errors.isEmpty()) {
@@ -33,5 +33,5 @@ const validate = (req, res, next) => {
 
 module.exports = {
   userValidationRules,
-  validate
+  validateUser
 };

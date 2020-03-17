@@ -1,0 +1,80 @@
+.newvotes-container {
+  width: 96vw;
+  height: 95vh;
+  padding: 2vh 2vw;
+  text-align: center;
+}
+
+.title {
+  font-size: 4rem;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+}
+
+.title > span {
+  cursor: pointer;
+}
+
+.vote-title {
+  font-size: 3rem;
+  border: 0;
+  border-bottom: 1px solid gray;
+  margin-left: 2rem;
+  width: 70vw;
+}
+
+.submit-button {
+  font-size: 1.3rem;
+  padding: 1rem;
+  margin-left: 2rem;
+  width: 7rem;
+  color: white;
+  background-color: #2E7EEA;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.options {
+  width: 70vw;
+  margin: 3rem auto;
+  margin-bottom: 1rem;
+}
+
+.option {
+  padding: 0.5rem 1rem;
+  font-size: 2rem;
+  width: 96%;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.expiration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.expiration-time {
+  margin-left: 1.5rem;
+  font-size: 1.5rem;
+  width: 70%;
+}
+
+.add-button {
+  font-size: 2rem;
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  padding-top: 0.5rem;
+}
+
+.add-button:hover {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  transition: background-color 0.5s;
+}

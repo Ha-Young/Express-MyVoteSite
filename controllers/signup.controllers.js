@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const errors = require('../lib/errors');
-const User = require('../models/Users');
+const Users = require('../models/Users');
 
 exports.registerUser = async (req, res, next) => {
   const { username, firstname, lastname, email, password, gender } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    const user = await Users.findOne({ email });
 
     if (!user) {
       await bcrypt.hash(password, 12, async (err, hashedPassword) => {
@@ -16,7 +16,7 @@ exports.registerUser = async (req, res, next) => {
           return next(new errors.HashGenerationError(err.message));
         }
 
-        const newUser = new User({
+        const newUser = new Users({
           username,
           firstname,
           lastname,

@@ -1,0 +1,19 @@
+extends layout
+
+block styles
+  link(rel="stylesheet", href="/stylesheets/newvotes.css")
+
+block content
+  form(action="/votings" method="POST").newvotes-container
+    .title
+      span x
+      input.vote-title(type="text" placeholder="투표 추가" name="title")
+    .options
+      div
+        input.option(type="text" placeholder="항목 입력" name="option1")
+      div.expiration
+        label(for="expiration") 마감시간 설정
+        input.expiration-time(type="datetime-local" name="expiration")
+      div.add-button 항목 추가
+    input.submit-button(type="submit" value="저장")
+  script(src="/javascripts/newvotes.js")

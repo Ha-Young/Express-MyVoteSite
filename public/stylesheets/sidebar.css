@@ -5,17 +5,30 @@
   align-items: center;
   padding: 5vh 0;
   height: 90vh;
-  width: 30vw;
+  width: 25vw;
 }
 
 .profile-image {
   height: 10rem;
   width: 10rem;
+  border-radius: 10rem;
 }
 
 .user-info {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.user-info > p {
+  margin: 0.5rem 0;
+}
+
+.create-votes {
+  cursor: pointer;
+}
+
+.votes {
+  margin-top: 10rem;
+  text-align: center;
+  font-size: 1.4rem;
 }

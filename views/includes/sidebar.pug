@@ -1,8 +1,20 @@
 .sidebar
-  img.profile-image(src="", alt="profile-image")
+  img.profile-image(src="https://cdn.shopify.com/s/files/1/0246/4622/1903/products/legostarwars-display_720x.png?v=1578179637", alt="profile-image")
   h1 username
   .user-info
-    p email
-    p gender
-    p created votes: votes_created.length
-    p voted votes: votes.voted.length
+    p dhs0113@naver.com
+    p male
+    p
+      a(href="/my-votings") 12 votes created
+  button.create-votes 투표 생성하기
+
+  .votes
+    p 전체 : 100 votes
+    p 진행 중 : 76 votes
+    p 종료됨 : 34 votes
+
+script.
+  const button = document.querySelector('.create-votes');
+  button.addEventListener('click', () => {
+    location.assign(location.href + 'votings/new');
+  });

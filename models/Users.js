@@ -55,4 +55,4 @@ UserSchema.methods.validatePassword = async (password, hashedPassword) => {
   return await bcyrpt.compare(password, hashedPassword);
 };
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Users', UserSchema);

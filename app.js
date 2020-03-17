@@ -11,6 +11,7 @@ const MongoStore = require('connect-mongo')(session);
 const homeRouter = require('./routes/home');
 const signupRouter = require('./routes/signup');
 const loginRouter = require('./routes/login');
+const votingRouter = require('./routes/voting');
 
 const errors = require('./lib/errors');
 
@@ -33,7 +34,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 5 },
+  cookie: { maxAge: 1000 * 60 * 20 },
   store: new MongoStore({ url: process.env.MONGODB_URI })
 }));
 app.use(passport.initialize());
@@ -42,6 +43,7 @@ app.use(passport.session());
 app.use('/', homeRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
+app.use('/votings', votingRouter);
 
 // 이상한 url일 때 대응해주는 에러
 app.use((req, res, next) => {

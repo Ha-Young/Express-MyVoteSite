@@ -1,5 +1,9 @@
-body {
+html, body {
   font-size: 10px;
+  box-sizing: content-box;
+}
+
+body {
   /* padding: 2vh 2vw; */
   margin: 0;
   height: 100vh;
