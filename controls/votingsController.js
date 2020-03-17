@@ -1,5 +1,20 @@
 import Vote from '../models/vote';
 
+export const getNewVote = (req, res) => {
+  res.render('newVoting');
+};
+
+export const getVoteDetail = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const vote = await Vote.findById(id).populate('creator');
+
+    res.render('votingDetail', { vote });
+  } catch (err) {
+    // Error handling
+  }
+};
+
 export const postVotings = async (req, res) => {
   try {
     const { voting_name, expiration_date, expiration_time, options } = req.body;

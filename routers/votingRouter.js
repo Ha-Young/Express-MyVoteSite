@@ -1,15 +1,11 @@
 import express from 'express';
-import { postVotings } from '../controls/votingsController';
+import { getNewVote, postVotings, getVoteDetail } from '../controls/votingsController';
 const router = express.Router();
 
-router.get('/new', (req, res) => {
-  res.render('newVoting');
-});
+router.get('/new', getNewVote);
 
 router.post('/', postVotings);
 
-router.get('/:id', (req, res) => {
-  res.render('votingDetail');
-});
+router.get('/:id', getVoteDetail);
 
 export default router;

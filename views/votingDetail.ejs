@@ -1,3 +1,6 @@
+<%
+  const { title, options, creator, expirated } = vote;
+%>
 <!DOCTYPE html>
 <html>
   <%- include('partial/head') -%>
@@ -5,14 +8,17 @@
     <%- include('partial/header') -%>
     <div class="container">
       <section class="voting-detail">
-        <h2>Title of Voting</h2>
+        <h2><%= title %></h2>
+        <p>Made by <%= creator.username %></p>
         <form action="/votings/id" method="POST">
           <fieldset class="box">
             <legend class="only_sound">Title of Voting</legend>
-            <p>
-              <input id="soso" type="radio" value="soso" name="value" />
-              <label for="soso">something</label>
-            </p>
+            <% for (let i = 0; i < options.length; i++) { %>
+              <p>
+                <input id="option<%= i %>" type="radio" value="<%= options[i].title %>" name="option" />
+                <label for="option<%= i %>"><%= options[i].title %></label>
+              </p>
+            <% } %>
           </fieldset>
           <div class="buttons-wrap">
             <input type="submit" class="button" value="제출하기" />
