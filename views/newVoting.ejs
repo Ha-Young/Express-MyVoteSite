@@ -9,13 +9,18 @@
 <body>
   <h1><%= title %></h1>
   <div>
-    <form action="/votings/new" method="post" >
+    <form action="/votings/new" method="post">
       제목 <input type="text" name="title" required><br>
       설명 <textarea name="description" required></textarea><br>
       만료일 <input type="date" name="expiration_date" required> <input type="time" name="expiration_time" required><br>
       선택사항 <input type="text" name="selectOption" placeholder="띄어쓰기 없이 ','로 구분해주세요" required><br>
       <input type="submit" value="투표생성">
     </form>
+  </div>
+  <div>
+    <% if (message) { %>
+    <%= message %>
+    <% } %>
   </div>
   <div>
     <a href="/">투표 목록으로 돌아가기</a>
