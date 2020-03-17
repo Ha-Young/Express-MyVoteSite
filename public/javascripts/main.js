@@ -30,7 +30,8 @@ if (confirm) {
 }
 
 function addOptionItem (count, target) {
-  const optionItem = `<input type="text" name="option${count}" />`;
+  //const optionItem = `<input type="text" name="option${count}" />`;
+  const optionItem = `<input type="text" name="options" />`;
   const p = document.createElement('p');
 
   p.innerHTML = optionItem;
