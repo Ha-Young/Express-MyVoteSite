@@ -11,7 +11,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    voteList_created_byUser:[{
+    voteList_created_byUser: [{
         id: String,
         title: String,
         creation_date: Date,

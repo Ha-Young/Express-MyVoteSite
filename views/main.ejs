@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <% for(let i of votingsData) { %>
+  <div class="votings">
+    <a href="/votings/<%= i.id %>">
+      <div>투표제목 <%= i.title %></div>
+      <div>작성자 <%= i.constructor %></div>
+      <div>투표 설명 <%= i.description %></div>
+      <div>만료일 <%= i.expirationDate %></div>
+      <% if(i.progress === true) { %>
+      <div>진행여부: 진행 중</div>
+      <% } %>
+      <% if(i.progress === false) { %>
+      <div>진행여부: 진행 종료</div>
+      <% } %>
+    </a>
+  </div>
+  <% } %>
+  <span>
+    <a href="/votings/new">투표 생성하기</a>
+  </span>
+  <span>
+    <a href="/my-votings">내 투표보기</a>
+  </span>
+</body>
+
+</html>
