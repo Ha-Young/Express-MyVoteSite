@@ -18,6 +18,19 @@ hr {
   margin: 2px 0px;
 }
 
+input::placeholder {
+  color: white;
+  font-style: italic;
+}
+
+input:focus, button:focus {
+	outline: none;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
 /* [header] */
 header {
   display: flex;
@@ -33,4 +46,46 @@ header h1, header h2, header h4 {
 .headerInfo {
   display: flex;
   align-items: baseline;
+}
+
+/* [create voting] */
+.createSection form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* [login] */
+.loginSection {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loginSection h1 {
+  font-family: 'Lobster', cursive;
+  font-size: 40px;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+}
+
+.loginForm input, .loginForm button {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border-style: none;
+  font-size: 30px;
+  color: white;
+}
+
+.loginForm input {
+  background-color: #d1f5d3;
+}
+
+.loginForm button {
+  background-color: #9dc6a7;
 }
