@@ -9,7 +9,7 @@ const passportConfig = require('./passport/passport.js');
 const index = require('./routes/index');
 const signup = require('./routes/signup');
 const auth = require('./routes/auth');
-const users = require('./routes/users');
+const votings = require('./routes/votings');
 const mongoose = require('mongoose');
 const db = mongoose.connection;
 
@@ -45,9 +45,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/', index);
-app.use('/users', users);
 app.use('/signup', signup);
 app.use('/auth', auth);
+app.use('/votings', votings);
 
 app.use(function(req, res, next) {
   next(new error.PageNotFoundError());

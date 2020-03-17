@@ -1,0 +1,71 @@
+form {
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+  width: 400px;
+  line-height: 20px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+form label {
+  display: block;
+  text-align: left;
+}
+
+form div {
+  width: 300px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+form p {
+  color: red;
+}
+
+input {
+  width: 300px;
+  height: 30px;
+  border-radius: 5px;
+  border: 0;
+  border: 1px solid rgb(219, 219, 219);
+}
+
+.submit-button {
+  margin-top: 10px;
+  width: 300px;
+  height: 30px;
+  margin-bottom: 20px;
+  border: 0;
+  border-radius: 5px;
+  background-color: rgb(26, 170, 85);
+  cursor: pointer;
+  color: #fff;
+}
+
+.submit-button:hover {
+  margin-top: 10px;
+  width: 300px;
+  height: 30px;
+  margin-bottom: 20px;
+  border: 0;
+  border-radius: 5px;
+  background-color: rgb(22, 143, 72);
+  cursor: pointer;
+  color: #fff;
+}
+
+.add-item-button {
+  border: 0;
+  outline: none;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: -30px;
+}
+
+.selection-input-container input {
+  margin-bottom: 5px;
+}
+
+.date-input {
+  margin-bottom: 5px;
+}

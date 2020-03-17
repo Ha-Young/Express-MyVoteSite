@@ -10,7 +10,7 @@ body {
 }
 
 a {
-  color: #00b7ff;
+  /* color: #00b7ff; */
   text-decoration: none;
 }
 
@@ -31,6 +31,29 @@ ul {
   list-style: none;
 }
 
+.user {
+  margin-right: 20px;
+}
 .user * {
-  margin-right: 10px;
+  margin-right: 20px;
+}
+
+.header-login-button {
+  margin-right: 20px;
+  color: #00b7ff;
+}
+
+.header-logout-button {
+  color: #00b7ff;
+}
+
+.title {
+  color: white;
+  font-size: 30px;
+  margin-left: -10px;
+  font-weight: 100;
+}
+
+.voting-creation-button:visited {
+  color: #fff;
 }

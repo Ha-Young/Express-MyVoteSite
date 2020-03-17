@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  link(rel='stylesheet', href='/stylesheets/voting-creation.css')
+  form(class="voting-creation-form" action="/votings/new", method="post")
+    h1(class="voting-creation-title") 투표 생성
+    div
+      label 제목
+      input(type="text", name="voting-title")
+    div(class="selection-input-container")
+      label 투표 선택 사항
+      input(class="selection-input" type="text", name="selection")
+    button(class="add-item-button" type="button") +
+    div
+      label 만료 날짜
+      input(class="date-input" type="date", name="date")
+      input(type="time", name="time")
+    button(class="submit-button" type="submit") 생성하기
+    if (error)
+      p(class="error-message") #{error.message}
+  script(src="/javascripts/votingCreation.js")

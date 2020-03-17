@@ -6,13 +6,15 @@ html
   body
     header
       ul
-        li(class="title") Voting
+        li
+          a(class="title", href="/") Voting
         li
           if user
             div(class="user") 
               span #{user.nickname}
-              span 더보기
-              a(href="/auth/logout") 로그아웃
+              a(class="voting-creation-button", href="/votings/new") 투표 생성
+              a(class="my-voting") 내 투표
+              a(class="header-logout-button", href="/auth/logout") 로그아웃
           else 
-            a(href="/auth/login") 로그인
+            a(class="header-login-button", href="/auth/login") 로그인
     block content
