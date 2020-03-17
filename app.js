@@ -8,6 +8,7 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const createError = require('http-errors');
+const flash = require('connect-flash');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
@@ -41,6 +42,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 mongoose.connect(process.env.DB_URL, {
   useNewUrlParser: true,

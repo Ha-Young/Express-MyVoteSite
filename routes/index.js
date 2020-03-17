@@ -11,13 +11,17 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/login', (req, res, next) => {
+  const flash = req.flash();
+  if (flash.error) return res.render('login', { loginMsg: flash.error[0] });
+  if (flash.signUpMsg) return res.render('login', { loginMsg: flash.signUpMsg[0] });
   res.render('login');
 });
 
 router.post('/login', 
   passportLocal.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/login',
+    failureRedirect: '/login', 
+    failureFlash: true,
   }));
 
 router.get('/logout', (req, res) => {
@@ -51,10 +55,11 @@ router.post('/signup', [
     if(!errors.length) {
       const newUser = new User({
         email: req.body.email,
-        password: req.body.email,
+        password: req.body.password,
       });
   
       await newUser.save();
+      req.flash('signUpMsg', 'Welcome. :) Login Please.');
       res.status(307).redirect('/login');
     } else {
       return res.render('signupFail', { message: errors[0].msg });

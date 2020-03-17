@@ -6,14 +6,16 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
-    "bcrypt": "^4.0.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^2.3.1",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "express-session": "^1.17.0",
+    "express-validator": "^6.4.0",
     "http-errors": "~1.6.3",
     "mongoose": "^5.9.4",
     "passport": "^0.4.1",
