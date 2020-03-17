@@ -43,7 +43,15 @@ main{
   background-color: whitesmoke;
 }
 
+.button-vote-creator{
+  float:right;
+  margin-top:-50px;
+  font-size:20px;
+  padding:10px;
+  border-radius:10px;
+}
 
 .vote {
   border: solid 1px black;
 }
+

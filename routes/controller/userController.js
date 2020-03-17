@@ -36,12 +36,13 @@ async function findUser(req, res, next) {
       if (isMatch) {
         console.log("통과");
         //세션 처리
-        res.json({ message: LOGIN_RESULT.SUCCESS });
-        return;
+        req.session.displayname = email.split('@')[0];
+        req.session.save(function(){
+          res.json({ message: LOGIN_RESULT.SUCCESS });
+      });
       } else {
         console.log("비밀번호 오류");
         res.json({ message: LOGIN_RESULT.WRONG_PASSWORD });
-        return;
       }
     });
   } else {
