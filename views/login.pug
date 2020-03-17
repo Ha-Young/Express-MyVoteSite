@@ -10,7 +10,5 @@ block content
         button(onclick='confirm()') login
       p.message Not registered? 
         a.anchor(href="/signup") Create an account
-  script.
-    function confirm(){
-      alert('login!')
-    }
+      p.error
+  script(src='/javascripts/login.js')
