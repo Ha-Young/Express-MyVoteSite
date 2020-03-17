@@ -1,16 +1,16 @@
 const User = require("../../models/User");
-async function findOrCreateUser(req, res, next) {
-  console.log('request:',req.body);
-  const {email}=req.body;
-  const targetUser = await User.findOne({ email:email });
-  if(targetUser){
-    console.log('이미존재');
-  }else{
-    console.log('정보를 저장합니다');
-    User.create(req.body);
-  }
+const SIGNUP_RESULT={ SIGNUP_SUCCESS:'SIGNUP_SUCCESS' , USER_EXIST:"USER_EXIST" }
 
-  res.render("signup", { title: "voting-app", style: "login" });
+async function findOrCreateUser(req, res, next) {
+  console.log("request here", req.body);
+  const { email } = req.body;
+  const targetUser = await User.findOne({ email: email });
+  if (targetUser) {
+    res.json({ message: SIGNUP_RESULT.USER_EXIST });
+  } else {
+    User.create(req.body);
+    res.json({ message: SIGNUP_RESULT.SIGNUP_SUCCESS });
+  }
 }
 
 module.exports = { findOrCreateUser };
