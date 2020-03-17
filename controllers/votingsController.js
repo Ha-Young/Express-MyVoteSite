@@ -16,7 +16,7 @@ export const getNewVote = (req, res) => {
 
 export const getVoteDetail = async (req, res) => {
   try {
-    const id = req.params.id;
+    const { id } = req.params;
     const vote = await Vote.findById(id).populate('creator');
 
     res.render('votingDetail', { vote });
@@ -27,9 +27,14 @@ export const getVoteDetail = async (req, res) => {
 
 export const postVotings = async (req, res) => {
   try {
-    const { voting_name, expiration_date, expiration_time, options } = req.body;
+    const {
+      voting_name,
+      expiration_date,
+      expiration_time,
+      options
+    } = req.body;
     const expirated = `${expiration_date}T${expiration_time}`;
-    const handledOptions = options.map(option => ({ title: option }));
+    const handledOptions = options.map((option) => ({ title: option }));
     const vote = await Vote.create({
       title: voting_name,
       options: handledOptions,
@@ -49,11 +54,11 @@ export const postVotingDetail = async (req, res) => {
     const userId = req.user.id;
     const value = req.body.option;
     const vote = await Vote.findById(voteId);
-    const targetOption = vote.options.find(option => option.title === value);
+    const targetOption = vote.options.find((option) => option.title === value);
 
     targetOption.received.push(userId);
     await vote.save();
-
+    res.redirect('success');
     // Redirect Success
   } catch (err) {
     // Error handling

@@ -1,5 +1,10 @@
 import express from 'express';
-import { getNewVote, postVotings, getVoteDetail, postVotingDetail } from '../controllers/votingsController';
+import {
+  getNewVote,
+  postVotings,
+  getVoteDetail,
+  postVotingDetail
+} from '../controllers/votingsController';
 
 const router = express.Router();
 

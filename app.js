@@ -10,6 +10,7 @@ import authRouter from './routers/authRouter';
 import votingRouter from './routers/votingRouter';
 
 import './db';
+import './passport';
 
 const app = express();
 
@@ -29,13 +30,11 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(localMiddleware)
+app.use(localMiddleware);
 
 app.use('/', rootRouter);
 app.use('/auth', authRouter);
 app.use('/votings', votingRouter);
-
-import './passport';
 
 app.use((req, res, next) => {
   next(createError(404));

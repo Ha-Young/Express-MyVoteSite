@@ -14,8 +14,13 @@ export const getSignup = (req, res) => {
   res.render('signup');
 };
 
-export const postSignup = async (req, res, next) => {
-  const { username, email, password, password2 } = req.body;
+export const postSignup = async (req, res) => {
+  const {
+    username,
+    email,
+    password,
+    password2
+  } = req.body;
 
   if (password !== password2) {
     res.send('Password is not Matched');
@@ -38,4 +43,4 @@ export const postSignup = async (req, res, next) => {
 export const getLogout = (req, res) => {
   req.logout();
   res.redirect('/');
-}
+};
