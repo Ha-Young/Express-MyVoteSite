@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    link(rel="stylesheet", href="/stylesheets/success.css")
+  body
+    nav
+      ul
+        if hasLoggedIn
+          li 
+            button Main
+          li 
+            button New vote
+          li 
+            button My vote
+          li 
+            button Logout
+        else
+          li 
+            button Main
+          li 
+            button New vote
+          li 
+            button Logout
+          h1 Your vote has been created successfully
+          butotn Go to main
+          

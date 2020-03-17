@@ -25,6 +25,9 @@ const pollSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  expiringTime: {
+    type: Date, 
+  },
   answers: [answerSchema],
 });
 
