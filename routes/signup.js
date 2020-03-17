@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const error = require('../lib/error');
+const bcrypt = require('bcrypt');
 
 router.get('/', (req, res) => {
   res.render('signup');
@@ -11,18 +12,17 @@ router.post('/', async (req, res, next) => {
   const { email, nickname, password, confirm } = req.body;
   const userByEmail = await User.findOne({ email });
   const userByNickname = await User.findOne({ nickname });
-  console.log('sdsdsdsdsd', userByEmail);
+  const salt = bcrypt.genSaltSync();
+  const hash = bcrypt.hashSync(password, salt);
 
   try {
     if (userByEmail) throw new error.SignupEmailError();
     if (userByNickname) throw new error.SignupNicknameError();
     if (password !== confirm) throw new error.SignupPasswordError();
 
-    new User({ email, nickname, password }).save();
-    console.log('==============');
+    await new User({ email, nickname, password: hash }).save();
     res.redirect('/login');
   } catch (err) {
-    console.log(err);
     if (err instanceof error.SignupEmailError) {
       return res.render('signup', { emailError: err.displayMessage });
     }

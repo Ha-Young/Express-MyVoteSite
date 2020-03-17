@@ -1,0 +1,36 @@
+body {
+  padding: 50px;
+  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  text-align: center;
+  color: rgb(46, 46, 46);
+}
+
+a {
+  color: #00b7ff;
+  text-decoration: none;
+}
+
+header {
+  background-color: #292961;
+  color: #fff;
+  width: 100%;
+  line-height: 50px;
+}
+
+ul {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+ul {
+  list-style: none;
+}
+
+.user * {
+  margin-right: 10px;
+}
