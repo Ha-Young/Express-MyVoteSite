@@ -1,0 +1,31 @@
+extends layout
+
+block styles
+  link(rel="stylesheet", href="/stylesheets/vote.css")
+  link(rel="stylesheet", href="/stylesheets/sidebar.css")
+
+block content
+  body
+    .vote-container
+      include includes/sidebar.pug
+      .vote-viewer
+        .vote
+          .vote-top
+            if vote.voteStatus
+              p.vote-status.ongoing #{vote.voteStatus}
+            else
+              p.vote-status.closed #{vote.voteStatus}
+            p #{vote.expirationDate}
+          span.vote-title #{vote.title}
+          form
+            fieldset.vote-mid
+              each option, index in vote.options
+                div.option
+                  input(type="radio", name="option" id=option.description)
+                  label(for=option.description) #{option.description}
+              input(type="submit", value="투표하기")
+          .vote-bottom
+            button 목록으로
+            if currentUser === createdBy
+              button 투표 삭제
+  //- script(src="/javascripts/vote.js")

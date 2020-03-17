@@ -21,9 +21,10 @@
   border: 1px solid black;
   border-radius: 0.5rem;
   width: 25rem;
-  height: 22rem;
+  height: 25rem;
   margin: 2rem;
   padding: 0.5rem 1rem;
+  cursor: pointer;
 }
 
 .vote-top {

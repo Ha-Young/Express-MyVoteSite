@@ -45,16 +45,9 @@ app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
 app.use('/votings', votingRouter);
 
-// 이상한 url일 때 대응해주는 에러
 app.use((req, res, next) => {
   next(new errors.InvalidUrlError('Invalid url.'));
 });
-
-
-
-
-
-
 
 // error handler
 app.use((err, req, res, next) => {

@@ -11,7 +11,7 @@ passport.use(new LocalStrategy({
       const user = await User.findOne({ email });
 
       if (!user) {
-        return done(null, false, 'Invalid email address.');
+        return done(null, false, 'There is no user matches with this email.');
       }
 
       const { password: hashedPassword } = user;

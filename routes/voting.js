@@ -9,4 +9,6 @@ router.get('/new', checkAuthentication, (req, res) => res.render('newvotes'));
 
 router.post('/', checkAuthentication, votingControllers.registerVote);
 
+router.get('/:id', checkAuthentication, votingControllers.renderVote);
+
 module.exports = router;

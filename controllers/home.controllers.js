@@ -2,7 +2,7 @@ const NO_VOTES_MESSAGE = "🥺 등록된 투표가 없어요 🥺";
 
 const Votes = require('../models/Votes');
 const errors = require('../lib/errors');
-const { makeVisualData } = require('../lib/helpers');
+const { makeDisplayInfo } = require('../lib/helpers');
 
 exports.renderVotes = async (req, res, next) => {
   try {
@@ -12,13 +12,18 @@ exports.renderVotes = async (req, res, next) => {
       return res.render('home', { message: NO_VOTES_MESSAGE });
     }
 
-    const visualDataList = [];
-    votes.forEach(vote => {
-      visualDataList.push(makeVisualData(vote));
+    const votesInfoForDisplay = votes.map(vote => {
+      return makeDisplayInfo(vote);
     });
 
-    res.render('home', { votes: visualDataList });
+    votesInfoForDisplay.sort((a, b) => {
+      return a.expires_at < b.expires_at ? -1 :
+        a.expires_at > b.expires_at ? 1 : 0;
+    });
+
+    res.render('home', { votes: votesInfoForDisplay });
   } catch(err) {
     next(new errors.GeneralError(err.message));
   }
 };
+

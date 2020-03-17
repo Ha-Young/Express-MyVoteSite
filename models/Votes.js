@@ -8,6 +8,11 @@ const VoteSchema = new Schema({
     required: [ true, 'Vote title is required.' ],
     index: true,
   },
+  vote_id: {
+    type: Number,
+    required: true,
+    unique: true
+  },
   select_options: [{
     description: {
       type: String,

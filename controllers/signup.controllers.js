@@ -15,7 +15,10 @@ exports.registerUser = async (req, res, next) => {
           return next(new errors.HashGenerationError(err.message));
         }
 
+        const counter = await Users.estimatedDocumentCount();
+
         await Users.create({
+          user_id: counter + 1,
           username,
           firstname,
           lastname,

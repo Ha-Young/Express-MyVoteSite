@@ -13,17 +13,29 @@ block content
           h1.no-votes #{message}
         else
           each vote in votes
-            .vote
+            div(data-id=vote.vote_id).vote
               .vote-top
                 p #{vote.voteStatus}
-                p #{vote.title}
+                p #{vote.expirationDate}
+              p #{vote.title}
               .scroll
                 .vote-mid
                   each option in vote.options
                     .option
                       span #{option.description}
-                      span #{option.vote_counter} 명
               .vote-bottom
                 p #{vote.totalVoters} 명 참여 중
-                button 투표 참여하기
+                p made by #{vote.username}
+
+  script.
+    if (!document.querySelector('.no-votes')) {
+      const voteCards = document.querySelectorAll('.vote');
+
+      for (const card of voteCards) {
+        card.addEventListener('click', () => {
+          location.assign(location.origin + '/votings/' + card.dataset.id);
+        });
+      }
+    }
+
 

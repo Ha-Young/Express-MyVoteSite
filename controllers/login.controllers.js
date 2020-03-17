@@ -1,5 +1,7 @@
 const passport = require('passport');
 
+const errors = require('../lib/errors');
+
 exports.processLogin = (req, res, next) => {
   passport.authenticate('local', (err, validUser, authFailureMessage) => {
     if (err) {
