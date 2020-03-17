@@ -44,7 +44,7 @@
 .option {
   padding: 0.5rem 1rem;
   font-size: 2rem;
-  width: 96%;
+  width: 80%;
   border-radius: 0.5rem;
   margin-bottom: 1rem;
 }
@@ -59,7 +59,8 @@
 .expiration-time {
   margin-left: 1.5rem;
   font-size: 1.5rem;
-  width: 70%;
+  width: 50%;
+  text-align: center;
 }
 
 .add-button {
@@ -77,4 +78,21 @@
   color: white;
   border: 1px solid white;
   transition: background-color 0.5s;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reset-button {
+  font-size: 1.3rem;
+  padding: 0.8rem 1rem;
+  margin-left: 2rem;
+  width: 7rem;
+  color: white;
+  background-color: rgb(30, 118, 34);
+  border-radius: 0.5rem;
+  cursor: pointer;
 }

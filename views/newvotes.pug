@@ -7,13 +7,16 @@ block content
   form(action="/votings" method="POST").newvotes-container
     .title
       span x
-      input.vote-title(type="text" placeholder="투표 추가" name="title")
+      input.vote-title(type="text" placeholder="투표 추가" name="title" required)
     .options
       div
-        input.option(type="text" placeholder="항목 입력" name="option1")
+        input.option(type="text" placeholder="항목 입력" name="option1" required)
+        input.option(type="text" placeholder="항목 입력" name="option1" required)
       div.expiration
         label(for="expiration") 마감시간 설정
-        input.expiration-time(type="datetime-local" name="expiration")
+        input.expiration-time(type="datetime-local" name="expiration" required)
       div.add-button 항목 추가
-    input.submit-button(type="submit" value="저장")
+    div.buttons
+      input.submit-button(type="submit" value="저장")
+      span.reset-button 새로 만들기
   script(src="/javascripts/newvotes.js")

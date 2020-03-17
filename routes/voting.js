@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+const errors = require('../lib/errors');
+
 const checkAuthentication = require('../middlewares/authenticate');
 const Users = require('../models/Users');
 const Votes = require('../models/Votes');
@@ -12,6 +14,10 @@ router.get('/new', checkAuthentication, (req, res, next) => res.render('newvotes
 router.post('/', checkAuthentication, async (req, res, next) => {
   const { title, expiration, ...options } = req.body;
   const select_options = [];
+
+  if (new Date(expiration).toISOString() < new Date().toISOString()) {
+    return next(new errors.InvalidExpirationError());
+  }
 
   Object.values(options).forEach(option => {
     const temp = {};

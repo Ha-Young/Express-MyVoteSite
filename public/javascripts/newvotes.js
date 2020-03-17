@@ -6,7 +6,7 @@ closeButton.addEventListener('click', () => {
   history.back();
 });
 
-let counter = 2;
+let counter = 3;
 
 addButton.addEventListener('click', () => {
   const optionInputField = document.createElement('input');
@@ -19,4 +19,9 @@ addButton.addEventListener('click', () => {
   counter++;
 
   optionDiv.appendChild(optionInputField);
+});
+
+const resetButton = document.querySelector('.reset-button');
+resetButton.addEventListener('click', () => {
+  window.location.reload();
 });
