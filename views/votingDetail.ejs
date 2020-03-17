@@ -1,5 +1,5 @@
 <%
-  const { title, options, creator, expirated } = vote;
+  const { id, title, options, creator, expirated } = vote;
 %>
 <!DOCTYPE html>
 <html>
@@ -10,7 +10,7 @@
       <section class="voting-detail">
         <h2><%= title %></h2>
         <p>Made by <%= creator.username %></p>
-        <form action="/votings/id" method="POST">
+        <form action="/votings/<%= id %>" method="POST">
           <fieldset class="box">
             <legend class="only_sound">Title of Voting</legend>
             <% for (let i = 0; i < options.length; i++) { %>

@@ -40,6 +40,22 @@ export const postVotings = async (req, res) => {
     res.redirect(`/votings/${vote.id}`);
   } catch (err) {
     // Error handler
-    console.log(err);
+  }
+};
+
+export const postVotingDetail = async (req, res) => {
+  try {
+    const voteId = req.params.id;
+    const userId = req.user.id;
+    const value = req.body.option;
+    const vote = await Vote.findById(voteId);
+    const targetOption = vote.options.find(option => option.title === value);
+
+    targetOption.received.push(userId);
+    await vote.save();
+
+    // Redirect Success
+  } catch (err) {
+    // Error handling
   }
 };
