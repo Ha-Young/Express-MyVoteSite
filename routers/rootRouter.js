@@ -1,6 +1,6 @@
 import express from 'express';
 import { getLogout, getLogin, postLogin, getSignup, postSignup } from '../controls';
-import { getHome } from '../controls/votingsController';
+import { getHome, getSuccess } from '../controls/votingsController';
 
 const router = express.Router();
 
@@ -15,5 +15,7 @@ router.post('/login', postLogin);
 router.get('/signup', getSignup);
 
 router.post('/signup', postSignup);
+
+router.get('/success', getSuccess);
 
 export default router;

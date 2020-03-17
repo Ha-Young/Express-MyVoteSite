@@ -118,11 +118,11 @@ h2 {
 /*
   login
 */
-.login {
+.no-header {
   height: 100%;
   display: flex;
 }
-.login-box {
+.no-header section {
   display: flex;
   align-self: center;
   margin: 0 auto;
@@ -131,7 +131,7 @@ h2 {
   background-color: #fff;
   border-radius: 4px;
 }
-.login-box h3 {
+.no-header section h3 {
   font-size: 20px;
   margin-bottom: 21px;
 }

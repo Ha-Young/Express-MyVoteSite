@@ -59,3 +59,7 @@ export const postVotingDetail = async (req, res) => {
     // Error handling
   }
 };
+
+export const getSuccess = (req, res) => {
+  res.render('success');
+};
