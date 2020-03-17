@@ -16,7 +16,7 @@ router.get('/login', (req, res, next) => {
   const flash = req.flash();
   if (flash.error) return res.render('login', { loginMsg: flash.error[0] });
   if (flash.signUpMsg) return res.render('login', { loginMsg: flash.signUpMsg[0] });
-  res.render('login');
+  res.render('login', { loginMsg: 'Sign In'});
 });
 
 router.post('/login', 
@@ -40,19 +40,19 @@ router.get('/signup', (req, res, next) => {
 router.post('/signup', [
   check('email')
     .notEmpty()
-    .withMessage('이메일을 작성해주세요.')
+    .withMessage('Please fill out the email.')
     .isEmail()
-    .withMessage('이메일 형식으로 작성해주세요'),
+    .withMessage('Please fill it out in e-mail format.'),
   check('password')
     .notEmpty()
-    .withMessage('비밀번호를 작성해주세요.')
+    .withMessage('Please fill out the password.')
     .matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}/)
-    .withMessage('비밀번호는 8~15자 이하이고, 소문자/대문자/숫자 하나가 포함되어야 합니다.'),
+    .withMessage('Passwords are 8-15 characters long and must contain one lower case/upper case/numeric character.'),
   check('passwordConfirmation')
     .notEmpty()
-    .withMessage('비밀번호 확인란을 작성해주세요.')
+    .withMessage('Please fill in the password check box.')
     .custom((value, { req }) => value === req.body.password)
-    .withMessage('입력하신 비밀번호가 서로 다릅니다.'),
+    .withMessage('The passwords you entered is different.'),
 ], async (req, res, next) => {
   try {
     const errors = validationResult(req).errors;
@@ -86,19 +86,19 @@ router.get('/votings/new', ensureAuthenticated, (req, res, next) => {
 router.post('/votings/new', [
   check('title')
     .notEmpty()
-    .withMessage('제목을 작성해주세요.'),
+    .withMessage('Please fill out title.'),
   check('expiration_time')
     .notEmpty()
-    .withMessage('만료 기한을 작성해주세요')
+    .withMessage('Please fill out expiration date.')
     .custom((value, { req }) => {
       const mergedDateTime = req.body.expiration_date + ' ' + value;
       return new Date() < new Date(mergedDateTime);
     })
-    .withMessage('만료 기한은 현재 시점보다 이후 시점으로 작성해주세요.'),
+    .withMessage('Please fill out the expiration date later than the current time.'),
   check('options')
     .exists()
     .custom((value, { req }) => value.every(option => option.length > 0))
-    .withMessage('최소 2개의 옵션을 작성해 주세요.'),
+    .withMessage('Please fill out at least two options.'),
 ], ensureAuthenticated, async (req, res, next) => {
   try {
     const errors = validationResult(req).errors;
