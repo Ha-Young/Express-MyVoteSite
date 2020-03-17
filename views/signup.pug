@@ -5,9 +5,45 @@ block content
   div.register-page
     div.form
       form.register-form
-        input(type="text" placeholder="name")
-        input(type="password" placeholder="password")
-        input(type="text" placeholder="email address")
-        button create
-        p.message Already registered? 
-          a.anchor(href="/login") Sign In
+        input(name='email' type="email" placeholder="email")
+        //- oninvalid="this.setCustomValidity('다음과 같은 형식이어야 합니다. example@gmail.com')"
+        //- onvalid="this.setCustomValidity('')")
+        input(name='password' type="password" placeholder="password")
+        //- oninvalid="this.setCustomValidity('요구사항: 영문,숫자,특수기호를 포함한 7~15의 비밀번호')"
+        //- onvalid="this.setCustomValidity('')")
+        input(type="password" placeholder="password confirm" required)
+        button(onclick='confirm()') create
+        p.message Already registered?
+          a.anchor(href="/login") Login
+  script.
+    const form=document.querySelector('form');
+
+    function confirm(){
+      // password validation:at least one numeric digit and a special character
+        const email=document.querySelector('input[type="email"]');
+        const emailPattern=/\S+@\S+\.\S+/ ;
+        const passwords=document.querySelectorAll('input[type="password"]');
+        const password=passwords[0].value;
+        const passwordConfirm=passwords[1].value;
+        const passwordPattern=/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
+          if(email.value.match(emailPattern)){
+            if(passwords[0].value.match(passwordPattern))
+            {
+              form.method='POST';
+              form.action='/signup'
+              if(password===passwordConfirm){
+                 form.submit()
+
+              } else {
+                alert("비밀번호가 일치하지 않습니다.")
+                formListener=form.addEventListener('submit',e=>{e.preventDefault()});
+              }
+            } else {
+              alert('비밀번호 조건: 영문,숫자,특수기호를 포함한 7~15자리');
+              formListener=form.addEventListener('submit',e=>{e.preventDefault()});
+            }
+          } else {
+          alert('다음과 같은 형식이어야 합니다. example@gmail.com');
+          formListener=form.addEventListener('submit',e=>{e.preventDefault()});
+          }
+    }
