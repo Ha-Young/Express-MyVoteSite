@@ -1,4 +1,4 @@
-const SIGNUP_RESULT={ SIGNUP_SUCESS:'SIGNUP_SUCCESS' , USER_EXIST:"USER_EXIST" }
+const SIGNUP_RESULT={ SIGNUP_SUCCESS:'SIGNUP_SUCCESS' , USER_EXIST:"USER_EXIST" }
 
 function confirm() {
   const form = document.querySelector("form");
