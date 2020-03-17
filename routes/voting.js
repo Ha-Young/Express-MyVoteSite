@@ -28,11 +28,13 @@ router.post('/', checkAuthentication, async (req, res, next) => {
     select_options.push(temp);
   });
 
+  console.log(select_options);
+
   const newVote = new Votes({
     title,
     select_options,
     created_by: req.user._id,
-    expired_at: new Date(expiration).toISOString()
+    expires_at: new Date(expiration).toISOString()
   });
 
   await newVote.save();

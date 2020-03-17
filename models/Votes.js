@@ -28,7 +28,7 @@ const VoteSchema = new Schema({
     ref: 'Users',
     require: [ true, 'Should include user who created this vote.' ]
   },
-  expired_at: {
+  expires_at: {
     type: Date,
     require: [ true, 'Should set expiration date.' ]
   }

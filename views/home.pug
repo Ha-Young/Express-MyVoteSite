@@ -5,8 +5,15 @@ block styles
   link(rel="stylesheet", href="/stylesheets/sidebar.css")
 
 block content
-
   body
     .home
       include includes/sidebar.pug
-      h1 Home Page
+      .vote-viewer
+        each vote in votes
+          .vote
+            span #{vote.title}
+            //- span #{vote.}
+            each option in vote.select_options
+              .vote-status
+                p #{option.description}
+                p #{option.vote_counter} 명

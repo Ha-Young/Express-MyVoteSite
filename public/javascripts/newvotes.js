@@ -3,7 +3,7 @@ const addButton = document.querySelector('.add-button');
 const optionDiv = document.querySelector('.options > div');
 
 closeButton.addEventListener('click', () => {
-  history.back();
+  location.assign(location.origin);
 });
 
 let counter = 3;
