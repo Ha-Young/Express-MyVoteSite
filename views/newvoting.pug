@@ -1,0 +1,33 @@
+doctype html
+html
+  head
+    link(rel="stylesheet", href="/stylesheets/newvoting.css")
+  body
+    nav
+      ul
+        if hasLoggedIn
+          li 
+            button Vote
+          li 
+            button New vote
+          li 
+            button My vote
+          li 
+            button Logout
+        else
+          li 
+            button Vote
+          li 
+            button New vote
+          li 
+            button Logout
+    main
+     form(class="voteForm" method="post")
+      label(for="topic") Topic
+      input(type="text" name="topic" placeholder="Type your topic here")
+      div(class="inputBox")
+        input(type="text" name="answer1" placeholder="Type your answer here")
+        input(type="text" name="answer2" placeholder="Type your answer here")
+      button(type="text" class="addButton") Add
+      input(type="submit" value="Submit")
+    script(src="/javascripts/newvoting.js")

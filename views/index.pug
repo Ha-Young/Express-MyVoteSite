@@ -1,17 +1,25 @@
 doctype html
 html
   head
-    link(rel="stylesheet", href="/stylesheets/style.css")
+    link(rel="stylesheet", href="/stylesheets/index.css")
   body
     nav
       ul
-        li 
-          button Vote
-        li 
-          button New vote
-        li 
-          button My vote
-        li 
-          button login
+        if hasLoggedIn
+          li 
+            button Vote
+          li 
+            button New vote
+          li 
+            button My vote
+          li 
+            button Logout
+        else
+          li 
+            button Vote
+          li 
+            button New vote
+          li 
+            button Logout
     main
      

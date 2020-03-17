@@ -11,7 +11,11 @@ const regPatterns = {
 
 
 router.get('/', (req, res, next) => {
-  res.render('signup');
+  if (req.isAuthenticated()) {
+    res.render('signup', { hasLoggedIn: true });
+  } else {
+    res.render('signup', { hasLoggedIn: false });
+  }
 });
 
 
@@ -47,16 +51,14 @@ const validateDuplication = async (req,res, next) => {
 
     const password = await bcrypt.hash(req.body.password, 10);
     const newUser = await new User({ email, password }).save();
-    console.log(newUser);
+    next();
   } catch(e) {
     next(e);
   }
-
 };
 
-
 router.post('/', validateSignupInput, validateDuplication, (req, res, next) => {
-  console.log(req.body)
+  res.redirect('/');
 });
 
 module.exports = router;

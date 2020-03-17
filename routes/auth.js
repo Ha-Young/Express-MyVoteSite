@@ -6,9 +6,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
-/* GET users listing. */
-router.get('/login', function(req, res, next) {
-  res.render('login');
+router.get('/login', (req, res, next) => {
+  if (req.isAuthenticated()) {
+    res.render('login', { hasLoggedIn: true });
+  } else {
+    res.render('login', { hasLoggedIn: false });
+  }
 });
 
 

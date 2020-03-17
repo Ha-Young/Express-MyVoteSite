@@ -1,12 +1,15 @@
 const express = require('express');
-const createError = require('http-errors')
+const passport = require('passport');
+const createError = require('http-errors');
 const router = express.Router();
 const checkAuth = require('../middleware/check-auth');
-/* GET home page. */
 
 router.get('/', (req, res, next) => {
-  res.render('index');
-  // res.render('index', { title: 'Express' });
+  if (req.isAuthenticated()) {
+    res.render('index', { hasLoggedIn: true });
+  } else {
+    res.render('index', { hasLoggedIn: false });
+  }
 });
 
 

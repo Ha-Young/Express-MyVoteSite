@@ -1,5 +1,13 @@
 const mongoose = require('mongoose');
 
+pollSchema = new mongoose.Schema({
+  mypoll: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Poll',
+  }
+});
+
+
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -10,6 +18,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  myPolls: [pollSchema]
 });
 
 module.exports = mongoose.model('User', userSchema);

@@ -5,14 +5,22 @@ html
   body
     nav
       ul
-        li 
-          button Vote
-        li 
-          button New vote
-        li 
-          button My vote
-        li 
-          button login
+        if hasLoggedIn
+          li 
+            button Vote
+          li 
+            button New vote
+          li 
+            button My vote
+          li 
+            button Logout
+        else
+          li 
+            button Vote
+          li 
+            button New vote
+          li 
+            button Login
     main
       form(action="" method="post" class="form")
         h1 Sign up

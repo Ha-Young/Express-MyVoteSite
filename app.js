@@ -2,15 +2,14 @@ require('dotenv').config();
 const createError = require('http-errors')
 const express = require('express');
 const path = require('path');
-// const bodyParser = require('body-parser');
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const signupRouter = require('./routes/signup');
-const authRouter = require('./routes/auth');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
 
+const indexRouter = require('./routes/index');
+const signupRouter = require('./routes/signup');
+const authRouter = require('./routes/auth');
+const votingRouter = require('./routes/votings');
 
 require('./config/passport')(passport);
 
@@ -44,27 +43,20 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/users', usersRouter);
 app.use('/signup', signupRouter);
 app.use('/auth', authRouter);
 app.use('/', indexRouter);
+app.use('/votings', votingRouter);
 
-
-
-
-
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  console.log(1111111)
   next(createError(404));
 });
 
-// error handler
+
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });

@@ -1,0 +1,24 @@
+nav {
+  margin: 0 auto;
+  min-height: 100px;
+  width: 70%;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-between;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+ul li button {
+  padding: 8px 16px;
+  border-radius: 10px;
+}
+
+main {
+  margin: 0 auto;
+  width: 70%;
+}
