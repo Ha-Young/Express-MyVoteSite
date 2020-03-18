@@ -206,3 +206,10 @@ header h4 {
   margin: 20px;
   padding: 10px;
 }
+
+/* [my voting] */
+.myVoting {
+  padding: 2px;
+  border-radius: 10px;
+  background-color: #f8fab8;
+}
