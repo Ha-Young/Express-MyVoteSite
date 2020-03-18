@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  myPolls: [pollSchema]
+  myPolls: [pollSchema],
 });
 
 module.exports = mongoose.model('User', userSchema);

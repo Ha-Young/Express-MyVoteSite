@@ -1,7 +1,6 @@
 const addButton = document.querySelector('.addButton');
 const inputBox = document.querySelector('.inputBox');
 let answerNumber = 2;
-console.log(addButton);
 
 addButton.addEventListener('click', (e) => {
   e.preventDefault();

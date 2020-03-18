@@ -6,16 +6,21 @@ if (deleteButton) {
     const pollId = deleteButton.dataset.pollid;
     const url = `http://localhost:4000/votings/${pollId}`;
     try {
-      fetch(url, {
+      const response = await fetch(url, {
         method: 'delete',
         body: JSON.stringify({ pollId }),
         headers: new Headers({
         'Content-Type': 'application/json',
         }),
       });
+      
+      if (response.ok) {
+        return location.href = 'http://localhost:4000';
+      }
 
+      // throw Error(response.statusText);
     } catch(e) {
-
+      console.log(e)
     }
   });
 }

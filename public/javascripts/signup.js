@@ -16,7 +16,7 @@ const validate = (input) => {
   const value = input.value;
   if (fieldName === 'confirmPassword') {
     if (value === password.value) {
-      console.log('valid')
+      // console.log('valid')
       input.className = 'valid';
     } else {
       input.className = 'invalid';

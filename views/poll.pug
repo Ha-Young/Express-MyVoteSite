@@ -40,14 +40,10 @@ html
           button(class="deleteButton" data-pollid=`${poll.id}`) Delete
       div
         if displayResults
+          h1=`최다표: ${displayResults[0].votes}`
           each val in displayResults
             h1=val.votes
             h1=val.answer
-      //- br
-      //- br
-      //- div(class="chartContainer" style="height: 300px;width: 100%")
-      //- script(src="https://cdnjs.cloudflare.com/ajax/libs/pusher/5.0.2/pusher.min.js")
-      //- script(src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js")
-       input(type="radio" name=`${poll.topic}` id=`${val.answer}` value=`${val.answer}`)
+
       script(src="/javascripts/poll.js")
       
