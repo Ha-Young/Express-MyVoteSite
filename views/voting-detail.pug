@@ -14,4 +14,4 @@ block content
       form(class="voting-detail-form", action=`/votings/${voting._id}/selection/${selection._id}`, method="post")
         h2 #{selection.selection_item}
         button(type="submit") 투표하기
-    p(class="expiration-date") 만료일 #{moment(voting.created_at).format('YYYY-MM-DD hh:mm a')}
+    p(class="expiration-date") 만료일 #{moment(voting.deadline).format('YYYY-MM-DD hh:mm a')}

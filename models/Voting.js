@@ -23,8 +23,9 @@ const votingSchema = new mongoose.Schema({
       }
     }
   ],
-  created_at: {
-    type: Date
+  deadline: {
+    type: Date,
+    requierd: true
   },
   is_expired: {
     type: Boolean,

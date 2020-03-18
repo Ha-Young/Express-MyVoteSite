@@ -13,7 +13,7 @@ html
             div(class="user") 
               span #{user.nickname}
               a(class="voting-creation-button", href="/votings/new") 투표 생성
-              a(class="my-voting") 내 투표
+              a(class="my-voting", href="/my-votings") 내 투표
               a(class="header-logout-button", href="/auth/logout") 로그아웃
           else 
             a(class="header-login-button", href="/auth/login") 로그인

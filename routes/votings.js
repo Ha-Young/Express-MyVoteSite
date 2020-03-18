@@ -4,6 +4,7 @@ const checkUser = require('../middlewares/checkUser');
 const { findUser } = require('../utils/helpers');
 const Voting = require('../models/Voting');
 const moment = require('moment');
+const error = require('../lib/error');
 
 router.get('/new', checkUser, async (req, res) => {
   const user = await findUser(req);
@@ -29,24 +30,39 @@ router.post('/new', checkUser, async (req, res) => {
       body: { 'voting-title': title, selection, date, time }
     } = req;
     const user = await findUser(req);
-    const selections = selection.map(el => {
+    const selectionItems = selection.map(element => {
       return {
-        selection_item: el,
+        selection_item: element,
         count: 0
       };
     });
-    const creationDate = new Date(`${date} ${time}`);
-    console.log(creationDate);
+    const deadline = new Date(`${date} ${time}`);
+    const currentTime = new Date();
+    console.log('===========', deadline.getTime());
+    if (!title.trim() || !date.trim() || !time.trim()) {
+      throw new error.VotingValidationError();
+    }
+    if (deadline < currentTime) throw new error.VotingTimeError();
+    selectionItems.forEach(item => {
+      if (!item.selection_item.trim()) {
+        throw new error.VotingValidationError();
+      }
+    });
 
     await new Voting({
       user,
       title,
-      selection_items: selections,
-      created_at: creationDate.toISOString()
+      selection_items: selectionItems,
+      deadline: deadline.toISOString()
     }).save();
     res.redirect('/');
   } catch (err) {
-    console.log(err);
+    if (
+      err instanceof error.VotingTimeError ||
+      err instanceof error.VotingValidationError
+    ) {
+      return res.render('voting-creation', { error: err.displayMessage });
+    }
   }
 });
 

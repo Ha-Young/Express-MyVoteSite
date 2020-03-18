@@ -50,3 +50,23 @@
 .voting-container button a:visited {
   color: #fff;
 }
+
+.voting-ongoing {
+  background-color: #1f78d1;
+  border: 1px solid #1f78d1;
+  border-radius: 5px;
+  line-height: 16px;
+  padding: 3px 8px;
+  color: #fff;
+  font-size: 7px;
+}
+
+.voting-deadline {
+  background-color: red;
+  border: 1px solid red;
+  border-radius: 5px;
+  line-height: 16px;
+  padding: 3px 8px;
+  color: #fff;
+  font-size: 7px;
+}
