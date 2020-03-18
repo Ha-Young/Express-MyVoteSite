@@ -28,6 +28,10 @@ const pollSchema = new mongoose.Schema({
   expiringTime: {
     type: Date, 
   },
+  finishedUsers: {
+    type: Array,
+    default: [],
+  },
   answers: [answerSchema],
 });
 

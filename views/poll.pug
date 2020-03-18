@@ -24,17 +24,23 @@ html
     main
       div
         ul
-          li
-            a(href=`votings/${poll.id}`)=`Topic: ${poll.topic}`
+          li=`Topic: ${poll.topic}`
           li=`Creator: ${poll.creator.email}`
           li=`Expring time: ${timeString[0]} ${timeString[1]}`
       div(class="container")
       h1=`${poll.topic}`
       h3 choose one of the option
-      form
+      form(class="votForm" method="post")
         each val in poll.answers 
           p
-            input(type="radio" name=`${poll.topic}` id=`${val.answer}` value=`${val.answer}`)
+            input(type="radio" name='answer' id=`${val.answer}` value=`${val.answer}`)
             label(for=`${val.answer}`)=`${val.answer}`
-            //- p=`${val.answer}`
         input(type="submit" value="Vote")  
+      br
+      br
+      div(class="chartContainer" style="height: 300px;width: 100%")
+      //- script(src="https://cdnjs.cloudflare.com/ajax/libs/pusher/5.0.2/pusher.min.js")
+      //- script(src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js")
+       input(type="radio" name=`${poll.topic}` id=`${val.answer}` value=`${val.answer}`)
+      //- script(src="/javascripts/poll.js")
+      

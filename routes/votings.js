@@ -67,7 +67,7 @@ router.get('/success', authenticateLogin, function(req, res, next) {
 router.get('/:poll_id', async (req, res, next) => {
   const id = req.params.poll_id;
   poll = await Poll.findById(id).populate('creator');
-  console.log(poll)
+  // console.log(poll)
   // console.log(poll.creator)
   // console.log(poll.expiringTime);
   // console.log(poll.expiringTime.toDateString());
@@ -82,15 +82,28 @@ router.get('/:poll_id', async (req, res, next) => {
   });
 });
 
+router.post('/:poll_id', (req, res, next) => {
+  if (req.isAuthenticated()) {
+    const user = req.session.passport.user;
+    console.log(user)
+    console.log(req);
+  }
+  // console.log(req.session)
+  // console.log('request came');
+  // console.log(req.body)
+  //  pusher.trigger('poll', 'vote', {
+  //   votes: 1,
+  //   os:req.body.os
+  // });
+});
+
+
 // poll.expiringTime.toDateString(), 
 // poll.expiringTime.toLocaleTimeString()
 
 
 
- // pusher.trigger('poll', 'vote', {
-  //   votes: 1,
-  //   poll: req.body.poll
-  // });
+
 
 module.exports = router;
 
