@@ -8,13 +8,23 @@ const { findUser } = require('../utils/helpers');
 
 router.get('/', async (req, res, next) => {
   const user = await findUser(req);
-  const votings = await Voting.find().populate('user', 'nickname');
-  votings.forEach(voting => {
-    console.log(new Date(voting.created_at).toLocaleString());
-    voting.created_at = new Date(voting.created_at).toLocaleString();
+  let votings = await Voting.find();
+  const updatedVotings = votings.map(voting => {
+    if (!voting.is_expired) {
+      const deadline = voting.deadline.getTime();
+      const current = new Date().getTime();
+      console.log(2);
+      if (deadline < current) {
+        return Voting.findByIdAndUpdate(voting._id, { is_expired: true });
+      }
+    } else {
+      return voting;
+    }
   });
 
-  console.log(votings);
+  await Promise.all(updatedVotings);
+  votings = await Voting.find().populate('user', 'nickname');
+
   res.render('index', { user, votings, moment });
 });
 

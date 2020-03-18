@@ -19,7 +19,8 @@ mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: false,
   useCreateIndex: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false
 });
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {

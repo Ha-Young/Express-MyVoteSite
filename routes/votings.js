@@ -16,7 +16,6 @@ router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const voting = await Voting.findById(id).populate('user', 'nickname');
-    console.log(voting);
 
     res.render('voting-detail', { voting, moment });
   } catch (err) {
@@ -36,9 +35,9 @@ router.post('/new', checkUser, async (req, res) => {
         count: 0
       };
     });
-    const deadline = new Date(`${date} ${time}`);
-    const currentTime = new Date();
-    console.log('===========', deadline.getTime());
+    const deadline = new Date(`${date} ${time}`).getTime();
+    const currentTime = new Date().getTime();
+
     if (!title.trim() || !date.trim() || !time.trim()) {
       throw new error.VotingValidationError();
     }
@@ -48,15 +47,16 @@ router.post('/new', checkUser, async (req, res) => {
         throw new error.VotingValidationError();
       }
     });
-
     await new Voting({
       user,
       title,
       selection_items: selectionItems,
-      deadline: deadline.toISOString()
+      deadline: deadline
     }).save();
+    console.log('==========');
     res.redirect('/');
   } catch (err) {
+    console.log(err);
     if (
       err instanceof error.VotingTimeError ||
       err instanceof error.VotingValidationError
@@ -66,7 +66,7 @@ router.post('/new', checkUser, async (req, res) => {
   }
 });
 
-router.post('/:id/selection/:id2', async (req, res) => {
+router.post('/:id/selection/:id2', checkUser, async (req, res) => {
   const user = await findUser(req);
   const { id: votingId, id2: selectionId } = req.params;
   const target = await Voting.findOne(
