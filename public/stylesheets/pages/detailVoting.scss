@@ -1,0 +1,122 @@
+.detail-container {
+  width: 100%;
+  min-height: 80%;
+  display: flex;
+  justify-content: center;
+
+  .detail-voting-box {
+    margin-top: 50px;
+    min-width: 400px;
+    height: 550px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .detail-voting-title-box {
+      width: 100%;
+      margin-bottom: 30px;
+
+      .detail-voting-title {
+        text-align: center;
+        font-size: 30px;
+      }
+    }
+    .detail-voting-item-form {
+      width: 100%;
+      margin-top: 20px;
+      .detail-voting-items-box {
+        width: 100%;
+
+        .detail-voting-item-box {
+          cursor: pointer;
+          border: 1px solid #e7e7e7;
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 38px;
+          box-sizing: border-box;
+          border-radius: 0;
+          background: #fff;
+          font-size: 15px;
+          line-height: normal;
+          font-weight: 300;
+          color: #3d3d3d;
+          width: 100%;
+
+          .detail-voting-radio {
+            height: 100%;
+            margin: 0px 10px;
+          }
+
+          .detail-voting-label {
+            display: flex;
+            align-items: center;
+            height: 38px;
+            cursor: pointer;
+            font-size: 20px;
+            width: 100%;
+          }
+
+          &:not(:first-child) {
+            margin-top: 20px;
+          }
+
+          &:hover {
+            border: 1px solid #27b06e;
+          }
+        }
+      }
+
+      .new-voting-submit-button-box {
+        margin-top: 50px;
+        cursor: pointer;
+        border: 1px solid #27b06e;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 38px;
+        box-sizing: border-box;
+        border-radius: 0;
+        background-color: #27b06e;
+
+        line-height: normal;
+
+        margin-bottom: 50px;
+        .new-voting-submit-button {
+          cursor: pointer;
+          color: #fff;
+          height: 100%;
+          font-size: 15px;
+          width: 100%;
+          font-weight: 300;
+          background-color: #27b06e;
+          text-align: center;
+        }
+      }
+    }
+
+    .new-voting-remove-button-box {
+      margin-top: 50px;
+      cursor: pointer;
+      border: 1px solid #e74c3c;
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      width: 100%;
+      height: 38px;
+      box-sizing: border-box;
+      border-radius: 0;
+      background-color: #e74c3c;
+      font-size: 15px;
+      line-height: normal;
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 50px;
+
+      .new-voting-remove-button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+}

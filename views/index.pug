@@ -1,4 +1,27 @@
 extends layouts/main
+include mixins/votingBox
 
 block content
-  p 메인
+    .main-container
+        each item in votingList
+            a(href=`/votings/${item._id}`).voting-item-box
+                if new Date(item.endDate).getTime() > votingList.currentDate.getTime()
+                    .abled-voting-box.voting-box
+                        +votingBox({
+                            title : item.title,
+                            creator : item.creator.name,
+                            endDate : item.endDate,
+                            formatDate : item.formatDate,
+                            state : "진행중"
+                        })
+                else
+                    .disabled-voting-box.voting-box
+                        +votingBox({
+                            title : item.title,
+                            creator : item.creator.name,
+                            endDate : item.endDate,
+                            formatDate : item.formatDate,
+                            state : "종료됨",
+                        })
+
+            //- 제목, 생성자, 만료 날짜 및 시간, 진행 중 여부

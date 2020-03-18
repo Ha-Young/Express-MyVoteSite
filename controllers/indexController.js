@@ -1,20 +1,36 @@
 const passport = require('passport');
 const User = require('../models/User');
+const Voting = require('../models/Voting');
 const bcrypt = require('bcrypt');
 const createError = require('http-errors');
+const moment = require('moment');
+moment.locale('ko');
 
 const indexController = {
-  getMain: (req, res, next) => {
-    res.render('index');
+  getMain: async (req, res, next) => {
+    try {
+      const votingList = await Voting.find().populate('creator');
+
+      // 찾지 못했을때 에러처리 필요
+
+      for (let i = 0; i < votingList.length; i++) {
+        const formatDate = moment(votingList[i].endDate).fromNow();
+        votingList[i].formatDate = formatDate;
+      }
+      votingList.currentDate = new Date();
+
+      res.render('index', { votingList });
+    } catch (error) {
+      // 에러처리 필요
+      console.log('error');
+    }
   },
 
   getMyVotings: (req, res, next) => {
     res.render('myVotings');
   },
 
-  getLogin: (req, res, next) => {
-    res.render('login');
-  },
+  getLogin: (req, res, next) => res.render('login'),
 
   postLogin: passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login' }),
 
@@ -24,10 +40,8 @@ const indexController = {
     res.redirect('/');
   },
 
-  getSignup: (req, res, next) => {
-    res.render('signup');
-  },
-
+  getSignup: (req, res, next) => res.render('signup'),
+  
   postSignup: async (req, res, next) => {
     const {
       body: { email, password, password2, name }
@@ -43,7 +57,7 @@ const indexController = {
       // 두 가지 모두 만족하면 hash 생성 후 저장한다.
       const salt = bcrypt.genSaltSync(10);
       const hash = bcrypt.hashSync(password, salt);
-      const user = new User({ name, email, salt, hash });
+      const user = new User({ name, email, hash });
       await user.save();
 
       res.redirect('/login');

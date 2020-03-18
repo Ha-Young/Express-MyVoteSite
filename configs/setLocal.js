@@ -1,5 +1,5 @@
 const setLocals = (req, res, next) => {
-  res.locals.loggedUser = req.user
+  res.locals.loggedUser = req.user;
   next();
 };
 

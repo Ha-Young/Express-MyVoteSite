@@ -1,0 +1,71 @@
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 50px;
+
+  .voting-item-box {
+    border-radius: 8px;
+    border: 1px solid #e7e7e7;
+    width: 340px;
+    height: 150px;
+    color: #3d3d3d;
+    margin: 32px 22px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      border: 3px solid #27b06e;
+      margin: 30px 20px;
+    }
+
+    .voting-box {
+      display: flex;
+      justify-content: center;
+      width: 80%;
+      height: 65%;
+
+      .voting-mixin {
+        width: 100%;
+
+        .voting-title {
+          display: flex;
+          height: 50%;
+          font-size: 25px;
+        }
+
+        .voting-creator {
+          height: 30%;
+          font-size: 15px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .voting-date-box {
+          height: 20%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+    }
+
+    .abled-voting-box {
+      .voting-state {
+        color: #00a8ff;
+      }
+    }
+
+    .disabled-voting-box {
+      filter: opacity(60%);
+      .voting-state {
+        filter: none;
+        color: #e74c3c;
+      }
+    }
+  }
+}

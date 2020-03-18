@@ -1,0 +1,22 @@
+extends layouts/main
+
+block content
+    .detail-container
+        .detail-voting-box
+            .detail-voting-title-box
+                .detail-voting-title=voting.title
+            .detail-voting-end-date-box
+                span 종료일 : 
+                span.detail-voting-end-date=voting.formatDate
+            form(method='POST' action=`/votings/${voting._id}/success`).detail-voting-item-form
+                .detail-voting-items-box
+                    each item in voting.item
+                        .detail-voting-item-box
+                            input(type='radio' id=`${item._id}` name='voting' value=`${item._id}`).detail-voting-radio
+                            label(for=`${item._id}`).detail-voting-label=item.item
+                .new-voting-submit-button-box
+                    input(type="submit" value="제출하기").new-voting-submit-button 
+            if loggedUser && String(loggedUser.id) === String(voting.creator._id)
+                a(href=`/voting/${voting._id}/remove`)
+                    .new-voting-remove-button-box
+                        .new-voting-remove-button 삭제하기

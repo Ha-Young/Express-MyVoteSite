@@ -1,0 +1,145 @@
+.new-voting-container {
+  width: 100%;
+  min-height: 80%;
+  display: flex;
+  justify-content: center;
+
+  .new-voting-form {
+    margin-top: 50px;
+    min-width: 400px;
+    height: 550px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .new-voting-title-box {
+      font-size: 25px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      width: 100%;
+
+      .new-voting-title-input {
+        margin-top: 5px;
+        border: 1px solid #e7e7e7;
+        display: block;
+        padding: 0 15px;
+        width: 100%;
+        height: 38px;
+        box-sizing: border-box;
+        border-radius: 0;
+        background: #fff;
+        font-size: 15px;
+        line-height: normal;
+        font-weight: 300;
+        color: #3d3d3d;
+      }
+    }
+
+    .new-voting-item-boxs {
+      margin-top: 20px;
+      width: 100%;
+
+      .new-voting-item-box {
+        width: 100%;
+        &:not(:first-child) {
+          margin-top: 20px;
+        }
+
+        .new-voting-item {
+          font-size: 20px;
+        }
+
+        .new-voting-item-input {
+          margin-top: 5px;
+          border: 1px solid #e7e7e7;
+          display: block;
+          padding: 0 15px;
+          width: 100%;
+          height: 38px;
+          box-sizing: border-box;
+          border-radius: 0;
+          background: #fff;
+          font-size: 15px;
+          line-height: normal;
+          font-weight: 300;
+          color: #3d3d3d;
+        }
+      }
+
+      .new-voting-time-box {
+        width: 100%;
+        margin-top: 50px;
+
+        .new-voting-time {
+          font-size: 20px;
+          display: flex;
+        }
+
+        .new-voting-time-input-box {
+          display: flex;
+
+          .new-voting-time-input {
+            margin-top: 5px;
+            border: 1px solid #e7e7e7;
+            display: block;
+            padding: 0 15px;
+            width: 50%;
+            height: 38px;
+            box-sizing: border-box;
+            border-radius: 0;
+            background: #fff;
+            font-size: 15px;
+            line-height: normal;
+            font-weight: 300;
+            color: #3d3d3d;
+          }
+        }
+      }
+    }
+
+    .new-voting-finish-box {
+      margin-top: 50px;
+      width: 100%;
+
+      .new-voting-submit-input-box {
+        width: 100%;
+
+        .new-voting-submit-input {
+          display: block;
+          padding: 0 15px;
+          width: 100%;
+          height: 38px;
+          box-sizing: border-box;
+          border-radius: 0;
+          background-color: #27b06e;
+          font-size: 15px;
+          line-height: normal;
+          font-weight: 300;
+          color: #fff;
+          font-size: 1rem;
+          cursor: pointer;
+        }
+      }
+      .new-voting-cancel-input-box {
+        width: 100%;
+        margin-top: 10px;
+
+        .new-voting-cancel-input {
+          display: block;
+          padding: 0 15px;
+          width: 100%;
+          height: 38px;
+          box-sizing: border-box;
+          border-radius: 0;
+          background-color: #e74c3c;
+          font-size: 15px;
+          line-height: normal;
+          font-weight: 300;
+          color: #fff;
+          font-size: 1rem;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

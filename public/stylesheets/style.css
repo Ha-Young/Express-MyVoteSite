@@ -92,6 +92,56 @@ table {
       font-weight: bold;
       margin-right: 30px; }
 
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 50px; }
+  .main-container .voting-item-box {
+    border-radius: 8px;
+    border: 1px solid #e7e7e7;
+    width: 340px;
+    height: 150px;
+    color: #3d3d3d;
+    margin: 32px 22px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .main-container .voting-item-box:hover {
+      border: 3px solid #27b06e;
+      margin: 30px 20px; }
+    .main-container .voting-item-box .voting-box {
+      display: flex;
+      justify-content: center;
+      width: 80%;
+      height: 65%; }
+      .main-container .voting-item-box .voting-box .voting-mixin {
+        width: 100%; }
+        .main-container .voting-item-box .voting-box .voting-mixin .voting-title {
+          display: flex;
+          height: 50%;
+          font-size: 25px; }
+        .main-container .voting-item-box .voting-box .voting-mixin .voting-creator {
+          height: 30%;
+          font-size: 15px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center; }
+        .main-container .voting-item-box .voting-box .voting-mixin .voting-date-box {
+          height: 20%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center; }
+    .main-container .voting-item-box .abled-voting-box .voting-state {
+      color: #00a8ff; }
+    .main-container .voting-item-box .disabled-voting-box {
+      filter: opacity(60%); }
+      .main-container .voting-item-box .disabled-voting-box .voting-state {
+        filter: none;
+        color: #e74c3c; }
+
 .login-container {
   width: 100%;
   min-height: 80%;
@@ -257,6 +307,214 @@ table {
         color: #fff;
         font-size: 1rem; }
 
+.new-voting-container {
+  width: 100%;
+  min-height: 80%;
+  display: flex;
+  justify-content: center; }
+  .new-voting-container .new-voting-form {
+    margin-top: 50px;
+    min-width: 400px;
+    height: 550px;
+    display: flex;
+    align-items: center;
+    flex-direction: column; }
+    .new-voting-container .new-voting-form .new-voting-title-box {
+      font-size: 25px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      width: 100%; }
+      .new-voting-container .new-voting-form .new-voting-title-box .new-voting-title-input {
+        margin-top: 5px;
+        border: 1px solid #e7e7e7;
+        display: block;
+        padding: 0 15px;
+        width: 100%;
+        height: 38px;
+        box-sizing: border-box;
+        border-radius: 0;
+        background: #fff;
+        font-size: 15px;
+        line-height: normal;
+        font-weight: 300;
+        color: #3d3d3d; }
+    .new-voting-container .new-voting-form .new-voting-item-boxs {
+      margin-top: 20px;
+      width: 100%; }
+      .new-voting-container .new-voting-form .new-voting-item-boxs .new-voting-item-box {
+        width: 100%; }
+        .new-voting-container .new-voting-form .new-voting-item-boxs .new-voting-item-box:not(:first-child) {
+          margin-top: 20px; }
+        .new-voting-container .new-voting-form .new-voting-item-boxs .new-voting-item-box .new-voting-item {
+          font-size: 20px; }
+        .new-voting-container .new-voting-form .new-voting-item-boxs .new-voting-item-box .new-voting-item-input {
+          margin-top: 5px;
+          border: 1px solid #e7e7e7;
+          display: block;
+          padding: 0 15px;
+          width: 100%;
+          height: 38px;
+          box-sizing: border-box;
+          border-radius: 0;
+          background: #fff;
+          font-size: 15px;
+          line-height: normal;
+          font-weight: 300;
+          color: #3d3d3d; }
+      .new-voting-container .new-voting-form .new-voting-item-boxs .new-voting-time-box {
+        width: 100%;
+        margin-top: 50px; }
+        .new-voting-container .new-voting-form .new-voting-item-boxs .new-voting-time-box .new-voting-time {
+          font-size: 20px;
+          display: flex; }
+        .new-voting-container .new-voting-form .new-voting-item-boxs .new-voting-time-box .new-voting-time-input-box {
+          display: flex; }
+          .new-voting-container .new-voting-form .new-voting-item-boxs .new-voting-time-box .new-voting-time-input-box .new-voting-time-input {
+            margin-top: 5px;
+            border: 1px solid #e7e7e7;
+            display: block;
+            padding: 0 15px;
+            width: 50%;
+            height: 38px;
+            box-sizing: border-box;
+            border-radius: 0;
+            background: #fff;
+            font-size: 15px;
+            line-height: normal;
+            font-weight: 300;
+            color: #3d3d3d; }
+    .new-voting-container .new-voting-form .new-voting-finish-box {
+      margin-top: 50px;
+      width: 100%; }
+      .new-voting-container .new-voting-form .new-voting-finish-box .new-voting-submit-input-box {
+        width: 100%; }
+        .new-voting-container .new-voting-form .new-voting-finish-box .new-voting-submit-input-box .new-voting-submit-input {
+          display: block;
+          padding: 0 15px;
+          width: 100%;
+          height: 38px;
+          box-sizing: border-box;
+          border-radius: 0;
+          background-color: #27b06e;
+          font-size: 15px;
+          line-height: normal;
+          font-weight: 300;
+          color: #fff;
+          font-size: 1rem;
+          cursor: pointer; }
+      .new-voting-container .new-voting-form .new-voting-finish-box .new-voting-cancel-input-box {
+        width: 100%;
+        margin-top: 10px; }
+        .new-voting-container .new-voting-form .new-voting-finish-box .new-voting-cancel-input-box .new-voting-cancel-input {
+          display: block;
+          padding: 0 15px;
+          width: 100%;
+          height: 38px;
+          box-sizing: border-box;
+          border-radius: 0;
+          background-color: #e74c3c;
+          font-size: 15px;
+          line-height: normal;
+          font-weight: 300;
+          color: #fff;
+          font-size: 1rem;
+          cursor: pointer; }
+
+.detail-container {
+  width: 100%;
+  min-height: 80%;
+  display: flex;
+  justify-content: center; }
+  .detail-container .detail-voting-box {
+    margin-top: 50px;
+    min-width: 400px;
+    height: 550px;
+    display: flex;
+    align-items: center;
+    flex-direction: column; }
+    .detail-container .detail-voting-box .detail-voting-title-box {
+      width: 100%;
+      margin-bottom: 30px; }
+      .detail-container .detail-voting-box .detail-voting-title-box .detail-voting-title {
+        text-align: center;
+        font-size: 30px; }
+    .detail-container .detail-voting-box .detail-voting-item-form {
+      width: 100%;
+      margin-top: 20px; }
+      .detail-container .detail-voting-box .detail-voting-item-form .detail-voting-items-box {
+        width: 100%; }
+        .detail-container .detail-voting-box .detail-voting-item-form .detail-voting-items-box .detail-voting-item-box {
+          cursor: pointer;
+          border: 1px solid #e7e7e7;
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 38px;
+          box-sizing: border-box;
+          border-radius: 0;
+          background: #fff;
+          font-size: 15px;
+          line-height: normal;
+          font-weight: 300;
+          color: #3d3d3d;
+          width: 100%; }
+          .detail-container .detail-voting-box .detail-voting-item-form .detail-voting-items-box .detail-voting-item-box .detail-voting-radio {
+            height: 100%;
+            margin: 0px 10px; }
+          .detail-container .detail-voting-box .detail-voting-item-form .detail-voting-items-box .detail-voting-item-box .detail-voting-label {
+            display: flex;
+            align-items: center;
+            height: 38px;
+            cursor: pointer;
+            font-size: 20px;
+            width: 100%; }
+          .detail-container .detail-voting-box .detail-voting-item-form .detail-voting-items-box .detail-voting-item-box:not(:first-child) {
+            margin-top: 20px; }
+          .detail-container .detail-voting-box .detail-voting-item-form .detail-voting-items-box .detail-voting-item-box:hover {
+            border: 1px solid #27b06e; }
+      .detail-container .detail-voting-box .detail-voting-item-form .new-voting-submit-button-box {
+        margin-top: 50px;
+        cursor: pointer;
+        border: 1px solid #27b06e;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 38px;
+        box-sizing: border-box;
+        border-radius: 0;
+        background-color: #27b06e;
+        line-height: normal;
+        margin-bottom: 50px; }
+        .detail-container .detail-voting-box .detail-voting-item-form .new-voting-submit-button-box .new-voting-submit-button {
+          cursor: pointer;
+          color: #fff;
+          height: 100%;
+          font-size: 15px;
+          width: 100%;
+          font-weight: 300;
+          background-color: #27b06e;
+          text-align: center; }
+    .detail-container .detail-voting-box .new-voting-remove-button-box {
+      margin-top: 50px;
+      cursor: pointer;
+      border: 1px solid #e74c3c;
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      width: 100%;
+      height: 38px;
+      box-sizing: border-box;
+      border-radius: 0;
+      background-color: #e74c3c;
+      font-size: 15px;
+      line-height: normal;
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 50px; }
+      .detail-container .detail-voting-box .new-voting-remove-button-box .new-voting-remove-button {
+        width: 100%;
+        text-align: center; }
+
 * {
   user-select: none; }
 
@@ -279,7 +537,16 @@ body {
   color: #534f4f; }
 
 input {
-  border: none; }
+  padding: 0px;
+  margin: 0px;
+  border: none;
+  font-family: Noto Sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; }
+
+input[type='date'] {
+  text-align: center; }
+
+input[type='time'] {
+  text-align: center; }
 
 button {
   border: none; }

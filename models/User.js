@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
+  votingList: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Voting' }],
   hash: {
     type: String,
     required: true,
