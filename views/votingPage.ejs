@@ -8,6 +8,15 @@
 
 <body>
   <h1><%= title %></h1>
+  <%= votingData.title %><br>
+  <%= votingData.writer %><br>
+  <%= votingData.description %><br>
+  <%= votingData.expiration_date %><br>
+  <%= votingData.progress %><br>
+  <% if(deleteBtn) { %>
+    <input type="submit" value="<%= deleteBtn %>">
+  <% } %>
+  <a href="/">투표 목록으로 돌아가기</a>
 </body>
 
 </html>

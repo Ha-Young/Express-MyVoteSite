@@ -6,11 +6,11 @@ const Votings = require('../models/Votings');
 router.get('/new', isLoggedIn, (req, res, next) => {
     res.render('newVoting', {
         title: '투표 생성하기',
-        message: ''
+        message: null
     });
 });
 
-router.post('/new', async (req, res, next) => {
+router.post('/new', isLoggedIn, async (req, res, next) => {
     const todayNow = new Date();
     const { title, description, expiration_date, expiration_time, selectOption } = req.body;
     const result_expiration_date = new Date(expiration_date + '.' + expiration_time);
@@ -41,12 +41,24 @@ router.post('/new', async (req, res, next) => {
     }
 });
 
-router.get('/:id', isLoggedIn, (req, res, next) => {
-    const id = req.params.id;
-    console.log('---------id-------', id);
-    res.render('votingPage', {
-        title: '투표 페이지'
-    });
+router.get('/:id', async (req, res, next) => {
+    const votingId = req.params.id;
+    const votingData = await Votings.findOne({ id: votingId });
+
+    if (!req.user) {
+        res.render('votingPage', {
+            title: '투표 페이지',
+            votingData,
+            deleteBtn: null
+        });
+    } else {
+        const deleteBtn = String(req.user._id) === String(votingData.writerId) ? '삭제' : '';
+        res.render('votingPage', {
+            title: '투표 페이지',
+            votingData,
+            deleteBtn
+        });
+    }
 });
 
 
