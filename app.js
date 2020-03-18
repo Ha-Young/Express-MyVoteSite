@@ -11,7 +11,7 @@ const MongoStore = require('connect-mongo')(session);
 
 const homeRouter = require('./routes/home');
 const signupRouter = require('./routes/signup');
-const loginRouter = require('./routes/login');
+const authRouter = require('./routes/auth');
 const votingRouter = require('./routes/voting');
 
 const errors = require('./lib/errors');
@@ -44,7 +44,7 @@ app.use(passport.session());
 
 app.use('/', homeRouter);
 app.use('/signup', signupRouter);
-app.use('/login', loginRouter);
+app.use('/auth', authRouter);
 app.use('/votings', votingRouter);
 
 app.use((req, res, next) => {

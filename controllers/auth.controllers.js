@@ -2,7 +2,7 @@ const passport = require('passport');
 
 const errors = require('../lib/errors');
 
-exports.processLogin = (req, res, next) => {
+exports.login = (req, res, next) => {
   passport.authenticate('local', (err, validUser, authFailureMessage) => {
     if (err) {
       return next(new errors.GeneralError(err.message));
@@ -20,4 +20,12 @@ exports.processLogin = (req, res, next) => {
       return res.redirect('/');
     });
   })(req, res, next);
+};
+
+exports.logout = async (req, res, next) => {
+  await req.logout();
+  await req.session.destroy();
+  await res.clearCookie('connect.sid');
+
+  res.redirect('/');
 };

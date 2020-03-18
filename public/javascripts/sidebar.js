@@ -1,5 +1,6 @@
 const createVoteButton = document.querySelector('.create-votes');
 const loginButton = document.querySelector('.login');
+const logoutButton = document.querySelector('.logout');
 const signupButton = document.querySelector('.signup');
 
 createVoteButton.addEventListener('click', () => {
@@ -8,7 +9,13 @@ createVoteButton.addEventListener('click', () => {
 
 if (loginButton) {
   loginButton.addEventListener('click', () => {
-    location.assign(location.origin + '/login');
+    location.assign(location.origin + '/auth/login');
+  });
+}
+
+if (logoutButton) {
+  logoutButton.addEventListener('click', () => {
+    location.assign(location.origin + '/auth/logout');
   });
 }
 

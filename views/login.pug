@@ -6,7 +6,7 @@ block styles
 block content
   .login
     h1 Login
-    form.login-form(action="/login" method="POST")
+    form.login-form(action="/auth/login" method="POST")
       .login-field
         label(for="email" ) email:
         input(type="email" name="email" id="email" required)
