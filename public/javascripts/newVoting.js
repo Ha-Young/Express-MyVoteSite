@@ -2,12 +2,22 @@ const items = document.querySelector('.items');
 const addItem = document.querySelector('.addItem');
 const removeItem = document.querySelector('.removeItem');
 
-let itemNum = items.childElementCount;
+let itemCount = items.childElementCount;
 
-addItem.addEventListener('click', () => {
-  const item = document.createElement("input");
-  
-  item.setAttribute('type', 'text'); 
-  item.setAttribute('name', `name${itemNum + 1}`); 
-  items.appendChild(item);
+addItem.addEventListener('click', event => {
+  event.preventDefault();
+  if (itemCount < 5) {
+    const item = document.createElement("input");
+    item.setAttribute('type', 'text');
+    item.setAttribute('name', `item${++itemCount}`);
+    items.appendChild(item);
+  }
+});
+
+removeItem.addEventListener('click', event => {
+  event.preventDefault(); 
+  if (itemCount > 2) {
+    --itemCount;
+    items.removeChild(items.lastChild);
+  }
 });
