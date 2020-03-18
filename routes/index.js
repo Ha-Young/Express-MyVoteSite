@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const userController = require("./controller/userController");
+const voteController = require("./controller/voteController");
 
 const renderProperty = {
   title: "전국민 투표앱! 코리아 투표앱",
@@ -60,6 +61,11 @@ router.get("/votings/new", (req, res, next) => {
     style: renderProperty.voteFormStyle
   });
 });
+
+router.post("/votings/new", (req, res, next) => {
+  voteController.createVote(req,res,next);
+});
+
 router.get("/votings/:id", (req, res, next) => {
   const loginUser = req.session.userId;
 
@@ -69,4 +75,9 @@ router.get("/votings/:id", (req, res, next) => {
     style: renderProperty.voteFormStyle
   });
 });
+
+router.put("/votings/:id", voteController.updateVote);
+
+router.delete("/votings/:id", (req, res, next) => {});
+
 module.exports = router;

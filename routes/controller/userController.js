@@ -21,9 +21,7 @@ async function findOrCreateUser(req, res, next) {
 
 async function findUser(req, res, next) {
   const { email, password } = req.body;
-  console.log(req.body);
   const targetUser = await User.findOne({ email: email });
-  console.log(targetUser);
   if (targetUser) {
     console.log("로그인 로직 시작");
     //비밀번호 비교
@@ -36,10 +34,11 @@ async function findUser(req, res, next) {
       if (isMatch) {
         console.log("통과");
         //세션 처리
-        req.session.userId = email.split('@')[0];
-        req.session.save(function(){
+        req.session.user=targetUser;
+        req.session.userId = email.split("@")[0];
+        req.session.save(function() {
           res.json({ message: LOGIN_RESULT.SUCCESS });
-      });
+        });
       } else {
         console.log("비밀번호 오류");
         res.json({ message: LOGIN_RESULT.WRONG_PASSWORD });
