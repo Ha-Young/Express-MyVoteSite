@@ -1,0 +1,40 @@
+.voting-detail-container {
+  width: 500px;
+  line-height: 20px;
+  margin: 0 auto;
+  margin-top: 50px;
+  padding: 0 20px;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+}
+
+.voting-detail-container h1 {
+  margin-bottom: 30px;
+}
+
+.voting-detail-nickname-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.voting-detail-form {
+  margin: 0 auto;
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.voting-detail-form button {
+  width: 70px;
+  height: 30px;
+  border: 0;
+  border-radius: 5px;
+  background-color: rgb(26, 170, 85);
+  cursor: pointer;
+  color: #fff;
+}
+
+.expiration-date {
+  margin-bottom: 30px;
+}

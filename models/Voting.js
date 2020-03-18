@@ -30,7 +30,12 @@ const votingSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
     required: true
-  }
+  },
+  voted_user: [
+    {
+      type: mongoose.Types.ObjectId
+    }
+  ]
 });
 
 module.exports = mongoose.model('Voting', votingSchema);

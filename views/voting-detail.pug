@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  link(rel='stylesheet', href='/stylesheets/voting-detail.css')
+  div(class="voting-detail-container")
+    div(class="voting-detail-nickname-container")
+      p #{voting.user.nickname} 님의 투표
+      if(voting.is_expired)
+        p 만료됨
+      else
+        p 진행중
+    h1 #{voting.title}
+    each selection in voting.selection_items
+      form(class="voting-detail-form", action=`/votings/${voting._id}/selection/${selection._id}`, method="post")
+        h2 #{selection.selection_item}
+        button(type="submit") 투표하기
+    p(class="expiration-date") 만료일 #{moment(voting.created_at).format('YYYY-MM-DD hh:mm a')}

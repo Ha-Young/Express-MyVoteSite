@@ -14,4 +14,4 @@ block content
         h2 #{voting.title}
         p(class="expiration-date") 만료일 #{moment(voting.created_at).format('YYYY-MM-DD hh:mm a')}
         button
-          a 투표하기
+          a(href=`/votings/${voting._id}`) 투표하기

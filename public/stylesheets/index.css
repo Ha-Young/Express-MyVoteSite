@@ -42,3 +42,11 @@
   cursor: pointer;
   color: #fff;
 }
+
+.voting-container button a {
+  color: #fff;
+}
+
+.voting-container button a:visited {
+  color: #fff;
+}
