@@ -13,7 +13,7 @@ exports.registerVote = async (req, res, next) => {
     return next(new errors.InvalidExpirationError());
   }
 
-  const selectOptionList = Object.values(options).map(option => ({
+  const select_options = Object.values(options).map(option => ({
     description: option,
     vote_counter: 0,
     voter: []
@@ -25,13 +25,12 @@ exports.registerVote = async (req, res, next) => {
     const createdVote = await Votes.create({
       title,
       vote_id: counter + 1,
-      select_options: selectOptionList,
+      select_options,
       created_by: req.user._id,
       expires_at: expirationTime
     });
 
-    const currentUser = await Users.findById(req.user._id);
-    const { votes_created } = currentUser;
+    const { currentUser, currentUser: { votes_created } } = res.locals;
     votes_created.push(createdVote._id);
 
     await currentUser.updateOne({ votes_created });
@@ -65,8 +64,7 @@ exports.deleteVote = async (req, res, next) => {
     const deleteTargetVote = await Votes.findOne({ vote_id: req.body }).lean();
     await Votes.findOneAndDelete({ vote_id: req.body });
 
-    const currentUser = await Users.findById(req.user._id);
-    let { votes_created } = currentUser;
+    let { currentUser, currentUser: { votes_created } } = res.locals;
 
     votes_created = votes_created.filter(vote_id => {
       return vote_id.toString() !== deleteTargetVote._id.toString();
@@ -82,11 +80,11 @@ exports.deleteVote = async (req, res, next) => {
 
 exports.registerCastingVote = async (req, res, next) => {
   if (!req.user) {
-    return res.redirect('/login');
+    return res.redirect('/auth/login');
   }
 
   try {
-    const { id: voteId } = req.params; // vote_id 값. 2와 같은 숫자.
+    const { id: voteId } = req.params;
     const selectedOptionIndex = Object.values(req.body)[0];
 
     const vote = await Votes.findOne({ vote_id: voteId });
@@ -98,8 +96,8 @@ exports.registerCastingVote = async (req, res, next) => {
 
     await vote.updateOne({ select_options });
 
-    const currentUser = await Users.findById(req.user._id);
-    const { votes_voted } = currentUser;
+    const { currentUser, currentUser: { votes_voted } } = res.locals;
+
     votes_voted.push(vote._id);
 
     await currentUser.updateOne({ votes_voted });
