@@ -14,6 +14,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/login', (req, res, next) => {
   const flash = req.flash();
+  if (flash.error && flash.error[0] === 'Missing credentials') return res.render('login', { loginMsg: 'There is not exist email or password.' });
   if (flash.error) return res.render('login', { loginMsg: flash.error[0] });
   if (flash.signUpMsg) return res.render('login', { loginMsg: flash.signUpMsg[0] });
   res.render('login', { loginMsg: 'Sign In'});
@@ -62,16 +63,16 @@ router.post('/signup', [
         email: req.body.email,
         password: req.body.password,
       });
-  
+
       await newUser.save();
       req.flash('signUpMsg', 'Welcome. :) Login Please.');
       res.status(307).redirect('/login');
     } else {
-      return res.render('postFail', { message: errors[0].msg });
+      return res.render('validationFail', { message: errors[0].msg });
     }
   } catch (err) {
     if (err.errmsg.split(' ')[1] === 'duplicate') {
-      return res.render('postFail', { message: '이메일이 중복되었습니다.'});
+      return res.render('validationFail', { message: '이메일이 중복되었습니다.'});
     } else {
       next(err);
     }
@@ -120,7 +121,7 @@ router.post('/votings/new', [
       await newVoting.save();
       res.status(307).redirect('/');
     } else {
-      return res.render('postFail', { message: errors[0].msg });
+      return res.render('validationFail', { message: errors[0].msg });
     }
   } catch (err) {
     next(err);
