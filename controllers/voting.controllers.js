@@ -43,8 +43,8 @@ exports.registerVote = async (req, res, next) => {
 
 exports.renderVote = async (req, res, next) => {
   try {
-    const { id: voteId } = req.params;
-    const currentVote = await Votes.findOne({ vote_id: voteId }).populate('created_by').lean();
+    const { id: vote_id } = req.params;
+    const currentVote = await Votes.findOne({ vote_id }).populate('created_by').lean();
     const currentUser = req.user ? req.user.username : null;
 
     const voteInfoForDisplay = makeDisplayInfo(currentVote);
@@ -84,10 +84,10 @@ exports.registerCastingVote = async (req, res, next) => {
   }
 
   try {
-    const { id: voteId } = req.params;
+    const { id: vote_id } = req.params;
     const selectedOptionIndex = Object.values(req.body)[0];
 
-    const vote = await Votes.findOne({ vote_id: voteId });
+    const vote = await Votes.findOne({ vote_id });
     const { select_options } = vote;
     const selectedOption = select_options[selectedOptionIndex];
 
