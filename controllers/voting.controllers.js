@@ -81,26 +81,28 @@ exports.registerCastingVote = async (req, res, next) => {
   }
 
   try {
-    const { id: vote_id } = req.params;
     const selectedOptionIndex = Object.values(req.body)[0];
-
-    const vote = await Votes.findOne({ vote_id });
-    const { select_options } = vote;
+    const currentVote = await Votes.findById(req.params.id);
+    const { select_options } = currentVote;
     const selectedOption = select_options[selectedOptionIndex];
+
+    console.log(selectedOptionIndex);
+    console.log(currentVote);
 
     selectedOption.vote_counter++;
     selectedOption.voter.push(req.user._id);
 
-    await vote.updateOne({ select_options });
+    await currentVote.updateOne({ select_options });
 
     const { loggedInUser, loggedInUser: { votes_voted } } = res.locals;
 
-    votes_voted.push(vote._id);
+    votes_voted.push(currentVote._id);
 
     await loggedInUser.updateOne({ votes_voted });
 
     res.redirect('/');
   } catch(err) {
+    console.log(err);
     // something goes here...
   }
 };
