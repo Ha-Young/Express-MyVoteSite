@@ -26,6 +26,6 @@ block content
               input#submit(type="submit", value="투표하기")
           .vote-bottom
             button.button.to-list 목록으로
-            if loggedInUser === vote.created_by
+            if loggedInUser.username === vote.created_by
               button.button.delete-vote 투표 삭제
   script(src="/javascripts/vote.js")

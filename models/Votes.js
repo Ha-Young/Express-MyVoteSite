@@ -8,11 +8,6 @@ const VoteSchema = new Schema({
     required: [ true, 'Vote title is required.' ],
     index: true,
   },
-  vote_id: {
-    type: Number,
-    required: true,
-    unique: true
-  },
   select_options: [{
     description: {
       type: String,
@@ -28,6 +23,10 @@ const VoteSchema = new Schema({
       default: []
     }]
   }],
+  total_voters: {
+    type: Number,
+    default: 0
+  },
   created_by: {
     type: mongoose.Types.ObjectId,
     ref: 'Users',
@@ -36,6 +35,10 @@ const VoteSchema = new Schema({
   expires_at: {
     type: Date,
     require: [ true, 'Should set expiration date.' ]
+  },
+  expired: {
+    type: Boolean,
+    default: false
   }
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 

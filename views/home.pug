@@ -13,7 +13,7 @@ block content
           h1.no-votes #{message}
         else
           each vote in votes
-            div(data-id=vote.vote_id).vote
+            div(data-id=vote._id).vote
               .vote-top
                 p #{vote.voteStatus}
                 p #{vote.expirationDate}
@@ -24,7 +24,7 @@ block content
                     .option
                       span #{option.description}
               .vote-bottom
-                p #{vote.totalVoters} 명 참여 중
+                p #{vote.total_voters} 명 참여 중
                 p made by #{vote.created_by}
 
   script.

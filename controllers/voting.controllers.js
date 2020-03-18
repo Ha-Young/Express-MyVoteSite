@@ -1,7 +1,6 @@
 const Votes = require('../models/Votes');
-const Users = require('../models/Users');
 const errors = require('../lib/errors');
-const { makeDisplayInfo } = require('../lib/helpers');
+const { getDisplayInfo } = require('../lib/helpers');
 
 exports.registerVote = async (req, res, next) => {
   const { title, expires_at, ...options } = req.body;
@@ -20,14 +19,13 @@ exports.registerVote = async (req, res, next) => {
   }));
 
   try {
-    const counter = await Votes.estimatedDocumentCount();
-
     const createdVote = await Votes.create({
       title,
-      vote_id: counter + 1,
       select_options,
+      total_voters: 0,
       created_by: req.user._id,
-      expires_at: expirationTime
+      expires_at: expirationTime,
+      expired: false
     });
 
     const { loggedInUser, loggedInUser: { votes_created } } = res.locals;
@@ -41,35 +39,14 @@ exports.registerVote = async (req, res, next) => {
   }
 };
 
-exports.renderVote = async (req, res, next) => {
-  try {
-    const { id: vote_id } = req.params;
-    const currentVote = await Votes.findOne({ vote_id }).populate('created_by').lean();
-    const votes = await Votes.find().lean();
-    const loggedInUser = req.user ? req.user : null;
-
-    const voteInfoForDisplay = makeDisplayInfo(currentVote);
-
-    res.render('vote', {
-      vote: voteInfoForDisplay,
-      votes: votes,
-      loggedInUser
-    });
-  } catch(err) {
-    console.log(err);
-    next(new errors.NonExistingVoteError());
-  }
-};
-
 exports.deleteVote = async (req, res, next) => {
   try {
-    const deleteTargetVote = await Votes.findOne({ vote_id: req.body }).lean();
-    await Votes.findOneAndDelete({ vote_id: req.body });
+    const deletedVote = await Votes.findByIdAndRemove(req.body);
 
     let { loggedInUser, loggedInUser: { votes_created } } = res.locals;
 
-    votes_created = votes_created.filter(vote_id => {
-      return vote_id.toString() !== deleteTargetVote._id.toString();
+    votes_created = votes_created.filter(voteId => {
+      return voteId.toString() !== deletedVote._id.toString();
     });
 
     await loggedInUser.updateOne({ votes_created });
@@ -77,6 +54,24 @@ exports.deleteVote = async (req, res, next) => {
     res.redirect('/'); // 여기서 왜 에러가..?
   } catch(err) {
     next(new errors.GeneralError(err.message));
+  }
+};
+
+exports.renderVote = async (req, res, next) => {
+  try {
+    const currentVote = await Votes.findById(req.params.id).populate('created_by').lean();
+    const votes = await Votes.find().lean();
+    const loggedInUser = req.user ? req.user : null;
+
+    const voteDisplayInfo = getDisplayInfo(currentVote);
+
+    res.render('vote', {
+      vote: voteDisplayInfo,
+      votes,
+      loggedInUser
+    });
+  } catch(err) {
+    next(new errors.NonExistingVoteError());
   }
 };
 

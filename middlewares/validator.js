@@ -28,8 +28,7 @@ const validateUser = (req, res, next) => {
     return next();
   }
 
-  const errorMessages = [];
-  errors.array().map(err => errorMessages.push(err.msg));
+  const errorMessages = errors.array().map(err => err.msg);
 
   next(new ValidationError(errorMessages));
 };

@@ -7,11 +7,11 @@ toListButton.addEventListener('click', () => {
 
 if (deleteVoteButton) {
   deleteVoteButton.addEventListener('click', () => {
-    const vote_id = location.pathname.replace(/\/votings\//i, '');
+    const voteId = location.pathname.replace(/\/votings\//i, '');
 
     fetch('/votings', {
       method: "DELETE",
-      body: vote_id
+      body: voteId
     });
   });
 }
@@ -20,7 +20,7 @@ const submitButton = document.querySelector('#submit');
 submitButton.addEventListener('click', async () => {
   window.alert('한 번 투표하시면 수정이 불가능합니다. 투표를 진행하시겠습니까?');
 
-  const vote_id = location.pathname.replace(/\/votings\//i, '');
-  fetch(`/votings/${vote_id}`, { method: "POST" })
+  const voteId = location.pathname.replace(/\/votings\//i, '');
+  fetch(`/votings/${voteId}`, { method: "POST" })
     .then(res => window.alert(res));
 });
