@@ -30,17 +30,24 @@ html
       div(class="container")
       h1=`${poll.topic}`
       h3 choose one of the option
-      form(class="votForm" method="post")
+      form(method="post")
         each val in poll.answers 
           p
             input(type="radio" name='answer' id=`${val.answer}` value=`${val.answer}`)
             label(for=`${val.answer}`)=`${val.answer}`
-        input(type="submit" value="Vote")  
-      br
-      br
-      div(class="chartContainer" style="height: 300px;width: 100%")
+        input(type="submit" value="Vote")
+        if isCreator
+          button(class="deleteButton" data-pollid=`${poll.id}`) Delete
+      div
+        if displayResults
+          each val in displayResults
+            h1=val.votes
+            h1=val.answer
+      //- br
+      //- br
+      //- div(class="chartContainer" style="height: 300px;width: 100%")
       //- script(src="https://cdnjs.cloudflare.com/ajax/libs/pusher/5.0.2/pusher.min.js")
       //- script(src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js")
        input(type="radio" name=`${poll.topic}` id=`${val.answer}` value=`${val.answer}`)
-      //- script(src="/javascripts/poll.js")
+      script(src="/javascripts/poll.js")
       

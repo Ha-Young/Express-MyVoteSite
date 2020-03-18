@@ -1,3 +1,25 @@
+const deleteButton = document.querySelector('.deleteButton');
+if (deleteButton) {
+  console.log(deleteButton)
+  deleteButton.addEventListener('click', async(e) => {
+    e.preventDefault();
+    const pollId = deleteButton.dataset.pollid;
+    const url = `http://localhost:4000/votings/${pollId}`;
+    try {
+      fetch(url, {
+        method: 'delete',
+        body: JSON.stringify({ pollId }),
+        headers: new Headers({
+        'Content-Type': 'application/json',
+        }),
+      });
+
+    } catch(e) {
+
+    }
+  });
+}
+
 // const form = document.querySelector('.votForm');
 
 // form.addEventListener('submit', async (e) => {
@@ -23,5 +45,3 @@
   // }
 // });
 
-
-// console.log(form)
