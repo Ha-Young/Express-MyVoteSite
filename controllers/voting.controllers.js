@@ -47,7 +47,6 @@ exports.renderVote = async (req, res, next) => {
     const { id: voteId } = req.params;
     const currentVote = await Votes.findOne({ vote_id: voteId }).populate('created_by').lean();
     const currentUser = req.user ? req.user.username : null;
-    console.log(req.user);
 
     const voteInfoForDisplay = makeDisplayInfo(currentVote);
 
@@ -95,28 +94,18 @@ exports.registerCastingVote = async (req, res, next) => {
     const selectedOption = select_options[selectedOptionIndex];
 
     selectedOption.vote_counter++;
-    selectedOption.voter = req.user._id;
+    selectedOption.voter.push(req.user._id);
 
     await vote.updateOne({ select_options });
 
-    await Users.findByIdAndUpdate(req.user._id, { votes_voted: [ vote._id ]});
-  } catch(err) {
+    const currentUser = await Users.findById(req.user._id);
+    const { votes_voted } = currentUser;
+    votes_voted.push(vote._id);
 
+    await currentUser.updateOne({ votes_voted });
+
+    res.redirect('/');
+  } catch(err) {
+    // something goes here...
   }
 };
-
-
-// const schema = Schema({ nums: [Number] });
-// const Model = mongoose.model('Test', schema);
-
-// const doc = await Model.create({ nums: [3, 4] });
-// doc.nums.push(5); // Add 5 to the end of the array
-// await doc.save();
-
-// // You can also pass an object with `$each` as the
-// // first parameter to use MongoDB's `$position`
-// doc.nums.push({
-//   $each: [1, 2],
-//   $position: 0
-// });
-// doc.nums; // [1, 2, 3, 4, 5]
