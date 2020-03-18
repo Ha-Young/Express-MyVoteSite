@@ -11,6 +11,13 @@ const schema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true
+  },
+  doneVotes: {
+    type: [{
+      type: mongoose.Types.ObjectId,
+      ref: 'Vote'
+    }],
+    default: []
   }
 });
 

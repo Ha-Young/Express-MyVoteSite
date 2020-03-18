@@ -1,11 +1,11 @@
-<%
-  const { id, subject, options, creator, expirated } = vote;
-%>
 <!DOCTYPE html>
 <html>
   <%- include('partial/head') -%>
   <body>
     <%- include('partial/header') -%>
+    <%
+      const { id, subject, options, creator, expirated } = vote;
+    %>
     <div class="container">
       <section class="voting-detail">
         <h2><%= subject %></h2>
@@ -21,7 +21,11 @@
             <% } %>
           </fieldset>
           <div class="buttons-wrap">
-            <input type="submit" class="button" value="제출하기" />
+            <% if (isDone) { %>
+              <input type="submit" class="button danger" value="투표완료" disabled="true"/>
+            <% } else { %>
+              <input type="submit" class="button" value="제출하기" />
+            <% } %>
             <a href="/" class="button">돌아가기</a>
           </div>
         </form>
