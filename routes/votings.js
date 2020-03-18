@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Pusher = require('pusher');
-const alert = require('alert-node');
+// const Pusher = require('pusher');
 const createError = require('http-errors');
 const User = require('../models/user');
 const Poll = require('../models/poll');
@@ -64,8 +63,6 @@ router.get('/:poll_id', async (req, res, next) => {
     const { user } = req.session.passport;
     if (poll.creator.id === user) isCreator = true;
     displayResults = pollResults(isCreator, poll);
-
-    // console.log(displayResults, 'displayresult')
 
     return res.render('poll', { 
       hasLoggedIn: true, 
@@ -132,7 +129,6 @@ router.delete('/:poll_id', async (req, res, next) => {
   const { pollId } = req.body;
   const poll = await Poll.findById(pollId).populate('creator');
   const userId = poll.creator.id;
-  // console.log(userId);
   const user = await User.findById(userId);
   let index = '';
   user.myPolls.some((poll, i) => {
@@ -140,6 +136,7 @@ router.delete('/:poll_id', async (req, res, next) => {
       return index = i;
     }
   });
+
   user.myPolls.splice(index, 1);
   await user.save();
   await Poll.findOneAndDelete(pollId);

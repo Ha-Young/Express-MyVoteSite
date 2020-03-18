@@ -1,6 +1,5 @@
 const deleteButton = document.querySelector('.deleteButton');
 if (deleteButton) {
-  console.log(deleteButton)
   deleteButton.addEventListener('click', async(e) => {
     e.preventDefault();
     const pollId = deleteButton.dataset.pollid;
@@ -13,14 +12,14 @@ if (deleteButton) {
         'Content-Type': 'application/json',
         }),
       });
-      
+
       if (response.ok) {
         return location.href = 'http://localhost:4000';
       }
-
-      // throw Error(response.statusText);
+    
+      throw new Error()
     } catch(e) {
-      console.log(e)
+      location.href = 'http://localhost:4000/error';
     }
   });
 }

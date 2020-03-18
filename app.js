@@ -11,6 +11,7 @@ const signupRouter = require('./routes/signup');
 const authRouter = require('./routes/auth');
 const votingRouter = require('./routes/votings');
 const clientFetchError = require('./routes/clientFetchError');
+const myVotings = require('./routes/my-votings');
 
 require('./config/passport')(passport);
 
@@ -49,6 +50,7 @@ app.use('/auth', authRouter);
 app.use('/', indexRouter);
 app.use('/votings', votingRouter);
 app.use('/error', clientFetchError);
+app.use('/my-votings', myVotings);
 
 app.use(function(req, res, next) {
   next(createError(404));

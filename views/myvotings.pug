@@ -1,0 +1,36 @@
+doctype html
+html
+  head
+    link(rel="stylesheet", href="/stylesheets/newvoting.css")
+  body
+    nav
+      ul
+        if hasLoggedIn
+          li 
+            a(href="/") Main
+          li 
+            a(href="/votings/new") New vote
+          li 
+            a(href="") My vote
+          li 
+            a(href="/auth/logout") Logout
+        else
+          li 
+            a(href="/") Main
+          li 
+            a(href="/signup") Signup
+          li 
+            a(href="/auth/login") Login
+    main
+    //-  form(class="voteForm" method="post")
+    //-   label(for="topic") Topic
+    //-   input(type="text" name="topic" placeholder="Type your topic here")
+    //-   label ExpringDate
+    //-   input(type="date" name="date" placeholder="Type your topic here")
+    //-   input(type="time" name="time" placeholder="Type your topic here")
+    //-   div(class="inputBox")
+    //-     input(type="text" name="answer1" placeholder="Type your answer here")
+    //-     input(type="text" name="answer2" placeholder="Type your answer here")
+    //-   button(type="text" class="addButton") Add
+    //-   input(type="submit" value="Submit")
+    //- script(src="/javascripts/newvoting.js")
