@@ -4,8 +4,8 @@
   flex-direction: column;
   align-items: center;
   padding: 5vh 0;
-  height: 90vh;
   width: 25vw;
+  height: 100vh;
 }
 
 .profile-image {

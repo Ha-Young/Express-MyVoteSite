@@ -19,13 +19,13 @@ block content
           span.vote-title #{vote.title}
           form(action=`/votings/${vote.vote_id}`, method="post")
             fieldset.vote-mid
-              each option, index in vote.options
+              each option, index in vote.select_options
                 div.option
                   input(type="radio", name="option", id=option.description, value=index)
                   label(for=option.description) #{option.description}
               input#submit(type="submit", value="투표하기")
           .vote-bottom
             button.button.to-list 목록으로
-            if currentUser === createdBy
+            if loggedInUser === vote.created_by
               button.button.delete-vote 투표 삭제
   script(src="/javascripts/vote.js")

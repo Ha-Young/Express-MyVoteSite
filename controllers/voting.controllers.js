@@ -30,10 +30,10 @@ exports.registerVote = async (req, res, next) => {
       expires_at: expirationTime
     });
 
-    const { currentUser, currentUser: { votes_created } } = res.locals;
+    const { loggedInUser, loggedInUser: { votes_created } } = res.locals;
     votes_created.push(createdVote._id);
 
-    await currentUser.updateOne({ votes_created });
+    await loggedInUser.updateOne({ votes_created });
 
     res.redirect('/');
   } catch(err) {
@@ -45,16 +45,18 @@ exports.renderVote = async (req, res, next) => {
   try {
     const { id: vote_id } = req.params;
     const currentVote = await Votes.findOne({ vote_id }).populate('created_by').lean();
-    const currentUser = req.user ? req.user.username : null;
+    const votes = await Votes.find().lean();
+    const loggedInUser = req.user ? req.user : null;
 
     const voteInfoForDisplay = makeDisplayInfo(currentVote);
 
     res.render('vote', {
       vote: voteInfoForDisplay,
-      createdBy: voteInfoForDisplay.created_by,
-      currentUser
+      votes: votes,
+      loggedInUser
     });
   } catch(err) {
+    console.log(err);
     next(new errors.NonExistingVoteError());
   }
 };
@@ -64,13 +66,13 @@ exports.deleteVote = async (req, res, next) => {
     const deleteTargetVote = await Votes.findOne({ vote_id: req.body }).lean();
     await Votes.findOneAndDelete({ vote_id: req.body });
 
-    let { currentUser, currentUser: { votes_created } } = res.locals;
+    let { loggedInUser, loggedInUser: { votes_created } } = res.locals;
 
     votes_created = votes_created.filter(vote_id => {
       return vote_id.toString() !== deleteTargetVote._id.toString();
     });
 
-    await currentUser.updateOne({ votes_created });
+    await loggedInUser.updateOne({ votes_created });
 
     res.redirect('/'); // 여기서 왜 에러가..?
   } catch(err) {
@@ -96,11 +98,11 @@ exports.registerCastingVote = async (req, res, next) => {
 
     await vote.updateOne({ select_options });
 
-    const { currentUser, currentUser: { votes_voted } } = res.locals;
+    const { loggedInUser, loggedInUser: { votes_voted } } = res.locals;
 
     votes_voted.push(vote._id);
 
-    await currentUser.updateOne({ votes_voted });
+    await loggedInUser.updateOne({ votes_voted });
 
     res.redirect('/');
   } catch(err) {
