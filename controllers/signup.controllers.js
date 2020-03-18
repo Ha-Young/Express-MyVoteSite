@@ -28,7 +28,7 @@ exports.registerUser = async (req, res, next) => {
         });
       });
 
-      return res.redirect('/login');
+      return res.redirect('/auth/login');
     }
 
     next(new errors.DuplicateUserError('Duplicated user.'));

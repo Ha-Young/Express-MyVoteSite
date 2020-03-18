@@ -6,11 +6,11 @@ const { makeDisplayInfo } = require('../lib/helpers');
 
 exports.renderVotes = async (req, res, next) => {
   try {
-    const currentUser = req.user ? req.user._id : null;
+    const currentUser = req.user ? req.user.username : null;
     const votes = await Votes.find().populate('created_by').lean();
 
     if (!votes.length) {
-      return res.render('home', { message: NO_VOTES_MESSAGE });
+      return res.render('home', { message: NO_VOTES_MESSAGE, currentUser });
     }
 
     const votesInfoForDisplay = votes.map(vote => {
