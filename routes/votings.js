@@ -7,6 +7,8 @@ router.get('/new', (req, res, next) => {
   //FIXME: 더 효율적인 방법으로 수정하기, 모달
   if (req.user) {
     res.render('newVoting');
+  } else {
+    res.redirect('/');
   }
 });
 
