@@ -89,7 +89,7 @@ router.post('/votings/new', [
     .withMessage('Please fill out title.'),
   check('expiration_time')
     .notEmpty()
-    .withMessage('Please fill out expiration date.')
+    .withMessage('The expiration date/time does not exist or It is earlier than the current time.')
     .custom((value, { req }) => {
       const mergedDateTime = req.body.expiration_date + ' ' + value;
       return new Date() < new Date(mergedDateTime);
