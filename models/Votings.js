@@ -32,12 +32,18 @@ const votingsSchema = new Schema({
         required: true
     },
     select_option: {
-        type:[String],
+        type: [String],
         required: true
     },
     progress: {
         type: Boolean,
         required: true
+    },
+    vote_count: {
+        type: [{
+            votor: String,
+            selected_option: String
+        }]
     }
 });
 

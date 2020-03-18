@@ -42,24 +42,65 @@ router.post('/new', isLoggedIn, async (req, res, next) => {
 });
 
 router.get('/:id', async (req, res, next) => {
-    const votingId = req.params.id;
-    const votingData = await Votings.findOne({ id: votingId });
+    try {
+        const votingId = req.params.id;
+        const votingData = await Votings.findOne({ id: votingId });
+        if (!votingData) {
+            res.redirect('/');
+        } else if (!req.user) {
+            res.render('votingPage', {
+                title: '투표 페이지',
+                votingData,
+                deleteBtn: null
+            });
+        } else {
+            const deleteBtn = String(req.user._id) === String(votingData.writerId) ? '삭제' : null;
+            res.render('votingPage', {
+                title: '투표 페이지',
+                votingData,
+                deleteBtn
+            });
+        }
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+});
 
+router.put('/:id', (req, res, next) => {
+    console.log('-------put--------', req.params);
+    console.log('------put.user-----', req.user._id);
+    console.log('--------put.body------', req.body);
+    const userId = String(req.user._id);
+    const result = { votor: userId, selected_option: req.body.value };
     if (!req.user) {
-        res.render('votingPage', {
-            title: '투표 페이지',
-            votingData,
-            deleteBtn: null
-        });
+        res.redirect(301, '/login');
     } else {
-        const deleteBtn = String(req.user._id) === String(votingData.writerId) ? '삭제' : '';
-        res.render('votingPage', {
-            title: '투표 페이지',
-            votingData,
-            deleteBtn
+        Votings.findOne({ id: req.params.id }, (err, votingData) => {
+            const voteCount = votingData.vote_count;
+            const userCheck = voteCount.find((el) => {
+                return el.votor === userId;
+            });
+            if (userCheck) {
+                return res.send('중복된 투표입니다.');
+            } else {
+                votingData.vote_count.push(result);
+                votingData.save();
+                res.send('투표성공');
+            }
         });
     }
 });
 
+router.delete('/:id', async (req, res, next) => {
+    try {
+        const votingId = Number(req.params.id);
+        await Votings.remove({ id: votingId });
+        res.redirect('/');
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+});
 
 module.exports = router;

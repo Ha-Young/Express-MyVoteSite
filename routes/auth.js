@@ -11,6 +11,16 @@ router.get('/login', (req, res, next) => {
   });
 });
 
+router.put('/login', (req, res, next) => {
+  // req.flash('voteError', '로그인하셔야 투표하실 수 있습니다.')
+  // res.render('login', {
+  //   message: req.flash('vottError')
+  // });
+  res.render('login', {
+    message: ''
+  });
+});
+
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, success, fail) => {
     if (err) {

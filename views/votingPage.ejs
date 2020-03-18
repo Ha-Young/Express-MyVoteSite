@@ -13,10 +13,44 @@
   <%= votingData.description %><br>
   <%= votingData.expiration_date %><br>
   <%= votingData.progress %><br>
+  <select>
+    <option value="선택">선택</option>
+    <% for(let i=0; i < votingData.select_option.length; i++) { %>
+    <option class="option" value="<%= votingData.select_option[i] %>"><%= votingData.select_option[i] %></option>
+    <% } %>
+  </select>
+  <a class="vote" href="/votings/<%= votingData.id %>">투표하기</a>
   <% if(deleteBtn) { %>
-    <input type="submit" value="<%= deleteBtn %>">
+  <a class="deleteBtn" href="/votings/<%= votingData.id %>"><%= deleteBtn %></a>
   <% } %>
   <a href="/">투표 목록으로 돌아가기</a>
+
+  <script>
+    const deleteBtn = document.querySelector('.deleteBtn');
+    const vote = document.querySelector('.vote');
+    const voteUrl = vote.href;
+    const option = document.querySelector('.option');
+
+    vote.addEventListener('click', () => {
+      fetch(voteUrl, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ value: option.value })
+      });
+    });
+
+    if (deleteBtn) {
+      const url = deleteBtn.href;
+      deleteBtn.addEventListener('click', () => {
+        fetch(url, {
+          method: 'DELETE',
+        });
+      });
+    }
+
+  </script>
 </body>
 
 </html>
