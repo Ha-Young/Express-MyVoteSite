@@ -1,0 +1,41 @@
+doctype html
+html
+  head
+    link(rel="stylesheet", href="/stylesheets/index.css")
+  body
+    nav
+      ul
+        if hasLoggedIn
+          li 
+            a(href="/") Main
+          li 
+            a(href="/votings/new") New vote
+          li 
+            a(href="") My vote
+          li 
+            a(href="/auth/logout") Logout
+        else
+          li 
+            a(href="/") Main
+          li 
+            a(href="/signup") Signup
+          li 
+            a(href="/auth/login") Login
+    main
+      //- each val, index in poll
+      //-   div
+      //-     ul
+      //-       li
+      //-         a(href=`votings/${val.id}`)=`Topic: ${val.topic}`
+      //-       li=`Creator: ${val.creator.email}`
+      //-       li=`Expring time: ${timeString[0]} ${timeString[1]}`
+      div(class="container")
+      h1=`${poll.topic}`
+      h3 choose one of the option
+      form
+        each val in poll.answers 
+          p
+            input(type="radio" name=`${poll.topic}` id=`${val.answer}` value=`${val.answer}`)
+            label(for=`${val.answer}`)=`${val.answer}`
+            //- p=`${val.answer}`
+        input(type="submit" value="Vote")  

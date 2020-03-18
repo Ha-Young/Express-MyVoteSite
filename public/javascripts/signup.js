@@ -30,38 +30,8 @@ const validate = (input) => {
   }
 };
 
-  // form.onsubmit = () => {
-  //   let count = 0;
-  //   inputs.forEach((input) => {
-  //     if (input.className = 'valid') {
-  //       count++;
-  //     }
-  //   });
-  //   console.log(count)
-  // }
-
-
-
-// const disalbeSubmitButton = () => {
-//   let count = 0;
-//   inputs.forEach((input) => {
-//     console.log(input.className)
-//     if (input.className = 'valid') {
-//       count++;
-//     }
-//   });
-
-//   console.log(count)
-//   if (count === 3) {
-//     submit.disabled = 'true';
-//   } else {
-//     submit.disabled = 'false';
-//   }
-// };
-
 inputs.forEach((input) => {
   input.addEventListener('keyup', (e) => {
     validate(e.target);
-    // disalbeSubmitButton();
   });
 });

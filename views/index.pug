@@ -22,11 +22,12 @@ html
           li 
             a(href="/auth/login") Login
     main
-      h1 메인이다 메인이다 메인이다
+      h1 투표 목록
         each val, index in polls
           div
             ul
-              li=`Topic: ${val.topic}`
+              li
+                a(href=`votings/${val.id}`)=`Topic: ${val.topic}`
               li=`Creator: ${val.creator.email}`
                 if val.isInProgress
                   li='Still Voting: on'

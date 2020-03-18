@@ -5,21 +5,11 @@ const alert = require('alert-node');
 const createError = require('http-errors');
 const User = require('../models/user');
 const Poll = require('../models/poll');
+const authenticateLogin = require('./middlewares/authenticateLogin');
 
-var pusher = new Pusher({
-  appId: '964537',
-  key: 'e2a6118dfc7a6334d497',
-  secret: '87f4f8af8bdeef393c07',
-  cluster: 'ap3',
-  encrypted: true,
-});
 
-router.get('/new', function(req, res, next) {
-  if (req.isAuthenticated()) {
-    res.render('newvoting', { hasLoggedIn: true });
-  } else {
-    res.redirect('/auth/login');
-  }
+router.get('/new', authenticateLogin, function(req, res, next) {
+  res.render('newvoting', { hasLoggedIn: true });
 });
 
 router.post('/new', async (req, res, next) => {
@@ -58,19 +48,43 @@ router.post('/new', async (req, res, next) => {
   }
 });
 
-router.get('/success', function(req, res, next) {
-  if (req.isAuthenticated()) {
-    res.render('success', { hasLoggedIn: true });
-  } else {
-    res.redirect('/auth/login');
-  }
+router.get('/success', authenticateLogin, function(req, res, next) {
+  res.render('success', { hasLoggedIn: true });
 });
 
+
+// const pusher = new Pusher({
+//   appId: '964537',
+//   key: 'e2a6118dfc7a6334d497',
+//   secret: '87f4f8af8bdeef393c07',
+//   cluster: 'ap3',
+//   encrypted: true,
+//   useTLS: true,
+// });
+
+
+
+router.get('/:poll_id', async (req, res, next) => {
+  const id = req.params.poll_id;
+  poll = await Poll.findById(id);
+  // console.log(poll.creator)
+  // console.log(poll.expiringTime);
+  // console.log(poll.expiringTime.toDateString());
+  // console.log(poll.expiringTime.toLocaleTimeString());
+  res.render('poll', { hasLoggedIn: true, poll, timeString: [poll.expiringTime.toDateString(), poll.expiringTime.toLocaleTimeString()] });
+});
+
+// poll.expiringTime.toDateString(), 
+// poll.expiringTime.toLocaleTimeString()
+
+
+
+ // pusher.trigger('poll', 'vote', {
+  //   votes: 1,
+  //   poll: req.body.poll
+  // });
 
 module.exports = router;
 
 
-  // pusher.trigger('poll', 'vote', {
-  //   votes: 1,
-  //   poll: req.body.poll
-  // });
+ 

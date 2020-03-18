@@ -18,6 +18,7 @@ const User = require('../models/user');
 
 const checkProgress = async (req, res, next) => {
   const polls = await Poll.find({}).populate('creator');
+  console.log(polls)
   const timeString = [];
   const promises = polls.map(async (poll) => {
     timeString.push([
@@ -31,11 +32,9 @@ const checkProgress = async (req, res, next) => {
   });
 
   await Promise.all(promises);
-  console.log(timeString);
+  // console.log(timeString);
   req.polls = polls;
-
   req.timeString = timeString;
-  
   next();
   // timeString.push(poll.expiringTime.toDateString());
   // timeString.push(poll.expiringTime.toLocaleTimeString());

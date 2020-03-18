@@ -22,3 +22,19 @@ main {
   margin: 0 auto;
   width: 70%;
 }
+
+main ul {
+  margin: 20px auto;
+  width: 50%;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 16);
+  padding: 20px 20px;
+}
+
+main li {
+  font-size: 20px;
+  border-bottom: 1px solid #5e5d58;
+}
+
+main li a {
+  text-decoration: none;
+}
