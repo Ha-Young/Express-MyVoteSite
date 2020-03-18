@@ -7,10 +7,25 @@ const Voting = require('../models/Voting');
 const { check, validationResult } = require('express-validator');
 const { ensureAuthenticated } = require('../middlewares/authorization');
 
-router.get('/', (req, res, next) => {
-  if(!req.user) return res.render('index');
+router.get('/', async (req, res, next) => {
+  const votes = await Voting.find().populate('made');
+  const ongoingVotes = [];
+  const completedVotes = [];
+  votes.forEach((vote) => {
+    const expirationDate = vote.expiration_date.toString();
+    const voteInfo = {
+      id: vote._id,
+      title: vote.title,
+      made: vote.made.email.split('@')[0],
+      expiration: expirationDate.split('GMT')[0].slice(0, -4),
+    };
+    const isOngoing = new Date() < new Date(expirationDate);
+    isOngoing ? ongoingVotes.push(voteInfo) : completedVotes.push(voteInfo);
+  });
+
+  if(!req.user) return res.render('index', { ongoingVotes, completedVotes });
   const user = req.user.email.split('@')[0];
-  res.render('index', { user });
+  res.render('index', { user, ongoingVotes, completedVotes });
 });
 
 router.get('/login', (req, res, next) => {
@@ -29,8 +44,8 @@ router.post('/login',
   }));
 
 router.get('/logout', (req, res) => {
-  req.logout();
   req.session.destroy((err) => {
+    req.logout();
     res.status(302).redirect('/');
   });
 });
@@ -137,6 +152,28 @@ router.post('/votings/new', [
       // next(createError(404, 'An unknown error occurred while saving vote. Try again!'));
     }
   }
+});
+
+router.get('/my-votings', ensureAuthenticated, async (req, res, next) => {
+  const votes = await Voting.find().populate('made');
+  const ongoingVotes = [];
+  const completedVotes = [];
+  votes.forEach((vote) => {
+    if (req.user._id.equals(vote.made._id)) {
+      const expirationDate = vote.expiration_date.toString();
+      const voteInfo = {
+        id: vote._id,
+        title: vote.title,
+        made: vote.made.email.split('@')[0],
+        expiration: expirationDate.split('GMT')[0].slice(0, -4),
+      };
+      const isOngoing = new Date() < new Date(expirationDate);
+      isOngoing ? ongoingVotes.push(voteInfo) : completedVotes.push(voteInfo);
+    }
+  });
+  if(!req.user) return res.render('index', { ongoingVotes, completedVotes });
+  const user = req.user.email.split('@')[0];
+  res.render('index', { user, ongoingVotes, completedVotes });
 });
 
 module.exports = router;
