@@ -1,9 +1,9 @@
 const Votes = require('../models/Votes');
+const Users = require('../models/Users');
 const errors = require('../lib/errors');
 const { makeDisplayInfo } = require('../lib/helpers');
 
 exports.registerVote = async (req, res, next) => {
-  const { _id: userId } = req.user;
   const { title, expires_at, ...options } = req.body;
 
   const expirationTime = new Date(expires_at).toISOString();
@@ -19,16 +19,22 @@ exports.registerVote = async (req, res, next) => {
     voter: []
   }));
 
-  const counter = await Votes.estimatedDocumentCount();
-
   try {
-    await Votes.create({
+    const counter = await Votes.estimatedDocumentCount();
+
+    const createdVote = await Votes.create({
       title,
       vote_id: counter + 1,
       select_options: selectOptionList,
-      created_by: userId,
+      created_by: req.user._id,
       expires_at: expirationTime
     });
+
+    const currentUser = await Users.findById(req.user._id);
+    const { votes_created } = currentUser;
+    votes_created.push(createdVote._id);
+
+    await currentUser.updateOne({ votes_created });
 
     res.redirect('/');
   } catch(err) {
@@ -50,14 +56,23 @@ exports.renderVote = async (req, res, next) => {
       currentUser
     });
   } catch(err) {
-    next(new errors.GeneralError(err.message));
+    next(new errors.NonExistingVoteError());
   }
 };
 
 exports.deleteVote = async (req, res, next) => {
   try {
-    const targetVoteId = req.body;
-    await Votes.findOneAndDelete({ vote_id: targetVoteId });
+    const deleteTargetVote = await Votes.findOne({ vote_id: req.body }).lean();
+    await Votes.findOneAndDelete({ vote_id: req.body });
+
+    const currentUser = await Users.findById(req.user._id);
+    let { votes_created } = currentUser;
+
+    votes_created = votes_created.filter(vote_id => {
+      return vote_id.toString() !== deleteTargetVote._id.toString();
+    });
+
+    await currentUser.updateOne({ votes_created });
 
     res.redirect('/'); // 여기서 왜 에러가..?
   } catch(err) {
@@ -70,10 +85,23 @@ exports.registerCastingVote = async (req, res, next) => {
     return res.redirect('/login');
   }
 
-  const { id: voteId } = req.params;
-  const selectedOptionIndex = Object.values(req.body)[0];
-  // console.log(selectedOptionIndex);
-  await Votes.findOneAndUpdate({ vote_id: voteId });
+  try {
+    const { id: voteId } = req.params; // vote_id 값. 2와 같은 숫자.
+    const selectedOptionIndex = Object.values(req.body)[0];
+
+    const vote = await Votes.findOne({ vote_id: voteId });
+    const { select_options } = vote;
+    const selectedOption = select_options[selectedOptionIndex];
+
+    selectedOption.vote_counter++;
+    selectedOption.voter = req.user._id;
+
+    await vote.updateOne({ select_options });
+
+    await Users.findByIdAndUpdate(req.user._id, { votes_voted: [ vote._id ]});
+  } catch(err) {
+
+  }
 };
 
 

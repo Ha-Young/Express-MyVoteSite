@@ -1,6 +1,7 @@
 const express = require('express');
 
 const checkAuthentication = require('../middlewares/authenticate');
+const checkWhetherUserVoted = require('../middlewares/checkWhetherUserVoted');
 const votingControllers = require('../controllers/voting.controllers');
 
 const router = express.Router();
@@ -13,6 +14,6 @@ router.delete('/', checkAuthentication, votingControllers.deleteVote)
 
 router.get('/:id', votingControllers.renderVote);
 
-router.post('/:id', checkAuthentication, votingControllers.registerCastingVote);
+router.post('/:id', checkAuthentication, checkWhetherUserVoted, votingControllers.registerCastingVote);
 
 module.exports = router;

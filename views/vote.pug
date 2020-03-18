@@ -23,7 +23,7 @@ block content
                 div.option
                   input(type="radio", name="option", id=option.description, value=index)
                   label(for=option.description) #{option.description}
-              input(type="submit", value="투표하기")
+              input#submit(type="submit", value="투표하기")
           .vote-bottom
             button.button.to-list 목록으로
             if currentUser === createdBy
