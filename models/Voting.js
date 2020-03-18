@@ -6,7 +6,18 @@ const votingSchema = new mongoose.Schema({
     unique: true,
     required: true
   },
-  items: [String],
+  items: [
+    {
+      name: {
+        type: String,
+        required: true
+      },
+      count: {
+        type: Number,
+        required: true
+      }
+    }
+  ],
   endDate: {
     type: String,
     required: true
@@ -14,6 +25,10 @@ const votingSchema = new mongoose.Schema({
   author: {
     type: String,
     required: true
+  },
+  solvedUser: {
+    type: [ String ],
+    default: []
   }
 });
 

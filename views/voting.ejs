@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>voting</title>
+</head>
+
+<body>
+  <div>
+    <h1>투표 페이지</h1>
+
+    <div>
+      <ul>
+        <li>제목: <%= voting.title %></li>
+        <li>생성자: <%= voting.author %></li>
+        <li>만료날짜: <%= voting.endDate %></li>
+        <% if (status) { %>
+        <li>진행 여부:<span>진행중</span>/li>
+          <% } else { %>
+        <li>진행 여부:<span>기간 만료</span></li>
+        <% } %>
+      </ul>
+    </div>
+
+    <div>
+      <% if (status) { %>
+      <form action=<% `/votings/${voting._id}` %> method='POST'>
+        <% voting.items.map(item =>{ %>
+        <label>
+          <input type='radio' name='target' value='<%= item.name %>'><%= item.name %>
+        </label>
+        <% }) %>
+        <input type='submit' value='제출'>
+      </form>
+      <% } else { %>
+      <ul>
+        <% voting.items.forEach(item => { %>
+          <li>
+            <span><% `${item.name}: ${item.count}표` %></span>
+          </li>
+        <% }) %>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>
+
+/*
+{
+solvedUser: [],
+_id: 5e7226e8cccc5f0c40549b8a,
+title: 'q',
+items: [
+{ _id: 5e7226e8cccc5f0c40549b8b, name: 'q1', count: 0 },
+{ _id: 5e7226e8cccc5f0c40549b8c, name: 'q2', count: 0 }
+],
+endDate: '2020-03-26T01:01',
+author: 'bb@bb.com',
+__v: 0
+}
+*/
+
+res.render('voting', {
+voting,
+isAuthor,
+status:
+});

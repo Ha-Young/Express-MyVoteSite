@@ -7,9 +7,10 @@ let itemCount = items.childElementCount;
 addItem.addEventListener('click', event => {
   event.preventDefault();
   if (itemCount < 5) {
+    ++itemCount;
     const item = document.createElement("input");
     item.setAttribute('type', 'text');
-    item.setAttribute('name', `item${++itemCount}`);
+    item.setAttribute('name', 'items');
     items.appendChild(item);
   }
 });

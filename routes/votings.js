@@ -13,33 +13,72 @@ router.get('/new', (req, res, next) => {
 });
 
 router.post('/new', async (req, res, next) => {
-  const votingInfoKey = Object.keys(req.body);
-  const isEmptyValueCheck = votingInfoKey.every(key => req.body[key] !== '');
-  
+  const { title, items, endDate } = req.body;
+  /*
+  {
+  title: 'qq',
+  items: [ 'q1', 'q2' ],
+  endDate: '2020-03-19T14:02'
+  }
+  */
+  const votingInfo = Object.keys(req.body);
+  const isEmptyValueCheck = votingInfo.every(item => req.body[item].length !== 0);
+
   //FIXME: 빈값 발견시 모달 띄우기
   if (isEmptyValueCheck) {
-    const itemsKey = votingInfoKey.slice(1, votingInfoKey.length - 1);
-    const items = itemsKey.map(key => req.body[key]);
-    const title = req.body.title;
-    const endDate = req.body.endDate;
+    const itemList = [];
+    items.forEach(item => itemList.push({ name: item, count: 0 }));
 
     new Voting({
       title,
-      items,
+      items: itemList,
       endDate,
-      author: req.user.email
+      author: req.user.email,
+      solvedUser: []
     }).save();
   }
-
-  // 유효성 검사
-  // 타이틀 ,시간 , 투표항목 다수 나눠야함
-  // 디비에 저장
-  // 홈에 저장된 모든 투표 정보투표 정보 넘겨주기 
-  
-  // const allVotings = await Voting.find();
-  // console.log(allVotings)
-  // res.locals.votings = allVotings;
   res.redirect('/');
 });
 
+router.get('/:voting_id', async (req, res) => {
+  const { voting_id: id } = req.params;
+
+  //해당 투표값
+  const voting = await Voting.findOne({ _id: id });
+  const votingEndDate = new Date(voting.endDate).getTime();
+  const currentDate = new Date().getTime();
+  const isAuthor = req.user.email === voting.author;
+
+  if (votingEndDate >= currentDate) {
+    // 만료 X => 해당 투표 페이지 보여주기
+    res.render('voting', {
+      voting,
+      isAuthor,
+      status: true
+    });
+  } else {
+    // 만료 => 결과
+    res.render('voting', {
+      voting,
+      isAuthor,
+      status: false
+    });
+  }
+});
+
 module.exports = router;
+
+/*
+  {
+  solvedUser: [],
+  _id: 5e7226e8cccc5f0c40549b8a,
+  title: 'q',
+  items: [
+    { _id: 5e7226e8cccc5f0c40549b8b, name: 'q1', count: 0 },
+    { _id: 5e7226e8cccc5f0c40549b8c, name: 'q2', count: 0 }
+  ],
+  endDate: '2020-03-26T01:01',
+  author: 'bb@bb.com',
+  __v: 0
+}
+*/

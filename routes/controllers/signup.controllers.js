@@ -8,6 +8,7 @@ exports.validation = async (req, res, next) => {
   const passwordRules = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/
   const emailRules = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
   const findUser = await User.findOne({ email });
+  
   if (findUser) {
     next(createError({
       message: '이미 가입된 이메일'
