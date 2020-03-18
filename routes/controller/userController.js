@@ -36,7 +36,7 @@ async function findUser(req, res, next) {
       if (isMatch) {
         console.log("통과");
         //세션 처리
-        req.session.displayname = email.split('@')[0];
+        req.session.userId = email.split('@')[0];
         req.session.save(function(){
           res.json({ message: LOGIN_RESULT.SUCCESS });
       });

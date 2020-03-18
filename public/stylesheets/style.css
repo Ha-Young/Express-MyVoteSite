@@ -5,8 +5,8 @@ body {
   height: 100%;
 }
 
-main{
-  padding:100px;
+main {
+  padding: 100px;
 }
 .header {
   list-style-type: none;
@@ -19,43 +19,75 @@ main{
   justify-content: space-between;
   align-items: center;
 }
-.header > ul{
+.header > ul {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
 }
 
-.header > li ,a,span{
+.header > li,
+a,
+span {
   display: block;
   color: white;
   text-align: center;
   padding: 8px;
   text-decoration: none;
 }
-.icon{
+.icon {
   display: flex;
   align-items: center;
 }
 
-.icon > img{
+.icon > img {
   cursor: pointer;
   margin-bottom: 0;
   margin-left: 20px;
-  width:50px;
+  width: 50px;
   background-color: whitesmoke;
 }
-.uservote{
-  color:white;
-}
-.button-vote-creator{
-  float:right;
-  margin-top:-50px;
-  font-size:20px;
-  padding:10px;
-  border-radius:10px;
-}
 
-.vote {
+.uservote {
+  color: white;
+}
+.button-vote-creator {
+  float: right;
+  margin-top: -50px;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 10px;
+}
+.vote-box {
+  padding: 20px 50px;
+  margin: 10px;
   border: solid 1px black;
+  display: flex;
+  flex-direction: column;
 }
 
+.vote-title {
+  font-size: 20px;
+  margin: 10px 0px 20px;
+  font-weight: 900;
+}
+
+.vote-state-going,
+.vote-state-done {
+  border-radius: 5px;
+  width: fit-content;
+  background-color: rgb(32, 218, 178);
+  width: 50px;
+}
+
+.vote-state-done {
+  background-color: rgb(170, 170, 166);
+}
+
+.vote-due {
+  width: fit-content;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}

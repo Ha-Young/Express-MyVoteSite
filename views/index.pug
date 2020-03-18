@@ -3,13 +3,18 @@ extends layout
 block content
   main
     h1= title
-    p 투표
+    p 언제든 투표를 만들고, 다른이들의 투표에 참여해 보세요!
     if loginUser
-      button.button-vote-creator(onclick="window.location.href = '/newVote';") 내투표 만들기
-    -var values = [{title:"title", creator:"creator", due:"2020-03-20 3pm", state:"continue"   }];
+      button.button-vote-creator(onclick="window.location.href = '/votings/new';") 투표 만들기
+    -var values = votes;
       each val in values
-        ul.vote
-          li.vote-title=val.title
-          li.vote-creator=val.creator
-          li.vote-due=val.due
-          li.vote-state=val.state
+        div.vote-box(data-id=val.id onclick="window.location.href = '/votings/:"+val.id+";")
+          div.vote-title=val.title
+          div.vote-creator=val.creator
+          div.flex-row
+            case val.state
+              when '진행중'
+                div.vote-state-going=val.state
+              when '완료'
+                div.vote-state-done=val.state
+            div.vote-due='투표마감:'+val.due
