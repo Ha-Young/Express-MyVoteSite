@@ -1,6 +1,7 @@
 body {
   margin: 0px;
-  font: 16px, 'Baloo Bhai 2', 'Sunflower', sans-serif, cursive;
+  font-family: 'Baloo Bhai 2', 'Sunflower', sans-serif, cursive;
+  font-size: 16px;
 }
 
 a,
@@ -38,7 +39,8 @@ button:hover {
 .signupSection,
 .loginForm,
 .signupForm,
-.postFailSection {
+.validationFailSection,
+.createResultSection {
   display: flex;
   flex-direction: column;
 }
@@ -106,25 +108,101 @@ header h4 {
   background-color: #7bb088;
 }
 
-.goHome {
+.goHomeLoginPage,
+.goHomeSignupPage {
   background-color: #bae5e5;
 }
 
-.goHome:hover {
+.goHomeLoginPage:hover
+.goHomeSignupPage:hover {
   background-color: #a2d4d4;
 }
 
-/* [post fail] */
-.postFailSection h1 {
+/* [validation fail, create result] */
+.validationFailSection h1,
+.createResultSection h1,
+.createResultSection h2 {
   font-family: 'Baloo Tamma 2', cursive;
   text-align: center;
 }
 
-.postFailSection {
+.validationFailSection,
+.createResultSection {
   align-items: center;
   margin-top: 200px;
 }
 
-.postFailSection a {
+.validationFailSection a,
+.createResultSection a {
+  padding: 10px;
+}
+
+.goHomeVotePage {
+  margin: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f7f1f1;
+}
+
+.goHomeVotePage:hover {
+  background-color: #d9cdcd;
+}
+
+/* [create] */
+.createForm {
+  margin: 10px;
+  padding: 10px;
+}
+
+.createForm input,
+.createSubmit,
+.addOption,
+.deleteOption {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border-style: none;
+  font-size: 20px;
+  color: white;
+}
+
+.createTitle {
+  background-color: #424874;
+}
+
+.createExpiratin,
+.createOption {
+  background-color: #a6b1e1;
+}
+
+.createDescription {
+  background-color: #c5cded;
+}
+
+.createExpiratin {
+  background-color: #dcd6f7;
+}
+
+.addOption,
+.deleteOption {
+  background-color: #bfd6c4;
+}
+
+.createSubmit {
+  background-color: #a5b5a9;
+}
+
+.addOption:hover,
+.deleteOption:hover {
+  background-color: #97b59e;
+}
+
+.createSubmit:hover {
+  background-color: #79887d;
+}
+
+.goBackValiFailPage,
+.goBackCreatePage {
+  margin: 20px;
   padding: 10px;
 }

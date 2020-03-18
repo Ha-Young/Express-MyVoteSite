@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Voting Create Result</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Tamma+2&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <section class="createResultSection">
+      <h1><%= message %></h1>
+      <a href="#" class="goHomeVotePage">Go Home</a>
+      <h2 class="redirectMessage">3초 뒤 홈페이지로 이동합니다.</h2>
+      <h2>(자동으로 이동하지 않으면 'Go Home'을 선택하세요.)</h2>
+    </section>
+    <script>
+      const resultMessage = document.querySelector('h1');
+      document.querySelector(".goHomeVotePage").addEventListener("click", () => {
+        window.location.href = 'http://localhost:3000/';
+      });
+  
+      let seconds = 3;
+      const interval = setInterval(() => {
+        seconds = seconds - 1;
+        document.querySelector(".redirectMessage").innerHTML = `${seconds}초 뒤 홈페이지로 이동합니다.`;
+      }, 1000);
+
+      setTimeout(() => {
+        clearInterval(interval);
+        window.location.href = 'http://localhost:3000/';
+      }, 3500);
+    </script>
+  </body>
+</html>

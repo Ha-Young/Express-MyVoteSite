@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passportLocal = require('../config/passport');
+// const createError = require('http-errors');
 const User = require('../models/User');
 const Voting = require('../models/Voting');
 const { check, validationResult } = require('express-validator');
@@ -57,7 +58,6 @@ router.post('/signup', [
 ], async (req, res, next) => {
   try {
     const errors = validationResult(req).errors;
-
     if(!errors.length) {
       const newUser = new User({
         email: req.body.email,
@@ -72,9 +72,10 @@ router.post('/signup', [
     }
   } catch (err) {
     if (err.errmsg.split(' ')[1] === 'duplicate') {
-      return res.render('validationFail', { message: '이메일이 중복되었습니다.'});
+      return res.render('validationFail', { message: 'This is a registered email.'});
     } else {
-      next(err);
+      next(err); //프로젝트 완성 후 아래 코드로 교체 예정
+      //next(createError(404, 'An unknown error occurred while signing up. Try again!'));
     }
   }
 });
@@ -119,12 +120,22 @@ router.post('/votings/new', [
         newVoting.options.set(option, 0);
       });
       await newVoting.save();
-      res.status(307).redirect('/');
+      return res.render('createResult', { message: 'Saved Vote! :)'});
     } else {
       return res.render('validationFail', { message: errors[0].msg });
     }
   } catch (err) {
-    next(err);
+    const errMessage = err.message.toString().split(' ');
+    if (errMessage[9] === '"$",') {
+      const message = 'Sorry. "$" characters cannot be included in option content. Please delete "$" in option content.';
+      return res.render('validationFail', { message });
+    } else if (errMessage[8] === '".",') {
+      const message = 'Sorry. "." characters cannot be included in option content. Please delete "." in option content.';
+      return res.render('validationFail', { message });
+    } else {
+      next(err); //프로젝트 완성 후 아래 코드로 교체 예정
+      // next(createError(404, 'An unknown error occurred while saving vote. Try again!'));
+    }
   }
 });
 
