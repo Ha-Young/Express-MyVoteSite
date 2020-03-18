@@ -1,19 +1,20 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
-  email: {
+const votingSchema = new mongoose.Schema({
+  title: {
     type: String,
     unique: true,
     required: true
   },
-  password: {
+  items: [String],
+  endDate: {
     type: String,
     required: true
   },
-  salt: {
+  author: {
     type: String,
     required: true
   }
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Voting', votingSchema);

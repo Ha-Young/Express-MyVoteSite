@@ -8,11 +8,35 @@
 
 <body>
   <div>
-    <h1>홈</h1>
-    <button><a href='/signup'>회원가입</a></button>
-    <button><a href='/login'>로그인</a></button>
-    <button><a href='/votings/new'>투표 생성하기</a></button>
+    <div>
+      <h1>홈</h1>
+      <button><a href='/signup'>회원가입</a></button>
+      <button><a href='/login'>로그인</a></button>
+      <button><a href='/votings/new'>투표 생성하기</a></button>
+    </div>
+
+    <div>
+      <% if (allVotings) { %>
+        <% allVotings.forEach(voting => { %>
+          <ul>
+            <li>제목 <%= voting.title %></li>
+            <li>작성자 <%= voting.author %></li>
+            <li>만료 날짜 <%= new Date(voting.endDate) %></li>
+          </ul>
+        <% }); %>
+      <% } %>
+    </div>
   </div>
 </body>
 
 </html>
+
+<!-- 제목, 생성자, 만료 날짜 및 시간, 진행 중 여부
+{
+items: [ 'b', 'c' ],
+_id: 5e71cdd916718a26b0c4c3f7,
+title: 'a',
+endDate: '2020-03-28T15:03',
+author: 'a@a.com',
+__v: 0
+} -->
