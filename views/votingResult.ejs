@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <%- include('partial/head') -%>
+  <body>
+    <%- include('partial/header') -%>
+    <%
+      const { id, subject, options, creator, expirated } = vote;
+      const lotsOfLength = options.map(opt => opt.voter.length);
+      const maxLength = Math.max.apply(null, lotsOfLength);
+    %>
+    <div class="container">
+      <section class="voting-detail">
+        <h2><%= subject %> Result.</h2>
+        <p>Made by <%= creator.username %></p>
+        <p class="align-right">총 투표인원 <%= maxLength %></p>
+        <ul class="chart-area">
+          <%
+            for (let i = 0; i < options.length; i++) {
+              const length = options[i].voter.length;
+              let value = 0;
+              
+              if (length) {
+                value = Math.floor(maxLength / length) * 100;
+              }
+          %>
+            <li>
+              <h4><%= options[i].value %></h4>
+              <div class="bar" data-value="<%= value %>"></div>
+              <p><strong><%= length%></strong><%= value %>%</p>
+            </li>
+          <% } %>
+          </ul>
+          <div class="buttons-wrap">
+            <a href="/votings/<%= id %>" class="button">투표로 돌아가기</a>
+          </div>
+      </section>
+    </div>
+    <%- include('partial/scripts') -%>
+  </body>
+</html>

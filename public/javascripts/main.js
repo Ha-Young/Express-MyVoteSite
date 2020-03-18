@@ -2,6 +2,7 @@ const optionsArea = document.querySelector('.options-area');
 const addOptionButton = document.querySelector('.add-options');
 const removeOptionButton = document.querySelector('.remove-options');
 const confirm = document.querySelector('.confirm');
+const chartArea = document.querySelector('.chart-area');
 
 if (optionsArea) {
   let optionCount = 1;
@@ -43,4 +44,14 @@ function removeOptionItem (target) {
   const lastIndex = options.length - 1;
 
   target.removeChild(options[lastIndex]);
+}
+
+if (chartArea) {
+  const bars = chartArea.querySelectorAll('.bar');
+
+  for (let i = 0; i < bars.length; i++) {
+    const value = bars[i].dataset.value;
+    console.log(value);
+    bars[i].style.width = `${value}%`;
+  }
 }

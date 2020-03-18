@@ -3,7 +3,8 @@ import {
   getNewVote,
   postVotings,
   getVoteDetail,
-  postVotingDetail
+  postVotingDetail,
+  getVoteResult
 } from '../controllers/votingsController';
 
 const router = express.Router();
@@ -15,5 +16,7 @@ router.get('/new', getNewVote);
 router.get('/:id', getVoteDetail);
 
 router.post('/:id', postVotingDetail);
+
+router.get('/:id/result', getVoteResult);
 
 export default router;

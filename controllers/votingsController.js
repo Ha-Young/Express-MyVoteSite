@@ -15,24 +15,6 @@ export const getNewVote = (req, res) => {
   res.render('newVoting');
 };
 
-export const getVoteDetail = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const vote = await Vote.findById(id).populate('creator');
-    const user = req.user;
-    let isDone = false;
-
-    if (user) {
-      isDone = user.doneVotes.indexOf(id) > -1;
-    }
-
-    res.render('votingDetail', { vote, isDone });
-  } catch (err) {
-    // Error handling
-    console.log(err);
-  }
-};
-
 export const postVotings = async (req, res) => {
   try {
     const {
@@ -53,6 +35,28 @@ export const postVotings = async (req, res) => {
     res.redirect(`/votings/${vote.id}`);
   } catch (err) {
     // Error handler
+  }
+};
+
+export const getVoteDetail = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const vote = await Vote.findById(id).populate('creator');
+    const user = req.user;
+    let isDone = false;
+    let isCreator = false;
+
+    if (user) {
+      if (vote.creator.id === user.id) {
+        isCreator = true;
+      }
+      isDone = user.doneVotes.indexOf(id) > -1;
+    }
+
+    res.render('votingDetail', { vote, isDone, isCreator });
+  } catch (err) {
+    // Error handling
+    console.log(err);
   }
 };
 
@@ -79,4 +83,16 @@ export const postVotingDetail = async (req, res) => {
 
 export const getSuccess = (req, res) => {
   res.render('success');
+};
+
+export const getVoteResult = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const vote = await Vote.findById(id).populate('creator');
+
+    res.render('votingResult', { vote });
+  } catch (err) {
+    // Error handling
+    console.log(err);
+  }
 };
