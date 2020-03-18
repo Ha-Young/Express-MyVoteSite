@@ -2,17 +2,20 @@ import express from 'express';
 import path from 'path';
 import logger from 'morgan';
 import session from 'express-session';
+import mongoose from 'mongoose';
+import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import createError from 'http-errors';
-import { localMiddleware } from './middlewares';
 import rootRouter from './routers/rootRouter';
 import authRouter from './routers/authRouter';
 import votingRouter from './routers/votingRouter';
+import { localMiddleware } from './middlewares';
 
 import './db';
 import './passport';
 
 const app = express();
+const SessionStore = MongoStore(session);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -25,7 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: new SessionStore({ mongooseConnection: mongoose.connection })
 }));
 
 app.use(passport.initialize());
