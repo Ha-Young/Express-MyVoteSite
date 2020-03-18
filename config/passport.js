@@ -3,13 +3,16 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
-passport.serializeUser((user, done) => {
-  done(null, user);
+passport.serializeUser(async (user, done) => {
+  await User.findById(user, (err, user) => {
+    done(null, user.email);
+  }) // => done의 두번째 인자는 session에 저장될 유저의 식별자
 })
 
-passport.deserializeUser(async (user, done) => {
-  await User.findById(user, (err, user) => {
-    done(err, user);
+passport.deserializeUser(async (email, done) => {
+  await User.findOne({ email }, (err, user) => {
+    done(null, user); // => 페이지를 방문할 때마다 지정된 식별자를 기준으로
+    // 애플리케이션에서 필요한 유저의 정보를 가져옴
   });
 });
 
@@ -20,7 +23,7 @@ passport.use(new LocalStrategy({
 }, async (email, password, done) => {
   const hash = await User.findOne({ email }, 'password');
 
-  await User.find({ email }, (err, user) => {
+  await User.findOne({ email }, (err, user) => {
     if (err) {
       return done(err);
     }

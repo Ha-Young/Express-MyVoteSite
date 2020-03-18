@@ -2,22 +2,22 @@
 <html>
   <head></head>
   <body>
-    <form action='/votings/new' method='GET'>
+    <form action='/votings/new' method='POST'>
       <div class='title'>
         <label>Title:</label>
         <input type='text' name='title' />
       </div>
       <div class='options'>
         <label>Options:</label>
-        <input type='text' name='option' />
-        <input type='text' name='option' />
-        <input type='text' name='option' />
-        <input type='text' name='option' />
-        <input type='text' name='option' />
+        <input type='text' name='options' />
+        <input type='text' name='options' />
+        <input type='text' name='options' />
+        <input type='text' name='options' />
+        <input type='text' name='options' />
       </div>
       <div class='expirationDate'>
         <label>Expiration Date:</label>
-        <input type='text' name='ExpirationDate' />
+        <input type='datetime-local' name='expirationDate' />
       </div>
       <div class='createButton'>
         <input type='submit' value='Create' />

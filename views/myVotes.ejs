@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div class='title'>
+      <a href='/votings/<%= myVotes._id %>'>
+        <% console.log(myVotes) %>
+        <h3><%= myVotes.title %></h3>
+      </a>
+    </div>
+
+    <div class='expirationDate'>
+      <label>Expiration Date:</label>
+      <div>
+        <%= myVotes.expirationDate %>
+      </div>
+    </div>
+  </body>
+</html>

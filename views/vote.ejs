@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <h1><%= vote.title %></h1>
+    <div><%= vote.expirationDate %></div>
+    <form action='/votings/<%= vote._id %>' method='POST'>
+      <% vote.options.forEach(option => { %>
+        <label>
+          <input type='radio' name='selected' value='<%= option._id %>'>
+          <%= option.optionTitle %>
+        </label>
+      <% }) %>
+      <input type='submit' value='Submit' />
+    </form>
+  </body>
+</html>

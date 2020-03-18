@@ -17,5 +17,29 @@
 
     <a href='/votings/new'>Create</a>
     <a href='/my-votings'>My Votings</a>
+
+    <div>
+      <% if (votes) { %>
+        <% votes.forEach(vote => { %>
+          <% console.log(vote.isExpired) %>
+          <% if(!vote.isExpired) { %>
+            <div>진행 중인 투표</div>
+            <a href='/votings/<%= vote._id %>'>
+              <%= vote.title %>
+            </a>
+            <div><%= vote.creatorNickname %></div>
+            <div><%= vote.expirationDate %></div>
+          <% } else { %>
+            <div>만료된 투표</div>
+            <a href='/votings/<%= vote._id %>'>
+              <%= vote.title %>
+            </a>
+            <div><%= vote.creatorNickname %></div>
+          <% } %>
+        <% }) %>
+      <% } else { %>
+        <div>진행 중인 투표가 없습니다.</div>
+      <% } %>
+    </div>
   </body>
 </html>

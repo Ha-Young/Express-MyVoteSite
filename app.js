@@ -1,6 +1,7 @@
 require('dotenv').config();
 require('./config/passport');
 require('./config/mongoose');
+
 const createError = require('http-errors');
 const express = require('express');
 const session = require('express-session');
@@ -12,6 +13,7 @@ const cookieParser = require('cookie-parser');
 
 const indexRouter = require('./routes/index');
 const votingRouter = require('./routes/votings');
+const myVotingRouter = require('./routes/myVotings');
 
 const app = express();
 
@@ -23,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-  secret: 'keyboard cat',
+  secret: process.env.SESSION_SECRET,
   saveUninitialized: false,
   resave: false
 }));
@@ -33,12 +35,17 @@ app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/votings', votingRouter);
+app.use('/my-votings', myVotingRouter);
 
 app.post('/login',
   passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login'
-}))
+}
+  // , (req, res) => {
+  //   req.session.save()
+  // }
+))
 
 app.use(function(req, res, next) {
   next(createError(404));
