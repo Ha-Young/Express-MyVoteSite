@@ -5,6 +5,6 @@ const checkAuthentication = require('../middlewares/authenticate');
 
 const router = express.Router();
 
-router.get('/', checkAuthentication, homeControllers.renderVotes);
+router.get('/', homeControllers.renderVotes);
 
 module.exports = router;

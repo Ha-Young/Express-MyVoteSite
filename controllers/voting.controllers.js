@@ -37,17 +37,17 @@ exports.registerVote = async (req, res, next) => {
 };
 
 exports.renderVote = async (req, res, next) => {
-  const { id: voteId } = req.params;
-
   try {
+    const { id: voteId } = req.params;
     const currentVote = await Votes.findOne({ vote_id: voteId }).populate('created_by').lean();
+    const currentUser = req.user ? req.user._id : null;
 
     const voteInfoForDisplay = makeDisplayInfo(currentVote);
 
     res.render('vote', {
       vote: voteInfoForDisplay,
       createdBy: voteInfoForDisplay.created_by.toString(),
-      currentUser: req.user._id
+      currentUser
     });
   } catch(err) {
     next(new errors.GeneralError(err.message));
@@ -64,3 +64,30 @@ exports.deleteVote = async (req, res, next) => {
     next(new errors.GeneralError(err.message));
   }
 };
+
+exports.registerCastingVote = async (req, res, next) => {
+  if (!req.user) {
+    return res.redirect('/login');
+  }
+
+  const { id: voteId } = req.params;
+  const selectedOptionIndex = Object.values(req.body)[0];
+  // console.log(selectedOptionIndex);
+  await Votes.findOneAndUpdate({ vote_id: voteId });
+};
+
+
+// const schema = Schema({ nums: [Number] });
+// const Model = mongoose.model('Test', schema);
+
+// const doc = await Model.create({ nums: [3, 4] });
+// doc.nums.push(5); // Add 5 to the end of the array
+// await doc.save();
+
+// // You can also pass an object with `$each` as the
+// // first parameter to use MongoDB's `$position`
+// doc.nums.push({
+//   $each: [1, 2],
+//   $position: 0
+// });
+// doc.nums; // [1, 2, 3, 4, 5]
