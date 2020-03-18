@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Create</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai+2|Sunflower:300&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <%- include("./partials/header") %>
+    <hr />
+    <section class="createSection">
+      <form class="createForm" action="/votings/new" method="POST">
+        <input type="text" name="title" placeholder="Title" class="createTitle" />
+        <input type="date" name="expiration_date" class="createExpiratin" />
+        <input type="time" name="expiration_time" class="createExpiratin" />
+        <input type="text" name="description" placeholder="Write description." class="createDescription" />
+        <input type="text" name="options" placeholder="Write options." class="createOption" />
+        <input type="text" name="options" placeholder="Write options." class="createOption" />
+        <button type="button" class="addOption">Option Add</button>
+        <button type="button" class="deleteOption">Option Delete</button>
+        <button type="submit" class="createSubmit">Create</button>
+      </form>
+      <a href="#" class="goBack">Go Back</a>
+    </section>
+    <script>
+      document.querySelector(".goBack").addEventListener("click", () => {
+        window.history.back();
+      });
+
+      document.querySelector(".addOption").addEventListener("click", () => {
+        const options = document.querySelectorAll(".createOption");
+        if (options.length < 5) {
+          const createForm = document.querySelector(".createForm");
+          const addOption = document.querySelector(".addOption");
+          const newOption = document.createElement("input");
+          newOption.setAttribute("type", "text");
+          newOption.setAttribute("name", "options");
+          newOption.setAttribute("placeholder", "Write options.");
+          newOption.classList.add("createOption");
+          createForm.insertBefore(newOption, addOption);
+        } else {
+          alert("You can create up to five options. :)");
+        }
+      });
+
+      document.querySelector(".deleteOption").addEventListener("click", () => {
+        const options = document.querySelectorAll(".createOption");
+        if (options.length > 2) {
+          const createForm = document.querySelector(".createForm");
+          options[options.length - 1].remove();
+        } else {
+          alert("Please fill out at least two options. :)");
+        }
+      });
+    </script>
+  </body>
+</html>
