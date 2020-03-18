@@ -46,13 +46,14 @@ exports.renderVote = async (req, res, next) => {
   try {
     const { id: voteId } = req.params;
     const currentVote = await Votes.findOne({ vote_id: voteId }).populate('created_by').lean();
-    const currentUser = req.user ? req.user._id : null;
+    const currentUser = req.user ? req.user.username : null;
+    console.log(req.user);
 
     const voteInfoForDisplay = makeDisplayInfo(currentVote);
 
     res.render('vote', {
       vote: voteInfoForDisplay,
-      createdBy: voteInfoForDisplay.created_by.toString(),
+      createdBy: voteInfoForDisplay.created_by,
       currentUser
     });
   } catch(err) {

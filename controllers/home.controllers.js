@@ -6,6 +6,7 @@ const { makeDisplayInfo } = require('../lib/helpers');
 
 exports.renderVotes = async (req, res, next) => {
   try {
+    const currentUser = req.user ? req.user._id : null;
     const votes = await Votes.find().populate('created_by').lean();
 
     if (!votes.length) {
@@ -21,7 +22,7 @@ exports.renderVotes = async (req, res, next) => {
         a.expires_at > b.expires_at ? 1 : 0;
     });
 
-    res.render('home', { votes: votesInfoForDisplay });
+    res.render('home', { votes: votesInfoForDisplay, currentUser });
   } catch(err) {
     next(new errors.GeneralError(err.message));
   }

@@ -6,15 +6,14 @@
     p male
     p
       a(href="/my-votings") 12 votes created
-  button.create-votes 투표 생성하기
+  button.button.create-votes 투표 생성하기
+  if !currentUser
+    button.button.login 로그인
+  button.button.signup 회원가입
 
   .votes
     p 전체 : 100 votes
     p 진행 중 : 76 votes
     p 종료됨 : 34 votes
 
-script.
-  const button = document.querySelector('.create-votes');
-  button.addEventListener('click', () => {
-    location.assign(location.origin + '/votings/new');
-  });
+script(src="/javascripts/sidebar.js")
