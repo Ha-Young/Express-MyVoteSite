@@ -17,8 +17,9 @@ const User = require('../models/user');
 
 
 const checkProgress = async (req, res, next) => {
-  const polls = await Poll.find({}).populate('creator');
-  console.log(polls)
+  // const polls = await Poll.find({}).populate('creator');
+  const polls = await Poll.find({});
+  // console.log(polls)
   const timeString = [];
   const promises = polls.map(async (poll) => {
     timeString.push([
@@ -44,7 +45,7 @@ const checkProgress = async (req, res, next) => {
 
 
 router.get('/', checkProgress, async (req, res, next) => {
-  console.log(req);
+  // console.log(req);
   // const polls = await Poll.find({}).populate('creator')
   // console.log(polls);
   // const polls = await Poll.find({});

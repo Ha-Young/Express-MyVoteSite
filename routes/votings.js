@@ -66,12 +66,20 @@ router.get('/success', authenticateLogin, function(req, res, next) {
 
 router.get('/:poll_id', async (req, res, next) => {
   const id = req.params.poll_id;
-  poll = await Poll.findById(id);
+  poll = await Poll.findById(id).populate('creator');
+  console.log(poll)
   // console.log(poll.creator)
   // console.log(poll.expiringTime);
   // console.log(poll.expiringTime.toDateString());
   // console.log(poll.expiringTime.toLocaleTimeString());
-  res.render('poll', { hasLoggedIn: true, poll, timeString: [poll.expiringTime.toDateString(), poll.expiringTime.toLocaleTimeString()] });
+  res.render('poll', { 
+    hasLoggedIn: true, 
+    timeString: [
+      poll.expiringTime.toDateString(), 
+      poll.expiringTime.toLocaleTimeString()
+    ],
+    poll, 
+  });
 });
 
 // poll.expiringTime.toDateString(), 

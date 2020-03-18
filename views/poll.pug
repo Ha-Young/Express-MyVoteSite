@@ -22,13 +22,12 @@ html
           li 
             a(href="/auth/login") Login
     main
-      //- each val, index in poll
-      //-   div
-      //-     ul
-      //-       li
-      //-         a(href=`votings/${val.id}`)=`Topic: ${val.topic}`
-      //-       li=`Creator: ${val.creator.email}`
-      //-       li=`Expring time: ${timeString[0]} ${timeString[1]}`
+      div
+        ul
+          li
+            a(href=`votings/${poll.id}`)=`Topic: ${poll.topic}`
+          li=`Creator: ${poll.creator.email}`
+          li=`Expring time: ${timeString[0]} ${timeString[1]}`
       div(class="container")
       h1=`${poll.topic}`
       h3 choose one of the option

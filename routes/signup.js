@@ -18,7 +18,6 @@ router.get('/', (req, res, next) => {
   }
 });
 
-
 const validateSignupInput = async (req, res, next) => {
   try {
     if (!regPatterns.email.test(req.body.email)) {
@@ -44,7 +43,6 @@ const validateDuplication = async (req,res, next) => {
   try {
     const { email }  = req.body;
     const user = await User.findOne({ email });
-    console.log(user)
     if (user) {
       throw(createError(409, "The email already exists"));
     }

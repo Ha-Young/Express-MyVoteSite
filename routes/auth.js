@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
 router.get('/login', (req, res, next) => {
+  console.log(11111)
   if (req.isAuthenticated()) {
     res.render('login', { hasLoggedIn: true });
   } else {
