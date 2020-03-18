@@ -2,7 +2,7 @@
 <ul class="vote-list">
   <%
     for (let i = 0; i < votes.length; i++) {
-      const { subject, expirated, creator } = votes[i];
+      const { subject, expirated, creator, created_at } = votes[i];
       const currentTime = new Date().getTime();
       const expiratedTime = new Date(expirated).getTime();
       const isExpirated = expiratedTime - currentTime < 0;
@@ -15,9 +15,12 @@
           <a href="/votings/<%= votes[i].id %>"><%= subject %></a>
         <% } %>
       </h3>
-      <div class="vote-info">
-        생성자, 만료 날짜 및 시간, 진행 중 여부, 투표 선택 사항
-      </div>
+      <ul class="vote-info">
+        <li>Creator: <%= creator.username %></li>
+        <li>Created at: <%= dateTransformer(created_at) %></li>
+        <li>Expirated at: <%= dateTransformer(expirated) %></li>
+      </ul>
+      <li></li>
     </li>
   <% } %>
 </ul>

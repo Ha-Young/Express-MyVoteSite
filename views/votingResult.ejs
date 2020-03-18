@@ -4,15 +4,29 @@
   <body>
     <%- include('partial/header') -%>
     <%
-      const { id, subject, options, creator, expirated } = vote;
+      const { id, subject, options, creator, created_at, expirated } = vote;
       const lotsOfLength = options.map(opt => opt.voter.length);
       const maxLength = Math.max.apply(null, lotsOfLength);
+      const currentTime = new Date().getTime();
+      const expiratedTime = new Date(expirated).getTime();
+      const isExpirated = expiratedTime - currentTime < 0;
+      let isCreator = false;
+
+      if (user) {
+        isCreator = creator.id === user.id;
+      }
     %>
     <div class="container">
       <section class="voting-detail">
-        <h2><%= subject %> Result.</h2>
-        <p>Made by <%= creator.username %></p>
-        <p class="align-right">총 투표인원 <%= maxLength %></p>
+        <header class="box">
+          <h2><%= subject %> Result.</h2>
+          <ul class="vote-info">
+            <li>Creator: <%= creator.username %></li>
+            <li>Created at: <%= dateTransformer(created_at) %></li>
+            <li>Expirated at: <%= dateTransformer(expirated) %></li>
+            <li>Total votes: <%= maxLength %></li>
+          </ul>
+        </header>
         <ul class="chart-area">
           <%
             for (let i = 0; i < options.length; i++) {
@@ -31,7 +45,10 @@
           <% } %>
           </ul>
           <div class="buttons-wrap">
-            <a href="/votings/<%= id %>" class="button">투표로 돌아가기</a>
+            <% if (isCreator && !isExpirated) { %>
+              <a href="/votings/<%= id %>" class="button">투표로 돌아가기</a>
+            <% } %>
+            <a href="/" class="button">홈으로</a>
           </div>
       </section>
     </div>

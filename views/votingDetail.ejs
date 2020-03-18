@@ -4,12 +4,26 @@
   <body>
     <%- include('partial/header') -%>
     <%
-      const { id, subject, options, creator, expirated } = vote;
+      const { id, subject, options, creator, created_at, expirated } = vote;
+      let isDone = false;
+      let isCreator = false;
+
+      if (user) {
+        isDone = user.doneVotes.indexOf(id) > -1;
+        isCreator = creator.id === user.id;
+      }
     %>
+
     <div class="container">
       <section class="voting-detail">
-        <h2><%= subject %></h2>
-        <p>Made by <%= creator.username %></p>
+        <header class="box">
+          <h2><%= subject %></h2>
+          <ul class="vote-info">
+            <li>Creator: <%= creator.username %></li>
+            <li>Created at: <%= dateTransformer(created_at) %></li>
+            <li>Expirated at: <%= dateTransformer(expirated) %></li>
+          </ul>
+        </header>
         <% if (isCreator) { %>
           <div class="buttons-wrap">
             <a href="/votings/<%= id %>/result" class="button">결과 보기</a>

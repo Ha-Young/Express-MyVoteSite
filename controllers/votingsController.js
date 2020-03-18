@@ -1,11 +1,12 @@
 import Vote from '../models/vote';
 import User from '../models/user';
+import { dateTransformer } from '../helper';
 
 export const getHome = async (req, res) => {
   try {
-    const votes = await Vote.find();
+    const votes = await Vote.find().populate('creator');
 
-    res.render('index', { votes });
+    res.render('index', { votes, dateTransformer });
   } catch (err) {
     // Error handling
   }
@@ -42,18 +43,8 @@ export const getVoteDetail = async (req, res) => {
   try {
     const { id } = req.params;
     const vote = await Vote.findById(id).populate('creator');
-    const user = req.user;
-    let isDone = false;
-    let isCreator = false;
 
-    if (user) {
-      if (vote.creator.id === user.id) {
-        isCreator = true;
-      }
-      isDone = user.doneVotes.indexOf(id) > -1;
-    }
-
-    res.render('votingDetail', { vote, isDone, isCreator });
+    res.render('votingDetail', { vote, dateTransformer });
   } catch (err) {
     // Error handling
     console.log(err);
@@ -90,7 +81,7 @@ export const getVoteResult = async (req, res) => {
     const { id } = req.params;
     const vote = await Vote.findById(id).populate('creator');
 
-    res.render('votingResult', { vote });
+    res.render('votingResult', { vote, dateTransformer });
   } catch (err) {
     // Error handling
     console.log(err);
