@@ -1,5 +1,6 @@
 const toListButton = document.querySelector('.to-list');
 const deleteVoteButton = document.querySelector('.delete-vote');
+const submitButton = document.querySelector('#submit');
 
 toListButton.addEventListener('click', () => {
   location.assign(location.origin);
@@ -23,4 +24,14 @@ if (deleteVoteButton) {
       }
     }
   });
+}
+
+const submitForm = (e) => {
+  e.preventDefault();
+
+  const userReaction = window.confirm('한 번 투표하면 수정이 불가능합니다. 투표하시겠어요?');
+
+  if (userReaction) {
+    document.createElement('form').submit.call(document.forms['vote-form']);
+  }
 }

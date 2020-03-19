@@ -16,18 +16,25 @@ block content
             else
               p.vote-status.closed #{vote.voteStatus}
             p.expirationDate #{vote.expirationDate}
+          .vote-info
+            p #{vote.total_voters} 명 참여 중
+            p made by #{vote.created_by}
           span.vote-title #{vote.title}
-          form(action=`/votings/${vote._id}`, method="post")
-            fieldset.vote-mid
-              each option, index in vote.select_options
-                div.option
-                  input(type="radio", name="option", id=option.description, value=index)
-                  label(for=option.description) #{option.description}
-              if (vote.voteStatus === "진행 중")
-                input#submit.button(type="submit", value="투표하기" name="submitButton")
-              else
-                input#disabled.button(type="submit", value="투표하기" disabled)
-                h3.vote-disabled-message 투표가 종료되었습니다.
+          //- form#vote-form(action=`/votings/${vote._id}`, method="post")
+          form#vote-form(action=`/votings/${vote._id}` method="post" onsubmit='submitForm(event)' name='vote-form')
+            .scroll
+              fieldset.vote-mid
+                each option, index in vote.select_options
+                  div.option
+                    input(type="radio", name="option", id=option.description, value=index required)
+                    label(for=option.description) #{option.description}
+                if (vote.voteStatus === "진행 중")
+                  input#submit.button.form-button(type="submit", value="투표하기" name="submitButton")
+                else
+                  input#disabled.button.form-button(type="submit", value="투표하기" disabled)
+                  h3.vote-disabled-message 투표가 종료되었습니다.
+          if errorMessage
+            h3.errorMessage #{errorMessage}
           .vote-bottom
             button.button.to-list 목록으로
             if loggedInUser && loggedInUser.username === vote.created_by
