@@ -72,14 +72,17 @@ export const postVotingDetail = async (req, res) => {
     await user.save();
     await vote.save();
     res.redirect('/success');
-    // Redirect Success
   } catch (err) {
-    // Error handling
+    res.redirect('/failure');
   }
 };
 
 export const getSuccess = (req, res) => {
   res.render('success');
+};
+
+export const getFailure = (req, res) => {
+  res.render('failure');
 };
 
 export const getVoteResult = async (req, res) => {
