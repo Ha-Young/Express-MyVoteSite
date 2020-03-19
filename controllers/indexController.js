@@ -1,9 +1,10 @@
 const passport = require('passport');
-const User = require('../models/User');
-const Voting = require('../models/Voting');
 const bcrypt = require('bcrypt');
 const createError = require('http-errors');
 const moment = require('moment');
+
+const User = require('../models/User');
+const Voting = require('../models/Voting');
 moment.locale('ko');
 
 const indexController = {
@@ -26,13 +27,35 @@ const indexController = {
     }
   },
 
-  getMyVotings: (req, res, next) => {
-    res.render('myVotings');
+  getMyVotings: async (req, res, next) => {
+    try {
+      const user = await User.findById(req.user.id).populate('votingList');
+      // 못찾았을때 에러처리
+      const votingList = user.votingList;
+
+      for (let i = 0; i < votingList.length; i++) {
+        const formatDate = moment(votingList[i].endDate).fromNow();
+        votingList[i].formatDate = formatDate;
+      }
+      votingList.currentDate = new Date();
+
+      res.render('myVotings', { votingList, userName: req.user.name });
+    } catch (error) {
+      console.log(error);
+    }
   },
 
-  getLogin: (req, res, next) => res.render('login'),
+  getLogin: (req, res, next) => {
+    res.render('login');
+  },
 
-  postLogin: passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login' }),
+  postLogin: passport.authenticate('local', { failureRedirect: '/login' }),
+
+  postPrePageLogin: (req, res) => {
+    const preUrl = req.session.preUrl || '/';
+    req.session.preUrl ? delete req.session.preUrl : null;
+    res.redirect(preUrl);
+  },
 
   getLogout: (req, res, next) => {
     req.logout();
@@ -41,7 +64,7 @@ const indexController = {
   },
 
   getSignup: (req, res, next) => res.render('signup'),
-  
+
   postSignup: async (req, res, next) => {
     const {
       body: { email, password, password2, name }

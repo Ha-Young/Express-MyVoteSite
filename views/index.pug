@@ -11,7 +11,7 @@ block content
                             title : item.title,
                             creator : item.creator.name,
                             endDate : item.endDate,
-                            formatDate : item.formatDate,
+                            formatDate : `${item.formatDate} 종료`,
                             state : "진행중"
                         })
                 else
@@ -20,8 +20,6 @@ block content
                             title : item.title,
                             creator : item.creator.name,
                             endDate : item.endDate,
-                            formatDate : item.formatDate,
+                            formatDate : `${item.formatDate} 종료됨`,
                             state : "종료됨",
                         })
-
-            //- 제목, 생성자, 만료 날짜 및 시간, 진행 중 여부

@@ -8,15 +8,35 @@ block content
             .detail-voting-end-date-box
                 span 종료일 : 
                 span.detail-voting-end-date=voting.formatDate
-            form(method='POST' action=`/votings/${voting._id}/success`).detail-voting-item-form
-                .detail-voting-items-box
-                    each item in voting.item
-                        .detail-voting-item-box
-                            input(type='radio' id=`${item._id}` name='voting' value=`${item._id}`).detail-voting-radio
-                            label(for=`${item._id}`).detail-voting-label=item.item
-                .new-voting-submit-button-box
-                    input(type="submit" value="제출하기").new-voting-submit-button 
+            .detail-voting-creator-box
+                span 제작자 :
+                span=voting.creator.name
+            if new Date(voting.endDate).getTime() > voting.currentDate.getTime()
+                form(method='POST' action=`/votings/${voting._id}/success`).detail-voting-item-form
+                    .detail-voting-items-box
+                        each item in voting.item
+                            .detail-voting-item-box
+                                input(type='radio' id=`${item._id}` name='voting' value=`${item._id}`).detail-voting-radio
+                                label(for=`${item._id}`).detail-voting-label=item.item
+                                    if loggedUser && String(voting.creator._id) === String(loggedUser.id)
+                                        .now-count
+                                            span ( 
+                                            span=item.count
+                                            span 표 )
+                    .new-voting-submit-button-box
+                        input(type="submit" value="제출하기").new-voting-submit-button 
+            else
+                .detail-voting-end
+                    .detail-voting-items-box
+                        each item in voting.item
+                            .detail-voting-item-box
+                                .detail-voting-result=item.item
+                                .now-count
+                                    span ( 
+                                    span=item.count
+                                    span 표 )
+                .detail-vitong-end-title 종료된 투표입니다.
             if loggedUser && String(loggedUser.id) === String(voting.creator._id)
-                a(href=`/voting/${voting._id}/remove`)
-                    .new-voting-remove-button-box
-                        .new-voting-remove-button 삭제하기
+                a(href=`/votings/${voting._id}/remove`).new-voting-remove-button-box
+                    .new-voting-remove-button 삭제하기
+            a(href="/").detial-voting-redirect-button 다른투표 보기

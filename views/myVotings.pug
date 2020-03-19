@@ -1,4 +1,29 @@
 extends layouts/main
+include mixins/votingBox
 
 block content
-    h1 내 투표 목록 보는곳
+    .main-container
+        if votingList.length > 0
+            each item in votingList
+                a(href=`/votings/${item._id}`).voting-item-box
+                    if new Date(item.endDate).getTime() > votingList.currentDate.getTime()
+                        .abled-voting-box.voting-box
+                            +votingBox({
+                                title : item.title,
+                                creator : userName,
+                                endDate : item.endDate,
+                                formatDate : item.formatDate,
+                                state : "진행중"
+                            })
+                    else
+                        .disabled-voting-box.voting-box
+                            +votingBox({
+                                title : item.title,
+                                creator : userName,
+                                endDate : item.endDate,
+                                formatDate : item.formatDate,
+                                state : "종료됨",
+                            })
+        else
+            .votings-not-exist-box
+                .votings-not-exist 내가 생성한 투표가 없어요...

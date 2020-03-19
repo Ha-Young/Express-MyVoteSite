@@ -35,6 +35,7 @@ const votingsController = {
     const votingId = req.params.voting_id;
     const voting = await Voting.findById(votingId).populate('creator');
     voting.formatDate = moment(voting.endDate).format('LLLL');
+    voting.currentDate = new Date();
     res.render('detailVoting', { voting });
   },
 
@@ -63,9 +64,19 @@ const votingsController = {
   },
 
   getVotingRemove: async (req, res, next) => {
-    // 삭제로직 추가요망
-    // 삭제하고 유저에있는 아이템도 삭제해야됨
-    res.redirect('/');
+    try {
+      const user = await User.findById(req.user.id);
+      const votingId = req.params.voting_id;
+      const idIndex = user.votingList.findIndex(id => String(id) === votingId);
+
+      user.votingList.splice(idIndex, 1);
+
+      await user.save();
+      await Voting.findByIdAndDelete(votingId);
+
+      res.redirect('/');
+    } catch (error) {}
   }
 };
+
 module.exports = votingsController;
