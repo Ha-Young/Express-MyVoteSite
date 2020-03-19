@@ -1,8 +1,9 @@
 const User = require('../../models/user');
 const Poll = require('../../models/poll');
+const createError = require('http-errors');
 const getPollsAndTimeString = require('../../lib/getPollsAndTimeString');
 
-module.exports = async (req, res, next) => {
+exports.displayMyVotings = async (req, res, next) => {
   try {
     const id = req.session.passport.user;
     const user = await User.findById(id);
@@ -24,6 +25,6 @@ module.exports = async (req, res, next) => {
     const { timeString } = data;
     res.render('myvotings', { hasLoggedIn: true, polls, timeString });
   } catch(e) {
-    throw(createError(500, "Internal Error, Please try again"));
+    next(createError(500, "Internal Error, Please try again"));
   }
 };

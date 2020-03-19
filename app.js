@@ -1,5 +1,5 @@
 require('dotenv').config();
-const createError = require('http-errors')
+const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -58,6 +58,8 @@ app.use(function(req, res, next) {
 
 
 app.use(function(err, req, res, next) {
+  console.log(err.message)
+  console.log(res.locals.message)
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);

@@ -4,6 +4,6 @@ const myVotingControl = require('./controllers/my-votings.controller');
 
 const router = express.Router();
 
-router.get('/', authenticateLogin, myVotingControl);
+router.get('/', authenticateLogin, myVotingControl.displayMyVotings);
 
 module.exports = router;

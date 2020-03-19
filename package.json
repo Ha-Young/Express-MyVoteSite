@@ -4,15 +4,14 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "npx nodemon server.js"
+    "dev": "npx nodemon server.js",
+    "test": "mocha"
   },
   "dependencies": {
-    "alert-node": "^3.0.10",
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
-    "ejs": "^3.0.1",
     "express": "~4.16.1",
     "express-session": "^1.17.0",
     "http-errors": "^1.6.3",
@@ -20,7 +19,12 @@
     "mongoose": "^5.9.4",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "pug": "^2.0.4",
-    "pusher": "^3.0.0"
+    "pug": "^2.0.4"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-connect-middleware": "^0.3.1",
+    "chai-passport-strategy": "^1.0.1",
+    "mocha": "^7.1.1"
   }
 }
