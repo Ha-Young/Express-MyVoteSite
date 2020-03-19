@@ -1,7 +1,18 @@
-a {
-  color: #00b7ff;
+form {
+  width: 400px;
+  margin: 10px auto;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
 }
 
-a:visited {
-  color: #00b7ff;
+form button {
+  margin-top: 10px;
+  width: 200px;
+  height: 30px;
+  margin-bottom: 20px;
+  border: 0;
+  border-radius: 5px;
+  background-color: rgb(26, 170, 85);
+  cursor: pointer;
+  color: #fff;
 }

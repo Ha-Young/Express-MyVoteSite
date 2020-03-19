@@ -2,4 +2,16 @@ extends layout
 
 block content
   link(rel='stylesheet', href='/stylesheets/my-votings.css')
-  h1 my voting
+  h1 My Voting
+  div(class="my-votings-wrapper")
+    each voting in votings
+      form(action=`/votings/${voting._id}`, method='get')
+        h2 #{voting.title}
+        if(!voting.is_expired)
+          p 진행중
+        else
+          p 만료됨
+        p(class="expiration-date") 만료일 #{moment(voting.deadline).format('YYYY-MM-DD hh:mm a')}
+        button(type="submit") 투표하기
+        
+      

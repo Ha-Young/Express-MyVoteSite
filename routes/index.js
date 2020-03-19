@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
 const Voting = require('../models/Voting');
 const moment = require('moment');
 const checkUser = require('../middlewares/checkUser');
@@ -30,8 +29,9 @@ router.get('/', async (req, res, next) => {
 
 router.get('/my-votings', checkUser, async (req, res) => {
   const user = await findUser(req);
-
-  res.render('my-votings', { user });
+  const votings = await Voting.find({ user: user._id }).populate('user', 'nickname');
+  console.log(votings);
+  res.render('my-votings', { user, votings, moment });
 });
 
 module.exports = router;

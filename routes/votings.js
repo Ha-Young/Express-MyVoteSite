@@ -101,15 +101,15 @@ router.post('/new', checkUser, async (req, res) => {
 router.post('/:id/selection/:id2', checkUser, async (req, res) => {
   const { id: votingId, id2: optionId } = req.params;
   const user = await findUser(req);
+  const voting2 = await Voting.findById(votingId);
+  const votedUser = voting2.voted_user.find(user => user === user._id);
 
   try {
     const target = await Voting.findOne(
       { _id: votingId, 'options._id': optionId },
       { 'options.$': 1 }
     );
-    const voting2 = await Voting.findById(votingId);
     let { option_count } = target.options[0];
-    const votedUser = voting2.voted_user.find(user => user === user._id);
 
     if (votedUser) throw new error.VotingDuplicateError();
 
@@ -131,7 +131,21 @@ router.post('/:id/selection/:id2', checkUser, async (req, res) => {
     const voting = await Voting.findById(votingId).populate('user', 'nickname');
 
     if (err instanceof error.VotingDuplicateError) {
-      return res.render('voting-detail', { voting, moment, error: err.displayMessage });
+      if (votedUser) {
+        return res.render('voting-detail', {
+          user,
+          sameUser: true,
+          voting,
+          moment,
+          error: err.displayMessage
+        });
+      }
+      res.render('voting-detail', {
+        user,
+        voting,
+        moment,
+        error: err.displayMessage
+      });
     }
   }
 });
