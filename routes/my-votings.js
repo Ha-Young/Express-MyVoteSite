@@ -1,11 +1,9 @@
 const express = require('express');
-const authenticateLogin = require('express');
+const authenticateLogin = require('./middlewares/authenticateLogin');
 const myVotingControl = require('./controllers/my-votings.controller');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-  console.log(3333333333333333333333333333)
-});
+router.get('/', authenticateLogin, myVotingControl);
 
 module.exports = router;

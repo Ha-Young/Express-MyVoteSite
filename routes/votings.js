@@ -6,7 +6,7 @@ const User = require('../models/user');
 const Poll = require('../models/poll');
 const authenticateLogin = require('./middlewares/authenticateLogin');
 const pollResults = require('../lib/pollResults');
-const getPollsAndTimeString = require('../lib/getPollsAndTimeString');
+
 
 router.get('/new', authenticateLogin, function(req, res, next) {
   res.render('newvoting', { hasLoggedIn: true });
@@ -35,7 +35,8 @@ router.post('/new', async (req, res, next) => {
       }).save();
 
       const user = await User.findById(id);
-      user.myPolls.push({ myPoll : poll.id })
+      // user.myPolls.push({ myPoll : poll.id })
+      user.myPolls.push(poll.id);
       await user.save();
       answers.forEach((answer) => {
         poll.answers.push({ answer })
