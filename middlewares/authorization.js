@@ -1,6 +1,6 @@
 function ensureAuthenticated (req, res, next) {
   if (req.isAuthenticated()) return next();
-  res.status(302).redirect('/login');
+  return res.status(302).redirect('/users/login');
 }
 
 exports.ensureAuthenticated = ensureAuthenticated;
