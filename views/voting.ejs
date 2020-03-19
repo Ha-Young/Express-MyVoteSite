@@ -32,18 +32,24 @@
         <% }) %>
         <input type='submit' value='제출'>
       </form>
-      <% } else { %>
+      <% } %>
+      <% if (!status || isAuthor) { %>
       <ul>
         <% voting.items.forEach(item => { %>
-          <li>
-            <span><%= `${item.name}: ${item.count}표` %></span>
-          </li>
-        <% }) %>
-        <% } %>
+        <li><%= `${item.name}: ${item.count}표` %></li>
       </ul>
+      <% }) %>
+      <% } %>
     </div>
 
-    <button><a href='/'>목록보기</a></button>
+    <div>
+      <% if (isAuthor) { %>
+      <form action=<%= `/votings/${voting._id}` %> method='delete'>
+        <input type='submit' value='삭제'>
+      </form>
+      <% } %>
+      <button><a href='/'>목록보기</a></button>
+    </div>
   </div>
 </body>
 
@@ -64,8 +70,8 @@ __v: 0
 }
 */
 
-res.render('voting', {
-voting,
-isAuthor,
-status:
-}); -->
+// res.render('voting', {
+// voting,
+// isAuthor,
+// status:
+// }); -->

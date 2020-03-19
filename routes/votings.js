@@ -7,5 +7,6 @@ router.get('/new', (req, res, next) => res.render('newVoting'));
 router.post('/new', votingsControllers.newVoting)
 router.get('/:voting_id', votingsControllers.renderVoting);
 router.post('/:voting_id', votingsControllers.confirmVoting);
+router.delete('/:voting_id', votingsControllers.deleteVoting);
 
 module.exports = router;

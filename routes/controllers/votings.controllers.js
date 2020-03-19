@@ -5,7 +5,7 @@ exports.newVoting = async (req, res) => {
   const { title, items, endDate } = req.body;
   const votingInfo = Object.keys(req.body);
   const isEmptyValueCheck = votingInfo.every(item => req.body[item].length !== 0);
-
+  
   //FIXME: 빈값 발견시 모달 띄우기
   if (isEmptyValueCheck) {
     const itemList = [];
@@ -30,7 +30,7 @@ exports.renderVoting = async (req, res) => {
   let isAuthor;
 
   if (req.user) {
-    isAuthor = req.user.email === voting.author;
+    isAuthor = req.user._id === String(voting.authorId);
   } else {
     isAuthor = null;
   }
@@ -54,6 +54,8 @@ exports.confirmVoting = async (req, res) => {
   const { _id: userId} = req.user;
   const { itemId } = req.body;
   const { voting_id: votingId } = req.params;
+  const endDate = new Date(voting.endDate).getTime();
+  const currentDate = new Date().getTime();
   
     //FIXME: 투표 미체크후 제출시 메시지처리
   if (!itemId) {
@@ -71,7 +73,13 @@ exports.confirmVoting = async (req, res) => {
       res.redirect('/');
       return
     }
-    
+
+    //FIXME: 만료 시간이 지났다는 메시지 처리
+    if (endDate < currentDate) {
+      res.redirect('/');
+      return
+    }
+
     //FIXME: 모두 탐색후 값 변경하는데, 효율적 방법 찾기
     for (let i = 0; i < items.length; i++ ) {
       if (String(items[i]._id) === itemId) {
@@ -93,6 +101,14 @@ exports.confirmVoting = async (req, res) => {
     // 로그인 => 투표하려고 했던 페이지
 
   }
+}
+
+exports.deleteVoting = (req, res) => {
+  // 해당 req.params에서 투표 id 가져오고
+  // db에서 검색후 지우고
+  // 홈으로 이동
+  console.log(req.params)
+  // const {}
 }
 
 /* 
