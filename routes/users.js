@@ -1,25 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
-const passportLocal = require('../config/passport');
 const usersController = require('../controller/users.controller');
 
 router.get('/login', usersController.getLogin);
-
-router.post('/login', 
-  passportLocal.authenticate('local', { failureRedirect: '/users/login', failureFlash: true }),
-  (req, res) => {
-    if (req.body.referer && (req.body.referer !== undefined && req.body.referer.slice(-6) !== '/login')) {
-      res.redirect(req.body.referer);
-    } else {
-      res.redirect('/');
-    }
-  });
-
+router.post('/login', usersController.authLocal, usersController.authLocalRedirect);
 router.get('/logout', usersController.getLogout);
-
 router.get('/new', usersController.getNewUser);
-
 router.post('/new', [
   check('email')
     .notEmpty()

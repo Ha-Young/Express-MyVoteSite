@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
 const createError = require('http-errors');
+const passportLocal = require('../config/passport');
 const User = require('../models/User');
 
 exports.getLogin = (req, res, next) => {
@@ -19,6 +20,21 @@ exports.getLogout = (req, res) => {
   });
 }
 
+exports.authLocal = passportLocal.authenticate('local', {
+  failureRedirect: '/users/login',
+  failureFlash: true,
+});
+
+exports.authLocalRedirect= (req, res) => {
+  const isNotRefererUndefined = req.body.referer !== undefined;
+  const isNotRefererLogin = req.body.referer.slice(-6) !== '/login';
+  if (req.body.referer && (isNotRefererUndefined && isNotRefererLogin)) {
+    res.redirect(req.body.referer);
+  } else {
+    res.redirect('/');
+  }
+}
+
 exports.getNewUser = (req, res, next) => {
   res.render('signup');
 }
@@ -26,18 +42,15 @@ exports.getNewUser = (req, res, next) => {
 exports.makeNewUser = async (req, res, next) => {
   try {
     const errors = validationResult(req).errors;
-    if(!errors.length) {
-      const newUser = new User({
-        email: req.body.email,
-        password: req.body.password,
-      });
+    if(errors.length) return res.render('validationFail', { message: errors[0].msg });
+    const newUser = new User({
+      email: req.body.email,
+      password: req.body.password,
+    });
 
-      await newUser.save();
-      req.flash('signUpMsg', 'Welcome. :) Login Please.');
-      res.status(307).redirect('/users/login');
-    } else {
-      return res.render('validationFail', { message: errors[0].msg });
-    }
+    await newUser.save();
+    req.flash('signUpMsg', 'Welcome. :) Login Please.');
+    res.status(307).redirect('/users/login');
   } catch (err) {
     if (err.errmsg.split(' ')[1] === 'duplicate') {
       return res.render('validationFail', { message: 'This is a registered email.'});
@@ -46,4 +59,3 @@ exports.makeNewUser = async (req, res, next) => {
     }
   }
 }
-
