@@ -14,6 +14,7 @@ const homeRouter = require('./routes/home');
 const signupRouter = require('./routes/signup');
 const authRouter = require('./routes/auth');
 const votingRouter = require('./routes/voting');
+const myVotingRouter = require('./routes/myVotings');
 
 const errors = require('./lib/errors');
 
@@ -48,6 +49,7 @@ app.use('/signup', signupRouter);
 app.use('/auth', authRouter);
 app.use('/', homeRouter);
 app.use('/votings', votingRouter);
+app.use('/my-votings', myVotingRouter);
 
 app.use((req, res, next) => {
   next(new errors.InvalidUrlError('Invalid url.'));
