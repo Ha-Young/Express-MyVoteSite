@@ -14,9 +14,6 @@ const votingSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  description: {
-    type: String,
-  },
   options: {
     type: Map,
     of: Number,
