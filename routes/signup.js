@@ -1,42 +1,28 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const { check, validationResult } = require('express-validator');
 
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
   res.render('signup');
 });
 
-router.post('/',
-  [
-    check('username').isEmail(),
-    check('password').isLength({ min: 5 })
-  ],
-  async (req, res, next) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return error = 'error~~~'
-        // return res.status(422).json({ errors: errors.array() });
-      }
+router.post('/',async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+    let user = await User.findOne({ username: username });
 
-      const { username, password } = req.body;
-      const user = await User.findOne({ username: username });
+    if(user) return res.status(400).json('이미 가입된 이메일입니다.');
 
-      if(user) return res.status(500).send('username already exists');
-
-      const record = new User();
-      record.username = username;
-      record.password = record.hashPassword(password);
-      await record.save();
-
-      // 클라이언트에서 ajax
-      res.write('<script>alert(\'Complete! Please log in.\'); location.href=\'/login\';</script>');
-    } catch(err) {
-      console.log(err);
-      res.status(500).send('error occured')
-    }
+    user = new User({
+      username
+    });
+    user.password = user.hashPassword(password);
+    await user.save();
+    res.json('ok');
+  } catch(err) {
+    console.log(err);
+    res.status(500).json('error occured')
   }
-);
+});
 
 module.exports = router;

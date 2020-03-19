@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible', content='ie=edge')
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    title Voting
+  body
+    div.authwarp
+      h1= voting.title
+      div= voting.createdBy.username
+      div= voting.createdAt
+      div= voting.isProceeding
+      form(action=`/votings/${voting._id}` method='POST')
+        each option in voting.options
+          div
+            input(type='radio' id=`${option.option}` name='option' value=`${option.option}`)
+            lable(for=`${option.option}`)=option.option
+            lable(for=`${option.option}`)=option.count
+        input(type='submit')
+      input(type='button' onclick='location.href=\'javascript:history.back()\'' value='이전')

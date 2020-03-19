@@ -9,12 +9,17 @@ html(lang='en')
   body
     div.authwarp
       h1 회원가입
-      form(action='/signup' method='POST')
+      form
         div.inputBox
-          input(type='text' name='username' placeholder='이메일')
+          input(type='text' name='username' placeholder='이메일주소 입력')
         div.inputBox
-          input(type='password' name='password' placeholder='비밀번호')
+          input(type='password' name='password' placeholder='비밀번호(8~32자리)')
         div.inputBox
-          input(type='password' name='re-password' placeholder='비밀번호확인')
-        div.button-big
+          input(type='password' name='re-password' placeholder='비밀번호 재입력')
+        div.errorAlert
+        div.button-blue
           input(type='submit' value='가입하기')
+      script(
+        type='text/javascript'
+        src='/javascripts/signup.js'
+        )

@@ -3,13 +3,17 @@ const createError = require('http-errors');
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
+const mongoose = require('mongoose');
+const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const signupRouter = require('./routes/signup');
+const votingRouter = require('./routes/votings');
 
 const app = express();
 
@@ -21,12 +25,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
   secret: process.env.SECRET_CODE,
   cookie: { maxAge: 60 * 60 * 1000 },
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  store: new MongoStore({
+    url: process.env.MONGODB_URL,
+    collection: "sessions"
+  })
 }));
 
 require('./config/mongoose');
@@ -37,6 +46,7 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
+app.use('/votings', votingRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -45,6 +55,7 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
+  console.log(err);
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

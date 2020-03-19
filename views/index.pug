@@ -1,5 +1,11 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1 Home
+  button(onclick='location.href=\'/votings/new\'') 투표 만들기
+  if votings
+    ul
+      each voting in votings
+        li
+          a(href=`/votings/${voting._id}`)
+            div title: #{voting.title} - Owner: #{voting.author} - #{voting.expiredAt}에 마감 - 진행중: #{voting.isProceeding}

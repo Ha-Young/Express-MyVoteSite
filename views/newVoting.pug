@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible', content='ie=edge')
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    title new Voting
+  body
+    div.authwarp
+      h1 투표 만들기
+      form
+        div.inputBox2
+          input(type='text' id="title" name='title' placeholder='투표 제목')
+        div.inputBox2
+          label(for="endDate") 마감시간
+          input(type='date' id="endDate" name='endDate')
+          input(type='time' id="endTime" name='endTime')
+        div.inputBox2
+          input(type='text' name='option1' placeholder='항목 입력')
+        div.inputBox2
+          input(type='text' name='option2' placeholder='항목 입력')
+        div.errorAlert
+        div.button-blue
+          input(type='submit' value='완료')
+        div.button-blue-line
+          input(type='button' onclick='location.href=\'javascript:history.back()\'' value='취소')
+      script(
+        type='text/javascript'
+        src='/javascripts/newVoting.js'
+        )

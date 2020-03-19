@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
+const Schema = mongoose.Schema;
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
   username: {
     type: String,
     required: true
@@ -9,7 +10,23 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  registerVotings: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Vote',
+    required: true
+  }],
+  participateVotings: [{
+    voting: {
+      type: Schema.Types.ObjectId,
+      ref: 'Vote',
+      required: true
+    },
+    selectedOption: {
+      type: String,
+      required: true
+    }
+  }],
 });
 
 UserSchema.methods.hashPassword = (password) => {
