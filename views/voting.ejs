@@ -30,25 +30,25 @@
           <input type='radio' name='itemId' value='<%= item._id %>'><%= item.name %>
         </label>
         <% }) %>
-        <input type='submit' value='제출'>
+        <input type='submit' value='투표하기'>
       </form>
       <% } %>
       <% if (!status || isAuthor) { %>
       <ul>
         <% voting.items.forEach(item => { %>
         <li><%= `${item.name}: ${item.count}표` %></li>
+        <% }) %>
+        <% } %>
       </ul>
-      <% }) %>
-      <% } %>
     </div>
 
     <div>
       <% if (isAuthor) { %>
-      <form action=<%= `/votings/${voting._id}` %> method='delete'>
-        <input type='submit' value='삭제'>
+      <form action=<%= `/votings/remove/${voting._id}` %> method='get'>
+        <input type='submit' value='투표 삭제'>
       </form>
       <% } %>
-      <button><a href='/'>목록보기</a></button>
+      <button><a href='/'>목록 보기</a></button>
     </div>
   </div>
 </body>

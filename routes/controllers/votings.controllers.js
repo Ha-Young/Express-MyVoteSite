@@ -1,4 +1,5 @@
 const Voting = require('../../models/Voting');
+const createError = require('http-errors');
 
 exports.newVoting = async (req, res) => {
   const { email, _id: id } = req.user;
@@ -103,12 +104,14 @@ exports.confirmVoting = async (req, res) => {
   }
 }
 
-exports.deleteVoting = (req, res) => {
-  // 해당 req.params에서 투표 id 가져오고
-  // db에서 검색후 지우고
-  // 홈으로 이동
-  console.log(req.params)
-  // const {}
+exports.deleteVoting = async(req, res) => {
+  const { voting_id: votingId } = req.params;
+  try {
+    await Voting.deleteOne({ _id: votingId });
+    res.redirect('/');
+  } catch (err) {
+    next(createError(500, err));
+  }
 }
 
 /* 

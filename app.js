@@ -1,9 +1,12 @@
+require('dotenv').config({ path: 'variables.env' });
+
 const createError = require('http-errors');
 const path = require('path');
 const bodyParser = require('body-parser')
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
+const MongoStore = require('connect-mongo')(session);
 
 const index = require('./routes/index');
 const signup = require('./routes/signup');
@@ -19,15 +22,18 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-//FIXME: 시크릿 env 파일에 넣기, 서버 다시켜도 로그인 유지되게 수정 
 app.use(
   session({
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     secret: "nathaneat",
-    cookie: {
-      httpOnly: true,
-      secure: false
+    store: new MongoStore({ 
+      url : process.env.MONGODB_URI,
+      ttl: 60 * 60
+    }),
+    store: new MongoStore({ url : process.env.MONGODB_URI }),
+    cookie: { 
+      maxAge: 1000 * 60 * 2
     }
   })
 );
