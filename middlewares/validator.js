@@ -1,5 +1,4 @@
 const { body, validationResult } = require('express-validator');
-const { ValidationError } = require('../lib/errors');
 const validationMessages = require('../lib/validationMessages');
 
 // const PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$";
@@ -28,9 +27,9 @@ const validateUser = (req, res, next) => {
     return next();
   }
 
-  const errorMessages = errors.array().map(err => err.msg);
+  const errorMessageList = errors.array().map(err => err.msg);
 
-  req.flash('Signup Error Message', errorMessages[0]);
+  req.flash('Signup Error Message', errorMessageList[0]);
   res.redirect('/signup');
 };
 

@@ -59,6 +59,7 @@ exports.deleteVote = async (req, res, next) => {
 };
 
 exports.renderVote = async (req, res, next) => {
+  console.log(req.session);
   try {
     const currentVote = await Votes.findById(req.params.id).populate('created_by').lean();
     const votes = await Votes.find().lean();

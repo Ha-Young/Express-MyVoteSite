@@ -18,6 +18,9 @@ exports.login = (req, res, next) => {
         return next(new errors.LoginError(err.message));
       }
 
+      // setTimeout(() => {
+      //   res.redirect(req.session.returnTo || '/');
+      // }, 0);
       res.redirect(req.session.returnTo || '/');
       delete req.session.returnTo;
     });
