@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 const Voting = require('../models/Voting');
 
 router.get('/', async (req, res, next) => {
@@ -16,6 +17,20 @@ router.get('/logout', (req, res) => {
   req.logout();
   req.session.destroy();
   res.redirect('/');
+});
+
+router.get('/my-votings', (req, res) => {
+  const allVotings = await Voting.find();
+  const userId = req.user._id;
+  const myVotings = []
+  const otherVotings = []
+  //여기서 내 투표, 전체 투표 걸러서 주기 
+  //해당 유저값 제외후 검색 ? 
+
+  res.render('myVotings', {
+    allVotings,
+    userId
+  });
 });
 
 module.exports = router;
