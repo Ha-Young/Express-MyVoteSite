@@ -1,10 +1,11 @@
 //date limit
 const dateInput = document.querySelector("input[type='datetime-local']");
-
+const MESSAGE = {
+  SAVE_ERROR: "VOTE_SAVE_ERROR",
+  CREATE_SUCCESS: "CREATE_SUCCESS"
+};
 let now = new Date();
-// console.log(now);
-// let dateISO=new Date(now);
-// console.log(dateISO);
+
 const minDate = new Date(now.getTime() - now.getTimezoneOffset() * 60 * 1000 + 10 * 60 * 1000);
 const minDateForm = minDate
   .toISOString()
@@ -80,17 +81,15 @@ form.addEventListener("submit", e => {
     .then(result => {
       console.log();
       switch (result.message) {
-        case LOGIN_RESULT.SUCCESS:
+        case MESSAGE.SAVE_ERROR:
+          errorMessage.textContent = "저장 오류가 발생했습니다. 다시 시도해 주세요";
+          break;
+        case MESSAGE.CREATE_SUCCESS:
+          alert("투표가 생성되었습니다");
           window.location.pathname = "/";
           break;
-        case LOGIN_RESULT.NO_ACCOUNT:
-          errorMessage.textContent = "존재하지않는 계정입니다.";
-          break;
-        case LOGIN_RESULT.WRONG_PASSWORD:
-          errorMessage.textContent = "잘못된 비밀번호입니다";
-          break;
         default:
-          errorMessage.textContent = "서버오류";
+          errorMessage.textContent = "알수 없는오류";
       }
     });
 });

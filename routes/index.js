@@ -2,28 +2,19 @@ var express = require("express");
 var router = express.Router();
 const userController = require("./controller/userController");
 const voteController = require("./controller/voteController");
+const { RENDER_PROPS } = require("./controller/constant");
 
-const renderProperty = {
-  title: "전국민 투표앱! 코리아 투표앱",
-  formStyle: "form",
-  voteFormStyle: "voteForm"
-};
-const votes = [
-  { id: 1, title: "투표제목1", creator: "사용자1", due: "2020-03-20 3pm", state: "진행중" },
-  { id: 2, title: "투표제목2", creator: "사용자2", due: "2020-03-20 3pm", state: "진행중" },
-  { id: 3, title: "투표제목3", creator: "사용자3", due: "2020-03-20 3pm", state: "완료" }
-];
+// const renderProperty = {
+//   title: "전국민 투표앱! 코리아 투표앱",
+//   formStyle: "form",
+//   voteFormStyle: "voteForm"
+// };
 
 /* GET home page. */
-router.get("/", (req, res, next) => {
-  const loginUser = req.session.userId;
-
-  console.log(req.session, req.session.userId);
-  res.render("index", { title: renderProperty.title, loginUser: loginUser, votes: votes });
-});
+router.get("/", (req, res, next) => voteController.getAllVote(req, res, next));
 
 router.get("/login", (req, res, next) => {
-  res.render("login", { title: renderProperty.title, style: renderProperty.formStyle });
+  res.render("login", { title: RENDER_PROPS.TITLE, style: RENDER_PROPS.STYLE.FORM });
 });
 
 router.post("/login", (req, res, next) => userController.findUser(req, res, next));
@@ -35,7 +26,7 @@ router.get("/signout", (req, res, next) => {
 router.post("/signup", (req, res, next) => userController.findOrCreateUser(req, res, next));
 
 router.get("/signup", (req, res, next) => {
-  res.render("signup", { title: renderProperty.title, style: renderProperty.formStyle });
+  res.render("signup", { title: RENDER_PROPS.TITLE, style: RENDER_PROPS.STYLE.FORM });
 });
 router.get("/my-votings", (req, res, next) => {
   const loginUser = req.session.userId;
@@ -44,40 +35,28 @@ router.get("/my-votings", (req, res, next) => {
     return;
   }
   res.render("voteForm", {
-    title: renderProperty.title,
+    title: RENDER_PROPS.TITLE,
     loginUser: loginUser,
-    style: renderProperty.voteFormStyle
+    style: RENDER_PROPS.STYLE.VOTE_FORM
   });
 });
 router.get("/votings/new", (req, res, next) => {
   const loginUser = req.session.userId;
-  //TODO: comment 해제
-  // if (!loginUser) {
-  //   next({status:401 , message:'로그인후 이용가능합니다'})
-  // }
+  if (!loginUser) {
+    next({ status: 401, message: "로그인후 이용가능합니다" });
+  }
   res.render("voteForm", {
-    title: renderProperty.title,
+    title: RENDER_PROPS.TITLE,
     loginUser: loginUser,
-    style: renderProperty.voteFormStyle
+    style: RENDER_PROPS.STYLE.VOTE_FORM
   });
 });
 
 router.post("/votings/new", (req, res, next) => {
-  voteController.createVote(req,res,next);
+  voteController.createVote(req, res, next);
 });
 
-router.get("/votings/:id", (req, res, next) => {
-  const loginUser = req.session.userId;
+router.get("/votings/:id", (req, res, next) => voteController.getUserVote(req, res, next));
 
-  res.render("voteForm", {
-    title: renderProperty.title,
-    loginUser: loginUser,
-    style: renderProperty.voteFormStyle
-  });
-});
-
-router.put("/votings/:id", voteController.updateVote);
-
-router.delete("/votings/:id", (req, res, next) => {});
-
+router.post("/votings/:id", (req, res, next) => voteController.updateVoteCount(req, res, next));
 module.exports = router;

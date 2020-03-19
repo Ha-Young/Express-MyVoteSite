@@ -74,9 +74,10 @@ span {
 .vote-state-going,
 .vote-state-done {
   border-radius: 5px;
-  width: fit-content;
+  margin:0 0 10px 0;
+  padding:0px 10px;
   background-color: rgb(32, 218, 178);
-  width: 50px;
+  width: fit-content;
 }
 
 .vote-state-done {

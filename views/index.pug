@@ -8,13 +8,13 @@ block content
       button.button-vote-creator(onclick="window.location.href = '/votings/new';") 투표 만들기
     -var values = votes;
       each val in values
-        div.vote-box(data-id=val.id onclick="window.location.href = '/votings/:"+val.id+";")
+        div.vote-box(data-id=val._id onclick="window.location.href = 'votings/"+val._id+"';")
           div.vote-title=val.title
-          div.vote-creator=val.creator
+          div.vote-creator=val.user.email.split('@')[0]
           div.flex-row
             case val.state
-              when '진행중'
-                div.vote-state-going=val.state
-              when '완료'
-                div.vote-state-done=val.state
-            div.vote-due='투표마감:'+val.due
+              when 'inProgress'
+                div.vote-state-going="진행중"
+              when 'done'
+                div.vote-state-done="진행완료"
+            div.vote-due='투표마감일:'+val.due.toISOString().split("T")[0]+"🕙"+val.due.toTimeString().slice(0, 5)

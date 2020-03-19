@@ -4,10 +4,12 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     case style
-      when 'form'
+      when 'FORM'
         link(rel='stylesheet',href='/stylesheets/form.css')
-      when 'voteForm'
+      when 'VOTE_FORM'
         link(rel='stylesheet',href='/stylesheets/voteForm.css')
+      when 'VOTE'
+        link(rel='stylesheet',href='/stylesheets/vote.css')
   body
     include header
     block content
