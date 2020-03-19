@@ -2,12 +2,46 @@ import passport from 'passport';
 import User from '../models/user';
 
 export const getLogin = (req, res) => {
-  res.render('login');
+  const { redirect_id: id } = req.query;
+
+  res.render('login', { id });
 };
 
-export const postLogin = passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login'
+export const postLogin = (req, res) => {
+  passport.authenticate('local', function(err, user) {
+    if (err) {
+      // Error Handling
+    }
+
+    if (!user) {
+      return res.redirect('/login');
+    }
+
+    req.logIn(user, (err) => {
+      if (err) {
+        // Error Handing
+      }
+
+      const { redirect_id: id } = req.query;
+
+      if (id) {
+        res.redirect(`/votings/${id}`);
+      } else {
+        res.redirect('/');
+      }
+    });
+  })(req, res);
+}
+
+
+passport.authenticate('local', (req, res) => {
+  const { redirect_id: id } = req.query;
+
+  if (id) {
+    res.redirect(`/votings/${id}`);
+  } else {
+    res.redirect('/');
+  }
 });
 
 export const getSignup = (req, res) => {

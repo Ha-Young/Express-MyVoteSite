@@ -180,11 +180,12 @@ h2 {
 .chart-area li h4 {
   line-height: 21px;
   font-size: 18px;
+  padding-right: 15px;
   display: inline-block;
   flex: 1;
 }
 .chart-area li > div {
-  flex: 1 85%;
+  flex: 1 80%;
   display: flex;
 }
 .chart-area li .bar {

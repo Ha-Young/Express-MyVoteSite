@@ -42,10 +42,14 @@
           </fieldset>
           
           <div class="buttons-wrap">
-            <% if (isDone) { %>
-              <input type="submit" class="button disable" value="투표완료" disabled="true"/>
+            <% if (user) { %>
+              <% if (isDone) { %>
+                <input type="submit" class="button disable" value="투표완료" disabled="true"/>
+              <% } else { %>
+                <input type="submit" class="button" value="제출하기" />
+              <% } %>
             <% } else { %>
-              <input type="submit" class="button" value="제출하기" />
+              <a href="/login?redirect_id=<%= id %>" class="button">제출하기</a>
             <% } %>
             <a href="/" class="button">돌아가기</a>
           </div>

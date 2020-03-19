@@ -10,7 +10,7 @@ if (optionsArea) {
   addOptionButton.addEventListener('click', e => {
     e.preventDefault();
     optionCount++;
-    addOptionItem(optionCount, optionsArea);
+    addOptionItem(optionsArea);
   });
 
   removeOptionButton.addEventListener('click', e => {
@@ -41,7 +41,7 @@ if (chartArea) {
   }
 }
 
-function addOptionItem (count, target) {
+function addOptionItem (target) {
   const optionItem = `<input type="text" name="options" />`;
   const p = document.createElement('p');
 
