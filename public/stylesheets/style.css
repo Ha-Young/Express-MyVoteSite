@@ -178,10 +178,6 @@ header h4 {
   background-color: #a6b1e1;
 }
 
-.createDescription {
-  background-color: #c5cded;
-}
-
 .createExpiratin {
   background-color: #dcd6f7;
 }
@@ -209,13 +205,6 @@ header h4 {
   margin: 20px;
   padding: 10px;
 }
-
-/* [my voting] */
-/* .myVoting {
-  padding: 2px;
-  border-radius: 10px;
-  background-color: #f8fab8;
-} */
 
 /* [votes] */
 .votesSection {
@@ -281,4 +270,71 @@ header h4 {
 
 .voteInfoMain {
   border-bottom: 1px solid gray;
+}
+
+/* [vote Detail] */
+.currentResult,
+.activeVoteForm,
+.completeResult {
+  margin: 10px;
+  padding: 15px;
+  width: 50%;
+  box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.5);
+}
+
+.voteStatus {
+  margin: 10px;
+  color: blue;
+}
+
+.voteMadeBy,
+.voteExpiration,
+.currentResultComment,
+.optionSelectComment {
+  margin: 10px;
+  width: 50%;
+  border-bottom: 1px solid gray;
+}
+
+.voteOptionLabel {
+  display: inline-block;
+  width: 90%;
+  margin: 20px 10px;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: #dcd6f7;
+}
+
+.voteSubmit,
+.delete,
+.goHomeDetailPage {
+  margin: 10px;
+  width: 80px;
+  height: 50px;
+  border-radius: 8px;
+  background-color: #424874;
+  font-size: 18px;
+  color: white;
+}
+
+.voteSubmit:hover,
+.delete:hover,
+.goHomeDetailPage:hover {
+  background-color: #252948;
+  text-decoration: underline;
+}
+
+.activeVoteOptions {
+  display: flex;
+}
+
+.resultBox {
+  padding: 5px;
+  border-radius: 8px;
+  background-color: #dcd6f7;
+  color: #dcd6f7;
+}
+
+.optionResult {
+  margin: 20px 10px;
 }

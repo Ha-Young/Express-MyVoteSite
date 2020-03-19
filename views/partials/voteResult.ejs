@@ -1,0 +1,8 @@
+<div>
+  <% voteInfo.options.forEach((option) => { %>
+    <div class="optionResult">
+      <div><%= option[0] %> (<%= option[1] %>건) (<%= option[2] %>)</div>
+      <div class="resultBox <%= option[2] %>">box</div>
+    </div>
+  <% }) %>
+</div>

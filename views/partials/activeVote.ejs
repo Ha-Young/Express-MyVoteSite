@@ -1,0 +1,30 @@
+<article>
+  <h1><%= voteInfo.title %></h1>
+  <h4 class="voteStatus">Ongoing Vote</h4>
+  <h2 class="voteExpiration">
+    Expiration : <%= voteInfo.expirationDate.split('GMT')[0].slice(0, -4) %>
+  </h2>
+  <h2 class="voteMadeBy">Made By : <%= voteInfo.madeByName %></h2>
+  <div class="activeVoteOptions">
+    <form action="/votings/<%= voteInfo.id %>" method="POST" class="<%= voteInfo.id %> activeVoteForm" id="<%= voteInfo.title%>">
+      <h2 class="optionSelectComment">Select Choice</h2>
+      <% voteInfo.options.forEach((option) => { %>
+        <input type="radio" id="<%= option[0] %>" name="option" value="<%= option[0] %>">
+        <label class="voteOptionLabel" for="<%= option[0] %>"><%= option[0] %></label><br>
+      <% }) %>
+    </form>
+    <% if (voteInfo.loginUser === voteInfo.madeById) { %>
+      <div class="currentResult">
+        <h2 class="currentResultComment">Current Result</h2>
+        <%- include("./voteResult") %>
+      </div>
+    <% } %>
+  </div>
+  <div style="display: flex;">
+    <button type="submit" class="voteSubmit">Vote</button>
+    <button type="button" class="goHomeDetailPage">Go Home</button>
+    <% if (voteInfo.loginUser === voteInfo.madeById) { %>
+      <button type="button" class="delete" id="<%= voteInfo.id %>">Delete</button>
+    <% } %>
+  </div>
+</article>

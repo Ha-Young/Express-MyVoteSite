@@ -1,0 +1,17 @@
+<article>
+  <h1><%= voteInfo.title %></h1>
+  <h4 class="voteStatus">Complete Vote</h4>
+  <h2 class="voteExpiration">
+    Expiration : <%= voteInfo.expirationDate.split('GMT')[0].slice(0, -4) %>
+  </h2>
+  <h2 class="voteMadeBy">Made By : <%= voteInfo.madeByName %></h2>
+  <div class="completeResult">
+    <%- include("./voteResult") %>
+  </div>
+  <div style="display: flex;">
+    <% if (voteInfo.loginUser === voteInfo.madeById) { %>
+      <button type="button" class="delete" id="<%= voteInfo.id %>">Delete</button>
+    <% } %>
+    <button type="button" class="goHomeDetailPage">Go Home</button>
+  </div>
+</article>

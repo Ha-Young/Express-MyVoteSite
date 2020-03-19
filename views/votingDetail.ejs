@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Voting</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai+2|Sunflower:300&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <%- include("./partials/header") %>
+    <hr />
+    <section class="votesSection">
+      <% if (new Date() < new Date(voteInfo.expirationDate)) { %>
+        <%- include("./partials/activeVote") %>
+      <% } else { %>
+        <%- include("./partials/completeVote") %>
+      <% } %>
+      <script>
+        document.querySelector(".goHomeDetailPage").addEventListener("click", () => {
+          window.location.href = "http://localhost:3000/";
+        });
+        
+        const deleteButton = document.querySelector(".delete");
+        if (!!deleteButton) {
+          deleteButton.addEventListener("click", (ev) => {
+            return fetch(`http://localhost:3000/votings/${ev.currentTarget.id}`, {
+              method: 'DELETE'
+            })
+            .then((res) => res.json())
+            .then(res => {
+              if (res.delete === "ok") {
+                alert("Vote Delete! :)");
+                window.location.href = "http://localhost:3000/";
+              }
+            });
+          });
+        }
+
+        const resultBox = document.querySelectorAll(".resultBox")
+        for (let i = 0; i < resultBox.length; i++) {
+          const optionsResult = resultBox[i].className.split(' ')[1];
+          resultBox[i].style.width = optionsResult;
+        }
+      </script>
+    </section>
+  </body>
+</html>
