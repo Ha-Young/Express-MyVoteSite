@@ -9,16 +9,19 @@
   <body>
     <section class="loginSection">
       <h1><%= loginMsg %></h1>
-      <form class="loginForm" action="/login" method="POST">
+      <form class="loginForm" action="/users/login" method="POST">
         <input type="text" name="email" placeholder="Email" />
         <input type="password" name="password" placeholder="Password" />
+        <% if (locals.referer) { %>
+          <input type="hidden" name="referer" value= <%= referer %> >
+        <% } %>
         <button type="submit" class="loginSubmit">Sign In</button>
         <button type="button" class="goHomeLoginPage">Go Home</button>
       </form>
     </section>
     <script>
       document.querySelector(".goHomeLoginPage").addEventListener("click", () => {
-        window.location.href = 'http://localhost:3000/';
+        window.location.href = "http://localhost:3000/";
       });
     </script>
   </body>
