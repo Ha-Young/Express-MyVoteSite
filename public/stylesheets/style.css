@@ -9,32 +9,19 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
-}
-
 h1 {
   margin-bottom: 32px;
   font-size: 45px;
   font-weight: 500;
 }
 
-input[type=text], input[type=password] {
-  padding: 0 14px;
-  width: 100%;
-  height: 42px;
-  /* border: 0; */
-  border: 1px solid #d4d4d4;
-  font-size: 15px;
+ul {
+  list-style: none;
 }
 
-input[type=submit] {
-  width: 100%;
-  height: 100%;
-  background-color: #2282F1;
-  color: white;
-  border: 0;
-  font-size: 15px;
+a {
+  text-decoration: none;
+  color: #3C4043;
 }
 
 .authwarp {
@@ -47,14 +34,45 @@ input[type=submit] {
   float: right;
   font-size: 14px;
   color: #5d5d5d;
-  text-decoration:none
 }
 
 .inputBox {
   margin: 10px 0;
   width: 100%;
   height: 42px;
+}
+
+input[type=text],
+input[type=password],
+input[type=email] {
+  padding: 0 14px;
+  width: 100%;
+  height: 100%;
   border: 1px solid #d4d4d4;
+  font-size: 15px;
+}
+
+input[type=radio] {
+  margin-right: 10px;
+}
+
+.detailBox {
+  text-align: left;
+  line-height: 30px;
+  font-size: 15px;
+}
+
+.votingCard {
+  margin: 15px 0;
+  border: 1px dotted gray;
+  text-align: left;
+  padding: 10px;
+  line-height: 23px;
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 700;
 }
 
 .button-blue {
@@ -64,7 +82,7 @@ input[type=submit] {
   cursor: pointer;
 }
 
-.button-blue > input {
+.button-blue > input, button {
   width: 100%;
   height: 100%;
   background-color: #2282F1;
@@ -80,7 +98,8 @@ input[type=submit] {
   cursor: pointer;
 }
 
-.button-blue-line > input {
+.button-blue-line > input,
+.button-blue-line > button {
   width: 100%;
   height: 100%;
   background-color: white;
@@ -89,8 +108,6 @@ input[type=submit] {
   font-size: 15px;
 }
 
-.inputBox2 {
-  margin: 10px 0;
-  width: 100%;
-  /* height: 42px; */
+.small {
+  width: 50%;
 }

@@ -1,11 +1,26 @@
-extends layout
-
-block content
-  h1 Home
-  button(onclick='location.href=\'/votings/new\'') 투표 만들기
-  if votings
-    ul
-      each voting in votings
-        li
-          a(href=`/votings/${voting._id}`)
-            div title: #{voting.title} - Owner: #{voting.author} - #{voting.expiredAt}에 마감 - 진행중: #{voting.isProceeding}
+<!DOCTYPE html>
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible', content='ie=edge')
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    title Voting
+  body
+    div.authwarp
+      h1 Home
+      div.button-blue-line.small
+        input(type='button' onclick='location.href=\'/votings/new\'' value='로그아웃')
+      div.button-blue-line.small
+        input(type='button' onclick='location.href=\'/votings/new\'' value='내가 등록한 투표')
+      div.button-blue
+        input(type='button' onclick='location.href=\'/votings/new\'' value='투표 만들기')
+      if votings
+        ul
+          each voting in votings
+            li.votingCard
+              a(href=`/votings/${voting._id}`)
+                div.card-title= voting.title
+                div - 등록자 | #{voting.author}
+                div - 종료일 | #{voting.expiredAt}
+                div - 진행중 | #{voting.isProceeding}

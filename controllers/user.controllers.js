@@ -6,7 +6,7 @@ exports.updateRegisterVoting = async (req, res, next) => {
 
   await User.updateOne(
     { _id: userId },
-    { $set: { registerVotings: votingId } }
+    { $push: { registerVotings: votingId } }
   );
   res.json('ok');
 };
@@ -18,7 +18,7 @@ exports.updateParticipateVoting = async (req, res, next) => {
 
   await User.updateOne(
     { _id: userId },
-    { $set: { participateVotings: { voting: votingId, selectedOption } } }
+    { $push: { participateVotings: { voting: votingId, selectedOption } } }
   )
   next();
 };
