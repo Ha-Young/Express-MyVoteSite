@@ -1,12 +1,23 @@
 const Voting = require('../../models/Voting');
 const createError = require('http-errors');
 
+exports.isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) 
+    return next();
+
+  if (req.session) {
+    req.session.redirectUrl = req.headers.referer || req.originalUrl || req.url;
+  }  
+  console.log(req.session)
+  res.redirect('/login');
+};
+
 exports.newVoting = async (req, res) => {
   const { email, _id: id } = req.user;
   const { title, items, endDate } = req.body;
   const votingInfo = Object.keys(req.body);
   const isEmptyValueCheck = votingInfo.every(item => req.body[item].length !== 0);
-  
+
   //FIXME: 빈값 발견시 모달 띄우기
   if (isEmptyValueCheck) {
     const itemList = [];
@@ -52,21 +63,24 @@ exports.renderVoting = async (req, res) => {
 }
 
 exports.confirmVoting = async (req, res) => {
-  const { _id: userId} = req.user;
+
+  console.log('req.session', req.session);
+  const { _id: userId } = req.user;
   const { itemId } = req.body;
   const { voting_id: votingId } = req.params;
-  const endDate = new Date(voting.endDate).getTime();
-  const currentDate = new Date().getTime();
-  
-    //FIXME: 투표 미체크후 제출시 메시지처리
+
+
+  //FIXME: 투표 미체크후 제출시 메시지처리
   if (!itemId) {
     res.redirect('/');
     return
   }
-  
+
   if (req.user) {
     const voting = await Voting.findById(votingId);
     const isSolvedCheck = voting.solvedUser.includes(userId);
+    const endDate = new Date(voting.endDate).getTime();
+    const currentDate = new Date().getTime();
     let { items, solvedUser } = voting;
 
     //FIXME: 투표 완료한 유저 이미 완료한 투표 메시지 처리 
@@ -82,7 +96,7 @@ exports.confirmVoting = async (req, res) => {
     }
 
     //FIXME: 모두 탐색후 값 변경하는데, 효율적 방법 찾기
-    for (let i = 0; i < items.length; i++ ) {
+    for (let i = 0; i < items.length; i++) {
       if (String(items[i]._id) === itemId) {
         items[i].count += 1;
         break;
@@ -104,7 +118,7 @@ exports.confirmVoting = async (req, res) => {
   }
 }
 
-exports.deleteVoting = async(req, res) => {
+exports.deleteVoting = async (req, res) => {
   const { voting_id: votingId } = req.params;
   try {
     await Voting.deleteOne({ _id: votingId });
@@ -114,7 +128,7 @@ exports.deleteVoting = async(req, res) => {
   }
 }
 
-/* 
+/*
 {
   solvedUser: [],
   _id: 5e731b52b9ca6d4204ceb73b,

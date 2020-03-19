@@ -2,14 +2,24 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
-// const loginControllers = require('./controllers/login.controllers');
-
-const authenticate = passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login'
+router.get('/', (req, res, next) => {
+  console.log('로그인', req.session)
+    res.render('login');
 });
 
-router.get('/', (req, res, next) => res.render('login'));
-router.post('/', authenticate);
+router.post('/', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) { return next(err); }
+    if (!user) { return res.redirect('/login'); }
+    req.logIn(user, (err) => {
+      if (err) { return next(err); }
+      if (req.session.redirectUrl) {
+        res.redirect(req.session.redirectUrl);
+      } else {
+        res.redirect('/');
+      }
+    });
+  })(req, res, next);
+});
 
 module.exports = router;
