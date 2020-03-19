@@ -12,12 +12,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  voted: [
-    {
-      type: mongoose.ObjectId,
-      ref: 'Voting',
-    }
-  ],
 });
 
 userSchema.pre('save', function (next) {
@@ -35,3 +29,4 @@ userSchema.methods.comparePasswordSync = function (candidatePassword) {
 };
 
 module.exports = mongoose.model('User', userSchema);
+ 

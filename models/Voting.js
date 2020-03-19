@@ -22,6 +22,13 @@ const votingSchema = new mongoose.Schema({
     of: Number,
     required: true,
   },
+  voted: [
+    {
+      type: mongoose.ObjectId,
+      ref: 'Voting',
+      required: true,
+    }
+  ],
 });
 
 module.exports = mongoose.model('Voting', votingSchema);
