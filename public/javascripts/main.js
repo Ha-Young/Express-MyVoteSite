@@ -6,17 +6,15 @@ const chartArea = document.querySelector('.chart-area');
 const deleteVoteButton = document.getElementById('delete-vote');
 
 if (optionsArea) {
-  let optionCount = 1;
+  let optionCount = 2;
 
-  addOptionButton.addEventListener('click', e => {
-    e.preventDefault();
+  addOptionButton.addEventListener('click', () => {
     optionCount++;
     addOptionItem(optionsArea);
   });
 
-  removeOptionButton.addEventListener('click', e => {
-    e.preventDefault();
-    if (optionCount > 1) {
+  removeOptionButton.addEventListener('click', () => {
+    if (optionCount > 2) {
       optionCount--;
       removeOptionItem(optionsArea);
     }
