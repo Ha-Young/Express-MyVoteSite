@@ -3,16 +3,16 @@ html
   head
     link(rel="stylesheet", href="/stylesheets/login.css")
   body
-    nav
+    div(class="nav")
       ul
         if hasLoggedIn
-          li 
+          li
             a(href="/") Main
-          li 
+          li
             a(href="/votings/new") New vote
-          li 
-            a(href="") My vote
-          li 
+          li
+            a(href="/my-votings") My votes
+          li
             a(href="/auth/logout") Logout
         else
           li 

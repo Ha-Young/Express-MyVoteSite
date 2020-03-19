@@ -16,7 +16,8 @@ router.post('/new', async (req, res, next) => {
   try {
       const time = `${req.body.date} ${req.body.time}`;
       if (new Date() > new Date(time)) {
-        throw(createError(422, "Please select expring time for future"));
+        return res.redirect('/votings/failure');
+        // throw(createError(422, "Please select expring time for future"));
       }
       
       const { topic } = req.body;
@@ -51,6 +52,10 @@ router.post('/new', async (req, res, next) => {
 
 router.get('/success', authenticateLogin, function(req, res, next) {
   res.render('success', { hasLoggedIn: true });
+});
+
+router.get('/failure', authenticateLogin, function(req, res, next) {
+  res.render('failure', { hasLoggedIn: true });
 });
 
 

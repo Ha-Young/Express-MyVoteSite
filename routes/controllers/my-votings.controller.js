@@ -4,10 +4,11 @@ const getPollsAndTimeString = require('../../lib/getPollsAndTimeString');
 
 module.exports = async (req, res, next) => {
   const id = req.session.passport.user;
-  
   const user = await User.findById(id);
-  // const asdf = user.myPolls.populate('creator');
-  // const data = getPollsAndTimeString(user.myPolls);
+  if (!user.myPolls.length) {
+    return res.render('myvotings', { hasLoggedIn: true, polls: null, timeString: null });
+  }
+
   const crriteria = { $or: []};
   user.myPolls.forEach((id) => {
     const obj = {};
@@ -15,8 +16,10 @@ module.exports = async (req, res, next) => {
     crriteria.$or.push(obj);
   });
 
-  console.log(crriteria);
-  const ff = await Poll.find(crriteria).populate('creator')
-  console.log(ff);
-  res.render('/')
+  const myPolls = await Poll.find(crriteria);
+  // const myPolls = await Poll.find(crriteria).populate('creator');
+  const data = await getPollsAndTimeString(myPolls);
+  const { polls } = data;
+  const { timeString } = data;
+  res.render('myvotings', { hasLoggedIn: true, polls, timeString });
 };

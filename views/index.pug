@@ -3,16 +3,16 @@ html
   head
     link(rel="stylesheet", href="/stylesheets/index.css")
   body
-    nav
+    div(class="nav")
       ul
         if hasLoggedIn
-          li 
+          li
             a(href="/") Main
-          li 
+          li
             a(href="/votings/new") New vote
-          li 
+          li
             a(href="/my-votings") My votes
-          li 
+          li
             a(href="/auth/logout") Logout
         else
           li 
@@ -22,7 +22,8 @@ html
           li 
             a(href="/auth/login") Login
     main
-      h1 투표 목록
+      div(class="voteLists")
+        h1 투표 목록
         each val, index in polls
           div
             ul

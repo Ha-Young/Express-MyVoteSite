@@ -3,24 +3,24 @@ html
   head
     link(rel="stylesheet", href="/stylesheets/signup.css")
   body
-    nav
+    div(class="nav")
       ul
         if hasLoggedIn
-          li 
-            button Vote
-          li 
-            button New vote
-          li 
-            button My vote
-          li 
-            button Logout
+          li
+            a(href="/") Main
+          li
+            a(href="/votings/new") New vote
+          li
+            a(href="/my-votings") My votes
+          li
+            a(href="/auth/logout") Logout
         else
           li 
-            button Vote
+            a(href="/") Main
           li 
-            button New vote
+            a(href="/signup") Signup
           li 
-            button Logout
+            a(href="/auth/login") Login
     main
       h1 New User Sinup
       form(action="" method="post" id="myForm")

@@ -1,21 +1,30 @@
-nav {
+.nav {
   margin: 0 auto;
-  min-height: 100px;
   width: 70%;
 }
 
-nav ul {
-  display: flex;
-  justify-content: space-between;
-}
-
-ul li {
+.nav ul {
   list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
 }
 
-ul li button {
-  padding: 8px 16px;
-  border-radius: 10px;
+.nav ul li {
+  float: left;
+}
+
+.nav ul li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.nav ul li a:hover {
+  background-color: #111;
 }
 
 main {

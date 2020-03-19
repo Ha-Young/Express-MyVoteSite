@@ -1,18 +1,18 @@
 doctype html
 html
   head
-    link(rel="stylesheet", href="/stylesheets/index.css")
+    link(rel="stylesheet", href="/stylesheets/poll.css")
   body
-    nav
+    div(class="nav")
       ul
         if hasLoggedIn
-          li 
+          li
             a(href="/") Main
-          li 
+          li
             a(href="/votings/new") New vote
-          li 
-            a(href="") My vote
-          li 
+          li
+            a(href="/my-votings") My votes
+          li
             a(href="/auth/logout") Logout
         else
           li 
@@ -27,23 +27,25 @@ html
           li=`Topic: ${poll.topic}`
           li=`Creator: ${poll.creator.email}`
           li=`Expring time: ${timeString[0]} ${timeString[1]}`
-      div(class="container")
-      h1=`${poll.topic}`
-      h3 choose one of the option
-      form(method="post")
-        each val in poll.answers 
-          p
-            input(type="radio" name='answer' id=`${val.answer}` value=`${val.answer}`)
-            label(for=`${val.answer}`)=`${val.answer}`
-        input(type="submit" value="Vote")
-        if isCreator
-          button(class="deleteButton" data-pollid=`${poll.id}`) Delete
-      div
+      div(class="pollContainer")
+        h1=`${poll.topic}`
+        h3 choose one of the option
+        form(method="post")
+          each val in poll.answers
+            div
+              p
+                input(type="radio" name='answer' id=`${val.answer}` value=`${val.answer}`)
+                label(for=`${val.answer}`)=`${val.answer}`
+          div
+            input(type="submit" value="Vote")
+            if isCreator
+            button(class="deleteButton" data-pollid=`${poll.id}`) Delete
         if displayResults
-          h1=`최다표: ${displayResults[0].votes}`
-          each val in displayResults
-            h1=val.votes
-            h1=val.answer
-
+          div(class="resultBox")
+            h2=`Mosted voted: ${displayResults[0].answer}`
+            each val in displayResults
+              span(class="resultDetail")
+                h4=val.answer
+                h4=` : ${val.votes}`
       script(src="/javascripts/poll.js")
       

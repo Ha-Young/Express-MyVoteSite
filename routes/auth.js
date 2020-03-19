@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
 router.get('/login', (req, res, next) => {
+ 
   if (req.isAuthenticated()) {
     res.render('login', { hasLoggedIn: true });
   } else {
@@ -24,11 +25,17 @@ router.get('/login', (req, res, next) => {
 //   done(null, user);
 // });
 
+// const asdf = (req, res, next) => {
+//   console.log(req.session.returnTo);
+// };
+
 router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
   failureRedirect: '/login',
   failWithError: true,
-}));
+}), (req, res, next) => {
+  res.redirect(req.session.returnTo || '/');
+  delete req.session.returnTo;
+});
 
 router.get('/logout', (req, res, next) => {
   req.logOut();
