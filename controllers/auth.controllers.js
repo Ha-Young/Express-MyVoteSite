@@ -9,7 +9,9 @@ exports.login = (req, res, next) => {
     }
 
     if (!validUser) {
-      return next(new errors.InvalidLoginInputError(authFailureMessage));
+      req.flash('errorMessage', authFailureMessage);
+      res.redirect('/auth/login');
+      // return next(new errors.InvalidLoginInputError(authFailureMessage));
     }
 
     req.logIn(validUser, err => {

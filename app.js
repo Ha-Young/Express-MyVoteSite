@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const flash = require('req-flash');
 
 const homeRouter = require('./routes/home');
 const signupRouter = require('./routes/signup');
@@ -41,6 +42,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 app.use('/signup', signupRouter);
 app.use('/auth', authRouter);

@@ -30,7 +30,8 @@ const validateUser = (req, res, next) => {
 
   const errorMessages = errors.array().map(err => err.msg);
 
-  next(new ValidationError(errorMessages));
+  req.flash('errorMessage', errorMessages[0]);
+  res.redirect('/signup');
 };
 
 module.exports = {

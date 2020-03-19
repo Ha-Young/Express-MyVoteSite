@@ -20,12 +20,14 @@ block content
         .signup-field
           //- label(for="email") email:
           input(type="email" name="email" id="email" placeholder="email" required)
-        .signup-field
+        .signup-field.password
           //- label(for="password") password:
-          input(type="password" name="password" id="password" placeholder="password" required)
-        .signup-field
+          input(type="password" name="password" id="password" placeholder="password should be longer than 10 characters." required)
+        .signup-field.password
           //- label(for="confirm_password") confirm password:
           input(type="password" name="confirm_password" id="confirm_password" placeholder="confirmation password" required)
+        if message
+          h3 #{message}
       input.button(type="submit" value="CREATE ACCOUNT")
       .login Already have an account?
         a(href="/auth/login") LOGIN

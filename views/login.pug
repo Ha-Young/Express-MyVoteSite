@@ -9,11 +9,11 @@ block content
       h1 Login
       .login-container
         .login-field
-          //- label(for="email" ) email:
           input(type="email" name="email" id="email" placeholder="email" required)
         .login-field
-          //- label(for="password" ) password:
           input(type="password" name="password" id="password" placeholder="password" required)
+        if message
+          h3 #{message}
       input.button(type="submit" value="LOGIN")
       .signup Don't have an account?
         a(href="/signup") SIGN UP

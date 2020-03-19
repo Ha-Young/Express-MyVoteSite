@@ -1,4 +1,4 @@
-const closeButton = document.querySelector('.title > span');
+const closeButton = document.querySelector('#close-button');
 const addButton = document.querySelector('.add-button');
 const optionDiv = document.querySelector('.options > div');
 

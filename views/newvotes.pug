@@ -4,19 +4,21 @@ block styles
   link(rel="stylesheet", href="/stylesheets/newvotes.css")
 
 block content
-  form(action="/votings" method="POST").newvotes-container
-    .title
-      span x
-      input.vote-title(type="text" placeholder="투표 추가" name="title" required)
-    .options
-      div
-        input.option(type="text" placeholder="항목 입력" name="option1" required)
-        input.option(type="text" placeholder="항목 입력" name="option2" required)
-      div.expiration
-        label(for="expires_at") 마감시간 설정
-        input.expiration-time(type="datetime-local" name="expires_at" required)
-      div.add-button 항목 추가
-    div.buttons
-      input.submit-button(type="submit" value="저장")
-      span.reset-button 새로고침
+  .newvotes
+    form(action="/votings" method="POST").newvote-form
+      .newvotes-container
+        span#close-button x
+        .title
+          input.vote-title(type="text" placeholder="투표 추가" name="title" required)
+        .options
+          div
+            input.option(type="text" placeholder="항목 입력" name="option1" required)
+            input.option(type="text" placeholder="항목 입력" name="option2" required)
+          div.expiration
+            label(for="expires_at") 마감시간 설정
+            input.expiration-time(type="datetime-local" name="expires_at" required)
+          div.add-button 항목 추가
+        div.buttons
+          input.button.submit-button(type="submit" value="저장")
+          span.button.reset-button 새로고침
   script(src="/javascripts/newvotes.js")

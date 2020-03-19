@@ -8,7 +8,7 @@
 .login-form {
   border: 1px solid black;
   text-align: center;
-  width: 50vw;
+  width: 30vw;
   font-size: 1.3rem;
   padding: 3rem;
   border-radius: 0.5rem;
@@ -31,6 +31,7 @@
 
 .login-field {
   margin: 1rem 0;
+  width: 100%;
 }
 
 .login-field > input {
@@ -40,8 +41,8 @@
   border: 0px;
   padding: 0.8rem;
   box-shadow: 2px 2px 2px 2px grey;
+  width: 90%;
 }
-
 
 .signup {
   margin-top: 1rem;
