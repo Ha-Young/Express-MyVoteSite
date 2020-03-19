@@ -13,7 +13,7 @@
       <ul>
         <li>제목: <%= voting.title %></li>
         <li>생성자: <%= voting.author %></li>
-        <li>만료날짜: <%= voting.endDate %></li>
+        <li>만료날짜: <%= new Date(voting.endDate) %></li>
         <% if (status) { %>
         <li>진행 여부:<span>진행중</span>/li>
           <% } else { %>
@@ -42,12 +42,14 @@
         <% } %>
       </ul>
     </div>
+
+    <button><a href='/'>목록보기</a></button>
   </div>
 </body>
 
 </html>
 
-/*
+<!-- /*
 {
 solvedUser: [],
 _id: 5e7226e8cccc5f0c40549b8a,
@@ -66,4 +68,4 @@ res.render('voting', {
 voting,
 isAuthor,
 status:
-});
+}); -->
