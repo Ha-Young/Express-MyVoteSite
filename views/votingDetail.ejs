@@ -35,7 +35,7 @@
             <legend class="only_sound"><%= subject %></legend>
             <% for (let i = 0; i < options.length; i++) { %>
               <p>
-                <input id="option<%= i %>" type="radio" value="<%= options[i].value %>" name="option" />
+                <input id="option<%= i %>" type="radio" value="<%= options[i].value %>" name="option" <% if (isDone) { %>disabled<% } %>/>
                 <label for="option<%= i %>"><%= options[i].value %></label>
               </p>
             <% } %>
@@ -43,7 +43,7 @@
           
           <div class="buttons-wrap">
             <% if (isDone) { %>
-              <input type="submit" class="button danger" value="투표완료" disabled="true"/>
+              <input type="submit" class="button disable" value="투표완료" disabled="true"/>
             <% } else { %>
               <input type="submit" class="button" value="제출하기" />
             <% } %>

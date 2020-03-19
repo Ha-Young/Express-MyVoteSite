@@ -1,7 +1,7 @@
 const optionsArea = document.querySelector('.options-area');
 const addOptionButton = document.querySelector('.add-options');
 const removeOptionButton = document.querySelector('.remove-options');
-const confirm = document.querySelector('.confirm');
+const confirms = document.querySelectorAll('.confirm');
 const chartArea = document.querySelector('.chart-area');
 
 if (optionsArea) {
@@ -22,16 +22,26 @@ if (optionsArea) {
   });
 }
 
-if (confirm) {
-  confirm.addEventListener('click', e => {
-    if (!window.confirm('제출하시겠습니까?')) {
-      e.preventDefault();
-    }
-  })
+if (confirms) {
+  for (let i = 0; i < confirms.length; i++) {
+    confirms[i].addEventListener('click', e => {
+      if (!window.confirm('제출하시겠습니까?')) {
+        e.preventDefault();
+      }
+    });
+  }
+}
+
+if (chartArea) {
+  const bars = chartArea.querySelectorAll('.bar');
+
+  for (let i = 0; i < bars.length; i++) {
+    const value = bars[i].dataset.value;
+    bars[i].style.width = `${value}%`;
+  }
 }
 
 function addOptionItem (count, target) {
-  //const optionItem = `<input type="text" name="option${count}" />`;
   const optionItem = `<input type="text" name="options" />`;
   const p = document.createElement('p');
 
@@ -44,14 +54,4 @@ function removeOptionItem (target) {
   const lastIndex = options.length - 1;
 
   target.removeChild(options[lastIndex]);
-}
-
-if (chartArea) {
-  const bars = chartArea.querySelectorAll('.bar');
-
-  for (let i = 0; i < bars.length; i++) {
-    const value = bars[i].dataset.value;
-    console.log(value);
-    bars[i].style.width = `${value}%`;
-  }
 }

@@ -44,8 +44,13 @@
 }
 .button.danger {
   border: 0px;
-  background-color: #d45858;
   color: #fff;
+  background-color: #d45858;
+}
+.button.disable {
+  border: 0px;
+  color: #fff;
+  background-color: #666;
 }
 .box {
   background-color: #fff;
@@ -173,10 +178,14 @@ h2 {
   margin-bottom: 0;
 }
 .chart-area li h4 {
-  line-height: 40px;
+  line-height: 21px;
   font-size: 18px;
-  max-width: 10%;
-  width: 100%;
+  display: inline-block;
+  flex: 1;
+}
+.chart-area li > div {
+  flex: 1 85%;
+  display: flex;
 }
 .chart-area li .bar {
   height: 40px;
@@ -191,7 +200,4 @@ h2 {
   display: block;
   text-align: center;
   font-weight: bold;
-}
-.align-right {
-  text-align: right;
 }

@@ -39,8 +39,10 @@
           %>
             <li>
               <h4><%= options[i].value %></h4>
-              <div class="bar" data-value="<%= value %>"></div>
-              <p><strong><%= length%></strong><%= value %>%</p>
+              <div>
+                <div class="bar" data-value="<%= value %>"></div>
+                <p><strong><%= length%></strong><%= value %>%</p>
+              </div>
             </li>
           <% } %>
           </ul>
