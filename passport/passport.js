@@ -2,7 +2,6 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const error = require('../lib/error');
 
 module.exports = () => {
   passport.serializeUser((user, done) => {
@@ -33,7 +32,7 @@ module.exports = () => {
           if (!user) return done(null, false, { message: '존재하지 않는 유저입니다.' });
           if (bcrypt.compareSync(password, user.password)) return done(null, user);
 
-          done(null, false, { message: '비밀번호가 틀렸습니다.' });
+          done(null, false, { message: '비밀번호가 일치하지 않습니다ㄴ.' });
         } catch (err) {
           done(err);
         }

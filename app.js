@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const error = require('./lib/error');
+const { findUser } = require('./utils/helpers');
 const logger = require('morgan');
 const session = require('express-session');
 const passport = require('passport');
@@ -50,17 +51,18 @@ app.use('/signup', signup);
 app.use('/auth', auth);
 app.use('/votings', votings);
 
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(new error.PageNotFoundError());
 });
 
-app.use(function(err, req, res, next) {
-  // console.log(err);
-  res.locals.message = err.message;
+app.use(async (err, req, res) => {
+  const user = await findUser(req);
+
+  res.locals.message = err.displayMessage;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', { user });
 });
 
 module.exports = app;

@@ -7,6 +7,17 @@ async function findUser(req) {
   return user;
 }
 
+function checkSameUser(user, votingUserId) {
+  if (user) {
+    if (String(votingUserId) === String(user._id)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 module.exports = {
-  findUser
+  findUser,
+  checkSameUser
 };

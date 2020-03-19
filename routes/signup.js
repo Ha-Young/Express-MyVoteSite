@@ -9,19 +9,20 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', async (req, res, next) => {
-  const { email, nickname, password, confirm } = req.body;
-  const userByEmail = await User.findOne({ email });
-  const userByNickname = await User.findOne({ nickname });
-  const salt = bcrypt.genSaltSync();
-  const hash = bcrypt.hashSync(password, salt);
-
   try {
+    const { email, nickname, password, confirm } = req.body;
+    const userByEmail = await User.findOne({ email });
+    const userByNickname = await User.findOne({ nickname });
+    const salt = bcrypt.genSaltSync();
+    const hash = bcrypt.hashSync(password, salt);
+
     if (userByEmail) throw new error.SignupEmailError();
     if (userByNickname) throw new error.SignupNicknameError();
     if (password !== confirm) throw new error.SignupPasswordError();
 
     await new User({ email, nickname, password: hash }).save();
-    res.redirect('/login');
+
+    res.redirect('/auth/login');
   } catch (err) {
     if (err instanceof error.SignupEmailError) {
       return res.render('signup', { emailError: err.displayMessage });
