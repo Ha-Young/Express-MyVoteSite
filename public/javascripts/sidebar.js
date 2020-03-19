@@ -3,9 +3,11 @@ const loginButton = document.querySelector('.login');
 const logoutButton = document.querySelector('.logout');
 const signupButton = document.querySelector('.signup');
 
-createVoteButton.addEventListener('click', () => {
-  location.assign(location.origin + '/votings/new');
-});
+if (createVoteButton) {
+  createVoteButton.addEventListener('click', () => {
+    location.assign(location.origin + '/votings/new');
+  });
+}
 
 if (loginButton) {
   loginButton.addEventListener('click', () => {

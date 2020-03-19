@@ -15,17 +15,15 @@ block content
           each vote in votes
             div(data-id=vote._id).vote
               .vote-top
-                p #{vote.voteStatus}
-                p #{vote.expirationDate}
-              p #{vote.title}
-              .scroll
-                .vote-mid
-                  each option in vote.select_options
-                    .option
-                      span #{option.description}
-              .vote-bottom
-                p #{vote.total_voters} 명 참여 중
-                p made by #{vote.created_by}
+                if vote.voteStatus === "진행 중"
+                  p.vote-status.ongoing #{vote.voteStatus}
+                else
+                  p.vote-status.closed #{vote.voteStatus}
+                .vote-info
+                  p #{vote.total_voters} 명 참여 중
+                  p made by #{vote.created_by}
+              p.vote-title #{vote.title}
+              p.expirationDate #{vote.expirationDate}
 
   script.
     if (!document.querySelector('.no-votes')) {

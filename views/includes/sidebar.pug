@@ -1,17 +1,18 @@
 .sidebar
   img.profile-image(src="https://cdn.shopify.com/s/files/1/0246/4622/1903/products/legostarwars-display_720x.png?v=1578179637", alt="profile-image")
   if loggedInUser
-    h1 #{loggedInUser.username}
+    h1.username #{loggedInUser.username}
     .user-info
       p #{loggedInUser.email}
       p
         a(href="/my-votings") 내 투표 보기
-  button.button.create-votes 투표 생성하기
-  button.button.signup 회원가입
-  if !loggedInUser
-    button.button.login 로그인
-  else
-    button.button.logout 로그아웃
+    button.button.create-votes 투표 만들기
+  .sidebar-buttons
+    button.button.signup 회원가입
+    if !loggedInUser
+      button.button.login 로그인
+    else
+      button.button.logout 로그아웃
 
   .votes
     p 전체 : #{votes.length} votes
