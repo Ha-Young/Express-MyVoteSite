@@ -63,12 +63,18 @@ exports.renderVote = async (req, res, next) => {
     const votes = await Votes.find().lean();
     const loggedInUser = req.user ? req.user : null;
 
+    const expiredCounter = votes.reduce((counter, vote) => {
+      if (vote.expired) counter++;
+      return counter;
+    }, 0);
+
     const voteDisplayInfo = getDisplayInfo(currentVote);
 
     res.render('vote', {
       vote: voteDisplayInfo,
       votes,
-      loggedInUser
+      loggedInUser,
+      expiredCounter
     });
   } catch(err) {
     next(new errors.NonExistingVoteError());
@@ -81,23 +87,23 @@ exports.registerCastingVote = async (req, res, next) => {
   }
 
   try {
-    const selectedOptionIndex = Object.values(req.body)[0];
-    const currentVote = await Votes.findById(req.params.id);
-    const { select_options } = currentVote;
-    const selectedOption = select_options[selectedOptionIndex];
+    // const selectedOptionIndex = Object.values(req.body)[0];
+    // const currentVote = await Votes.findById(req.params.id);
+    // const { select_options } = currentVote;
+    // const selectedOption = select_options[selectedOptionIndex];
 
-    selectedOption.vote_counter++;
-    selectedOption.voter.push(req.user._id);
+    // selectedOption.vote_counter++;
+    // selectedOption.voter.push(req.user._id);
 
-    await currentVote.updateOne({ select_options });
+    // await currentVote.updateOne({ select_options });
 
-    const { loggedInUser, loggedInUser: { votes_voted } } = res.locals;
+    // const { loggedInUser, loggedInUser: { votes_voted } } = res.locals;
 
-    votes_voted.push(currentVote._id);
+    // votes_voted.push(currentVote._id);
 
-    await loggedInUser.updateOne({ votes_voted });
+    // await loggedInUser.updateOne({ votes_voted });
 
-    res.redirect('/');
+    // res.redirect('/');
   } catch(err) {
     console.log(err);
     // something goes here...

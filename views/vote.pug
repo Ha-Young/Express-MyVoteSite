@@ -11,11 +11,11 @@ block content
       .vote-viewer
         .vote
           .vote-top
-            if vote.voteStatus
+            if vote.voteStatus === "진행 중"
               p.vote-status.ongoing #{vote.voteStatus}
             else
               p.vote-status.closed #{vote.voteStatus}
-            p #{vote.expirationDate}
+            p.expirationDate #{vote.expirationDate}
           span.vote-title #{vote.title}
           form(action=`/votings/${vote._id}`, method="post")
             fieldset.vote-mid
@@ -23,7 +23,11 @@ block content
                 div.option
                   input(type="radio", name="option", id=option.description, value=index)
                   label(for=option.description) #{option.description}
-              input#submit(type="submit", value="투표하기")
+              if (vote.voteStatus === "진행 중")
+                input#submit.button(type="submit", value="투표하기" name="submitButton")
+              else
+                input#disabled.button(type="submit", value="투표하기" disabled)
+                h3.vote-disabled-message 투표가 종료되었습니다.
           .vote-bottom
             button.button.to-list 목록으로
             if loggedInUser && loggedInUser.username === vote.created_by

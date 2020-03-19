@@ -11,7 +11,6 @@ exports.login = (req, res, next) => {
     if (!validUser) {
       req.flash('errorMessage', authFailureMessage);
       res.redirect('/auth/login');
-      // return next(new errors.InvalidLoginInputError(authFailureMessage));
     }
 
     req.logIn(validUser, err => {
@@ -19,7 +18,8 @@ exports.login = (req, res, next) => {
         return next(new errors.LoginError(err.message));
       }
 
-      return res.redirect('/');
+      res.redirect(req.session.returnTo || '/');
+      delete req.session.returnTo;
     });
   })(req, res, next);
 };
