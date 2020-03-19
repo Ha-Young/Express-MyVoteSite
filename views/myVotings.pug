@@ -8,14 +8,11 @@ html(lang='en')
     title Voting
   body
     div.authwarp
-      h1 Home
+      h1 내가 등록한 투표
       div.buttonwrap
-        if isUser
-          input.button.line-gray.small(type='button' onclick='location.href=\'/logout\'' value='로그아웃')
-        else
-          input.button.line-gray.small(type='button' onclick='location.href=\'/login\'' value='로그인')
+        input.button.line-gray.small(type='button' onclick='location.href=\'/\'' value='로그아웃')
       div.buttonwrap
-        input.button.line-blue(type='button' onclick='location.href=\'/my-Votings\'' value='내가 등록한 투표 보기')
+        input.button.line-blue(type='button' onclick='location.href=\'/\'' value='홈으로')
       div.buttonwrap
         input.button.blue(type='button' onclick='location.href=\'/votings/new\'' value='투표 만들기')
       if votings

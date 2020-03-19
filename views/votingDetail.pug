@@ -12,14 +12,23 @@ html(lang='en')
       div= voting.isProceeding
       div.detailBox
         div= `- 등록자 | ${voting.createdBy.username}`
-        div= `- 종료일 | ${voting.createdAt}`
+        div= `- 종료일 | ${voting.expiredAt}`
         form(action=`/votings/${voting._id}` method='POST')
-          each option in voting.options
-            div
-              input(type='radio' id=`${option.option}` name='option' value=`${option.option}`)
-              lable(for=`${option.option}`)=option.option
-              lable(for=`${option.option}`)=option.count
-          div.button-blue
-            input(type='submit')
-      div.button-blue-line
-        input(type='button' onclick='location.href=\'/\'' value='< 이전')
+          if voting.isProceeding
+            each option in voting.options
+              div
+                input(type='radio' id=`${option.option}` name='option' value=`${option.option}`)
+                lable(for=`${option.option}`)=option.option
+                if isAuthor
+                  lable.count(for=`${option.option}`)=`${option.count} 표`
+          else
+            each option in voting.options
+              div
+                input(type='radio' id=`${option.option}` name='option' value=`${option.option}` disabled)
+                lable.radio-disabled(for=`${option.option}`)=option.option
+                lable.count(for=`${option.option}`)=`${option.count} 표`
+          if voting.isProceeding
+            div.buttonwrap
+              input.button.blue(type='submit')
+      div.buttonwrap
+        input.button.line-blue(type='button' onclick='location.href=\'/\'' value='< 이전')

@@ -17,10 +17,10 @@ html(lang='en')
         div.inputBox
           input(type='password' name='re-password' placeholder='비밀번호 재입력')
         div.errorAlert
-        div.button-blue
-          input(type='submit' value='가입하기')
-        div.button-blue-line
-          input(type='button' onclick='location.href=\'javascript:history.back()\'' value='<   이전')
+        div.buttonwrap
+          input.button.blue(type='submit' value='가입하기')
+        div.buttonwrap
+          input.button.line-blue(type='button' onclick='location.href=\'javascript:history.back()\'' value='<   이전')
       script(
         type='text/javascript'
         src='/javascripts/signup.js'

@@ -14,6 +14,7 @@ const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const signupRouter = require('./routes/signup');
 const votingRouter = require('./routes/votings');
+const myVotingRouter = require('./routes/myVotings');
 
 const app = express();
 
@@ -47,6 +48,13 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/votings', votingRouter);
+app.use('/my-Votings', myVotingRouter);
+app.get('/logout', function(req, res, next) {
+  req.session.destroy(() => {
+    req.session;
+  });
+  res.redirect('/');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

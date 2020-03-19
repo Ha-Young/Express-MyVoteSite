@@ -24,6 +24,17 @@ exports.create = async (req, res, next) => {
   }
 }
 
+exports.checkIsAuthor = async (req, res, next) => {
+  const voting = req.voting
+  let isAuthor = false;
+
+  if(req.user && req.user._id === String(voting.createdBy._id)) {
+    isAuthor = true;
+  }
+
+  res.render('votingDetail', { voting, isAuthor });
+}
+
 exports.updateSelectedOption = async (req, res, next) => {
   const votingId = req.params.voting_id;
 
@@ -40,5 +51,22 @@ exports.updateSelectedOption = async (req, res, next) => {
   )
 
   const updatedVoting = await Voting.findById(req.params.voting_id).populate('createdBy').lean();
-  res.render('votingDetail', { voting: updatedVoting });
+  req.voting = updatedVoting;
+  next();
 };
+
+exports.updateExpired = async (req, res, next) => {
+  const nowDate = new Date();
+  const votings = await Voting.find().lean();
+  await Promise.all(
+    votings.map(async (voting) => {
+      if(voting.expiredAt < nowDate) {
+        await Voting.updateOne(
+          { _id: voting._id },
+          { $set: { isProceeding: false } }
+        );
+      }
+    })
+  )
+  next();
+}

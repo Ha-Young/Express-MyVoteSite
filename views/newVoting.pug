@@ -21,10 +21,10 @@ html(lang='en')
         div.inputBox
           input(type='text' name='option2' placeholder='항목 입력')
         div.errorAlert
-        div.button-blue
-          input(type='submit' value='완료')
-        div.button-blue-line
-          input(type='button' onclick='location.href=\'javascript:history.back()\'' value='취소')
+        div.buttonwrap
+          input.button.blue(type='submit' value='완료')
+        div.buttonwrap
+          input.button.line-blue(type='button' onclick='location.href=\'javascript:history.back()\'' value='취소')
       script(
         type='text/javascript'
         src='/javascripts/newVoting.js'

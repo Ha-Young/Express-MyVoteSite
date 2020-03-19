@@ -13,13 +13,13 @@ const UserSchema = new Schema({
   },
   registerVotings: [{
     type: Schema.Types.ObjectId,
-    ref: 'Vote',
+    ref: 'Voting',
     required: true
   }],
   participateVotings: [{
     voting: {
       type: Schema.Types.ObjectId,
-      ref: 'Vote',
+      ref: 'Voting',
       required: true
     },
     selectedOption: {
