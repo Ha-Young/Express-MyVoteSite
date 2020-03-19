@@ -9,7 +9,7 @@ exports.registerVote = async (req, res, next) => {
   const currentTime = new Date().toISOString();
 
   if (expirationTime < currentTime) {
-    req.flash('errorMessage', '투표 만료시간은 현재 시간 이후여야 합니다.')
+    req.flash('Vote Registration Error', '투표 만료시간은 현재 시간 이후여야 합니다.')
     return res.redirect('/votings/new');
   }
 
@@ -40,18 +40,16 @@ exports.registerVote = async (req, res, next) => {
   }
 };
 
-exports.deleteVote = async (req, res, next) => {
+exports.deleteVote = async (req, res) => {
   try {
     const deletedVote = await Votes.findByIdAndRemove(req.body);
     let { loggedInUser, loggedInUser: { votes_created } } = res.locals;
 
-    votes_created = votes_created.filter(voteId => {
-      return voteId.toString() !== deletedVote._id.toString();
-    });
-
+    votes_created = votes_created.filter(voteId => voteId.toString() !== deletedVote._id.toString());
     await loggedInUser.updateOne({ votes_created });
+
     res.status(200).end();
-    // res.status(200).send('투표가 성공적으로 삭제되었습니다!');
+    // res.status(200).send('투표가 성공적으로 삭제되었습니다!'); - 필요 없을 시 app.js에서 bodyParser.text()도 삭제
   } catch(err) {
     res.status(500).end();
     // next(new errors.GeneralError(err.message));
@@ -59,13 +57,12 @@ exports.deleteVote = async (req, res, next) => {
 };
 
 exports.renderVote = async (req, res, next) => {
-  console.log(req.session);
   try {
     const currentVote = await Votes.findById(req.params.id).populate('created_by').lean();
-    const votes = await Votes.find().lean();
-    const loggedInUser = req.user ? req.user : null;
+    const allVotes = await Votes.find().lean();
+    const loggedInUser = req.user || null;
 
-    const expiredVotesCounter = votes.reduce((counter, vote) => {
+    const expiredVotesCounter = allVotes.reduce((counter, vote) => {
       if (vote.expired) counter++;
       return counter;
     }, 0);
@@ -74,10 +71,10 @@ exports.renderVote = async (req, res, next) => {
 
     res.render('vote', {
       vote: voteDisplayInfo,
-      votes,
+      allVotes,
       loggedInUser,
       expiredVotesCounter,
-      errorMessage: req.flash('errorMessage')
+      errorMessage: req.flash('Already Voted Error')
     });
   } catch(err) {
     next(new errors.NonExistingVoteError());
@@ -90,19 +87,18 @@ exports.registerCastingVote = async (req, res, next) => {
   }
 
   try {
-    const selectedOptionIndex = Object.values(req.body)[0];
+    const userSelectedOptionIndex = Object.values(req.body)[0];
     const { currentVote } = res.locals;
     let { select_options, total_voters } = currentVote;
-    const selectedOption = select_options[selectedOptionIndex];
+    const userSelectedOption = select_options[userSelectedOptionIndex];
 
-    selectedOption.vote_counter++;
-    selectedOption.voter.push(req.user._id);
+    userSelectedOption.vote_counter++;
+    userSelectedOption.voter.push(req.user._id);
     total_voters++;
 
     await currentVote.updateOne({ select_options, total_voters });
 
     const { loggedInUser, loggedInUser: { votes_voted } } = res.locals;
-
     votes_voted.push(currentVote._id);
 
     await loggedInUser.updateOne({ votes_voted });

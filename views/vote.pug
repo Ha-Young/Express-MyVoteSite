@@ -20,7 +20,6 @@ block content
             p #{vote.total_voters} 명 참여 중
             p made by #{vote.created_by}
           span.vote-title #{vote.title}
-          //- form#vote-form(action=`/votings/${vote._id}`, method="post")
           form#vote-form(action=`/votings/${vote._id}` method="post" onsubmit='submitForm(event)' name='vote-form')
             .scroll
               fieldset.vote-mid

@@ -7,7 +7,9 @@ const votingControllers = require('../controllers/voting.controllers');
 const router = express.Router();
 
 router.get('/new', checkAuthentication, (req, res) => {
-  res.render('newvotes', { message: req.flash('errorMessage')})
+  res.render('newvotes', {
+    errorMessage: req.flash('Vote Registration Error')
+  });
 });
 
 router.post('/', checkAuthentication, votingControllers.registerVote);

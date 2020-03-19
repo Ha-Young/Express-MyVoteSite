@@ -45,9 +45,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app.use('/', homeRouter);
 app.use('/signup', signupRouter);
 app.use('/auth', authRouter);
+app.use('/', homeRouter);
 app.use('/votings', votingRouter);
 app.use('/my-votings', myVotingRouter);
 
