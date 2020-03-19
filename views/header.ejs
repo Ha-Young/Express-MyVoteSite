@@ -1,17 +1,24 @@
-<div>
+<div class="header-container">
   <div>
-    <a href="/">Home</a>
+    <a href="/" class="header-title"><%= title %></a>
   </div>
-  <% if (isLogined) { %>
-    <div>
-      <a href="/logout">Logout</a>
-    </div>
-  <% } else { %>
-    <div>
-      <a href="/login">Login</a>
-    </div>
-    <div>
-      <a href="/signup">Signup</a>
-    </div>
-  <% } %>
+  <div class="header-user">
+    <% if (isLogined) { %>
+      <div>
+        <a href="/my-votings" class="header-my-votings">
+          <i href="/my-votings"class="fas fa-user-circle fa-2x"></i>
+        </a>
+      </div>
+      <div>
+        <a href="/logout">로그아웃</a>
+      </div>
+    <% } else { %>
+      <div>
+        <a href="/login">로그인</a>
+      </div>
+      <div>
+        <a href="/signup">회원가입</a>
+      </div>
+    <% } %>
+  </div>
 </div>

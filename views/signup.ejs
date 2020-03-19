@@ -1,19 +1,36 @@
-<div>
-  <form action="/signup" method="POST">
-    <div>
-      <input type="email" placeholder="아이디(이메일)" name="email" />
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://fonts.googleapis.com/css?family=Baloo+2:600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/49f652a05a.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="input-container">
+      <h1 class="main-title"><%= title %></h1>
+      <form action="/signup" method="POST">
+        <div>
+          <input type="email" placeholder="&#xf0e0;  아이디(이메일)" name="email" class="textbox" />
+        </div>
+        <div>
+          <input type="password" placeholder="&#xf023;  비밀번호(영문 숫자 특수문자 2가지 이상 6~15자 이내)" name="password" class="textbox" />
+        </div>
+        <div>
+          <input type="password" placeholder="&#xf023;  비밀번호 확인" name="passwordCheck" class="textbox" />
+        </div>
+        <div>
+          <input type="text" placeholder="&#xf007;  이름" name="name" class="textbox" />
+        </div>
+        <% if (alertMessage) { %>
+          <div class="alert-message">
+            <%= alertMessage %>
+          </div>
+        <% } %>
+        <div>
+          <input type="submit" class="buttonbox" value="가입하기" />
+        </div>
+      </form>
     </div>
-    <div>
-      <input type="password" placeholder="비밀번호(영문 숫자 특수문자 2가지 이상 6~15자 이내)" name="password" />
-    </div>
-    <div>
-      <input type="password" placeholder="비밀번호 확인" name="passwordCheck" />
-    </div>
-    <div>
-      <input type="text" placeholder="이름" name="name" />
-    </div>
-    <div>
-      <input type="submit" />
-    </div>
-  </form>
-</div>
+  </body>
+</html>

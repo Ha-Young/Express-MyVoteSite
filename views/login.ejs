@@ -1,13 +1,43 @@
-<div>
-  <form action="/auth" method="POST">
-    <div>
-      <input type="email" placeholder="아이디(이메일)" name="email" />
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://fonts.googleapis.com/css?family=Baloo+2:600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/49f652a05a.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="input-container">
+      <h1 class="main-title">
+        <%= title %>
+      </h1>
+      <form action="/auth" method="POST">
+        <div>
+          <input type="email" placeholder="&#xf0e0;  아이디(이메일)" name="email" class="textbox" />
+        </div>
+        <div>
+          <input type="password" placeholder="&#xf023;  비밀번호" name="password" class="textbox" />
+        </div>
+        <% if (alertMessage) { %>
+          <div class="alert-message">
+            <%= alertMessage %>
+          </div>
+        <% } %>
+    
+        <% if (errorMessage) { %>
+          <div class="error-message">
+            <%= errorMessage %>
+          </div>
+        <% } %>
+        <div>
+          <input type="submit" class="buttonbox" value="로그인" />
+        </div>
+      </form>
+      <div class="login-signup-container">
+        <a href="/signup" class="buttonbox login-signup">
+          회원가입
+        </a>
+      </div>
     </div>
-    <div>
-      <input type="password" placeholder="비밀번호" name="password" />
-    </div>
-    <div>
-      <input type="submit" />
-    </div>
-  </form>
-</div>
+  </body>
+</html>

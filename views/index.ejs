@@ -2,15 +2,16 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css'>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+2:600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/49f652a05a.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <%- include('header') %>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <div>
-      <a href="/votings/getCount">투표 생성하기</a>
-      <a href="/my-votings">내 투표 보기</a>
+    <h1 class="main-title"><%= title %></h1>
+    <div class="button-new-container">
+      <a href="/votings/getCount" class="button-new">새로만들기</a>
     </div>
     <%- include('votes') %>
   </body>

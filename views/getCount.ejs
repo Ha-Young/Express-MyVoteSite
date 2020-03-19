@@ -1,9 +1,22 @@
-<%- include('header') %>
-<form action="/votings/getCount" method="POST">
-  <div>
-    <input type="text" placeholder="선택지의 갯수를 입력하세요" name="selectionCount" />
-  </div>
-  <div>
-    <input type="submit" />
-  </div>
-</form>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+2:600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/49f652a05a.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <%- include('header') %>
+    <h1 class="main-title"><%= title %></h1>
+    <form action="/votings/getCount" method="POST" class="new-container">
+      <div>
+        <input type="text" placeholder="선택지의 갯수를 입력하세요" name="selectionCount" class="textbox" />
+      </div>
+      <div>
+        <input type="submit" class="buttonbox" value="입력" />
+      </div>
+    </form>
+  </body>
+</html>

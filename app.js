@@ -7,10 +7,13 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const flash = require('connect-flash');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieSession = require('cookie-session');
 const cookieParser = require('cookie-parser');
+const MongoStore = require('connect-mongo')(session);
+const methodOverride = require('method-override');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -25,7 +28,8 @@ const app = express();
 mongoose.set('useCreateIndex', true);
 mongoose.connect(process.env.DB_HOST, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false
 });
 
 passport.use(new LocalStrategy({
@@ -33,22 +37,17 @@ passport.use(new LocalStrategy({
   passwordField: 'password'
   }, async (username, password, done) => {
   try {
-    console.log(username);
     const user = await User.findOne({ email: username });
     if (!user) {
-      console.log('email is wrong');
-      return done(null, false, { message: 'Incorrect username.' });
+      return done(null, false, { message: '등록되지 않은 이메일입니다' });
     }
     if (!bcrypt.compareSync(password, user.passwordHash)) {
-      console.log('password is wrong');
-      return done(null, false, { message: 'Incorrect password.' });
+      return done(null, false, { message: '비밀번호를 잘못 입력하셨습니다' });
     }
-    console.log('login succeed');
     return done(null, user);
   } catch (error) {
     if (error) {
-      console.log('login failed');
-      return done(error);
+      return done(error, { message: '로그인에 실패하였습니다 다시 시도해주십시오' });
     }
   }
 }));
@@ -56,22 +55,20 @@ passport.use(new LocalStrategy({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(flash());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded());
+app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true 
+  saveUninitialized: true,
+  store: new MongoStore({ url: process.env.DB_HOST }),
+  resave: false
 }));
-// app.use(cookieSession({
-//   name: 'session',
-//   keys: process.env.COOKIE_SECRET,
-//   maxAge: 24 * 60 * 60 * 1000
-// }));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -101,7 +98,10 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {
+    title: 'vote!',
+    isLogined: req.isAuthenticated()
+  });
 });
 
 module.exports = app;

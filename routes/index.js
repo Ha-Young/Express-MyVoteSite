@@ -6,18 +6,26 @@ const User = require('../models/User');
 const Vote = require('../models/Vote');
 
 const { isAuthenticated } = require('../middlewares/authorization');
+const { calculateRemainTime, updateVoteStatus } = require('../middlewares/utils');
 
-router.get('/', async (req, res, next) => {
-  const votes = await Vote.find();
-  res.render('index', { 
-    title: 'Time to Vote',
+router.get('/', updateVoteStatus, async (req, res, next) => {
+  const { votesInProgress, votesEnds } = res.locals;
+
+  res.render('index', {
+    votesInProgress,
+    votesEnds,
+    calculateRemainTime,
+    title: 'vote!',
     isLogined: req.isAuthenticated(),
-    votes
+    
   });
 });
 
 router.get('/signup', (req, res) => {
-  res.render('signup');
+  res.render('signup', {
+    title: 'vote!',
+    alertMessage: req.flash('alert')
+  });
 });
 
 router.post('/signup', async (req, res, next) => {
@@ -25,20 +33,20 @@ router.post('/signup', async (req, res, next) => {
     const user = await User.findOne({ email: req.body.email });
 
     if (user) {
-      console.log('이미 존재하는 사용자입니다');
-      return res.redirect('/login');
+      req.flash('alert', '이미 가입된 이메일 주소입니다 다른 이메일을 입력하여 주세요');
+      return res.redirect('/signup');
     }
 
     if (req.body.password !== req.body.passwordCheck) {
-      console.log('비밀번호가 서로 다릅니다');
-      return res.redirect('/login');
+      req.flash('alert', '비밀번호가 일치하지 않습니다');
+      return res.redirect('/signup');
     }
 
-    await new User({ 
+    await User.create({ 
       ...req.body,
       passwordHash: bcrypt.hashSync(req.body.password, Number(process.env.BCRYPT_SALT_ROUNDS))
-   }).save();
-    console.log('가입을 축하드립니다');
+    });
+    req.flash('alert', '가입을 축하드립니다');
     return res.redirect('/login');
   } catch (error) {
     return next(error);
@@ -46,7 +54,11 @@ router.post('/signup', async (req, res, next) => {
 });
 
 router.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login', {
+    title: 'vote!',
+    alertMessage: req.flash('alert'),
+    errorMessage: req.flash('error')[0]
+  });
 });
 
 router.get('/logout', isAuthenticated, (req, res) => {
@@ -56,9 +68,13 @@ router.get('/logout', isAuthenticated, (req, res) => {
 
 router.get('/my-votings', isAuthenticated, async (req, res) => {
   const user = await User.findById(req.session.passport.user);
-  const votes = await Vote.find({ owner: user._id });
+  const votes = await Vote.find({ "owner._id": user._id });
   res.render('myVotings', {
-    votes
+    user,
+    votes,
+    title: 'vote!',
+    calculateRemainTime,
+    isLogined: req.isAuthenticated()
   });
 });
 

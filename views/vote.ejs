@@ -1,37 +1,81 @@
-<!-- 
-제목, 생성자, 만료 날짜 및 시간, 진행 중 여부, 투표 선택 사항들이 보여야 합니다.
-투표 만료 날짜 및 시간은 현재 날짜와 시간보다 과거일 수 없습니다.
-투표 목록으로 돌아갈 수 있는 버튼이 있어야 합니다.
-만료된 투표의 경우, 투표 결과를 표기해주어야 합니다. (가장 많은 선택을 받은 사항 표기)
-진행 중인 투표의 경우, 누구든지 투표에 참여할 수 있어야 합니다.
-중복 투표는 불가능합니다.
-만료되지 않은 투표는 투표를 하더라도 결과 확인이 불가능합니다.
-단, 투표 생성자는 언제든지 투표 결과를 확인할 수 있습니다.
-투표 생성자에게는 "삭제" 버튼이 보여야 합니다.
-투표 생성자가 "삭제"할 경우, 더 이상 투표는 참가할 수 없습니다.
-투표 생성자라 하더라도 이미 생성한 투표를 수정하는 것은 불가능합니다.
-로그인하지 않은 사용자가 투표를 시도할 경우, 로그인 페이지로 이동해야 합니다.
-위 상황에서 로그인하지 않았던 사용자가 로그인 페이지에서 로그인 할  경우, 다시 방문했던 투표 페이지로 돌아와야 합니다.
--->
-<%- include('header') %>
-<div>
-  <% action = `/votings/${vote._id}` %>
-  <div>
-    <%= vote.title %>
-  </div>
-  <div>
-    <%= vote.expired_date %>
-  </div>
-  <div>
-    <%= vote.in_progress %>
-  </div>
-  <form action="<% action %>" method="POST">
-    <% vote.selections.map(selection => { %>
-      <input type="radio" id="<%= selection._id %>" name="selections" value="<%= selection._id %>" />
-      <label for="<%= selection._id %>"><%= selection.content %></label>
-    <% }) %>
-    <div>
-      <input type="submit" />
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+2:600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/49f652a05a.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <%- include('header') %>
+    <div class="vote-container">
+      <% if (vote.in_progress) { %>
+        <h1 class="vote-vote-title">
+          <%= vote.title %>
+        </h1>
+        <div class="vote-information-container">
+          <div class="vote-information">
+            <% if (vote.in_progress) { %>
+              <%= calculateRemainTime(vote) %> | 
+            <% } %>
+            <%= vote.owner.name %>
+          </div>
+          <div class="vote-status in-progress">
+            투표 진행중
+          </div>
+        </div>
+        <form action="/votings/<%= vote._id %>" method="POST">
+          <% vote.selections.map(selection => { %>
+            <input
+              type="radio"
+              id="<%= selection._id %>"
+              name="selections"
+              value="<%= selection._id %>" />
+            <label for="<%= selection._id %>" class="radiobox">
+              <%= selection.content %>
+            </label>
+          <% }) %>
+          <div class="radio-submit-container">
+            <input type="submit" class="radio-submitbox" value="투표하기" />
+          </div>
+        </form>
+      <% } else { %>
+        <h1 class="vote-vote-title">
+          <%= vote.title %>
+        </h1>
+        <div class="vote-information-container">
+          <div class="vote-information">
+            <%= vote.owner.name %>
+          </div>
+          <div class="vote-status ends">
+            투표 종료
+          </div>
+        </div>
+        <div>
+          <div class="best-selection">
+            <%= bestSelect.content %>
+          </div>
+          <div class="radio-result-container">
+            <% vote.selections.map(selection => { %>
+              <div class="radio-result">
+                <%= selection.content %>
+                <span>
+                  <% for (let i = 0; i < selection.selected; i++) { %>
+                    <i class="fas fa-square"></i>
+                  <% } %>
+                </span>
+                <span><%= selection.selected %></span>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
+      <% if (user._id.equals(vote.owner._id)) { %>
+        <form action="/votings/<%= vote._id %>?_method=DELETE" method="POST">
+          <input type="submit" value="삭제" class="deletebox" />
+        </form>
+      <% } %>
     </div>
-  </form>
-</div>
+  </body>
+</html>

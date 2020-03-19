@@ -1,5 +1,17 @@
-<%- include('header') %>
-<div>
-  <div>My Votings</div>
-  <%- include('votes') %>
-</div>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+2:600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/49f652a05a.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <%- include('header') %>
+    <div>
+      <h1 class="main-title"><%= user.name %> votes!</h1>
+      <%- include('votes') %>
+    </div>
+  </body>
+</html>

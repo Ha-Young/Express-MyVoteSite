@@ -1,13 +1,15 @@
 const mongoose = require('mongoose');
 
+const today = new Date();
+
 const VoteSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true
   },
   owner: {
-    type: mongoose.ObjectId,
-    required: true
+    _id: mongoose.ObjectId,
+    name: String
   },
   selections: [{
     content: {
@@ -20,8 +22,10 @@ const VoteSchema = new mongoose.Schema({
       min: 0
     }
   }],
+  voters: [mongoose.ObjectId],
   expired_date: {
     type: Date,
+    min: new Date(today.getTime() + 10 * 60 * 1000),
     required: true
   },
   in_progress: {
