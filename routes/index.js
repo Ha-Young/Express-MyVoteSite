@@ -5,7 +5,6 @@ const Votings = require('../models/Votings');
 
 router.get('/', async (req, res, next) => {
   let votingsData = await Votings.find();
-  console.log(votingsData);
   res.render('main', {
     title: '메인 페이지',
     votingsData
@@ -14,8 +13,8 @@ router.get('/', async (req, res, next) => {
 
 router.put('/', async (req, res, next) => {
   console.log(req.body);
-  await Votings.updateOne({ expiration_date: req.body.date }, { progress: false })
-  res.json({ result: 'ok' })
+  await Votings.updateOne({ expiration_date_string: req.body.date }, { progress: false });
+  res.json({ result: 'ok' });
 });
 
 router.delete('/', (req, res, next) => {
@@ -28,7 +27,7 @@ router.delete('/', (req, res, next) => {
 });
 
 router.get('/my-votings', isLoggedIn, async (req, res, next) => {
-  const myVotingList = await Votings.find({ writerId: req.user._id })
+  const myVotingList = await Votings.find({ writerId: req.user._id });
   res.render('myVotings', {
     title: '내 투표보기',
     myVotingList

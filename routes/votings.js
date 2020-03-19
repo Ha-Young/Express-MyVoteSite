@@ -14,6 +14,7 @@ router.post('/new', isLoggedIn, async (req, res, next) => {
     const todayNow = new Date();
     const { title, description, expiration_date, expiration_time, selectOption } = req.body;
     const result_expiration_date = new Date(expiration_date + '.' + expiration_time);
+    const result_expiration_date_string = expiration_date + '.' + expiration_time
     const select_option = selectOption.split(',');
 
     try {
@@ -31,6 +32,7 @@ router.post('/new', isLoggedIn, async (req, res, next) => {
             writerId: req.user._id,
             description,
             expiration_date: result_expiration_date,
+            expiration_date_string: result_expiration_date_string,
             select_option,
             progress: true
         });

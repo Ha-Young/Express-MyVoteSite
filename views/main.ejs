@@ -11,15 +11,27 @@
   <% for(let i of votingsData) { %>
   <div class="votings">
     <a href="/votings/<%= i.id %>">
-      <div>투표제목 <%= i.title %></div>
-      <div>작성자 <%= i.writer %></div>
-      <div>투표 설명 <%= i.description %></div>
-      <div class="endDate">만료일 <%= i.expiration_date %></div>
+      <div>
+        <span>투표제목</span>
+        <span><%= i.title %></span>
+      </div>
+      <div>
+        <span>작성자</span>
+        <span><%= i.writer %></span>
+      </div>
+      <div>
+        <span>설명</span>
+        <span><%= i.description %></span>
+      </div>
+      <div>
+        <span>만료일</span>
+        <span class="endDate"><%= i.expiration_date_string %></span>
+      </div>
       <% if(i.progress === true) { %>
-      <div>진행여부: 진행 중</div>
+      <div class="progress">진행 중</div>
       <% } %>
       <% if(i.progress === false) { %>
-      <div>진행여부: 진행 종료</div>
+      <div class="progress">진행 종료</div>
       <% } %>
     </a>
   </div>
@@ -33,40 +45,8 @@
     </span>
   </div>
 
-  <script>
+  <script src="/javascripts/mainPage.js"></script>
 
-    const endDate = document.querySelectorAll('.endDate');
-
-    setInterval(() => {
-      let date = new Date()
-      for (let i = 0; i < endDate.length; i++) {
-        // console.log('확인',endDate[i].textContent)
-        // console.log('확인',date)
-
-        if (endDate[i].textContent === String(date)) {
-          fetch('/', {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ date: date })
-          })
-          .then((res)=>{
-            return res.json();
-          })
-          .then((myJson) => {
-            console.log(myJson);
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-        }
-      }
-    }, 1000);
-
-
-
-  </script>
 </body>
 
 </html>

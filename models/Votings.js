@@ -31,6 +31,10 @@ const votingsSchema = new Schema({
         type: Date,
         required: true
     },
+    expiration_date_string: {
+        type:String,
+        required: true
+    },
     select_option: {
         type: [String],
         required: true
