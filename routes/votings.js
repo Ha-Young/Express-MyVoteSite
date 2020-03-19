@@ -68,27 +68,29 @@ router.get('/:id', async (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-    console.log('-------put--------', req.params);
-    console.log('------put.user-----', req.user._id);
-    console.log('--------put.body------', req.body);
-    const userId = String(req.user._id);
-    const result = { votor: userId, selected_option: req.body.value };
-    if (!req.user) {
-        res.redirect(301, '/login');
-    } else {
-        Votings.findOne({ id: req.params.id }, (err, votingData) => {
-            const voteCount = votingData.vote_count;
-            const userCheck = voteCount.find((el) => {
-                return el.votor === userId;
+    try {
+        if (!req.user) {
+            return res.json({ result: false });
+        } else {
+            const userId = String(req.user._id);
+            const result = { votor: userId, selected_option: req.body.value };
+            Votings.findOne({ id: req.params.id }, (err, votingData) => {
+                const voteCount = votingData.vote_count;
+                const userCheck = voteCount.find((el) => {
+                    return el.votor === userId;
+                });
+                if (userCheck) {
+                    return res.json({ result: 'overlap' });
+                } else {
+                    votingData.vote_count.push(result);
+                    votingData.save();
+                    res.json({ result: true });
+                }
             });
-            if (userCheck) {
-                return res.send('중복된 투표입니다.');
-            } else {
-                votingData.vote_count.push(result);
-                votingData.save();
-                res.send('투표성공');
-            }
-        });
+        }
+    } catch (err) {
+        console.log(err);
+        next(err);
     }
 });
 

@@ -6,20 +6,12 @@ const User = require('../models/User');
 
 
 router.get('/login', (req, res, next) => {
+  req.session.returnTo = req.headers.referer;
   res.render('login', {
     message: ''
   });
 });
 
-router.put('/login', (req, res, next) => {
-  // req.flash('voteError', '로그인하셔야 투표하실 수 있습니다.')
-  // res.render('login', {
-  //   message: req.flash('vottError')
-  // });
-  res.render('login', {
-    message: ''
-  });
-});
 
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, success, fail) => {
@@ -36,6 +28,9 @@ router.post('/login', (req, res, next) => {
       if (err) {
         console.log(err);
         return next(err);
+      }
+      if (req.session.returnTo) {
+        return res.redirect(req.session.returnTo)
       }
       return res.redirect('/');
     });
