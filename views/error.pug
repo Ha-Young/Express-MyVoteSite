@@ -1,4 +1,24 @@
 extends layout
 
+block styles
+  link(rel="stylesheet", href="/stylesheets/error.css")
+
 block content
-  p #{message}
+  .error
+    .error-container
+      p #{message}
+      .error-buttons
+        button#back 이전 페이지
+        button#main 메인화면으로
+
+  script.
+    const backButton = document.querySelector('#back');
+    const mainButton = document.querySelector('#main');
+
+    backButton.addEventListener('click', () => {
+      history.back();
+    });
+
+    mainButton.addEventListener('click', () => {
+      location.assign(location.origin);
+    });

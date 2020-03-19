@@ -5,7 +5,7 @@
     .user-info
       p #{loggedInUser.email}
       p
-        a(href="/my-votings") #{loggedInUser.votes_created.length} votes created
+        a(href="/my-votings") 내 투표 보기
   button.button.create-votes 투표 생성하기
   button.button.signup 회원가입
   if !loggedInUser

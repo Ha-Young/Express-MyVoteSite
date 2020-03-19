@@ -1,17 +1,31 @@
 .signup {
-  border: 1px solid black;
-  text-align: center;
-  width: 50vw;
-  margin: 0 auto;
-  font-size: 1.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .signup-form {
-  padding: 1rem;
+  border: 1px solid black;
+  text-align: center;
+  width: 50vw;
+  font-size: 1.3rem;
+  padding: 3rem;
+  border-radius: 0.5rem;
+  box-shadow: 0.2rem 0.2rem 0.2rem black;
 }
 
 .signup-form > h1 {
   margin: 0;
+}
+
+.signup-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem auto;
+  width: 80%;
 }
 
 .signup-field {
@@ -20,9 +34,18 @@
 
 .signup-field > input {
   margin-left: 1rem;
+  font-size: 1.5rem;
+  border-radius: 0.5rem;
+  border: 0px;
+  padding: 0.8rem;
+  box-shadow: 2px 2px 2px 2px grey;
 }
 
 .login {
-  border: 1px solid blue;
-  font-size: 1rem;
+  margin-top: 1rem;
+  font-size: 2rem;
+}
+
+.login > a {
+  margin-left: 2rem;
 }

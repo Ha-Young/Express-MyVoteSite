@@ -36,11 +36,6 @@ const UserSchema = new Schema({
     unique: true,
     minlength: 10
   },
-  gender: {
-    type: String,
-    enum: [ 'male', 'female', 'etc.' ],
-    required: true
-  },
   votes_created: [{
     type: mongoose.Types.ObjectId,
     ref: 'Votes'

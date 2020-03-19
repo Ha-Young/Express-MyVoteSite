@@ -19,3 +19,14 @@ a {
 a:visited, a:active {
   color: #00B7FF;
 }
+
+.button {
+  margin: 0.5rem 1rem;
+  font-size: 1.5rem;
+  background-color: #1F2440;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}

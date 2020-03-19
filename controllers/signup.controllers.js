@@ -4,7 +4,7 @@ const errors = require('../lib/errors');
 const Users = require('../models/Users');
 
 exports.registerUser = async (req, res, next) => {
-  const { username, firstname, lastname, email, password, gender } = req.body;
+  const { username, firstname, lastname, email, password } = req.body;
 
   try {
     const user = await Users.findOne({ email });
@@ -21,7 +21,6 @@ exports.registerUser = async (req, res, next) => {
           lastname,
           email,
           password: hashedPassword,
-          gender
         });
       });
 

@@ -1,13 +1,28 @@
 .login {
-  border: 1px solid black;
-  text-align: center;
-  width: 50vw;
-  margin: 0 auto;
-  font-size: 1.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .login-form {
-  padding: 1rem;
+  border: 1px solid black;
+  text-align: center;
+  width: 50vw;
+  font-size: 1.3rem;
+  padding: 3rem;
+  border-radius: 0.5rem;
+  box-shadow: 0.2rem 0.2rem 0.2rem black;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem auto;
+  width: 80%;
 }
 
 .login-form > h1 {
@@ -20,4 +35,19 @@
 
 .login-field > input {
   margin-left: 1rem;
+  font-size: 1.5rem;
+  border-radius: 0.5rem;
+  border: 0px;
+  padding: 0.8rem;
+  box-shadow: 2px 2px 2px 2px grey;
+}
+
+
+.signup {
+  margin-top: 1rem;
+  font-size: 2rem;
+}
+
+.signup > a {
+  margin-left: 2rem;
 }
