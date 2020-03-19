@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>INDEX</title>
+  </head>
+  <body>
+    <div class='header'>
+      <% if (user) { %>
+        HI, <%= user.username %>
+        <a href='/logout'>Log out</a>
+      <% } else { %>
+        Hi, Guest user
+        <a href='/login'>Log in</a>
+        <a href='/signup'>Sign up</a>
+      <% } %>
+      <br/>
+      <a href='/my-votings'>My votings</a>
+    </div>
+    HI ,
+    
+    I AM INDEX
+    <div>
+      <table>
+        <tr>
+          <th>Title</th>
+          <th>Creator</th>
+          <th>Expiry</th>
+          <th>Status</th>
+        </tr>
+        <% votings.map(voting => { %>
+          <tr>
+            <td>
+              <a href=<%=`/votings/${voting._id}`%>>
+                <%= voting.title %>
+              </a>
+            </td>
+            <td><%= voting.authorName %></td>
+            <td><%= voting.end_time %></td>
+            <td>
+              <%= voting.status.toLowerCase() %>
+            </td>
+          </tr>
+        <% }) %>
+      </table>
+      </ul>
+    </div>
+    <a href="/votings/new">CREATE A NEW voting</a>
+  </body>
+</html>

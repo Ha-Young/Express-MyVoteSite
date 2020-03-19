@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create a new voting</title>
+  </head>
+  <body>
+    NEW VOTING
+    <form method='POST' action=<%=`/votings/new`%>>
+      Title : <input type='text' name='title'></input><br/>
+
+      <div>
+        Choices:<br/>
+        Create a choice
+        <button type='button' onclick=handleCreateClick(event)>Add a choice</button>
+        <div id='choiceList'>
+          <input type='text' name='choices'></input>
+        </div>
+      </div>
+
+      <div>
+        Expiry date:
+        <input type='datetime-local' name='expiryDate'/>
+        Time zone : GMT +<input type='text' name='expiryTimezone'></input>
+      </div>
+
+      <button type='submit'>SUBMIT</button>
+    </form>
+    <script>
+      function handleCreateClick(event) {
+        //add line break later
+        let el = document.createElement('input');
+        el.setAttribute('type', 'text');
+        el.setAttribute('name', 'choices');
+        document.getElementById('choiceList').appendChild(el);
+        // add remove button later
+        return;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My votings</title>
+  </head>
+  <body>
+    <div class='header'>
+      <% if (user) { %>
+        HI, <%= user.username %>
+      <% } else { %>
+        Hi, Guest user
+      <% } %>
+      <a href='/logout'>Log out</a>
+      <br/>
+      <a href='/'>Main page</a>
+    </div>
+    HI ,
+    
+    I AM MY VOTINGS
+    <div>
+      <table>
+        <tr>
+          <th>Title</th>
+          <th>Creator</th>
+          <th>Expiry</th>
+          <th>Status</th>
+        </tr>
+        <% votings.map(voting => { %>
+          <tr>
+            <td>
+              <a href=<%=`/votings/${voting._id}`%>>
+                <%= voting.title %>
+              </a>
+            </td>
+            <td><%= voting.authorName %></td>
+            <td><%= voting.end_time %></td>
+            <td>
+              <% if (new Date() > new Date(voting.end_time)) { %>
+                <%= 'Finished' %>
+              <% } else { %>
+                <%= 'Ongoing' %>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </table>
+      </ul>
+    </div>
+    <a href="/votings/new">CREATE A NEW voting</a>
+  </body>
+</html>

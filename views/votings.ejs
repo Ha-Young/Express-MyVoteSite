@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>INDEX</title>
+  </head>
+  <body>
+    <div class='header'>
+      <% if (user) { %>
+        HI, <%= user.username %>
+        <a href='/logout'>Log out</a>
+      <% } else { %>
+        Hi, Guest user
+        <a href='/login'>Log in</a>
+      <% } %>
+      
+      <br/>
+      <a href='/my-votings'>My votings</a><br/>
+      <a href='/'>Main page</a>
+    </div>
+    HI ,
+    
+    I AM VOTINGS/:ID
+    <div>
+      <div>
+        <%= voting.title %>
+      </div>
+      <div>
+        Status: <b><%= voting.status %></b>
+      </div>
+      
+      <% if (voting.status === 'EXPIRED') { %>
+        <div>
+          <%= `This voting has ended on ${voting.end_time}` %>
+        </div>
+        <div>
+          <!-- Show result here -->
+        </div>
+
+        
+      <% } else if (voting.status === 'ACTIVE') { %>
+        <div>
+          <%= `This voting will end on ${voting.end_time}` %>
+        </div>
+        <% if (!voted) { %>
+          <div>
+            <!-- choices and voting button -->
+            <form method='POST' action=<%=`/votings/${voting._id}`%>>
+              <% voting.choices.map((choice, idx) => { %>
+                <input type='radio' id=`choice${idx}` name='choice' value=<%= choice._id %>>
+                <label for=`choice${idx}`><%= choice.name %></label><br/>
+              <% }) %>
+              <button type='submit'>Vote</button>
+            </form>
+          </div>
+        <% } else { %>
+          YOU'VE ALREADY VOTED
+        <% } %>
+      <% } %>
+      </div>
+      <div>
+      </div>
+      <% if (isRemovable) { %>
+        <div>    
+          DANGER ZONE :
+          <form
+            method="POST"
+            action=<%=`/votings/${voting._id}?_method=DELETE`%>
+            enctype='application/x-www-form-urlencoded'
+          >
+            <!-- <input type="hidden" name="_method" value="DELETE"> -->
+            <button type="submit">Remove this voting</button>
+          </form>
+        </div>
+      <% } %>
+    </div>
+  </body>
+</html>
