@@ -3,15 +3,45 @@ extends layout
 block content
   link(rel='stylesheet', href='/stylesheets/voting-detail.css')
   div(class="voting-detail-container")
-    div(class="voting-detail-nickname-container")
-      p #{voting.user.nickname} 님의 투표
-      if(voting.is_expired)
-        p 만료됨
+    if(sameUser)
+      div(class="voting-detail-nickname-container")
+        p #{voting.user.nickname} 님의 투표
+        p(class="voting-detail-ongoing") 진행중
+      h1 #{voting.title}
+      each option in voting.options
+        form(class="voting-detail-form", action=`/votings/${voting._id}/selection/${option._id}`, method="post")
+          h2 #{option.option_title}
+          p #{option.option_count}표
+          button(type="submit") 투표하기
+      p(class="expiration-date") 만료일 #{moment(voting.deadline).format('YYYY-MM-DD hh:mm a')}
+      form(action=`/votings/delete/${voting._id}`, method="get")
+        button(class="voting-delete-button", type="submit") 투표 삭제
+      if(error)
+        p(class="error-message") #{error}
+    else
+      if(!voting.is_expired)
+        div(class="voting-detail-nickname-container")
+          p #{voting.user.nickname} 님의 투표
+          p(class="voting-detail-ongoing") 진행중
+        h1 #{voting.title}
+        each option in voting.options
+          form(class="voting-detail-form", action=`/votings/${voting._id}/selection/${option._id}`, method="post")
+            h2 #{option.option_title}
+            button(type="submit") 투표하기
+        p(class="expiration-date") 만료일 #{moment(voting.deadline).format('YYYY-MM-DD hh:mm a')}
+        p 진행
+        if(error)
+          p(class="error-message") #{error}
       else
-        p 진행중
-    h1 #{voting.title}
-    each selection in voting.selection_items
-      form(class="voting-detail-form", action=`/votings/${voting._id}/selection/${selection._id}`, method="post")
-        h2 #{selection.selection_item}
-        button(type="submit") 투표하기
-    p(class="expiration-date") 만료일 #{moment(voting.deadline).format('YYYY-MM-DD hh:mm a')}
+        div(class="voting-detail-nickname-container")
+          p #{voting.user.nickname} 님의 투표
+          p(class="voting-detail-deadline") 만료됨
+        h1 #{voting.title}
+        each option, index in voting.options
+          div(class="voting-detail-div")
+            span #{index + 1}.
+            p #{option.option_title}
+            p #{option_count} 표
+        p(class="expiration-date") 만료일 #{moment(voting.deadline).format('YYYY-MM-DD hh:mm a')}
+        p 만료
+  a(class="home", href="/") 돌아가기

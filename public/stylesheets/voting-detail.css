@@ -1,8 +1,15 @@
+.home {
+  color: #00b7ff;
+}
+
+.home:visited {
+  color: #00b7ff;
+}
+
 .voting-detail-container {
   width: 500px;
   line-height: 20px;
-  margin: 0 auto;
-  margin-top: 50px;
+  margin: 50px auto;
   padding: 0 20px;
   border: 1px solid rgb(219, 219, 219);
   border-radius: 5px;
@@ -25,6 +32,14 @@
   align-items: center;
 }
 
+.voting-detail-div {
+  margin: 0 auto;
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .voting-detail-form button {
   width: 70px;
   height: 30px;
@@ -37,4 +52,39 @@
 
 .expiration-date {
   margin-bottom: 30px;
+}
+
+.voting-detail-ongoing {
+  background-color: #1f78d1;
+  border: 1px solid #1f78d1;
+  border-radius: 5px;
+  line-height: 16px;
+  padding: 3px 8px;
+  color: #fff;
+  font-size: 12px;
+}
+
+.voting-detail-deadline {
+  background-color: red;
+  border: 1px solid red;
+  border-radius: 5px;
+  line-height: 16px;
+  padding: 3px 8px;
+  color: #fff;
+  font-size: 12px;
+}
+
+.error-message {
+  color: red;
+}
+
+.voting-delete-button {
+  background-color: red;
+  border: 1px solid red;
+  border-radius: 5px;
+  line-height: 16px;
+  padding: 5px 10px;
+  color: #fff;
+  font-size: 15px;
+  margin-bottom: 15px;
 }

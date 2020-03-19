@@ -13,26 +13,58 @@ router.get('/new', checkUser, async (req, res) => {
 });
 
 router.get('/:id', async (req, res, next) => {
+  const user = await findUser(req);
+
   try {
     const { id } = req.params;
-    const voting = await Voting.findById(id).populate('user', 'nickname');
+    const voting = await Voting.findById(id).populate('user');
 
-    res.render('voting-detail', { voting, moment });
+    if (user) {
+      // console.log(String(voting.user._id) === String(user._id));
+      if (String(voting.user._id) === String(user._id)) {
+        // console.log(voting);
+        return res.render('voting-detail', {
+          voting,
+          moment,
+          user,
+          sameUser: true
+        });
+      }
+    }
+
+    if (voting.is_expired) {
+      voting.options.sort((a, b) => {
+        return a.option_count > b.option_count ? -1 : 1;
+      });
+
+      return res.render('voting-detail', { voting, moment, user });
+    }
+
+    res.render('voting-detail', { voting, moment, user });
   } catch (err) {
     next(err);
   }
 });
 
+router.get('/delete/:id', async (req, res) => {
+  const user = findUser(req);
+  const { id } = req.params;
+
+  await Voting.findByIdAndDelete(id);
+
+  res.render('success', { user, message: '삭제' });
+});
+
 router.post('/new', checkUser, async (req, res) => {
   try {
     const {
-      body: { 'voting-title': title, selection, date, time }
+      body: { 'voting-title': title, options, date, time }
     } = req;
     const user = await findUser(req);
-    const selectionItems = selection.map(element => {
+    const optionObj = options.map(element => {
       return {
-        selection_item: element,
-        count: 0
+        option_title: element,
+        option_count: 0
       };
     });
     const deadline = new Date(`${date} ${time}`).getTime();
@@ -41,19 +73,19 @@ router.post('/new', checkUser, async (req, res) => {
     if (!title.trim() || !date.trim() || !time.trim()) {
       throw new error.VotingValidationError();
     }
+    console.log(optionObj);
     if (deadline < currentTime) throw new error.VotingTimeError();
-    selectionItems.forEach(item => {
-      if (!item.selection_item.trim()) {
+    optionObj.forEach(item => {
+      if (!item.option_title.trim()) {
         throw new error.VotingValidationError();
       }
     });
     await new Voting({
       user,
       title,
-      selection_items: selectionItems,
+      options: optionObj,
       deadline: deadline
     }).save();
-    console.log('==========');
     res.redirect('/');
   } catch (err) {
     console.log(err);
@@ -67,25 +99,41 @@ router.post('/new', checkUser, async (req, res) => {
 });
 
 router.post('/:id/selection/:id2', checkUser, async (req, res) => {
+  const { id: votingId, id2: optionId } = req.params;
   const user = await findUser(req);
-  const { id: votingId, id2: selectionId } = req.params;
-  const target = await Voting.findOne(
-    { _id: votingId, 'selection_items._id': selectionId },
-    { 'selection_items.$': 1 }
-  );
-  let { count } = target.selection_items[0];
 
-  await Voting.update(
-    { 'selection_items._id': selectionId },
-    {
-      $set: {
-        'selection_items.$.count': parseInt(count) + 1
+  try {
+    const target = await Voting.findOne(
+      { _id: votingId, 'options._id': optionId },
+      { 'options.$': 1 }
+    );
+    const voting2 = await Voting.findById(votingId);
+    let { option_count } = target.options[0];
+    const votedUser = voting2.voted_user.find(user => user === user._id);
+
+    if (votedUser) throw new error.VotingDuplicateError();
+
+    await Voting.update(
+      { 'options._id': optionId },
+      {
+        $set: {
+          'options.$.option_count': parseInt(option_count) + 1
+        }
       }
-    }
-  );
-  const voting = await Voting.findById(votingId).populate('user', 'nickname');
+    );
 
-  res.render('voting-success', { voting, moment });
+    await Voting.findByIdAndUpdate(votingId, { $push: { voted_user: user._id } });
+
+    // const voting = await Voting.findById(votingId).populate('user', 'nickname');
+
+    res.render('success', { user, message: '투표' });
+  } catch (err) {
+    const voting = await Voting.findById(votingId).populate('user', 'nickname');
+
+    if (err instanceof error.VotingDuplicateError) {
+      return res.render('voting-detail', { voting, moment, error: err.displayMessage });
+    }
+  }
 });
 
 module.exports = router;

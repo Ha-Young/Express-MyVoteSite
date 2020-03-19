@@ -2,10 +2,10 @@ h1 {
   margin: 50px auto;
 }
 
-a {
+.home-link {
   color: #00b7ff;
 }
 
-a:visited {
+.home-link:visited {
   color: #00b7ff;
 }

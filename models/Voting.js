@@ -10,13 +10,13 @@ const votingSchema = new mongoose.Schema({
     unique: true,
     required: true
   },
-  selection_items: [
+  options: [
     {
-      selection_item: {
+      option_title: {
         type: String,
         required: true
       },
-      count: {
+      option_count: {
         type: Number,
         required: true,
         default: 0

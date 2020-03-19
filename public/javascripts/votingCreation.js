@@ -3,13 +3,13 @@ const plusButton = document.querySelector('.add-item-button');
 plusButton.addEventListener('click', eventHandler);
 
 function eventHandler() {
-  const selectionInputs = document.querySelectorAll('.selection-input');
+  const selectionInputs = document.querySelectorAll('.option-input');
   const selectionInputsContainer = document.querySelector('.selection-input-container');
   const input = document.createElement('input');
 
-  input.setAttribute('name', 'selection');
+  input.setAttribute('name', 'options');
   input.setAttribute('type', 'text');
-  input.setAttribute('class', 'selection-input');
+  input.setAttribute('class', 'option-input');
 
   selectionInputsContainer.appendChild(input);
 }
