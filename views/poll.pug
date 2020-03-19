@@ -26,7 +26,10 @@ html
         ul
           li=`Topic: ${poll.topic}`
           li=`Creator: ${poll.creator.email}`
-          li=`Expring time: ${timeString[0]} ${timeString[1]}`
+          if poll.isInProgress
+            li=`Expring time: ${timeString[0]} ${timeString[1]}`
+          else
+            li=`Expired`
       div(class="pollContainer")
         h1=`${poll.topic}`
         h3 choose one of the option
@@ -37,9 +40,10 @@ html
                 input(type="radio" name='answer' id=`${val.answer}` value=`${val.answer}`)
                 label(for=`${val.answer}`)=`${val.answer}`
           div
-            input(type="submit" value="Vote")
+            if poll.isInProgress
+              input(type="submit" value="Vote")
             if isCreator
-            button(class="deleteButton" data-pollid=`${poll.id}`) Delete
+              button(class="deleteButton" data-pollid=`${poll.id}`) Delete
         if displayResults
           div(class="resultBox")
             h2=`Mosted voted: ${displayResults[0].answer}`

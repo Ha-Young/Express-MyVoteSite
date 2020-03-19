@@ -35,6 +35,4 @@ const pollSchema = new mongoose.Schema({
   answers: [answerSchema],
 });
 
-///expring date as well
-
 module.exports = mongoose.model('Poll', pollSchema);
