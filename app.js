@@ -11,6 +11,7 @@ const createError = require('http-errors');
 const flash = require('connect-flash');
 
 const index = require('./routes/index');
+const votings = require('./routes/votings');
 const users = require('./routes/users');
 
 const app = express();
@@ -18,8 +19,6 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -27,6 +26,7 @@ app.use(bodyParser.json());
 const store = new MongoDBStore({
   uri: process.env.DB_SESSION_URL,
   collection: 'mySessions',
+  clear_interval: 3600,
 });
  
 store.on('error', (error) => console.log('MongoDB session store error: ', error));
@@ -56,6 +56,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => console.log('Connected to Mongo database..'));
 
 app.use('/', index);
+app.use('/votings', votings);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
