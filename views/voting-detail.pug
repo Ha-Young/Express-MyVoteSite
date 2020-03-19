@@ -4,23 +4,32 @@ block content
   link(rel='stylesheet', href='/stylesheets/voting-detail.css')
   div(class="voting-detail-container")
     if(sameUser)
-      div(class="voting-detail-nickname-container")
-        p #{voting.user.nickname} 님의 투표
-        if(!voting.is_expired)
+      if(!voting.is_expired)
+        div(class="voting-detail-nickname-container")
+          p #{voting.user.nickname} 님의 투표
           p(class="voting-detail-ongoing") 진행중
-        else
-          p(class="voting-detail-deadline") 만료됨
-      h1 #{voting.title}
-      each option in voting.options
-        form(class="voting-detail-form", action=`/votings/${voting._id}/selection/${option._id}`, method="post")
-          h2 #{option.option_title}
-          p #{option.option_count}표
-          button(type="submit") 투표하기
-      p(class="expiration-date") 만료일 #{moment(voting.deadline).format('YYYY-MM-DD hh:mm a')}
-      form(action=`/votings/delete/${voting._id}`, method="get")
-        button(class="voting-delete-button", type="submit") 투표 삭제
-      if(error)
-        p(class="error-message") #{error}
+        h1 #{voting.title}
+        each option in voting.options
+          form(class="voting-detail-form", action=`/votings/${voting._id}/selection/${option._id}`, method="post")
+            h2 #{option.option_title}
+            p #{option.option_count}표
+            button(type="submit") 투표하기
+        p(class="expiration-date") 만료일 #{moment(voting.deadline).format('YYYY-MM-DD hh:mm a')}
+        form(action=`/votings/delete/${voting._id}`, method="get")
+          button(class="voting-delete-button", type="submit") 투표 삭제
+      else
+        div(class="voting-detail-nickname-container")
+          p #{voting.user.nickname} 님의 투표
+          p(class="voting-detail-deadline") 마감됨
+        h1 #{voting.title}
+        each option, index in voting.options
+          div(class="voting-detail-div")
+            span #{index + 1}.
+            p #{option.option_title}
+            p #{option.option_count} 표
+        p(class="expiration-date") 만료일 #{moment(voting.deadline).format('YYYY-MM-DD hh:mm a')}
+        form(action=`/votings/delete/${voting._id}`, method="get")
+          button(class="voting-delete-button", type="submit") 투표 삭제
     else
       if(!voting.is_expired)
         div(class="voting-detail-nickname-container")
@@ -32,8 +41,6 @@ block content
             h2 #{option.option_title}
             button(type="submit") 투표하기
         p(class="expiration-date") 만료일 #{moment(voting.deadline).format('YYYY-MM-DD hh:mm a')}
-        if(error)
-          p(class="error-message") #{error}
       else
         div(class="voting-detail-nickname-container")
           p #{voting.user.nickname} 님의 투표
@@ -43,6 +50,10 @@ block content
           div(class="voting-detail-div")
             span #{index + 1}.
             p #{option.option_title}
-            p #{option_count} 표
+            p #{option.option_count} 표
         p(class="expiration-date") 만료일 #{moment(voting.deadline).format('YYYY-MM-DD hh:mm a')}
+  if(success)
+    p(class="success-mesagge") #{success}
+  if(error)
+    p(class="error-mesagge") #{error}
   a(class="home", href="/") 돌아가기

@@ -18,11 +18,9 @@ router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const voting = await Voting.findById(id).populate('user');
-
+    console.log(user);
     if (user) {
-      // console.log(String(voting.user._id) === String(user._id));
       if (String(voting.user._id) === String(user._id)) {
-        // console.log(voting);
         return res.render('voting-detail', {
           voting,
           moment,
@@ -54,6 +52,10 @@ router.get('/delete/:id', async (req, res) => {
 
   res.render('success', { user, message: '삭제' });
 });
+
+router.get('/success', (req, res) => {});
+
+router.get('/error', (req, res) => {});
 
 router.post('/new', checkUser, async (req, res) => {
   try {
@@ -101,8 +103,10 @@ router.post('/new', checkUser, async (req, res) => {
 router.post('/:id/selection/:id2', checkUser, async (req, res) => {
   const { id: votingId, id2: optionId } = req.params;
   const user = await findUser(req);
-  const voting2 = await Voting.findById(votingId);
-  const votedUser = voting2.voted_user.find(user => user === user._id);
+  let voting = await Voting.findById(votingId);
+  const foundVotedUser = voting.voted_user.find(userId => {
+    return String(userId) === String(user._id);
+  });
 
   try {
     const target = await Voting.findOne(
@@ -111,9 +115,11 @@ router.post('/:id/selection/:id2', checkUser, async (req, res) => {
     );
     let { option_count } = target.options[0];
 
-    if (votedUser) throw new error.VotingDuplicateError();
+    if (foundVotedUser !== undefined) {
+      throw new error.VotingDuplicateError();
+    }
 
-    await Voting.update(
+    await Voting.updateOne(
       { 'options._id': optionId },
       {
         $set: {
@@ -123,22 +129,38 @@ router.post('/:id/selection/:id2', checkUser, async (req, res) => {
     );
 
     await Voting.findByIdAndUpdate(votingId, { $push: { voted_user: user._id } });
+    voting = await Voting.findById(votingId).populate('user', 'nickname');
 
-    // const voting = await Voting.findById(votingId).populate('user', 'nickname');
-
-    res.render('success', { user, message: '투표' });
+    if (user._id) {
+      if (String(voting.user._id) === String(user._id)) {
+        console.log(String(voting.user._id), String(user._id));
+        return res.render('voting-detail', {
+          voting,
+          moment,
+          user,
+          sameUser: true,
+          success: '투표 성공!!'
+        });
+      }
+    }
+    // console.log(voting);
+    res.render('voting-detail', { user, voting, moment, success: '투표 성공!!' });
   } catch (err) {
+    console.log(err);
     const voting = await Voting.findById(votingId).populate('user', 'nickname');
 
     if (err instanceof error.VotingDuplicateError) {
-      if (votedUser) {
-        return res.render('voting-detail', {
-          user,
-          sameUser: true,
-          voting,
-          moment,
-          error: err.displayMessage
-        });
+      if (user._id) {
+        if (String(voting.user._id) === String(user._id)) {
+          console.log(String(voting.user._id), String(user._id));
+          return res.render('voting-detail', {
+            voting,
+            moment,
+            user,
+            sameUser: true,
+            error: err.displayMessage
+          });
+        }
       }
       res.render('voting-detail', {
         user,

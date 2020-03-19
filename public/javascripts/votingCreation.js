@@ -3,7 +3,6 @@ const plusButton = document.querySelector('.add-item-button');
 plusButton.addEventListener('click', eventHandler);
 
 function eventHandler() {
-  const selectionInputs = document.querySelectorAll('.option-input');
   const selectionInputsContainer = document.querySelector('.selection-input-container');
   const input = document.createElement('input');
 

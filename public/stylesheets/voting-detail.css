@@ -78,6 +78,10 @@
   color: red;
 }
 
+.success-message {
+  color: rgb(26, 170, 85);
+}
+
 .voting-delete-button {
   background-color: red;
   border: 1px solid red;
