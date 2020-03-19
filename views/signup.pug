@@ -6,12 +6,12 @@ block content
             .signup-title 회원가입
             form(action="/signup" method="post")
                 .id-input-box
-                    input(type="email" name="email" placeholder="이메일" required=true value="q@q.q")
+                    input(type="text" name="email" placeholder="이메일" required=true)
                 .pw-input-box
-                    input(type="password" name="password" placeholder="비밀번호" required=true value="qqqqqqqq")
+                    input(type="password" name="password" placeholder="비밀번호" required=true)
                 .pw-input-box
-                    input(type="password" name="password2" placeholder="비밀번호 확인" required=true value="qqqqqqqq")
+                    input(type="password" name="password2" placeholder="비밀번호 확인" required=true)
                 .name-input-box
-                    input(type="text" name="name" placeholder="이름" required=true value="qq")
+                    input(type="text" name="name" placeholder="이름" required=true)
                 .signup-button-input-box
                     input(type="submit" value="가입하기")

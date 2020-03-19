@@ -12,7 +12,7 @@ block content
                                 title : item.title,
                                 creator : userName,
                                 endDate : item.endDate,
-                                formatDate : item.formatDate,
+                                formatDate : `${item.formatDate} 종료`,
                                 state : "진행중"
                             })
                     else
@@ -21,7 +21,7 @@ block content
                                 title : item.title,
                                 creator : userName,
                                 endDate : item.endDate,
-                                formatDate : item.formatDate,
+                                formatDate : `${item.formatDate} 종료됨`,
                                 state : "종료됨",
                             })
         else

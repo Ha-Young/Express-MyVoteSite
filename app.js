@@ -13,6 +13,7 @@ const setLocals = require('./configs/setLocal');
 const passportConfig = require('./configs/passport');
 const indexRouter = require('./routes/index');
 const votingRouter = require('./routes/votings');
+const ERROR_STATUS = require('./configs/errorCode.js');
 
 const app = express();
 
@@ -68,7 +69,7 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
+  res.locals.message = ERROR_STATUS[err.errorCode];
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page

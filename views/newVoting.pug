@@ -5,19 +5,19 @@ block content
         form(action="/votings/new" method="post").new-voting-form
             .new-voting-title-box
                 .new-voting-title 투표주제
-                input(type="text" name="title" placeholder="투표주제를 입력해주세요.").new-voting-title-input
+                input(type="text" name="title" placeholder="투표주제를 입력해주세요." maxlength="20" required="true").new-voting-title-input
             .new-voting-item-boxs
                 .new-voting-item-box
                     .new-voting-item 투표항목
-                    input(type="text" name="item" placeholder="투표항목을 입력해주세요.").new-voting-item-input
+                    input(type="text" name="item" placeholder="투표항목을 입력해주세요." maxlength="15" required="true").new-voting-item-input
                 .new-voting-item-box
                     .new-voting-item 투표항목
-                    input(type="text" name="item" placeholder="투표항목을 입력해주세요.").new-voting-item-input
+                    input(type="text" name="item" placeholder="투표항목을 입력해주세요." maxlength="15" required="true").new-voting-item-input
                 .new-voting-time-box
                     .new-voting-time 투표 종료일
                     .new-voting-time-input-box
-                        input(type="date" name="endDate" placeholder="투표항목을 입력해주세요.").new-voting-time-input
-                        input(type="time" name="endTime" placeholder="투표항목을 입력해주세요.").new-voting-time-input
+                        input(type="date" name="endDate" placeholder="투표항목을 입력해주세요." required="true").new-voting-time-input
+                        input(type="time" name="endTime" placeholder="투표항목을 입력해주세요." required="true").new-voting-time-input
             .new-voting-finish-box
                 .new-voting-submit-input-box
                     input(type="submit" value="완료").new-voting-submit-input

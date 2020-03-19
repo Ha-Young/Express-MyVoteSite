@@ -3,23 +3,26 @@ include mixins/votingBox
 
 block content
     .main-container
-        each item in votingList
-            a(href=`/votings/${item._id}`).voting-item-box
-                if new Date(item.endDate).getTime() > votingList.currentDate.getTime()
-                    .abled-voting-box.voting-box
-                        +votingBox({
-                            title : item.title,
-                            creator : item.creator.name,
-                            endDate : item.endDate,
-                            formatDate : `${item.formatDate} 종료`,
-                            state : "진행중"
-                        })
-                else
-                    .disabled-voting-box.voting-box
-                        +votingBox({
-                            title : item.title,
-                            creator : item.creator.name,
-                            endDate : item.endDate,
-                            formatDate : `${item.formatDate} 종료됨`,
-                            state : "종료됨",
-                        })
+        if votingList.length > 0
+            each item in votingList
+                a(href=`/votings/${item._id}`).voting-item-box
+                    if new Date(item.endDate).getTime() > votingList.currentDate.getTime()
+                        .abled-voting-box.voting-box
+                            +votingBox({
+                                title : item.title,
+                                creator : item.creator.name,
+                                endDate : item.endDate,
+                                formatDate : `${item.formatDate} 종료`,
+                                state : "진행중"
+                            })
+                    else
+                        .disabled-voting-box.voting-box
+                            +votingBox({
+                                title : item.title,
+                                creator : item.creator.name,
+                                endDate : item.endDate,
+                                formatDate : `${item.formatDate} 종료됨`,
+                                state : "종료됨",
+                            })
+        else
+            .not-exist-voting 생성된 투표가 없어요...

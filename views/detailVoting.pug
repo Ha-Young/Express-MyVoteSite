@@ -9,7 +9,7 @@ block content
                 span 종료일 : 
                 span.detail-voting-end-date=voting.formatDate
             .detail-voting-creator-box
-                span 제작자 :
+                span 제작자 : 
                 span=voting.creator.name
             if new Date(voting.endDate).getTime() > voting.currentDate.getTime()
                 form(method='POST' action=`/votings/${voting._id}/success`).detail-voting-item-form

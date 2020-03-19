@@ -27,8 +27,11 @@ const votingsController = {
 
       await user.save();
       await voting.save();
-      res.redirect('/');
-    } catch (error) {}
+
+      res.redirect('/')
+    } catch (error) {
+      next(error)
+    }
   },
 
   getDetailVoting: async (req, res, next) => {
@@ -46,8 +49,8 @@ const votingsController = {
 
     try {
       const voting = await Voting.findById(votingId);
-      const checkOverlapUser = () => voting.joinUser.filter(user => String(user) === userId).length;
-      if (checkOverlapUser()) {
+      const checkDuplicateUser = () => voting.joinUser.filter(user => String(user) === userId).length;
+      if (checkDuplicateUser()) {
         // 유저가 중복일때
         // 따로 중복투표라는 렌더링 페이지 만드는게 좋을 것 같음
         res.redirect('/');
@@ -59,7 +62,7 @@ const votingsController = {
         res.redirect('/');
       }
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   },
 
