@@ -86,9 +86,6 @@ exports.registerCastingVote = async (req, res, next) => {
     const { select_options } = currentVote;
     const selectedOption = select_options[selectedOptionIndex];
 
-    console.log(selectedOptionIndex);
-    console.log(currentVote);
-
     selectedOption.vote_counter++;
     selectedOption.voter.push(req.user._id);
 

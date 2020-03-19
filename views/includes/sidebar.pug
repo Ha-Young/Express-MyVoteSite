@@ -16,7 +16,7 @@
 
   .votes
     p 전체 : #{votes.length} votes
-    p 진행 중 : 00 votes
-    p 종료됨 : 00 votes
+    p 진행 중 : #{votes.length - expiredCounter} votes
+    p 종료됨 : #{expiredCounter} votes
 
 script(src="/javascripts/sidebar.js")

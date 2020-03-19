@@ -6,7 +6,7 @@ const { getDisplayInfo } = require('../lib/helpers');
 
 exports.renderVotes = async (req, res, next) => {
   try {
-    const votes = await Votes.find().populate('created_by').lean();
+    const { votes } = res.locals;
     const loggedInUser = req.user ? req.user : null;
 
     if (!votes.length) {
@@ -17,14 +17,19 @@ exports.renderVotes = async (req, res, next) => {
       });
     }
 
-    const voteDisplayInfo = votes.map(vote => getDisplayInfo(vote));
+    let expiredCounter = 0;
+    const voteDisplayInfo = [];
+    votes.forEach(vote => {
+      if (vote.expired) expiredCounter++;
+      voteDisplayInfo.push(getDisplayInfo(vote));
+    });
 
-    votes.sort((a, b) => {
+    voteDisplayInfo.sort((a, b) => {
       return a.expires_at < b.expires_at ? -1 :
         a.expires_at > b.expires_at ? 1 : 0;
     });
 
-    res.render('home', { votes: voteDisplayInfo, loggedInUser });
+    res.render('home', { votes: voteDisplayInfo, loggedInUser, expiredCounter });
   } catch(err) {
     next(new errors.GeneralError(err.message));
   }
