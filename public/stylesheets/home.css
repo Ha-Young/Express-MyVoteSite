@@ -6,7 +6,7 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
   padding: 1rem 2.5rem;
 }

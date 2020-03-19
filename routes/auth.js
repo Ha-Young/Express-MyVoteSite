@@ -4,7 +4,9 @@ const authControllers = require('../controllers/auth.controllers');
 
 const router = express.Router();
 
-router.get('/login', (req, res) => res.render('login', { message: req.flash('errorMessage') }));
+router.get('/login', (req, res) => res.render('login', {
+  errorMessage: req.flash('Login Error Message')
+}));
 
 router.post('/login', authControllers.login);
 

@@ -15,17 +15,17 @@ router.get('/', checkAuthentication, async (req, res) => {
 
   const votes = loggedInUser.votes_created;
 
-  let expiredCounter = 0;
+  let expiredVotesCounter = 0;
   const voteDisplayInfo = [];
   votes.forEach(vote => {
-    if (vote.expired) expiredCounter++;
+    if (vote.expired) expiredVotesCounter++;
     voteDisplayInfo.push(getDisplayInfo(vote));
   });
 
   res.render('home', {
     loggedInUser,
     votes: voteDisplayInfo,
-    expiredCounter
+    expiredVotesCounter
   });
 });
 

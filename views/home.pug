@@ -12,7 +12,7 @@ block content
         if message
           h1.no-votes #{message}
         else
-          each vote in votes
+          each vote in allVotes
             div(data-id=vote._id).vote
               .vote-top
                 if vote.voteStatus === "진행 중"

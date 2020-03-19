@@ -57,3 +57,8 @@
 .login > a {
   margin-left: 2rem;
 }
+
+.errorMessage {
+  font-size: 2rem;
+  color: red;
+}

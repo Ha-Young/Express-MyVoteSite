@@ -9,25 +9,19 @@ block content
       h1 Sign up
       .signup-container
         .signup-field
-          //- label(for="username" ) username:
           input(type="text" name="username" id="username" placeholder="username" required)
         .signup-field
-          //- label(for="firstname") firstname:
           input(type="text" name="firstname" id="firstname" placeholder="firstname" required)
         .signup-field
-          //- label(for="lastname") lastname:
           input(type="text" name="lastname" id="lastname" placeholder="lastname" required)
         .signup-field
-          //- label(for="email") email:
           input(type="email" name="email" id="email" placeholder="email" required)
         .signup-field.password
-          //- label(for="password") password:
           input(type="password" name="password" id="password" placeholder="password should be longer than 10 characters." required)
         .signup-field.password
-          //- label(for="confirm_password") confirm password:
           input(type="password" name="confirm_password" id="confirm_password" placeholder="confirmation password" required)
-        if message
-          h3 #{message}
+        if errorMessage
+          h3.errorMessage #{errorMessage}
       input.button(type="submit" value="CREATE ACCOUNT")
       .login Already have an account?
         a(href="/auth/login") LOGIN

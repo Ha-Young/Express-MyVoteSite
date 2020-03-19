@@ -4,7 +4,7 @@ const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -33,21 +33,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(bodyParser.text());
+// app.use(bodyParser.text());
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 20 },
+  cookie: { maxAge: 1000 * 60 * 30 },
   store: new MongoStore({ url: process.env.MONGODB_URI })
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+app.use('/', homeRouter);
 app.use('/signup', signupRouter);
 app.use('/auth', authRouter);
-app.use('/', homeRouter);
 app.use('/votings', votingRouter);
 app.use('/my-votings', myVotingRouter);
 
@@ -55,13 +55,10 @@ app.use((req, res, next) => {
   next(new errors.InvalidUrlError('Invalid url.'));
 });
 
-// error handler
 app.use((err, req, res, next) => {
-  // set locals, only providing error in development
   res.locals.message = err.displayMessage;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });

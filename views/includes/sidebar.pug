@@ -17,8 +17,8 @@
       button.button.logout 로그아웃
 
   .votes
-    p 전체 : #{votes.length} votes
-    p 진행 중 : #{votes.length - expiredCounter} votes
-    p 종료됨 : #{expiredCounter} votes
+    p 전체 : #{allVotes.length} votes
+    p 진행 중 : #{allVotes.length - expiredVotesCounter} votes
+    p 종료됨 : #{expiredVotesCounter} votes
 
 script(src="/javascripts/sidebar.js")

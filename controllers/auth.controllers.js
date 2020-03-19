@@ -9,8 +9,8 @@ exports.login = (req, res, next) => {
     }
 
     if (!validUser) {
-      req.flash('errorMessage', authFailureMessage);
-      res.redirect('/auth/login');
+      req.flash('Login Error Message', authFailureMessage);
+      return res.redirect('/auth/login');
     }
 
     req.logIn(validUser, err => {

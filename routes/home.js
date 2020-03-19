@@ -1,10 +1,10 @@
 const express = require('express');
 
-const checkExpiration = require('../middlewares/checkExpiration');
+const updateVoteExpiration = require('../middlewares/updateVoteExpiration');
 const homeControllers = require('../controllers/home.controllers');
 
 const router = express.Router();
 
-router.get('/', checkExpiration, homeControllers.renderVotes);
+router.get('/', updateVoteExpiration, homeControllers.renderVotes);
 
 module.exports = router;

@@ -64,7 +64,7 @@ exports.renderVote = async (req, res, next) => {
     const votes = await Votes.find().lean();
     const loggedInUser = req.user ? req.user : null;
 
-    const expiredCounter = votes.reduce((counter, vote) => {
+    const expiredVotesCounter = votes.reduce((counter, vote) => {
       if (vote.expired) counter++;
       return counter;
     }, 0);
@@ -75,7 +75,7 @@ exports.renderVote = async (req, res, next) => {
       vote: voteDisplayInfo,
       votes,
       loggedInUser,
-      expiredCounter,
+      expiredVotesCounter,
       errorMessage: req.flash('errorMessage')
     });
   } catch(err) {

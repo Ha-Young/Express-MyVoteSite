@@ -12,8 +12,8 @@ block content
           input(type="email" name="email" id="email" placeholder="email" required)
         .login-field
           input(type="password" name="password" id="password" placeholder="password" required)
-        if message
-          h3 #{message}
+        if errorMessage
+          h3.errorMessage #{errorMessage}
       input.button(type="submit" value="LOGIN")
       .signup Don't have an account?
         a(href="/signup") SIGN UP
