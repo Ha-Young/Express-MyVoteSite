@@ -12,10 +12,10 @@
     <div>
       <ul>
         <li>제목: <%= voting.title %></li>
-        <li>생성자: <%= voting.author %></li>
-        <li>만료날짜: <%= new Date(voting.endDate) %></li>
+        <li>작성자: <%= voting.author %></li>
+        <li>만료 날짜: <%= new Date(voting.endDate) %></li>
         <% if (status) { %>
-        <li>진행 여부:<span>진행중</span>/li>
+        <li>진행 여부:<span>진행중</span>
           <% } else { %>
         <li>진행 여부:<span>기간 만료</span></li>
         <% } %>
@@ -24,10 +24,10 @@
 
     <div>
       <% if (status) { %>
-      <form action=<% `/votings/${voting._id}` %> method='POST'>
+      <form action=<%= `/votings/${voting._id}` %> method='POST'>
         <% voting.items.map(item =>{ %>
         <label>
-          <input type='radio' name='target' value='<%= item.name %>'><%= item.name %>
+          <input type='radio' name='itemId' value='<%= item._id %>'><%= item.name %>
         </label>
         <% }) %>
         <input type='submit' value='제출'>
@@ -36,7 +36,7 @@
       <ul>
         <% voting.items.forEach(item => { %>
           <li>
-            <span><% `${item.name}: ${item.count}표` %></span>
+            <span><%= `${item.name}: ${item.count}표` %></span>
           </li>
         <% }) %>
         <% } %>

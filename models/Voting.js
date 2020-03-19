@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const votingSchema = new mongoose.Schema({
   title: {
@@ -21,6 +22,10 @@ const votingSchema = new mongoose.Schema({
   endDate: {
     type: String,
     required: true
+  },
+  authorId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   },
   author: {
     type: String,

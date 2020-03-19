@@ -19,7 +19,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-//FIXME: 시크릿 env 파일에 넣기
+//FIXME: 시크릿 env 파일에 넣기, 서버 다시켜도 로그인 유지되게 수정 
 app.use(
   session({
     resave: false,
