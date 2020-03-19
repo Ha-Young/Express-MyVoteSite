@@ -1,11 +1,53 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <meta charset="UTF-8" />
+    <title>Votings</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai+2|Sunflower:300&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <%- include("./partials/header") %>
+    <hr />
+    <section class="votesSection">
+      <% if (ongoingVotes.length) { %>
+        <article>
+          <h1>Ongoing</h1>
+          <div class="voteInfo">
+            <%- include("./partials/voteInfoHead") %>
+            <% ongoingVotes.forEach((vote) => { %>
+              <ul>
+                <li class="voteTitle"><%= vote.title %></li>
+                <li class="voteMadeby"><%= vote.made %></li>
+                <li class="voteExpiration"><%= vote.expiration %></li>
+                <li class="vote" id="<%= vote.id %>">투표하기</li>
+              </ul>
+            <% }) %>
+          </div>
+        </article>
+      <% } %>
+      <% if (completedVotes.length) { %>
+        <article>
+          <h1>Completed</h1>
+          <div class="voteInfo">
+            <%- include("./partials/voteInfoHead") %>
+            <% completedVotes.forEach((vote) => { %>
+              <ul>
+                <li class="voteTitle"><%= vote.title %></li>
+                <li class="voteMadeby"><%= vote.made %></li>
+                <li class="voteExpiration"><%= vote.expiration %></li>
+                <li class="vote" id="<%= vote.id %>">투표하기</li>
+              </ul>
+            <% }) %>
+          </div>
+        </article>
+      <% } %>
+    </section>
+    <script>
+      const votes = document.querySelectorAll(".vote");
+      votes.forEach((vote) => vote.addEventListener("click", (ev) => {
+        window.location.href = `http://localhost:3000/votings/${ev.currentTarget.id}`;
+      }));
+    </script>
   </body>
 </html>

@@ -40,7 +40,8 @@ button:hover {
 .loginForm,
 .signupForm,
 .validationFailSection,
-.createResultSection {
+.postResultSection,
+.votesSection section {
   display: flex;
   flex-direction: column;
 }
@@ -54,7 +55,9 @@ header,
 
 header {
   justify-content: space-between;
-  margin: 2px 10px;
+  padding: 2px 10px;
+  background-color: #dcd6f7;
+  color: white;
 }
 
 header h1,
@@ -120,20 +123,20 @@ header h4 {
 
 /* [validation fail, create result] */
 .validationFailSection h1,
-.createResultSection h1,
-.createResultSection h2 {
+.postResultSection h1,
+.postResultSection h2 {
   font-family: 'Baloo Tamma 2', cursive;
   text-align: center;
 }
 
 .validationFailSection,
-.createResultSection {
+.postResultSection {
   align-items: center;
   margin-top: 200px;
 }
 
 .validationFailSection a,
-.createResultSection a {
+.postResultSection a {
   padding: 10px;
 }
 
@@ -208,8 +211,74 @@ header h4 {
 }
 
 /* [my voting] */
-.myVoting {
+/* .myVoting {
   padding: 2px;
   border-radius: 10px;
   background-color: #f8fab8;
+} */
+
+/* [votes] */
+.votesSection {
+  padding: 10px;
+  background-color: #f9f8fc;
+}
+
+.votesSection ul {
+  display: flex;
+  list-style: none;
+  margin: 5px;
+  padding: 0px;
+}
+
+.votesSection h1 {
+  margin: 10px;
+  font-size: 30px;
+  align-self: baseline;
+}
+
+.votesSection section {
+  align-items: center;
+}
+
+.voteInfo {
+  margin: 20px auto;
+  padding: 15px;
+  box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.5);
+}
+
+.voteTitle {
+  width: 500px;
+}
+
+.voteMadeby {
+  width: 300px
+}
+
+.voteExpiration {
+  width: 250px
+}
+
+.voteButton,
+.vote {
+  width: 200px
+}
+
+.vote {
+  border-radius: 10px;
+  background-color: #a6b1e1;
+  text-align: center;
+}
+
+.vote:hover {
+  cursor: pointer;
+  background-color: #424874;
+  color: white;
+}
+
+.voteInfo li {
+  margin: 10px;
+}
+
+.voteInfoMain {
+  border-bottom: 1px solid gray;
 }
