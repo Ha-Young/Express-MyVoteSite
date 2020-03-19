@@ -8,13 +8,18 @@
 
 <body>
   <h1><%= title %></h1>
-  <div>
+  <div class="newVotingFormBox">
     <form action="/votings/new" method="post">
-      제목 <input type="text" name="title" required><br>
-      설명 <textarea name="description" required></textarea><br>
-      만료일 <input type="date" name="expiration_date" required> <input type="time" name="expiration_time" required><br>
-      선택사항 <input type="text" name="selectOption" placeholder="띄어쓰기 없이 ','로 구분해주세요" required><br>
-      <input type="submit" value="투표생성">
+      <span>제목</span>
+      <input class="newVotingInput" type="text" name="title" required><br>
+      <span>설명</span>
+      <textarea class="newVotingInput" name="description" required></textarea><br>
+      <span>만료일</span>
+      <input class="newVotingInput" type="date" name="expiration_date" required>
+      <input type="time" name="expiration_time" required><br>
+      <span>선택사항</span>
+      <input class="newVotingInput" type="text" name="selectOption" placeholder="띄어쓰기 없이 ','로 구분해주세요" required><br>
+      <input class="newVotingInput" type="submit" value="투표생성">
     </form>
   </div>
   <div>
@@ -22,9 +27,9 @@
     <%= message %>
     <% } %>
   </div>
-  <div>
+  <span class="mainPageBtn newVotingPageBtn">
     <a href="/">투표 목록으로 돌아가기</a>
-  </div>
+  </span>
 </body>
 
 </html>

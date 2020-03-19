@@ -45,20 +45,43 @@ router.get('/:id', async (req, res, next) => {
     try {
         const votingId = req.params.id;
         const votingData = await Votings.findOne({ id: votingId });
+
         if (!votingData) {
             res.redirect('/');
         } else if (!req.user) {
+            const selectOption = votingData.select_option;
+            const voteCountList = votingData.vote_count;
+            const votingResults = {}
+            for(let i=0; i< selectOption.length; i++) {
+                votingResults[selectOption[i]] = voteCountList.filter((el) => {
+                    return el.selected_option === selectOption[i]
+                }).length;
+            }
+
             res.render('votingPage', {
                 title: '투표 페이지',
                 votingData,
-                deleteBtn: null
+                deleteBtn: null,
+                result: null
             });
         } else {
+            const selectOption = votingData.select_option;
+            const voteCountList = votingData.vote_count;
+            const votingResults = {}
+            for(let i=0; i< selectOption.length; i++) {
+                votingResults[selectOption[i]] = voteCountList.filter((el) => {
+                    return el.selected_option === selectOption[i]
+                }).length;
+            }
+
+
             const deleteBtn = String(req.user._id) === String(votingData.writerId) ? '삭제' : null;
+            const result =  String(req.user._id) === String(votingData.writerId) ? votingResults : null;
             res.render('votingPage', {
                 title: '투표 페이지',
                 votingData,
-                deleteBtn
+                deleteBtn,
+                result
             });
         }
     } catch (err) {

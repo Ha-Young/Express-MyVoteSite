@@ -7,16 +7,21 @@
 </head>
 
 <body>
-    <div>
-        <div>
+    <div class="loginBox">
+        <div class="loginFormBox">
             <form action="/login" method="post">
-                email <input type="email" name="userEmail"><br>
-                password <input type="password" name="userPassword">
+                email <input class="loginInputBox" type="email" name="userEmail"><br>
+                password <input class="loginInputBox" type="password" name="userPassword">
                 <input type="submit" value="login">
             </form>
         </div>
-        <div>
-            <a href="/signup">회원가입</a>
+        <div class="loginBtnBox">
+            <span class="loginPageBtn">
+                <a href="/signup">회원가입</a>
+            </span>
+            <span class="loginPageBtn">
+                <a href="/">home</a>
+            </span>
         </div>
         <div>
             <% if (message) { %>

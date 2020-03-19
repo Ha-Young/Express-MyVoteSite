@@ -4,5 +4,69 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  text-decoration: none;
+  color: gray;
+}
+
+.loginBox {
+  text-align: center;
+}
+
+.loginFormBox {
+  border: 1px solid gray;
+  border-radius: 1em;
+  padding: 30px;
+}
+
+.loginInputBox {
+  margin: 5px;
+}
+
+.loginBtnBox {
+  margin: 30px;
+}
+
+.loginPageBtn {
+  border: 1px solid gray;
+  border-radius: 1em;
+  width: 100px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.votings {
+  border: 1px solid gray;
+  border-radius: 1em;
+  padding: 10px;
+  margin: 10px;
+}
+
+.mainPageBtn {
+  border: 1px solid gray;
+  border-radius: 1em;
+  padding: 10px;
+  margin: 10px;
+}
+
+.votingsNew {
+  float: left;
+}
+
+.myVotings {
+  float: right;
+}
+
+.newVotingFormBox {
+  border: 1px solid gray;
+  border-radius: 1em;
+  padding: 30px;
+  margin: 30px;
+}
+
+.newVotingInput {
+  margin: 10px;
+}
+
+.newVotingPageBtn {
+  float: right;
 }

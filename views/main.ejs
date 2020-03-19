@@ -14,7 +14,7 @@
       <div>투표제목 <%= i.title %></div>
       <div>작성자 <%= i.writer %></div>
       <div>투표 설명 <%= i.description %></div>
-      <div>만료일 <%= i.expiration_date %></div>
+      <div class="endDate">만료일 <%= i.expiration_date %></div>
       <% if(i.progress === true) { %>
       <div>진행여부: 진행 중</div>
       <% } %>
@@ -25,13 +25,48 @@
   </div>
   <% } %>
   <div>
-    <span>
+    <span class="votingsNew mainPageBtn">
       <a href="/votings/new">투표 생성하기</a>
     </span>
-    <span>
+    <span class="myVotings mainPageBtn">
       <a href="/my-votings">내 투표보기</a>
     </span>
   </div>
+
+  <script>
+
+    const endDate = document.querySelectorAll('.endDate');
+
+    setInterval(() => {
+      let date = new Date()
+      for (let i = 0; i < endDate.length; i++) {
+        // console.log('확인',endDate[i].textContent)
+        // console.log('확인',date)
+
+        if (endDate[i].textContent === String(date)) {
+          fetch('/', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ date: date })
+          })
+          .then((res)=>{
+            return res.json();
+          })
+          .then((myJson) => {
+            console.log(myJson);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+        }
+      }
+    }, 1000);
+
+
+
+  </script>
 </body>
 
 </html>
