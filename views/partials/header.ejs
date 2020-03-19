@@ -1,13 +1,13 @@
 <header>
-  <a href='/'><h1>Voting</h1></a>
-  <div class='headerInfo'>
+  <a href="/"><h1>Voting</h1></a>
+  <div class="headerInfo">
     <% if (locals.user) { %>
-      <a href='/logout'><h4>Logout</h4></a>
-      <a href='/votings/new'><h4>Create Voting</h4></a>
-      <a href='/my-votings' class="myVoting"><h2><%= user %></h2></a>
+      <a href="/users/logout"><h4>Logout</h4></a>
+      <a href="/votings/new"><h4>Create Voting</h4></a>
+      <a href="/my-votings" class="myVoting"><h2><%= user %></h2></a>
     <% } else { %>
-      <a href='/signup'><h4>Sign Up</h4></a>
-      <a href='/login'><h4>Sign In</h4></a>
+      <a href="/users/new"><h4>Sign Up</h4></a>
+      <a href="/users/login"><h4>Sign In</h4></a>
     <% } %>
   </div>
 </header>
