@@ -42,6 +42,9 @@
           </div>
         </article>
       <% } %>
+      <% if (!ongoingVotes.length && !completedVotes.length) { %>
+        <h1>Make Your Vote! :)</h1>
+      <% } %>
     </section>
     <script>
       const votes = document.querySelectorAll(".vote");
