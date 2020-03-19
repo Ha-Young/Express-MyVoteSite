@@ -18,6 +18,12 @@ const schema = new mongoose.Schema({
       ref: 'Vote'
     }],
     default: []
+  },
+  ownVotes: {
+    type: [{
+      type: mongoose.Types.ObjectId,
+      ref: 'Vote'
+    }]
   }
 });
 

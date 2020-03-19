@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <%- include('partial/head') -%>
+  <body>
+    <%- include('partial/header') -%>
+    <div class="container">
+      <%- include('partial/votes', {
+        title: '내가 만든 투표',
+        votes
+      }) -%>
+    </div>
+    <%- include('partial/scripts') -%>
+  </body>
+</html>

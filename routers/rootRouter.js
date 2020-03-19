@@ -8,7 +8,8 @@ import {
 } from '../controllers/authController';
 import {
   getHome,
-  getSuccess
+  getSuccess,
+  getMyVotings
 } from '../controllers/votingsController';
 
 const router = express.Router();
@@ -26,5 +27,7 @@ router.get('/signup', getSignup);
 router.post('/signup', postSignup);
 
 router.get('/success', getSuccess);
+
+router.get('/my-votings', getMyVotings);
 
 export default router;

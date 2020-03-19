@@ -27,17 +27,20 @@ export const postVotings = async (req, res) => {
     } = req.body;
     const expirated = `${expiration_date}T${expiration_time}`;
     const handledOptions = options.map((option) => ({ value: option }));
-
-    await Vote.create({
+    const user = req.user;
+    const vote = await Vote.create({
       subject: voting_name,
       options: handledOptions,
       expirated,
       creator: req.user.id,
     });
 
+    user.ownVotes.push(vote.id);
+    await user.save();
     res.redirect('/');
   } catch (err) {
     // Error handler
+    console.log(err);
   }
 };
 
@@ -89,5 +92,21 @@ export const getVoteResult = async (req, res) => {
   } catch (err) {
     // Error handling
     console.log(err);
+  }
+};
+
+export const getMyVotings = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const me = await User.findById(userId).populate({
+      path: 'ownVotes',
+      populate: { path: 'creator' }
+    });
+    const votes = me.ownVotes;
+
+    res.locals.dateTransformer = dateTransformer;
+    res.render('myVotings', { votes });
+  } catch (err) {
+    // Error handling
   }
 };
