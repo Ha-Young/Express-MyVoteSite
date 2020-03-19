@@ -136,3 +136,8 @@
   align-items: center;
   justify-content: center;
 }
+
+.errorMessage {
+  font-size: 2rem;
+  color: red;
+}

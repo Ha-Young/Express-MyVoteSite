@@ -17,6 +17,8 @@ block content
           div.expiration
             label(for="expires_at") 마감시간 설정
             input.expiration-time(type="datetime-local" name="expires_at" required)
+          if message
+            h3.errorMessage #{message}
           div.add-button 항목 추가
         div.buttons
           input.button.submit-button(type="submit" value="저장")

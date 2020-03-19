@@ -9,7 +9,8 @@ exports.registerVote = async (req, res, next) => {
   const currentTime = new Date().toISOString();
 
   if (expirationTime < currentTime) {
-    return next(new errors.InvalidExpirationError());
+    req.flash('errorMessage', '투표 만료시간은 현재 시간 이후여야 합니다.')
+    return res.redirect('/votings/new');
   }
 
   const select_options = Object.values(options).map(option => ({

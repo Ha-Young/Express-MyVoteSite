@@ -1,6 +1,7 @@
 html, body {
   font-size: 10px;
   box-sizing: content-box;
+  overflow-x: hidden;
 }
 
 body {
