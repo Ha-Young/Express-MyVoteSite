@@ -1,7 +1,6 @@
 const Votes = require('../models/Votes');
 
 module.exports = checkWhetherUserVoted = async (req, res, next) => {
-  console.log(location);
   const { loggedInUser } = res.locals;
   const currentVote = await Votes.findById(req.params.id);
 

@@ -6,12 +6,21 @@ toListButton.addEventListener('click', () => {
 });
 
 if (deleteVoteButton) {
-  deleteVoteButton.addEventListener('click', () => {
-    const voteId = location.pathname.replace(/\/votings\//i, '');
+  deleteVoteButton.addEventListener('click', async () => {
+    const userReaction = window.confirm('한 번 삭제한 투표는 복구할 수 없습니다. 정말 삭제하시겠습니까?');
 
-    fetch('/votings', {
-      method: "DELETE",
-      body: voteId
-    });
+    if (userReaction) {
+      const voteId = location.pathname.replace(/\/votings\//i, '');
+      const response = await fetch('/votings', {
+        method: "DELETE",
+        body: voteId
+      });
+
+      if (response.status === 200) {
+        location.assign(location.origin);
+      } else {
+        window.alert('투표를 삭제하지 못했습니다!');
+      }
+    }
   });
 }

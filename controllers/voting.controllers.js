@@ -42,7 +42,6 @@ exports.registerVote = async (req, res, next) => {
 exports.deleteVote = async (req, res, next) => {
   try {
     const deletedVote = await Votes.findByIdAndRemove(req.body);
-
     let { loggedInUser, loggedInUser: { votes_created } } = res.locals;
 
     votes_created = votes_created.filter(voteId => {
@@ -50,10 +49,11 @@ exports.deleteVote = async (req, res, next) => {
     });
 
     await loggedInUser.updateOne({ votes_created });
-
-    res.redirect('/'); // 여기서 왜 에러가..?
+    res.status(200).end();
+    // res.status(200).send('투표가 성공적으로 삭제되었습니다!');
   } catch(err) {
-    next(new errors.GeneralError(err.message));
+    res.status(500).end();
+    // next(new errors.GeneralError(err.message));
   }
 };
 
