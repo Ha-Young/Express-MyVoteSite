@@ -6,7 +6,8 @@ export const getHome = async (req, res) => {
   try {
     const votes = await Vote.find().populate('creator');
 
-    res.render('index', { votes, dateTransformer });
+    res.locals.dateTransformer = dateTransformer;
+    res.render('index', { votes });
   } catch (err) {
     // Error handling
   }
@@ -26,14 +27,15 @@ export const postVotings = async (req, res) => {
     } = req.body;
     const expirated = `${expiration_date}T${expiration_time}`;
     const handledOptions = options.map((option) => ({ value: option }));
-    const vote = await Vote.create({
+
+    await Vote.create({
       subject: voting_name,
       options: handledOptions,
       expirated,
       creator: req.user.id,
     });
 
-    res.redirect(`/votings/${vote.id}`);
+    res.redirect('/');
   } catch (err) {
     // Error handler
   }
@@ -44,7 +46,8 @@ export const getVoteDetail = async (req, res) => {
     const { id } = req.params;
     const vote = await Vote.findById(id).populate('creator');
 
-    res.render('votingDetail', { vote, dateTransformer });
+    res.locals.dateTransformer = dateTransformer;
+    res.render('votingDetail', { vote });
   } catch (err) {
     // Error handling
     console.log(err);
@@ -81,7 +84,8 @@ export const getVoteResult = async (req, res) => {
     const { id } = req.params;
     const vote = await Vote.findById(id).populate('creator');
 
-    res.render('votingResult', { vote, dateTransformer });
+    res.locals.dateTransformer = dateTransformer;
+    res.render('votingResult', { vote });
   } catch (err) {
     // Error handling
     console.log(err);
