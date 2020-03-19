@@ -2,14 +2,15 @@ require('dotenv').config();
 require('./config/passport');
 require('./config/mongoose');
 
-const createError = require('http-errors');
 const express = require('express');
 const session = require('express-session');
 
 const path = require('path');
 const passport = require('passport');
 const bodyParser = require('body-parser');
+const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
+const methodOverride = require('method-override')
 
 const indexRouter = require('./routes/index');
 const votingRouter = require('./routes/votings');
@@ -21,6 +22,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(cookieParser());
+app.use(methodOverride());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -42,10 +44,13 @@ app.post('/login',
   successRedirect: '/',
   failureRedirect: '/login'
 }
-  // , (req, res) => {
-  //   req.session.save()
-  // }
-))
+// , (req, res) => {
+//   req.session.save(() => {
+//     res.redirect('/');
+//   })
+//   }
+)
+)
 
 app.use(function(req, res, next) {
   next(createError(404));

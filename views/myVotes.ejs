@@ -2,18 +2,23 @@
 <html>
   <head></head>
   <body>
-    <div class='title'>
-      <a href='/votings/<%= myVotes._id %>'>
-        <% console.log(myVotes) %>
-        <h3><%= myVotes.title %></h3>
-      </a>
-    </div>
+    <% if (myVotes.length > 0) { %>
+      <% myVotes.forEach(vote => { %>
+        <div class='title'>
+          <a href='/votings/<%= vote._id %>'>
+            <h3><%= vote.title %></h3>
+          </a>
+        </div>
 
-    <div class='expirationDate'>
-      <label>Expiration Date:</label>
-      <div>
-        <%= myVotes.expirationDate %>
-      </div>
-    </div>
+        <div class='expirationDate'>
+          <label>Expiration Date:</label>
+          <div>
+            <%= vote.expirationDate %>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <div>생성하신 투표가 없어요. 이번 기회에 만들어보시죠!</div>
+    <% } %>
   </body>
 </html>

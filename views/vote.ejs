@@ -4,14 +4,40 @@
   <body>
     <h1><%= vote.title %></h1>
     <div><%= vote.expirationDate %></div>
-    <form action='/votings/<%= vote._id %>' method='POST'>
+    <div><%= vote.creatorNickname %></div>
+
+    <% if (vote.isExpired) { %>
+      <div>투표가 마쳤습니다.</div>
+      <div>투표 결과</div>
       <% vote.options.forEach(option => { %>
-        <label>
-          <input type='radio' name='selected' value='<%= option._id %>'>
+        <div>
           <%= option.optionTitle %>
-        </label>
+        </div>
+        <%= option.count %>표
       <% }) %>
-      <input type='submit' value='Submit' />
-    </form>
+
+    <% } else { %>
+      <% if (isParticipated) { %>
+        <div>투표가 진행 중입니다.</div>
+        <div>이미 참여한 투표입니다.</div>
+
+        <% vote.options.forEach((option, index) => { %>
+          <div>
+            <%= index %>: <%= option.optionTitle %>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <form action='/votings/<%= vote._id %>' method='POST'>
+          <div>투표가 진행 중입니다. 투표에 참여해보세요!</div>
+          <% vote.options.forEach(option => { %>
+            <label>
+              <input type='radio' name='selected' value='<%= option._id %>'>
+                <%= option.optionTitle %>
+            </label>
+          <% }) %>
+          <input type='submit' value='Submit' />
+        </form>
+      <% } %>
+    <% } %>
   </body>
 </html>

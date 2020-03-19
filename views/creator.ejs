@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <% vote.options.forEach(option => { %>
+      <div>
+        <%= option.optionTitle %>
+      </div>
+      <%= option.count %>표
+    <% }) %>
+    <input class='deleteButton' type='button' name='<%= vote._id %>' value='Delete' />
+    <script src='/javascripts/deleteVote.js'></script>
+  </body>
+</html>

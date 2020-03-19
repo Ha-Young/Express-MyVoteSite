@@ -8,26 +8,25 @@ const voteSchema = mongoose.Schema({
   },
   creatorNickname: {
     type: String,
-    require: true
+    required: true
   },
   title: {
     type: String,
-    require: true
+    required: true
   },
   expirationDate: {
     type: Date,
-    require: true
+    required: true
   },
   isExpired: {
     type: Boolean,
-    require: true,
+    required: true,
     default: false
   },
   options : [
     {
       optionTitle: {
-        type: String,
-        require: true
+        type: String
       },
       count: {
         type: Number,

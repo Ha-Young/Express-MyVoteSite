@@ -1,16 +1,13 @@
 const express = require('express');
 const router = express.Router();
-
 const Vote = require('../models/Vote');
 
 router.get('/', async (req, res, next) => {
-  const { user } = req.session.passport;
-  console.log(user)
-  const userVotes = Vote.find({ creator: user }, (err, doc) => {
-    // console.log(doc, '닥')
-  });
+  const myId = req.user._id;
 
-  res.render('myVotes', { myVotes: userVotes });
+  const myVotes = await Vote.find({ creator: myId }).populate('creator');
+  res.render('myVotes', { myVotes });
+
 });
 
 module.exports = router;
