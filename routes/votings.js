@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-// const Pusher = require('pusher');
 const createError = require('http-errors');
 const User = require('../models/user');
 const Poll = require('../models/poll');
@@ -17,7 +16,6 @@ router.post('/new', async (req, res, next) => {
       const time = `${req.body.date} ${req.body.time}`;
       if (new Date() > new Date(time)) {
         return res.redirect('/votings/failure');
-        // throw(createError(422, "Please select expring time for future"));
       }
       
       const { topic } = req.body;
@@ -36,7 +34,6 @@ router.post('/new', async (req, res, next) => {
       }).save();
 
       const user = await User.findById(id);
-      // user.myPolls.push({ myPoll : poll.id })
       user.myPolls.push(poll.id);
       await user.save();
       answers.forEach((answer) => {
@@ -148,17 +145,5 @@ router.delete('/:poll_id', async (req, res, next) => {
   await Poll.findOneAndDelete(pollId);
   return res.status(200).json({ result: 'ok' });
 });
-
-
-
-
-
-
-// poll.expiringTime.toDateString(), 
-// poll.expiringTime.toLocaleTimeString()
-
-
-
-
 
 module.exports = router;

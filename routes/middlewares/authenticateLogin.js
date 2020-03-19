@@ -1,6 +1,4 @@
-module.exports = authenticateLogin = (req, res, next) => {
-  // console.log(req.session)
-  console.log(req.session)
+module.exports = (req, res, next) => {
     req.session.returnTo = req.originalUrl; 
   if (req.isAuthenticated()) {
     return next();
