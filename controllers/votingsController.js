@@ -1,5 +1,6 @@
 const moment = require('moment');
 const mongoose = require('mongoose');
+const createError = require('http-errors');
 
 const User = require('../models/User');
 const Voting = require('../models/Voting');
@@ -28,9 +29,9 @@ const votingsController = {
       await user.save();
       await voting.save();
 
-      res.redirect('/')
+      res.redirect('/');
     } catch (error) {
-      next(error)
+      next(error);
     }
   },
 
@@ -49,18 +50,16 @@ const votingsController = {
 
     try {
       const voting = await Voting.findById(votingId);
-      const checkDuplicateUser = () => voting.joinUser.filter(user => String(user) === userId).length;
-      if (checkDuplicateUser()) {
-        // 유저가 중복일때
-        // 따로 중복투표라는 렌더링 페이지 만드는게 좋을 것 같음
-        res.redirect('/');
-      } else {
-        voting.item.filter(vote => String(vote._id) === votingItemId)[0].count++;
-        voting.joinUser.push(mongoose.Types.ObjectId(userId));
-        voting.count++;
-        await voting.save();
-        res.redirect('/');
-      }
+
+      if (!votingItemId) throw createError(500, { errorCode: 300 });
+      if (new Date().getTime() > new Date(voting.endDate).getTime()) throw createError(500, { errorCode: 301 });
+      if (voting.joinUser.includes(userId)) throw createError(500, { errorCode: 302 });
+
+      voting.item.filter(vote => String(vote._id) === votingItemId)[0].count++;
+      voting.joinUser.push(mongoose.Types.ObjectId(userId));
+      voting.count++;
+      await voting.save();
+      res.render('votingAfter', { message: '🙆‍♂️ 투표에 정상적으로 참여되었습니다. 🙆‍♀️' });
     } catch (error) {
       next(error);
     }

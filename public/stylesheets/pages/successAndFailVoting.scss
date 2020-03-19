@@ -1,11 +1,11 @@
-.new-voting-success-container {
+.voting-after-container {
   width: 100%;
   height: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  .new-voting-success-item-box {
+  .voting-after-item-box {
     width: 80%;
     height: 500px;
     display: flex;
@@ -13,22 +13,22 @@
     align-items: center;
     flex-direction: column;
 
-    .new-voting-success-message-box {
+    .voting-after-message-box {
       display: flex;
       justify-content: center;
       align-items: center;
       width: 100%;
 
-      .new-voting-success-message {
+      .voting-after-message {
         font-size: 30px;
         font-weight: bold;
       }
     }
 
-    .new-voting-success-redirect-button-box {
+    .voting-after-redirect-button-box {
       margin-top: 15px;
 
-      .new-voting-success-redirect-button {
+      .voting-after-redirect-button {
         display: flex;
         justify-content: center;
         align-items: center;

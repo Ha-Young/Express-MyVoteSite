@@ -12,7 +12,7 @@ block content
                 span 제작자 : 
                 span=voting.creator.name
             if new Date(voting.endDate).getTime() > voting.currentDate.getTime()
-                form(method='POST' action=`/votings/${voting._id}/success`).detail-voting-item-form
+                form(method='POST' action=`/votings/${voting._id}`).detail-voting-item-form
                     .detail-voting-items-box
                         each item in voting.item
                             .detail-voting-item-box
@@ -23,8 +23,12 @@ block content
                                             span ( 
                                             span=item.count
                                             span 표 )
-                    .new-voting-submit-button-box
-                        input(type="submit" value="제출하기").new-voting-submit-button 
+                    if voting.joinUser.includes(loggedUser.id)
+                        .new-voting-submit-button-box
+                            input(type="submit" value="이미 참여한 투표입니다." disabled="true").new-voting-disabled-button
+                    else
+                        .new-voting-submit-button-box
+                            input(type="submit" value="제출하기").new-voting-submit-button
             else
                 .detail-voting-end
                     .detail-voting-items-box

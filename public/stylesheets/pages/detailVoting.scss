@@ -88,7 +88,6 @@
       .new-voting-submit-button-box {
         margin-top: 50px;
         cursor: pointer;
-        border: 1px solid #27b06e;
         display: flex;
         align-items: center;
         width: 100%;
@@ -106,6 +105,16 @@
           width: 100%;
           font-weight: 300;
           background-color: #27b06e;
+          text-align: center;
+        }
+
+        .new-voting-disabled-button {
+          color: #fff;
+          height: 100%;
+          font-size: 15px;
+          width: 100%;
+          font-weight: 300;
+          background-color: #7f8c8d;
           text-align: center;
         }
       }
