@@ -2,7 +2,7 @@
   <div class="votes-subtitle">
     투표 진행중
   </div>
-  <% votesInProgress.map(vote => { %>
+  <% votes[0].map(vote => { %>
     <% href = `/votings/${vote._id}` %>
     <a href="<%- href %>">
       <div class="vote-title">
@@ -24,7 +24,7 @@
   <div class="votes-subtitle">
     종료된 투표
   </div>
-  <% votesEnds.map(vote => { %>
+  <% votes[1].map(vote => { %>
     <% href = `/votings/${vote._id}` %>
     <a href="<%- href %>">
       <div class="vote-title">

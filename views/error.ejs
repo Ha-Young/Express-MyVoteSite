@@ -8,10 +8,8 @@
     <script src="https://kit.fontawesome.com/49f652a05a.js" crossorigin="anonymous"></script>
   </head>
   <body>
-    <%- include('header') %>
     <div class="new-container">
-      <h1><%= message %></h1>
-      <h2><%= error.status %></h2>
+      <h1><%= error.status %> <%= error.message %></h1>
       <a href="/" class="buttonbox">메인페이지로 돌아가기</a> 
     </div>
   </body>

@@ -10,8 +10,6 @@ const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const cookieSession = require('cookie-session');
-const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo')(session);
 const methodOverride = require('method-override');
 
@@ -59,14 +57,13 @@ app.use(flash());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(bodyParser.urlencoded());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: process.env.SESSION_SECRET,
   saveUninitialized: true,
-  store: new MongoStore({ url: process.env.DB_HOST }),
+  store: new MongoStore({ url: process.env.DB_HOST, ttl: 60 * 60 }),
   resave: false
 }));
 
@@ -85,22 +82,19 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/votings', votingsRouter);
 
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
-app.use(function(err, req, res, next) {
+app.use(function(error, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.message = error.message;
+  res.locals.error = req.app.get('env') === 'development' ? error : {};
 
-  // render the error page
-  res.status(err.status || 500);
+  res.status(error.status || 500);
   res.render('error', {
-    title: 'vote!',
-    isLogined: req.isAuthenticated()
+    error,
+    title: 'vote!'
   });
 });
 

@@ -1,0 +1,36 @@
+<div class="vote-information-container">
+  <div class="vote-information">
+    <%= calculateRemainTime(vote) %> | 
+    <%= vote.owner.name %>
+  </div>
+  <div class="vote-status in-progress">
+    투표 진행중
+  </div>
+</div>
+
+<form action="/votings/<%= vote._id %>?_method=PUT" method="POST">
+  <div class="selection-container">
+    <% vote.selections.map(selection => { %>
+      <input
+        type="radio"
+        id="<%= selection._id %>"
+        name="selections"
+        value="<%= selection._id %>" />
+      <label for="<%= selection._id %>" class="radiobox">
+        <%= selection.content %>
+      </label>
+    <% }) %>
+  </div>
+  <% if (user && user._id.equals(vote.owner._id)) { %>
+    <%- include('voteEnds') %>
+  <% } %>
+  <% if (user && vote.voters.includes(user._id)) { %>
+    <div class="radio-submit-container">
+      <input type="submit" class="radio-submitbox disabled" value="이미 투표하셨습니다" disabled />
+    </div>
+  <% } else  { %>
+    <div class="radio-submit-container">
+      <input type="submit" class="radio-submitbox" value="투표하기" />
+    </div>
+  <% } %>
+</form>

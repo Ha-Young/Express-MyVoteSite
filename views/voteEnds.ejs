@@ -1,0 +1,29 @@
+<% if (!vote.in_progress) { %>
+  <div class="vote-information-container">
+    <div class="vote-information">
+      <%= vote.owner.name %>
+    </div>
+    <div class="vote-status ends">
+      투표 종료
+    </div>
+  </div>
+  <div class="best-selection">
+    <%= bestSelect.content %>
+  </div>
+<% } %>
+
+<div>
+  <div class="radio-result-container">
+    <% vote.selections.map(selection => { %>
+      <div class="radio-result">
+        <%= selection.content %>
+        <span>
+          <% for (let i = 0; i < selection.selected; i++) { %>
+            <i class="fas fa-square"></i>
+          <% } %>
+        </span>
+        <span><%= selection.selected %></span>
+      </div>
+    <% }) %>
+  </div>
+</div>

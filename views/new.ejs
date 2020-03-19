@@ -15,14 +15,25 @@
         <div>
           <input type="text" placeholder="투표 제목" name="title" class="textbox" />
         </div>
-        <div>
-          <% for(let i = 0; i < count; i++) { %>
+        <% if (alertMessage) { %>
+          <div class="alert-message">
+            <%= alertMessage %>
+          </div>
+        <% } %>
+        <div class="new-option-container">
+          <% for(let i = 0; i < 2; i++) { %>
             <div>
               <input type="text" placeholder="투표 선택사항" name="selections" class="textbox" />
             </div>
           <% } %>
         </div>
         <div>
+          <button type="button" class="add-option"><i class="fas fa-plus-circle fa-2x"></i></button>
+        </div>
+        <div>
+          <% tzoffset = (new Date()).getTimezoneOffset() * 60000; %>
+          <% WEEK = 7 * 24 * 60 * 60 * 1000 %>
+          <% defaultDate = (new Date(Date.now() - tzoffset + WEEK)).toISOString().slice(0, 16); %>
           <input type="datetime-local" placeholder="만료날짜" name="expired_date" value="<%= defaultDate %>" class="textbox" />
         </div>
         <div>
@@ -30,5 +41,6 @@
         </div>
       </form>
     </div>
+    <script src="/javascripts/index.js"></script>
   </body>
 </html>

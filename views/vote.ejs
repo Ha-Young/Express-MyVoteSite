@@ -10,68 +10,9 @@
   <body>
     <%- include('header') %>
     <div class="vote-container">
-      <% if (vote.in_progress) { %>
-        <h1 class="vote-vote-title">
-          <%= vote.title %>
-        </h1>
-        <div class="vote-information-container">
-          <div class="vote-information">
-            <% if (vote.in_progress) { %>
-              <%= calculateRemainTime(vote) %> | 
-            <% } %>
-            <%= vote.owner.name %>
-          </div>
-          <div class="vote-status in-progress">
-            투표 진행중
-          </div>
-        </div>
-        <form action="/votings/<%= vote._id %>" method="POST">
-          <% vote.selections.map(selection => { %>
-            <input
-              type="radio"
-              id="<%= selection._id %>"
-              name="selections"
-              value="<%= selection._id %>" />
-            <label for="<%= selection._id %>" class="radiobox">
-              <%= selection.content %>
-            </label>
-          <% }) %>
-          <div class="radio-submit-container">
-            <input type="submit" class="radio-submitbox" value="투표하기" />
-          </div>
-        </form>
-      <% } else { %>
-        <h1 class="vote-vote-title">
-          <%= vote.title %>
-        </h1>
-        <div class="vote-information-container">
-          <div class="vote-information">
-            <%= vote.owner.name %>
-          </div>
-          <div class="vote-status ends">
-            투표 종료
-          </div>
-        </div>
-        <div>
-          <div class="best-selection">
-            <%= bestSelect.content %>
-          </div>
-          <div class="radio-result-container">
-            <% vote.selections.map(selection => { %>
-              <div class="radio-result">
-                <%= selection.content %>
-                <span>
-                  <% for (let i = 0; i < selection.selected; i++) { %>
-                    <i class="fas fa-square"></i>
-                  <% } %>
-                </span>
-                <span><%= selection.selected %></span>
-              </div>
-            <% }) %>
-          </div>
-        </div>
-      <% } %>
-      <% if (user._id.equals(vote.owner._id)) { %>
+      <h1 class="vote-vote-title"><%= vote.title %></h1>
+      <%- vote.in_progress ? include('voteInProgress') : include('voteEnds') %>
+      <% if (user && user._id.equals(vote.owner._id)) { %>
         <form action="/votings/<%= vote._id %>?_method=DELETE" method="POST">
           <input type="submit" value="삭제" class="deletebox" />
         </form>
