@@ -4,7 +4,8 @@ import {
   postVotings,
   getVoteDetail,
   postVotingDetail,
-  getVoteResult
+  getVoteResult,
+  deleteVote
 } from '../controllers/votingsController';
 
 const router = express.Router();
@@ -16,6 +17,8 @@ router.get('/new', getNewVote);
 router.get('/:id', getVoteDetail);
 
 router.post('/:id', postVotingDetail);
+
+router.delete('/:id', deleteVote);
 
 router.get('/:id/result', getVoteResult);
 

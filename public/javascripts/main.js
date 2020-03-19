@@ -3,6 +3,7 @@ const addOptionButton = document.querySelector('.add-options');
 const removeOptionButton = document.querySelector('.remove-options');
 const confirms = document.querySelectorAll('.confirm');
 const chartArea = document.querySelector('.chart-area');
+const deleteVoteButton = document.getElementById('delete-vote');
 
 if (optionsArea) {
   let optionCount = 1;
@@ -39,6 +40,15 @@ if (chartArea) {
     const value = bars[i].dataset.value;
     bars[i].style.width = `${value}%`;
   }
+}
+
+if (deleteVoteButton) {
+  deleteVoteButton.addEventListener('click', async () => {
+    const id = deleteVoteButton.dataset.voteId;
+
+    await fetch(`/votings/${id}`, { method: 'DELETE' });
+    window.location.href = '/';
+  });
 }
 
 function addOptionItem (target) {

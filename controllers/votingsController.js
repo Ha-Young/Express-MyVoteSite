@@ -110,3 +110,14 @@ export const getMyVotings = async (req, res) => {
     // Error handling
   }
 };
+
+export const deleteVote = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const vote = await Vote.findByIdAndDelete(id);
+
+    res.json(vote);
+  } catch (err) {
+
+  }
+};
