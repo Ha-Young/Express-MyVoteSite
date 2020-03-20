@@ -19,7 +19,7 @@
     <div class="container">
       <section class="voting-detail">
         <header class="box">
-          <h2><%= subject %> Result.</h2>
+          <h2><%= subject %></h2>
           <ul class="vote-info">
             <li>Creator: <%= creator.username %></li>
             <li>Created at: <%= dateTransformer(created_at) %></li>
@@ -37,7 +37,7 @@
                 value = Math.floor(maxLength / length) * 100;
               }
           %>
-            <li>
+            <li class="<% if (length === maxLength) { %>winner<% } %>">
               <h4><%= options[i].value %></h4>
               <div>
                 <div class="bar" data-value="<%= value %>"></div>

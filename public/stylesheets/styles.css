@@ -178,6 +178,9 @@ h2 {
   align-items: center;
   margin-bottom: 21px;
 }
+.chart-area li.winner h4:before, .chart-area li.winner h4:after{
+  content: '🥇';
+}
 .chart-area li:last-child {
   margin-bottom: 0;
 }
