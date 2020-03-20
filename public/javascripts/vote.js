@@ -1,10 +1,21 @@
 const toListButton = document.querySelector('.to-list');
+// const showResultButton = document.querySelector('.show-vote-result');
 const deleteVoteButton = document.querySelector('.delete-vote');
 const submitButton = document.querySelector('#submit');
 
 toListButton.addEventListener('click', () => {
   location.assign(location.origin);
 });
+
+const openModal = () => {
+  const modal = document.querySelector('.modal');
+  modal.style.display = 'block';
+};
+
+const closeModal = () => {
+  const modal = document.querySelector('.modal');
+  modal.style.display = 'none';
+};
 
 if (deleteVoteButton) {
   deleteVoteButton.addEventListener('click', async () => {

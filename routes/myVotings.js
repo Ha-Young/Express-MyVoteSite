@@ -1,9 +1,8 @@
 const express = require('express');
 const Users = require('../models/Users');
-// const Votes = require('../models/Votes');
 
 const checkAuthentication = require('../middlewares/authenticate');
-const { getDisplayInfo } = require('../lib/helpers');
+const { getDisplayInfo, sortVotesByExpiration } = require('../lib/helpers');
 
 const router = express.Router();
 
@@ -13,18 +12,20 @@ router.get('/', checkAuthentication, async (req, res) => {
     populate: { path: 'created_by' }
   });
 
-  const votes = loggedInUser.votes_created;
+  const allVotes = loggedInUser.votes_created;
 
   let expiredVotesCounter = 0;
-  const voteDisplayInfo = [];
-  votes.forEach(vote => {
+  const voteDisplayInfoList = [];
+  allVotes.forEach(vote => {
     if (vote.expired) expiredVotesCounter++;
-    voteDisplayInfo.push(getDisplayInfo(vote));
+    voteDisplayInfoList.push(getDisplayInfo(vote));
   });
+
+  const sortedVoteList = sortVotesByExpiration(voteDisplayInfoList);
 
   res.render('home', {
     loggedInUser,
-    votes: voteDisplayInfo,
+    allVotes: sortedVoteList,
     expiredVotesCounter
   });
 });
