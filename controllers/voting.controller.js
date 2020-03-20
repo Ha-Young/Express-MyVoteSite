@@ -3,13 +3,13 @@ const Voting = require('../models/Voting');
 const moment = require('moment');
 const error = require('../lib/error');
 
-exports.getVotingCreationPage = async function(req, res) {
+exports.getCreationPage = async function(req, res) {
   const user = await findUser(req);
 
   res.render('voting-creation', { user });
 };
 
-exports.getVotingDetail = async function(req, res, next) {
+exports.getDetail = async function(req, res, next) {
   try {
     const user = await findUser(req);
     const { id } = req.params;
@@ -39,7 +39,7 @@ exports.getVotingDetail = async function(req, res, next) {
   }
 };
 
-exports.createVoting = async function(req, res, next) {
+exports.create = async function(req, res, next) {
   try {
     const { 'voting-title': title, options, date, time } = req.body;
     const user = await findUser(req);
@@ -84,7 +84,7 @@ exports.createVoting = async function(req, res, next) {
   }
 };
 
-exports.updateVoting = async function(req, res, next) {
+exports.update = async function(req, res, next) {
   const { votingId, optionId } = req.params;
   let voting = await Voting.findById(votingId);
   const votingUserId = voting.user._id;
@@ -150,7 +150,7 @@ exports.updateVoting = async function(req, res, next) {
   }
 };
 
-exports.removeVoting = async function(req, res, next) {
+exports.remove = async function(req, res, next) {
   try {
     const user = findUser(req);
     const { id } = req.params;
