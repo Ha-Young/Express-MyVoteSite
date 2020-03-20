@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/login.css' />
+    <% include ./partials/head %>
+  </head>
+  <body>
+    <% include ./partials/header %>
+    <div class="formBox">
+      <h2 class="formTitle">
+        LOGIN
+      </h2>
+      <form action="/login" method="POST">
+        <label class="basicLabel">
+          <span>EMAIL :</span>
+          <input type="email" name="email" class="basicText"></input>
+        </label>
+        <label class="basicLabel">
+          <span>PASSWORD :</span>
+          <input type="password" name="password" class="basicText"></input>
+        </label>
+        <label>
+          <button type="submit" class="button">Login</button>
+        </label>
+      </form>
+      <a href="/join">Join us</a>
+      <span>check message</span>
+    </div>
+  </body>
+</html>

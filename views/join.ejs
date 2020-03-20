@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/join.css' />
+    <% include ./partials/head %>
+  </head>
+  <body>
+    <% include ./partials/header %>
+    <div class="formBox">
+      <form action="/join" method="POST">
+        <h2 class="formTitle">
+          JOIN
+        </h2>
+        <label class="basicLabel">
+          <span>EMAIL :</span>
+          <input type="email" name="email" class="basicText"></input>
+          <span> 이메일형식, 소문자로만 입력가능 </span>
+        </label>
+        <label class="basicLabel">
+          <span>PASSWORD :</span>
+          <input type="password" name="password" class="basicText"></input>
+          <span> 4~12자가능 </span>
+        </label>
+        <label class="basicLabel">
+          <span>NICKNAME :</span>
+          <input type="text" name="name" class="basicText"></input>
+          <span> 영어 2~10자 또는 한글2~6자까지만 가능</span>
+        </label>
+        <label>
+          <button type="submit" class="button">Sign</button>
+        </label>
+      </form>
+    </div>
+    <div class="basic loginButton"><a href="/login">Login</a></div>
+    <div class="basic alertBox">
+      <%= message %>
+    </div>
+  </body>
+</html>

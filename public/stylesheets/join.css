@@ -1,0 +1,18 @@
+.formBox {
+  display: flex;
+  justify-content: center;
+}
+
+.basicLabel, .basic {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.loginButton {
+  text-align: center;
+}
+
+.alertBox {
+  text-align: center;
+}

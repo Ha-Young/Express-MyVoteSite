@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/home.css' />
+    <% include ./partials/head %>
+  </head>
+  <body>
+    <% include ./partials/header %>
+    <div class="homeBox">
+      <div class="voteNavBox">
+        <div> * Vote List </div>
+        <div><a href="/my-voting">My Vote</a></div>
+        <div><a href="/voting/new">Create Vote</a></div>
+      </div>
+      <ul class="listBox">
+        <% if(!votes.length) { %>
+          <li>No Vote</li>
+        <% }%>
+        <% for (let i = 0; i < votes.length; i++) { %>
+          <li>
+            <a href="/voting/<%= votes[i]._id%>">
+              <%= votes[i].title %>
+              <%= votes[i].status %>
+            </a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </body>
+</html>

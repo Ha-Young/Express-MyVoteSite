@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/newVote.css' />
+    <% include ./partials/head %>
+  </head>
+  <body>
+    <% include ./partials/header %>
+    <div class="formBox">
+      <form action="/voting/new" method="POST">
+        <h2 class="formTitle">
+          New Vote!
+        </h2>
+        <label class="basicLabel">
+          <span>TITLE :</span>
+          <input type="text" name="title" class="basicText title"></input>
+        </label>
+        <label class="basicLabel">
+          <span>EXPIRED AT :</span>
+          <% function setZero (num) { return (num < 10)? '0' + num : num;} %>
+          <% let yy = new Date().getFullYear(); %>
+          <input type="number" name="expired" class="basicText dateInfo" value="<%= yy %>"></input>
+          <span>년</span>
+          <% let mm = new Date().getMonth() + 1; %>
+          <input type="number" name="expired" class="basicText dateInfo" value="<%= setZero(mm) %>"></input>
+          <span>월</span>
+          <% let dd = new Date().getDate(); %>
+          <input type="number" name="expired" class="basicText dateInfo" value="<%= setZero(dd) %>"></input>
+          <span>일</span>
+          <% let hours = new Date().getHours(); %>
+          <input type="number" name="expired" class="basicText dateInfo" value="<%= setZero(hours) %>"></input>
+          <span>:</span>
+          <% let minutes = new Date().getMinutes(); %>
+          <input type="number" name="expired" class="basicText dateInfo" value="<%= setZero(minutes) %>"></input>
+          <span>에 투표종료</span>
+        </label>
+        <ul>
+          <span>OPTIONS :</span>
+          <button type="button" name="addOption" class="addOption">
+            +
+          </button>
+          <button type="button" name="delOption" class="delOption">
+            -
+          </button>
+          <li>
+          <input type="text" name="options" class="basicText option"></input>
+          </li>
+          <li>
+            <input type="text" name="options" class="basicText option"></input>
+          </li>
+        </ul>
+        <label>
+          <button type="submit" class="button">Create</button>
+        </label>
+      </form>
+    </div>
+    <div class="basic cancelButton"><a href="/">Cancel</a></div>
+    <div class="basic alertBox">
+      message: <%= message %>
+    </div>
+  </body>
+</html>
