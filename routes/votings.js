@@ -1,10 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const Vote = require('../models/Vote');
-const { votingAuthorization } = require('../middlewares/votingAuthorization');
+const { authorization } = require('../middlewares/authorization');
+const { duplicateVoting } = require('../middlewares/duplicateVoting');
 const _ = require('lodash');
 
-router.get('/new', async (req, res, next) => {
+router.get('/new', authorization, async (req, res, next) => {
+  const { isAnonymousUser } = res.locals;
+
+  if (isAnonymousUser) {
+    return res.redirect('/login');
+  }
+
   res.render('createVote');
 });
 
@@ -31,13 +38,6 @@ router.post('/new', async (req, res, next) => {
   res.redirect('/');
 })
 
-
-// 로그인했을 때 이전 페이지로 돌아가는 로직
-// 세션에 url 전체를 저장
-// 미들웨어처럼 재사용성 높여보기
-
-// 클라이언트 정보를 서버 측에서 가공해서 처리
-
 router.get('/:vote_id', async (req, res, next) => {
   const { vote_id } = req.params;
   let { isParticipated } = res.locals;
@@ -47,20 +47,24 @@ router.get('/:vote_id', async (req, res, next) => {
     .exec((err, vote) => {
       if (req.user) {
         if (_.isEqual(vote.creator, req.user._id)) {
-          res.render('creator', { vote });
-        } else {
-          res.render('vote', { vote, isParticipated });
+          return res.render('creator', { vote });
         }
-      } else {
-        res.render('vote', { vote, isAnonymoususer: true });
       }
+      res.render('vote', { vote, isParticipated });
     });
   } catch (error) {
     console.log(error);
   }
 });
 
-router.post('/:vote_id', async (req, res, next) => {
+router.post('/:vote_id', authorization, duplicateVoting, async (req, res, next) => {
+  const { isAnonymousUser } = res.locals;
+  const visited = req.headers.referer;
+
+  if (isAnonymousUser) {
+    return res.redirect(`/login?vote=${visited}`);
+  }
+
   const { selected } = req.body;
   const { vote_id } = req.params;
   const participant = req.user._id;
@@ -80,12 +84,11 @@ router.post('/:vote_id', async (req, res, next) => {
   res.redirect('/');
 });
 
-router.delete('/:vote_id', async (req, res, next) => {
+router.delete('/api/votings/:vote_id', async (req, res, next) => {
   const { vote_id } = req.params;
 
   try {
     await Vote.deleteOne({ _id: vote_id });
-    res.redirect('/');
   } catch (error) {
     console.log(error);
   }

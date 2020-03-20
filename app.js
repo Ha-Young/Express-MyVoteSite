@@ -15,6 +15,7 @@ const methodOverride = require('method-override')
 const indexRouter = require('./routes/index');
 const votingRouter = require('./routes/votings');
 const myVotingRouter = require('./routes/myVotings');
+const apiRouter = require('./API/api');
 
 const app = express();
 
@@ -38,19 +39,8 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/votings', votingRouter);
 app.use('/my-votings', myVotingRouter);
+app.use('/api', apiRouter);
 
-app.post('/login',
-  passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login'
-}
-// , (req, res) => {
-//   req.session.save(() => {
-//     res.redirect('/');
-//   })
-//   }
-)
-)
 
 app.use(function(req, res, next) {
   next(createError(404));

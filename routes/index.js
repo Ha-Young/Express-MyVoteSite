@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 const { validator } = require('../middlewares/validator');
-const { authorization } = require('../middlewares/authorization');
 const signupController = require('../controllers/signup.Controller');
 
 const Vote = require('../models/Vote');
@@ -20,8 +20,23 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/login', (req, res, next) => {
-  res.render('login');
+  const visited = req.headers.referer;
+
+  res.render('login', { visited });
 });
+
+router.post('/login', passport.authenticate('local', {
+  failureRedirect: '/'
+}), (req, res) => {
+  const visited = req.query.vote;
+
+  if (visited) {
+    res.redirect(visited);
+  } else {
+    res.redirect('/');
+  }
+});
+// 하나의 요청주소에서는 언제나 동일한 응답을 받을 수 있어야한다.
 
 router.get('/logout', (req, res) => {
   req.logout();
@@ -38,7 +53,7 @@ router.post('/signup',
   validator,
   // signupController.passwordConfirmation,
   signupController.register, (req, res, next) => {
-    res.redirect('/');
+    res.redirect('/login');
   }
 );
 
