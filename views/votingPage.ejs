@@ -7,29 +7,42 @@
 </head>
 
 <body>
-  <h1><%= title %></h1>
-  <%= votingData.title %><br>
-  <%= votingData.writer %><br>
-  <%= votingData.description %><br>
-  <%= votingData.expiration_date %><br>
-  <%= votingData.progress %><br>
-  <select>
-    <option value="선택">선택</option>
-    <% for(let i=0; i < votingData.select_option.length; i++) { %>
-    <option class="option" value="<%= votingData.select_option[i] %>"><%= votingData.select_option[i] %></option>
+  <div class="votingsPageBox">
+    <h1><%= title %></h1>
+    <div class="votingDataBox">
+      제목: <%= votingData.title %><br>
+      작성자: <%= votingData.writer %><br>
+      투표 설명: <%= votingData.description %><br>
+      만료일: <%= votingData.expiration_date %><br>
+      <% if(votingData.progress) { %>
+      진행 중
+      <% } else { %>
+      진행 종료
+      <% } %>
+    </div>
+    <select>
+      <option value="선택">선택</option>
+      <% for(let i=0; i < votingData.select_option.length; i++) { %>
+      <option class="option" value="<%= votingData.select_option[i] %>"><%= votingData.select_option[i] %></option>
+      <% } %>
+    </select>
+    <span class="vote votingPageBtn">
+      <a href="/votings/<%= votingData.id %>">투표하기</a>
+    </span>
+    <% if(deleteBtn) { %>
+    <span class="deleteBtn votingPageBtn">
+      <a href="/votings/<%= votingData.id %>"><%= deleteBtn %></a>
+    </span>
     <% } %>
-  </select>
-  <a class="vote" href="/votings/<%= votingData.id %>">투표하기</a>
-  <% if(deleteBtn) { %>
-  <a class="deleteBtn" href="/votings/<%= votingData.id %>"><%= deleteBtn %></a>
-  <% } %>
-  <% if(result) { %>
+    <% if(result) { %>
     <% for(let key in result) { %>
-      <div><%= key %> -> <%= result[key]%></div>
+    <div><%= key %> -> <%= result[key]%></div>
     <% } %>
-  <% } %>
-  <a href="/">투표 목록으로 돌아가기</a>
-
+    <% } %>
+    <span class="votingPageBtn">
+      <a href="/">투표 목록으로 돌아가기</a>
+    </span>
+  </div>
   <script src="/javascripts/votingPage.js"></script>
 </body>
 

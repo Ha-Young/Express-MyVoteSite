@@ -70,3 +70,29 @@ a {
 .newVotingPageBtn {
   float: right;
 }
+
+.votingsPageBox {
+  border: 1px solid gray;
+  text-align: center;
+  border-radius: 1em;
+  padding: 50px;
+}
+
+.votingDataBox {
+  margin: 50px;
+}
+
+.votingPageBtn {
+  border: 1px solid gray;
+  border-radius: 1em;
+  padding: 10px;
+  margin: 10px;
+}
+
+select {
+  border: 1px solid gray;
+  border-radius: 1em;
+  padding: 10px;
+  outline: none;
+  cursor: pointer;
+}
