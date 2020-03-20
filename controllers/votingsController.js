@@ -1,16 +1,17 @@
 import mongoose from 'mongoose';
 import Vote from '../models/vote';
 import User from '../models/user';
+import createError from 'http-errors';
 import { dateTransformer } from '../helper';
 
-export const getHome = async (req, res) => {
+export const getHome = async (req, res, next) => {
   try {
     const votes = await Vote.find().populate('creator');
 
     res.locals.dateTransformer = dateTransformer;
     res.render('index', { votes });
   } catch (err) {
-    // Error handling
+    next(createError(500, err));
   }
 };
 
@@ -18,7 +19,7 @@ export const getNewVote = (req, res) => {
   res.render('newVoting');
 };
 
-export const postVotings = async (req, res) => {
+export const postVotings = async (req, res, next) => {
   try {
     const {
       voting_name,
@@ -40,17 +41,16 @@ export const postVotings = async (req, res) => {
     await user.save();
     res.redirect('/');
   } catch (err) {
-    // Error handler
-    console.log(err);
+    next(createError(500, err));
   }
 };
 
-export const getVoteDetail = async (req, res) => {
+export const getVoteDetail = async (req, res, next) => {
   try {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      res.redirect('/');
+      next(createError(400, '잘못된 요청입니다.'));
       return;
     }
 
@@ -59,8 +59,7 @@ export const getVoteDetail = async (req, res) => {
     res.locals.dateTransformer = dateTransformer;
     res.render('votingDetail', { vote });
   } catch (err) {
-    // Error handling
-    console.log(err);
+    next(createError(500, err));
   }
 };
 
@@ -84,21 +83,38 @@ export const postVotingDetail = async (req, res) => {
   }
 };
 
-export const getVoteResult = async (req, res) => {
+export const getVoteResult = async (req, res, next) => {
   try {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      res.redirect('/');
+      next(createError(400, '잘못된 요청입니다.'));
+      return;
     }
 
     const vote = await Vote.findById(id).populate('creator');
+    const user = req.user;
+    const { expirated, creator } = vote;
+    const currentTime = new Date().getTime();
+    const expiratedTime = new Date(expirated).getTime();
+    const isExpirated = expiratedTime - currentTime < 0;
+    let isCreator = false;
+
+    if (user) {
+      isCreator = creator.id === user.id;
+    }
+
+    if (!isCreator) {
+      if (!isExpirated) {
+        next(createError(403, '권한이 없는 페이지입니다.'));
+        return;
+      }
+    }
 
     res.locals.dateTransformer = dateTransformer;
     res.render('votingResult', { vote });
   } catch (err) {
-    // Error handling
-    console.log(err);
+    next(createError(500, err));
   }
 };
 
@@ -114,7 +130,7 @@ export const getMyVotings = async (req, res) => {
     res.locals.dateTransformer = dateTransformer;
     res.render('myVotings', { votes });
   } catch (err) {
-    // Error handling
+    next(createError(500, err));
   }
 };
 
@@ -125,7 +141,7 @@ export const deleteVote = async (req, res, next) => {
 
     res.json(vote);
   } catch (err) {
-
+    next(createError(500, err));
   }
 };
 
