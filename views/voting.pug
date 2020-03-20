@@ -1,0 +1,67 @@
+extends layout
+
+block append styles
+  link(rel='stylesheet', href='/stylesheets/voting.css')
+
+block content
+  include partials/header.pug
+  
+  .voting-wrap
+    .voting-detail
+      h2= voting.title
+      ul
+        li= voting.creator.nickname
+        li= voting.progress
+        li= expiration
+
+    form.voting-form(action=`/votings/${voting._id}` method='POST')
+      for option in voting.options
+        section
+          
+          .input-box
+            if voting.progress === '종료'
+              input.radio(type='radio' name='option' value=`${option.title}` disabled)
+            else if user && user.voted.includes(voting._id)
+              input.radio(type='radio' name='option' value=`${option.title}` disabled)
+            else if user && !user.voted.includes(voting._id)
+              input.radio(type='radio' name='option' value=`${option.title}`)
+            else if !user
+              input.radio(type='radio' name='option' value=`${option.title}`)
+            label(for=`${option.title}`)= option.title
+
+          if (user && user.created.includes(voting._id)) || voting.progress === '종료'
+            .aggregation
+              p= `득표수 : ${option.vote}`
+
+      .button-area
+        if user && user.created.includes(voting._id)
+          button.button-delete(type='button' value='delete') 삭제하기
+
+        if voting.progress === '종료'
+           button.button-gray(type='submit' value='update' disabled) 투표종료
+        else if user && user.voted.includes(voting._id)
+          button.button-gray(type='submit' value='update' disabled) 투표완료
+        else if user && !user.voted.includes(voting._id)
+          button.button-blue(type='submit' value='update') 투표하기
+        else if !user
+          button.button-blue(type='submit' value='update') 투표하기
+
+  a.button-back(href='/')= '🔙'
+
+  script(type='text/javascript').
+    const buttonDelete = document.querySelector(".button-delete");
+    const votingId = !{JSON.stringify(voting._id)};
+
+    if (buttonDelete) {
+      buttonDelete.addEventListener("click", () => {
+        fetch(`/votings/${votingId}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: votingId
+          })
+        });
+
+        location.href = "/";
+      });
+    }

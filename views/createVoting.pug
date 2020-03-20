@@ -1,0 +1,31 @@
+extends layout
+
+block append styles
+  link(rel='stylesheet', href='/stylesheets/createVoting.css')
+
+block content
+  include partials/header.pug
+
+  form.create-form(action='/votings/new' method='POST')
+    section
+      label(for='title') 타이틀
+      input.input-style(type='text', name='title', placeholder='투표 제목을 입력하세요')
+    section
+      label(for='expiration') 만료날짜
+      input.input-style(type='date', name='expiration')
+      input.input-style(type='time', name='expiration')
+    section.option-box
+      label(for='option') 옵션
+      .options
+        input.input-style(type='text', name='options')
+        input.input-style(type='text', name='options')
+      .option-buttons
+        button(type='button').button-remove= '옵션 삭제'
+        button(type='button').button-add= '옵션 추가'
+    .submit-area
+      button(type='submit').button-submit.button-blue 투표등록
+      p= createMessage
+
+  a.button-back(href='/')= '🔙'
+
+  script(type='text/javascript' src='/javascripts/createVoting.js') 

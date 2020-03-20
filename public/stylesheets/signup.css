@@ -1,0 +1,56 @@
+.signup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  padding: 34px 60px 50px;
+  background: #fff;
+  border-radius: 4px;
+  transform: translate(-50%, -50%);
+}
+
+.signup > h1 {
+  margin: 0;
+  text-align: center;
+}
+
+.signup > h1 > a {
+  font-size: 25px;
+  color: #26449c;
+}
+
+.signup > form {
+  margin-top: 30px;
+}
+
+.signup section {
+  display: flex;
+  margin: 20px 0;
+}
+
+.signup section > label {
+  display: inline-block;
+  width: 110px;
+  font-size: 14px;
+  line-height: 42px;
+  color: #333;
+}
+
+.submit-area {
+  width: 100%;
+  margin-top: 40px;
+}
+
+.submit-area > p {
+  float: left;
+  width: calc(100% - 135px);
+  margin: 0;
+  font-size: 14px;
+  line-height: 40px;
+  color: #26449c;
+  letter-spacing: -0.071em;
+  text-align: right;
+}
+
+.button-submit {
+  float: right;
+}

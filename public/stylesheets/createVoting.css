@@ -1,0 +1,100 @@
+.create-form {
+  position: relative;
+  margin-top: 30px;
+  padding: 30px 40px 105px;
+  background: #fff;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.create-form section:not(:last-of-type) {
+  margin-bottom: 25px;
+}
+
+.create-form label {
+  display: inline-block;
+  float: left;
+  width: 100px;
+  line-height: 40px;
+}
+
+input[type='time'] {
+  margin-left: 22px;
+}
+
+.option-box {
+  display: inline-block;
+  width: 100%;
+}
+
+.options {
+  float: right;
+  width: calc(100% - 100px);
+}
+
+.options input {
+  width: 100%;
+}
+
+.option-buttons {
+  display: inline-block;
+  float: right;
+  clear: both;
+  width: calc(100% - 100px);
+  margin-top: 30px;
+}
+
+.option-buttons button {
+  width: calc(100% / 2 - 10px);
+  margin-right: 20px;
+  padding: 15px 0;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.option-buttons button:last-of-type {
+  margin-right: 0;
+}
+
+.button-add {
+  background: #26449c;
+  color: #fff;
+}
+
+.button-remove {
+  background: #f3f3f3;
+}
+
+.create-form .submit-area {
+  position: absolute;
+  right: 40px;
+  bottom: 30px;
+  width: calc(100% - 180px);
+}
+
+.create-form .submit-area .button-submit {
+  float: right;
+}
+
+.create-form .submit-area p {
+  float: left;
+  width: calc(100% - 135px);
+  margin: 0;
+  font-size: 14px;
+  line-height: 40px;
+  color: #26449c;
+  text-align: right;
+}
+
+.button-back {
+  position: fixed;
+  bottom: 40px;
+  left: 40px;
+  width: 90px;
+  height: 90px;
+  background: #eaeaea;
+  border-radius: 50%;
+  font-size: 45px;
+  line-height: 84px;
+  text-align: center;
+}

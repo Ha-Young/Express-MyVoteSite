@@ -1,0 +1,45 @@
+.login {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  padding: 34px 60px 50px;
+  background: #fff;
+  border-radius: 4px;
+  transform: translate(-50%, -50%);
+}
+
+.login > h1 {
+  margin: 0;
+  text-align: center;
+}
+
+.login > h1 > a {
+  font-size: 25px;
+  color: #26449c;
+}
+
+.login > form {
+  margin-top: 30px;
+}
+
+.login section {
+  margin: 20px 0;
+}
+
+.submit-area {
+  width: 100%;
+  margin-top: 35px;
+}
+
+.submit-area > a {
+  float: right;
+  margin: 0;
+  margin-right: 20px;
+  font-size: 14px;
+  line-height: 40px;
+  color: #26449c;
+}
+
+.button-submit {
+  float: right;
+}

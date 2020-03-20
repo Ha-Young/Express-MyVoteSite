@@ -1,0 +1,19 @@
+extends layout
+
+block append styles
+  link(rel='stylesheet', href='/stylesheets/index.css')
+
+block content
+  include partials/header.pug
+  
+  .votings-list
+    each voting, index in votings
+      .votings
+        a(href=`/votings/${voting._id}`)
+          h3.title= voting.title
+          ul
+            li= `작성자 : ${voting.creator.nickname}`
+            li= `진행현황 : ${voting.progress}`
+            li= `만료날짜 : ${expirationList[index]}`
+            
+  a(href='/votings/new').button-create 투표 만들기

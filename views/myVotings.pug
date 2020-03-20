@@ -1,0 +1,19 @@
+extends layout
+
+block append styles
+  link(rel='stylesheet', href='/stylesheets/myVotings.css')
+
+block content
+  include partials/header.pug
+  
+  .votings-list
+    each voting, index in votings.created
+      .votings
+        a(href=`/votings/${voting._id}`)
+          h3.title= voting.title
+          ul
+            li= `진행현황 : ${voting.progress}`
+            li= `만료날짜 : ${expiration[index]}`
+
+    if !votings.created.length
+      h3.not-message 등록한 투표가 없습니다

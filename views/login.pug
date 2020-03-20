@@ -1,0 +1,18 @@
+extends layout
+
+block append styles
+  link(rel='stylesheet', href='/stylesheets/login.css')
+
+block content
+  .login
+    h1 
+      a(href='/') Voting!
+    form(action='/login' method='POST')
+      section
+        input(type='hidden' name='referer' value=referer)
+        input.input-style(type='email' name='email' placeholder='이메일')
+      section
+        input.input-style(type='password' name='password' placeholder='비밀번호')
+      .submit-area
+        button.button-submit.button-blue(type='submit') 로그인
+        a(href='/signup') 회원가입

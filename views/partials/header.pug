@@ -1,0 +1,17 @@
+block content
+  header
+    h1
+      a(href='/')= 'Voting!'
+
+    if user
+      .my-menu
+        .show-area
+          p= user.nickname
+        .menu
+          ul
+            li
+              a(href='/my-votings')='내 투표보기'
+            li
+              a(href='/logout')='로그아웃'
+    else
+      a.button-login(href='/login')= '로그인'

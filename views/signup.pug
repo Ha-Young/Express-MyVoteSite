@@ -1,0 +1,25 @@
+extends layout
+
+block append styles
+  link(rel='stylesheet', href='/stylesheets/signup.css')
+
+block content
+  .signup
+    h1 
+      a(href='/') Voting!
+    form(action='/signup' method='POST')
+      section
+        label(for='email') 이메일
+        input.input-style(type='email' name='email' placeholder='이메일 주소를 입력해주세요')
+      section
+        label(for='nickname') 닉네임
+        input.input-style(type='text' name='nickname' placeholder='닉네임을 입력해주세요')
+      section
+        label(for='password') 비밀번호
+        input.input-style(type='password' name='password' placeholder='비밀번호를 입력해주세요')
+      section
+        label(for='password-check') 비밀번호 확인
+        input.input-style(type='password' name='password-check' placeholder='비밀번호 확인을 입력해주세요')
+      .submit-area
+        p= signupMessage
+        button.button-submit.button-blue(type='submit') 회원가입

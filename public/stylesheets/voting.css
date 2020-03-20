@@ -1,0 +1,154 @@
+.voting-wrap {
+  display: inline-block;
+  width: 100%;
+  margin-top: 30px;
+  padding: 30px 40px;
+  background: #fff;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.voting-detail::after {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-top: 30px;
+  background: #f3f3f3;
+  content: '';
+}
+
+.voting-detail h2 {
+  margin: 0;
+  font-weight: 400;
+  font-size: 20px;
+  color: #333;
+}
+
+.voting-detail ul {
+  display: flex;
+  margin: 10px 0 0 0;
+  padding: 0;
+}
+
+.voting-detail li {
+  display: flex;
+  font-size: 14px;
+  color: #bbb;
+}
+
+.voting-detail li:not(:last-of-type)::after {
+  display: block;
+  width: 1px;
+  height: 14px;
+  margin: 4px 10px;
+  background: #bbb;
+  content: '';
+}
+
+.voting-form {
+  margin-top: 30px;
+}
+
+.voting-form section {
+  display: flex;
+  margin: 25px 0;
+}
+
+.radio {
+  position: absolute;
+  z-index: 1;
+  margin: 5px 0 0 4px;
+  padding: 10px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.radio:disabled {
+  cursor: default;
+}
+
+.radio + label {
+  display: inline-block;
+  position: relative;
+  padding-left: 30px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #333;
+}
+
+.radio + label:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 100%;
+  content: '';
+}
+
+.radio + label:after{
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 12px;
+  height: 12px;
+  background: #26449c;
+  border-radius: 100%;
+  content: '';
+  transition: all 0.2s ease;
+}
+
+.radio:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.radio:checked + label:after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.aggregation {
+  margin-left: 20px;
+}
+
+.aggregation p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 26px;
+  color: #ccc;
+}
+
+.button-area {
+  float: right;
+  margin-top: 20px;
+}
+
+.button-area button:disabled {
+  cursor: default;
+}
+
+.button-delete {
+  height: 40px;
+  margin-right: 10px;
+  padding: 0 30px;
+  background: #f3f3f3;
+  border-radius: 2px;
+  font-size: 14px;
+  color: #333;
+}
+
+.button-back {
+  position: fixed;
+  bottom: 40px;
+  left: 40px;
+  width: 90px;
+  height: 90px;
+  background: #eaeaea;
+  border-radius: 50%;
+  font-size: 45px;
+  line-height: 84px;
+  text-align: center;
+}

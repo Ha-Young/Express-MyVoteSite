@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700&display=swap');
+
+html,
+body {
+  margin: 0;
+  background: #f7f7f7;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+  padding: 40px;
+}
+
+ul,
+li {
+  font-family: 'Noto Sans KR', sans-serif;
+  list-style: none;
+}
+
+a {
+  font-family: 'Noto Sans KR', sans-serif;
+  text-decoration: none;
+}
+
+input {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+input:focus {
+  outline: none;
+}
+
+.input-style {
+  width: 380px;
+  height: 40px;
+  border: 0;
+  border-bottom: 1px solid #eee;
+  background: none;
+  font-size: 14px;
+  color: #333;
+}
+
+.input-style::placeholder {
+  color: #ccc;
+}
+
+button {
+  border: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none;
+}
+
+.button-blue {
+  height: 40px;
+  padding: 0 30px;
+  background: #26449c;
+  border-radius: 2px;
+  font-size: 14px;
+  color: #fff;
+}
+
+.button-gray {
+  height: 40px;
+  padding: 0 30px;
+  background: #f3f3f3;
+  border-radius: 2px;
+  font-size: 14px;
+  color: #333;
+}
+
+header {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+}
+
+header h1 {
+  margin: -13px 0 0 0;
+}
+
+header h1 a {
+  font-size: 40px;
+  color: #26449c;
+}
+
+.button-login {
+  display: block;
+  height: 30px;
+  margin-top: 2px;
+  padding: 0 13px;
+  border: 1px solid #26449c;
+  border-radius: 2px;
+  font-size: 14px;
+  line-height: 28px;
+  color: #26449c;
+}
+
+.my-menu {
+  position: absolute;
+  top: -6px;
+  right: 0;
+  z-index: 1;
+  width: 120px;
+}
+
+.show-area {
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.show-area > p {
+  overflow: hidden; 
+  width: 100%;
+  margin: 0;
+  color: #333;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.my-menu .menu {
+  display: none;
+}
+
+.my-menu:hover .menu {
+  display: block;
+}
+
+.my-menu .menu ul {
+  margin: 0;
+  padding: 0;
+}
+
+.my-menu .menu a {
+  display: block;
+  width: 100%;
+  padding: 8px 0;
+  font-size: 14px;
+  color: #333;
+}
