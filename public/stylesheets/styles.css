@@ -12,6 +12,10 @@
   display: flex;
   flex-direction: column;
 }
+.layout-column h4 {
+  font-size: 18px;
+  margin-bottom: 21px;
+}
 .buttons-wrap {
   margin: 21px 0;
   display: flex;

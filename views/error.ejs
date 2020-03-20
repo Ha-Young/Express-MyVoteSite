@@ -2,9 +2,16 @@
 <html>
   <%- include('partial/head') -%>
   <body>
-    <h1><%= message %></h1>
-    <h2><%= error.status %></h2>
-    <pre><%= error.stack %></pre>
+    <div class="container no-header">
+      <section class="layout-column">
+        <h3><%= message %></h3>
+        <h4><%= error.status %></h4>
+        <pre><%= error.stack %></pre>
+        <div class="buttons-wrap">
+          <a href="/" class="button">Go Home</a>
+        </div>
+      </section>
+    </div>
     <%- include('partial/scripts') -%>
   </body>
 </html>
