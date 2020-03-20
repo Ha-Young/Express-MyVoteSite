@@ -3,10 +3,9 @@ const router = express.Router();
 const { check } = require('express-validator');
 const votingsController = require('../controller/votings.cotroller');
 const { ensureAuthenticated } = require('../middlewares/authorization');
-const util = require('../lib/util');
+const timeUtil = require('../lib/timeUtil');
 
 router.get('/new', ensureAuthenticated, votingsController.getCreatePage);
-
 router.post('/new', [
   check('title')
     .notEmpty()
@@ -15,7 +14,7 @@ router.post('/new', [
     .notEmpty()
     .withMessage('The expiration date/time does not exist or It is earlier than the current time.')
     .custom((expiration_time, { req }) => {
-      return util.compareCurrentDate(req.body.expiration_date, expiration_time);
+      return timeUtil.compareCurrentDate(req.body.expiration_date, expiration_time);
     })
     .withMessage('Please fill out the expiration date later than the current time.'),
   check('options')
@@ -23,11 +22,8 @@ router.post('/new', [
     .custom((value) => value.every(option => option.length > 0))
     .withMessage('Please fill out at least two options.'),
 ], ensureAuthenticated, votingsController.createNewVote);
-
 router.get('/:id', votingsController.getSelectedVote);
-
 router.post('/:id', ensureAuthenticated, votingsController.voteSelectedVoting);
-
 router.delete('/:id', ensureAuthenticated, votingsController.deleteVote);
 
 module.exports = router;

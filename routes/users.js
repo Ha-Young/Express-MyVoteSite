@@ -23,6 +23,6 @@ router.post('/new', [
     .withMessage('Please fill in the password check box.')
     .custom((value, { req }) => value === req.body.password)
     .withMessage('The passwords you entered is different.'),
-], usersController.makeNewUser);
+], usersController.createNewUser);
 
 module.exports = router;
