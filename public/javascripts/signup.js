@@ -1,12 +1,10 @@
-const SIGNUP_RESULT={ SIGNUP_SUCCESS:'SIGNUP_SUCCESS' , USER_EXIST:"USER_EXIST" }
+const SIGNUP_RESULT = { SIGNUP_SUCCESS: "SIGNUP_SUCCESS", USER_EXIST: "USER_EXIST" };
 
 function confirm() {
   const form = document.querySelector("form");
   form.addEventListener("submit", e => {
     e.preventDefault();
   });
-
-  // password validation:at least one numeric digit and a special character
   const email = document.querySelector('input[type="email"]').value;
   const emailPattern = /\S+@\S+\.\S+/;
   const passwords = document.querySelectorAll('input[type="password"]');
@@ -16,8 +14,6 @@ function confirm() {
 
   if (email.match(emailPattern)) {
     if (passwords[0].value.match(passwordPattern)) {
-      // form.method = "POST";
-      // form.action = "/signup";
       if (password === passwordConfirm) {
         const data = {
           email: email,
@@ -32,13 +28,12 @@ function confirm() {
           .then(res => res.json())
           .then(result => {
             if (result.message === SIGNUP_RESULT.USER_EXIST) {
-              alert('이미 계정이 존재합니다.')
-            }else {
-              alert('회원가입이 완료 되었습니다')
-              window.location.pathname = '/'
+              alert("이미 계정이 존재합니다.");
+            } else {
+              alert("회원가입이 완료 되었습니다");
+              window.location.pathname = "/";
             }
           });
-        // form.submit();
       } else {
         alert("비밀번호가 일치하지 않습니다.");
       }

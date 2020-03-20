@@ -1,6 +1,8 @@
 const form = document.querySelector("form");
+
 form.addEventListener("submit", e => {
   e.preventDefault();
+
   const LOGIN_RESULT = {
     SUCCESS: "SUCCESS",
     NO_ACCOUNT: "NO_ACCOUT",
@@ -18,10 +20,10 @@ form.addEventListener("submit", e => {
     body: JSON.stringify(data),
     headers: { "Content-Type": "application/json" }
   };
+
   fetch("/login", option)
     .then(res => res.json())
     .then(result => {
-      console.log();
       switch (result.message) {
         case LOGIN_RESULT.SUCCESS:
           window.location.pathname = "/";

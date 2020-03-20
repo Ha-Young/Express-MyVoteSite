@@ -9,7 +9,6 @@ const LOGIN_RESULT = {
 
 
 async function findOrCreateUser(req, res, next) {
-  console.log("request here", req.body);
   const { email } = req.body;
   const targetUser = await User.findOne({ email: email });
   if (targetUser) {
@@ -24,29 +23,22 @@ async function findUser(req, res, next) {
   const { email, password } = req.body;
   const targetUser = await User.findOne({ email: email });
   if (targetUser) {
-    console.log("로그인 로직 시작");
-    //비밀번호 비교
     targetUser.comparePassword(password, function(err, isMatch) {
       if (err) {
-        console.log("오류");
         res.json({ message: LOGIN_RESULT.ERROR });
         return;
       }
       if (isMatch) {
-        console.log("통과");
-        //세션 처리
         req.session.user=targetUser;
         req.session.userId = email.split("@")[0];
         req.session.save(function() {
           res.json({ message: LOGIN_RESULT.SUCCESS });
         });
       } else {
-        console.log("비밀번호 오류");
         res.json({ message: LOGIN_RESULT.WRONG_PASSWORD });
       }
     });
   } else {
-    console.log("계정없음");
     User.create(req.body);
     res.json({ message: LOGIN_RESULT.NO_ACCOUNT });
   }

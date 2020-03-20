@@ -4,13 +4,6 @@ const userController = require("./controller/userController");
 const voteController = require("./controller/voteController");
 const { RENDER_PROPS } = require("./controller/constant");
 
-// const renderProperty = {
-//   title: "전국민 투표앱! 코리아 투표앱",
-//   formStyle: "form",
-//   voteFormStyle: "voteForm"
-// };
-
-/* GET home page. */
 router.get("/", (req, res, next) => voteController.getAllVote(req, res, next));
 
 router.get("/login", (req, res, next) => {
@@ -23,11 +16,13 @@ router.get("/signout", (req, res, next) => {
   req.session.destroy();
   res.redirect("/");
 });
+
 router.post("/signup", (req, res, next) => userController.findOrCreateUser(req, res, next));
 
 router.get("/signup", (req, res, next) => {
   res.render("signup", { title: RENDER_PROPS.TITLE, style: RENDER_PROPS.STYLE.FORM });
 });
+
 router.get("/my-votings", (req, res, next) => {
   const loginUser = req.session.userId;
   if (!loginUser) {
@@ -40,6 +35,7 @@ router.get("/my-votings", (req, res, next) => {
     style: RENDER_PROPS.STYLE.VOTE_FORM
   });
 });
+
 router.get("/votings/new", (req, res, next) => {
   const loginUser = req.session.userId;
   if (!loginUser) {
@@ -59,4 +55,5 @@ router.post("/votings/new", (req, res, next) => {
 router.get("/votings/:id", (req, res, next) => voteController.getUserVote(req, res, next));
 
 router.post("/votings/:id", (req, res, next) => voteController.updateVoteCount(req, res, next));
+
 module.exports = router;

@@ -1,4 +1,3 @@
-//date limit
 const dateInput = document.querySelector("input[type='datetime-local']");
 const MESSAGE = {
   SAVE_ERROR: "VOTE_SAVE_ERROR",
@@ -25,8 +24,6 @@ dateInput.max = maxDate
 
 var optionNum = 2;
 function addOption() {
-  console.log("옵션추가");
-  //TODO : 선택지 삭제도 가능하게 하기
   if (optionNum < 5) {
     optionNum++;
     const optionWrapper = document.querySelector(".option-wrapper");
@@ -34,7 +31,6 @@ function addOption() {
     option.type = "text";
     option.placeholder = "선택지" + optionNum;
     option.className = "option";
-    console.log(option);
     optionWrapper.appendChild(option);
   } else {
   }
@@ -51,7 +47,6 @@ function processData() {
   function checkIfDuplicateExists(arr) {
     return new Set(arr).size !== arr.length;
   }
-  console.log("중복검사결과:", checkIfDuplicateExists(options), options);
   return {
     title,
     due,
@@ -62,7 +57,6 @@ function processData() {
 const form = document.querySelector(".vote-form");
 form.addEventListener("submit", e => {
   e.preventDefault();
-  console.log("submit");
   const VOTE_CREATE_RESULT = {
     SUCCESS: "SUCCESS",
     CREATE_ERROR: "CREATE_ERROR"
@@ -70,7 +64,6 @@ form.addEventListener("submit", e => {
   const errorMessage = document.querySelector(".error");
 
   const data = processData();
-  console.log(data);
   const option = {
     method: "POST",
     body: JSON.stringify(data),
@@ -79,7 +72,6 @@ form.addEventListener("submit", e => {
   fetch("/votings/new", option)
     .then(res => res.json())
     .then(result => {
-      console.log();
       switch (result.message) {
         case MESSAGE.SAVE_ERROR:
           errorMessage.textContent = "저장 오류가 발생했습니다. 다시 시도해 주세요";
