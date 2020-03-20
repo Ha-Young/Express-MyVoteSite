@@ -10,7 +10,8 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
-const methodOverride = require('method-override')
+// const flash = require('connect-flash');
+// const methodOverride = require('method-override')
 
 const indexRouter = require('./routes/index');
 const votingRouter = require('./routes/votings');
@@ -23,7 +24,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(cookieParser());
-app.use(methodOverride());
+// app.use(methodOverride());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -35,6 +36,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+// app.use(flash());
 
 app.use('/', indexRouter);
 app.use('/votings', votingRouter);

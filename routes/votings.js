@@ -4,6 +4,7 @@ const Vote = require('../models/Vote');
 const { authorization } = require('../middlewares/authorization');
 const { duplicateVoting } = require('../middlewares/duplicateVoting');
 const _ = require('lodash');
+const errors = require('../helpers/error');
 
 router.get('/new', authorization, async (req, res, next) => {
   const { isAnonymousUser } = res.locals;
@@ -32,7 +33,7 @@ router.post('/new', async (req, res, next) => {
       expirationDate
     });
   } catch (error) {
-    console.log(error);
+    next(new errors.GeneralError(error));
   }
 
   res.redirect('/');
@@ -53,7 +54,7 @@ router.get('/:vote_id', async (req, res, next) => {
       res.render('vote', { vote, isParticipated });
     });
   } catch (error) {
-    console.log(error);
+    next(new errors.GeneralError(error));
   }
 });
 
@@ -78,7 +79,7 @@ router.post('/:vote_id', authorization, duplicateVoting, async (req, res, next) 
       $push: { participants: participant }
     });
   } catch (error) {
-    console.log(error);
+    next(new errors.GeneralError(error));
   }
 
   res.redirect('/');
@@ -90,7 +91,7 @@ router.delete('/api/votings/:vote_id', async (req, res, next) => {
   try {
     await Vote.deleteOne({ _id: vote_id });
   } catch (error) {
-    console.log(error);
+    next(new errors.GeneralError(error));
   }
 })
 

@@ -4,39 +4,47 @@ const passport = require('passport');
 
 const { validator } = require('../middlewares/validator');
 const signupController = require('../controllers/signup.Controller');
+const errors = require('../helpers/error');
 
 const Vote = require('../models/Vote');
 
 router.get('/', async (req, res, next) => {
-  const today = new Date(Date.now());
+  try {
+    const today = new Date(Date.now());
 
-  await Vote.updateMany(
-    { expirationDate: { $lte: today }},
-    { isExpired: true }
-  );
+    await Vote.updateMany(
+      { expirationDate: { $lte: today }},
+      { isExpired: true }
+    );
 
-  const votes = await Vote.find();
-  res.render('index', { votes });
+    const votes = await Vote.find();
+    res.render('index', { votes });
+  } catch (error) {
+    next(new errors.GeneralError(error));
+  }
 });
 
 router.get('/login', (req, res, next) => {
-  const visited = req.headers.referer;
-
-  res.render('login', { visited });
+  res.render('login', { message: null });
 });
 
-router.post('/login', passport.authenticate('local', {
-  failureRedirect: '/'
-}), (req, res) => {
-  const visited = req.query.vote;
 
-  if (visited) {
-    res.redirect(visited);
-  } else {
-    res.redirect('/');
-  }
+router.post('/login', function(req, res, next) {
+  passport.authenticate('local', function(err, user, message) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.render('login', { message });
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(errors.GeneralError(err));
+      }
+      return res.redirect('/');
+    });
+  })(req, res, next);
 });
-// 하나의 요청주소에서는 언제나 동일한 응답을 받을 수 있어야한다.
 
 router.get('/logout', (req, res) => {
   req.logout();
