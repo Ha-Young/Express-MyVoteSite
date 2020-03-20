@@ -9,7 +9,7 @@
 <body>
   <h1><%= title %></h1>
   <% for(let i of myVotingList) { %>
-    <div>
+    <div class="votings">
       <a href="/votings/<%= i.id %>">
         <div>투표제목 <%= i.title %></div>
         <div>작성자 <%= i.writer %></div>

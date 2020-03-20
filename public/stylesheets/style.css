@@ -82,11 +82,19 @@ a {
   margin: 50px;
 }
 
+.votingDetails {
+  margin: 10px;
+}
+
 .votingPageBtn {
   border: 1px solid gray;
   border-radius: 1em;
   padding: 10px;
   margin: 10px;
+}
+
+.box {
+  margin: 40px;
 }
 
 select {

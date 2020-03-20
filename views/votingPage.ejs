@@ -10,12 +10,19 @@
   <div class="votingsPageBox">
     <h1><%= title %></h1>
     <div class="votingDataBox">
-      제목: <%= votingData.title %><br>
-      작성자: <%= votingData.writer %><br>
-      투표 설명: <%= votingData.description %><br>
-      만료일: <%= votingData.expiration_date_string %><br>
+      <div class="votingDetails">
+        제목: <%= votingData.title %><br>
+        작성자: <%= votingData.writer %><br>
+        투표 설명: <%= votingData.description %><br>
+        만료일: <%= votingData.expiration_date_string %><br>
+      </div>
       <% if(votingData.progress) { %>
-      진행 중
+      <div class="box">
+        진행 중
+      </div>
+      <div class="box">
+        <a class="vote votingPageBtn" href="/votings/<%= votingData.id %>">투표하기</a>
+      </div>
       <% } else { %>
       진행 종료
       <% } %>
@@ -26,16 +33,19 @@
       <option class="option" value="<%= votingData.select_option[i] %>"><%= votingData.select_option[i] %></option>
       <% } %>
     </select>
-    <a class="vote votingPageBtn" href="/votings/<%= votingData.id %>">투표하기</a>
     <% if(deleteBtn) { %>
-    <a class="deleteBtn votingPageBtn" href="/votings/<%= votingData.id %>"><%= deleteBtn %></a>
+      <a class="deleteBtn votingPageBtn" href="/votings/<%= votingData.id %>"><%= deleteBtn %></a>
     <% } %>
-    <% if(result) { %>
-    <% for(let key in result) { %>
-    <div><%= key %> -> <%= result[key]%></div>
-    <% } %>
-    <% } %>
-    <a class="votingPageBtn" href="/">투표 목록으로 돌아가기</a>
+    <div class="box">
+      <% if(!votingData.progress||userCheck) { %>
+        <% for(let key in result) { %>
+          <div><%= key %> -> <%= result[key]%></div>
+        <% } %>
+      <% } %>
+    </div>
+    <div class="box">
+      <a class="votingPageBtn" href="/">투표 목록으로 돌아가기</a>
+    </div>
   </div>
   <script src="/javascripts/votingPage.js"></script>
 </body>

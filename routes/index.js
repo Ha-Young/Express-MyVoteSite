@@ -12,7 +12,6 @@ router.get('/', async (req, res, next) => {
 });
 
 router.put('/', async (req, res, next) => {
-  console.log(req.body);
   await Votings.updateOne({ expiration_date_string: req.body.date }, { progress: false });
   res.json({ result: 'ok' });
 });
