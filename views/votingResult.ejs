@@ -6,6 +6,7 @@
     <%
       const { id, subject, options, creator, created_at, expirated } = vote;
       const lotsOfLength = options.map(opt => opt.voter.length);
+      const totalLength = lotsOfLength.reduce((acc, len) => acc + len, 0);
       const maxLength = Math.max.apply(null, lotsOfLength);
       const isExpirated = getIsExpired(expirated);
       let isCreator = false;
@@ -22,7 +23,7 @@
             <li>Creator: <%= creator.username %></li>
             <li>Created at: <%= dateTransformer(created_at) %></li>
             <li>Expirated at: <%= dateTransformer(expirated) %></li>
-            <li>Total votes: <%= maxLength %></li>
+            <li>Total votes: <%= totalLength %></li>
           </ul>
         </header>
         <ul class="chart-area">
@@ -32,7 +33,7 @@
               let value = 0;
               
               if (length) {
-                value = Math.floor(maxLength / length) * 100;
+                value = (length / maxLength).toFixed(2) * 100;
               }
           %>
             <li class="<% if (length && length === maxLength) { %> winner <% } %>">
