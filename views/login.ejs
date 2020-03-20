@@ -1,17 +1,41 @@
 <!DOCTYPE html>
 <html>
   <head>
-
+    <title>Voting Platform Sign in</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/login.css' />
   </head>
   <body>
-    LOGIN
-    <form method='POST' action=<%=`/login`%>>
-      USERNAME: <input type="text" name="username"></input><br/>
-      PASSWORD: <input type="text" name="password"></input><br/>
-      <button type='submit'>LOGIN</button>
-    </form>
-    <a href='/signup'>
-      <button>Sign up</button>
-    </a>
+    
+    <div id='body_container'>
+      <div>
+        <a href='/'> Main page </a>
+      </div>
+      
+      <div id='form_container'>
+        <div id='signin_text'>
+          <span>Sign in</span>
+        </div>
+        <form method='POST' action=<%=`/login`%>>
+          <div>
+            <span>USERNAME</span><br/>
+            <input type="text" name="username" required/>
+          </div>
+          <div>
+            <span>PASSWORD</span><br/>
+            <input type="password" name="password" required/>
+          </div>
+          <button class='primary_button' type='submit'>LOGIN</button>
+        </form>
+      </div>
+      <div id='signup_container'>
+        <span>New to Voting Platform?</span>
+        <div>
+          <a href='/signup'>
+            <button class='secondary_button'>Create your Account</button>
+          </a>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

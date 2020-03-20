@@ -6,3 +6,49 @@ body {
 a {
   color: #00B7FF;
 }
+
+.primary_button {
+  font-size: 30px;
+  background-color: #00B7FF;
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+}
+
+.primary_button:hover {
+  filter: contrast(1.5);
+}
+
+.primary_button:focus, .primary_button:active {
+  outline: none;
+  box-shadow: none;
+}
+
+.primary_button:disabled {
+  background-color: gainsboro;
+  filter: contrast(1);
+}
+
+.secondary_button {
+  font-size: 30px;
+  background-color: lightgrey;
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+}
+
+.secondary_button:hover {
+  opacity: 0.8;
+}
+
+.secondary_button:focus, .primary_button:active {
+  outline: none;
+  box-shadow: none;
+}
+
+.secondary_button:disabled {
+  background-color: gainsboro;
+  filter: contrast(1);
+}

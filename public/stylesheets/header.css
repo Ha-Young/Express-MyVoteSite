@@ -1,0 +1,13 @@
+.header_container {
+  width: 80%;
+}
+
+.header-link-text {
+  /* margin: 10px; */
+  margin-right: 5px;
+}
+
+.nav-bar-container {
+  margin-top: 10px;
+  /* font-size: 20px; */
+}

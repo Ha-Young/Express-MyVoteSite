@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const { VOTING_STATUSES } = require('../constants/enums');
 
 const notEmpty = function(tests){
   return tests.length !== 0;
@@ -20,8 +21,6 @@ const votingSchema = new mongoose.Schema({
         type: String,
         required: true
       }
-      // type: String,
-      // required: true
     }],
     required: true,
     validate: [notEmpty, 'Please add at least one choice']
@@ -32,8 +31,8 @@ const votingSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: [ 'ACTIVE', 'EXPIRED' ],
-    default: 'ACTIVE',
+    enum: [ VOTING_STATUSES.ACTIVE, VOTING_STATUSES.ENDED ],
+    default: VOTING_STATUSES.ACTIVE,
     required: true,
   },
   votes: {

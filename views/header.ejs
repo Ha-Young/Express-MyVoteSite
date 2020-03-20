@@ -1,0 +1,18 @@
+<link rel='stylesheet' href='/stylesheets/header.css' />
+<div class='header_container'>
+  <div>
+    <% if (user) { %>
+      HI, <b><%= user.username %></b><br/>
+      <a href='/my-votings'><span class='header-link-text'>My votings</span></a>
+      <a href='/logout'><span class='header-link-text'>Log out</span></a>
+    <% } else { %>
+      Hi, Guest user <br/>
+      <a href='/login'><span class='header-link-text'>Log in</span></a>
+      <a href='/my-votings'><span class='header-link-text'>My votings</span></a>
+    <% } %>
+  </div>
+  <div class='nav-bar-container'>
+    <a href='/'>Main page</a>
+  </div>
+  <hr/>
+</div>

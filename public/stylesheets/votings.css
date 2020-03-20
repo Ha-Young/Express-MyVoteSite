@@ -1,0 +1,30 @@
+#main_container {
+  font-size: 20px;
+  width: 80%;
+}
+
+#status_container,
+#end_time_container,
+#result_container,
+#vote_container,
+#remove_container,
+#voted_message,
+#choices_available_text {
+  margin-top: 20px;
+}
+
+#vote_container {
+  background-color: lightcyan;
+}
+
+#vote_button_container {
+  margin-top: 15px;
+}
+
+#remove_container button {
+  font-size: 20px;
+}
+
+#danger_text {
+  color: red;
+}

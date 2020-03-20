@@ -1,25 +1,46 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
 router.get('/', (req, res, next) => {
   res.render('signup', { title: 'Sign Up' });
 });
 
-router.post('/', async (req, res, next) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  // encrypting password should be added later
+router.post('/', (req, res, next) => {
+  if (!req.body.username.length) {
+    return next('Username is empty');
+  }
 
-  const user = await User.create({
-    username,
-    password
-  });
+  if (req.body.password.length < 6) {
+    return next('Password length is too short.');
+  }
 
-  // error => redirect to error page
+  const saltRounds = 10;
+  // try {
+    bcrypt.hash(req.body.password, saltRounds, async function(err, hash) {
+      try {
+        await User.create({
+          username: req.body.username,
+          password: hash
+        });
+        res.redirect('/login');
+      } catch (err) {
+        console.log('Error occured while creating a user: \n', err);
 
-  
-  res.redirect('/login');
-})
+        let message;
+        if (err.name === 'MongoError' && err.code === 11000) {
+          message = '😥 User ID already exists';
+        } else {
+          message = '🤕 Error during signing up';
+        }
+        return res.status(500).render('signup_error', { message });
+      }
+    });
+  // } catch (err) {
+  //   console.log('Error occured while creating a user: \n', err);    
+  //   return res.status(500).render('signup_error');
+  // }
+});
 
 module.exports = router;

@@ -4,40 +4,52 @@ const { authorization } = require('../middlewares/authorization');
 const { expiryMonitor } = require('../middlewares/expiryMonitor');
 const Voting = require('../models/Voting');
 const User = require('../models/User');
+const { VOTING_STATUSES } = require('../constants/enums');
+const { timezones } = require('../constants/timezones');
 
 router.get('/new', authorization, expiryMonitor, (req, res, next) => {
-  res.render('votings_new', { user: req.user });
+  const user = req.user;
+  user.tzOffsetMinutes = new Date().getTimezoneOffset();
+  res.render('votings_new', { user, timezones });
 });
 
 router.post('/new', authorization, async(req, res, next) => {
-  // console.log(req.body);
-  // console.log(req.user);
-  let expiryDate = req.body.expiryDate;
-  function getTzOffset(tzInt) {
-    if (0 <= tzInt && tzInt < 10) {
-      return `0${tzInt}:00`;
-    } else if (10 <= tzInt) {
-      return `${tzInt}:00`;
-    }
+  let endTime = req.body.endTime;
+  
+  // move this to utils
+  function getIsoTz(tzOffsetMinutes) {
+    let hh = Math.floor(tzOffsetMinutes / -60).toString();
+    let mm = (Math.abs(tzOffsetMinutes) - 60 * hh).toString();
+    hh = (hh < 10) ? '0' + hh : hh;
+    mm = (mm < 10) ? '0' + mm : mm;
+    hh = (tzOffsetMinutes < 0) ? '+' + hh : '-' + hh;
+
+    return `${hh}:${mm}`;
   }
-  expiryDate += ':00.000+' + getTzOffset(req.body.expiryTimezone);
-  // console.log(expiryDate);
-  // console.log(new Date(expiryDate).toISOString());
+  
+  endTime += ':00.000' + getIsoTz(req.body.tzOffsetMinutes);
+  console.log('body endtime:' ,req.body.endTime, 'offset minutes entered:', req.body.tzOffsetMinutes, 'final endtime: ', endTime);
+
+  if (req.body.choices.length < 2) {
+    throw new Error('There should be at least 2 choices when creating a voting');
+  }
 
   const choices = req.body.choices.map(choice => {
     return { name: choice };
   });
+
   try {
     await Voting.create({
       author: req.user._id,
       title: req.body.title,
       choices,
-      end_time: req.body.expiryDate,
-      status: 'ACTIVE'
+      start_time: new Date().toISOString(),
+      end_time: endTime,
+      status: VOTING_STATUSES.ACTIVE
     });
     res.redirect('/votings/success');
   } catch (err) {
-    console.log('Error in voting creation, details below.\n', error);
+    console.log('Error in voting creation, details below.\n', err);
     res.redirect('/votings/error');
   }
 });
@@ -51,31 +63,64 @@ router.get('/success', authorization, (req, res, next) => {
 });
 
 router.get('/:id', expiryMonitor, async(req, res, next) => {
+
   // two criteria - 
   // 1) status = active or not?
   // 2) voted = user voted or not ?
   const user = req.user;
+  console.log(user);
   try {
     let voting = await Voting.findById( req.params.id ).exec();
     voting = JSON.parse(JSON.stringify(voting));
+    console.log(voting);
 
-    // check if user already voted
-    let voted = false;
-    if (req.user) {
-      req.user.votes.forEach(vote => {
-        if (vote.voting.toString() === req.params.id) {
-          voted = true;
-        }
-      })
+    if (voting.status === VOTING_STATUSES.ENDED) {
+      voting.choices.forEach(choice => {
+        let count = 0;
+        voting.votes.forEach(vote => {
+          if (vote.choice === choice._id) {
+            count++;
+          }
+        });
+        choice.count = count;
+      });
     }
-    // console.log(voting.author.toString() === user._id.toString());
 
-    let isRemovable = (
-      user
-      && (voting.author.toString() === user._id.toString())
-    );
+    // check if user already voted    
+    if (user) {
+      user.hasVoted = false;
+      user.votes.forEach(vote => {
+        if (vote.voting.toString() === req.params.id) {
+          user.hasVoted = true;
+        }
+      });
 
-    res.render('votings', { user, voting, voted, isRemovable });
+      // should I use mongodb queries?
+      let userChoice;
+      if (user.hasVoted) {
+        let userChoiceId;
+        voting.votes.forEach(vote => {
+          if (vote.user.toString() === user._id.toString()) {
+            userChoiceId = vote.choice.toString();
+            console.log(userChoiceId);
+          }
+        });
+        voting.choices.forEach(choice => {
+          if (choice._id.toString() === userChoiceId) {
+            userChoice = choice.name;
+            console.log(userChoice);
+          }
+        });
+      }
+      user.choice = userChoice;
+
+      user.isAuthor = (
+        user
+        && (voting.author.toString() === user._id.toString())
+      );
+    }
+
+    res.render('votings', { user, voting });
   } catch (err) {
     console.log(err);
     // add next(err); later
@@ -86,7 +131,7 @@ router.post('/:id', authorization, expiryMonitor, async(req, res, next) => {
   try {
     // validation if the voting is active
     const voting = await Voting.findById( req.params.id ).exec();
-    if (voting.status !== 'ACTIVE') {
+    if (voting.status !== VOTING_STATUSES.ACTIVE) {
       throw new Error('User is trying to vote for a voting whose status is not active');
     }
     // check if user already voted

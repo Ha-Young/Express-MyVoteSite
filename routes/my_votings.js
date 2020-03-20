@@ -8,7 +8,7 @@ const User = require('../models/User');
 router.get('/', authorization, expiryMonitor, async(req, res, next) => {
   
 
-  let votings = await voting.find({ author: req.user._id }).exec();
+  let votings = await Voting.find({ author: req.user._id }).exec();
   votings = JSON.parse(JSON.stringify(votings));
   const users = votings.map((voting) => {
     return new Promise(async(resolve, reject) => {

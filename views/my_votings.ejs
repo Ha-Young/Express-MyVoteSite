@@ -2,23 +2,13 @@
 <html>
   <head>
     <title>My votings</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/my_votings.css' />
   </head>
   <body>
-    <div class='header'>
-      <% if (user) { %>
-        HI, <%= user.username %>
-      <% } else { %>
-        Hi, Guest user
-      <% } %>
-      <a href='/logout'>Log out</a>
-      <br/>
-      <a href='/'>Main page</a>
-    </div>
-    HI ,
-    
-    I AM MY VOTINGS
-    <div>
-      <table>
+    <%- include('header') %>
+    <div id='body_container'>
+      <table class='voting_list_table'>
         <tr>
           <th>Title</th>
           <th>Creator</th>
@@ -35,10 +25,10 @@
             <td><%= voting.authorName %></td>
             <td><%= voting.end_time %></td>
             <td>
-              <% if (new Date() > new Date(voting.end_time)) { %>
-                <%= 'Finished' %>
-              <% } else { %>
-                <%= 'Ongoing' %>
+              <% if (voting.status === 'active') { %>
+                🗳️ Ongoing
+              <% } else if (voting.status === 'ended') { %>
+                📦 Finished
               <% } %>
             </td>
           </tr>
@@ -46,6 +36,5 @@
       </table>
       </ul>
     </div>
-    <a href="/votings/new">CREATE A NEW voting</a>
   </body>
 </html>

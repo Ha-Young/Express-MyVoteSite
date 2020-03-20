@@ -1,77 +1,100 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>INDEX</title>
+    <title>VOTING</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/votings.css' />
   </head>
   <body>
-    <div class='header'>
-      <% if (user) { %>
-        HI, <%= user.username %>
-        <a href='/logout'>Log out</a>
-      <% } else { %>
-        Hi, Guest user
-        <a href='/login'>Log in</a>
-      <% } %>
-      
-      <br/>
-      <a href='/my-votings'>My votings</a><br/>
-      <a href='/'>Main page</a>
-    </div>
-    HI ,
-    
-    I AM VOTINGS/:ID
-    <div>
+    <%- include('header') %>
+    <div id='main_container'>
       <div>
-        <%= voting.title %>
-      </div>
-      <div>
-        Status: <b><%= voting.status %></b>
-      </div>
-      
-      <% if (voting.status === 'EXPIRED') { %>
         <div>
-          <%= `This voting has ended on ${voting.end_time}` %>
+          <h1><%= voting.title %></h1>
         </div>
-        <div>
-          <!-- Show result here -->
-        </div>
-
-        
-      <% } else if (voting.status === 'ACTIVE') { %>
-        <div>
-          <%= `This voting will end on ${voting.end_time}` %>
-        </div>
-        <% if (!voted) { %>
+        <div id='status_container'>
           <div>
-            <!-- choices and voting button -->
-            <form method='POST' action=<%=`/votings/${voting._id}`%>>
-              <% voting.choices.map((choice, idx) => { %>
-                <input type='radio' id=`choice${idx}` name='choice' value=<%= choice._id %>>
-                <label for=`choice${idx}`><%= choice.name %></label><br/>
+            <span><b>Status</b></span>
+          </div>
+          <div>
+            <span>
+              <% if (voting.status === 'active') { %>
+                🗳️
+              <% } else if (voting.status === 'ended') { %>
+                ⌛️
+              <% } %>
+              <%= voting.status %>
+            </span>
+          </div>
+        </div>
+        
+        <% if (voting.status === 'ended') { %>
+          <div id='end_time_container'>
+            <span>This voting has ended on <%= new Date(voting.end_time).toString().substring(0,34) %></span>
+          </div>
+          <div id='result_container'>
+            <div>
+              <span><b>RESULT</b></span>
+            </div>
+            <ul>
+              <% voting.choices.map(choice => { %>
+                <li><%= choice.name %>: <b><%= choice.count %> votes</b> </li>
               <% }) %>
-              <button type='submit'>Vote</button>
+            </ul>
+            
+          </div>
+        
+  
+        <% } else if (voting.status === 'active') { %>
+          <div id='end_time_container'>
+            This voting will end on <b><%= new Date(voting.end_time).toString().substring(0,34) %></b>
+          </div>
+          <% if (!user || !user.hasVoted) { %>
+            <div id='vote_container'>
+              <span><b>Vote here</b></span>
+              <form method='POST' action=<%=`/votings/${voting._id}`%>>
+                <% voting.choices.map((choice, idx) => { %>
+                  <input type='radio' id=`choice${idx}` name='choice' value=<%= choice._id %>>
+                  <label for=`choice${idx}`><%= choice.name %></label><br/>
+                <% }) %>
+                <div id='vote_button_container'>
+                  <button class='primary_button' type='submit'>Vote</button>
+                </div>
+              </form>
+            </div>
+          <% } else { %>
+            <div id='voted_message'>
+              <span>You have already voted for <%= user.choice %></span>
+              <div id='choices_available_text'>
+                <span><b>Choices for this voting</b></span>
+              </div>
+              <div>
+                <ul>
+                  <% voting.choices.map(choice => { %>
+                    <li><%= choice.name %></li>
+                  <% }) %>
+                </ul>
+              </div>
+            </div>
+          <% } %>
+        <% } %>
+        </div>
+        <div>
+        </div>
+        <% if (user && user.isAuthor) { %>
+          <div id='remove_container'>    
+            <span id='danger_text'>DANGER ZONE</span>
+            <form
+              method="POST"
+              action=<%=`/votings/${voting._id}?_method=DELETE`%>
+              enctype='application/x-www-form-urlencoded'
+            >
+              <!-- <input type="hidden" name="_method" value="DELETE"> -->
+              <button class='secondary_button' type="submit">Remove this voting</button>
             </form>
           </div>
-        <% } else { %>
-          YOU'VE ALREADY VOTED
         <% } %>
-      <% } %>
       </div>
-      <div>
-      </div>
-      <% if (isRemovable) { %>
-        <div>    
-          DANGER ZONE :
-          <form
-            method="POST"
-            action=<%=`/votings/${voting._id}?_method=DELETE`%>
-            enctype='application/x-www-form-urlencoded'
-          >
-            <!-- <input type="hidden" name="_method" value="DELETE"> -->
-            <button type="submit">Remove this voting</button>
-          </form>
-        </div>
-      <% } %>
     </div>
   </body>
 </html>

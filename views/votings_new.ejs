@@ -2,38 +2,97 @@
 <html>
   <head>
     <title>Create a new voting</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/votings_new.css' />
   </head>
   <body>
-    NEW VOTING
-    <form method='POST' action=<%=`/votings/new`%>>
-      Title : <input type='text' name='title'></input><br/>
-
-      <div>
-        Choices:<br/>
-        Create a choice
-        <button type='button' onclick=handleCreateClick(event)>Add a choice</button>
-        <div id='choiceList'>
-          <input type='text' name='choices'></input>
-        </div>
+    <%- include('header') %>
+    <div id='main_container'>
+      <h3>Create a new voting</h3>
+      <div id='form_container'>
+        <form onsubmit='formValidator()' method='POST' action=<%=`/votings/new`%>>
+          <!-- <form method='POST' action=<%=`/votings/new`%>> -->
+            <div id='title_container'>
+              <div>
+                Title
+              </div>
+              <div>
+                <input type='text' name='title' placeholder='Type your title for voting' required>
+              </div>
+            </div>
+            
+            <div id='choice_container'>
+              Choices
+              <button class='primary_button' type='button' onclick=handleAddClick(event)>
+                Add a choice
+              </button>
+              <div id='choice_list'>
+                <input class='choice_inputs' type='text' name='choices' placeholder='Type your first choice here' required><br/>
+                <input class='choice_inputs' type='text' name='choices' placeholder='Type your second choice here' required><br/>
+              </div>
+            </div>
+      
+            <div id='end_date_container'>
+              <div>
+                End date
+              </div>
+              <div>
+                <input type='datetime-local' name='endTime' required/>
+                <span>Time zone : GMT</span>
+                <select name='tzOffsetMinutes'>
+                  <% timezones.map(timezone => { %>
+                    <option
+                      value=<%= timezone.offsetMinutes %>
+                      <% if (Number(timezone.offsetMinutes === user.tzOffsetMinutes)) { %>
+                        <%= 'selected' %>
+                      <% } %>
+                    >
+                      <%= timezone.display %>
+                    </option>
+                  <% }) %>
+                </select>
+              </div>
+            </div>
+            <div id='submit_button_container'>
+              <button class='primary_button' type='submit'>SUBMIT</button>
+            </div>
+          </form>
       </div>
+      
+    </div>
 
-      <div>
-        Expiry date:
-        <input type='datetime-local' name='expiryDate'/>
-        Time zone : GMT +<input type='text' name='expiryTimezone'></input>
-      </div>
-
-      <button type='submit'>SUBMIT</button>
-    </form>
     <script>
-      function handleCreateClick(event) {
+      function handleAddClick(event) {
+        
         //add line break later
+        let div = document.createElement('div');
         let el = document.createElement('input');
         el.setAttribute('type', 'text');
         el.setAttribute('name', 'choices');
-        document.getElementById('choiceList').appendChild(el);
+        el.setAttribute('required', 'true');
+        el.setAttribute('class', 'choice_inputs');
+        el.setAttribute('placeholder', 'Type your extra choices here');
+
+        let button = document.createElement('button');
+        button.setAttribute('onclick', 'handleRemoveClick(event)');
+        button.setAttribute('type', 'button');
+        button.setAttribute('class', 'secondary_button');
+        button.innerText = 'REMOVE';
+
+        div.appendChild(el);
+        div.appendChild(button);
+        document.getElementById('choice_list').appendChild(div);
         // add remove button later
         return;
+      }
+
+      function handleRemoveClick(event){
+        event.target.parentNode.parentNode.removeChild(event.target.parentNode);
+      }
+
+      function formValidator() {
+        const choices = document.getElementById('choice_list').children;
+        return (choices.length > 2); 
       }
     </script>
   </body>

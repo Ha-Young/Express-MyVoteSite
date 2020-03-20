@@ -1,14 +1,65 @@
 <!DOCTYPE html>
 <html>
   <head>
-
+    <title>
+      Create an Account
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/signup.css' />
   </head>
   <body>
-    SIGN UP
-    <form method='POST' action=<%=`/signup`%>>
-      USERNAME : <input type="text" name="username"></input><br/>
-      PASSWORD: <input type="text" name="password"></input><br/>
-      <button type='submit'>SIGN UP</button>
-    </form>
+    <div id='body_container'>
+      <span>SIGN UP</span>
+      <div id='form_container'>
+        <form name='signup' method='POST' action=<%=`/signup`%>>
+          USERNAME :
+          <input 
+            type="text"
+            name="username"
+            required
+          />
+          <br/>
+          PASSWORD:
+          <input
+            type="password"
+            name="password"
+            required
+          />
+          <br/>
+          <button id='signup_button' class='primary_button' type='submit' disabled='true'>
+            SIGN UP
+          </button>
+          <br/>
+        </form>
+        <span class='alertText' id='passwordAlert'></span>
+      </div>
+    </div>
+
+    <script>
+      let isUsernameValid = false;
+      let isPasswordValid = false;
+      let signupButton = document.getElementById('signup_button');
+
+      function signupDisableHandler() {
+        // if (isUsernameValid && isPasswordValid) {
+        if (isPasswordValid) {
+          signupButton.removeAttribute('disabled');
+        } else {
+          signupButton.setAttribute('disabled', 'true');
+        }
+      }
+
+      const password = document.forms['signup']['password'];
+      password.addEventListener('keyup', function() {
+        let passwordAlertText = document.getElementById('passwordAlert').innerText;
+        if (password.value.length >= 6) {
+          document.getElementById('passwordAlert').innerText = ''
+        } else {
+          document.getElementById('passwordAlert').innerText = 'Password should be at least 6 characters'
+        }
+        isPasswordValid = password.value.length >= 6 ? true : false;
+        signupDisableHandler();
+      });
+    </script>
   </body>
 </html>

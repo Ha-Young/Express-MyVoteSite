@@ -1,0 +1,20 @@
+#body_container {
+  text-align: center;
+  font-size: 20px;
+}
+
+.alertText {
+  color: red;
+}
+
+#form_container {
+  margin: 20px;
+}
+
+#signup_button {
+  margin: 20px;
+}
+
+input {
+  font-size: 20px;
+}

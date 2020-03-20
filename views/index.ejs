@@ -2,48 +2,45 @@
 <html>
   <head>
     <title>INDEX</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/index.css' />
   </head>
   <body>
-    <div class='header'>
-      <% if (user) { %>
-        HI, <%= user.username %>
-        <a href='/logout'>Log out</a>
-      <% } else { %>
-        Hi, Guest user
-        <a href='/login'>Log in</a>
-        <a href='/signup'>Sign up</a>
-      <% } %>
-      <br/>
-      <a href='/my-votings'>My votings</a>
-    </div>
-    HI ,
-    
-    I AM INDEX
-    <div>
-      <table>
-        <tr>
-          <th>Title</th>
-          <th>Creator</th>
-          <th>Expiry</th>
-          <th>Status</th>
-        </tr>
-        <% votings.map(voting => { %>
+    <%- include('header') %>
+    <div id='body_container'>
+      <div class='table-container'>
+        <table class='voting_list_table'>
           <tr>
-            <td>
-              <a href=<%=`/votings/${voting._id}`%>>
-                <%= voting.title %>
-              </a>
-            </td>
-            <td><%= voting.authorName %></td>
-            <td><%= voting.end_time %></td>
-            <td>
-              <%= voting.status.toLowerCase() %>
-            </td>
+            <th>Title</th>
+            <th>Creator</th>
+            <th>End time</th>
+            <th>Status</th>
           </tr>
-        <% }) %>
-      </table>
-      </ul>
+          <% votings.map(voting => { %>
+            <tr>
+              <td>
+                <a href=<%=`/votings/${voting._id}`%>>
+                  <%= voting.title %>
+                </a>
+              </td>
+              <td><%= voting.authorName %></td>
+              <td>
+                <%= new Date(voting.end_time).toString().substring(0,34) %>
+              </td>
+              <td>
+                <%= voting.status.toLowerCase() %>
+              </td>
+            </tr>
+          <% }) %>
+        </table>
+      </div>
+      <div id='create_button_container'>
+        <a href="/votings/new">
+          <button class='primary_button'>
+            Create a new voting
+          </button>  
+        </a>
+      </div>
     </div>
-    <a href="/votings/new">CREATE A NEW voting</a>
   </body>
 </html>
