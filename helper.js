@@ -10,3 +10,10 @@ export function dateTransformer (date) {
 
   return `${year}. ${month + 1}. ${dates}`;
 }
+
+export function getIsExpired (date) {
+  const currentTime = new Date().getTime();
+  const expiratedTime = new Date(date).getTime();
+
+  return expiratedTime - currentTime < 0;
+}

@@ -7,9 +7,7 @@
       const { id, subject, options, creator, created_at, expirated } = vote;
       const lotsOfLength = options.map(opt => opt.voter.length);
       const maxLength = Math.max.apply(null, lotsOfLength);
-      const currentTime = new Date().getTime();
-      const expiratedTime = new Date(expirated).getTime();
-      const isExpirated = expiratedTime - currentTime < 0;
+      const isExpirated = getIsExpired(expirated);
       let isCreator = false;
 
       if (user) {
@@ -37,11 +35,11 @@
                 value = Math.floor(maxLength / length) * 100;
               }
           %>
-            <li class="<% if (length === maxLength) { %>winner<% } %>">
+            <li class="<% if (length === maxLength) { %> winner <% } %>">
               <h4><%= options[i].value %></h4>
               <div>
                 <div class="bar" data-value="<%= value %>"></div>
-                <p><strong><%= length%></strong><%= value %>%</p>
+                <p><strong><%= length %></strong><%= value %>%</p>
               </div>
             </li>
           <% } %>

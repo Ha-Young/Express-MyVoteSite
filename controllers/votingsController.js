@@ -2,13 +2,14 @@ import mongoose from 'mongoose';
 import Vote from '../models/vote';
 import User from '../models/user';
 import createError from 'http-errors';
-import { dateTransformer } from '../helper';
+import { dateTransformer, getIsExpired } from '../helper';
 
 export const getHome = async (req, res, next) => {
   try {
     const votes = await Vote.find().populate('creator');
 
     res.locals.dateTransformer = dateTransformer;
+    res.locals.getIsExpired = getIsExpired;
     res.render('index', { votes });
   } catch (err) {
     next(createError(500, err));
@@ -55,6 +56,13 @@ export const getVoteDetail = async (req, res, next) => {
     }
 
     const vote = await Vote.findById(id).populate('creator');
+    const { expirated } = vote;
+    const isExpirated = getIsExpired(expirated);
+
+    if (isExpirated) {
+      next(createError(403, '접근할 수 없는 페이지입니다.'));
+      return;
+    }
 
     res.locals.dateTransformer = dateTransformer;
     res.render('votingDetail', { vote });
@@ -95,9 +103,7 @@ export const getVoteResult = async (req, res, next) => {
     const vote = await Vote.findById(id).populate('creator');
     const user = req.user;
     const { expirated, creator } = vote;
-    const currentTime = new Date().getTime();
-    const expiratedTime = new Date(expirated).getTime();
-    const isExpirated = expiratedTime - currentTime < 0;
+    const isExpirated = getIsExpired(expirated);
     let isCreator = false;
 
     if (user) {
@@ -112,6 +118,7 @@ export const getVoteResult = async (req, res, next) => {
     }
 
     res.locals.dateTransformer = dateTransformer;
+    res.locals.getIsExpired = getIsExpired;
     res.render('votingResult', { vote });
   } catch (err) {
     next(createError(500, err));

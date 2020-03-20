@@ -10,9 +10,7 @@
 
         for (let i = 0; i < votes.length; i++) {
           const { expirated } = votes[i];
-          const currentTime = new Date().getTime();
-          const expiratedTime = new Date(expirated).getTime();
-          const isExpirated = expiratedTime - currentTime < 0;
+          const isExpirated = getIsExpired(expirated);
 
           if (isExpirated) {
             expiratedVotes.push(votes[i]);
