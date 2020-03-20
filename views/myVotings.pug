@@ -7,14 +7,23 @@ html(lang='en')
     link(rel='stylesheet' href='/stylesheets/style.css')
     title Voting
   body
-    div.authwarp
+    div.basicwarp
       h1 내가 등록한 투표
       div.buttonwrap
-        input.button.line-gray.small(type='button' onclick='location.href=\'/\'' value='로그아웃')
+        input.button.line-gray.small(
+          type='button'
+          onclick='location.href=\'/\''
+          value='로그아웃')
       div.buttonwrap
-        input.button.line-blue(type='button' onclick='location.href=\'/\'' value='홈으로')
+        input.button.line-blue(
+          type='button'
+          onclick='location.href=\'/\''
+          value='홈으로')
       div.buttonwrap
-        input.button.blue(type='button' onclick='location.href=\'/votings/new\'' value='투표 만들기')
+        input.button.blue(
+          type='button'
+          onclick='location.href=\'/votings/new\''
+          value='투표 만들기')
       if votings
         ul
           each voting in votings

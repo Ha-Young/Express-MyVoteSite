@@ -6,7 +6,7 @@ exports.getAll = async (req, res, next) => {
   const voting = await Voting.findById(votingId).populate('createdBy').lean();
   req.voting = voting;
   next();
-}
+};
 
 exports.create = async (req, res, next) => {
   try {
@@ -26,8 +26,7 @@ exports.create = async (req, res, next) => {
     req.newVoting = newVoting;
     next();
   } catch(err) {
-    console.log(err);
-    res.status(500).json('error occured')
+    res.status(500).json('error occured');
   }
 }
 
@@ -36,9 +35,8 @@ exports.checkIsAuthor = async (req, res, next) => {
   const isRespondent = req.isRespondent;
   const selectedOption = req.selectedOption;
   let isAuthor = false;
-  console.log(isRespondent, selectedOption);
 
-  if(req.user && req.user._id === String(voting.createdBy._id)) {
+  if (req.user && req.user._id === String(voting.createdBy._id)) {
     isAuthor = true;
   }
 
@@ -50,7 +48,7 @@ exports.updateSelectedOption = async (req, res, next) => {
 
   const voting = await Voting.findById(req.params.voting_id).populate('createdBy').lean();
   const options = voting.options;
-  const selectedIndex = options.findIndex(i => i.option == req.body.option);
+  const selectedIndex = options.findIndex(i => i.option === req.body.option);
 
   options[selectedIndex].count++;
   const updatedOptions = options;
@@ -68,15 +66,16 @@ exports.updateSelectedOption = async (req, res, next) => {
 exports.updateExpired = async (req, res, next) => {
   const nowDate = new Date();
   const votings = await Voting.find().lean();
+
   await Promise.all(
-    votings.map(async (voting) => {
-      if(voting.expiredAt < nowDate) {
+    votings.map(async voting => {
+      if (voting.expiredAt < nowDate) {
         await Voting.updateOne(
           { _id: voting._id },
           { $set: { isProceeding: false } }
         );
       }
     })
-  )
+  );
   next();
-}
+};

@@ -24,7 +24,7 @@ exports.updateParticipateVoting = async (req, res, next) => {
 };
 
 exports.checkRespondent = async (req, res, next) => {
-  if(!req.user) return next();
+  if (!req.user) return next();
 
   const userId = req.user._id;
   const votingId = req.params.voting_id;
@@ -33,8 +33,8 @@ exports.checkRespondent = async (req, res, next) => {
   let isRespondent = false;
   let selectedOption = null;
 
-  for(let i = 0; i < participateList.length; i++) {
-    if(String(participateList[i].voting) === votingId) {
+  for (let i = 0; i < participateList.length; i++) {
+    if (String(participateList[i].voting) === votingId) {
       isRespondent = true;
       selectedOption = participateList[i].selectedOption;
     }

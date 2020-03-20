@@ -1,7 +1,7 @@
 * {
-	margin:0;
-	padding:0;
-	box-sizing:border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
@@ -24,13 +24,13 @@ a {
   color: #3C4043;
 }
 
-.authwarp {
+.basicwarp {
   margin: 4rem auto;
   max-width: 400px;
   text-align: center;
 }
 
-.authwarp > a {
+.basicwarp > a {
   float: right;
   font-size: 14px;
   color: #5d5d5d;
@@ -53,10 +53,10 @@ input[type=email] {
 }
 
 .inputDate {
+  margin: 0 15px;
   width: 50%;
   height: 100%;
   font-size: 13px;
-  margin: 0 15px;
 }
 
 .inputTime {
@@ -70,7 +70,7 @@ input[type=radio] {
 }
 
 .radio-disabled {
-  color: #d4d4d4
+  color: #d4d4d4;
 }
 
 .count {
@@ -91,8 +91,8 @@ input[type=radio] {
 }
 
 .detail-delete-button {
-  padding: 0 5px;
   display: inline;
+  padding: 0 5px;
   font-size: 13px;
   color: gray;
   border: 1px solid gray;
@@ -102,10 +102,10 @@ input[type=radio] {
 
 .votingCard {
   margin: 15px 0;
-  border: 1px dotted gray;
-  text-align: left;
   padding: 10px;
   line-height: 23px;
+  border: 1px dotted gray;
+  text-align: left;
 }
 
 .card-title {

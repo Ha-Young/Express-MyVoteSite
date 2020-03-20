@@ -52,4 +52,4 @@ const VotingSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model ('Voting', VotingSchema);
+module.exports = mongoose.model('Voting', VotingSchema);

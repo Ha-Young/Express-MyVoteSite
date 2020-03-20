@@ -29,7 +29,7 @@ const UserSchema = new Schema({
   }],
 });
 
-UserSchema.methods.hashPassword = (password) => {
+UserSchema.methods.hashPassword = password => {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 }
 
@@ -37,4 +37,4 @@ UserSchema.methods.comparePassword = (password, hash) => {
   return bcrypt.compareSync(password, hash);
 }
 
-module.exports = mongoose.model ('User', UserSchema);
+module.exports = mongoose.model('User', UserSchema);

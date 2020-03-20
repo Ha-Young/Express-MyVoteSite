@@ -6,12 +6,12 @@ router.get('/', (req, res, next) => {
   res.render('signup');
 });
 
-router.post('/',async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     const { username, password } = req.body;
     let user = await User.findOne({ username: username });
 
-    if(user) return res.status(400).json('이미 가입된 이메일입니다.');
+    if (user) return res.status(400).json('이미 가입된 이메일입니다.');
 
     user = new User({
       username
@@ -20,7 +20,6 @@ router.post('/',async (req, res, next) => {
     await user.save();
     res.json('ok');
   } catch(err) {
-    console.log(err);
     res.status(500).json('error occured')
   }
 });
