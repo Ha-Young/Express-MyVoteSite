@@ -10,7 +10,7 @@
     <div id='main_container'>
       <h3>Create a new voting</h3>
       <div id='form_container'>
-        <form onsubmit='formValidator()' method='POST' action=<%=`/votings/new`%>>
+        <form onsubmit='return formValidator()' method='POST' action=<%=`/votings/new`%>>
           <!-- <form method='POST' action=<%=`/votings/new`%>> -->
             <div id='title_container'>
               <div>
@@ -37,9 +37,9 @@
                 End date
               </div>
               <div>
-                <input type='datetime-local' name='endTime' required/>
+                <input id='end_time' type='datetime-local' name='endTime' required/>
                 <span>Time zone : GMT</span>
-                <select name='tzOffsetMinutes'>
+                <select id='end_time_tzOffset' name='tzOffsetMinutes'>
                   <% timezones.map(timezone => { %>
                     <option
                       value=<%= timezone.offsetMinutes %>
@@ -52,6 +52,9 @@
                   <% }) %>
                 </select>
               </div>
+              <div>
+                <span id='end_time_alert_text'></span>
+              </div>
             </div>
             <div id='submit_button_container'>
               <button class='primary_button' type='submit'>SUBMIT</button>
@@ -61,10 +64,9 @@
       
     </div>
 
+    <script src='/javascripts/utils.js'></script>
     <script>
       function handleAddClick(event) {
-        
-        //add line break later
         let div = document.createElement('div');
         let el = document.createElement('input');
         el.setAttribute('type', 'text');
@@ -82,7 +84,6 @@
         div.appendChild(el);
         div.appendChild(button);
         document.getElementById('choice_list').appendChild(div);
-        // add remove button later
         return;
       }
 
@@ -92,7 +93,17 @@
 
       function formValidator() {
         const choices = document.getElementById('choice_list').children;
-        return (choices.length > 2); 
+
+        const end_time = document.getElementById('end_time').value;
+        const tzOffset = document.getElementById('end_time_tzOffset').value;
+        const gmtIso = getGmtFromDatetimeLocal(end_time, tzOffset);
+        if (choices.length > 2 && (new Date() < new Date(gmtIso))) {
+          return true;
+        } else {
+          document.getElementById('end_time').setAttribute('class', 'invalid_end_date_input');
+          document.getElementById('end_time_alert_text').innerText = 'Please input end date later than now';
+          return false;
+        }; 
       }
     </script>
   </body>

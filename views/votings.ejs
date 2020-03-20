@@ -19,11 +19,10 @@
           <div>
             <span>
               <% if (voting.status === 'active') { %>
-                🗳️
+                <span class='ongoing_text'>🗳️ Ongoing</span>
               <% } else if (voting.status === 'ended') { %>
-                ⌛️
+                <span class='finished_text'>📦 Finished</span>
               <% } %>
-              <%= voting.status %>
             </span>
           </div>
         </div>
@@ -32,7 +31,7 @@
           <div id='end_time_container'>
             <span>This voting has ended on <%= new Date(voting.end_time).toString().substring(0,34) %></span>
           </div>
-          <div id='result_container'>
+          <div class='result_container'>
             <div>
               <span><b>RESULT</b></span>
             </div>
@@ -41,9 +40,7 @@
                 <li><%= choice.name %>: <b><%= choice.count %> votes</b> </li>
               <% }) %>
             </ul>
-            
           </div>
-        
   
         <% } else if (voting.status === 'active') { %>
           <div id='end_time_container'>
@@ -82,16 +79,35 @@
         <div>
         </div>
         <% if (user && user.isAuthor) { %>
-          <div id='remove_container'>    
-            <span id='danger_text'>DANGER ZONE</span>
-            <form
-              method="POST"
-              action=<%=`/votings/${voting._id}?_method=DELETE`%>
-              enctype='application/x-www-form-urlencoded'
-            >
-              <!-- <input type="hidden" name="_method" value="DELETE"> -->
-              <button class='secondary_button' type="submit">Remove this voting</button>
-            </form>
+          <div>
+            <hr/>
+            <div id='author_zone_text_container'>
+              <h2>Author-only view</h2>
+            </div>
+
+            <% if (voting.status !== 'ended') { %>
+              <div class='result_container'>
+                <div id='author_zone_votes_text_container'>
+                  <span><b>Votes</b></span>
+                </div>
+                <ul>
+                  <% voting.choices.map(choice => { %>
+                    <li><%= choice.name %>: <b><%= choice.count %> votes</b> </li>
+                  <% }) %>
+                </ul>
+              </div>
+            <% } %>
+            <div id='remove_container'>
+              <span id='danger_text'>DANGER ZONE</span>
+              <form
+                method="POST"
+                action=<%=`/votings/${voting._id}?_method=DELETE`%>
+                enctype='application/x-www-form-urlencoded'
+              >
+                <!-- <input type="hidden" name="_method" value="DELETE"> -->
+                <button class='secondary_button' type="submit">Remove this voting</button>
+              </form>
+            </div>
           </div>
         <% } %>
       </div>

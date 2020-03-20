@@ -5,17 +5,24 @@ const Voting = require('../models/Voting');
 const User = require('../models/User');
 
 router.get('/', expiryMonitor, async(req, res, next) => {
-  let votings = await Voting.find().exec();
-  votings = JSON.parse(JSON.stringify(votings));
-  const users = votings.map((voting) => {
-    return new Promise(async(resolve, reject) => {
-      const user = await User.findById(voting.author).exec();
-      voting.authorName = user.username;
-      resolve();
+  try {
+    let votings = await Voting.find().exec(); // error
+    votings = JSON.parse(JSON.stringify(votings));
+    const users = votings.map((voting) => {
+      return new Promise(async(resolve, reject) => {
+        const user = await User.findById(voting.author).exec(); // error
+        voting.authorName = user.username;
+        resolve();
+      });
     });
-  });
-  await Promise.all(users);
-  res.render('index', { user: req.user, votings });
+    await Promise.all(users);
+    res.render('index', { user: req.user, votings });
+  } catch (err) {
+    if (err.name === 'MongoError') {
+      console.log('Error while fetching votes and author names from DB\n', err);
+      next(err);
+    }
+  }
 });
 
 module.exports = router;

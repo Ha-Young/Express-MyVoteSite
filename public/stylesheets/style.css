@@ -52,3 +52,12 @@ a {
   background-color: gainsboro;
   filter: contrast(1);
 }
+
+.ongoing_text {
+  color: green;
+  font-weight: bold;
+}
+
+.finished_text {
+  color: grey;
+}

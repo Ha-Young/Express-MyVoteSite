@@ -6,6 +6,7 @@ const Voting = require('../models/Voting');
 const User = require('../models/User');
 const { VOTING_STATUSES } = require('../constants/enums');
 const { timezones } = require('../constants/timezones');
+const { getGmtFromDatetimeLocal } = require('../utils/utils');
 
 router.get('/new', authorization, expiryMonitor, (req, res, next) => {
   const user = req.user;
@@ -14,24 +15,14 @@ router.get('/new', authorization, expiryMonitor, (req, res, next) => {
 });
 
 router.post('/new', authorization, async(req, res, next) => {
-  let endTime = req.body.endTime;
-  
-  // move this to utils
-  function getIsoTz(tzOffsetMinutes) {
-    let hh = Math.floor(tzOffsetMinutes / -60).toString();
-    let mm = (Math.abs(tzOffsetMinutes) - 60 * hh).toString();
-    hh = (hh < 10) ? '0' + hh : hh;
-    mm = (mm < 10) ? '0' + mm : mm;
-    hh = (tzOffsetMinutes < 0) ? '+' + hh : '-' + hh;
-
-    return `${hh}:${mm}`;
-  }
-  
-  endTime += ':00.000' + getIsoTz(req.body.tzOffsetMinutes);
-  console.log('body endtime:' ,req.body.endTime, 'offset minutes entered:', req.body.tzOffsetMinutes, 'final endtime: ', endTime);
-
+  endTime = getGmtFromDatetimeLocal(req.body.endTime, req.body.tzOffsetMinutes);
+  console.log(endTime);
   if (req.body.choices.length < 2) {
     throw new Error('There should be at least 2 choices when creating a voting');
+  }
+
+  if (new Date(endTime).valueOf < new Date()) {
+    throw new Error('End time should be later than now');
   }
 
   const choices = req.body.choices.map(choice => {
@@ -63,30 +54,16 @@ router.get('/success', authorization, (req, res, next) => {
 });
 
 router.get('/:id', expiryMonitor, async(req, res, next) => {
-
-  // two criteria - 
-  // 1) status = active or not?
-  // 2) voted = user voted or not ?
   const user = req.user;
-  console.log(user);
   try {
-    let voting = await Voting.findById( req.params.id ).exec();
-    voting = JSON.parse(JSON.stringify(voting));
-    console.log(voting);
-
-    if (voting.status === VOTING_STATUSES.ENDED) {
-      voting.choices.forEach(choice => {
-        let count = 0;
-        voting.votes.forEach(vote => {
-          if (vote.choice === choice._id) {
-            count++;
-          }
-        });
-        choice.count = count;
-      });
+    let voting;
+    try {
+      await Voting.findById( req.params.id ).exec();
+      voting = JSON.parse(JSON.stringify(voting));
+    } catch (err) {
+      throw new Error('Error while finding a vote by id \n', err);
     }
-
-    // check if user already voted    
+    
     if (user) {
       user.hasVoted = false;
       user.votes.forEach(vote => {
@@ -102,69 +79,104 @@ router.get('/:id', expiryMonitor, async(req, res, next) => {
         voting.votes.forEach(vote => {
           if (vote.user.toString() === user._id.toString()) {
             userChoiceId = vote.choice.toString();
-            console.log(userChoiceId);
           }
         });
         voting.choices.forEach(choice => {
           if (choice._id.toString() === userChoiceId) {
             userChoice = choice.name;
-            console.log(userChoice);
           }
         });
       }
       user.choice = userChoice;
 
       user.isAuthor = (
-        user
-        && (voting.author.toString() === user._id.toString())
+        user && (voting.author.toString() === user._id.toString())
       );
+    }
+
+    if (voting.status === VOTING_STATUSES.ENDED || (user && user.isAuthor)) {
+      voting.choices.forEach(choice => {
+        let count = 0;
+        voting.votes.forEach(vote => {
+          if (vote.choice === choice._id) {
+            count++;
+          }
+        });
+        choice.count = count;
+      });
     }
 
     res.render('votings', { user, voting });
   } catch (err) {
-    console.log(err);
-    // add next(err); later
+    console.log('Error while processing voting/:id\n', err);
+    next(err);
   }
 });
 
 router.post('/:id', authorization, expiryMonitor, async(req, res, next) => {
   try {
-    // validation if the voting is active
-    const voting = await Voting.findById( req.params.id ).exec();
-    if (voting.status !== VOTING_STATUSES.ACTIVE) {
-      throw new Error('User is trying to vote for a voting whose status is not active');
+    let voting;
+    try {
+      voting = await Voting.findById( req.params.id ).exec();
+    } catch (err) {
+      console.log('Error occured while finding a vote by id from DB\n', err);
+      throw new Error(err);
     }
-    // check if user already voted
-    let voted = await Voting.find({ _id: req.params.id, 'votes.user': req.user._id });
+    if (voting.status !== VOTING_STATUSES.ACTIVE) {
+      throw new Error(
+        'User is trying to vote for a voting whose status is not active'
+      );
+    }
+    
+    let voted;
+    try {
+      voted = await Voting.find({ 
+        _id: req.params.id,
+        'votes.user': req.user._id 
+      });
+    } catch (err) {
+      console.log('Error occured while checking if user id is inside Voting.votes.user \n', err);
+      throw new Error(err);
+    }    
     if (voted.length) {
       throw new Error('User already voted for this poll.');
     };
 
-    await Voting.findOneAndUpdate( 
-      { _id: req.params.id },
-      {
-        $push: {
-          votes: {
-            user: req.user._id,
-            choice: req.body.choice
+    try {
+      await Voting.findOneAndUpdate( 
+        { _id: req.params.id },
+        {
+          $push: {
+            votes: {
+              user: req.user._id,
+              choice: req.body.choice
+            }
           }
-        }
-      }).exec();
+        }).exec();
+    } catch (err) {
+      console.log('Error while pushing a vote into Voting\n', err);
+      throw new Error(err);
+    }
 
-    await User.findOneAndUpdate(
-      { _id: req.user._id },
-      {
-        $push: {
-          votes: {
-            voting: req.params.id,
+    try {
+      await User.findOneAndUpdate(
+        { _id: req.user._id },
+        {
+          $push: {
+            votes: {
+              voting: req.params.id,
+            }
           }
-        }
-      }).exec();
-
+        }).exec();  
+    } catch (err) {
+      console.log('Error while pushing a vote into User\n', err);
+      throw new Error(err);
+    }
+    
     res.redirect(`/votings/${req.params.id}`);
   } catch (err) {
     console.log(err);
-    // add next(err); later
+    next(err);
   }
 });
 
@@ -172,11 +184,9 @@ router.delete('/:id', authorization, async(req, res, next) => {
   console.log('delete router');
   try {
     await Voting.findOneAndDelete({ _id: req.params.id }).exec();
-    // show some alert, before delete
-    console.log('before redirection');
     res.status(204).redirect('/');
   } catch (err) {
-    // error handling, depending on whether the error is coming from 'find' part or 'delete' part
+    console.log('Error while finding & deleting a voting\n', err);
     next(err);
   }
 });

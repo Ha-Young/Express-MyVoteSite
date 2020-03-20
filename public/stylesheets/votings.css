@@ -7,7 +7,6 @@
 #end_time_container,
 #result_container,
 #vote_container,
-#remove_container,
 #voted_message,
 #choices_available_text {
   margin-top: 20px;
@@ -27,4 +26,12 @@
 
 #danger_text {
   color: red;
+}
+
+#author_zone_text_container {
+  margin-top: 20px;
+}
+
+#author_zone_votes_text_container {
+  margin-top: 15px;
 }

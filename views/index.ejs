@@ -28,7 +28,11 @@
                 <%= new Date(voting.end_time).toString().substring(0,34) %>
               </td>
               <td>
-                <%= voting.status.toLowerCase() %>
+                <% if (voting.status === 'active') { %>
+                  <span class='ongoing_text'>🗳️ Ongoing</span>
+                <% } else if (voting.status === 'ended') { %>
+                  <span class='finished_text'>📦 Finished</span>
+                <% } %>
               </td>
             </tr>
           <% }) %>

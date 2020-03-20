@@ -26,3 +26,11 @@ input {
 #submit_button_container {
   margin-top: 20px;
 }
+
+.invalid_end_date_input {
+  outline: 1px solid red;
+}
+
+#end_time_alert_text {
+  color: red;
+}

@@ -3,6 +3,11 @@
   text-align: center;
 }
 
+#page_title_text {
+  width: 100%;
+  text-align: center;
+}
+
 .voting_list_table {
   width: 90%;
   border: 1px solid grey;
