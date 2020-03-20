@@ -6,11 +6,11 @@ const User = require('../models/User');
 
 router.get('/', expiryMonitor, async(req, res, next) => {
   try {
-    let votings = await Voting.find().exec(); // error
+    let votings = await Voting.find().exec();
     votings = JSON.parse(JSON.stringify(votings));
     const users = votings.map((voting) => {
       return new Promise(async(resolve, reject) => {
-        const user = await User.findById(voting.author).exec(); // error
+        const user = await User.findById(voting.author).exec();
         voting.authorName = user.username;
         resolve();
       });
@@ -18,10 +18,8 @@ router.get('/', expiryMonitor, async(req, res, next) => {
     await Promise.all(users);
     res.render('index', { user: req.user, votings });
   } catch (err) {
-    if (err.name === 'MongoError') {
-      console.log('Error while fetching votes and author names from DB\n', err);
-      next(err);
-    }
+    console.log('Error while fetching votes and author names from DB\n', err);
+    next(err);
   }
 });
 

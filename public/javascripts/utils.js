@@ -1,4 +1,4 @@
-function getIsoTzHHMM(tzOffsetMinutes) {
+function getIsoTzHhMm(tzOffsetMinutes) {
   let hh = Math.floor(tzOffsetMinutes / -60).toString();
   let mm = (Math.abs(tzOffsetMinutes) - 60 * hh).toString();
   hh = (hh < 10) ? '0' + hh : hh;
@@ -7,6 +7,6 @@ function getIsoTzHHMM(tzOffsetMinutes) {
   return `${hh}:${mm}`;
 }
 
-function getGmtFromDatetimeLocal(datetimeLocal, tzOffsetMinutes) {
-  return (datetimeLocal + getIsoTzHHMM(tzOffsetMinutes));
+function getIsoGmtFromDatetimeLocal(datetimeLocal, tzOffsetMinutes) {
+  return (datetimeLocal + getIsoTzHhMm(tzOffsetMinutes));
 }

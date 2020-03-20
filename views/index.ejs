@@ -7,9 +7,9 @@
   </head>
   <body>
     <%- include('header') %>
-    <div id='body_container'>
+    <div id='body-container'>
       <div class='table-container'>
-        <table class='voting_list_table'>
+        <table class='voting-list-table'>
           <tr>
             <th>Title</th>
             <th>Creator</th>
@@ -29,18 +29,18 @@
               </td>
               <td>
                 <% if (voting.status === 'active') { %>
-                  <span class='ongoing_text'>🗳️ Ongoing</span>
+                  <span class='ongoing-text'>🗳️ Ongoing</span>
                 <% } else if (voting.status === 'ended') { %>
-                  <span class='finished_text'>📦 Finished</span>
+                  <span class='finished-text'>📦 Finished</span>
                 <% } %>
               </td>
             </tr>
           <% }) %>
         </table>
       </div>
-      <div id='create_button_container'>
+      <div id='create-button-container'>
         <a href="/votings/new">
-          <button class='primary_button'>
+          <button class='primary-button'>
             Create a new voting
           </button>  
         </a>

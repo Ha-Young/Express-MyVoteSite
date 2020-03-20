@@ -1,16 +1,17 @@
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
-const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const User = require('../models/User');
 
 passport.use(new Strategy(
   async function(username, password, cb) {
     try {
       const user = await User.findOne({ username }).exec();
       if (!user) return cb(null, false);
+
       const match = await bcrypt.compare(password, user.password);
-      console.log(match);
       if (!match) return cb(null, false);
+      
       return cb(null, user);
     } catch (err) {
       return cb(err);
@@ -27,6 +28,6 @@ passport.deserializeUser(async function(id, cb) {
     const user = await User.findById(id);
     cb(null, user);
   } catch (err) {
-    return cb(err);
+    cb(err);
   }
 });

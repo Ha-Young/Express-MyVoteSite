@@ -1,37 +1,37 @@
-#main_container {
+#main-container {
   font-size: 20px;
   width: 80%;
 }
 
-#status_container,
-#end_time_container,
-#result_container,
-#vote_container,
-#voted_message,
-#choices_available_text {
+#status-container,
+#end-time-container,
+#result-container,
+#vote-container,
+#voted-message,
+#choices-available-text {
   margin-top: 20px;
 }
 
-#vote_container {
+#vote-container {
   background-color: lightcyan;
 }
 
-#vote_button_container {
+#vote-button-container {
   margin-top: 15px;
 }
 
-#remove_container button {
+#remove-container button {
   font-size: 20px;
 }
 
-#danger_text {
+#danger-text {
   color: red;
 }
 
-#author_zone_text_container {
+#author-zone-text-container {
   margin-top: 20px;
 }
 
-#author_zone_votes_text_container {
+#author-zone-votes-text-container {
   margin-top: 15px;
 }

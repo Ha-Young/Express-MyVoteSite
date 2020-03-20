@@ -1,23 +1,23 @@
-#body_container {
+#body-container {
   width: 80%;
   text-align: center;
 }
 
-#page_title_text {
+#page-title-text {
   width: 100%;
   text-align: center;
 }
 
-.voting_list_table {
+.voting-list-table {
   width: 90%;
   border: 1px solid grey;
 }
 
-#create_button_container {
+#create-button-container {
   text-align: center;
 }
 
-.voting_list_table {
+.voting-list-table {
   margin-left: auto;
   margin-right: auto;
   border-collapse: collapse;

@@ -1,10 +1,10 @@
-#body_container {
+#body-container {
   width: 100%;
   text-align: center;
   font-size: 20px;
 }
 
-#form_container {
+#form-container {
   border: 1px solid lightblue;
   border-radius: 5px;
   text-align: center;
@@ -16,7 +16,7 @@
   padding: 20px;
 }
 
-#signin_text {
+#signin-text {
   font-size: 20px;
   margin-bottom: 30px;
 }
@@ -26,11 +26,11 @@ input {
   margin-bottom: 10px;
 }
 
-.secondary_button {
+.secondary-button {
   margin-top: 10px;
   font-size: 25px;
 }
 
-#signup_container {
+#signup-container {
   font-size: 25px;
 }

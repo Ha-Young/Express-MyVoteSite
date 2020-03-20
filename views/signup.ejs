@@ -8,9 +8,9 @@
     <link rel='stylesheet' href='/stylesheets/signup.css' />
   </head>
   <body>
-    <div id='body_container'>
+    <div id='body-container'>
       <span>SIGN UP</span>
-      <div id='form_container'>
+      <div id='form-container'>
         <form name='signup' method='POST' action=<%=`/signup`%>>
           USERNAME :
           <input 
@@ -26,12 +26,12 @@
             required
           />
           <br/>
-          <button id='signup_button' class='primary_button' type='submit' disabled='true'>
+          <button id='signup-button' class='primary-button' type='submit' disabled='true'>
             SIGN UP
           </button>
           <br/>
         </form>
-        <span class='alertText' id='passwordAlert'></span>
+        <span class='alert-text' id='password-alert'></span>
       </div>
       <div>
         <a href='/'>Go to main</a>
@@ -41,10 +41,9 @@
     <script>
       let isUsernameValid = false;
       let isPasswordValid = false;
-      let signupButton = document.getElementById('signup_button');
+      let signupButton = document.getElementById('signup-button');
 
       function signupDisableHandler() {
-        // if (isUsernameValid && isPasswordValid) {
         if (isPasswordValid) {
           signupButton.removeAttribute('disabled');
         } else {
@@ -54,11 +53,11 @@
 
       const password = document.forms['signup']['password'];
       password.addEventListener('keyup', function() {
-        let passwordAlertText = document.getElementById('passwordAlert').innerText;
+        let passwordAlertText = document.getElementById('password-alert').innerText;
         if (password.value.length >= 6) {
-          document.getElementById('passwordAlert').innerText = ''
+          document.getElementById('password-alert').innerText = ''
         } else {
-          document.getElementById('passwordAlert').innerText = 'Password should be at least 6 characters'
+          document.getElementById('password-alert').innerText = 'Password should be at least 6 characters'
         }
         isPasswordValid = password.value.length >= 6 ? true : false;
         signupDisableHandler();

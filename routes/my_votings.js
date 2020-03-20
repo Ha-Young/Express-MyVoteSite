@@ -27,7 +27,7 @@ router.get('/', authorization, expiryMonitor, async(req, res, next) => {
           next(err);
         }
       });
-    })
+    });
     await Promise.all(users);
     res.render('my_votings', { user: req.user, votings });
   } catch (err) {

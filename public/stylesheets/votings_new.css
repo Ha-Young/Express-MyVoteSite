@@ -1,4 +1,4 @@
-#main_container {
+#main-container {
   font-size: 20px;
 }
 
@@ -7,30 +7,30 @@ input {
   font-size: 20px;
 }
 
-#title_container, #choice_container {
+#title-container, #choice-container {
   margin-bottom: 20px;
 }
 
-#choice_container button {
+#choice-container button {
   font-size: 20px;
 }
 
-#end_date_container input {
+#end-date-container input {
   width: 300px;
 }
 
-#end_date_container select {
+#end-date-container select {
   font-size: 20px;
 }
 
-#submit_button_container {
+#submit-button-container {
   margin-top: 20px;
 }
 
-.invalid_end_date_input {
+.invalid-end-date-input {
   outline: 1px solid red;
 }
 
-#end_time_alert_text {
+#end-time-alert-text {
   color: red;
 }

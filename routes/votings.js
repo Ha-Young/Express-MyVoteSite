@@ -6,23 +6,31 @@ const Voting = require('../models/Voting');
 const User = require('../models/User');
 const { VOTING_STATUSES } = require('../constants/enums');
 const { timezones } = require('../constants/timezones');
-const { getGmtFromDatetimeLocal } = require('../utils/utils');
+const { getIsoGmtFromDatetimeLocal } = require('../utils/utils');
 
 router.get('/new', authorization, expiryMonitor, (req, res, next) => {
-  const user = req.user;
+  // const user = req.user;
+  const user = JSON.parse(JSON.stringify(req.user));
   user.tzOffsetMinutes = new Date().getTimezoneOffset();
   res.render('votings_new', { user, timezones });
 });
 
 router.post('/new', authorization, async(req, res, next) => {
-  endTime = getGmtFromDatetimeLocal(req.body.endTime, req.body.tzOffsetMinutes);
-  console.log(endTime);
+  const endTimeGmt = getIsoGmtFromDatetimeLocal(
+    req.body.endTimeDatetimeLocal,
+    req.body.tzOffsetMinutes
+  );
+
   if (req.body.choices.length < 2) {
-    throw new Error('There should be at least 2 choices when creating a voting');
+    throw new Error(
+      'There should be at least 2 choices when creating a voting'
+    );
   }
 
   if (new Date(endTime).valueOf < new Date()) {
-    throw new Error('End time should be later than now');
+    throw new Error(
+      'End time should be later than now'
+    );
   }
 
   const choices = req.body.choices.map(choice => {
@@ -35,7 +43,7 @@ router.post('/new', authorization, async(req, res, next) => {
       title: req.body.title,
       choices,
       start_time: new Date().toISOString(),
-      end_time: endTime,
+      end_time: endTimeGmt,
       status: VOTING_STATUSES.ACTIVE
     });
     res.redirect('/votings/success');
@@ -54,7 +62,8 @@ router.get('/success', authorization, (req, res, next) => {
 });
 
 router.get('/:id', expiryMonitor, async(req, res, next) => {
-  const user = req.user;
+  // const user = req.user;
+  const user = JSON.parse(JSON.stringify(req.user));
   try {
     let voting;
     try {
@@ -172,7 +181,7 @@ router.post('/:id', authorization, expiryMonitor, async(req, res, next) => {
       console.log('Error while pushing a vote into User\n', err);
       throw new Error(err);
     }
-    
+
     res.redirect(`/votings/${req.params.id}`);
   } catch (err) {
     console.log(err);

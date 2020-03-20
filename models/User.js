@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
     type: [{
       voting: {
         type: Schema.Types.ObjectId,
-        ref: 'Voting' // this should be fixed later
+        required: true
       }
     }]
   }

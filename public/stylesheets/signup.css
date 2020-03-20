@@ -1,17 +1,17 @@
-#body_container {
+#body-container {
   text-align: center;
   font-size: 20px;
 }
 
-.alertText {
+.alert-text {
   color: red;
 }
 
-#form_container {
+#form-container {
   margin: 20px;
 }
 
-#signup_button {
+#signup-button {
   margin: 20px;
 }
 

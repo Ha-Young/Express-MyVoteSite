@@ -1,9 +1,9 @@
-#body_container {
+#body-container {
   width: 80%;
   text-align: center;
 }
 
-.voting_list_table {
+.voting-list-table {
   width: 90%;
   border: 1px solid grey;
 }
@@ -12,7 +12,7 @@
   text-align: center;
 }
 
-.voting_list_table {
+.voting-list-table {
   margin-left: auto;
   margin-right: auto;
   border-collapse: collapse;
@@ -21,7 +21,6 @@
 
 tr {
   border: none;
-  /* border-bottom: 1px solid black; */
 }
 
 th {
@@ -33,7 +32,7 @@ td {
   height: 30px;
 }
 
-#create_button_container {
+#create-button-container {
   margin-top: 20px;
   text-align: center;
 }

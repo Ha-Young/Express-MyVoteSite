@@ -7,61 +7,65 @@
   </head>
   <body>
     <%- include('header') %>
-    <div id='main_container'>
+    <div id='main-container'>
       <h3>Create a new voting</h3>
-      <div id='form_container'>
-        <form onsubmit='return formValidator()' method='POST' action=<%=`/votings/new`%>>
-          <!-- <form method='POST' action=<%=`/votings/new`%>> -->
-            <div id='title_container'>
-              <div>
-                Title
-              </div>
-              <div>
-                <input type='text' name='title' placeholder='Type your title for voting' required>
-              </div>
+      <div id='form-container'>
+        <form 
+          onsubmit='return formValidator()'
+          method='POST'
+          action=<%=`/votings/new`%>
+        >
+          <div id='title-container'>
+            <div>
+              Title
             </div>
-            
-            <div id='choice_container'>
-              Choices
-              <button class='primary_button' type='button' onclick=handleAddClick(event)>
-                Add a choice
-              </button>
-              <div id='choice_list'>
-                <input class='choice_inputs' type='text' name='choices' placeholder='Type your first choice here' required><br/>
-                <input class='choice_inputs' type='text' name='choices' placeholder='Type your second choice here' required><br/>
-              </div>
+            <div>
+              <input type='text' name='title' placeholder='Type your title for voting' required>
             </div>
-      
-            <div id='end_date_container'>
-              <div>
-                End date
-              </div>
-              <div>
-                <input id='end_time' type='datetime-local' name='endTime' required/>
-                <span>Time zone : GMT</span>
-                <select id='end_time_tzOffset' name='tzOffsetMinutes'>
-                  <% timezones.map(timezone => { %>
-                    <option
-                      value=<%= timezone.offsetMinutes %>
-                      <% if (Number(timezone.offsetMinutes === user.tzOffsetMinutes)) { %>
-                        <%= 'selected' %>
-                      <% } %>
-                    >
-                      <%= timezone.display %>
-                    </option>
-                  <% }) %>
-                </select>
-              </div>
-              <div>
-                <span id='end_time_alert_text'></span>
-              </div>
+          </div>
+
+          <div id='choice-container'>
+            Choices
+            <button class='primary-button' type='button' onclick=handleAddClick(event)>
+              Add a choice
+            </button>
+            <div id='choice-list'>
+              <input class='choice-inputs' type='text' name='choices' placeholder='Type your first choice here' required><br/>
+              <input class='choice-inputs' type='text' name='choices' placeholder='Type your second choice here' required><br/>
             </div>
-            <div id='submit_button_container'>
-              <button class='primary_button' type='submit'>SUBMIT</button>
+          </div>
+    
+          <div id='end-time-container'>
+            <div>
+              End date
             </div>
-          </form>
+            <div>
+              <input id='end-time' type='datetime-local' name='endTimeDatetimeLocal' required/>
+              <span>Time zone : GMT</span>
+              <select id='end-time-tzOffset' name='tzOffsetMinutes'>
+                <% timezones.map(timezone => { %>
+                  <option
+                    value=<%= timezone.offsetMinutes %>
+                    <% if (Number(timezone.offsetMinutes === user.tzOffsetMinutes)) { %>
+                      <%= 'selected' %>
+                    <% } %>
+                  >
+                    <%= timezone.display %>
+                  </option>
+                <% }) %>
+              </select>
+            </div>
+            <div>
+              <span id='end-time-alert-text'></span>
+            </div>
+          </div>
+          <div id='submit-button-container'>
+            <button class='primary-button' type='submit'>
+              SUBMIT
+            </button>
+          </div>
+        </form>
       </div>
-      
     </div>
 
     <script src='/javascripts/utils.js'></script>
@@ -72,18 +76,18 @@
         el.setAttribute('type', 'text');
         el.setAttribute('name', 'choices');
         el.setAttribute('required', 'true');
-        el.setAttribute('class', 'choice_inputs');
+        el.setAttribute('class', 'choice-inputs');
         el.setAttribute('placeholder', 'Type your extra choices here');
 
         let button = document.createElement('button');
         button.setAttribute('onclick', 'handleRemoveClick(event)');
         button.setAttribute('type', 'button');
-        button.setAttribute('class', 'secondary_button');
+        button.setAttribute('class', 'secondary-button');
         button.innerText = 'REMOVE';
 
         div.appendChild(el);
         div.appendChild(button);
-        document.getElementById('choice_list').appendChild(div);
+        document.getElementById('choice-list').appendChild(div);
         return;
       }
 
@@ -92,18 +96,18 @@
       }
 
       function formValidator() {
-        const choices = document.getElementById('choice_list').children;
+        const choices = document.getElementById('choice-list').children;
 
-        const end_time = document.getElementById('end_time').value;
-        const tzOffset = document.getElementById('end_time_tzOffset').value;
-        const gmtIso = getGmtFromDatetimeLocal(end_time, tzOffset);
+        const end_time = document.getElementById('end-time').value;
+        const tzOffset = document.getElementById('end-time-tzOffset').value;
+        const gmtIso = getIsoGmtFromDatetimeLocal(end_time, tzOffset);
         if (choices.length > 2 && (new Date() < new Date(gmtIso))) {
           return true;
         } else {
-          document.getElementById('end_time').setAttribute('class', 'invalid_end_date_input');
-          document.getElementById('end_time_alert_text').innerText = 'Please input end date later than now';
+          document.getElementById('end-time').setAttribute('class', 'invalid_end_date_input');
+          document.getElementById('end-time-alert-text').innerText = 'Please input end date later than now';
           return false;
-        }; 
+        };
       }
     </script>
   </body>
