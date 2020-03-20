@@ -41,7 +41,8 @@ button:hover {
 .signupForm,
 .validationFailSection,
 .postResultSection,
-.votesSection section {
+.votesSection section,
+.errorSection {
   display: flex;
   flex-direction: column;
 }
@@ -124,19 +125,22 @@ header h4 {
 /* [validation fail, create result] */
 .validationFailSection h1,
 .postResultSection h1,
-.postResultSection h2 {
+.postResultSection h2,
+.errorSection h1 {
   font-family: 'Baloo Tamma 2', cursive;
   text-align: center;
 }
 
 .validationFailSection,
-.postResultSection {
+.postResultSection,
+.errorSection {
   align-items: center;
   margin-top: 200px;
 }
 
 .validationFailSection a,
-.postResultSection a {
+.postResultSection a,
+.errorSection a {
   padding: 10px;
 }
 
@@ -247,18 +251,18 @@ header h4 {
   width: 250px
 }
 
-.voteButton,
-.vote {
+.voteMoveButton,
+.voteMove {
   width: 200px
 }
 
-.vote {
+.voteMove {
   border-radius: 10px;
   background-color: #a6b1e1;
   text-align: center;
 }
 
-.vote:hover {
+.voteMove:hover {
   cursor: pointer;
   background-color: #424874;
   color: white;
@@ -332,7 +336,7 @@ header h4 {
   padding: 5px;
   border-radius: 8px;
   background-color: #dcd6f7;
-  color: #dcd6f7;
+  color: transparent;
 }
 
 .optionResult {

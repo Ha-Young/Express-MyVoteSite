@@ -12,6 +12,7 @@
         <input type="radio" id="<%= option[0] %>" name="option" value="<%= option[0] %>">
         <label class="voteOptionLabel" for="<%= option[0] %>"><%= option[0] %></label><br>
       <% }) %>
+      <button type="submit" class="voteSubmit">Vote</button>
     </form>
     <% if (voteInfo.loginUser === voteInfo.madeById) { %>
       <div class="currentResult">
@@ -21,7 +22,6 @@
     <% } %>
   </div>
   <div style="display: flex;">
-    <button type="submit" class="voteSubmit">Vote</button>
     <button type="button" class="goHomeDetailPage">Go Home</button>
     <% if (voteInfo.loginUser === voteInfo.madeById) { %>
       <button type="button" class="delete" id="<%= voteInfo.id %>">Delete</button>
