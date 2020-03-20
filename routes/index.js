@@ -3,13 +3,12 @@ const bcrypt = require('bcrypt');
 const router = express.Router();
 
 const User = require('../models/User');
-const Vote = require('../models/Vote');
 
 const { calculateRemainTime } = require('../utils/index');
 const { updateVoteStatus, findVote, findVoteByOwner } = require('../middlewares/votes');
 const { isAuthenticated, validateEmail, validatePassword } = require('../middlewares/authorization');
 
-router.get('/', updateVoteStatus, findVote, async (req, res, next) => {
+router.get('/', updateVoteStatus, findVote, async (req, res) => {
   const { votes } = res.locals;
 
   res.render('index', {
