@@ -45,9 +45,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/', indexRouter);
 app.use('/signup', signupRouter);
 app.use('/auth', authRouter);
-app.use('/', indexRouter);
+
 app.use('/votings', votingRouter);
 app.use('/error', clientFetchError);
 app.use('/my-votings', myVotings);

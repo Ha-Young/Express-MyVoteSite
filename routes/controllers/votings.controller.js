@@ -56,10 +56,12 @@ exports.renderIndividualPoll = async(req, res, next) => {
       const { user } = req.session.passport;
       if (poll.creator.id === user) isCreator = true;
       data = getDataForPollResults(isCreator, poll);
+      data.hasLoggedIn = true;
       return res.render('poll', data);
     }
 
     data = getDataForPollResults(isCreator, poll);
+    data.hasLoggedIn = false;
     return res.render('poll', data);
   } catch(e) {
     if (e.name === "MongoError") {

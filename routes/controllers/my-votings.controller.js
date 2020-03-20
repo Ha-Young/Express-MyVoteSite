@@ -15,13 +15,13 @@ exports.displayMyVotings = async(req, res, next) => {
       });
     }
   
-    const crriteria = { $or: [] };
+    const criteria = { $or: [] };
     user.myPolls.forEach((id) => {
       const obj = {};
       obj._id = id;
-      crriteria.$or.push(obj);
+      criteria.$or.push(obj);
     });
-    const myPolls = await Poll.find(crriteria);
+    const myPolls = await Poll.find(criteria).populate('creator');
     const data = await getPollsAndTimeString(myPolls);
     const { polls } = data;
     const { timeString } = data;

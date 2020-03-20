@@ -34,7 +34,7 @@ router.get(
 );
 
 router.get(
-  '/:poll_id', 
+  '/:poll_id',
   rateLimit.blockTooManyRequests, 
   votingsController.renderIndividualPoll
 );
