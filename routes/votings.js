@@ -26,10 +26,6 @@ router.post('/new', authorization, async(req, res, next) => {
     );
     console.log(err.message);
     next(err);
-
-    // throw new Error(
-    //   'There should be at least 2 choices when creating a voting'
-    // );
   }
 
   if (new Date(endTimeIsoGmt).valueOf < new Date()) {
@@ -38,10 +34,6 @@ router.post('/new', authorization, async(req, res, next) => {
     );
     console.log(err.message);
     next(err);
-
-    // throw new Error(
-    //   'End time should be later than now'
-    // );
   }
 
   const choices = req.body.choices.map(choice => {
@@ -82,7 +74,6 @@ router.get('/:id', expiryMonitor, async(req, res, next) => {
     } catch (err) {
       console.log('Error while finding a vote by id \n', err);
       next(err);
-      // throw new Error('Error while finding a vote by id \n', err);
     }
 
     if (user) {
@@ -95,7 +86,6 @@ router.get('/:id', expiryMonitor, async(req, res, next) => {
         }
       });
 
-      // should I use mongodb queries?
       if (user.hasVoted) {
         let userChoice;
         voting.votes.forEach(vote => {
@@ -129,78 +119,65 @@ router.get('/:id', expiryMonitor, async(req, res, next) => {
 });
 
 router.post('/:id', authorization, expiryMonitor, async(req, res, next) => {
-  // try {
-    let voting;
-    try {
-      voting = await Voting.findById( req.params.id ).exec();
-    } catch (err) {
-      console.log('Error occured while finding a vote by id from DB\n', err);
-      return next(err);
-      // throw new Error(err);
-    }
-    if (voting.status !== VOTING_STATUSES.ACTIVE) {
-      console.log('User is trying to vote for a voting whose status is not active\n' + err);
-      return next(err);
-      // throw new Error(
-      //   'User is trying to vote for a voting whose status is not active'
-      // );
-    }
-    
-    let voted;
-    try {
-      voted = await Voting.find({ 
-        _id: req.params.id,
-        'votes.user': req.user._id 
-      });
-    } catch (err) {
-      console.log('Error occured while checking if user id is inside Voting.votes.user \n', err);
-      return next(err);
-      // throw new Error(err);
-    }    
-    if (voted.length) {
-      console.log('User already voted for this poll.');
-      return next(err);
-      // throw new Error('User already voted for this poll.');
-    };
+  let voting;
+  try {
+    voting = await Voting.findById( req.params.id ).exec();
+  } catch (err) {
+    console.log('Error occured while finding a vote by id from DB\n', err);
+    return next(err);
+  }
+  if (voting.status !== VOTING_STATUSES.ACTIVE) {
+    console.log('User is trying to vote for a voting whose status is not active\n' + err);
+    return next(err);
+  }
+  
+  let voted;
+  try {
+    voted = await Voting.find({ 
+      _id: req.params.id,
+      'votes.user': req.user._id 
+    });
+  } catch (err) {
+    console.log('Error occured while checking if user id is inside Voting.votes.user \n', err);
+    return next(err);
+  }    
+  if (voted.length) {
+    console.log('User already voted for this poll.');
+    return next(err);
+  };
 
-    try {
-      await Voting.findOneAndUpdate( 
-        { _id: req.params.id },
-        {
-          $push: {
-            votes: {
-              user: req.user._id,
-              choice: req.body.choice
-            }
+  try {
+    await Voting.findOneAndUpdate( 
+      { _id: req.params.id },
+      {
+        $push: {
+          votes: {
+            user: req.user._id,
+            choice: req.body.choice
           }
-        }).exec();
-    } catch (err) {
-      console.log('Error while pushing a vote into Voting\n', err);
-      return next(err);
-      // throw new Error(err);
-    }
+        }
+      }).exec();
+  } catch (err) {
+    console.log('Error while pushing a vote into Voting\n', err);
+    return next(err);
+  }
 
-    try {
-      await User.findOneAndUpdate(
-        { _id: req.user._id },
-        {
-          $push: {
-            votes: {
-              voting: req.params.id,
-            }
+  try {
+    await User.findOneAndUpdate(
+      { _id: req.user._id },
+      {
+        $push: {
+          votes: {
+            voting: req.params.id,
           }
-        }).exec();  
-    } catch (err) {
-      console.log('Error while pushing a vote into User\n', err);
-      return next(err);
-      // throw new Error(err);
-    }
+        }
+      }).exec();  
+  } catch (err) {
+    console.log('Error while pushing a vote into User\n', err);
+    return next(err);
+  }
 
-    res.redirect(`/votings/${req.params.id}`);
-  // } catch (err) {
-  //   console.log(err);
-  //   next(err);
-  // }
+  res.redirect(`/votings/${req.params.id}`);
 });
 
 router.delete('/:id', authorization, async(req, res, next) => {

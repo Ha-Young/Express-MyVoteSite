@@ -11,8 +11,7 @@ async function expiryMonitor(req, res, next) {
     await Voting.updateMany(filter, doc);
   } catch (err) {
     console.log(
-      'Error occured while monitoring expiry & updating status accordingly',
-      err
+      'Error occured while monitoring expiry & updating status accordingly \n', err
     );
   }
   next();
