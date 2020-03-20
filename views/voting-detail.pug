@@ -10,7 +10,7 @@ block content
           p(class="voting-detail-ongoing") 진행중
         h1 #{voting.title}
         each option in voting.options
-          form(class="voting-detail-form", action=`/votings/${voting._id}/options/${option._id}?_method=PUT`, method="post")
+          form(class="voting-detail-form", action=`/votings/${voting._id}/options/${option._id}?_method=PUT`, method="POST")
             h2 #{option.option_title}
             p #{option.option_count}표
             button(type="submit") 투표하기
@@ -37,7 +37,7 @@ block content
           p(class="voting-detail-ongoing") 진행중
         h1 #{voting.title}
         each option in voting.options
-          form(class="voting-detail-form", action=`/votings/${voting._id}/options/${option._id}?_method=PUT`, method="post")
+          form(class="voting-detail-form", action=`/votings/${voting._id}/options/${option._id}?_method=PUT`, method="POST")
             h2 #{option.option_title}
             button(type="submit") 투표하기
         p(class="expiration-date") 만료일 #{moment(voting.deadline).format('YYYY-MM-DD hh:mm a')}
