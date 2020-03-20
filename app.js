@@ -28,13 +28,9 @@ app.use(
     saveUninitialized: true,
     secret: "nathaneat",
     store: new MongoStore({ 
-      url : process.env.MONGODB_URI,
-      ttl: 60 * 60
+      url : process.env.MONGODB_URI
     }),
     store: new MongoStore({ url : process.env.MONGODB_URI }),
-    cookie: { 
-      maxAge: 1000 * 60 * 2
-    }
   })
 );
 app.use(bodyParser.urlencoded({ extended: false }));

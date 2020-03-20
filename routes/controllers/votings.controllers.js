@@ -11,7 +11,7 @@ exports.isAuthenticated = (req, res, next) => {
   res.redirect('/login');
 };
 
-exports.newVoting = async (req, res) => {
+exports.newVoting = async (req, res, next) => {
   const { email, _id: userId } = req.user;
   const { title, items, endDate } = req.body;
   const votingInfo = Object.keys(req.body);
@@ -21,16 +21,24 @@ exports.newVoting = async (req, res) => {
   if (isEmptyValueCheck) {
     const itemList = [];
     items.forEach(item => itemList.push({ name: item, count: 0 }));
-    new Voting({
-      title,
-      items: itemList,
-      endDate,
-      author: email,
-      authorId: userId,
-      solvedUser: []
-    }).save();
+    try {
+      new Voting({
+        title,
+        items: itemList,
+        endDate,
+        author: email,
+        authorId: userId,
+        solvedUser: []
+      }).save();
+      res.render('newVotingSuccess');
+    } catch (error) {
+      res.render('newVotingFail', { error });
+    }
+  } else {
+    next(createError({
+      message: '빈값을 제출하면 안됩니다.'
+    }));  
   }
-  res.redirect('/');
 };
 
 exports.renderVoting = async (req, res) => {
@@ -119,19 +127,3 @@ exports.deleteVoting = async (req, res) => {
     res.json({ result: false });
   }
 }
-
-/*
-{
-  solvedUser: [],
-  _id: 5e731b52b9ca6d4204ceb73b,
-  title: 'q',
-  items: [
-    { _id: 5e731b52b9ca6d4204ceb73c, name: 'q1', count: 0 },
-    { _id: 5e731b52b9ca6d4204ceb73d, name: 'q2', count: 0 }
-  ],
-  endDate: '2020-03-20T14:02',
-  author: 'a@a.com',
-  authorId: 5e722756cccc5f0c40549b8d,
-  __v: 0
-}
-*/
