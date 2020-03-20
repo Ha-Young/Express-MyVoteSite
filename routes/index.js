@@ -20,16 +20,36 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/my-votings', async (req, res) => {
-  const allVotings = await Voting.find();
   const userId = req.user._id;
-  const myVotings = []
-  const otherVotings = []
-  //여기서 내 투표, 전체 투표 걸러서 주기 
-  //해당 유저값 제외후 검색 ? 
+  const allVotings = await Voting.find();
+  const myVotings = [];
+  const otherVotings = [];
 
+  allVotings.forEach(voting => {
+    const isMyVoitng = String(voting.authorId) === userId;
+    const votingEndDate = new Date(voting.endDate).getTime();
+    const currentDate = new Date().getTime();
+
+    //FIXME: 각 투표에 속성 추가 해야함
+    if (votingEndDate >= currentDate) { 
+      voting.status = true;
+      voting.myVoting = true;
+      voting.class = 'myVoting';
+    } else {
+      voting.status = false;
+      voting.myVoting = false;
+      voting.class = null;
+    }
+
+    if (isMyVoitng) {
+      myVotings.push(voting);
+    } else {
+      otherVotings.push(voting);
+    }
+  });
+  
   res.render('myVotings', {
-    allVotings,
-    userId
+    votings: [...myVotings, ...otherVotings],
   });
 });
 

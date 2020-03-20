@@ -12,7 +12,7 @@ exports.isAuthenticated = (req, res, next) => {
 };
 
 exports.newVoting = async (req, res) => {
-  const { email, _id: id } = req.user;
+  const { email, _id: userId } = req.user;
   const { title, items, endDate } = req.body;
   const votingInfo = Object.keys(req.body);
   const isEmptyValueCheck = votingInfo.every(item => req.body[item].length !== 0);
@@ -26,7 +26,7 @@ exports.newVoting = async (req, res) => {
       items: itemList,
       endDate,
       author: email,
-      authorId: id,
+      authorId: userId,
       solvedUser: []
     }).save();
   }
