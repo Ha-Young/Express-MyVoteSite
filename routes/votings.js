@@ -13,6 +13,7 @@ router.get('/new', checkUser, async (req, res) => {
 });
 
 router.get('/:id', async (req, res, next) => {
+  console.log(req.originalUrl);
   const user = await findUser(req);
 
   try {
@@ -36,7 +37,7 @@ router.get('/:id', async (req, res, next) => {
 
       return res.render('voting-detail', { voting, moment, user });
     }
-
+    req.session.returnTo = req.originalUrl;
     res.render('voting-detail', { voting, moment, user });
   } catch (err) {
     next(new error.GeneralError());
@@ -47,6 +48,7 @@ router.post('/new', checkUser, async (req, res, next) => {
   try {
     const { 'voting-title': title, options, date, time } = req.body;
     const user = await findUser(req);
+    const votingByVotingTitle = await Voting.findOne({ title });
     const optionObj = options.map(option => {
       return {
         option_title: option,
@@ -55,7 +57,7 @@ router.post('/new', checkUser, async (req, res, next) => {
     });
     const deadline = new Date(`${date} ${time}`).getTime();
     const currentTime = new Date().getTime();
-
+    // if(votingByVotingTitle)
     if (!title.trim() || !date.trim() || !time.trim()) {
       throw new error.VotingValidationError();
     }
@@ -73,7 +75,7 @@ router.post('/new', checkUser, async (req, res, next) => {
       deadline: deadline
     }).save();
 
-    res.redirect('/');
+    res.render('voting-creation', { user, success: '투표 생성 성공!' });
   } catch (err) {
     if (
       err instanceof error.VotingTimeError ||

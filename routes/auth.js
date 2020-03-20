@@ -15,7 +15,8 @@ router.post('/login', (req, res, next) => {
       return res.render('login', { errorMessage: info.message });
     }
     req.login(user, () => {
-      res.redirect('/');
+      res.redirect(req.session.returnTo || '/');
+      delete req.session.returnTo;
     });
   })(req, res, next);
 });

@@ -19,6 +19,8 @@ block content
     button(class="submit-button" type="submit") 생성하기
     if (error)
       p(class="error-message") #{error}
+    if (success)
+      p(class="success-message") #{success}
   a(class="home-link", href="/") 돌아가기
   script(src="/javascripts/votingCreation.js")
   

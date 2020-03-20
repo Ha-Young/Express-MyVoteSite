@@ -7,6 +7,7 @@ const { findUser } = require('../utils/helpers');
 const error = require('../lib/error');
 
 router.get('/', async (req, res, next) => {
+  console.log(req.session);
   try {
     const user = await findUser(req);
     let votings = await Voting.find();
