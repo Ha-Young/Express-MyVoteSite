@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import Vote from '../models/vote';
 import User from '../models/user';
 import { dateTransformer } from '../helper';
@@ -47,6 +48,12 @@ export const postVotings = async (req, res) => {
 export const getVoteDetail = async (req, res) => {
   try {
     const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.redirect('/');
+      return;
+    }
+
     const vote = await Vote.findById(id).populate('creator');
 
     res.locals.dateTransformer = dateTransformer;
@@ -77,17 +84,14 @@ export const postVotingDetail = async (req, res) => {
   }
 };
 
-export const getSuccess = (req, res) => {
-  res.render('success');
-};
-
-export const getFailure = (req, res) => {
-  res.render('failure');
-};
-
 export const getVoteResult = async (req, res) => {
   try {
     const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.redirect('/');
+    }
+
     const vote = await Vote.findById(id).populate('creator');
 
     res.locals.dateTransformer = dateTransformer;
@@ -123,4 +127,12 @@ export const deleteVote = async (req, res, next) => {
   } catch (err) {
 
   }
+};
+
+export const getSuccess = (req, res) => {
+  res.render('success');
+};
+
+export const getFailure = (req, res) => {
+  res.render('failure');
 };
