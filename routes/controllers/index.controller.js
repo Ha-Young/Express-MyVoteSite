@@ -1,5 +1,5 @@
-const getPollsAndTimeString = require('../../lib/getPollsAndTimeString');
 const createError = require('http-errors');
+const getPollsAndTimeString = require('../../lib/getPollsAndTimeString');
 
 exports.renderIndex = async (req, res, next) => {
   try {

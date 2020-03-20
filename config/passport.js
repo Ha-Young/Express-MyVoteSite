@@ -1,7 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
 const createError = require('http-errors');
+const User = require('../models/user');
 
 const initialize = (passport) => {
   try {

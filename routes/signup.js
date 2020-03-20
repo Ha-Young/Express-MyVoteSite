@@ -1,15 +1,16 @@
 const express = require('express');
-
-const router = express.Router();
 const signupController = require('./controllers/signup.controller');
 const validateSignupInput = require('./../lib/validateSignupInput');
 const validateEmailDuplication = require('./../lib/validateEmailDuplication');
+const rateLimit = require('./middlewares/blockToManyRequests');
+const router = express.Router();
 
-router.get('/', signupController.renderSignUp);
+router.get('/', rateLimit.blockTooManyRequests, signupController.renderSignUp);
 router.post(
-  '/', 
-  validateSignupInput, 
-  validateEmailDuplication, 
+  '/',
+  rateLimit.blockTooManyRequests,
+  validateSignupInput,
+  validateEmailDuplication,
   signupController.redirectMain
 );
 

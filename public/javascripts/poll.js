@@ -16,7 +16,7 @@ if (deleteButton) {
       if (response.ok) {
         return location.href = 'http://localhost:4000';
       }
-    
+      
       throw new Error()
     } catch(e) {
       location.href = 'http://localhost:4000/error';

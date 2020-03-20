@@ -1,6 +1,6 @@
+const createError = require('http-errors');
 const User = require('../../models/user');
 const Poll = require('../../models/poll');
-const createError = require('http-errors');
 const getPollsAndTimeString = require('../../lib/getPollsAndTimeString');
 
 exports.displayMyVotings = async (req, res, next) => {

@@ -1,5 +1,6 @@
 
 const createError = require('http-errors');
+const mongoose = require('mongoose');
 const saveDataForNewVote = require('../../lib/saveDataForNewVote');
 const getDataForPollResults = require('../../lib/getDataForPollResults');
 const validateNewVoteInput = require('../../lib/validateNewVoteInput');
@@ -40,6 +41,9 @@ exports.renderFailure = (req, res, next) => {
 exports.renderIndividualPoll = async(req, res, next) => {
   try {
     const id = req.params.poll_id;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw(createError(404, "You are trying to access unrecognized path"));
+    }
     const poll = await Poll.findById(id).populate('creator');
     if (new Date() > new Date(poll.expiringTime)) {
       throw(createError(403, "This vote has been closed"));
@@ -91,20 +95,27 @@ exports.saveVotingResults = async(req, res, next) => {
 };
 
 exports.deleteApoll= async(req, res, next) => {
-  //////tmr lets do 
-  const { pollId } = req.body;
-  const poll = await Poll.findById(pollId).populate('creator');
-  const userId = poll.creator.id;
-  const user = await User.findById(userId);
-  let index = '';
-  user.myPolls.some((poll, i) => {
+  try {
+    const { pollId } = req.body;
+    const poll = await Poll.findById(pollId).populate('creator');
+    const userId = poll.creator.id;
+    const user = await User.findById(userId);
+    let index = '';
+    user.myPolls.some((poll, i) => {
     if (String(poll.myPoll) === String(pollId)) {
       return index = i;
     }
-  });
+    });
   
-  user.myPolls.splice(index, 1);
-  await user.save();
-  await Poll.findOneAndDelete(pollId);
-  return res.status(200).json({ result: 'ok' });
+    user.myPolls.splice(index, 1);
+    await user.save();
+    await Poll.findOneAndDelete(pollId);
+    return res.status(200).json({ result: 'ok' });
+  } catch(e) {
+    if (e.name === "MongoError") {
+      return next(createError(500, "Internal Error, vote was not deleted."));
+    }
+
+    next(e);
+  }
 };

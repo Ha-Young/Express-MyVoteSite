@@ -26,7 +26,7 @@ describe('#login', function() {
     let error;
     // console.log(req)
     before(function(done) {
-      const user = { id: '1', username: 'root' };
+      const user = { id: 'vanillaCoding', username: 'hahahoho', password: 1357 };
       req.login(user, { session: false }, function(err) {
         error = err;
         console.log(req);
