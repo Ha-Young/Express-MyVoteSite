@@ -11,7 +11,8 @@ const schema = mongoose.Schema({
       voter: {
         type: [{
           type: mongoose.Types.ObjectId,
-          ref: 'User'
+          ref: 'User',
+          unique: true
         }],
         default: []
       }
