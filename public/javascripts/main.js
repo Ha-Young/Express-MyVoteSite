@@ -6,7 +6,21 @@ const chartArea = document.querySelector('.chart-area');
 const deleteVoteButton = document.getElementById('delete-vote');
 
 if (optionsArea) {
+  const voteDetailForm = document.querySelector('form');
+  const expirationDateInput = document.getElementById('expiration-date');
+  const expirationTimeInput = document.getElementById('expiration-time');
   let optionCount = 2;
+
+  voteDetailForm.addEventListener('submit', (e) => {
+    const expirationValue = `${expirationDateInput.value}T${expirationTimeInput.value}`;
+    const now = new Date().getTime();
+    const expiration = new Date(expirationValue).getTime();
+
+    if (now > expiration) {
+      e.preventDefault();
+      alert('만료 날짜를 확인해주세요.');
+    }
+  });
 
   addOptionButton.addEventListener('click', () => {
     optionCount++;
