@@ -7,7 +7,6 @@ import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import createError from 'http-errors';
 import rootRouter from './routers/rootRouter';
-import authRouter from './routers/authRouter';
 import votingRouter from './routers/votingRouter';
 import { localMiddleware } from './middlewares';
 
@@ -37,7 +36,6 @@ app.use(passport.session());
 app.use(localMiddleware);
 
 app.use('/', rootRouter);
-app.use('/auth', authRouter);
 app.use('/votings', votingRouter);
 
 app.use((req, res, next) => {
