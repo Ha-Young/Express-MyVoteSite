@@ -1,0 +1,24 @@
+extends layouts/main
+include mixins/normal_button
+
+block content
+  div(class='max-w-lg mx-auto mt-8')
+    div(class='mb-6')
+      h2(class='mb-1 text-gray-800 font-semibold text-4xl sm:text-5xl') Login
+      p(class='text-gray-500 sm:text-lg') Securely login to your Voting Platform account
+    form(action='/users/login', method='post')
+      input(
+        class='w-full placeholder-gray-600 sm:text-lg shadow bg-white rounded p-5 mb-6 border-2 border-transparent'
+        type='email', 
+        name='email', 
+        placeholder='Email Address', 
+        required
+      )
+      input(
+        class='w-full placeholder-gray-600 sm:text-lg shadow bg-white rounded p-5 mb-6 border-2 border-transparent'
+        type='password', 
+        name='password', 
+        placeholder='Password', 
+        required
+      )
+      +normal_button('Login', 'submit')

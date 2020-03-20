@@ -1,0 +1,60 @@
+extends layouts/main
+include mixins/normal_button
+
+block content
+  - function getAfterThirtyMinutesISOString() { 
+  -   const t = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000); 
+  -   t.setMinutes(t.getMinutes() + 30); return t.toISOString().slice(0, 16); 
+  - }
+
+  div(class='max-w-5xl mx-auto mt-8')
+    div(class='mb-12')
+      h2(class='mb-1 text-gray-800 font-semibold text-4xl sm:text-5xl') Create a vote
+      p(class='text-gray-500 sm:text-lg') Complete the below fields to create your vote
+    form(action='/votings/new', method='post')
+      label(class='text-gray-700 font-bold' for='vote_title') title
+      textarea(
+        class='w-full mt-1 placeholder-gray-600 sm:text-lg shadow bg-white rounded px-5 pt-6 pb-10 mb-8 border-2 border-transparent resize-none'
+        id='vote_title'
+        name='title'
+        placeholder='Eg. What is your favorite food'
+        required
+      )
+      label(class='text-gray-700 font-bold' for='vote_option') option
+      input(
+        class='w-full mt-1 placeholder-gray-600 sm:text-lg shadow bg-white rounded px-5 py-6 mb-8 border-2 border-transparent'
+        id='vote_option'
+        type='text' 
+        name='option_list' 
+        placeholder='Eg. Option 1' 
+        required
+      )
+      label(class='text-gray-700 font-bold' for='vote_option') option
+      input(
+        class='w-full mt-1 placeholder-gray-600 sm:text-lg shadow bg-white rounded px-5 py-6 mb-8 border-2 border-transparent'
+        id='vote_option'
+        type='text' 
+        name='option_list' 
+        placeholder='Eg. Option 2' 
+        required
+      )
+      label(class='text-gray-700 font-bold' for='vote_option') option
+      input(
+        class='w-full mt-1 placeholder-gray-600 sm:text-lg shadow bg-white rounded px-5 py-6 mb-8 border-2 border-transparent'
+        id='vote_option'
+        type='text' 
+        name='option_list' 
+        placeholder='Eg. Option 3' 
+        required
+      )
+      label(class='text-gray-700 font-bold' for='vote_expired_at') expired_at
+      input(
+        class='block mt-1 rounded p-3 mb-10'
+        id='vote_expired_at'
+        type='datetime-local'
+        name='expired_at'
+        value=getAfterThirtyMinutesISOString()
+        required
+      )
+      div(class='max-w-xs')
+        +normal_button('Create your vote', 'submit')

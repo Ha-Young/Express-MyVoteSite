@@ -1,0 +1,20 @@
+include ../mixins/flash_message
+
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title= title ? `Voting Platform - ${title}` : 'Voting Platform'
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU', crossorigin='anonymous')
+    link(rel='stylesheet' href='https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css')
+    link(rel='stylesheet', href='/static/bundle.css')
+  body(class='pb-16 bg-gray-200')
+    if messages.error
+      +flash_message({ type: 'error', text: messages.error })
+    else if messages.success
+      +flash_message({ type: 'success', text: messages.success })
+    include ../partials/header
+    main(class='container mx-auto px-6 pt-20')
+      block content
+    script(src='/static/bundle.js')

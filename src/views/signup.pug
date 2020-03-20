@@ -1,0 +1,33 @@
+extends layouts/main
+include mixins/normal_button
+
+block content
+  div(class='max-w-lg mx-auto mt-8')
+    div(class='mb-6')
+      h2(class='mb-1 text-gray-800 font-semibold text-4xl sm:text-5xl') Sign Up
+      p(class='text-gray-500 sm:text-lg') Complete the below form to create your account
+    form(action='/users/signup', method='post')
+      input(
+        class='w-full placeholder-gray-600 sm:text-lg shadow bg-white rounded p-5 mb-6 border-2 border-transparent'
+        type='email', 
+        name='email', 
+        placeholder='Email Address', 
+        required
+      )
+      input(
+        class='w-full placeholder-gray-600 sm:text-lg shadow bg-white rounded p-5 mb-6 border-2 border-transparent'
+        type='password', 
+        name='password', 
+        placeholder='Password', 
+        required
+      )
+      input(
+        class='w-full placeholder-gray-600 sm:text-lg shadow bg-white rounded p-5 mb-10 border-2 border-transparent'
+        type='password', 
+        name='confirmation', 
+        placeholder='Confirmation', 
+        required
+      )
+      +normal_button('Sign Up', 'submit')
+      p(class='mt-10 text-gray-500 font-semibold text-sm sm:text-base text-center') Already a member? 
+        a(class='text-gray-700 font-semibold' href='/users/login') Login

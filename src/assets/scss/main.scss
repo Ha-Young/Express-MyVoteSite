@@ -1,0 +1,27 @@
+@keyframes flash-animation {
+  0% {
+    transform: translateY(-80px);
+  }
+  10% {
+    transform: translateY(30px);
+  }
+  90% {
+    transform: translateY(30px);
+  }
+  100% {
+    transform: translateY(-80px);
+  }
+}
+
+.flash-animation {
+  position: fixed;
+  top: 0;
+  left: calc(50% - 15rem);
+  width: 30rem;
+  z-index: 101;
+  animation: flash-animation 4s ease-in-out forwards;
+  @media (max-width: 640px) {
+    width: 20rem;
+    left: calc(50% - 10rem);
+  }
+}

@@ -1,0 +1,9 @@
+header(class='absolute top-0 lef-0 w-full z-100')
+  nav(class='container flex justify-between items-center h-16 mx-auto px-6')
+    a(class='text-gray-900 font-bold md:text-xl hover:text-gray-700' href='/') 홈
+    div
+      if loggedUser
+        a(class='text-gray-900 font-bold md:text-xl hover:text-gray-700' href='/users/logout') 로그아웃
+      else
+        a(class='mr-4 text-gray-900 font-bold md:text-xl hover:text-gray-700' href='/users/signup') 회원가입
+        a(class='text-gray-900 font-bold md:text-xl hover:text-gray-700' href='/users/login') 로그인

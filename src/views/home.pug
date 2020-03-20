@@ -1,0 +1,13 @@
+extends layouts/main
+include mixins/voting_card
+include mixins/normal_button
+
+block content
+  div(class='flex flex-wrap lg:-mx-4')
+    each voting in votings
+      +voting_card(voting)
+  nav(class='flex justify-center sm:justify-start mt-8')
+    a(class='mr-4 sm:mr-8' href='/votings/new') 
+      +normal_button('Create vote') 
+    a(href='/my-votings')
+      +normal_button('My vote')

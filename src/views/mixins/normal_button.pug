@@ -1,0 +1,5 @@
+mixin normal_button(text, type='button', bg_color='bg-green')
+  button(
+    class=`${bg_color}-400 hover:${bg_color}-600 w-full py-4 px-6 sm:px-8 rounded sm:text-lg text-white font-bold`
+    type=`${type}`
+  ) #{text}

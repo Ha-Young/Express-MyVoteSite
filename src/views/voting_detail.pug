@@ -1,0 +1,38 @@
+extends layouts/main
+include mixins/voting_card
+include mixins/normal_button
+
+block content 
+  - const isExpried = voting.expired_at.getTime() < new Date().getTime();
+  - const biggestCount = Math.max(...voting.option_list.map(option => option.count));
+
+  +voting_card(voting)
+  div(class='mt-6 px-4')
+    p(class='text-gray-500 sm:text-lg') Created by: 
+      span(class='text-gray-800 sm:text-lg') #{voting.organizer.email}
+    p(class='text-gray-500 sm:text-lg') expired at: 
+      span(class='text-gray-800 sm:text-lg') #{voting.expired_at.toLocaleString()} 
+    if isExpried
+      div(class='mt-2')
+        each option in voting.option_list
+          if option.count === biggestCount
+            p(class='text-red-500') #{option.title}: #{option.count} vote 
+          else
+            p #{option.title}: #{option.count} vote 
+    else
+      form(action=`/votings/${voting._id}?_method=put`, method='post')
+        each option in voting.option_list
+          label(class='text-gray-700 font-bold' for='option_title') #{option.title} 
+          input(type='radio' name='option_title' value=option.title) 
+        div(class='max-w-xs my-2')
+          +normal_button('Submit your vote', 'submit')
+      if loggedUser && voting.organizer._id.toString() === loggedUser._id.toString()
+        each option in voting.option_list
+          if option.count === biggestCount
+            p(class='text-red-500') #{option.title}: #{option.count} vote 
+          else
+            p #{option.title}: #{option.count} vote 
+    if loggedUser && voting.organizer._id.toString() === loggedUser._id.toString()
+      form(action=`/votings/${voting._id}?_method=delete`, method='post')
+        div(class='max-w-xs mt-2')
+          +normal_button('Delete your vote', 'submit', 'bg-red')

@@ -1,0 +1,7 @@
+extends layouts/main
+include mixins/voting_card
+
+block content 
+  ul(class='flex flex-wrap lg:-mx-4')
+    each voting in votings
+      +voting_card(voting)
