@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  div.main=done
+  div.main
     case vote.state
       when 'inProgress'
         div.vote-state-going="진행중"
@@ -12,15 +12,30 @@ block content
     span.due='마감일시 :'+vote.due.toISOString().split("T")[0]+" ("+vote.due.toTimeString().slice(0, 5)+")"
     hr
     form
-      p 당신의 선택은 ... 
       -var options=vote.options
       -var i=0;
-        each optionObj in vote.options
-          div.option
-            input(type='radio' id=i name='option' value=optionObj.option )
-            label(for=i++)=optionObj.option
-             br
-      button(type="button" onclick=loginUser?"fetchVote()":"linkLogin()" )=loginUser?'투표하기':'로그인후 이용'
+        div.options
+          p 당신의 선택은 ... 
+          each optionObj in vote.options
+            div.option
+              input(type='radio' id=i name='option' value=optionObj.option )
+              label(for=i++)=optionObj.option
+              br
+      -var i=0;
+        div.options-result
+          each optionObj in vote.options
+            div.option-result(id=i++) #{optionObj.option} (▶️ #{optionObj.count?optionObj.count : '0'}명)
+      case user
+        when 'GUEST'
+          button( onclick="linkLogin()")='로그인후 이용'
+        when 'OWNER'
+          div.btn-wrapper
+            button( onclick=done?"alertDone()":"fetchVote()" )=done?'참여완료':'투표완료'
+            button( onclick='fetchDeleteVote()') 삭제
+            button.btn-result( onclick='toggleResult()') 현재결과
+        when 'USER'
+          button( onclick=done?"alertDone()":"fetchVote()" )=done?'참여완료':'투표완료'
+
     script(src='/javascripts/vote.js')
 
 

@@ -1,6 +1,7 @@
+const mongoose = require("mongoose");
 const Vote = require("../../models/Vote");
 const User = require("../../models/User");
-const { RENDER_PROPS, MESSAGE } = require("./constant");
+const { RENDER_PROPS, MESSAGE, USER_STATUS } = require("./constant");
 // const votes = [
 //   { id: 1, title: "투표제목1", creator: "사용자1", due: "2020-03-20 3pm", state: "진행중" },
 //   { id: 2, title: "투표제목2", creator: "사용자2", due: "2020-03-20 3pm", state: "진행중" },
@@ -40,43 +41,51 @@ async function getAllVote(req, res, next) {
     const time = vote.due.toTimeString().split(" ")[0];
     vote.due = date + time;
   });
-  console.log(votes);
   // votes.toObeject();
   res.render("index", { title: RENDER_PROPS.TITLE, loginUser: loginUser, votes: votes });
 }
 
 async function getUserVote(req, res, next) {
   const loginUser = req.session.userId;
-  // 실제 투표에서 들고오기
-  console.log("loginUser:", loginUser);
-  // 참여자에
   try {
-    var vote = await Vote.find({ _id: req.params.id })
+    var vote = await Vote.findOne({ _id: req.params.id })
       .populate("user")
       .exec();
-    var done = false;
-    if (vote[0].participants.length) {
-      done = vote[0].participants.contains(loginUser);
-    }
+    var user = loginUser
+      ? vote.user._id == req.session.user._id
+        ? USER_STATUS.OWNER
+        : USER_STATUS.USER
+      : USER_STATUS.GUEST;
+    var done = loginUser
+      ? vote.participants.includes(mongoose.Types.ObjectId(req.session.user._id))
+      : false;
   } catch (err) {
-    res.render("error", { status: 500, message: MESSAGE.GET_ERROR });
+    next(err);
+    // res.render("error", { error:{status: 500, message: MESSAGE.GET_ERROR} });
   }
+  console.log(user, done);
   res.render("vote", {
     loginUser: loginUser,
     style: RENDER_PROPS.STYLE.VOTE,
-    vote: vote[0],
-    done
+    vote: vote,
+    done,
+    user
   });
 }
 
 async function updateVoteCount(req, res, next) {
-  console.log("투표결과를 반영합니다");
-  var vote = await Vote.findOne({ _id: req.params.id });
-  console.log(vote);
-  console.log(req.body.optionId);
-  vote.options[req.body.optionId].count++;
-  console.log(vote.options);
-  const voteUpdated = await vote.save();
-  console.log(voteUpdated);
+  if (req.session.userId) {
+    var vote = await Vote.findOne({ _id: req.params.id });
+    if (!vote.participants.includes(req.session.user._id)) {
+      vote.options[req.body.optionId].count++;
+      vote.participants.push(req.session.user._id);
+      const voteUpdated = await vote.save();
+      res.json({ message: MESSAGE.UPDATE_SUCCESS });
+    } else {
+      res.json({ message: MESSAGE.USER_DONE });
+    }
+  } else {
+    res.json({ message: MESSAGE.UNAUTHORIZED });
+  }
 }
 module.exports = { createVote, getAllVote, getUserVote, updateVoteCount };
