@@ -1,41 +1,34 @@
-const http = require('http');
-const expect = require('chai').expect;
+// // const http = require('http');
+// const chai = require('chai');
+// // const request = require('request');
+// const request = require('supertest');
+// // const should = chai.should();
+// // const assert = require('chai').assert;
+// const chaiHttp = require('chai-http');
+// // const faker = require('faker');
+// // const mongoose = require('mongoose');
+// const { expect } = require('chai');
+// // const sinon = require('sinon');
+// // const stub = sinon.stub();
+// // const spy = sinon.spy();
+// const app = require('../app');
 
-const Passport = require('passport').Passport;
+// chai.use(chaiHttp);
 
-describe('prototype', function() {
-  const req = new http.IncomingMessage();
 
-  it('should be extended with login', function() {
-    expect(req.login).to.be.an('function');
-  });
+// describe('GET /', () => {
+//   it('should respond with template', done => {
+//     request(app)
+//       .get('/')
+//       .expect('Content-Type', /html/)
+//       .expect(200)
+//       .end((err, res) => {
+   
+//         if (err) return done(err);
+//         console.log(333333333333333333333333333333333)
+//         expect(res.text).to.include('잘까말까');
+//         done();
+//       });
+//   });
+// });
 
-  it('should be extended with logout', function() {
-    xpect(req.logout).to.be.an('function');
-  });
-});
-
-describe('#login', function() {
-  describe('not establishing a session', function() {
-    const passport = new Passport;
-    const req = new http.IncomingMessage();
-    req._passport = {};
-    req._passport.instance = passport;
-    req._passport.session = {};
-
-    let error;
-    // console.log(req)
-    before(function(done) {
-      const user = { id: 'vanillaCoding', username: 'hahahoho', password: 1357 };
-      req.login(user, { session: false }, function(err) {
-        error = err;
-        console.log(req);
-        done();
-      });
-    });
-
-    it('should not error', function() {
-      expect(error).to.be.undefined;
-    });
-  });
-});
