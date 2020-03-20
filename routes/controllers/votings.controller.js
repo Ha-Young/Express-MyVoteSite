@@ -44,6 +44,7 @@ exports.renderIndividualPoll = async(req, res, next) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       throw(createError(404, "You are trying to access unrecognized path"));
     }
+    
     const poll = await Poll.findById(id).populate('creator');
     if (new Date() > new Date(poll.expiringTime)) {
       throw(createError(403, "This vote has been closed"));
@@ -102,9 +103,9 @@ exports.deleteApoll= async(req, res, next) => {
     const user = await User.findById(userId);
     let index = '';
     user.myPolls.some((poll, i) => {
-    if (String(poll.myPoll) === String(pollId)) {
-      return index = i;
-    }
+      if (String(poll.myPoll) === String(pollId)) {
+        return index = i;
+      }
     });
   
     user.myPolls.splice(index, 1);

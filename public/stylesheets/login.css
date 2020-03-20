@@ -70,6 +70,7 @@ input[type=text], input[type=password] {
   border: none;
   background: #f1f1f1;
 }
+
 .submitButton {
   background-color: #4CAF50;
   color: white;

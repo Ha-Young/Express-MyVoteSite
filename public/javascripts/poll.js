@@ -9,16 +9,14 @@ if (deleteButton) {
         method: 'delete',
         body: JSON.stringify({ pollId }),
         headers: new Headers({
-        'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
         }),
       });
 
       if (response.ok) {
-        return location.href = 'http://localhost:4000';
+        return (location.href = 'http://localhost:4000');
       }
-      
-      throw new Error()
-    } catch(e) {
+    } catch (e) {
       location.href = 'http://localhost:4000/error';
     }
   });

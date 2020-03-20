@@ -9,6 +9,7 @@ addButton.addEventListener('click', (e) => {
   if (answerNumber === 5) {
     return alert('You cannnot add more than 5 answers');
   }
+  
   answerNumber += 1;
   input.setAttribute('name', `answer${answerNumber}`);
   input.setAttribute('placeholder', 'Type your answer here');

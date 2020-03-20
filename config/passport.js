@@ -5,7 +5,7 @@ const User = require('../models/user');
 
 const initialize = (passport) => {
   try {
-    const authenticateUser = async (email, password, done) => {
+    const authenticateUser = async(email, password, done) => {
       const user = await User.findOne( { email });
       if (!user) { 
         return done(createError(404, "The user does not exist"), false);
@@ -18,14 +18,14 @@ const initialize = (passport) => {
       }
     }; 
   
-    passport.use(new LocalStrategy({ usernameField: 'email'}, 
+    passport.use(new LocalStrategy({ usernameField: 'email' }, 
       authenticateUser));
   
     passport.serializeUser((user, done) => {
       done(null, user.id);
     });
   
-    passport.deserializeUser(async (id, done) => {
+    passport.deserializeUser(async(id, done) => {
       const user = await User.findById(id);
       done(null, user);
     });

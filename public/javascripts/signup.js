@@ -12,7 +12,7 @@ const regPatterns = {
 };
 
 const validate = (input) => {
-  const fieldName = input.attributes.name.value
+  const fieldName = input.attributes.name.value;
   const value = input.value;
   if (fieldName === 'confirmPassword') {
     if (value === password.value) {

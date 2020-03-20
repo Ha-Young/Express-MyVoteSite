@@ -7,8 +7,8 @@ exports.renderLogin = (req, res, next) => {
 };
 
 exports.authAndRedirect = (req, res, next) => {
-    res.redirect(req.session.returnTo || '/');
-    delete req.session.returnTo;
+  res.redirect(req.session.returnTo || '/');
+  delete req.session.returnTo;
 };
 
 exports.logOut = (req, res, next) => {

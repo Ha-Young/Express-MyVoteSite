@@ -24,7 +24,7 @@ router.get(
   rateLimit.blockTooManyRequests, 
   authenticateLogin, 
   votingsController.renderSuccess
-  );
+);
 
 router.get(
   '/failure', 
