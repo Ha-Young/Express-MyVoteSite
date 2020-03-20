@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
+import createError from 'http-errors';
 import Vote from '../models/vote';
 import User from '../models/user';
-import createError from 'http-errors';
 import { dateTransformer, getIsExpired } from '../helper';
 
 export const getHome = async (req, res, next) => {
@@ -31,7 +31,7 @@ export const postVotings = async (req, res, next) => {
 
     const expirated = `${expiration_date}T${expiration_time}`;
     const handledOptions = options.map((option) => ({ value: option }));
-    const user = req.user;
+    const { user } = req;
     const vote = await Vote.create({
       subject: voting_name,
       options: handledOptions,
@@ -107,7 +107,7 @@ export const getVoteResult = async (req, res, next) => {
     }
 
     const vote = await Vote.findById(id).populate('creator');
-    const user = req.user;
+    const { user } = req;
     const { expirated, creator } = vote;
     const isExpirated = getIsExpired(expirated);
     let isCreator = false;
@@ -131,7 +131,7 @@ export const getVoteResult = async (req, res, next) => {
   }
 };
 
-export const getMyVotings = async (req, res) => {
+export const getMyVotings = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const me = await User.findById(userId).populate({

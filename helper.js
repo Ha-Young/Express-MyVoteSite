@@ -1,5 +1,5 @@
-export function dateTransformer (date) {
-  if(new Date(date).toString() === 'Invalid Date') {
+export function dateTransformer(date) {
+  if (new Date(date).toString() === 'Invalid Date') {
     throw new Error(`${date} is not a date type input`);
   }
 
@@ -11,7 +11,7 @@ export function dateTransformer (date) {
   return `${year}. ${month + 1}. ${dates}`;
 }
 
-export function getIsExpired (date) {
+export function getIsExpired(date) {
   const currentTime = new Date().getTime();
   const expiratedTime = new Date(date).getTime();
 

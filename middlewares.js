@@ -1,4 +1,4 @@
-export const localMiddleware = (req, res, next) => {
+export default (req, res, next) => {
   res.locals.user = req.user;
   next();
 };

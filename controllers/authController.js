@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 import passport from 'passport';
 import createError from 'http-errors';
 import User from '../models/user';
@@ -10,7 +10,7 @@ export const getLogin = (req, res) => {
 };
 
 export const postLogin = (req, res, next) => {
-  passport.authenticate('local', function(err, user) {
+  passport.authenticate('local', (err, user) => {
     if (err) {
       next(createError(500, err));
     }
@@ -38,10 +38,10 @@ export const postLogin = (req, res, next) => {
       }
     });
   })(req, res);
-}
+};
 
 
-passport.authenticate('local', (req, res) => {
+passport.authenticate('local', (req, res, next) => {
   const { redirect_id: id } = req.query;
 
   if (id) {
@@ -49,7 +49,7 @@ passport.authenticate('local', (req, res) => {
       next(createError(400, '잘못된 요청입니다.'));
       return;
     }
-    
+
     res.redirect(`/votings/${id}`);
   } else {
     res.redirect('/');
@@ -60,14 +60,14 @@ export const getSignup = (req, res) => {
   res.render('signup');
 };
 
-export const postSignup = async (req, res) => {
+export const postSignup = async (req, res, next) => {
   const {
     username,
     email,
     password,
     password2
   } = req.body;
-  
+
   if (!username.trim().length || !email.trim().length) {
     const err = new mongoose.Error.ValidationError();
     next(createError(400, err));
