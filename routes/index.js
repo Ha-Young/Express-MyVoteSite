@@ -19,7 +19,7 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-router.get('/my-votings', (req, res) => {
+router.get('/my-votings', async (req, res) => {
   const allVotings = await Voting.find();
   const userId = req.user._id;
   const myVotings = []

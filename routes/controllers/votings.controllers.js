@@ -2,13 +2,12 @@ const Voting = require('../../models/Voting');
 const createError = require('http-errors');
 
 exports.isAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) 
+  if (req.isAuthenticated())
     return next();
 
   if (req.session) {
     req.session.redirectUrl = req.headers.referer || req.originalUrl || req.url;
-  }  
-  console.log(req.session)
+  }
   res.redirect('/login');
 };
 
@@ -63,12 +62,16 @@ exports.renderVoting = async (req, res) => {
 }
 
 exports.confirmVoting = async (req, res) => {
-
-  console.log('req.session', req.session);
   const { _id: userId } = req.user;
   const { itemId } = req.body;
   const { voting_id: votingId } = req.params;
 
+  const voting = await Voting.findById(votingId);
+  const isSolvedCheck = voting.solvedUser.includes(userId);
+  const endDate = new Date(voting.endDate).getTime();
+  const currentDate = new Date().getTime();
+
+  let { items, solvedUser } = voting;
 
   //FIXME: 투표 미체크후 제출시 메시지처리
   if (!itemId) {
@@ -76,55 +79,44 @@ exports.confirmVoting = async (req, res) => {
     return
   }
 
-  if (req.user) {
-    const voting = await Voting.findById(votingId);
-    const isSolvedCheck = voting.solvedUser.includes(userId);
-    const endDate = new Date(voting.endDate).getTime();
-    const currentDate = new Date().getTime();
-    let { items, solvedUser } = voting;
-
-    //FIXME: 투표 완료한 유저 이미 완료한 투표 메시지 처리 
-    if (isSolvedCheck) {
-      res.redirect('/');
-      return
-    }
-
-    //FIXME: 만료 시간이 지났다는 메시지 처리
-    if (endDate < currentDate) {
-      res.redirect('/');
-      return
-    }
-
-    //FIXME: 모두 탐색후 값 변경하는데, 효율적 방법 찾기
-    for (let i = 0; i < items.length; i++) {
-      if (String(items[i]._id) === itemId) {
-        items[i].count += 1;
-        break;
-      }
-    };
-
-    if (solvedUser.length) {
-      solvedUser = [...solvedUser, userId];
-    } else {
-      solvedUser = [userId];
-    }
-
-    await voting.updateOne({ items, solvedUser });
+  //FIXME: 투표 완료한 유저 이미 완료한 투표 메시지 처리 
+  if (isSolvedCheck) {
     res.redirect('/');
-  } else {
-    // 비로그인시 로그인창
-    // 로그인 => 투표하려고 했던 페이지
-
+    return
   }
+
+  //FIXME: 만료 시간이 지났다는 메시지 처리
+  if (endDate < currentDate) {
+    res.redirect('/');
+    return
+  }
+
+  //FIXME: 모두 탐색후 값 변경하는데, 효율적 방법 찾기
+  for (let i = 0; i < items.length; i++) {
+    if (String(items[i]._id) === itemId) {
+      items[i].count += 1;
+      break;
+    }
+  };
+
+  if (solvedUser.length) {
+    solvedUser = [...solvedUser, userId];
+  } else {
+    solvedUser = [userId];
+  }
+
+  await voting.updateOne({ items, solvedUser });
+  res.redirect('/');
 }
 
 exports.deleteVoting = async (req, res) => {
-  const { voting_id: votingId } = req.params;
+  const { votingId } = req.body;
+
   try {
     await Voting.deleteOne({ _id: votingId });
-    res.redirect('/');
+    res.json({ result: true });
   } catch (err) {
-    next(createError(500, err));
+    res.json({ result: false });
   }
 }
 

@@ -3,7 +3,6 @@ const router = express.Router();
 const passport = require('passport');
 
 router.get('/', (req, res, next) => {
-  console.log('로그인', req.session)
     res.render('login');
 });
 

@@ -44,13 +44,12 @@
 
     <div>
       <% if (isAuthor) { %>
-      <form action=<%= `/votings/remove/${voting._id}` %> method='get'>
-        <input type='submit' value='투표 삭제'>
-      </form>
+      <button class='deleteVoting' data-id='<%= voting._id %>'>투표 삭제</button>
       <% } %>
       <button><a href='/'>목록 보기</a></button>
     </div>
   </div>
+  <script src='/javascripts/voting.js'></script>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-require('dotenv').config({ path: 'variables.env' });
+require('dotenv').config();
 
 const createError = require('http-errors');
 const path = require('path');
@@ -38,6 +38,7 @@ app.use(
   })
 );
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
