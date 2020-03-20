@@ -17,33 +17,25 @@ router.post('/', (req, res, next) => {
   }
 
   const saltRounds = 10;
-  // try {
-    bcrypt.hash(req.body.password, saltRounds, async function(err, hash) {
-      try {
-        // throw new Error(err);
-        await User.create({
-          username: req.body.username,
-          password: hash
-        });
-        res.redirect('/login');
-      } catch (err) {
-        console.log('Error occured while creating a user: \n', err);
-        // throw new Error(err);
+  bcrypt.hash(req.body.password, saltRounds, async function(err, hash) {
+    try {
+      await User.create({
+        username: req.body.username,
+        password: hash
+      });
+      res.redirect('/login');
+    } catch (err) {
+      console.log('Error occured while creating a user: \n', err);
 
-        let message;
-        if (err.name === 'MongoError' && err.code === 11000) {
-          message = '😥 User ID already exists';
-        } else {
-          message = '🤕 We had error during signing up';
-        }
-        return res.status(500).render('signup_error', { message });
+      let message;
+      if (err.name === 'MongoError' && err.code === 11000) {
+        message = '😥 User ID already exists';
+      } else {
+        message = '🤕 We had error during signing up';
       }
-    });
-  // } catch (err) {
-  //   console.log('Error occured while creating a user: \n', err);    
-  //   message = 'Error while signing up'
-  //   return res.status(500).render('signup_error', { message });
-  // }
+      return res.status(500).render('signup_error', { message });
+    }
+  });
 });
 
 module.exports = router;

@@ -30,9 +30,9 @@
             <td><%= voting.end_time %></td>
             <td>
               <% if (voting.status === 'active') { %>
-                🗳️ Ongoing
+                <span class='ongoing-text'>🗳️ Ongoing</span>
               <% } else if (voting.status === 'ended') { %>
-                📦 Finished
+                <span class='finished-text'>📦 Finished</span>
               <% } %>
             </td>
           </tr>
