@@ -183,49 +183,6 @@
   background-color: #E81E25;
 }
 
-/* .modal {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 2;
-  display: none;
-}
-
-.modal-background {
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.modal-window {
-  position: absolute;
-  right: 1.5rem;
-  bottom: 15rem;
-  width: 40rem;
-  height: 30rem;
-  background-color: white;
-  margin-right: 5rem;
-  border: 0.5rem solid rgb(28, 0, 111);
-  border-radius: 0.5rem;
-  padding: 2rem 5rem;
-}
-
-.modal-scroll {
-  overflow: scroll;
-  overflow-x: hidden;
-  height: 30rem;
-  width: 40rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-
-.modal-scroll::-webkit-scrollbar {
-  width: 0;
-} */
-
 .option-result {
   display: flex;
   justify-content: center;
