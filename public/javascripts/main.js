@@ -23,13 +23,13 @@ if (optionsArea) {
   });
 
   addOptionButton.addEventListener('click', () => {
-    optionCount++;
+    optionCount += 1;
     addOptionItem(optionsArea);
   });
 
   removeOptionButton.addEventListener('click', () => {
     if (optionCount > 2) {
-      optionCount--;
+      optionCount -= 1;
       removeOptionItem(optionsArea);
     }
   });
@@ -37,8 +37,23 @@ if (optionsArea) {
 
 if (confirms) {
   for (let i = 0; i < confirms.length; i++) {
-    confirms[i].addEventListener('click', e => {
-      if (!window.confirm('제출하시겠습니까?')) {
+    confirms[i].addEventListener('click', (e) => {
+      const context = confirms[i].textContent;
+      let text;
+
+      switch (context) {
+        case 'Logout':
+          text = '로그아웃하시겠습니까?';
+          break;
+        case '삭제하기':
+          text = '삭제하시겠습니까?';
+          break;
+        default:
+          text = '제출하시겠습니까?';
+          break;
+      }
+
+      if (!window.confirm(text)) {
         e.preventDefault();
       }
     });
@@ -49,7 +64,7 @@ if (chartArea) {
   const bars = chartArea.querySelectorAll('.bar');
 
   for (let i = 0; i < bars.length; i++) {
-    const value = bars[i].dataset.value;
+    const { value } = bars[i].dataset;
     bars[i].style.width = `${value}%`;
   }
 }
@@ -63,15 +78,15 @@ if (deleteVoteButton) {
   });
 }
 
-function addOptionItem (target) {
-  const optionItem = `<input type="text" name="options" />`;
+function addOptionItem(target) {
+  const optionItem = '<input type="text" name="options" />';
   const p = document.createElement('p');
 
   p.innerHTML = optionItem;
   target.append(p);
 }
 
-function removeOptionItem (target) {
+function removeOptionItem(target) {
   const options = target.querySelectorAll('p');
   const lastIndex = options.length - 1;
 

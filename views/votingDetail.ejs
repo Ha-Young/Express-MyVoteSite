@@ -27,7 +27,7 @@
         <% if (isCreator) { %>
           <div class="buttons-wrap">
             <a href="/votings/<%= id %>/result" class="button">결과 보기</a>
-            <button class="button danger" id="delete-vote" data-vote-Id="<%= id %>">삭제하기</button>
+            <button class="button danger confirm" id="delete-vote" data-vote-Id="<%= id %>">삭제하기</button>
           </div>
         <% } %>
         <form action="/votings/<%= id %>" method="POST">
