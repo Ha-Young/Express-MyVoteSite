@@ -8,6 +8,6 @@ router.get('/new', pagePermissions.privatePage, votingsController.getNewVoting);
 router.post('/new', pagePermissions.privatePage, votingsController.postNewVoting);
 router.get('/:voting_id', votingsController.getDetailVoting);
 router.post('/:voting_id', pagePermissions.privatePage, votingsController.postVotingComplete);
-router.get('/:voting_id/remove', pagePermissions.privatePage, votingsController.getVotingRemove);
+router.delete('/:voting_id', pagePermissions.privatePage, votingsController.deleteVoting);
 
 module.exports = router;

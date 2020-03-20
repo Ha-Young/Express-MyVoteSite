@@ -23,7 +23,7 @@ block content
                                             span ( 
                                             span=item.count
                                             span 표 )
-                    if voting.joinUser.includes(loggedUser.id)
+                    if loggedUser && voting.joinUser.includes(loggedUser.id)
                         .new-voting-submit-button-box
                             input(type="submit" value="이미 참여한 투표입니다." disabled="true").new-voting-disabled-button
                     else
@@ -41,6 +41,7 @@ block content
                                     span 표 )
                 .detail-vitong-end-title 종료된 투표입니다.
             if loggedUser && String(loggedUser.id) === String(voting.creator._id)
-                a(href=`/votings/${voting._id}/remove`).new-voting-remove-button-box
+                .new-voting-remove-button-box#voting-remove
                     .new-voting-remove-button 삭제하기
             a(href="/").detial-voting-redirect-button 다른투표 보기
+    script(src="/javascripts/deleteVote.js")

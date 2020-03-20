@@ -7,7 +7,7 @@ block content
             each item in votingList
                 a(href=`/votings/${item._id}`).voting-item-box
                     if new Date(item.endDate).getTime() > votingList.currentDate.getTime()
-                        .abled-voting-box.voting-box
+                        .+abled-voting-box.voting-box
                             +votingBox({
                                 title : item.title,
                                 creator : userName,

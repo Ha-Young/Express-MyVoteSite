@@ -2,6 +2,7 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 const createError = require('http-errors');
 const moment = require('moment');
+const mongoose = require('mongoose');
 
 const User = require('../models/User');
 const Voting = require('../models/Voting');
@@ -21,8 +22,8 @@ const indexController = {
 
       res.render('index', { votingList });
     } catch (error) {
-      if (err instanceof errors.ValidationError) return next(createError(400, { errorCode: 200 }));
-      if (err.name === 'MongoError' && err.code === 11000) return next(createError(400, { errorCode: 200 }));
+      if (error instanceof mongoose.Error.CastError) return next(createError(400, { errorCode: 311 }));
+      if (error.name === 'MongoError' && err.code === 11000) return next(createError(400, { errorCode: 500 }));
       next(error);
     }
   },
@@ -30,7 +31,6 @@ const indexController = {
   getMyVotings: async (req, res, next) => {
     try {
       const user = await User.findById(req.user.id).populate('votingList');
-      // 못찾았을때 에러처리
       const votingList = user.votingList;
 
       for (let i = 0; i < votingList.length; i++) {
@@ -41,7 +41,9 @@ const indexController = {
 
       res.render('myVotings', { votingList, userName: req.user.name });
     } catch (error) {
-      console.log(error);
+      if (error instanceof mongoose.Error.CastError) return next(createError(400, { errorCode: 311 }));
+      if (error.name === 'MongoError' && err.code === 11000) return next(createError(400, { errorCode: 500 }));
+      next(error);
     }
   },
 
@@ -56,8 +58,8 @@ const indexController = {
       const checkUser = await User.findOne({ email: formEmail });
       if (!checkUser) throw createError(400, { errorCode: 200 });
 
-      const isCorrectPassword = bcrypt.compareSync(formPassword, checkUser.hash, (err, result) => result);
       const user = { id: checkUser._id, name: checkUser.name, email: checkUser.email };
+      const isCorrectPassword = bcrypt.compareSync(formPassword, checkUser.hash, (err, result) => result);
 
       if (isCorrectPassword) {
         done(null, user);
@@ -65,7 +67,8 @@ const indexController = {
         throw createError(400, { errorCode: 200 });
       }
     } catch (error) {
-      next(error);
+      if (error.name === 'MongoError' && err.code === 11000) return next(createError(400, { errorCode: 500 }));
+      done(error);
     }
   },
 
@@ -115,8 +118,12 @@ const indexController = {
 
       res.redirect('/login');
     } catch (error) {
+      if (error instanceof mongoose.Error.CastError) return next(createError(400, { errorCode: 311 }));
+      if (error instanceof mongoose.Error.ValidationError) return next(createError(400, { errorCode: 500 }));
+      if (error.name === 'MongoError' && err.code === 11000) return next(createError(400, { errorCode: 500 }));
       next(error);
     }
   }
 };
+
 module.exports = indexController;
