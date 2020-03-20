@@ -72,7 +72,6 @@
             </div>
           </div>
         <% } %>
-      </div>
       <% } %>
 
       <% if (user && user.isAuthor) { %>
@@ -88,7 +87,9 @@
               </div>
               <ul>
                 <% voting.choices.map(choice => { %>
-                  <li><%= choice.name %>: <b><%= choice.count %> votes</b> </li>
+                  <li>
+                    <%= choice.name %>: <b><%= choice.count %> votes</b>
+                  </li>
                 <% }) %>
               </ul>
             </div>
@@ -100,12 +101,13 @@
               action=<%=`/votings/${voting._id}?_method=DELETE`%>
               enctype='application/x-www-form-urlencoded'
             >
-              <button class='secondary-button' type="submit">Remove this voting</button>
+              <button class='secondary-button' type="submit">
+                Remove this voting
+              </button>
             </form>
           </div>
         </div>
       <% } %>
-      
     </div>
   </body>
 </html>

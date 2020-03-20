@@ -12,14 +12,14 @@
       <span>SIGN UP</span>
       <div id='form-container'>
         <form name='signup' method='POST' action=<%=`/signup`%>>
-          USERNAME :
+          USERNAME
           <input 
             type="text"
             name="username"
             required
           />
           <br/>
-          PASSWORD:
+          PASSWORD
           <input
             type="password"
             name="password"
@@ -39,10 +39,7 @@
     </div>
 
     <script>
-      let isUsernameValid = false;
-      let isPasswordValid = false;
-      let signupButton = document.getElementById('signup-button');
-
+      const signupButton = document.getElementById('signup-button');
       function signupDisableHandler() {
         if (isPasswordValid) {
           signupButton.removeAttribute('disabled');
@@ -51,15 +48,17 @@
         }
       }
 
+      let isPasswordValid = false;
       const password = document.forms['signup']['password'];
       password.addEventListener('keyup', function() {
-        let passwordAlertText = document.getElementById('password-alert').innerText;
         if (password.value.length >= 6) {
-          document.getElementById('password-alert').innerText = ''
+          alertText = '';
+          isPasswordValid = true;
         } else {
-          document.getElementById('password-alert').innerText = 'Password should be at least 6 characters'
+          alertText = 'Password should be at least 6 characters';
+          isPasswordValid = false;
         }
-        isPasswordValid = password.value.length >= 6 ? true : false;
+        document.getElementById('password-alert').innerText = alertText;
         signupDisableHandler();
       });
     </script>

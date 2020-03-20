@@ -60,7 +60,7 @@ router.get('/success', authorization, (req, res, next) => {
   res.render('votings_success');
 });
 
-router.get('/success', authorization, (req, res, next) => {
+router.get('/error', authorization, (req, res, next) => {
   res.render('votings_error');
 });
 

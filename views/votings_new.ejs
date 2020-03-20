@@ -54,11 +54,12 @@
                   </option>
                 <% }) %>
               </select>
-            </div>
-            <div>
-              <span id='end-time-alert-text'></span>
+              <div>
+                <span id='end-time-alert-text'></span>
+              </div>
             </div>
           </div>
+
           <div id='submit-button-container'>
             <button class='primary-button' type='submit'>
               SUBMIT
@@ -88,7 +89,6 @@
         div.appendChild(el);
         div.appendChild(button);
         document.getElementById('choice-list').appendChild(div);
-        return;
       }
 
       function handleRemoveClick(event){
@@ -96,18 +96,17 @@
       }
 
       function formValidator() {
-        const choices = document.getElementById('choice-list').children;
-
-        const end_time = document.getElementById('end-time').value;
+        const endTimeDatetimeLocal = document.getElementById('end-time').value;
         const tzOffset = document.getElementById('end-time-tzOffset').value;
-        const gmtIso = getIsoGmtFromDatetimeLocal(end_time, tzOffset);
-        if (choices.length > 2 && (new Date() < new Date(gmtIso))) {
+        const gmtIso = getIsoGmtFromDatetimeLocal(endTimeDatetimeLocal, tzOffset);
+
+        if (new Date() < new Date(gmtIso)) {
           return true;
-        } else {
-          document.getElementById('end-time').setAttribute('class', 'invalid_end_date_input');
-          document.getElementById('end-time-alert-text').innerText = 'Please input end date later than now';
-          return false;
-        };
+        }
+
+        document.getElementById('end-time').setAttribute('class', 'invalid-end-date-input');
+        document.getElementById('end-time-alert-text').innerText = 'Please input end date later than now';
+        return false;
       }
     </script>
   </body>
