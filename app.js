@@ -61,7 +61,7 @@ app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  next(createError(404, 'This is not the web page you are looking for. Go home again. :)'));
 });
 
 // error handler
