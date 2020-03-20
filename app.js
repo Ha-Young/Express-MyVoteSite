@@ -4,6 +4,7 @@ const path = require('path');
 const error = require('./lib/error');
 const { findUser } = require('./utils/helpers');
 const logger = require('morgan');
+const methodOverride = require('method-override');
 const session = require('express-session');
 const passport = require('passport');
 const passportConfig = require('./passport/passport.js');
@@ -32,6 +33,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(methodOverride('_method'));
 app.use(
   session({
     secret: process.env.SESSION_SECRET_KEY,
@@ -56,6 +58,7 @@ app.use((req, res, next) => {
 });
 
 app.use(async (err, req, res) => {
+  console.log(err);
   const user = await findUser(req);
 
   res.locals.message = err.displayMessage;

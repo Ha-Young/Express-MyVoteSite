@@ -34,7 +34,8 @@ const votingSchema = new mongoose.Schema({
   },
   voted_user: [
     {
-      type: mongoose.Types.ObjectId
+      type: mongoose.Types.ObjectId,
+      ref: 'User'
     }
   ]
 });

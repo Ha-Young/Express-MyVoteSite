@@ -8,12 +8,9 @@ router.get('/login', (req, res) => {
 
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return res.render('login', { errorMessage: info.message });
-    }
+    if (err) return next(err);
+    if (!user) return res.render('login', { errorMessage: info.message });
+
     req.login(user, () => {
       res.redirect(req.session.returnTo || '/');
       delete req.session.returnTo;

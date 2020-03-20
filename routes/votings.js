@@ -13,10 +13,8 @@ router.get('/new', checkUser, async (req, res) => {
 });
 
 router.get('/:id', async (req, res, next) => {
-  console.log(req.originalUrl);
-  const user = await findUser(req);
-
   try {
+    const user = await findUser(req);
     const { id } = req.params;
     const voting = await Voting.findById(id).populate('user');
     const votingUserId = voting.user._id;
@@ -49,7 +47,7 @@ router.post('/new', checkUser, async (req, res, next) => {
     const { 'voting-title': title, options, date, time } = req.body;
     const user = await findUser(req);
     const votingByVotingTitle = await Voting.findOne({ title });
-    const optionObj = options.map(option => {
+    const optionArray = options.map(option => {
       return {
         option_title: option,
         option_count: 0
@@ -57,12 +55,13 @@ router.post('/new', checkUser, async (req, res, next) => {
     });
     const deadline = new Date(`${date} ${time}`).getTime();
     const currentTime = new Date().getTime();
-    // if(votingByVotingTitle)
+
+    if (votingByVotingTitle) throw new error.VotingTitleDuplicateError();
     if (!title.trim() || !date.trim() || !time.trim()) {
       throw new error.VotingValidationError();
     }
     if (deadline < currentTime) throw new error.VotingTimeError();
-    optionObj.forEach(item => {
+    optionArray.forEach(item => {
       if (!item.option_title.trim()) {
         throw new error.VotingValidationError();
       }
@@ -71,15 +70,16 @@ router.post('/new', checkUser, async (req, res, next) => {
     await new Voting({
       user,
       title,
-      options: optionObj,
-      deadline: deadline
+      deadline,
+      options: optionArray
     }).save();
 
     res.render('voting-creation', { user, success: '투표 생성 성공!' });
   } catch (err) {
     if (
       err instanceof error.VotingTimeError ||
-      err instanceof error.VotingValidationError
+      err instanceof error.VotingValidationError ||
+      err instanceof error.VotingTitleDuplicateError
     ) {
       return res.render('voting-creation', { error: err.displayMessage });
     }
@@ -87,12 +87,12 @@ router.post('/new', checkUser, async (req, res, next) => {
   }
 });
 
-router.post('/:id/selection/:id2', checkUser, async (req, res, next) => {
-  const { id: votingId, id2: optionId } = req.params;
+router.put('/:voting-id/options/:option-id', checkUser, async (req, res, next) => {
+  const { 'voting-id': votingId, 'option-id': optionId } = req.params;
   let voting = await Voting.findById(votingId);
   const votingUserId = voting.user._id;
   const user = await findUser(req);
-  const foundVotedUser = voting.voted_user.find(userId => {
+  const votedUser = voting.voted_user.find(userId => {
     return String(userId) === String(user._id);
   });
 
@@ -101,9 +101,9 @@ router.post('/:id/selection/:id2', checkUser, async (req, res, next) => {
       { _id: votingId, 'options._id': optionId },
       { 'options.$': 1 }
     );
-    let { option_count } = target.options[0];
+    let { option_count: count } = target.options[0];
 
-    if (foundVotedUser !== undefined) {
+    if (votedUser !== undefined) {
       throw new error.VotingDuplicateError();
     }
 
@@ -111,7 +111,7 @@ router.post('/:id/selection/:id2', checkUser, async (req, res, next) => {
       { 'options._id': optionId },
       {
         $set: {
-          'options.$.option_count': parseInt(option_count) + 1
+          'options.$.option_count': parseInt(count) + 1
         }
       }
     );
@@ -154,7 +154,7 @@ router.post('/:id/selection/:id2', checkUser, async (req, res, next) => {
   }
 });
 
-router.get('/delete/:id', checkUser, async (req, res, next) => {
+router.delete('/:id', checkUser, async (req, res, next) => {
   try {
     const user = findUser(req);
     const { id } = req.params;
