@@ -19,8 +19,8 @@ class VotingPlatform extends Error {
       ${pe.render(this)}
       `
     );
-  };
-};
+  }
+}
 
 class ValidatorError extends VotingPlatform {
   constructor(message) {
@@ -28,9 +28,9 @@ class ValidatorError extends VotingPlatform {
       message,
       400,
       '유효하지않은 입력 값입니다.'
-    );
-  };
-};
+    )
+  }
+}
 
 class GeneralError extends VotingPlatform {
   constructor(message) {
@@ -38,11 +38,11 @@ class GeneralError extends VotingPlatform {
       message,
       500,
       '서버에 오류가 있었습니다. 잠시 후에 다시 시도해주시기 바랍니다.'
-    );
-  };
-};
+    )
+  }
+}
 
 module.exports = {
   ValidatorError,
   GeneralError
-}
+};

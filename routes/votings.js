@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const Vote = require('../models/Vote');
-const { authorization } = require('../middlewares/authorization');
-const { duplicateVoting } = require('../middlewares/duplicateVoting');
-const _ = require('lodash');
 const errors = require('../helpers/error');
+
+const { authorization } = require('../middlewares/authorization');
+const Vote = require('../models/Vote');
+const _ = require('lodash');
 
 router.get('/new', authorization, async (req, res, next) => {
   const { isAnonymousUser } = res.locals;
@@ -58,7 +58,7 @@ router.get('/:vote_id', async (req, res, next) => {
   }
 });
 
-router.post('/:vote_id', authorization, duplicateVoting, async (req, res, next) => {
+router.post('/:vote_id', authorization, async (req, res, next) => {
   const { isAnonymousUser } = res.locals;
   const visited = req.headers.referer;
 
@@ -78,11 +78,12 @@ router.post('/:vote_id', authorization, duplicateVoting, async (req, res, next) 
       $inc: { 'options.$.count': 1 },
       $push: { participants: participant }
     });
+
+    res.redirect('/');
   } catch (error) {
     next(new errors.GeneralError(error));
   }
 
-  res.redirect('/');
 });
 
 router.delete('/api/votings/:vote_id', async (req, res, next) => {

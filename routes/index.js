@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 
 const { validator } = require('../middlewares/validator');
+const { authorization } = require('../middlewares/authorization');
 const signupController = require('../controllers/signup.Controller');
 const errors = require('../helpers/error');
 
@@ -24,7 +25,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/login', (req, res, next) => {
+router.get('/login', authorization, (req, res, next) => {
   res.render('login', { message: null });
 });
 
@@ -32,14 +33,14 @@ router.get('/login', (req, res, next) => {
 router.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, message) {
     if (err) {
-      return next(err);
+      return next(errors.GeneralError(err));
     }
     if (!user) {
       return res.render('login', { message });
     }
     req.logIn(user, (err) => {
       if (err) {
-        return next(errors.GeneralError(err));
+        return next(errors.ValidatorError(err));
       }
       return res.redirect('/');
     });
@@ -57,10 +58,7 @@ router.get('/signup', (req, res, next) => {
   res.render('signup');
 });
 
-router.post('/signup',
-  validator,
-  // signupController.passwordConfirmation,
-  signupController.register, (req, res, next) => {
+router.post('/signup', validator, signupController.register, (req, res, next) => {
     res.redirect('/login');
   }
 );
