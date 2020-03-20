@@ -7,7 +7,10 @@
 </head>
 
 <body>
-  <h1><%= title %></h1>
+  <span class="loginBtn mainPageBtn">
+    <a href="/login">로그인</a>
+  </span>
+  <h1><%= title %></h1> 
   <% for(let i of votingsData) { %>
   <div class="votings">
     <a href="/votings/<%= i.id %>">
@@ -46,7 +49,6 @@
   </div>
 
   <script src="/javascripts/mainPage.js"></script>
-
 </body>
 
 </html>

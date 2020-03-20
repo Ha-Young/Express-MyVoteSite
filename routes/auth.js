@@ -17,8 +17,7 @@ router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, success, fail) => {
     if (err) {
       return next(err);
-    }
-    if (!success) {
+    } else if (!success) {
       req.flash('loginError', fail.message);
       return res.render('login', {
         message: req.flash('loginError')
@@ -28,8 +27,7 @@ router.post('/login', (req, res, next) => {
       if (err) {
         console.log(err);
         return next(err);
-      }
-      if (req.session.returnTo) {
+      } else if (req.session.returnTo) {
         return res.redirect(req.session.returnTo)
       }
       return res.redirect('/');
@@ -45,20 +43,17 @@ router.get('/signup', (req, res, next) => {
 });
 
 router.post('/signup', async (req, res, next) => {
-  const { userName, userEmail, userPassword } = req.body;
-
   try {
+
+    const { userName, userEmail, userPassword } = req.body;
+    const user = await User.findOne({ email_id: userEmail });
 
     if (userPassword[0] !== userPassword[1]) {
       req.flash('joinError', '비밀번호가 일치하지 않습니다.');
       return res.render('signup', {
         message: req.flash('joinError')
       });
-    }
-
-    const user = await User.findOne({ email_id: userEmail });
-
-    if (user) {
+    } else if (user) {
       req.flash('registeredMembers', '이미 가입된 회원입니다. 로그인 하세요.');
       return res.render('signup', {
         message: req.flash('registeredMembers')

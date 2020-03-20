@@ -26,7 +26,6 @@ setInterval(() => {
           return res.json();
         })
         .then((myJson) => {
-          console.log(myJson);
           if (myJson.result === 'ok') {
             progress[i].textContent = '진행 종료';
           }

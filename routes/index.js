@@ -4,15 +4,18 @@ const { isLoggedIn } = require('../middleware');
 const Votings = require('../models/Votings');
 
 router.get('/', async (req, res, next) => {
-  let votingsData = await Votings.find();
+  const votingsData = await Votings.find();
   res.render('main', {
-    title: '메인 페이지',
+    title: '투표 리스트',
     votingsData
   });
 });
 
 router.put('/', async (req, res, next) => {
-  await Votings.updateOne({ expiration_date_string: req.body.date }, { progress: false });
+  await Votings.updateOne(
+    { expiration_date_string: req.body.date },
+    { progress: false }
+  );
   res.json({ result: 'ok' });
 });
 

@@ -20,13 +20,13 @@ router.post('/new', isLoggedIn, async (req, res, next) => {
     const select_option = selectOption.split(',');
 
     if (select_option.length < 2) {
-      req.flash('optionError', '선택사항은 2개 이상입니다.')
+      req.flash('optionError', '선택사항은 2개 이상입니다.');
       return res.render('newVoting', {
         title: '투표 생성하기',
         message: req.flash('optionError')
       });
     } else if (todayNow > result_expiration_date) {
-      req.flash('dateError', '날짜를 확인하세요.')
+      req.flash('dateError', '날짜를 확인하세요.');
       return res.render('newVoting', {
         title: '투표 생성하기',
         message: req.flash('dateError')
@@ -56,17 +56,20 @@ router.get('/:id', async (req, res, next) => {
     const votingData = await Votings.findOne({ id: votingId });
 
     if (!votingData) {
-      res.redirect('/');
-    } else if (!req.user) {
-      const selectOption = votingData.select_option;
-      const voteCountList = votingData.vote_count;
-      const votingResults = {}
-      for (let i = 0; i < selectOption.length; i++) {
-        votingResults[selectOption[i]] = voteCountList.filter((el) => {
-          return el.selected_option === selectOption[i]
-        }).length;
-      }
+      return res.redirect('/');
+    } 
 
+    const selectOption = votingData.select_option;
+    const voteCountList = votingData.vote_count;
+    const votingResults = {};
+
+    for (let i = 0; i < selectOption.length; i++) {
+      votingResults[selectOption[i]] = voteCountList.filter((el) => {
+        return el.selected_option === selectOption[i]
+      }).length;
+    }
+    
+    if (!req.user) {
       res.render('votingPage', {
         title: '투표 페이지',
         votingData,
@@ -76,20 +79,11 @@ router.get('/:id', async (req, res, next) => {
       });
 
     } else {
-      const selectOption = votingData.select_option;
-      const voteCountList = votingData.vote_count;
-      const votingResults = {}
-      for (let i = 0; i < selectOption.length; i++) {
-        votingResults[selectOption[i]] = voteCountList.filter((el) => {
-          return el.selected_option === selectOption[i]
-        }).length;
-      }
 
       const deleteBtn = String(req.user._id) === String(votingData.writerId) ? '삭제' : null;
       const result = String(req.user._id) === String(votingData.writerId) ? votingResults : null;
-      
-      if (votingData.progress) {
 
+      if (votingData.progress) {
         res.render('votingPage', {
           title: '투표 페이지',
           votingData,
@@ -97,7 +91,6 @@ router.get('/:id', async (req, res, next) => {
           userCheck: true,
           result
         });
-
       } else {
         res.render('votingPage', {
           title: '투표 페이지',
@@ -107,7 +100,7 @@ router.get('/:id', async (req, res, next) => {
           result: votingResults
         });
       }
-
+      
     }
   } catch (err) {
     console.log(err);

@@ -2,33 +2,33 @@
 <html>
 
 <head>
-    <title>login</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+  <title>login</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 
 <body>
-    <div class="loginBox">
-        <div class="loginFormBox">
-            <form action="/login" method="post">
-                email <input class="loginInputBox" type="email" name="userEmail"><br>
-                password <input class="loginInputBox" type="password" name="userPassword">
-                <input type="submit" value="login">
-            </form>
-        </div>
-        <div class="loginBtnBox">
-            <span class="loginPageBtn">
-                <a href="/signup">회원가입</a>
-            </span>
-            <span class="loginPageBtn">
-                <a href="/">home</a>
-            </span>
-        </div>
-        <div>
-            <% if (message) { %>
-                <%= message %>
-            <% } %>
-        </div>
+  <div class="loginBox">
+    <div class="loginFormBox">
+      <form action="/login" method="post">
+        email <input class="loginInputBox" type="email" name="userEmail"><br>
+        password <input class="loginInputBox" type="password" name="userPassword">
+        <input type="submit" value="login">
+      </form>
     </div>
+    <div class="loginBtnBox">
+      <span class="loginPageBtn">
+        <a href="/signup">회원가입</a>
+      </span>
+      <span class="loginPageBtn">
+        <a href="/">home</a>
+      </span>
+    </div>
+    <div>
+      <% if (message) { %>
+      <%= message %>
+      <% } %>
+    </div>
+  </div>
 </body>
 
 </html>
