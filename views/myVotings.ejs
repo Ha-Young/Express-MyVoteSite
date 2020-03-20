@@ -13,12 +13,12 @@
     <h1>내 투표</h1>
 
     <div>
-      <% votings.forEach(voting => { %>
+      <% myVotingList.forEach(voting => { %>
       <ul>
         <li>제목: <%= voting.title %></li>
-        <li class='<%= voting.class %>'>작성자: <%= voting.author %></li>
+        <li>작성자: <%= voting.author %></li>
         <li>만료 날짜: <%= new Date(voting.endDate) %></li>
-        <% if (voting.status) { %>
+        <% if (new Date(voting.endDate).getTime() >= currentDate ) { %>
         <li>진행 여부: 진행중</li>
         <% } else { %>
         <li>진행 여부: 기간 만료</li>
