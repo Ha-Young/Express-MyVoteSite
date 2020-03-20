@@ -5,7 +5,7 @@ block styles
 
 block content
   .newvotes
-    form(action="/votings" method="POST").newvote-form
+    form(onsubmit='createVote(event)').newvote-form
       .newvotes-container
         span#close-button x
         .title

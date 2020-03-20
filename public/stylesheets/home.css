@@ -1,5 +1,6 @@
 .home {
   display: flex;
+  height: auto;
 }
 
 .vote-viewer {

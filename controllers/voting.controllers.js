@@ -34,25 +34,25 @@ exports.registerVote = async (req, res, next) => {
 
     await loggedInUser.updateOne({ votes_created });
 
-    res.redirect('/');
+    res.status(200).end();
+    // res.redirect('/');
   } catch(err) {
-    next(new errors.GeneralError(err.message));
+    res.status(500).end();
+    // next(new errors.GeneralError(err.message));
   }
 };
 
 exports.deleteVote = async (req, res) => {
   try {
-    const deletedVote = await Votes.findByIdAndRemove(req.body);
+    const deletedVote = await Votes.findByIdAndRemove(req.body.voteId);
     let { loggedInUser, loggedInUser: { votes_created } } = res.locals;
 
     votes_created = votes_created.filter(voteId => voteId.toString() !== deletedVote._id.toString());
     await loggedInUser.updateOne({ votes_created });
 
     res.status(200).end();
-    // res.status(200).send('투표가 성공적으로 삭제되었습니다!'); - 필요 없을 시 app.js에서 bodyParser.text()도 삭제
   } catch(err) {
     res.status(500).end();
-    // next(new errors.GeneralError(err.message));
   }
 };
 

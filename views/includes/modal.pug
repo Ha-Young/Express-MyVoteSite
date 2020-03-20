@@ -1,0 +1,12 @@
+link(rel="stylesheet", href="/stylesheets/modal.css")
+
+.modal
+  div(onclick='closeModal()').modal-background
+  .modal-window
+    .modal-scroll
+      each option in vote.select_options
+        .option-result
+          h1 #{option.description}
+          .option-counter-container
+            .option-counter(style=`width: ${option.vote_counter / vote.total_voters * 100 || 0}%`)
+              span #{option.vote_counter / vote.total_voters * 100 || 0}%

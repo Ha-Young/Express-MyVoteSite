@@ -4,7 +4,11 @@ const deleteVoteButton = document.querySelector('.delete-vote');
 const submitButton = document.querySelector('#submit');
 
 toListButton.addEventListener('click', () => {
-  location.assign(location.origin);
+  // if (location)
+  // console.log(location)
+  // if (location.pathname.includes('votings')) console.log(123);
+  // location.assign(location.origin);
+  history.back();
 });
 
 const openModal = () => {
@@ -25,7 +29,8 @@ if (deleteVoteButton) {
       const voteId = location.pathname.replace(/\/votings\//i, '');
       const response = await fetch('/votings', {
         method: "DELETE",
-        body: voteId
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ voteId })
       });
 
       if (response.status === 200) {

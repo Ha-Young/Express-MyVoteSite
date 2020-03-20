@@ -25,3 +25,49 @@ const resetButton = document.querySelector('.reset-button');
 resetButton.addEventListener('click', () => {
   window.location.reload();
 });
+
+const createVote = async (e) => {
+  e.preventDefault();
+  const userReaction = window.confirm("투표를 생성하시겠습니까?");
+
+  if (userReaction) {
+    const createVoteForm = document.querySelector('.newvote-form');
+
+    let reqBody = {};
+    Object.keys(createVoteForm.elements).forEach(key => {
+      const element = createVoteForm.elements[key];
+      if (element.type !== "submit") {
+        reqBody[element.name] = element.value;
+      }
+    });
+
+    const response = await fetch('/votings', {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(reqBody)
+    });
+
+    if (response.status === 200) {
+      window.alert("성공적으로 투표를 등록했습니다! 메인 페이지로 이동합니다.");
+      location.assign(location.origin);
+    } else {
+      window.alert("투표 생성에 실패했습니다! 투표 생성 페이지로 돌아갑니다.");
+      location.reload();
+    }
+  }
+
+};
+
+
+
+// form.addEventListener("submit", e => {
+//   e.preventDefault();
+//   let reqBody = {};
+//   Object.keys(form.elements).forEach(key => {
+//     let element = form.elements[key];
+//     if (element.type !== "submit") {
+//       reqBody[element.name] = element.value;
+//     }
+//   });
+//   submitForm(reqBody); //call to function for form submission
+// });

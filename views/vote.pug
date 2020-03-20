@@ -40,14 +40,8 @@ block content
               div
                 button(onclick='openModal()').button.show-vote-result 결과보기
                 button.button.delete-vote 투표 삭제
-      .modal
-        div(onclick='closeModal()').modal-background
-        .modal-window
-          .modal-scroll
-            each option in vote.select_options
-              .option-result
-                h1 #{option.description}
-                .option-counter-container
-                  .option-counter(style=`width: ${option.vote_counter / vote.total_voters * 100 || 0}%`)
-                    span #{option.vote_counter / vote.total_voters * 100 || 0}%
+            if !loggedInUser && vote.expired
+              div
+                button(onclick='openModal()').button.show-vote-result 결과보기
+      include includes/modal.pug
   script(src="/javascripts/vote.js")
