@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <h2>투표 만들기</h2>
+    <form action="/votings/new" method="post">
+      <div>
+        <label for="id">투표명:</label>
+        <input type="text" id="id" name="title" />
+      </div>
+      <% for (var i=0; i<2; i++) { %>
+      <div id="parent">
+        <label for="option">선택사항:</label>
+        <input type="text" id="password" name="voteOptions" required />
+      </div>
+      <% } %>
+      <div>
+        <label for="date">만료날짜:</label>
+        <input type="datetime-local" id="date" name="dueDate" />
+      </div>
+      <div>
+        <button>생성</button>
+      </div>
+    </form>
+  </body>
+</html>

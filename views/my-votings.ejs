@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+      <h2>MY VOTING PAGE</h2>
+      <% for(var el of vote) { %>
+        <div onclick="location.href='/votings/<%= el.id %>'">제목: <%= el.title %></div>
+        <div>만료날짜 및 시간: <%= el.dueDate %> </div>
+        <div>Vote Status: <%= el.isFinish %> </div>
+      <% } %>
+      <button onclick="location.href='/'">목록으로 돌아가기</button>
+    </body>
+</html>

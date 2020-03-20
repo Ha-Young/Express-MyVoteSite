@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <h2>VOTE DETAIL</h2>
+    <div>제목: <%= vote.title %></div>
+    <div>생성자: <%= vote.creator %></div>
+    <div>만료날짜 및 시간: <%= vote.dueDate %></div>
+    <div>진행중 여부: <%= vote.isFinish %></div>
+    <div>투표</div>
+    <form action="/votings/<%= vote.id %>" method='post' >
+      <% for (var el of vote.voteOptions) { %>
+        <input type="radio" name="voteOption" value="<%= el.voteOption %>" >
+        <label for="voteOption"><%= el.voteOption %></label><br>
+      <% } %>
+      <% if (vote.isFinish === "진행중") { %>
+        <button name="voteResult" value="<%= el.voteResult %>">투표하기</button>
+      <% } %>
+    </form>
+    <% if (vote.creator === currentUser || vote.isFinish !== "진행중") { %>
+      <div>투표 결과</div>
+      <% for (var el of vote.voteOptions) { %>
+        <div><%= el.voteOption %> GET <%= el.voteResult %> VOTES</div>
+      <% } %>
+    <% } %>
+    <% if (vote.creator === currentUser) { %>
+      <button id="voteDelete" name="voteDelete" value="<%= vote.id %>">투표 삭제</button>
+    <% } %>
+    <button onclick="location.href='/'">목록으로 돌아가기</button>
+    <script type="text/javascript" src="/javascripts/votingsDetail.controller.js"></script>
+  </body>
+</html>

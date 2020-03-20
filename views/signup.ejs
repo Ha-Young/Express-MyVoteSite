@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <h2>회원가입</h2>
+    <form action="/signup" method="post">
+      <div>
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="username" />
+      </div>
+      <div>
+        <label for="password">PASSWORD:</label>
+        <input type="password" minlength="8" id="password" name="password" />
+      </div>
+      <div>
+        <label for="passwordcf">PASSWORD CONFIRM:</label>
+        <input type="password" minlength="8" id="passwordcf" />
+      </div>
+      <div>
+        <button>회원가입</button>
+      </div>
+    </form>
+  </body>
+</html>

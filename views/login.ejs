@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <h2>로그인</h2>
+    <form action="/login" method="post">
+      <div>
+        <label for="name">ID:</label>
+        <input type="text" id="id" name="username" />
+      </div>
+      <div>
+        <label for="password">PASSWORD:</label>
+        <input type="password" minlength="8" id="password" name="password" />
+      </div>
+      <div>
+        <button name="redirectUrl" value="<%= redirectUrl %>">로그인</button>
+      </div>
+    </form>
+  </body>
+</html>

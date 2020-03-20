@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VOTE HAVEN</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>VOTE HAVEN</h1>
+    <h3><%= message %></h3>
+    <p>Welcome to VOTE HAVEN</p>
+    <button onclick="location.href='/my-votings'">내 투표 보기</button>
+    <div class="row">
+      <% for (var el of vote) { %>
+        <div class="column">
+          <div class="card">
+            <div onclick="location.href='/votings/<%= el.id %>'">제목: <%= el.title %></div>
+            <div>생성자: <%= el.creator %></div>
+            <div>만료 날짜 및 시간: <%= el.dueDate %></div>
+            <div>진행 여부: <%= el.isFinish %></div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+    <button onclick="location.href='/votings/new'">투표 생성하기</button>
+  </body>
+</html>
