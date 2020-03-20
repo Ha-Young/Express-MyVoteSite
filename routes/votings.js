@@ -16,17 +16,9 @@ router.post('/new',
 );
 
 router.get('/:voting_id',
-  async (req, res, next) => {
-    const votingId = req.params.voting_id;
-    const voting = await Voting.findById(votingId).populate('createdBy').lean();
-    // const userId = req.user._id;
-    // let isAuthor = false;
-    req.voting = voting;
-    next();
-  },
+  votingController.getAll,
+  userController.checkRespondent,
   votingController.checkIsAuthor
-  // if(userId === String(voting.createdBy._id)) isAuthor = true;
-  // res.render('votingDetail', { voting, isAuthor });
 );
 
 router.post('/:voting_id',

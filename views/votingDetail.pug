@@ -16,21 +16,32 @@ html(lang='en')
           div.detail-delete-button 투표삭제
         div= `- 종료일 | ${voting.expiredAt}`
         form(action=`/votings/${voting._id}` method='POST')
-          if voting.isProceeding
-            each option in voting.options
-              div
-                input(type='radio' id=`${option.option}` name='option' value=`${option.option}`)
-                lable(for=`${option.option}`)=option.option
-                if isAuthor
-                  lable.count(for=`${option.option}`)=`${option.count} 표`
-          else
-            each option in voting.options
-              div
-                input(type='radio' id=`${option.option}` name='option' value=`${option.option}` disabled)
-                lable.radio-disabled(for=`${option.option}`)=option.option
+          each option in voting.options
+            div
+              input(type='radio'
+                id=`${option.option}`
+                name='option'
+                value=`${option.option}`
+                checked=selectedOption===option.option
+                disabled=!voting.isProceeding||selectedOption)
+              lable(for=`${option.option}`)=option.option
+              if isAuthor||!voting.isProceeding
                 lable.count(for=`${option.option}`)=`${option.count} 표`
-          if voting.isProceeding
+          if !voting.isProceeding
             div.buttonwrap
-              input.button.blue(type='submit')
+              input.button.disabled(
+                type='submit'
+                disabled
+                value='종료된 투표입니다')
+          else if isRespondent
+            div.buttonwrap
+              input.button.disabled(
+                type='submit'
+                disabled
+                value='이미 투표하셨습니다')
+          else
+            div.buttonwrap
+              input.button.blue(
+                type='submit')
       div.buttonwrap
         input.button.line-blue(type='button' onclick='location.href=\'/\'' value='< 이전')

@@ -1,6 +1,13 @@
 const Voting = require('../models/Voting');
 const User = require('../models/User');
 
+exports.getAll = async (req, res, next) => {
+  const votingId = req.params.voting_id;
+  const voting = await Voting.findById(votingId).populate('createdBy').lean();
+  req.voting = voting;
+  next();
+}
+
 exports.create = async (req, res, next) => {
   try {
     const { title, endDate, endTime, options } = req.body;
@@ -25,14 +32,17 @@ exports.create = async (req, res, next) => {
 }
 
 exports.checkIsAuthor = async (req, res, next) => {
-  const voting = req.voting
+  const voting = req.voting;
+  const isRespondent = req.isRespondent;
+  const selectedOption = req.selectedOption;
   let isAuthor = false;
+  console.log(isRespondent, selectedOption);
 
   if(req.user && req.user._id === String(voting.createdBy._id)) {
     isAuthor = true;
   }
 
-  res.render('votingDetail', { voting, isAuthor });
+  res.render('votingDetail', { voting, isAuthor, isRespondent, selectedOption });
 }
 
 exports.updateSelectedOption = async (req, res, next) => {

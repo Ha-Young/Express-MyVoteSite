@@ -3,7 +3,6 @@ const createError = require('http-errors');
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
-const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -49,6 +48,9 @@ app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/votings', votingRouter);
 app.use('/my-Votings', myVotingRouter);
+app.get('/error', (req, res, next) => {
+  throw Error('에러메시지~~~');
+});
 app.get('/logout', function(req, res, next) {
   req.session.destroy(() => {
     req.session;
