@@ -97,11 +97,11 @@
           <div id='remove-container'>
             <span id='danger-text'>DANGER ZONE</span>
             <form
-              method="POST"
+              method='POST'
               action=<%=`/votings/${voting._id}?_method=DELETE`%>
               enctype='application/x-www-form-urlencoded'
             >
-              <button class='secondary-button' type="submit">
+              <button class='secondary-button' type='submit'>
                 Remove this voting
               </button>
             </form>
