@@ -13,7 +13,6 @@ const findVoteById = async (req, res, next) => {
     const vote = await Vote.findById(req.params.id);
 
     if (!vote) {
-      console.log('there is no vote');
       return next({
         ...error,
         status: 404,
