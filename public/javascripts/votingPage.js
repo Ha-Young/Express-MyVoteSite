@@ -35,6 +35,17 @@ if (deleteBtn) {
     deleteBtn.addEventListener('click', () => {
         fetch(url, {
             method: 'DELETE',
-        });
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((myJson) => {
+                if (myJson.result === 'delete') {
+                    window.location.href = '/'
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     });
 }

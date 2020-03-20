@@ -13,7 +13,7 @@
       제목: <%= votingData.title %><br>
       작성자: <%= votingData.writer %><br>
       투표 설명: <%= votingData.description %><br>
-      만료일: <%= votingData.expiration_date %><br>
+      만료일: <%= votingData.expiration_date_string %><br>
       <% if(votingData.progress) { %>
       진행 중
       <% } else { %>
@@ -26,22 +26,16 @@
       <option class="option" value="<%= votingData.select_option[i] %>"><%= votingData.select_option[i] %></option>
       <% } %>
     </select>
-    <span class="vote votingPageBtn">
-      <a href="/votings/<%= votingData.id %>">투표하기</a>
-    </span>
+    <a class="vote votingPageBtn" href="/votings/<%= votingData.id %>">투표하기</a>
     <% if(deleteBtn) { %>
-    <span class="deleteBtn votingPageBtn">
-      <a href="/votings/<%= votingData.id %>"><%= deleteBtn %></a>
-    </span>
+    <a class="deleteBtn votingPageBtn" href="/votings/<%= votingData.id %>"><%= deleteBtn %></a>
     <% } %>
     <% if(result) { %>
     <% for(let key in result) { %>
     <div><%= key %> -> <%= result[key]%></div>
     <% } %>
     <% } %>
-    <span class="votingPageBtn">
-      <a href="/">투표 목록으로 돌아가기</a>
-    </span>
+    <a class="votingPageBtn" href="/">투표 목록으로 돌아가기</a>
   </div>
   <script src="/javascripts/votingPage.js"></script>
 </body>

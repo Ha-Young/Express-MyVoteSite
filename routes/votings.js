@@ -123,7 +123,7 @@ router.delete('/:id', async (req, res, next) => {
     try {
         const votingId = Number(req.params.id);
         await Votings.remove({ id: votingId });
-        res.redirect('/');
+        res.json({ result: 'delete' });
     } catch (err) {
         console.log(err);
         next(err);

@@ -17,15 +17,6 @@ router.put('/', async (req, res, next) => {
   res.json({ result: 'ok' });
 });
 
-router.delete('/', (req, res, next) => {
-  Votings.find((err, votingsData) => {
-    res.render('main', {
-      title: '메인 페이지',
-      votingsData
-    });
-  });
-});
-
 router.get('/my-votings', isLoggedIn, async (req, res, next) => {
   const myVotingList = await Votings.find({ writerId: req.user._id });
   res.render('myVotings', {
