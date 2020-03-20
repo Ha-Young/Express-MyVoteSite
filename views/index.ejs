@@ -18,9 +18,9 @@
             <% ongoingVotes.forEach((vote) => { %>
               <ul>
                 <li class="voteTitle"><%= vote.title %></li>
-                <li class="voteMadeby"><%= vote.made %></li>
-                <li class="voteExpiration"><%= vote.expiration %></li>
-                <li class="vote" id="<%= vote.id %>">투표하기</li>
+                <li class="voteMadeby"><%= vote.email.split('@')[0] %></li>
+                <li class="voteExpiration"><%= vote.expiration.split('GMT')[0].slice(0, -4) %></li>
+                <li class="voteMove" id="<%= vote.id %>">투표하기</li>
               </ul>
             <% }) %>
           </div>
@@ -34,9 +34,9 @@
             <% completedVotes.forEach((vote) => { %>
               <ul>
                 <li class="voteTitle"><%= vote.title %></li>
-                <li class="voteMadeby"><%= vote.made %></li>
-                <li class="voteExpiration"><%= vote.expiration %></li>
-                <li class="vote" id="<%= vote.id %>">투표하기</li>
+                <li class="voteMadeby"><%= vote.email.split('@')[0] %></li>
+                <li class="voteExpiration"><%= vote.expiration.split('GMT')[0].slice(0, -4) %></li>
+                <li class="voteMove" id="<%= vote.id %>">투표하기</li>
               </ul>
             <% }) %>
           </div>
@@ -47,7 +47,7 @@
       <% } %>
     </section>
     <script>
-      const votes = document.querySelectorAll(".vote");
+      const votes = document.querySelectorAll(".voteMove");
       votes.forEach((vote) => vote.addEventListener("click", (ev) => {
         window.location.href = `http://localhost:3000/votings/${ev.currentTarget.id}`;
       }));
