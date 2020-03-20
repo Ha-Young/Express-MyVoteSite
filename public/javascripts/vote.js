@@ -1,14 +1,9 @@
 const toListButton = document.querySelector('.to-list');
-// const showResultButton = document.querySelector('.show-vote-result');
 const deleteVoteButton = document.querySelector('.delete-vote');
 const submitButton = document.querySelector('#submit');
 
 toListButton.addEventListener('click', () => {
-  // if (location)
-  // console.log(location)
-  // if (location.pathname.includes('votings')) console.log(123);
-  // location.assign(location.origin);
-  history.back();
+  location.assign(location.origin);
 });
 
 const openModal = () => {

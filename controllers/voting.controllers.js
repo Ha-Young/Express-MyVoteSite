@@ -1,4 +1,5 @@
 const Votes = require('../models/Votes');
+
 const errors = require('../lib/errors');
 const { getDisplayInfo } = require('../lib/helpers');
 
@@ -9,7 +10,7 @@ exports.registerVote = async (req, res, next) => {
   const currentTime = new Date().toISOString();
 
   if (expirationTime < currentTime) {
-    req.flash('Vote Registration Error', '투표 만료시간은 현재 시간 이후여야 합니다.')
+    req.flash('Vote Registration Error', '투표 만료시간은 현재 시간 이후여야 합니다.');
     return res.redirect('/votings/new');
   }
 
@@ -35,10 +36,8 @@ exports.registerVote = async (req, res, next) => {
     await loggedInUser.updateOne({ votes_created });
 
     res.status(200).end();
-    // res.redirect('/');
   } catch(err) {
     res.status(500).end();
-    // next(new errors.GeneralError(err.message));
   }
 };
 
@@ -105,7 +104,6 @@ exports.registerCastingVote = async (req, res, next) => {
 
     res.redirect('/');
   } catch(err) {
-    console.log(err);
-    // something goes here...
+    next(new errors.GeneralError(err.message));
   }
 };

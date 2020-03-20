@@ -9,4 +9,7 @@ link(rel="stylesheet", href="/stylesheets/modal.css")
           h1 #{option.description}
           .option-counter-container
             .option-counter(style=`width: ${option.vote_counter / vote.total_voters * 100 || 0}%`)
-              span #{option.vote_counter / vote.total_voters * 100 || 0}%
+              if vote.total_voters !== 0
+                span #{(option.vote_counter / vote.total_voters * 100).toFixed(1)}%
+              else
+                span 0%

@@ -1,5 +1,5 @@
-const errors = require('../lib/errors');
 const { getDisplayInfo, sortVotesByExpiration } = require('../lib/helpers');
+const errors = require('../lib/errors');
 
 const NO_VOTES_MESSAGE = "🥺 등록된 투표가 없어요 🥺";
 

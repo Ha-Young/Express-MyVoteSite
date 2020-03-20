@@ -40,7 +40,7 @@ block content
               div
                 button(onclick='openModal()').button.show-vote-result 결과보기
                 button.button.delete-vote 투표 삭제
-            if !loggedInUser && vote.expired
+            else if vote.expired
               div
                 button(onclick='openModal()').button.show-vote-result 결과보기
       include includes/modal.pug

@@ -13,9 +13,9 @@ router.get('/', checkAuthentication, async (req, res) => {
   });
 
   const allVotes = loggedInUser.votes_created;
-
-  let expiredVotesCounter = 0;
   const voteDisplayInfoList = [];
+  let expiredVotesCounter = 0;
+
   allVotes.forEach(vote => {
     if (vote.expired) expiredVotesCounter++;
     voteDisplayInfoList.push(getDisplayInfo(vote));

@@ -19,12 +19,11 @@ exports.login = (req, res, next) => {
       }
 
       res.redirect(req.session.returnTo || '/');
-      delete req.session.returnTo;
     });
   })(req, res, next);
 };
 
-exports.logout = async (req, res, next) => {
+exports.logout = async (req, res) => {
   await req.logout();
   await req.session.destroy();
   await res.clearCookie('connect.sid');
