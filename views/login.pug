@@ -9,7 +9,7 @@ html(lang='en')
   body
     div.authwarp
       h1 로그인
-      form(action='/login/auth' method='POST')
+      form(action=`/login/${url}` method='POST')
         div.inputBox
           input(type='text' name='username' placeholder='이메일')
         div.inputBox

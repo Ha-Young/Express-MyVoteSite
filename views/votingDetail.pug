@@ -11,7 +11,9 @@ html(lang='en')
       h1= voting.title
       div= voting.isProceeding
       div.detailBox
-        div= `- 등록자 | ${voting.createdBy.username}`
+        div.detail-author= `- 등록자 | ${voting.createdBy.username}`
+        if isAuthor
+          div.detail-delete-button 투표삭제
         div= `- 종료일 | ${voting.expiredAt}`
         form(action=`/votings/${voting._id}` method='POST')
           if voting.isProceeding

@@ -72,6 +72,21 @@ input[type=radio] {
   font-size: 15px;
 }
 
+.detail-author {
+  display: inline;
+  margin-right: 10px;
+}
+
+.detail-delete-button {
+  padding: 0 5px;
+  display: inline;
+  font-size: 13px;
+  color: gray;
+  border: 1px solid gray;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .votingCard {
   margin: 15px 0;
   border: 1px dotted gray;

@@ -3,32 +3,22 @@ const router = express.Router();
 const passport = require('passport');
 
 router.get('/', (req, res, next) => {
-  console.log(req.header("referer"));
-  console.log(req.header("referer") === 'http://localhost:3000/votings/*')
-  console.log(123);
-  res.render('login');
+  const url = req.url;
+  res.render('login', { url });
 });
 
-router.post('/auth', (req, res, next) => {
-  const referer = req.header("referer")
-  console.log(referer.split('/')[3]);
-  const sucessURL = referer.split('/')[3] === 'votings' ? referer.slice(21) : '/';
-  console.log(sucessURL);
+router.post('/', (req, res, next) => {
+  const query = req.query.continue;
+  console.log('aaaaaaa'+query);
+  const successRedirect = query ? query : '/';
+
   passport.authenticate('local', {
-    successRedirect: sucessURL,
-    failureRedirect: '/login'
-  })(req,res,next);
+  successRedirect,
+  failureRedirect: '/login'
+  })(req, res, next);
 });
 
-// router.post("/login",function(req,res,next){
-//   var redirect= req.query.returnUrl || "index";
-//   passport.authenticate('local', {
-//     successRedirect: redirect,
-//     failureRedirect: 'login',
-//     failureFlash: true })(req,res,next);
-// });
-
-// router.post('/auth', passport.authenticate('local', {
+// router.post('/', passport.authenticate('local', {
 //   successRedirect: '/',
 //   failureRedirect: '/login'
 // }));
