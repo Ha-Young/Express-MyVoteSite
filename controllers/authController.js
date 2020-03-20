@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import passport from 'passport';
 import createError from 'http-errors';
 import User from '../models/user';
@@ -26,6 +27,11 @@ export const postLogin = (req, res, next) => {
       const { redirect_id: id } = req.query;
 
       if (id) {
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+          next(createError(400, '잘못된 요청입니다.'));
+          return;
+        }
+
         res.redirect(`/votings/${id}`);
       } else {
         res.redirect('/');
@@ -39,6 +45,11 @@ passport.authenticate('local', (req, res) => {
   const { redirect_id: id } = req.query;
 
   if (id) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      next(createError(400, '잘못된 요청입니다.'));
+      return;
+    }
+    
     res.redirect(`/votings/${id}`);
   } else {
     res.redirect('/');
@@ -56,9 +67,15 @@ export const postSignup = async (req, res) => {
     password,
     password2
   } = req.body;
+  
+  if (!username.trim().length || !email.trim().length) {
+    const err = new mongoose.Error.ValidationError();
+    next(createError(400, err));
+  }
 
-  if (password !== password2) {
-    next(createError(400, 'Password is not Matched'));
+  if (!password.trim().length || password !== password2) {
+    const err = new mongoose.Error.ValidationError();
+    next(createError(400, err));
   } else {
     try {
       const user = new User({
@@ -69,6 +86,11 @@ export const postSignup = async (req, res) => {
       await User.register(user, password);
       res.redirect('/login');
     } catch (err) {
+      if (err instanceof mongoose.Error.ValidationError) {
+        next(createError(400, err));
+        return;
+      }
+
       next(createError(500, err));
     }
   }

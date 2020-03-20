@@ -28,6 +28,7 @@ export const postVotings = async (req, res, next) => {
       expiration_time,
       options
     } = req.body;
+
     const expirated = `${expiration_date}T${expiration_time}`;
     const handledOptions = options.map((option) => ({ value: option }));
     const user = req.user;
@@ -42,6 +43,11 @@ export const postVotings = async (req, res, next) => {
     await user.save();
     res.redirect('/');
   } catch (err) {
+    if (err instanceof mongoose.Error.ValidationError) {
+      next(createError(400, err));
+      return;
+    }
+
     next(createError(500, err));
   }
 };
