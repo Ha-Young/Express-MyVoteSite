@@ -35,7 +35,7 @@
                 value = Math.floor(maxLength / length) * 100;
               }
           %>
-            <li class="<% if (length === maxLength) { %> winner <% } %>">
+            <li class="<% if (length && length === maxLength) { %> winner <% } %>">
               <h4><%= options[i].value %></h4>
               <div>
                 <div class="bar" data-value="<%= value %>"></div>

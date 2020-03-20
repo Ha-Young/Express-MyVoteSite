@@ -8,22 +8,22 @@
       <form action="/votings" class="form" method="POST">
         <p>
           <label for="voting-name">VOTE NAME</label>
-          <input type="text" id="voting-name" name="voting_name" />
+          <input type="text" id="voting-name" name="voting_name" required="true" />
         </p>
         <p>
           <label>EXPIRATION</label>
-          <input type="date" id="expiration-date" name="expiration_date" />
+          <input type="date" id="expiration-date" name="expiration_date" required="true" />
         </p>
         <p>
-          <input type="time" id="expiration-time" name="expiration_time" />
+          <input type="time" id="expiration-time" name="expiration_time" required="true" />
         </p>
         <label>OPTIONS</label>
         <fieldset class="options-area">
           <p>
-            <input type="text" name="options" />
+            <input type="text" name="options" required="true" />
           </p>
           <p>
-            <input type="text" name="options" />
+            <input type="text" name="options" required="true" />
           </p>
         </fieldset>
         <div class="buttons-wrap">

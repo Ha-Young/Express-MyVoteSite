@@ -8,20 +8,20 @@
       <form action="/signup" class="form" method="POST">
         <p>
           <label for="username">USER NAME</label>
-          <input type="text" id="username" name="username" />
+          <input type="text" id="username" name="username" required="true" />
         </p>
         <p>
           <label for="email">EMAIL</label>
-          <input type="email" id="email" name="email" />
+          <input type="email" id="email" name="email" required="true" />
         </p>
         <p>
           <label for="password">PASSWORD</label>
-          <input type="password" id="password" name="password" minlength="8" />
+          <input type="password" id="password" name="password" minlength="8" required="true" />
           <span class="sub-text">Minimum length is 8 characters</span>
         </p>
         <p>
           <label for="password2">PASSWORD CONFIRM</label>
-          <input type="password" id="password2" name="password2" minlength="8" />
+          <input type="password" id="password2" name="password2" minlength="8" required="true" />
         </p>
         <div class="buttons-wrap">
           <button type="submit" class="button">REGISTER</button>
