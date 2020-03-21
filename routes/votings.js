@@ -10,6 +10,8 @@ const { findVoteById } = require('../middlewares/votes');
 const { isAuthenticated, findLoggedInUser } = require('../middlewares/authorization');
 
 router.get('/new', isAuthenticated, (req, res) => {
+  console.log(moment().tz(moment.tz.guess()).format().slice(0, 16));
+  console.log(moment.tz.guess());
   res.render('new', {
     title: 'vote!',
     defaultDate: moment().tz(moment.tz.guess()).format().slice(0, 16),
