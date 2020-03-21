@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "NODE_ENV=development nodemon ./bin/www"
+    "dev": "NODE_ENV=development nodemon ./bin/www",
+    "test": "mocha spec"
   },
   "dependencies": {
     "bcrypt": "^4.0.1",
@@ -25,5 +26,10 @@
     "pretty-error": "^2.1.1",
     "pug": "2.0.0-beta11",
     "underscore": "^1.9.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.1.1",
+    "supertest": "^4.0.2"
   }
 }
