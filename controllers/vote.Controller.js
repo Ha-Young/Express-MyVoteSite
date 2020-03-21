@@ -2,18 +2,19 @@ const mongoose = require('mongoose');
 const Vote = require('../models/Vote');
 const User = require('../models/User');
 const error = require('../libs/error');
-const util = require('../utils/utils');
 const { STATUS } = require('../constants/constants');
 
 exports.renderVoteList = async (req, res, next) => {
-  console.log('rendervotelist랜더중..', req.isAuthenticated());
-  const votes = await Vote.find();
-  console.log('votes', votes);
-  res.render('home', { votes });
+  try {
+    const votes = await Vote.find();
+
+    res.render('home', { votes });
+  } catch (err) {
+    next(new error.GeneralError(err.message));
+  }
 };
 
 exports.renderNewVote = async (req, res, next) => {
-  console.log('newvote랜더중', req.isAuthenticated());
   try {
     res.render('voteNew', { message: req.flash('invalid') });
   } catch (err) {
@@ -22,7 +23,6 @@ exports.renderNewVote = async (req, res, next) => {
 };
 
 exports.renderDetailVote = async (req, res, next) => {
-  console.log('detailvote 랜더링.', req.isAuthenticated());
   try {
     const { id: voteId } = req.params;
     let checkDuplicateUser = false;
@@ -69,7 +69,7 @@ exports.renderDetailVote = async (req, res, next) => {
       checkDuplicateUser,
       voteId,
       checkExistUser
-    })
+    });
   } catch (err) {
     next(err);
   }
@@ -124,6 +124,7 @@ exports.handleUpdateVote = async (req, res, next) => {
 exports.handleDeleteVote = async (req, res, next) => {
   try {
     const { deleteId } = req.body;
+
     await Vote.findByIdAndDelete(deleteId);
     res.render('success', { message: '성공적으로 삭제하였습니다!'})
   } catch (err) {
@@ -138,6 +139,3 @@ exports.renderPersonalPage = async (req, res, next) => {
     next(err);
   }
 };
-
-
-

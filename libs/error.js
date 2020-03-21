@@ -29,7 +29,7 @@ class InvalidObjectIdError extends voteError {
   }
 }
 
-class UndefinedError extends voteError {  // change 이름 변경하고 오류 추가할것
+class NotFoundError extends voteError {
   constructor (message) {
     super(message, 404, '404 : NOT FOUND. 페이지를 찾을수없습니다.');
   }
@@ -44,6 +44,6 @@ class GeneralError extends voteError {
 module.exports = {
   ValidationError,
   InvalidObjectIdError,
-  UndefinedError,
+  NotFoundError,
   GeneralError
 };

@@ -4,26 +4,22 @@ const Vote = require('../models/Vote');
 const User = require('../models/User');
 const error = require('../libs/error');
 
-exports.renderHome = async function (req, res, next) {
+exports.renderHome = async (req, res, next) => {
   try {
-    console.log('i am in homeeee', req.isAuthenticated());
-
     const votes = await Vote.find();
-    console.log('vote', votes);
+
     res.render('home', { votes });
   } catch (err) {
-    console.log('error??에러발생???');
     next(new error.GeneralError(err.message));
   }
 };
 
-exports.renderLogin = async function (req, res, next) {
+exports.renderLogin = async (req, res, next) => {
   try {
-    console.log('로그인화면',req.isAuthenticated());
     res.render('login');
   } catch (err) {
     next(new error.GeneralError(err.message));
-  } //나중에 트라이캐치 구문 지울것. 렌더확인요
+  }
 };
 
 exports.handleLogin = passport.authenticate('local', {
@@ -43,7 +39,7 @@ exports.renderJoin = async (req, res, next) => {
     res.render('join', { message: req.flash('duplication') });
   } catch (err) {
     next(new error.GeneralError(err.message));
-  } //나중에 트라이캐치 구문 지울것. 렌더확인요
+  }
 };
 
 exports.handleJoin = async (req, res, next) => {

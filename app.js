@@ -58,7 +58,7 @@ app.use('/', home);
 app.use('/voting', voting);
 
 app.use(function(req, res, next) {
-  next(new error.UndefinedError('invalid URL. Check pls')); //undefined 이름 바꿀것.
+  next(new error.UndefinedError('invalid URL. Check pls'));
 });
 
 app.use(function(err, req, res, next) {
