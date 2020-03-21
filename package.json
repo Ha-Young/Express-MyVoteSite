@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
-    "dev": "NODE_ENV=development nodemon ./bin/www"
+    "start": "node ./bin/www",
+    "dev": "NODE_ENV=development nodemon ./bin/www",
+    "test": "mocha"
   },
   "dependencies": {
-    "bcrypt": "^4.0.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "connect-mongo": "^3.2.0",
     "cookie-parser": "^1.4.5",
@@ -18,11 +19,16 @@
     "express-validator": "^6.4.0",
     "mongoose": "^5.9.4",
     "morgan": "^1.9.1",
-    "nodemon": "^2.0.2",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "pretty-error": "^2.1.1",
     "pug": "^2.0.0-beta11",
     "req-flash": "0.0.3"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^7.1.1",
+    "nodemon": "^2.0.2"
   }
 }

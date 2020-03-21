@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const errors = require("../lib/errors");
 const Users = require("../models/Users");
