@@ -17,6 +17,7 @@
     "express": "^4.16.4",
     "express-session": "^1.17.0",
     "express-validator": "^6.4.0",
+    "moment-timezone": "^0.5.28",
     "mongoose": "^5.9.4",
     "morgan": "^1.9.1",
     "passport": "^0.4.1",
