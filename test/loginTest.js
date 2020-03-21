@@ -1,28 +1,15 @@
-
 const { expect } = require('chai');
 const User = require('../models/user');
 const Poll = require('../models/poll');
 const app = require('../app');
 const request = require('supertest');
 
-describe('login', () => {
+describe('index', function() {
   const signup = '/signup';
   const logIn = '/auth/login';
   const preSave = { 
     email: 'yoyoyo@gmail.com', 
     password: `11231123`, 
-    confirmPassword: `11231123`,
-  };
-
-  const wrongEmail = { 
-    email: 'yoyoyo@gmail.comdddddd', 
-    password: `11231123`, 
-    confirmPassword: `11231123`,
-  };
-
-  const wrongPassword = { 
-    email: 'yoyoyo@gmail.com', 
-    password: `1123112322`, 
     confirmPassword: `11231123`,
   };
 

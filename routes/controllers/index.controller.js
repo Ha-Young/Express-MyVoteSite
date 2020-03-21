@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const getPollsAndTimeString = require('../../lib/getPollsAndTimeString');
+const Poll = require('../../models/poll');
 
 exports.renderIndex = async (req, res, next) => {
   try {

@@ -4,7 +4,7 @@ const Poll = require('../models/poll');
 const app = require('../app');
 const request = require('supertest');
 
-describe('signup', () => {
+describe('signup', function() {
   const signup = '/signup';
   const preSave = { 
     email: 'yoyoyo@gmail.com', 

@@ -6,7 +6,7 @@ const User = require('../models/user');
 const initialize = (passport) => {
   try {
     const authenticateUser = async(email, password, done) => {
-      const user = await User.findOne( { email });
+      const user = await User.findOne({ email });
       if (!user) { 
         return done(createError(404, "The user does not exist"), false);
       }
