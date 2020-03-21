@@ -3,8 +3,8 @@ const moment = require('moment-timezone');
 const calculateRemainTime = vote => {
   const DAY = 24 * 60 * 60 * 1000;
   const HOUR = 60 * 60 * 1000;
-  const now = moment();
-  const expiredDate = moment(vote.expired_date);
+  const now = moment.tz('Asia/Seoul');
+  const expiredDate = moment.tz(vote.expired_date, 'Asia/Seoul');
   const remainTime = expiredDate.diff(now);
   
   if (remainTime > DAY) {

@@ -35,6 +35,7 @@ describe('GET /', () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
+        expect(res.text).to.include('vote!');
         done();
       });
   });
@@ -48,6 +49,7 @@ describe('GET /signup', () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
+        expect(res.text).to.include('vote!');
         done();
       });
   });
@@ -58,9 +60,7 @@ describe('POST /signup', () => {
     request(app)
       .post('/signup')
       .expect(302)
-      .end((err, res) => {
-        if (err) return done(err);
-        done();
-      });
+      .expect('Location', '/login')
+      .end(done);
   });
 });

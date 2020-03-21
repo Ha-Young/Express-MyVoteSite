@@ -38,7 +38,7 @@ router.post('/new', isAuthenticated, findLoggedInUser, async (req, res, next) =>
         _id: user._id,
         name: user.name
       },
-      expired_date: moment(req.body.expired_date),
+      expired_date: moment.tz(req.body.expired_date, 'Asia/Seoul').format(),
       selections: req.body.selections.map(selection => {
         return { content: selection }
       }),
