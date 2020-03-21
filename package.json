@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "dev": "NODE_ENV=development nodemon ./bin/www"
+    "test": "mocha spec"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",

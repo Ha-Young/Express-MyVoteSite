@@ -11,15 +11,15 @@ html(lang='en')
       h1 투표 만들기
       form
         div.inputBox
-          input(type='text' id='title' name='title' placeholder='투표 제목')
+          input(type='text' id='title' name='title' placeholder='투표 제목' autocomplete='off')
         div.inputBox
           label(for='endDate') 마감시간
           input.inputDate(type='date' id='endDate' name='endDate')
           input.inputTime(type='time' id='endTime' name='endTime')
         div.inputBox
-          input(type='text' name='option1' placeholder='항목 입력')
+          input(type='text' name='option1' placeholder='항목 입력' autocomplete='off')
         div.inputBox
-          input(type='text' name='option2' placeholder='항목 입력')
+          input(type='text' name='option2' placeholder='항목 입력' autocomplete='off')
         div.errorAlert
         div.buttonwrap
           input.button.blue(type='submit' value='완료')
