@@ -2,7 +2,7 @@ const form = document.forms[0];
 const errorAlert = document.getElementsByClassName('errorAlert')[0];
 const inputs = document.querySelectorAll('input');
 
-form.addEventListener("submit", ev => {
+form.addEventListener('submit', ev => {
   ev.preventDefault();
   const title = inputs[0].value;
   const endDate = inputs[1].value;
@@ -16,9 +16,9 @@ form.addEventListener("submit", ev => {
   }
 
   fetch('/votings/new', {
-    method: "POST",
+    method: 'POST',
 		headers: {
-      "Content-Type": "application/json; charset=utf-8"
+      'Content-Type': 'application/json; charset=utf-8'
     },
     body: JSON.stringify({ title, endDate, endTime, options })
   }).then(response => {

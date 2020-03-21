@@ -36,7 +36,7 @@ app.use(session({
   saveUninitialized: true,
   store: new MongoStore({
     url: process.env.MONGODB_URL,
-    collection: "sessions"
+    collection: 'sessions'
   })
 }));
 

@@ -1,7 +1,7 @@
 const form = document.forms[0];
 const errorAlert = document.getElementsByClassName('errorAlert')[0];
 
-form.addEventListener("submit", ev => {
+form.addEventListener('submit', ev => {
   ev.preventDefault();
   const username = document.querySelectorAll('input')[0].value;
   const password = document.querySelectorAll('input')[1].value;
@@ -13,9 +13,9 @@ form.addEventListener("submit", ev => {
   if (password !== repassword) return errorAlert.innerText = '비밀번호가 일치하지 않습니다.';
 
   fetch('/signup', {
-    method: "POST",
+    method: 'POST',
 		headers: {
-      "Content-Type": "application/json; charset=utf-8"
+      'Content-Type': 'application/json; charset=utf-8'
     },
     body: JSON.stringify({ username, password })
   }).then(response => {
