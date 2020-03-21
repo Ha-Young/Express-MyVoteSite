@@ -39,7 +39,7 @@ describe('signup', () => {
       .request(app)
       .post(signup)
       .send(preSave)
-      .end(async (err, res) => {
+      .end((err, res) => {
         done();
       });
   });
@@ -96,7 +96,7 @@ describe('signup', () => {
       .request(app)
       .post(signup)
       .send(wrongPassword)
-      .end(async (err, res) => {
+      .end((err, res) => {
         expect(res.text).to.include('The password is not acceptable');
         expect(res.status).to.equal(422);
         done();
@@ -108,7 +108,7 @@ describe('signup', () => {
       .request(app)
       .post(signup)
       .send(wrongConfirmPassword)
-      .end(async (err, res) => {
+      .end((err, res) => {
         expect(res.text).to.include('Please confirm your password');
         expect(res.status).to.equal(422);
         done();
