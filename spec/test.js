@@ -60,7 +60,6 @@ describe('POST /signup', () => {
     request(app)
       .post('/signup')
       .expect(302)
-      .expect('Location', '/login')
       .end(done);
   });
 });
