@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const sassMiddleware = require('node-sass-middleware');
+require('dotenv').config();
 
 const setLocals = require('./configs/setLocal');
 const passportConfig = require('./configs/passport');
@@ -16,7 +17,7 @@ const ERROR_STATUS = require('./configs/errorCode.js');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost/voting-platform', {
+mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
@@ -41,11 +42,11 @@ app.use(
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   session({
-    secret: 'qwer',
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     store: new MongoStore({
-      url: 'mongodb://localhost/voting-platform',
+      url: process.env.MONGO_URL,
       collection: 'sessions'
     })
   })
