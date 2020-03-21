@@ -1,0 +1,51 @@
+.error-container {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .error-item-box {
+    width: 80%;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .error-message-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+
+      .error-message {
+        font-size: 30px;
+        font-weight: bold;
+      }
+    }
+
+    .error-redirect-button-box {
+      margin-top: 15px;
+
+      .error-redirect-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        border-radius: 2px;
+        padding: 0 15px;
+        width: 100%;
+        height: 38px;
+        box-sizing: border-box;
+        background-color: #27b06e;
+        font-size: 15px;
+        line-height: normal;
+        font-weight: 300;
+        color: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+    }
+  }
+}

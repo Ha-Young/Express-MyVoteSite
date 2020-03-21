@@ -1,6 +1,9 @@
 extends layouts/main
 
 block content
-    h1= message
-    h2= error.status
-    pre #{error.stack}
+    .error-container
+        .error-item-box
+            .error-message-box
+                span.error-message=message
+            a(href='#' onclick="history.back()").error-redirect-button-box
+                span.error-redirect-button 뒤로가기
