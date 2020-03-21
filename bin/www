@@ -4,7 +4,6 @@
  * Module dependencies.
  */
 
-require('dotenv').config();
 const app = require('../app');
 const debug = require('debug')('cms:server');
 const http = require('http');

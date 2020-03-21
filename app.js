@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
 import logger from 'morgan';
@@ -10,11 +11,20 @@ import rootRouter from './routers/rootRouter';
 import votingRouter from './routers/votingRouter';
 import localMiddleware from './middlewares';
 
-import './db';
-import './passport';
+dotenv.config();
 
 const app = express();
 const SessionStore = MongoStore(session);
+const db = mongoose.connection;
+
+mongoose.connect(process.env.DB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+});
+
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => console.log('DB connected.'));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -34,6 +44,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(localMiddleware);
+
+import './passport';
 
 app.use('/', rootRouter);
 app.use('/votings', votingRouter);
