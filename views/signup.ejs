@@ -20,6 +20,13 @@
         <input type='password' name='passwordConfirmation' />
       </div>
       <div>
+        <% if (invalidErrors) { %>
+          <% invalidErrors.forEach(err => { %>
+            <%= err.msg %>
+          <% }) %>
+        <% } %>
+      </div>
+      <div>
         <input type='submit' value='Sign Up' />
       </div>
     </form>

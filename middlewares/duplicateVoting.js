@@ -1,6 +1,10 @@
 const Vote = require('../models/Vote');
 
 exports.duplicateVoting = async (req, res, next) => {
+  if (!req.user) {
+    next();
+  }
+
   const { vote_id } = req.params;
   const vote = await Vote.find(
     { _id: vote_id },

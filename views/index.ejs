@@ -19,7 +19,7 @@
     <a href='/votings/new'>Create</a>
     <a href='/my-votings'>My Votings</a>
 
-    <div>
+    <div class='vote'>
       <% if (votes) { %>
         <% votes.forEach(vote => { %>
           <% if(!vote.isExpired) { %>

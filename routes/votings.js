@@ -3,6 +3,7 @@ const router = express.Router();
 const errors = require('../helpers/error');
 
 const { authorization } = require('../middlewares/authorization');
+const { duplicateVoting } = require('../middlewares/duplicateVoting');
 const Vote = require('../models/Vote');
 const _ = require('lodash');
 
@@ -39,7 +40,7 @@ router.post('/new', async (req, res, next) => {
   res.redirect('/');
 })
 
-router.get('/:vote_id', async (req, res, next) => {
+router.get('/:vote_id', duplicateVoting, async (req, res, next) => {
   const { vote_id } = req.params;
   let { isParticipated } = res.locals;
 

@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Vote = require('../models/Vote');
-const { duplicateVoting } = require('../middlewares/duplicateVoting');
 const { authorization } = require('../middlewares/authorization');
 
 router.get('/', authorization, async (req, res, next) => {

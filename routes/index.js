@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
-const { validator } = require('../middlewares/validator');
 const { authorization } = require('../middlewares/authorization');
+const { validator } = require('../middlewares/validator');
 const signupController = require('../controllers/signup.Controller');
 const errors = require('../helpers/error');
 
@@ -55,10 +55,13 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/signup', (req, res, next) => {
-  res.render('signup');
+  res.render('signup', { invalidErrors: null });
 });
 
-router.post('/signup', validator, signupController.register, (req, res, next) => {
+router.post('/signup',
+  validator,
+  signupController.register,
+  (req, res, next) => {
     res.redirect('/login');
   }
 );
