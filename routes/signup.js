@@ -12,7 +12,6 @@ router.post('/', async (req, res, next) => {
     let user = await User.findOne({ username: username });
 
     if (user) return res.status(400).json('이미 가입된 이메일입니다.');
-
     user = new User({
       username
     });
@@ -20,7 +19,7 @@ router.post('/', async (req, res, next) => {
     await user.save();
     res.json('ok');
   } catch(err) {
-    res.status(500).json('error occured')
+    res.status(500).json('일시적인 오류가 발생하였습니다. 다시 시도해주세요.')
   }
 });
 

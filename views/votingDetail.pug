@@ -9,7 +9,6 @@ html(lang='en')
   body
     div.basicwarp
       h1= voting.title
-      div= voting.isProceeding
       div.detailBox
         div.detail-author= `- 등록자 | ${voting.createdBy.username}`
         if isAuthor
@@ -18,7 +17,8 @@ html(lang='en')
         form(action=`/votings/${voting._id}` method='POST')
           each option in voting.options
             div
-              input(type='radio'
+              input(
+                type='radio'
                 id=`${option.option}`
                 name='option'
                 value=`${option.option}`
@@ -41,7 +41,9 @@ html(lang='en')
                 value='이미 투표하셨습니다')
           else
             div.buttonwrap
-              input.button.blue(
-                type='submit')
+              input.button.blue(type='submit')
       div.buttonwrap
-        input.button.line-blue(type='button' onclick='location.href=\'/\'' value='< 이전')
+        input.button.line-blue(
+          type='button'
+          onclick='location.href=\'/\''
+          value='< 이전')

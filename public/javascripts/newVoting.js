@@ -27,6 +27,6 @@ form.addEventListener("submit", ev => {
   }).then(data => {
     errorAlert.innerText = data;
   }).catch(err => {
-    console.log('catch error' + err);
+    next(createError(500, '일시적인 오류가 발생하였습니다.'));
   });
 });

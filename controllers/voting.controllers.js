@@ -1,17 +1,32 @@
+const createError = require('http-errors');
 const Voting = require('../models/Voting');
 const User = require('../models/User');
 
 exports.getAll = async (req, res, next) => {
+  try {
+    const votings = await Voting.find().populate('createdBy').lean();
+    res.locals.votings = votings;
+    next();
+  } catch(err) {
+    next(createError(500, '일시적인 오류가 발생하였습니다.'));
+  }
+};
+
+exports.getbyId = async (req, res, next) => {
   const votingId = req.params.voting_id;
-  const voting = await Voting.findById(votingId).populate('createdBy').lean();
-  req.voting = voting;
-  next();
+  try {
+    const voting = await Voting.findById(votingId).populate('createdBy').lean();
+    res.locals.voting = voting;
+    next();
+  } catch(err) {
+    next(createError(500, '일시적인 오류가 발생하였습니다.'));
+  }
 };
 
 exports.create = async (req, res, next) => {
+  const { title, endDate, endTime, options } = req.body;
+  const username = req.user.username;
   try {
-    const { title, endDate, endTime, options } = req.body;
-    const username = req.user.username;
     let user = await User.findOne({ username: username });
     const expiredAt = new Date(`${endDate} ${endTime}`);
 
@@ -22,18 +37,19 @@ exports.create = async (req, res, next) => {
       expiredAt,
       options
     });
+
     const newVoting = await voting.save();
-    req.newVoting = newVoting;
+    res.locals.newVoting = newVoting;
     next();
   } catch(err) {
-    res.status(500).json('error occured');
+    next(createError(500, '일시적인 오류가 발생하였습니다.'));
   }
-}
+};
 
 exports.checkIsAuthor = async (req, res, next) => {
-  const voting = req.voting;
-  const isRespondent = req.isRespondent;
-  const selectedOption = req.selectedOption;
+  const voting = res.locals.voting;
+  const isRespondent = res.locals.isRespondent;
+  const selectedOption = res.locals.selectedOption;
   let isAuthor = false;
 
   if (req.user && req.user._id === String(voting.createdBy._id)) {
@@ -41,41 +57,48 @@ exports.checkIsAuthor = async (req, res, next) => {
   }
 
   res.render('votingDetail', { voting, isAuthor, isRespondent, selectedOption });
-}
+};
 
 exports.updateSelectedOption = async (req, res, next) => {
   const votingId = req.params.voting_id;
+  try {
+    const voting = await Voting.findById(req.params.voting_id).populate('createdBy').lean();
+    const options = voting.options;
+    const selectedIndex = options.findIndex(i => i.option === req.body.option);
 
-  const voting = await Voting.findById(req.params.voting_id).populate('createdBy').lean();
-  const options = voting.options;
-  const selectedIndex = options.findIndex(i => i.option === req.body.option);
+    options[selectedIndex].count++;
+    const updatedOptions = options;
 
-  options[selectedIndex].count++;
-  const updatedOptions = options;
+    await Voting.updateOne(
+      { _id: votingId },
+      { $set: { options: updatedOptions } }
+    )
 
-  await Voting.updateOne(
-    { _id: votingId },
-    { $set: { options: updatedOptions } }
-  )
-
-  const updatedVoting = await Voting.findById(req.params.voting_id).populate('createdBy').lean();
-  req.voting = updatedVoting;
-  next();
+    const updatedVoting = await Voting.findById(req.params.voting_id).populate('createdBy').lean();
+    res.locals.voting = updatedVoting;
+    next();
+  } catch(err) {
+    next(createError(500, '일시적인 오류가 발생하였습니다.'));
+  }
 };
 
 exports.updateExpired = async (req, res, next) => {
   const nowDate = new Date();
-  const votings = await Voting.find().lean();
+  try {
+    const votings = await Voting.find().lean();
 
-  await Promise.all(
-    votings.map(async voting => {
-      if (voting.expiredAt < nowDate) {
-        await Voting.updateOne(
-          { _id: voting._id },
-          { $set: { isProceeding: false } }
-        );
-      }
-    })
-  );
-  next();
+    await Promise.all(
+      votings.map(async voting => {
+        if (voting.expiredAt < nowDate) {
+          await Voting.updateOne(
+            { _id: voting._id },
+            { $set: { isProceeding: false } }
+          );
+        }
+      })
+    );
+    next();
+  } catch(err) {
+    next(createError(500, '일시적인 오류가 발생하였습니다.'));
+  }
 };

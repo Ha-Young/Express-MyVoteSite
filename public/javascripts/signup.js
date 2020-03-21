@@ -20,10 +20,10 @@ form.addEventListener("submit", ev => {
     body: JSON.stringify({ username, password })
   }).then(response => {
     if(!response.ok) return response.json();
-    alert('완료');
+    alert('가입이 완료되었습니다. 로그인 후 이용해주세요.');
     location.href='/login';
   }).then(data => {
-    errorAlert.innerText = data;
+    if(data) errorAlert.innerText = data;
   }).catch(err => {
     console.log('catch error' + err);
   });

@@ -18,7 +18,7 @@ router.post('/new',
 );
 
 router.get('/:voting_id',
-  votingController.getAll,
+  votingController.getbyId,
   userController.checkRespondent,
   votingController.checkIsAuthor
 );

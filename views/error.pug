@@ -8,6 +8,15 @@ html(lang='en')
     title new Voting
   body
     div.basicwarp
-      h2= message
-      h2= error.status
-      pre #{error.message}
+      p= error.status
+      h2= error.message
+      div.buttonwrap
+        input.button.line-gray.small(
+          type='button'
+          onclick='location.href=\'javascript:history.back()\''
+          value='뒤로가기')
+      div.buttonwrap
+        input.button.line-gray.small(
+          type='button'
+          onclick='location.href=\'/\''
+          value='홈으로')

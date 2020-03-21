@@ -11,9 +11,15 @@ html(lang='en')
       h1 로그인
       form(action=`/login/${url}` method='POST')
         div.inputBox
-          input(type='text' name='username' placeholder='이메일')
+          input(
+            type='text'
+            name='username'
+            placeholder='이메일')
         div.inputBox
-          input(type='password' name='password' placeholder='비밀번호')
+          input(
+            type='password'
+            name='password'
+            placeholder='비밀번호')
         div.buttonwrap
           input.button.blue(type='submit' value='로그인하기')
       a(href='/signup') 회원가입하기 >

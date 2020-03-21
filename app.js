@@ -1,5 +1,4 @@
 require('dotenv').config();
-const createError = require('http-errors');
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
@@ -8,6 +7,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
+const createError = require('http-errors');
+const PrettyError = require('pretty-error');
 
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
@@ -16,6 +17,7 @@ const votingRouter = require('./routes/votings');
 const myVotingRouter = require('./routes/myVotings');
 
 const app = express();
+const pe = new PrettyError();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -48,9 +50,6 @@ app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/votings', votingRouter);
 app.use('/my-Votings', myVotingRouter);
-app.get('/error', (req, res, next) => {
-  throw Error('에러메시지~~~');
-});
 app.get('/logout', function(req, res, next) {
   req.session.destroy(() => {
     req.session;
@@ -58,19 +57,23 @@ app.get('/logout', function(req, res, next) {
   res.redirect('/');
 });
 
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  next(createError(404, '페이지를 찾을 수 없습니다.'));
 });
 
-// error handler
 app.use(function(err, req, res, next) {
-  console.log(err);
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
+  console.log(
+    `< Error ${err.status} >
+    ${err.message}
+
+    < Error Stack >
+    ${pe.render(err)}
+    `
+  );
+
   res.status(err.status || 500);
   res.render('error');
 });
