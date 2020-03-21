@@ -44,7 +44,10 @@ app.use('/login', login);
 app.use('/votings', votings);
 
 app.use(function (req, res, next) {
-  next(createError(404));
+  next(createError({
+    status: 404,
+    message: '존재하지 않는 페이지 입니다'
+  }));
 });
 
 app.use(function (err, req, res, next) {

@@ -17,7 +17,6 @@ exports.newVoting = async (req, res, next) => {
   const votingInfo = Object.keys(req.body);
   const isEmptyValueCheck = votingInfo.every(item => req.body[item].length !== 0);
 
-  //FIXME: 빈값 발견시 모달 띄우기
   if (isEmptyValueCheck) {
     const itemList = [];
     items.forEach(item => itemList.push({ name: item, count: 0 }));
@@ -36,36 +35,44 @@ exports.newVoting = async (req, res, next) => {
     }
   } else {
     next(createError({
-      message: '빈값을 제출하면 안됩니다.'
-    }));  
+      status: 409,
+      message: '빈값을 제출할수 없습니다'
+    }));
   }
 };
 
-exports.renderVoting = async (req, res) => {
-  const { voting_id: id } = req.params;
-  const voting = await Voting.findOne({ _id: id });
-  const votingEndDate = new Date(voting.endDate).getTime();
-  const currentDate = new Date().getTime();
-  let isAuthor;
+exports.renderVoting = async (req, res, next) => {
+  try {
+    const { voting_id: votingId } = req.params;
+    const voting = await Voting.findOne({ _id: votingId });
+    const votingEndDate = new Date(voting.endDate).getTime();
+    const currentDate = new Date().getTime();
 
-  if (req.user) {
-    isAuthor = req.user._id === String(voting.authorId);
-  } else {
-    isAuthor = null;
-  }
+    let isAuthor;
 
-  if (votingEndDate >= currentDate) {
-    res.render('voting', {
-      voting,
-      isAuthor,
-      status: true
-    });
-  } else {
-    res.render('voting', {
-      voting,
-      isAuthor,
-      status: false
-    });
+    if (req.user) {
+      isAuthor = req.user._id === String(voting.authorId);
+    } else {
+      isAuthor = null;
+    }
+
+    if (votingEndDate >= currentDate) {
+      res.render('voting', {
+        voting,
+        isAuthor,
+        status: true
+      });
+    } else {
+      res.render('voting', {
+        voting,
+        isAuthor,
+        status: false
+      });
+    }
+  } catch (error) {
+    next(createError({
+      message: '투표를 불러올 수 없습니다.'
+    }));
   }
 }
 
@@ -74,47 +81,57 @@ exports.confirmVoting = async (req, res) => {
   const { itemId } = req.body;
   const { voting_id: votingId } = req.params;
 
-  const voting = await Voting.findById(votingId);
-  const isSolvedCheck = voting.solvedUser.includes(userId);
-  const endDate = new Date(voting.endDate).getTime();
-  const currentDate = new Date().getTime();
+  try {
+    const voting = await Voting.findById(votingId);
+    const isSolvedCheck = voting.solvedUser.includes(userId);
+    const endDate = new Date(voting.endDate).getTime();
+    const currentDate = new Date().getTime();
 
-  let { items, solvedUser } = voting;
+    let { items, solvedUser } = voting;
 
-  //FIXME: 투표 미체크후 제출시 메시지처리
-  if (!itemId) {
-    res.redirect('/');
-    return
-  }
-
-  //FIXME: 투표 완료한 유저 이미 완료한 투표 메시지 처리 
-  if (isSolvedCheck) {
-    res.redirect('/');
-    return
-  }
-
-  //FIXME: 만료 시간이 지났다는 메시지 처리
-  if (endDate < currentDate) {
-    res.redirect('/');
-    return
-  }
-
-  //FIXME: 모두 탐색후 값 변경하는데, 효율적 방법 찾기
-  for (let i = 0; i < items.length; i++) {
-    if (String(items[i]._id) === itemId) {
-      items[i].count += 1;
-      break;
+    if (!itemId) {
+      return next(createError({
+        status: 409,
+        message: '투표를 체크한 후에 제출해야 합니다'
+      }));
     }
-  };
 
-  if (solvedUser.length) {
-    solvedUser = [...solvedUser, userId];
-  } else {
-    solvedUser = [userId];
+    if (isSolvedCheck) {
+      return next(createError({
+        status: 409,
+        message: '이미 완료한 투표 입니다'
+      }));
+    }
+
+    if (endDate < currentDate) {
+      return next(createError({
+        status: 409,
+        message: '만료 기간이 지난 투표입니다'
+      }));
+    }
+
+    //FIXME: 모두 탐색후 값 변경하는데, 효율적 방법 찾기
+    for (let i = 0; i < items.length; i++) {
+      if (String(items[i]._id) === itemId) {
+        items[i].count += 1;
+        break;
+      }
+    };
+
+    if (solvedUser.length) {
+      solvedUser = [...solvedUser, userId];
+    } else {
+      solvedUser = [userId];
+    }
+
+    await voting.updateOne({ items, solvedUser });
+    res.redirect('/');
+
+  } catch (error) {
+    return next(createError({
+      message: '해당 투표를 찾을 수 없습니다'
+    }));
   }
-
-  await voting.updateOne({ items, solvedUser });
-  res.redirect('/');
 }
 
 exports.deleteVoting = async (req, res) => {

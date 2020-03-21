@@ -23,6 +23,5 @@ deleteVoting.addEventListener('click', () => {
       } else {
         alert('투표를 삭제하지 못했습니다');
       }
-    })
-
+    });
 });
