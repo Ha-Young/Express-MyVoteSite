@@ -3,7 +3,7 @@ const router = express.Router();
 const errors = require('../helpers/error');
 
 const { authorization } = require('../middlewares/authorization');
-const { duplicateVoting } = require('../middlewares/duplicateVoting');
+const { checkParticipation } = require('../middlewares/checkParticipation');
 const Vote = require('../models/Vote');
 const _ = require('lodash');
 
@@ -18,17 +18,17 @@ router.get('/new', authorization, async (req, res, next) => {
 });
 
 router.post('/new', async (req, res, next) => {
-  let { title, options, expirationDate } = req.body;
+  const { title, options, expirationDate } = req.body;
   const { _id, nickname } = req.user;
 
-  options = options.map(option => ({
-    optionTitle: option
+  const option = options.map(el => ({
+    optionTitle: el
   }));
 
   try {
     await Vote.create({
       title,
-      options,
+      options: option,
       creator: _id,
       creatorNickname: nickname,
       expirationDate
@@ -40,7 +40,7 @@ router.post('/new', async (req, res, next) => {
   res.redirect('/');
 })
 
-router.get('/:vote_id', duplicateVoting, async (req, res, next) => {
+router.get('/:vote_id', checkParticipation, async (req, res, next) => {
   const { vote_id } = req.params;
   let { isParticipated } = res.locals;
 

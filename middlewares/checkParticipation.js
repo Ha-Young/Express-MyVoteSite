@@ -1,6 +1,6 @@
 const Vote = require('../models/Vote');
 
-exports.duplicateVoting = async (req, res, next) => {
+exports.checkParticipation = async (req, res, next) => {
   if (!req.user) {
     next();
   }

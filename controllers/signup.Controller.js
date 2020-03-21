@@ -4,7 +4,7 @@ const errors = require('../helpers/error');
 
 exports.register = async (req, res, next) => {
   const { nickname, email } = req.body;
-  let { password } = req.body;
+  const { password } = req.body;
 
   try {
     const saltRounds = process.env.SALT_ROUND;

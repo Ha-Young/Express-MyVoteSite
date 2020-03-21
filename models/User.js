@@ -16,7 +16,6 @@ const userSchema = mongoose.Schema({
     type: String,
     required: [true, 'Password is required']
   },
-  previousVisitURL: String,
   createdVotes: [
     {
       type: Schema.ObjectId,
