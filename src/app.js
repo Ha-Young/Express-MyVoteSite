@@ -32,11 +32,16 @@ const MongoStore = connectMongo(session);
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(compression());
-app.use(hpp());
-app.use(helmet());
-app.use(morgan('dev'));
-app.use('/static', express.static(path.join(__dirname, 'static')));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+  app.use('/static', express.static(path.join(__dirname, 'static')));
+} else {
+  app.use(compression());
+  app.use(hpp());
+  app.use(helmet());
+  app.use(morgan('combined'));
+}
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
