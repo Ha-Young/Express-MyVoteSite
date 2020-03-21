@@ -13,9 +13,9 @@
         <div><a href="/voting/new">Create Vote</a></div>
       </div>
       <ul class="listBox">
-        <% if(!votes.length) { %>
+        <% if (!votes.length) { %>
           <li>No Vote</li>
-        <% }%>
+        <% } %>
         <% for (let i = 0; i < votes.length; i++) { %>
           <li>
             <a href="/voting/<%= votes[i]._id%>">

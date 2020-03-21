@@ -10,9 +10,9 @@ router.get('/my-voting', authorization, controller.renderPersonalPage);
 
 router.get('/new', authorization, controller.renderNewVote);
 
-router.post('/new', authorization, validationVote, controller.handleNewVote);
-
 router.get('/:id', controller.renderDetailVote);
+
+router.post('/new', authorization, validationVote, controller.handleNewVote);
 
 router.put('/:id', authorization, controller.handleUpdateVote);
 

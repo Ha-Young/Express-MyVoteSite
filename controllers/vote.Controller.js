@@ -15,11 +15,7 @@ exports.renderVoteList = async (req, res, next) => {
 };
 
 exports.renderNewVote = async (req, res, next) => {
-  try {
-    res.render('voteNew', { message: req.flash('invalid') });
-  } catch (err) {
-    next(new error.GeneralError(err.message));
-  }
+  res.render('voteNew', { message: req.flash('invalid') });
 };
 
 exports.renderDetailVote = async (req, res, next) => {
@@ -133,8 +129,9 @@ exports.handleUpdateVote = async (req, res, next) => {
 exports.handleDeleteVote = async (req, res, next) => {
   try {
     const { deleteId } = req.body;
+
     await Vote.findByIdAndDelete(deleteId);
-    res.render('success', { message: '성공적으로 삭제하였습니다!'})
+    res.render('success', { message: '성공적으로 삭제하였습니다!' })
   } catch (err) {
     next(err);
   }

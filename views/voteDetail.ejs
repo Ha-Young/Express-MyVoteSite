@@ -22,17 +22,17 @@
             </li>
           <% }) %>
         </ul>
-        <% if(!checkDuplicateUser){ %>
+        <% if (!checkDuplicateUser) { %>
           <button type="submit" class="button"> Go vote ! </button>
         <% } %>
-        <% if(checkDuplicateUser){ %>
+        <% if (checkDuplicateUser) { %>
           <button type="button" class="button"> Already voted ! </button>
         <% } %>
-        <% if(!checkExistUser) { %>
+        <% if (!checkExistUser) { %>
           <button type="button" name="recommendLogin"> Need Login for Vote</button>
         <% } %>
       </form>
-      <% if(createrId.toString() === checkExistUser.toString()) { %>
+      <% if (createrId.toString() === checkExistUser.toString()) { %>
         <form action="/voting/<%= voteId %>?_method=DELETE" method="POST" class=deleteBox>
           <button type="submit" name="deleteId" value="<%= voteId %>">Delete Vote</button>
         </form>

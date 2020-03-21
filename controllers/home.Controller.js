@@ -15,11 +15,7 @@ exports.renderHome = async (req, res, next) => {
 };
 
 exports.renderLogin = async (req, res, next) => {
-  try {
-    res.render('login');
-  } catch (err) {
-    next(new error.GeneralError(err.message));
-  }
+  res.render('login');
 };
 
 exports.handleLogin = passport.authenticate('local', {
@@ -35,11 +31,7 @@ exports.renderLogOut = async (req, res, next) => {
 };
 
 exports.renderJoin = async (req, res, next) => {
-  try {
-    res.render('join', { message: req.flash('duplication') });
-  } catch (err) {
-    next(new error.GeneralError(err.message));
-  }
+  res.render('join', { message: req.flash('duplication') });
 };
 
 exports.handleJoin = async (req, res, next) => {

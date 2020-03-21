@@ -9,9 +9,9 @@
     <div class="voteBox">
       <span> 내가 만든 투표확인하기</span>
       <ul class="listBox">
-        <% if(!voteList.length) { %>
-          <li>No Vote. create yout vote!</li>
-        <% }%>
+        <% if (!voteList.length) { %>
+          <li>No Vote. create your vote!</li>
+        <% } %>
         <% for (let i = 0; i < voteList.length; i++) { %>
           <li>
             <a href="/voting/<%= voteList[i]._id%>">
