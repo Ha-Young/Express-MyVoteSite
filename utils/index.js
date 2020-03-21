@@ -1,8 +1,12 @@
+const moment = require('moment-timezone');
+
 const calculateRemainTime = vote => {
   const DAY = 24 * 60 * 60 * 1000;
   const HOUR = 60 * 60 * 1000;
-  const expiredDate = new Date(vote.expired_date);
-  const remainTime = expiredDate - new Date();
+  const now = moment();
+  const expiredDate = moment(vote.expired_date);
+  const remainTime = expiredDate.diff(now);
+  
   if (remainTime > DAY) {
     return `${Math.floor(remainTime / DAY)}일 ${Math.floor(remainTime % DAY / HOUR)}시간 남음`;
   } else if (remainTime > HOUR) {

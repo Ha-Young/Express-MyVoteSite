@@ -25,7 +25,7 @@ const VoteSchema = new mongoose.Schema({
   voters: [mongoose.ObjectId],
   expired_date: {
     type: Date,
-    min: new Date(today.getTime() + 10 * 60 * 1000),
+    min: new Date(today.getTime()),
     required: true
   },
   in_progress: {

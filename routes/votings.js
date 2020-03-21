@@ -12,7 +12,7 @@ const { isAuthenticated, findLoggedInUser } = require('../middlewares/authorizat
 router.get('/new', isAuthenticated, (req, res) => {
   res.render('new', {
     title: 'vote!',
-    defaultDate: moment().tz('Asia/Seoul').format().slice(0, 16),
+    defaultDate: moment().tz(moment.tz.guess()).format().slice(0, 16),
     alertMessage: req.flash('alert'),
     isLogined: req.isAuthenticated()
   });
@@ -38,6 +38,7 @@ router.post('/new', isAuthenticated, findLoggedInUser, async (req, res, next) =>
         _id: user._id,
         name: user.name
       },
+      expired_date: moment(req.body.expired_date),
       selections: req.body.selections.map(selection => {
         return { content: selection }
       }),
