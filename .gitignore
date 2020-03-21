@@ -1,10 +1,5 @@
 node_modules
 .env
-.npmrc
-.elasticbeanstalk
-.ebextensions
-AWSCLIV2.pkg
-get-pip.py
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
