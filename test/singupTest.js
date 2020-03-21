@@ -6,7 +6,7 @@ const Poll = require('../models/poll');
 const app = require('../app');
 chai.use(chaiHttp);
 
-describe('signup', () => {
+describe.skip('signup', () => {
   const signup = '/signup';
   const preSave = { 
     email: 'yoyoyo@gmail.com', 
