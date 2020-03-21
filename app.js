@@ -9,7 +9,7 @@ import passport from 'passport';
 import createError from 'http-errors';
 import rootRouter from './routers/rootRouter';
 import votingRouter from './routers/votingRouter';
-import localMiddleware from './middlewares';
+import { localMiddleware } from './middlewares';
 
 dotenv.config();
 

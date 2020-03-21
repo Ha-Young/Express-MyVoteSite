@@ -7,18 +7,19 @@ import {
   getVoteResult,
   deleteVote
 } from '../controllers/votingsController';
+import { onlyPrivacy } from '../middlewares';
 
 const router = express.Router();
 
-router.post('/', postVotings);
+router.post('/', onlyPrivacy, postVotings);
 
-router.get('/new', getNewVote);
+router.get('/new', onlyPrivacy, getNewVote);
 
 router.get('/:id', getVoteDetail);
 
-router.post('/:id', postVotingDetail);
+router.post('/:id', onlyPrivacy, postVotingDetail);
 
-router.delete('/:id', deleteVote);
+router.delete('/:id', onlyPrivacy, deleteVote);
 
 router.get('/:id/result', getVoteResult);
 

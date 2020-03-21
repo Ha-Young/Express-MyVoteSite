@@ -12,25 +12,26 @@ import {
   getMyVotings,
   getFailure
 } from '../controllers/votingsController';
+import { onlyPublic, onlyPrivacy } from '../middlewares';
 
 const router = express.Router();
 
 router.get('/', getHome);
 
-router.get('/logout', getLogout);
+router.get('/logout', onlyPrivacy, getLogout);
 
-router.get('/login', getLogin);
+router.get('/login', onlyPublic, getLogin);
 
-router.post('/login', postLogin);
+router.post('/login', onlyPrivacy, postLogin);
 
-router.get('/signup', getSignup);
+router.get('/signup', onlyPublic, getSignup);
 
-router.post('/signup', postSignup);
+router.post('/signup', onlyPublic, postSignup);
 
-router.get('/success', getSuccess);
+router.get('/success', onlyPrivacy, getSuccess);
 
-router.get('/failure', getFailure);
+router.get('/failure', onlyPrivacy, getFailure);
 
-router.get('/my-votings', getMyVotings);
+router.get('/my-votings', onlyPrivacy, getMyVotings);
 
 export default router;
