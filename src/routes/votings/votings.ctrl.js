@@ -74,10 +74,15 @@ export const createVoting = async (req, res, next) => {
 export const renderVotingDetail = async (req, res) => {
   const { voting } = res.locals;
 
-  const populatedVoting = await Voting.findById(voting).populate({
-    path: 'organizer'
-  });
-  res.render('voting_detail', { title: voting.title, voting: populatedVoting });
+  try {
+    const populatedVoting = await Voting.findById(voting).populate({
+      path: 'organizer'
+    });
+    
+    res.render('voting_detail', { title: voting.title, voting: populatedVoting });   
+  } catch (e) {
+    next(createError(500));
+  }
 };
 
 export const addOptionCount = async (req, res, next) => {
