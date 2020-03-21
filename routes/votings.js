@@ -1,4 +1,5 @@
 const express = require('express');
+const moment = require('moment-timezone');
 const router = express.Router();
 
 const User = require('../models/User');
@@ -11,6 +12,7 @@ const { isAuthenticated, findLoggedInUser } = require('../middlewares/authorizat
 router.get('/new', isAuthenticated, (req, res) => {
   res.render('new', {
     title: 'vote!',
+    defaultDate: moment().tz('Asia/Seoul').format().slice(0, 16),
     alertMessage: req.flash('alert'),
     isLogined: req.isAuthenticated()
   });

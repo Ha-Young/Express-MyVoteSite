@@ -31,9 +31,6 @@
           <button type="button" class="add-option"><i class="fas fa-plus-circle fa-2x"></i></button>
         </div>
         <div>
-          <% tzoffset = (new Date()).getTimezoneOffset() * 60000; %>
-          <% WEEK = 7 * 24 * 60 * 60 * 1000 %>
-          <% defaultDate = (new Date(Date.now() - tzoffset + WEEK)).toISOString().slice(0, 16); %>
           <input type="datetime-local" placeholder="만료날짜" name="expired_date" value="<%= defaultDate %>" class="textbox" />
         </div>
         <div>
