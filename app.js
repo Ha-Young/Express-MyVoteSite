@@ -4,7 +4,7 @@ const express = require('express');
 const createError = require('http-errors');
 
 const path = require('path');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
