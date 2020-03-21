@@ -5,7 +5,6 @@ const createError = require('http-errors');
 
 const path = require('path');
 const bcrypt = require('bcryptjs');
-const logger = require('morgan');
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const bodyParser = require('body-parser');
@@ -54,7 +53,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(flash());
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded());
