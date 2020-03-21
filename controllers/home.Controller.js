@@ -39,7 +39,7 @@ exports.handleJoin = async (req, res, next) => {
     const { email } = req.body;
     const user = await User.findOne({ email });
 
-    if(user){
+    if (user) {
       req.flash('duplication', '이미 중복된 이메일이 있습니다.');
       return res.redirect('/join');
     } else {
