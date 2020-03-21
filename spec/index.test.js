@@ -1,6 +1,7 @@
 const request = require('supertest');
 const { expect } = require('chai');
 const app = require('../app');
+let Cookies;
 
 const mockData = {
   email: 'th05662205@gmail.com',
@@ -31,6 +32,27 @@ describe('GET /index', () => {
           if (err) return done(err);
           expect(res.text).to.eql('Found. Redirecting to /auth/login');
           done();
+        });
+    });
+  });
+
+  describe('/my-votings', () => {
+    it('should respond with my voting template after log in', done => {
+      request(app)
+        .post('/auth/login')
+        .send(mockData)
+        .expect(302)
+        .end((err, res) => {
+          if (err) return done(err);
+          Cookies = res.headers['set-cookie'].pop().split(';')[0];
+
+          request(app)
+            .get('/my-votings')
+            .set('Cookie', [Cookies])
+            .end((err, res) => {
+              expect(res.text).to.include('My Voting');
+              done();
+            });
         });
     });
   });
