@@ -31,15 +31,15 @@
         <% if(!checkExistUser) { %>
           <button type="button" name="recommendLogin"> Need Login for Vote</button>
         <% } %>
-        <% if(createrId.toString() === checkExistUser.toString()) { %>
-          <form action="/voting/<%= voteId %>?_method=DELETE" method="POST" class=deleteBox>
-            <button type="submit" name="deleteId" value="<%= voteId %>">Delete Vote</button>
-          </form>
-        <% } %>
       </form>
+      <% if(createrId.toString() === checkExistUser.toString()) { %>
+        <form action="/voting/<%= voteId %>?_method=DELETE" method="POST" class=deleteBox>
+          <button type="submit" name="deleteId" value="<%= voteId %>">Delete Vote</button>
+        </form>
+      <% } %>
     </div>
     <div class="basic alertBox">
-      message: <%= message %>
+      <%= message %>
     </div>
   </body>
 </html>

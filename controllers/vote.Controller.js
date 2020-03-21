@@ -78,6 +78,7 @@ exports.renderDetailVote = async (req, res, next) => {
 exports.handleNewVote = async (req, res, next) => {
   try {
     const { options } = req.body;
+    const { _id: userId } = req.user;
     const convertedOptions = options.map((option) => {
       return {
         title: option,
@@ -85,12 +86,20 @@ exports.handleNewVote = async (req, res, next) => {
       };
     });
 
-    await Vote.create({
+    const vote = await Vote.create({
       title: req.body.title,
       creater: req.user._id,
       expired_at: res.locals.expired,
       options: convertedOptions
     });
+
+    await User.findByIdAndUpdate(userId,
+      {
+        $push: {
+          votes: vote._id
+        }
+      }
+    );
 
     res.render('success', { message: '성공적으로 투표를 생성했습니다!' });
   } catch (err) {
@@ -124,7 +133,6 @@ exports.handleUpdateVote = async (req, res, next) => {
 exports.handleDeleteVote = async (req, res, next) => {
   try {
     const { deleteId } = req.body;
-
     await Vote.findByIdAndDelete(deleteId);
     res.render('success', { message: '성공적으로 삭제하였습니다!'})
   } catch (err) {
@@ -134,7 +142,10 @@ exports.handleDeleteVote = async (req, res, next) => {
 
 exports.renderPersonalPage = async (req, res, next) => {
   try {
+    const { _id: userId } = req.user;
 
+    const voteList = await User.findById(userId).populate('votes');
+    res.render('personalPage', { voteList: voteList.votes });
   } catch (err) {
     next(err);
   }

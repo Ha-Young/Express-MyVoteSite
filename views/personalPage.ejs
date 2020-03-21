@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/newVote.css' />
+    <% include ./partials/head %>
+  </head>
+  <body>
+    <% include ./partials/header %>
+    <div class="voteBox">
+      <span> 내가 만든 투표확인하기</span>
+      <ul class="listBox">
+        <% if(!voteList.length) { %>
+          <li>No Vote. create yout vote!</li>
+        <% }%>
+        <% for (let i = 0; i < voteList.length; i++) { %>
+          <li>
+            <a href="/voting/<%= voteList[i]._id%>">
+              <%= voteList[i].title %>
+              <%= voteList[i].status %>
+              <%= voteList[i].expired_at %>
+            </a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </body>
+</html>
