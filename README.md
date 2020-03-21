@@ -88,7 +88,7 @@
 
 ### Advanced
 
-- Writing Unit Test
+- [x] Writing Unit Test
 - Writing End-to-End Test with [Cypress.io](https://www.cypress.io/)
 - Deploying to AWS Elastic Beanstalk (아래 링크는 현재 AWS 설정 방식과 약간의 차이가 있을 수 있습니다.)
   - [Setting up AWS Elastic Beanstalk](https://github.com/vanilla-coding/deploy-with-aws-eb-and-circleci/wiki/Setting-up-AWS-Elastic-Beanstalk)
