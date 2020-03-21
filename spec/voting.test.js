@@ -70,3 +70,29 @@ describe('GET /votings', () => {
     });
   });
 });
+
+describe('POST /votings', () => {
+  after(async () => {
+    await Voting.findOneAndDelete({ title: 'test2' });
+  });
+
+  describe('/new', () => {
+    it('should respond success message', done => {
+      request(app)
+        .post('/votings/new')
+        .set('Cookie', [Cookies])
+        .send({
+          'voting-title': 'test2',
+          options: ['test1', 'test2'],
+          date: '2023-02-03',
+          time: '14:01'
+        })
+        .expect(200)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.text).to.include('투표 생성 성공!');
+          done();
+        });
+    });
+  });
+});
