@@ -32,7 +32,6 @@ describe('signup', () => {
     confirmPassword: `1123112312313123131323`,
   })
 
-  const url = 'http://localhost:4000';
   before(function(done) {
     this.timeout(10000);
     chai
@@ -40,6 +39,7 @@ describe('signup', () => {
       .post(signup)
       .send(preSave)
       .end((err, res) => {
+        console.log(res)
         done();
       });
   });
