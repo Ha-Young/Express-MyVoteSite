@@ -54,11 +54,10 @@ app.use('/auth', auth);
 app.use('/votings', votings);
 
 app.use((req, res, next) => {
-  next(new error.PageNotFoundError());
+  next(new error.GeneralError());
 });
 
 app.use(async (err, req, res) => {
-  console.log(err);
   const user = await findUser(req);
 
   res.locals.message = err.displayMessage;

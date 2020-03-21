@@ -14,9 +14,9 @@ exports.getDetail = async function(req, res, next) {
     const user = await findUser(req);
     const { id } = req.params;
     const voting = await Voting.findById(id).populate('user');
-    const votingUserId = voting.user._id;
+    const votingCreatorId = voting.user._id;
 
-    if (checkSameUser(user, votingUserId)) {
+    if (checkSameUser(user, votingCreatorId)) {
       return res.render('voting_detail', {
         voting,
         moment,
@@ -87,36 +87,23 @@ exports.create = async function(req, res, next) {
 exports.update = async function(req, res, next) {
   const { votingId, optionId } = req.params;
   let voting = await Voting.findById(votingId);
-  const votingUserId = voting.user._id;
+  const votingCreatorId = voting.user._id;
   const user = await findUser(req);
   const votedUser = voting.voted_user.find(userId => {
     return String(userId) === String(user._id);
   });
-
   try {
-    const target = await Voting.findOne(
-      { _id: votingId, 'options._id': optionId },
-      { 'options.$': 1 }
-    );
-    let { option_count: count } = target.options[0];
+    const targetOptionIndex = voting.options.findIndex(option => {
+      return String(option._id) === String(optionId);
+    });
 
-    if (votedUser !== undefined) {
-      throw new error.VotingDuplicateError();
-    }
-
-    await Voting.updateOne(
-      { 'options._id': optionId },
-      {
-        $set: {
-          'options.$.option_count': parseInt(count) + 1
-        }
-      }
-    );
-
+    if (votedUser !== undefined) throw new error.VotingDuplicateError();
     await Voting.findByIdAndUpdate(votingId, { $push: { voted_user: user._id } });
-    voting = await Voting.findById(votingId).populate('user', 'nickname');
 
-    if (checkSameUser(user, votingUserId)) {
+    voting.options[targetOptionIndex].option_count++;
+    await voting.save();
+
+    if (checkSameUser(user, votingCreatorId)) {
       return res.render('voting_detail', {
         voting,
         moment,
@@ -130,7 +117,7 @@ exports.update = async function(req, res, next) {
   } catch (err) {
     const voting = await Voting.findById(votingId).populate('user', 'nickname');
     if (err instanceof error.VotingDuplicateError) {
-      if (checkSameUser(user, votingUserId)) {
+      if (checkSameUser(user, votingCreatorId)) {
         return res.render('voting_detail', {
           voting,
           moment,
