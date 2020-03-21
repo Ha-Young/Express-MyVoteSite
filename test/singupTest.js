@@ -1,12 +1,10 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
 const { expect } = require('chai');
 const User = require('../models/user');
 const Poll = require('../models/poll');
 const app = require('../app');
-chai.use(chaiHttp);
+const request = require('supertest');
 
-describe.skip('signup', () => {
+describe('signup', () => {
   const signup = '/signup';
   const preSave = { 
     email: 'yoyoyo@gmail.com', 
@@ -34,12 +32,10 @@ describe.skip('signup', () => {
 
   before(function(done) {
     this.timeout(10000);
-    chai
-      .request(app)
+    request(app)
       .post(signup)
       .send(preSave)
       .end((err, res) => {
-        console.log(res)
         done();
       });
   });
@@ -51,8 +47,7 @@ describe.skip('signup', () => {
   });
 
   it('signup get method should response 200 status', function(done) {
-    chai
-      .request(app)
+    request(app)
       .get(signup)
       .end((err, res) => {
         expect(res.status).to.equal(200);
@@ -68,8 +63,7 @@ describe.skip('signup', () => {
   });
 
   it('The same email address should occur 409 error ', function(done) {
-    chai
-      .request(app)
+    request(app)
       .post(signup)
       .send(preSave)
       .end((err, res) => {
@@ -80,8 +74,7 @@ describe.skip('signup', () => {
   });
 
   it('The wrongEmail email address should occur 422 error ', function(done) {
-    chai
-      .request(app)
+    request(app)
       .post(signup)
       .send(wrongEmail)
       .end((err, res) => {
@@ -92,8 +85,7 @@ describe.skip('signup', () => {
   });
 
   it('The wrong passworld should occur 422 error', function(done) {
-    chai
-      .request(app)
+    request(app)
       .post(signup)
       .send(wrongPassword)
       .end((err, res) => {
@@ -104,8 +96,7 @@ describe.skip('signup', () => {
   });
 
   it('The wrong passworld should occur 422 error', function(done) {
-    chai
-      .request(app)
+    request(app)
       .post(signup)
       .send(wrongConfirmPassword)
       .end((err, res) => {

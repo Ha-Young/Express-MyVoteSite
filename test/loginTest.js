@@ -74,7 +74,7 @@ describe('login', () => {
   });
   const authenticatedUser = request.agent(app);
 
-  it('User should be redirect to index when user entered valid information', function(done) {
+  it('A user should be redirect to index when user entered valid information,', function(done) {
     authenticatedUser
       .post(logIn)
       .send(preSave)
