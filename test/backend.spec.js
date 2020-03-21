@@ -40,3 +40,39 @@ describe('GET static assets', () => {
       .expect(200);
   });
 });
+
+describe('POST /login', () => {
+  it('should redirect to / when success login', (done) => {
+    const email = 'inyeop0212@gmail.com';
+    const password = 'qwerqwer';
+
+    request(app)
+      .post('/login')
+      .send({ email, password })
+      .expect(302)
+      .expect('Location', '/')
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        return done();
+      })
+  });
+
+  it('should redirect to /login when fail login', (done) => {
+    const email = 'inyeop0212@gmail.com';
+    const WRONG_PASSWORD = 'WRONG_PASSWORD';
+
+    request(app)
+      .post('/login')
+      .send({ email, password: WRONG_PASSWORD })
+      .expect(302)
+      .expect('Location', '/login')
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        return done();
+      });
+  });
+});
