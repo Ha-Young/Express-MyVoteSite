@@ -16,7 +16,6 @@ exports.validator = [
   check('passwordConfirmation')
     .custom((passwordConfirmation, { req }) => {
       if (passwordConfirmation !== req.body.password) {
-        console.log('password')
         throw new Error('Password confirmation does not match password');
       }
       return true;
@@ -28,8 +27,8 @@ exports.validator = [
       next();
     } else {
       const invalidErrors = errors.array();
+
       res.render('signup', { invalidErrors });
     }
   }
 ];
-
