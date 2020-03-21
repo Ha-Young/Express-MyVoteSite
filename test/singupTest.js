@@ -69,7 +69,7 @@ describe('signup', () => {
 
   it('The same email address should occur 409 error ', function(done) {
     chai
-      .request(url)
+      .request(app)
       .post(signup)
       .send(preSave)
       .end((err, res) => {
@@ -81,7 +81,7 @@ describe('signup', () => {
 
   it('The wrongEmail email address should occur 422 error ', function(done) {
     chai
-      .request(url)
+      .request(app)
       .post(signup)
       .send(wrongEmail)
       .end((err, res) => {
@@ -93,7 +93,7 @@ describe('signup', () => {
 
   it('The wrong passworld should occur 422 error', function(done) {
     chai
-      .request(url)
+      .request(app)
       .post(signup)
       .send(wrongPassword)
       .end(async (err, res) => {
@@ -105,7 +105,7 @@ describe('signup', () => {
 
   it('The wrong passworld should occur 422 error', function(done) {
     chai
-      .request(url)
+      .request(app)
       .post(signup)
       .send(wrongConfirmPassword)
       .end(async (err, res) => {
