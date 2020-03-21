@@ -1,7 +1,7 @@
-const Votes = require('../models/Votes');
+const Votes = require("../models/Votes");
 
-const errors = require('../lib/errors');
-const { getDisplayInfo } = require('../lib/helpers');
+const errors = require("../lib/errors");
+const { getDisplayInfo } = require("../lib/helpers");
 
 exports.registerVote = async (req, res, next) => {
   const { title, expires_at, ...options } = req.body;
@@ -10,8 +10,8 @@ exports.registerVote = async (req, res, next) => {
   const currentTime = new Date().toISOString();
 
   if (expirationTime < currentTime) {
-    req.flash('Vote Registration Error', '투표 만료시간은 현재 시간 이후여야 합니다.');
-    return res.redirect('/votings/new');
+    req.flash("Vote Registration Error", "투표 만료시간은 현재 시간 이후여야 합니다.");
+    return res.redirect("/votings/new");
   }
 
   const select_options = Object.values(options).map(option => ({
@@ -57,7 +57,7 @@ exports.deleteVote = async (req, res) => {
 
 exports.renderVote = async (req, res, next) => {
   try {
-    const currentVote = await Votes.findById(req.params.id).populate('created_by').lean();
+    const currentVote = await Votes.findById(req.params.id).populate("created_by").lean();
     const allVotes = await Votes.find().lean();
     const loggedInUser = req.user || null;
 
@@ -68,12 +68,12 @@ exports.renderVote = async (req, res, next) => {
 
     const voteDisplayInfo = getDisplayInfo(currentVote);
 
-    res.render('vote', {
+    res.render("vote", {
       vote: voteDisplayInfo,
       allVotes,
       loggedInUser,
       expiredVotesCounter,
-      errorMessage: req.flash('Already Voted Error')
+      errorMessage: req.flash("Already Voted Error")
     });
   } catch(err) {
     next(new errors.NonExistingVoteError());
@@ -82,7 +82,7 @@ exports.renderVote = async (req, res, next) => {
 
 exports.registerCastingVote = async (req, res, next) => {
   if (!req.user) {
-    return res.redirect('/auth/login');
+    return res.redirect("/auth/login");
   }
 
   try {
@@ -102,7 +102,7 @@ exports.registerCastingVote = async (req, res, next) => {
 
     await loggedInUser.updateOne({ votes_voted });
 
-    res.redirect('/');
+    res.redirect("/");
   } catch(err) {
     next(new errors.GeneralError(err.message));
   }

@@ -26,12 +26,12 @@ block content
               p.expirationDate #{vote.expirationDate}
 
   script.
-    if (!document.querySelector('.no-votes')) {
-      const voteCards = document.querySelectorAll('.vote');
+    if (!document.querySelector(".no-votes")) {
+      const voteCards = document.querySelectorAll(".vote");
 
       for (const card of voteCards) {
-        card.addEventListener('click', () => {
-          location.assign(location.origin + '/votings/' + card.dataset.id);
+        card.addEventListener("click", () => {
+          location.assign(location.origin + "/votings/" + card.dataset.id);
         });
       }
     }

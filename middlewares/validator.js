@@ -1,14 +1,14 @@
-const { body, validationResult } = require('express-validator');
+const { body, validationResult } = require("express-validator");
 
-const validationMessages = require('../lib/validationMessages');
+const validationMessages = require("../lib/validationMessages");
 
 const userValidationRules = () => [
-  body('username').isLength({ min: 4 }).withMessage(validationMessages.USERNAME),
-  body('firstname').exists().withMessage(validationMessages.FIRSTNAME),
-  body('lastname').exists().withMessage(validationMessages.LASTNAME),
-  body('email').isEmail().withMessage(validationMessages.EMAIL),
-  body('password').isLength({ min: 10 }).withMessage(validationMessages.PASSWORD),
-  body('confirm_password').custom((confirmationPassword, { req }) => {
+  body("username").isLength({ min: 4 }).withMessage(validationMessages.USERNAME),
+  body("firstname").exists().withMessage(validationMessages.FIRSTNAME),
+  body("lastname").exists().withMessage(validationMessages.LASTNAME),
+  body("email").isEmail().withMessage(validationMessages.EMAIL),
+  body("password").isLength({ min: 10 }).withMessage(validationMessages.PASSWORD),
+  body("confirm_password").custom((confirmationPassword, { req }) => {
     if (confirmationPassword !== req.body.password) {
       throw new Error(validationMessages.PASSWORD_CONFIRMATION);
     }
@@ -25,8 +25,8 @@ const validateUser = (req, res, next) => {
 
   const errorMessageList = errors.array().map(err => err.msg);
 
-  req.flash('Signup Error Message', errorMessageList[0]);
-  res.redirect('/signup');
+  req.flash("Signup Error Message", errorMessageList[0]);
+  res.redirect("/signup");
 };
 
 module.exports = {

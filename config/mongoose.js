@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -7,5 +7,5 @@ mongoose.connect(process.env.MONGODB_URI, {
   useCreateIndex: true
 });
 
-mongoose.connection.on('error', () => console.error('Connection Error!'));
-mongoose.connection.once('open', () => console.log('Connected!'));
+mongoose.connection.on("error", () => console.error("Connection Error!"));
+mongoose.connection.once("open", () => console.log("Connected!"));

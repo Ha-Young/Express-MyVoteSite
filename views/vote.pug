@@ -20,7 +20,7 @@ block content
             p #{vote.total_voters} 명 참여 중
             p made by #{vote.created_by}
           span.vote-title #{vote.title}
-          form#vote-form(action=`/votings/${vote._id}` method="post" onsubmit='submitForm(event)' name='vote-form')
+          form#vote-form(action=`/votings/${vote._id}` method="post" onsubmit="submitForm(event)" name="vote-form")
             .scroll
               fieldset.vote-mid
                 each option, index in vote.select_options
@@ -38,10 +38,10 @@ block content
             button.button.to-list 목록으로
             if loggedInUser && loggedInUser.username === vote.created_by
               div
-                button(onclick='openModal()').button.show-vote-result 결과보기
+                button(onclick="openModal()").button.show-vote-result 결과보기
                 button.button.delete-vote 투표 삭제
             else if vote.expired
               div
-                button(onclick='openModal()').button.show-vote-result 결과보기
+                button(onclick="openModal()").button.show-vote-result 결과보기
       include includes/modal.pug
   script(src="/javascripts/vote.js")

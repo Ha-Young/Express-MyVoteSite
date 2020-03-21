@@ -1,28 +1,28 @@
-const closeButton = document.querySelector('#close-button');
-const addButton = document.querySelector('.add-button');
-const optionDiv = document.querySelector('.options > div');
+const closeButton = document.querySelector("#close-button");
+const addButton = document.querySelector(".add-button");
+const optionDiv = document.querySelector(".options > div");
 
-closeButton.addEventListener('click', () => {
+closeButton.addEventListener("click", () => {
   location.assign(location.origin);
 });
 
 let counter = 3;
 
-addButton.addEventListener('click', () => {
-  const optionInputField = document.createElement('input');
+addButton.addEventListener("click", () => {
+  const optionInputField = document.createElement("input");
 
-  optionInputField.setAttribute('type', 'text');
-  optionInputField.setAttribute('placeholder', '항목 입력');
-  optionInputField.setAttribute('name', `option${counter}`);
-  optionInputField.classList.add('option');
+  optionInputField.setAttribute("type", "text");
+  optionInputField.setAttribute("placeholder", "항목 입력");
+  optionInputField.setAttribute("name", `option${counter}`);
+  optionInputField.classList.add("option");
 
   counter++;
 
   optionDiv.appendChild(optionInputField);
 });
 
-const resetButton = document.querySelector('.reset-button');
-resetButton.addEventListener('click', () => {
+const resetButton = document.querySelector(".reset-button");
+resetButton.addEventListener("click", () => {
   window.location.reload();
 });
 
@@ -31,7 +31,7 @@ const createVote = async (e) => {
   const userReaction = window.confirm("투표를 생성하시겠습니까?");
 
   if (userReaction) {
-    const createVoteForm = document.querySelector('.newvote-form');
+    const createVoteForm = document.querySelector(".newvote-form");
 
     let reqBody = {};
     Object.keys(createVoteForm.elements).forEach(key => {
@@ -41,7 +41,7 @@ const createVote = async (e) => {
       }
     });
 
-    const response = await fetch('/votings', {
+    const response = await fetch("/votings", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(reqBody)

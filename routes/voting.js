@@ -1,23 +1,23 @@
-const express = require('express');
+const express = require("express");
 
-const checkAuthentication = require('../middlewares/authenticate');
-const checkWhetherUserVoted = require('../middlewares/checkWhetherUserVoted');
-const votingControllers = require('../controllers/voting.controllers');
+const checkAuthentication = require("../middlewares/authenticate");
+const checkWhetherUserVoted = require("../middlewares/checkWhetherUserVoted");
+const votingControllers = require("../controllers/voting.controllers");
 
 const router = express.Router();
 
-router.get('/new', checkAuthentication, (req, res) => {
-  res.render('newvotes', {
-    errorMessage: req.flash('Vote Registration Error')
+router.get("/new", checkAuthentication, (req, res) => {
+  res.render("newvotes", {
+    errorMessage: req.flash("Vote Registration Error")
   });
 });
 
-router.post('/', checkAuthentication, votingControllers.registerVote);
+router.post("/", checkAuthentication, votingControllers.registerVote);
 
-router.delete('/', checkAuthentication, votingControllers.deleteVote)
+router.delete("/", checkAuthentication, votingControllers.deleteVote)
 
-router.get('/:id', votingControllers.renderVote);
+router.get("/:id", votingControllers.renderVote);
 
-router.post('/:id', checkAuthentication, checkWhetherUserVoted, votingControllers.registerCastingVote);
+router.post("/:id", checkAuthentication, checkWhetherUserVoted, votingControllers.registerCastingVote);
 
 module.exports = router;

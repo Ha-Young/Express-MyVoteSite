@@ -1,16 +1,16 @@
-const passport = require('passport');
+const passport = require("passport");
 
-const errors = require('../lib/errors');
+const errors = require("../lib/errors");
 
 exports.login = (req, res, next) => {
-  passport.authenticate('local', (err, validUser, authFailureMessage) => {
+  passport.authenticate("local", (err, validUser, authFailureMessage) => {
     if (err) {
       return next(new errors.GeneralError(err.message));
     }
 
     if (!validUser) {
-      req.flash('Login Error Message', authFailureMessage);
-      return res.redirect('/auth/login');
+      req.flash("Login Error Message", authFailureMessage);
+      return res.redirect("/auth/login");
     }
 
     req.logIn(validUser, err => {
@@ -18,7 +18,7 @@ exports.login = (req, res, next) => {
         return next(new errors.LoginError(err.message));
       }
 
-      res.redirect(req.session.returnTo || '/');
+      res.redirect(req.session.returnTo || "/");
     });
   })(req, res, next);
 };
@@ -26,7 +26,7 @@ exports.login = (req, res, next) => {
 exports.logout = async (req, res) => {
   await req.logout();
   await req.session.destroy();
-  await res.clearCookie('connect.sid');
+  await res.clearCookie("connect.sid");
 
-  res.redirect('/');
+  res.redirect("/");
 };

@@ -1,4 +1,4 @@
-const Users = require('../models/Users');
+const Users = require("../models/Users");
 
 module.exports = checkAuthentication = async (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -9,5 +9,5 @@ module.exports = checkAuthentication = async (req, res, next) => {
   }
 
   req.session.returnTo = req.originalUrl;
-  res.redirect('/auth/login');
+  res.redirect("/auth/login");
 };

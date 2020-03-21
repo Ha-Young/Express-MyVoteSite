@@ -1,7 +1,7 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
-const errors = require('../lib/errors');
-const Users = require('../models/Users');
+const errors = require("../lib/errors");
+const Users = require("../models/Users");
 
 exports.registerUser = async (req, res, next) => {
   const { username, firstname, lastname, email, password } = req.body;
@@ -24,10 +24,10 @@ exports.registerUser = async (req, res, next) => {
         });
       });
 
-      return res.redirect('/auth/login');
+      return res.redirect("/auth/login");
     }
 
-    next(new errors.DuplicateUserError('Duplicated user exists.'));
+    next(new errors.DuplicateUserError("Duplicated user exists."));
   } catch(err) {
     next(new errors.GeneralError(err.message));
   }
