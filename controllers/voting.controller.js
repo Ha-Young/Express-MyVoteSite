@@ -6,7 +6,7 @@ const error = require('../lib/error');
 exports.getCreationPage = async function(req, res) {
   const user = await findUser(req);
 
-  res.render('voting-creation', { user });
+  res.render('voting_creation', { user });
 };
 
 exports.getDetail = async function(req, res, next) {
@@ -17,7 +17,7 @@ exports.getDetail = async function(req, res, next) {
     const votingUserId = voting.user._id;
 
     if (checkSameUser(user, votingUserId)) {
-      return res.render('voting-detail', {
+      return res.render('voting_detail', {
         voting,
         moment,
         user,
@@ -30,10 +30,10 @@ exports.getDetail = async function(req, res, next) {
         return a.option_count > b.option_count ? -1 : 1;
       });
 
-      return res.render('voting-detail', { voting, moment, user });
+      return res.render('voting_detail', { voting, moment, user });
     }
     req.session.returnTo = req.originalUrl;
-    res.render('voting-detail', { voting, moment, user });
+    res.render('voting_detail', { voting, moment, user });
   } catch (err) {
     next(new error.GeneralError());
   }
@@ -71,14 +71,14 @@ exports.create = async function(req, res, next) {
       options: optionArray
     }).save();
 
-    res.render('voting-creation', { user, success: '투표 생성 성공!' });
+    res.render('voting_creation', { user, success: '투표 생성 성공!' });
   } catch (err) {
     if (
       err instanceof error.VotingTimeError ||
       err instanceof error.VotingValidationError ||
       err instanceof error.VotingTitleDuplicateError
     ) {
-      return res.render('voting-creation', { error: err.displayMessage });
+      return res.render('voting_creation', { error: err.displayMessage });
     }
     next(new error.GeneralError());
   }
@@ -117,7 +117,7 @@ exports.update = async function(req, res, next) {
     voting = await Voting.findById(votingId).populate('user', 'nickname');
 
     if (checkSameUser(user, votingUserId)) {
-      return res.render('voting-detail', {
+      return res.render('voting_detail', {
         voting,
         moment,
         user,
@@ -126,12 +126,12 @@ exports.update = async function(req, res, next) {
       });
     }
 
-    res.render('voting-detail', { user, voting, moment, success: '투표 성공!!' });
+    res.render('voting_detail', { user, voting, moment, success: '투표 성공!!' });
   } catch (err) {
     const voting = await Voting.findById(votingId).populate('user', 'nickname');
     if (err instanceof error.VotingDuplicateError) {
       if (checkSameUser(user, votingUserId)) {
-        return res.render('voting-detail', {
+        return res.render('voting_detail', {
           voting,
           moment,
           user,
@@ -139,7 +139,7 @@ exports.update = async function(req, res, next) {
           error: err.displayMessage
         });
       }
-      res.render('voting-detail', {
+      res.render('voting_detail', {
         user,
         voting,
         moment,

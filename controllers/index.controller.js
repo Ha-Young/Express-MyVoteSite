@@ -35,7 +35,7 @@ exports.getMyVotings = async (req, res, next) => {
     const user = await findUser(req);
     const votings = await Voting.find({ user: user._id }).populate('user', 'nickname');
 
-    res.render('my-votings', { user, votings, moment });
+    res.render('my_votings', { user, votings, moment });
   } catch (err) {
     next(new error.GeneralError());
   }
