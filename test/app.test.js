@@ -22,8 +22,8 @@ describe("root route", () => {
         const areVotesIncluded = allVotes.filter(vote => res.text.includes(vote.title));
         areVotesIncluded.should.have.lengthOf(allVotes.length);
 
-        res.text.includes("회원가입");
-        res.text.includes("로그인");
+        res.text.includes("회원가입").should.be.true;
+        res.text.includes("로그인").should.be.true;
       });
   });
 });
