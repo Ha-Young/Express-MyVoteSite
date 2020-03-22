@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { expect } from 'chai';
 import app from '../app';
+import User from '../models/user';
 
 describe('GET /', () => {
   it('should respond with template', done => {
@@ -72,6 +73,35 @@ describe('POST /login', () => {
         if (err) {
           return done(err);
         }
+        return done();
+      });
+  });
+});
+
+describe('POST /signup', () => {
+  it('should create new user when submited signup successfully', (done) => {
+    const username = 'username';
+    const email = 'user@user.com';
+    const password = 'password';
+
+    request(app)
+      .post('/signup')
+      .send({
+        username,
+        email,
+        password,
+        confirmPassword: password
+      })
+      .expect(302)
+      .expect('Location', '/login')
+      .end(async (err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        const user = await User.findOneAndDelete({ username, email });
+
+        expect(user).to.include({ username, email });
         return done();
       });
   });
