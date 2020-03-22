@@ -6,21 +6,21 @@ const mongoose = require('mongoose');
 
 const User = require('../models/User');
 const Voting = require('../models/Voting');
-const REGEXP = require('../configs/REGEXP');
+const REGEXP = require('../constants/REGEXP');
 moment.locale('ko');
 
 const indexController = {
   getMain: async (req, res, next) => {
     try {
       const votingList = await Voting.find().populate('creator');
+      const currentDate = new Date();
 
       for (let i = 0; i < votingList.length; i++) {
         const formatDate = moment(votingList[i].endDate).fromNow();
         votingList[i].formatDate = formatDate;
       }
-      votingList.currentDate = new Date();
 
-      res.render('index', { votingList });
+      res.render('index', { votingList, currentDate });
     } catch (error) {
       if (error instanceof mongoose.Error.CastError) return next(createError(400, { errorCode: 311 }));
       if (error.name === 'MongoError' && err.code === 11000) return next(createError(400, { errorCode: 500 }));
@@ -32,14 +32,14 @@ const indexController = {
     try {
       const user = await User.findById(req.user.id).populate('votingList');
       const votingList = user.votingList;
+      const currentDate = new Date();
 
       for (let i = 0; i < votingList.length; i++) {
         const formatDate = moment(votingList[i].endDate).fromNow();
         votingList[i].formatDate = formatDate;
       }
-      votingList.currentDate = new Date();
 
-      res.render('myVotings', { votingList, userName: req.user.name });
+      res.render('myVotings', { votingList, userName: req.user.name, currentDate });
     } catch (error) {
       if (error instanceof mongoose.Error.CastError) return next(createError(400, { errorCode: 311 }));
       if (error.name === 'MongoError' && err.code === 11000) return next(createError(400, { errorCode: 500 }));
@@ -74,7 +74,7 @@ const indexController = {
 
   postPrePageLogin: (req, res) => {
     const preUrl = req.session.preUrl || '/';
-    req.session.preUrl ? delete req.session.preUrl : null;
+    req.session.preUrl && delete req.session.preUrl;
     res.redirect(preUrl);
   },
 
@@ -111,7 +111,7 @@ const indexController = {
       if (name.length < 2) throw createError(400, { errorCode: 142 });
       if (name.length > 6) throw createError(400, { errorCode: 143 });
 
-      const salt = bcrypt.genSaltSync(10);
+      const salt = bcrypt.genSaltSync(Number(process.env.SALT_ROUNDS));
       const hash = bcrypt.hashSync(password, salt);
       const user = new User({ name, email, hash });
       await user.save();

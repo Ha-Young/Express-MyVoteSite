@@ -13,7 +13,7 @@ const setLocals = require('./configs/setLocal');
 const passportConfig = require('./configs/passport');
 const indexRouter = require('./routes/index');
 const votingRouter = require('./routes/votings');
-const ERROR_STATUS = require('./configs/errorCode.js');
+const ERROR_STATUS = require('./constants/errorCode.js');
 
 const app = express();
 

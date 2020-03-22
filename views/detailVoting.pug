@@ -14,7 +14,7 @@ block content
             if new Date(voting.endDate).getTime() > voting.currentDate.getTime()
                 form(method='POST' action=`/votings/${voting._id}`).detail-voting-item-form
                     .detail-voting-items-box
-                        each item in voting.item
+                        each item in voting.items
                             .detail-voting-item-box
                                 input(type='radio' id=`${item._id}` name='voting' value=`${item._id}`).detail-voting-radio
                                 label(for=`${item._id}`).detail-voting-label=item.item
@@ -23,7 +23,7 @@ block content
                                             span ( 
                                             span=item.count
                                             span 표 )
-                    if loggedUser && voting.joinUser.includes(loggedUser.id)
+                    if loggedUser && voting.joinUsers.includes(loggedUser.id)
                         .new-voting-submit-button-box
                             input(type="submit" value="이미 참여한 투표입니다." disabled="true").new-voting-disabled-button
                     else
@@ -32,7 +32,7 @@ block content
             else
                 .detail-voting-end
                     .detail-voting-items-box
-                        each item in voting.item
+                        each item in voting.items
                             .detail-voting-item-box
                                 .detail-voting-result=item.item
                                 .now-count

@@ -5,8 +5,8 @@ const votingSchema = new mongoose.Schema({
   creator: { type: mongoose.Types.ObjectId, required: true, ref: 'User' },
   count: { type: Number, required: true },
   endDate: { type: String, required: true },
-  joinUser: [{ type: mongoose.Types.ObjectId, required: true, ref: 'User' }],
-  item: [
+  joinUsers: [{ type: mongoose.Types.ObjectId, required: true, ref: 'User' }],
+  items: [
     {
       item: { type: String, required: true },
       count: { type: Number, required: true }

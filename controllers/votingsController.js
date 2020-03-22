@@ -28,7 +28,7 @@ const votingsController = {
         creator: req.user.id,
         count: 0,
         endDate: time,
-        item: item.map(vote => ({ item: vote, count: 0 }))
+        items: item.map(vote => ({ item: vote, count: 0 }))
       });
 
       user.votingList.push(mongoose.Types.ObjectId(voting._id));
@@ -74,11 +74,11 @@ const votingsController = {
 
       if (!voting) throw createError(400, { errorCode: 311 });
       if (!votingItemId) throw createError(400, { errorCode: 300 });
-      if (voting.joinUser.includes(userId)) throw createError(400, { errorCode: 302 });
+      if (voting.joinUsers.includes(userId)) throw createError(400, { errorCode: 302 });
       if (new Date().getTime() > new Date(voting.endDate).getTime()) throw createError(400, { errorCode: 301 });
 
-      voting.item.filter(vote => String(vote._id) === votingItemId)[0].count++;
-      voting.joinUser.push(mongoose.Types.ObjectId(userId));
+      voting.items.filter(vote => String(vote._id) === votingItemId)[0].count++;
+      voting.joinUsers.push(mongoose.Types.ObjectId(userId));
       voting.count++;
 
       await voting.save();
