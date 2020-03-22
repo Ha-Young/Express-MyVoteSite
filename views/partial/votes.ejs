@@ -3,7 +3,7 @@
   <%
     for (let i = 0; i < votes.length; i++) {
       const { subject, expirated, creator, created_at } = votes[i];
-      const currentTime = new Date().getTime();
+      const currentTime = Date.now();
       const expiratedTime = new Date(expirated).getTime();
       const isExpirated = expiratedTime - currentTime < 0;
   %>

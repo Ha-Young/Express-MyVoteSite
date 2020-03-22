@@ -13,7 +13,7 @@ if (optionsArea) {
 
   voteDetailForm.addEventListener('submit', (e) => {
     const expirationValue = `${expirationDateInput.value}T${expirationTimeInput.value}`;
-    const now = new Date().getTime();
+    const now = Date.now();
     const expiration = new Date(expirationValue).getTime();
 
     if (now > expiration) {

@@ -12,7 +12,7 @@ export function getYearMonthDay(timestamp) {
 export function getIsExpired(timestamp) {
   dateTypeValidation(timestamp);
 
-  const currentTime = new Date().getTime();
+  const currentTime = Date.now();
   const expiratedTime = new Date(timestamp).getTime();
 
   return expiratedTime - currentTime < 0;
