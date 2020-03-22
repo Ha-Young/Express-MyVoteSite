@@ -17,8 +17,8 @@
       </h3>
       <ul class="vote-info">
         <li>Creator: <%= creator.username %></li>
-        <li>Created at: <%= dateTransformer(created_at) %></li>
-        <li>Expirated at: <%= dateTransformer(expirated) %></li>
+        <li>Created at: <%= getYearMonthDay(created_at) %></li>
+        <li>Expirated at: <%= getYearMonthDay(expirated) %></li>
       </ul>
       <li></li>
     </li>

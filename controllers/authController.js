@@ -52,31 +52,33 @@ export const postSignup = async (req, res, next) => {
     confirmPassword
   } = req.body;
 
-  if (!username.trim().length || !email.trim().length) {
+  if (
+    !username.trim().length ||
+    !email.trim().length ||
+    !password.trim().length ||
+    !(password === confirmPassword)
+  ){
     const err = new mongoose.Error.ValidationError();
+
     next(createError(400, err));
+    return;
   }
 
-  if (!password.trim().length || password !== confirmPassword) {
-    const err = new mongoose.Error.ValidationError();
-    next(createError(400, err));
-  } else {
-    try {
-      const user = new User({
-        username,
-        email
-      });
+  try {
+    const user = new User({
+      username,
+      email
+    });
 
-      await User.register(user, password);
-      res.redirect('/login');
-    } catch (err) {
-      if (err instanceof mongoose.Error.ValidationError) {
-        next(createError(400, err));
-        return;
-      }
-
-      next(createError(500, err));
+    await User.register(user, password);
+    res.redirect('/login');
+  } catch (err) {
+    if (err instanceof mongoose.Error.ValidationError) {
+      next(createError(400, err));
+      return;
     }
+
+    next(createError(500, err));
   }
 };
 

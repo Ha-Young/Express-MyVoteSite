@@ -2,13 +2,13 @@ import mongoose from 'mongoose';
 import createError from 'http-errors';
 import Vote from '../models/vote';
 import User from '../models/user';
-import { dateTransformer, getIsExpired } from '../helper';
+import { getYearMonthDay, getIsExpired } from '../helper';
 
 export const getHome = async (req, res, next) => {
   try {
     const votes = await Vote.find().populate('creator');
 
-    res.locals.dateTransformer = dateTransformer;
+    res.locals.getYearMonthDay = getYearMonthDay;
     res.locals.getIsExpired = getIsExpired;
     res.render('index', { votes });
   } catch (err) {
@@ -70,7 +70,7 @@ export const getVoteDetail = async (req, res, next) => {
       return;
     }
 
-    res.locals.dateTransformer = dateTransformer;
+    res.locals.getYearMonthDay = getYearMonthDay;
     res.render('votingDetail', { vote });
   } catch (err) {
     next(createError(500, err));
@@ -123,7 +123,7 @@ export const getVoteResult = async (req, res, next) => {
       }
     }
 
-    res.locals.dateTransformer = dateTransformer;
+    res.locals.getYearMonthDay = getYearMonthDay;
     res.locals.getIsExpired = getIsExpired;
     res.render('votingResult', { vote });
   } catch (err) {
@@ -140,7 +140,7 @@ export const getMyVotings = async (req, res, next) => {
     });
     const votes = me.ownVotes;
 
-    res.locals.dateTransformer = dateTransformer;
+    res.locals.getYearMonthDay = getYearMonthDay;
     res.render('myVotings', { votes });
   } catch (err) {
     next(createError(500, err));

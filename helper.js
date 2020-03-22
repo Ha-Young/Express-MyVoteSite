@@ -1,9 +1,7 @@
-export function dateTransformer(date) {
-  if (new Date(date).toString() === 'Invalid Date') {
-    throw new Error(`${date} is not a date type input`);
-  }
+export function getYearMonthDay(timestamp) {
+  dateTypeValidation(timestamp);
 
-  const thatDate = new Date(date);
+  const thatDate = new Date(timestamp);
   const year = thatDate.getFullYear();
   const month = thatDate.getMonth();
   const dates = thatDate.getDate();
@@ -11,9 +9,17 @@ export function dateTransformer(date) {
   return `${year}. ${month + 1}. ${dates}`;
 }
 
-export function getIsExpired(date) {
+export function getIsExpired(timestamp) {
+  dateTypeValidation(timestamp);
+
   const currentTime = new Date().getTime();
-  const expiratedTime = new Date(date).getTime();
+  const expiratedTime = new Date(timestamp).getTime();
 
   return expiratedTime - currentTime < 0;
+}
+
+function dateTypeValidation (timestamp) {
+  if (new Date(timestamp).toString() === 'Invalid Date') {
+    throw new Error(`${timestamp} is not a date type input`);
+  }
 }
