@@ -1,24 +1,24 @@
 extends layouts/main
 
 block content
-    .new-voting-container
-        form(action="/votings/new" method="post").new-voting-form
-            .new-voting-title-box
-                .new-voting-title 투표주제
-                input(type="text" name="title" placeholder="투표 주제를 입력해주세요 [최대 20자]" minlength="1" maxlength="20" required="true").new-voting-title-input
-            .new-voting-item-boxs
-                .new-voting-item-box
-                    .new-voting-item 투표항목
-                    input(type="text" name="item" placeholder="투표 항목을 입력해주세요 [최대 15자]" minlength="1" maxlength="15" required="true").new-voting-item-input
-                .new-voting-item-box
-                    .new-voting-item 투표항목
-                    input(type="text" name="item" placeholder="투표 항목을 입력해주세요 [최대 15자]" minlength="1" maxlength="15" required="true").new-voting-item-input
-                .new-voting-time-box
-                    .new-voting-time 투표 종료일
-                    .new-voting-time-input-box
-                        input(type="datetime-local" name="datetime" required="true").new-voting-time-input
-            .new-voting-finish-box
-                .new-voting-submit-input-box
-                    input(type="submit" value="완료").new-voting-submit-input
-                .new-voting-cancel-input-box
-                    input(type="button" value="취소" onClick="location.href='/'").new-voting-cancel-input
+  .new-voting-container
+    form(action="/votings/new" method="post").new-voting-form
+      .new-voting-title-box
+        .new-voting-title 투표주제
+        input(type="text" name="title" placeholder="투표 주제를 입력해주세요 [최대 20자]" minlength="1" maxlength="20" required="true").new-voting-title-input
+      .new-voting-item-boxs
+        .new-voting-item-box
+          .new-voting-item 투표항목
+          input(type="text" name="item" placeholder="투표 항목을 입력해주세요 [최대 15자]" minlength="1" maxlength="15" required="true").new-voting-item-input
+        .new-voting-item-box
+          .new-voting-item 투표항목
+          input(type="text" name="item" placeholder="투표 항목을 입력해주세요 [최대 15자]" minlength="1" maxlength="15" required="true").new-voting-item-input
+        .new-voting-time-box
+          .new-voting-time 투표 종료일
+          .new-voting-time-input-box
+            input(type="datetime-local" name="datetime" required="true").new-voting-time-input
+      .new-voting-finish-box
+        .new-voting-submit-input-box
+          input(type="submit" value="완료").new-voting-submit-input
+        .new-voting-cancel-input-box
+          input(type="button" value="취소" onClick="location.href='/'").new-voting-cancel-input

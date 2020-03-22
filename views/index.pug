@@ -2,29 +2,29 @@ extends layouts/main
 include mixins/votingBox
 
 block content
-    .main-container
-        if votingList.length > 0
-            each item in votingList
-                a(href=`/votings/${item._id}`).voting-item-box
-                    if new Date(item.endDate).getTime() > currentDate.getTime()
-                        .abled-voting-box.voting-box
-                            +votingBox({
-                                title : item.title,
-                                creator : item.creator.name,
-                                endDate : item.endDate,
-                                formatDate : `${item.formatDate} 종료`,
-                                state : "진행중"
-                            })
-                    else
-                        .disabled-voting-box.voting-box
-                            +votingBox({
-                                title : item.title,
-                                creator : item.creator.name,
-                                endDate : item.endDate,
-                                formatDate : `${item.formatDate} 종료됨`,
-                                state : "종료됨",
-                            })
-        else
-            .votings-not-exist-box
-                .votings-not-exist 🙅‍♂️ 투표가 없어요 🙅‍♀️
+  .main-container
+    if votingList.length > 0
+      each item in votingList
+        a(href=`/votings/${item._id}`).voting-item-box
+          if new Date(item.endDate).getTime() > currentDate.getTime()
+            .abled-voting-box.voting-box
+              +votingBox({
+                title : item.title,
+                creator : item.creator.name,
+                endDate : item.endDate,
+                formatDate : `${item.formatDate} 종료`,
+                state : "진행중"
+              })
+          else
+            .disabled-voting-box.voting-box
+              +votingBox({
+                title : item.title,
+                creator : item.creator.name,
+                endDate : item.endDate,
+                formatDate : `${item.formatDate} 종료됨`,
+                state : "종료됨",
+              })
+    else
+      .votings-not-exist-box
+        .votings-not-exist 🙅‍♂️ 투표가 없어요 🙅‍♀️
 

@@ -1,15 +1,15 @@
 extends layouts/main
 
 block content
-    .login-container
-        .form-box
-            .login-title Voting Platform
-            form(action="/login" method="post")
-                .id-input-box
-                    input(type="email" name="email" placeholder="이메일을 입력해주세요" required=true)
-                .pw-input-box
-                    input(type="password" name="password" placeholder="비밀번호를 입력해주세요" required=true)
-                .login-button-input-box
-                    input(type="submit" value="로그인")
-            a(href="/signup").login-signup-box
-                input(type="submit" value="회원가입")
+  .login-container
+    .form-box
+      .login-title Voting Platform
+      form(action="/login" method="post")
+        .id-input-box
+          input(type="email" name="email" placeholder="이메일을 입력해주세요" required=true)
+        .pw-input-box
+          input(type="password" name="password" placeholder="비밀번호를 입력해주세요" required=true)
+        .login-button-input-box
+          input(type="submit" value="로그인")
+      a(href="/signup").login-signup-box
+        input(type="submit" value="회원가입")
