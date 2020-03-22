@@ -22,7 +22,7 @@ router.get('/logout', onlyPrivacy, getLogout);
 
 router.get('/login', onlyPublic, getLogin);
 
-router.post('/login', onlyPrivacy, postLogin);
+router.post('/login', onlyPublic, postLogin);
 
 router.get('/signup', onlyPublic, getSignup);
 
