@@ -27,9 +27,6 @@ app.use(
     resave: false,
     saveUninitialized: true,
     secret: "nathaneat",
-    store: new MongoStore({ 
-      url : process.env.MONGODB_URI
-    }),
     store: new MongoStore({ url : process.env.MONGODB_URI }),
   })
 );
