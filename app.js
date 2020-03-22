@@ -43,9 +43,10 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(localMiddleware);
 
 import './passport';
+
+app.use(localMiddleware);
 
 app.use('/', rootRouter);
 app.use('/votings', votingRouter);
