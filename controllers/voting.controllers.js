@@ -7,7 +7,7 @@ exports.getAll = async (req, res, next) => {
     const votings = await Voting.find().populate('createdBy').lean();
     res.locals.votings = votings;
     next();
-  } catch(err) {
+  } catch (err) {
     next(createError(500, '일시적인 오류가 발생하였습니다.'));
   }
 };
@@ -18,16 +18,16 @@ exports.getbyId = async (req, res, next) => {
     const voting = await Voting.findById(votingId).populate('createdBy').lean();
     res.locals.voting = voting;
     next();
-  } catch(err) {
+  } catch (err) {
     next(createError(500, '일시적인 오류가 발생하였습니다.'));
   }
 };
 
 exports.create = async (req, res, next) => {
   const { title, endDate, endTime, options } = req.body;
-  const username = req.user.username;
+  const { username } = req.user;
   try {
-    let user = await User.findOne({ username: username });
+    const user = await User.findOne({ username });
     const expiredAt = new Date(`${endDate} ${endTime}`);
 
     const voting = new Voting({
@@ -38,46 +38,41 @@ exports.create = async (req, res, next) => {
       options
     });
 
-    const newVoting = await voting.save();
-    res.locals.newVoting = newVoting;
+    res.locals.newVoting = await voting.save();
     next();
-  } catch(err) {
+  } catch (err) {
     next(createError(500, '일시적인 오류가 발생하였습니다.'));
   }
 };
 
-exports.checkIsAuthor = async (req, res, next) => {
-  const voting = res.locals.voting;
-  const isRespondent = res.locals.isRespondent;
-  const selectedOption = res.locals.selectedOption;
-  let isAuthor = false;
-
-  if (req.user && req.user._id === String(voting.createdBy._id)) {
-    isAuthor = true;
-  }
-
-  res.render('votingDetail', { voting, isAuthor, isRespondent, selectedOption });
+exports.checkIsAuthor = async (req, res) => {
+  res.render('votingDetail', {
+    voting: res.locals.voting,
+    isAuthor: res.locals.isAuthor,
+    isRespondent: req.user && req.user._id === String(res.locals.voting.createdBy._id),
+    selectedOption: res.locals.selectedOption
+  });
 };
 
 exports.updateSelectedOption = async (req, res, next) => {
   const votingId = req.params.voting_id;
   try {
-    const voting = await Voting.findById(req.params.voting_id).populate('createdBy').lean();
-    const options = voting.options;
+    const voting = await Voting.findById(votingId).populate('createdBy').lean();
+    const { options } = voting;
     const selectedIndex = options.findIndex(i => i.option === req.body.option);
 
     options[selectedIndex].count++;
-    const updatedOptions = options;
 
     await Voting.updateOne(
       { _id: votingId },
-      { $set: { options: updatedOptions } }
-    )
+      { $set: { options } }
+    );
 
-    const updatedVoting = await Voting.findById(req.params.voting_id).populate('createdBy').lean();
+    const updatedVoting = await Voting.findById(votingId).populate('createdBy').lean();
     res.locals.voting = updatedVoting;
+
     next();
-  } catch(err) {
+  } catch (err) {
     next(createError(500, '일시적인 오류가 발생하였습니다.'));
   }
 };
@@ -98,7 +93,7 @@ exports.updateExpired = async (req, res, next) => {
       })
     );
     next();
-  } catch(err) {
+  } catch (err) {
     next(createError(500, '일시적인 오류가 발생하였습니다.'));
   }
 };

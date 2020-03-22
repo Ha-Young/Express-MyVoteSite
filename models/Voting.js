@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const VotingSchema = new Schema({
   title: {
@@ -50,6 +51,8 @@ const VotingSchema = new Schema({
       min: 0
     }
   }
+}, {
+  timestamps: true
 });
 
 module.exports = mongoose.model('Voting', VotingSchema);

@@ -7,7 +7,7 @@ form.addEventListener('submit', ev => {
   const title = inputs[0].value;
   const endDate = inputs[1].value;
   const endTime = inputs[2].value;
-  let options = [];
+  const options = [];
 
   for (let i = 3; i < inputs.length - 2; i++) {
     options.push({
@@ -17,16 +17,16 @@ form.addEventListener('submit', ev => {
 
   fetch('/votings/new', {
     method: 'POST',
-		headers: {
+    headers: {
       'Content-Type': 'application/json; charset=utf-8'
     },
     body: JSON.stringify({ title, endDate, endTime, options })
   }).then(response => {
     if (!response.ok) return response.json();
-    location.href='/';
+    location.href = '/';
   }).then(data => {
     errorAlert.innerText = data;
-  }).catch(err => {
+  }).catch(() => {
     next(createError(500, '일시적인 오류가 발생하였습니다.'));
   });
 });

@@ -14,17 +14,17 @@ form.addEventListener('submit', ev => {
 
   fetch('/signup', {
     method: 'POST',
-		headers: {
+    headers: {
       'Content-Type': 'application/json; charset=utf-8'
     },
     body: JSON.stringify({ username, password })
   }).then(response => {
-    if(!response.ok) return response.json();
+    if (!response.ok) return response.json();
     alert('가입이 완료되었습니다. 로그인 후 이용해주세요.');
-    location.href='/login';
+    location.href = '/login';
   }).then(data => {
-    if(data) errorAlert.innerText = data;
+    if (data) errorAlert.innerText = data;
   }).catch(err => {
-    console.log('catch error' + err);
+    console.log(err);
   });
 });

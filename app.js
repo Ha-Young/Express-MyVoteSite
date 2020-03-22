@@ -42,6 +42,7 @@ app.use(session({
 
 require('./config/mongoose');
 require('./config/passport');
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -50,18 +51,16 @@ app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/votings', votingRouter);
 app.use('/my-Votings', myVotingRouter);
-app.get('/logout', function(req, res, next) {
-  req.session.destroy(() => {
-    req.session;
-  });
+app.get('/logout', (req, res) => {
+  req.session.destroy();
   res.redirect('/');
 });
 
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404, '페이지를 찾을 수 없습니다.'));
 });
 
-app.use(function(err, req, res, next) {
+app.use((err, req, res) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 

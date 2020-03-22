@@ -1,6 +1,6 @@
-const app = require('../app');
-const request = require('supertest');
 const { expect } = require('chai');
+const request = require('supertest');
+const app = require('../app');
 const User = require('../models/User');
 const Voting = require('../models/Voting');
 
@@ -8,8 +8,7 @@ const mockdata = {
   username: 'a@naver.com',
   password: 123
 };
-
-describe('Get static files', function() {
+describe('Get static files', () => {
   it('should be able to get static css file', done => {
     request(app)
       .get('/stylesheets/style.css')
@@ -18,7 +17,7 @@ describe('Get static files', function() {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.text).to.include('Arial');
-        done();
+        return done();
       });
   });
 
@@ -30,12 +29,12 @@ describe('Get static files', function() {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.text).to.include('const form = document.forms[0];');
-        done();
+        return done();
       });
-  })
-})
+  });
+});
 
-describe('GET /login', function() {
+describe('GET /login', function () {
   this.timeout(10000);
   it('should respond with login template', done => {
     request(app)
@@ -45,12 +44,12 @@ describe('GET /login', function() {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.text).to.include('로그인');
-        done();
+        return done();
       });
   });
 });
 
-describe('GET /votings/new', function() {
+describe('GET /votings/new', function () {
   this.timeout(10000);
   after(async () => {
     await Voting.deleteOne({ title: 'test' });
@@ -72,9 +71,9 @@ describe('GET /votings/new', function() {
       .end(async (err, res) => {
         if (err) return done(err);
         const sessionId = res.headers['set-cookie'][0].split(';')[0];
-        const user = await User.findOne({ username: 'test@google.com'});
+        const user = await User.findOne({ username: 'test@google.com' });
 
-        request(app)
+        return request(app)
           .get('/votings/new')
           .set('Cookie', sessionId)
           .send({
@@ -84,7 +83,7 @@ describe('GET /votings/new', function() {
             options: ['test1', 'test2']
           })
           .expect(302)
-          .end(async (err, res) => {
+          .end(async () => {
             const newVoting = await Voting.findOne({ title: 'test' });
             expect(newVoting.createdBy.equals(user._id)).to.eql(true);
             done();

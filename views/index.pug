@@ -41,6 +41,6 @@ html(lang='en')
             li.votingCard
               a(href=`/votings/${voting._id}`)
                 div.card-title= voting.title
-                div - 등록자 | #{voting.author}
+                div - 등록자 | #{voting.createdBy.username}
                 div - 종료일 | #{voting.expiredAt}
                 div - 진행중 | #{voting.isProceeding}
