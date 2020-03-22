@@ -7,8 +7,11 @@
 </head>
 
 <body>
-  <div>
+  <%- include('partials/header') %>
+  
+  <main>
     <h1>투표 만들기</h1>
+
     <form action='/votings/new' method='POST'>
       <div>제목
         <input type='text' name='title'>
@@ -33,7 +36,7 @@
         <button><a href='/'>목록</a></button>
       </div>
     </form>
-  </div>
+  </main>
   <script src='/javascripts/newVoting.js'></script>
 </body>
 

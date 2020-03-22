@@ -31,7 +31,8 @@ exports.myVotings = async (req, res) => {
     const currentDate = new Date().getTime();
 
     res.render('myVotings', {
-      myVotingList, currentDate
+      myVotingList, currentDate,
+      user: req.user
     });
   } catch (error) {
     next(createError({

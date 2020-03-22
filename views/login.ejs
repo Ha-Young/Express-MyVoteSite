@@ -8,16 +8,21 @@
 </head>
 
 <body>
-  <h1>로그인</h1>
-  <form action='/login' method='POST'>
-    아이디<input type="email" name='email'>
-    비밀번호<input type="password" name='password'>
-    <button type='submit'>확인</button>
-  </form>
+  <%- include('partials/header') %>
 
-  <button><a href='/'>홈</a></button>
-  <button><a href='/signup'>회원가입</a></button>
+  <main>
+    <h1>로그인</h1>
+    <form action='/login' method='POST'>
+      아이디<input type="email" name='email'>
+      비밀번호<input type="password" name='password'>
+      <button type='submit'>확인</button>
+    </form>
+  </main>
 
+  <div>
+    <button><a href='/'>홈</a></button>
+    <button><a href='/signup'>회원가입</a></button>
+  </div>
 </body>
 
 </html>

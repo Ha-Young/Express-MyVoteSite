@@ -7,38 +7,35 @@
 </head>
 
 <body>
-  <div>
-    <div>
-      <h1>홈</h1>
-      <% if(user) { %>
-        <button><a href='/logout'>로그아웃</a></button>
-        <button><a href='/votings/new'>투표 생성하기</a></button>
-        <button><a href='/my-votings'>내 투표 보기</a></button>
-        <% } else { %>
-          <button><a href='/signup'>회원가입</a></button>
-          <button><a href='/login'>로그인</a></button>
-      <% } %>
-    </div>
+  <%- include('partials/header') %>
 
-    <main>
-      <% if (allVotings) { %>
-      <% allVotings.forEach(voting => { %>
-      <div class='voting' data-id='<%= voting._id %>'>
-        <ul>
-          <li>제목: <%= voting.title %></li>
-          <li>작성자: <%= voting.author %></li>
-          <li>만료 날짜: <%= new Date(voting.endDate) %></li>
-          <% if (new Date(voting.endDate).getTime() >= currentDate) { %>
-          <li>진행중</li>
-          <% } else { %>
-          <li>기간 만료</li>
-          <% } %>
-        </ul>
-      </div>
-      <% }); %>
-      <% } %>
-    </main>
-  </div>
+  <% if (user) { %>
+  <nav>
+    <ul>
+      <li><a href='/votings/new'>투표 생성하기</a></li>
+      <li><a href='/votings/my-votings'>내 투표 보기</a></li>
+    </ul>
+  </nav>
+  <% } %>
+
+  <main>
+    <% if (allVotings) { %>
+    <% allVotings.forEach(voting => { %>
+    <div class='voting' data-id='<%= voting._id %>'>
+      <ul>
+        <li>제목: <%= voting.title %></li>
+        <li>작성자: <%= voting.author %></li>
+        <li>만료 날짜: <%= new Date(voting.endDate) %></li>
+        <% if (new Date(voting.endDate).getTime() >= currentDate) { %>
+        <li>진행중</li>
+        <% } else { %>
+        <li>기간 만료</li>
+        <% } %>
+      </ul>
+    </div>
+    <% }); %>
+    <% } %>
+  </main>
   <script src='../javascripts/index.js'></script>
 </body>
 

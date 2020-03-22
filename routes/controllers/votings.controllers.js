@@ -29,9 +29,9 @@ exports.newVoting = async (req, res, next) => {
         authorId: userId,
         solvedUser: []
       }).save();
-      res.render('newVotingSuccess');
+      res.render('newVotingSuccess', { user: req.user });
     } catch (error) {
-      res.render('newVotingFail', { error });
+      res.render('newVotingFail', { error, user: req.user });
     }
   } else {
     next(createError({
@@ -60,13 +60,15 @@ exports.renderVoting = async (req, res, next) => {
       res.render('voting', {
         voting,
         isAuthor,
-        status: true
+        status: true,
+        user: req.user
       });
     } else {
       res.render('voting', {
         voting,
         isAuthor,
-        status: false
+        status: false,
+        user: req.user
       });
     }
   } catch (error) {
@@ -76,7 +78,7 @@ exports.renderVoting = async (req, res, next) => {
   }
 }
 
-exports.confirmVoting = async (req, res) => {
+exports.confirmVoting = async (req, res, next) => {
   const { _id: userId } = req.user;
   const { itemId } = req.body;
   const { voting_id: votingId } = req.params;
