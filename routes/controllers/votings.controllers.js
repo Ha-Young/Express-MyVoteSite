@@ -1,5 +1,5 @@
-const Voting = require('../../models/Voting');
 const createError = require('http-errors');
+const Voting = require('../../models/Voting');
 
 exports.isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated())
@@ -36,7 +36,7 @@ exports.newVoting = async (req, res, next) => {
   } else {
     next(createError({
       status: 409,
-      message: '빈값을 제출할수 없습니다'
+      message: '빈 값을 제출할수 없습니다'
     }));
   }
 };
@@ -71,7 +71,7 @@ exports.renderVoting = async (req, res, next) => {
     }
   } catch (error) {
     next(createError({
-      message: '투표를 불러올 수 없습니다.'
+      message: '해당 투표를 불러올 수 없습니다.'
     }));
   }
 }

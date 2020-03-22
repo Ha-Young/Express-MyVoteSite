@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const createError = require('http-errors');
 const path = require('path');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
