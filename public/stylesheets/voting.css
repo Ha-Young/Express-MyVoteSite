@@ -1,0 +1,7 @@
+main > div {
+  margin: 30px 0px;
+}
+
+main > div > ul {
+  padding: 0px;
+}

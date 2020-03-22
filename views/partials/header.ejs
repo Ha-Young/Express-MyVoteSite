@@ -1,27 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+<header>
+  <div class='header-title'>
+    <h1><a href='/'>PLAY VOTING</a></h1>
+  </div>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>header</title>
-</head>
-
-<body>
-  <header>
-    <h1><a href='/'>홈</a></h1>
-
-    <nav>
-      <ul>
-        <% if(user) { %>
-        <li><a href='/logout'>로그아웃</a></li>
-        <% } else { %>
-        <li><a href='/signup'>회원가입</a></li>
-        <li><a href='/login'>로그인</a></li>
-        <% } %>
-      </ul>
-    </nav>
-  </header>
-</body>
-
-</html>
+  <nav class='header-nav'>
+    <ul>
+      <% if(user) { %>
+      <li><span><%= user.email %></span></li>
+      <li><a href='/logout'>로그아웃</a></li>
+      <% } else { %>
+      <li><a href='/signup'>회원가입</a></li>
+      <li><a href='/login'>로그인</a></li>
+      <% } %>
+    </ul>
+  </nav>
+</header>

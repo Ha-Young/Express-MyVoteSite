@@ -2,55 +2,65 @@
 <html>
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>voting</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/voting.css' />
 </head>
 
 <body>
-  <%- include('partials/header') %>
-  
-  <main>
-    <h1>투표 페이지</h1>
+  <div class='container'>
+    <%- include('partials/header') %>
 
-    <div>
-      <ul>
-        <li>제목: <%= voting.title %></li>
-        <li>작성자: <%= voting.author %></li>
-        <li>만료 날짜: <%= new Date(voting.endDate) %></li>
-        <% if (status) { %>
-        <li>진행 여부:<span>진행중</span>
+    <main>
+      <div>
+        <ul>
+          <li>제목: <%= voting.title %></li>
+          <li>작성자: <%= voting.author %></li>
+          <li>만료 날짜: <%= new Date(voting.qendDate) %></li>
+          <% if (status) { %>
+          <li>진행 여부: 진행중</li>
           <% } else { %>
-        <li>진행 여부:<span>기간 만료</span></li>
-        <% } %>
-      </ul>
-    </div>
+          <li>진행 여부: 기간 만료</li>
+          <% } %>
+        </ul>
+      </div>
 
-    <div>
       <% if (status) { %>
-      <form action=<%= `/votings/${voting._id}` %> method='POST'>
-        <% voting.items.map(item =>{ %>
-        <label>
-          <input type='radio' name='itemId' value='<%= item._id %>'><%= item.name %>
-        </label>
-        <% }) %>
-        <input type='submit' value='투표하기'>
-      </form>
+      <div>
+        <form action=<%= `/votings/${voting._id}` %> method='POST'>
+          <% voting.items.map(item =>{ %>
+          <div>
+            <span><%= item.name %></span>
+            <input type='radio' name='itemId' value='<%= item._id %>'>
+          </div>
+          <% }) %>
+          <div>
+            <input type='submit' value='투표하기'>
+          </div>
+        </form>
+      </div>
       <% } %>
-      <% if (!status || isAuthor) { %>
-      <ul>
-        <% voting.items.forEach(item => { %>
-        <li><%= `${item.name}: ${item.count}표` %></li>
-        <% }) %>
-        <% } %>
-      </ul>
-    </div>
 
-    <div>
-      <% if (isAuthor) { %>
-      <button class='deleteVoting' data-id='<%= voting._id %>'>투표 삭제</button>
+      <% if (!status || isAuthor) { %>
+      <div>
+        <ul>
+          <% voting.items.forEach(item => { %>
+          <li><%= `${item.name}: ${item.count}표` %></li>
+          <% }) %>
+        </ul>
+      </div>
       <% } %>
-      <button><a href='/'>목록 보기</a></button>
-    </div>
-  </main>
+
+      <div>
+        <% if (isAuthor) { %>
+        <button class='deleteVoting' data-id='<%= voting._id %>'>투표 삭제</button>
+        <% } %>
+        <button><a href='/'>목록 보기</a></button>
+      </div>
+    </main>
+  </div>
   <script src='/javascripts/voting.js'></script>
 </body>
 

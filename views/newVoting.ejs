@@ -4,39 +4,45 @@
 <head>
   <title>new voting</title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/newVoting.css' />
 </head>
 
 <body>
-  <%- include('partials/header') %>
-  
-  <main>
-    <h1>투표 만들기</h1>
+  <div class='container'>
+    <%- include('partials/header') %>
 
-    <form action='/votings/new' method='POST'>
-      <div>제목
-        <input type='text' name='title'>
-      </div>
+    <main>
+      <form action='/votings/new' method='POST'>
+        <div class='form-layout'>
+          <h4>제목</h4>
+          <input type='text' name='title'>
+        </div>
 
-      <div class='items'>선택 사항
-        <input type='text' name='items'>
-        <input type='text' name='items'>
-      </div>
+        <div class='form-layout'>
+          <h4>선택 사항</h4>
+          <div class='items'>
+            <input class='item' type='text' name='items'>
+            <input class='item' type='text' name='items'>
+          </div>
+        </div>
 
-      <div>
-        <button class='addItem'>항목 추가</button>
-        <button class='removeItem'>항목 제거</button>
-      </div>
+        <div class='form-layout'>
+          <button class='addItem'>항목 추가</button>
+          <button class='removeItem'>항목 제거</button>
+        </div>
 
-      <div>만료 날짜
-        <input type='datetime-local' name='endDate'>
-      </div>
+        <div class='form-layout'>
+          <h4>만료 날짜</h4>
+          <input type='datetime-local' name='endDate'>
+        </div>
 
-      <div>
-        <button type='submit'>생성</button>
-        <button><a href='/'>목록</a></button>
-      </div>
-    </form>
-  </main>
+        <div class='form-layout'>
+          <button type='submit'>생성</button>
+          <button><a href='/'>목록</a></button>
+        </div>
+      </form>
+    </main>
+  </div>
   <script src='/javascripts/newVoting.js'></script>
 </body>
 

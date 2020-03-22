@@ -4,38 +4,41 @@
 <head>
   <title>home</title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/index.css' />
 </head>
 
 <body>
-  <%- include('partials/header') %>
+  <div class='container'>
+    <%- include('partials/header') %>
 
-  <% if (user) { %>
-  <nav>
-    <ul>
-      <li><a href='/votings/new'>투표 생성하기</a></li>
-      <li><a href='/votings/my-votings'>내 투표 보기</a></li>
-    </ul>
-  </nav>
-  <% } %>
-
-  <main>
-    <% if (allVotings) { %>
-    <% allVotings.forEach(voting => { %>
-    <div class='voting' data-id='<%= voting._id %>'>
+    <% if (user) { %>
+    <nav class='home-nav'>
       <ul>
-        <li>제목: <%= voting.title %></li>
-        <li>작성자: <%= voting.author %></li>
-        <li>만료 날짜: <%= new Date(voting.endDate) %></li>
-        <% if (new Date(voting.endDate).getTime() >= currentDate) { %>
-        <li>진행중</li>
-        <% } else { %>
-        <li>기간 만료</li>
-        <% } %>
+        <li><a href='/votings/new'>투표 생성하기</a></li>
+        <li><a href='/my-votings'>내 투표 보기</a></li>
       </ul>
-    </div>
-    <% }); %>
+    </nav>
     <% } %>
-  </main>
+
+    <main>
+      <% if (allVotings) { %>
+      <nav>
+        <% allVotings.forEach(voting => { %>
+        <ul class='voting' data-id='<%= voting._id %>'>
+          <li>제목: <%= voting.title %></li>
+          <li>작성자: <%= voting.author %></li>
+          <li>만료 날짜: <%= new Date(voting.endDate) %></li>
+          <% if (new Date(voting.endDate).getTime() >= currentDate) { %>
+          <li>진행중</li>
+          <% } else { %>
+          <li>기간 만료</li>
+          <% } %>
+        </ul>
+        <% }); %>
+      </nav>
+      <% } %>
+    </main>
+  </div>
   <script src='../javascripts/index.js'></script>
 </body>
 

@@ -1,8 +1,29 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+/* 공통 */
+ul {
+  list-style:none;
 }
 
 a {
-  color: #00B7FF;
+  text-decoration: none;
+  color: black;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* header */
+.header-title {
+  text-align: center;
+}
+
+.header-nav > ul {
+  display: flex;
+}
+
+.header-nav > ul > li {
+  margin: 0px 10px;
 }

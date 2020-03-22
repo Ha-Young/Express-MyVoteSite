@@ -34,8 +34,7 @@ exports.newVoting = async (req, res, next) => {
       res.render('newVotingFail', { error, user: req.user });
     }
   } else {
-    next(createError({
-      status: 409,
+    next(createError(409, {
       message: '빈 값을 제출할수 없습니다'
     }));
   }
@@ -92,22 +91,22 @@ exports.confirmVoting = async (req, res, next) => {
     let { items, solvedUser } = voting;
 
     if (!itemId) {
-      return next(createError({
-        status: 409,
+      return next(createError(409, {
+
         message: '투표를 체크한 후에 제출해야 합니다'
       }));
     }
 
     if (isSolvedCheck) {
-      return next(createError({
-        status: 409,
+      return next(createError(409, {
+
         message: '이미 완료한 투표 입니다'
       }));
     }
 
     if (endDate < currentDate) {
-      return next(createError({
-        status: 409,
+      return next(createError(409, {
+
         message: '만료 기간이 지난 투표입니다'
       }));
     }

@@ -27,7 +27,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     secret: "nathaneat",
-    store: new MongoStore({ url : process.env.MONGODB_URI }),
+    store: new MongoStore({ url: process.env.MONGODB_URI }),
   })
 );
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -48,6 +48,7 @@ app.use(function (req, res, next) {
 });
 
 app.use(function (err, req, res, next) {
+  console.log('err', err)
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 

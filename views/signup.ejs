@@ -5,21 +5,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>signup</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/signup.css' />
 </head>
 
 <body>
-  <%- include('partials/header') %>
+  <div class='container'>
+    <%- include('partials/header') %>
 
-  <main>
-    <h1>회원가입</h1>
-
-    <form action='/signup' method='POST'>
-      이메일<input type="email" name='email'>
-      비밀번호<input type="password" name='password'>
-      비밀번호 확인<input type="password" name='confirmPassword'>
-      <button type='submit'>확인</button>
-    </form>
-  </main>
+    <main>
+      <form action='/signup' method='POST'>
+        <div>
+          <h4 class='signup-title'>이메일</h4>
+          <input class='signup-input' type="email" name='email'>
+        </div>
+        <div>
+          <h4 class='signup-title'>비밀번호</h4>
+          <input class='signup-input' type="password" name='password'>
+        </div>
+        <div>
+          <h4 class='signup-title'>비밀번호 확인</h4>
+          <input class='signup-input' type="password" name='confirmPassword'>
+        </div>
+        <div class='signup-submit'>
+          <button type='submit'>확인</button>
+        </div>
+      </form>
+    </main>
+  </div>
 </body>
 
 </html>

@@ -1,0 +1,16 @@
+.form-layout {
+  margin: 30px 0px;
+}
+
+.form-layout > h4 {
+  margin: 5px 0px;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  margin: 3px 0px;
+}
