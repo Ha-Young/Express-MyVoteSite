@@ -92,21 +92,18 @@ exports.confirmVoting = async (req, res, next) => {
 
     if (!itemId) {
       return next(createError(409, {
-
         message: '투표를 체크한 후에 제출해야 합니다'
       }));
     }
 
     if (isSolvedCheck) {
       return next(createError(409, {
-
         message: '이미 완료한 투표 입니다'
       }));
     }
 
     if (endDate < currentDate) {
       return next(createError(409, {
-
         message: '만료 기간이 지난 투표입니다'
       }));
     }

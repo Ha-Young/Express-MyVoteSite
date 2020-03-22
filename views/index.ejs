@@ -21,7 +21,7 @@
     <% } %>
 
     <main>
-      <% if (allVotings) { %>
+      <% if (allVotings.length) { %>
       <nav>
         <% allVotings.forEach(voting => { %>
         <ul class='voting' data-id='<%= voting._id %>'>
