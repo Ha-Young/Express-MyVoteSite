@@ -56,7 +56,7 @@ export const postSignup = async (req, res, next) => {
     !username.trim().length ||
     !email.trim().length ||
     !password.trim().length ||
-    !(password === confirmPassword)
+    password !== confirmPassword
   ){
     const err = new mongoose.Error.ValidationError();
 
