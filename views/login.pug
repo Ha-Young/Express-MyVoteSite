@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  head
+    link(rel="stylesheet" href="/stylesheets/css/login.css")
+
+  h1 로그인 하시바리
+  if errorMsg
+    p 삐-익..'#{errorMsg}'.
+  else
+    p 로그인 빨리 하시비
+
+  form(action="/users/login" method="post")
+    div
+      label(for="id") 아이뒤
+      input(type="text" name="username" autofocus)
+    div
+      label(for="password") 패쓰워드
+      input(type="password" name="password")
+
+    br
+
+    input(type="submit" value="로그인")
+    button
+      a(href="/users/register") 가입하기

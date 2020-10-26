@@ -1,0 +1,23 @@
+form {
+  border: 1px solid black;
+  padding: 1em;
+  width: 280px;
+  text-align: center;
+}
+
+form > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+form label {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin-right: 5px;
+}
+
+form input {
+  margin-right: 10px;
+}

@@ -1,0 +1,23 @@
+form {
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 1em;
+  width: 300px;
+  text-align: center;
+}
+
+form .inputs {
+  text-align: left;
+}
+
+form .inputs > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+form .inputs label {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}

@@ -1,0 +1,19 @@
+form {
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 1em;
+  width: 300px;
+  text-align: center;
+
+  .inputs {
+    text-align: left;
+
+    > div {
+      display: flex;
+    }
+
+    label {
+      flex: 1;
+    }
+  }
+}

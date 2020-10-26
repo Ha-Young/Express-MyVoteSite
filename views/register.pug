@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  head
+    link(rel="stylesheet" href="/stylesheets/css/register.css")
+
+  h1 가입하세여.
+  form(action="/users/register" method="post")
+    .inputs
+      div
+        label(for="username") Username
+        input(type="text" name="username")
+      div
+        label(for="password") Password
+        input(type="password" name="password")
+      div
+        label(for="passwordConfirm") Password Confirm
+        input(type="password" name="passwordConfirm")
+    br
+    input(type="submit" value="가입하깅")

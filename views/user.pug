@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h1 User
+  if user
+    p #{user.username} 's page.
+  else
+    p Cannot find user.
