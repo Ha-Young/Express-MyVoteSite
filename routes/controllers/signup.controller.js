@@ -1,19 +1,36 @@
 const User = require('../../models/User');
 const bcrypt = require('bcrypt');
+const constants = require('../../constants');
 
 exports.renderSignup = (req, res, next) => {
   res.render('signup');
 };
 
-exports.getInfo = async(req, res, next) => {
+exports.saveUser = async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, checkPassword } = req.body;
     const existUser = await User.findOne({ email: email });
 
-    if (existUser) {
-      return res.render('join', { error: '존재하는 email 입니다' });
+    const distinguishKorean = (name) => {
+      const koreanPattern = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+      return name.replace(koreanPattern, '');
+    };
+
+    if (!distinguishKorean(name)) {
+      return res.render('signup', { nameError: constants.ERROR_MESSAGE_INPUT_NAME });
     }
+    if (existUser) {
+      return res.render('signup', { emailError: constants.ERROR_MESSAGE_EXIST_EMAIL });
+    }
+    if (!email.includes('@')) {
+      return res.render('signup', { emailError: constants.ERROR_MESSAGE_INPUT_EMAIL });
+    }
+    if (password !== checkPassword) {
+      return res.render('signup', { passwordError: constants.ERROR_MESSAGE_INPUT_PASSWORD });
+    }
+
     const hash = await bcrypt.hash(password, 12);
+
     User({
       name,
       email,

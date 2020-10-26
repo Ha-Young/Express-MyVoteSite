@@ -4,28 +4,54 @@ block content
   h1 signup
 
   form(action='/signup', method='POST')
-    p name:
-
+    label name:
     input(
       type='text'
       name='name'
+      placeholder='Name'
       required=true
+      maxlength='10'
     )
+    p=nameError
 
-    p e-mail:
-
+    label e-mail:
     input(
       type='text'
       name='email'
+      placeholder='E-mail'
       required=true
+      maxlength='25'
     )
-    p=error
-    p PW:
+    p=emailError
+    p @를 포함하여 넣어주세요
 
+    label PW:
     input(
       type='password'
       name='password'
+      placeholder='Password'
       required=true
+      pattern='.{12,}'
+      maxlength='15'
+    )
+    p 12-15자
+
+    label PW 확인:
+    input(
+      type='password'
+      name='checkPassword'
+      placeholder='Password'
+      required=true
+      pattern='.{12,}'
+      maxlength='15'
+    )
+    p=passwordError
+    p 12-15자 비밀번호를 확인해주세요
+
+    input(
+      type='reset'
+      name='reset'
+      value='reset'
     )
 
     button(
