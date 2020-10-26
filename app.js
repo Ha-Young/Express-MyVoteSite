@@ -1,8 +1,12 @@
-const express = require('express');
+require('dotenv').config();
+require('./db');
+
 const path = require('path');
+const express = require('express');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 const createError = require('http-errors');
-const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const index = require('./routes/index');
@@ -13,6 +17,14 @@ const app = express();
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+  })
+);
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -37,7 +49,7 @@ app.use(function (err, req, res, next) {
 });
 
 app.listen(function () {
-  console.log(`[Sever] Listening ${process.env.PORT || '3000'}`);
+  console.log(`[Sever] Listening ${process.env.PORT || '3000'} - env: ${process.env.NODE_ENV}`);
 });
 
 module.exports = app;

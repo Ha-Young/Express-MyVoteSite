@@ -1,6 +1,15 @@
 extends ./layouts/layout
 
 block content
-  h1 This is home!!!
-  p Welcome to #{title}
-  p hohoho
+  if user
+    a(href='/votings/new' class='btn-create-vote') Create Vote
+  h1 투표해보세용!
+  ul
+  - var n = 0;
+    while n < 5
+      div(class=`card ${n++}`)
+        a(href='/')
+          h3 오늘 점심 뭐 먹지?
+          p host: TOGGO
+          p expired: 2020-10-30
+          p state: On Air

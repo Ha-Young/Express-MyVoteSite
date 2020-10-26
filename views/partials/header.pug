@@ -1,4 +1,8 @@
 header
   a(href='/') Logo
-  a(href='/auth/signup') Signup
-  a(href='/auth/login') Login
+  if user
+    .header-username #{user.username}
+    a(href='/auth/logout') Logout
+  else
+    a(href='/auth/signup') Signup
+    a(href='/auth/login') Login
