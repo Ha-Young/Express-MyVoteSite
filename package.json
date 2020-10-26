@@ -3,15 +3,24 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "dev": "NODE_ENV=development nodemon ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
-    "dotenv": "^8.2.0",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
+    "express-session": "^1.17.1",
     "http-errors": "~1.6.3",
+    "mongoose": "^5.10.10",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.6",
     "morgan": "~1.9.1"
   }
 }

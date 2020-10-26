@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>가입</title>
+</head>
+<body>
+  <form action='/signup' method='POST' autocomplete='off'>
+    <label for='email'>이메일: </label>
+    <input
+      pattern='/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/'
+      id='email'
+      name='email'
+      placeholder='이메일을 입력하세요'
+      required
+    ><br>
+    <label for='password'>비밀번호: </label>
+    <input
+      type='password'
+      pattern='.{4,}'
+      title='네 글자가 넘어야 합니다'
+      id='password'
+      name='password'
+      placeholder='비밀번호를 설정하세요'
+      required
+    ><br>
+    <label for='password-confirm'>비민번호 재입력: </label>
+    <input
+      type='password'
+      pattern='.{4,}'
+      title='네 글자가 넘어야 합니다'
+      id='password-confirm'
+      name='password-confirm'
+      placeholder='비밀번호를 확인합니다'
+      required
+    ><br>
+    <input type='submit' value='가입' disabled>
+  </form>
+  <a href='/login'>로그인</a>
+</body>
+</html>

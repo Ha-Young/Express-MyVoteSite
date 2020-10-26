@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('../src/passport');
 
 router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express' });
+  req.logout();
+  res.status(302).redirect('/login');
 });
 
 module.exports = router;
