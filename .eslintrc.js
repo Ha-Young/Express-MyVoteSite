@@ -22,6 +22,17 @@ module.exports = {
             'error',
             'always'
         ],
-        'no-unused-vars': 'none',
+        'no-unused-vars': [
+            'error',
+            { 'args': 'none' }
+        ],
+        'arrow-parens': [
+            'error',
+            'always'
+        ],
+        'func-style': [
+            'error',
+            'expression'
+        ]
     }
 };
