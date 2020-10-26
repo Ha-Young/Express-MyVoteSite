@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1 Login
+
+  form(action='/login', method='POST')
+    p email:
+
+    input(
+      type='text'
+      name='email'
+    )
+    p PW:
+
+    input(
+      type='password'
+      name='password'
+    )
+
+    button(
+      type='submit'
+    )
