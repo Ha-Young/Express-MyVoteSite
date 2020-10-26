@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const User = require('../Model/User');
+const User = require('../models/user');
 const bcrypt = require('bcrypt');
 
 module.exports = () => {
@@ -12,6 +12,8 @@ module.exports = () => {
     ) {
       let user;
       let isPasswordSame;
+
+      console.log(123);
 
       try {
         user = await User.findOne({ email });

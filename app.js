@@ -9,15 +9,15 @@ const passport = require('passport');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
-
 const dbConfig = require('./config/db');
 const passportConfig = require('./config/passport');
+const routes = require('./constants/routes');
 
 dbConfig();
 passportConfig();
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const globalRouter = require('./routes/globalRouter');
+const votingsRouter = require('./routes/votingsRouter');
 
 const app = express();
 
@@ -30,6 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -40,11 +41,16 @@ app.use(
     }),
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  next();
+});
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use(routes.home, globalRouter);
+app.use(routes.votings, votingsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

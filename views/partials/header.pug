@@ -1,0 +1,17 @@
+header.header
+  .header__wrap
+    .header__title
+      h1 Voting Platform
+    .header__menu
+      a(href='/my-votings')
+        button My voting
+      a(href='/votings/new')
+        button Create voting
+      if user
+        a(href='/logout')
+          button Logout
+      else
+        a(href='/login')
+          button Login
+        a(href='/signup')
+          button Sign Up

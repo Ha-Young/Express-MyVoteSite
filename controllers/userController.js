@@ -1,19 +1,13 @@
-const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-const User = require('../Model/User');
-const router = express.Router();
+const User = require('../models/user');
+const routes = require('../constants/routes');
 
-/* GET home page. */
-router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express' });
-});
-
-router.get('/signup', (req, res, next) => {
+exports.getSignUp = (req, res, next) => {
   res.render('signup');
-});
+};
 
-router.post('/signup', async (req, res, next) => {
+exports.postSignUp = async (req, res, next) => {
   const { email, password, 'password-confirm': passwordConfirm } = req.body;
   const userData = { email, password, passwordConfirm };
 
@@ -56,23 +50,23 @@ router.post('/signup', async (req, res, next) => {
     return;
   }
 
-  res.redirect('/login');
-});
+  res.redirect(routes.home);
+};
 
-router.get('/login', (req, res, next) => {
+exports.getLogin = (req, res, next) => {
   res.render('login');
+};
+
+exports.postLogin = passport.authenticate('local', {
+  successRedirect: routes.home,
+  failureRedirect: routes.login,
 });
 
-router.post(
-  '/login',
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-  })
-);
+exports.logout = (req, res, next) => {
+  req.session.destroy(function (err) {
+    if (err) return next(err);
+  });
 
-router.get('/logout', (req, res, next) => {
-  res.render('logout');
-});
-
-module.exports = router;
+  req.logout();
+  res.redirect(routes.home);
+};

@@ -1,4 +1,4 @@
-extends layout
+extends layouts/layout
 
 block content
   form(action="/signup" method="post")
@@ -13,6 +13,4 @@ block content
       input(id="sign__password__confirm" type="password" name="password-confirm")
     .sign.sign__btn__submit
       button(type="submit") Sign Up
-  - console.log(error);
-  if (error)
-    #{error}
+  h4= error
