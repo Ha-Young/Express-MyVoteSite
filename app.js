@@ -11,6 +11,8 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const signupRouter = require('./routes/signup');
 const loginRouter = require('./routes/login');
+const votingsRouter = require('./routes/votings');
+const myVotingsRouter = require('./routes/my-votings');
 const session = require('express-session');
 const app = express();
 
@@ -19,6 +21,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 // view engine setup
@@ -34,6 +37,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
+app.use('/votings', votingsRouter);
+app.use('/my-votings', myVotingsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
