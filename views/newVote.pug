@@ -1,0 +1,28 @@
+extends ./layouts/layout
+
+block content
+  h1 New vote
+  form(action='/votings/new', method='POST')
+    label
+      | title
+      input(type='text', name='title' required)
+    label
+      | expiredAt
+      input(type='datetime-local', name='expiredAt', step=1800 required)
+    label
+      | voting List
+      .item-container
+        input(type='text', id='item' required)
+        button#btn-add-item 추가
+      ul.item-list
+        li
+          input(type='text', name='itemList', value='짜장면')
+          button.btn-delete-item 삭제
+        li
+          input(type='text', name='itemList', value='삼겹살 스테이크')
+          button.btn-delete-item 삭제
+        li
+          input(type='text', name='itemList', value='국시')
+          button.btn-delete-item 삭제
+    input(type='submit' name='submit')
+  script(src='/javascripts/index.js')

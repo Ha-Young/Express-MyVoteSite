@@ -4,7 +4,6 @@ const router = express.Router();
 
 router.get('/', function (req, res, next) {
   console.log('req.session: ', req.session);
-
   res.render('index', { user: req.session.user });
 });
 

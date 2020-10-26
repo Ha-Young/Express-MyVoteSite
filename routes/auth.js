@@ -31,6 +31,8 @@ router.post('/signup', async function (req, res, next) {
     });
 
     req.session.user = newUser;
+    // res.locals.user = req.session.user;
+
     res.redirect('/');
   } catch (error) {
     next(error);

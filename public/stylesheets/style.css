@@ -22,3 +22,7 @@ footer {
 .btn-create-vote {
   background: green;
 }
+
+.item-container {
+  background-color: salmon;
+}
