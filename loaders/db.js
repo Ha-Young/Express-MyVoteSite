@@ -19,6 +19,7 @@ db.on('disconnected', () => {
     await mongoose.connect(process.env.ATLAS_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useCreateIndex: true,
     });
   } catch (err) {
     console.error('db init process', err);
