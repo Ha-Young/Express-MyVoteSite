@@ -6,12 +6,13 @@
   <title>로그인</title>
 </head>
 <body>
-  <form action='/signup' method='POST' autocomplete='off'>
+  <form action='/login' method='POST' autocomplete='off'>
     <label for='email'>이메일: </label>
     <input
-      pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
+      type='email'
+      pattern='[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*'
       id='email'
-      placeholder='이메일을 입력하세요'
+      name='email'
       required
     ><br>
     <label for='password'>비밀번호: </label>

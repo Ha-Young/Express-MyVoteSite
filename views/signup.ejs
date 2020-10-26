@@ -9,7 +9,9 @@
   <form action='/signup' method='POST' autocomplete='off'>
     <label for='email'>이메일: </label>
     <input
-      pattern='/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/'
+      type='email'
+      pattern='[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*'
+      title='이메일 형식에 맞추세요'
       id='email'
       name='email'
       placeholder='이메일을 입력하세요'
