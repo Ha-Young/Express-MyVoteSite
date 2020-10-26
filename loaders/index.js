@@ -1,5 +1,6 @@
 const config = require('../config');
 const mongooseLoader = require('./mongoose');
+require('./passport');
 
 const express = require('express');
 const path = require('path');
@@ -39,7 +40,7 @@ const initLoaders = app => {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  app.use(require('./registerLocalsUser'));
+  app.use(require('./localsMiddleware'));
 };
 
 module.exports = initLoaders;

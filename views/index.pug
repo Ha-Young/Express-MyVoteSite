@@ -1,5 +1,8 @@
-extends layout
+extends layouts/main
+
+block styles
+  link(rel='stylesheet', href='/stylesheets/home.css')
 
 block content
-  h1= title
-  p Welcome to #{title}
+  if user
+    h2 #{user.displayName} 님 반갑습니당

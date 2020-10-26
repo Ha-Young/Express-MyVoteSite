@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { VOTINGS } = require('../constants/routes');
+const VOTINGS = require('../constants/routes').VOTINGS;
 
 const votingsController = require('../controllers/votings');
 const requiresLogin = require('../controllers/middlewares/requiresLogin');

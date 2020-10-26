@@ -1,4 +1,8 @@
-exports.getAll = (req, res, next) => {};
+const VIEWS = require('../constants/views');
+
+exports.getAll = (req, res, next) => {
+  res.render(VIEWS.INDEX, { title: 'INDEX' });
+};
 
 exports.getAllMyVotings = (req, res, next) => {};
 

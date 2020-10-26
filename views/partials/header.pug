@@ -1,0 +1,17 @@
+header
+  .logo
+    a(href=routes.HOME) HOME
+  .menu
+    ul
+      if !user
+        li
+          a(href=routes.SIGNUP) Sign Up
+        li
+          a(href=routes.LOGIN) Log In
+      else
+        li
+          span #{user.displayName}
+        li
+          a(href=routes.MY_VOTINGS) My Votings
+        li
+          a(href=routes.LOGOUT) Log Out
