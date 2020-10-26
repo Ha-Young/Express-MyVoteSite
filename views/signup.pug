@@ -1,0 +1,15 @@
+extends ./layouts/layout
+
+block content
+  h1 Sign Up
+  form(action='/auth/signup', method='POST')
+    label
+      | email
+      input(type='email', name='email' required)
+    label
+      | password
+      input(type='password', name='password' required)
+    label
+      | check password
+      input(type='password', name='password' required)
+    input(type='submit' name='submit')
