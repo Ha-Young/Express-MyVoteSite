@@ -1,8 +1,14 @@
 const express = require('express');
+
+const home = require('./home');
+const notFound = require('./notFound');
+const errorHandler = require('./errorHandler');
+
 const router = express.Router();
 
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.use('/', home);
+
+router.use(notFound);
+router.use(errorHandler);
 
 module.exports = router;

@@ -3,8 +3,9 @@ const logger = require('morgan');
 const compression = require('compression');
 const helmet = require('helmet');
 const path = require('path');
+const express = require('express');
 
-module.exports = (app, express) => {
+module.exports = (app) => {
   const middleware = [];
 
   middleware.push(cookieParser());
