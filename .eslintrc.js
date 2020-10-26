@@ -2,37 +2,46 @@ module.exports = {
     'env': {
         'browser': true,
         'es2021': true,
-        'node': true
+        'node': true,
     },
     'extends': 'eslint:recommended',
     'parserOptions': {
         'ecmaVersion': 12,
-        'sourceType': 'module'
+        'sourceType': 'module',
     },
     'rules': {
         'semi': [
             'error',
-            'always'
+            'always',
         ],
         'quotes': [
             'error',
-            'single'
+            'single',
         ],
         'eol-last': [
             'error',
-            'always'
+            'always',
         ],
         'no-unused-vars': [
             'error',
-            { 'args': 'none' }
+            {
+                'args': 'none',
+            },
         ],
         'arrow-parens': [
             'error',
-            'always'
+            'always',
         ],
         'func-style': [
             'error',
-            'expression'
-        ]
-    }
+            'expression',
+        ],
+        'comma-dangle': [
+            'error',
+            {
+                'arrays': 'always',
+                'objects': 'always',
+            },
+        ],
+    },
 };
