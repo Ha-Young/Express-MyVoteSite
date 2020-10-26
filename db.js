@@ -4,6 +4,7 @@ mongoose.connect(process.env.ATLAS_DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
+  useCreateIndex: true,
 });
 
 const db = mongoose.connection;

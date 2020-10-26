@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const signupController = require('./controllers/signup.controller');
 
-// 로그인 후 사용자 이용 불가
 router.get('/', (req, res, next) => {
-  res.send('signup');
+  res.render('signup');
+});
+
+router.post('/', signupController.createNewUser, (req, res, next) => {
+  res.redirect('/login');
 });
 
 module.exports = router;
