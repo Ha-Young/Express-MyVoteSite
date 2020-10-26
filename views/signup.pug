@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  form(action="/signup" method="post")
+    .sign.sign__email
+      label(for="sign__email") Email
+      input(id="sign__email" type="email" name="email")
+    .sign.sign__password
+      label(for="sign__password") Password
+      input(id="sign__password" type="password" name="password")
+    .sign.sign__password__confirm
+      label(for="sign__password__confirm") Confirm Password
+      input(id="sign__password__confirm" type="password" name="password-confirm")
+    .sign.sign__btn__submit
+      button(type="submit") Sign Up
+  - console.log(error);
+  if (error)
+    #{error}

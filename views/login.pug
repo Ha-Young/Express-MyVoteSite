@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    form(action="/login" method="post")
+      .login.login__email
+        label(for="email") Email
+        input(id="email" type="email" name="email")
+      .login.login__password
+        label(for="password") Password
+        input(id="password" type="password" name="password")
+      .login.login__btn
+        button(id="btn-login" type="submit") Login
+    a(href="/signup")
+      button Sign Up
