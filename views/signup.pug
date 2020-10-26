@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  h1 signup
+
+  form(action='/signup', method='POST')
+    p name:
+
+    input(
+      type='text'
+      name='name'
+      required=true
+    )
+
+    p e-mail:
+
+    input(
+      type='text'
+      name='email'
+      required=true
+    )
+    p=error
+    p PW:
+
+    input(
+      type='password'
+      name='password'
+      required=true
+    )
+
+    button(
+      type='submit'
+    ) 가입
