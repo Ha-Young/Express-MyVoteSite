@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const mongodbError = require('../services/createError')('DATABASE');
+const { DATABASE, } = require('../services/constants');
+const mongodbError = require('../services/createError')(DATABASE);
 
 const uri = process.env.MONGODB_URI;
 

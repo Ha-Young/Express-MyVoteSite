@@ -6,6 +6,7 @@
     "start": "NODE_ENV=development nodemon ./bin/www"
   },
   "dependencies": {
+    "chai": "^4.2.0",
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.4",
     "express": "~4.16.1",

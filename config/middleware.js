@@ -10,7 +10,7 @@ module.exports = (app) => {
 
   middleware.push(cookieParser());
   middleware.push(express.json());
-  middleware.push(express.urlencoded({ extended: false }));
+  middleware.push(express.urlencoded({ extended: false, }));
   middleware.push(express.static(path.join(__dirname, 'public')));
 
   if (process.env.NODE_ENV === 'development') {
