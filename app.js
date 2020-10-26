@@ -1,17 +1,21 @@
 require('dotenv').config();
 require('./db');
 const passport = require('passport');
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var signupRouter = require('./routes/signup');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const signupRouter = require('./routes/signup');
+const loginRouter = require('./routes/login');
+const session = require('express-session');
+const app = express();
 
-var app = express();
+app.use(session({
+  secret: 'cats',
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 // view engine setup
@@ -21,12 +25,12 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/signup', signupRouter);
+app.use('/login', loginRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
