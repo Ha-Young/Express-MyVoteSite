@@ -1,9 +1,20 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+const authController = require('../controllers/auth');
+const votingsController = require('../controllers/votings');
+const requiresLogin = require('../controllers/middlewares/requiresLogin');
+
+router.get('/', requiresLogin, votingsController.getAll);
+
+router.get('/signup', authController.getSignup);
+router.post('/signup', authController.postSignup, authController.postLogin);
+
+router.get('/login', authController.getLogin);
+router.post('/login', authController.postLogin);
+
+router.get('/my-votings', votingsController.getAllMyVotings);
+
+router.get('/logout', requiresLogin, authController.getLogout);
 
 module.exports = router;

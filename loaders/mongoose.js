@@ -2,12 +2,8 @@ const mongoose = require('mongoose');
 
 const config = require('../config');
 
-module.exports = async () => {
-  await mongoose.connect(config.databaseURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  });
+const mongooseLoader = () => {
+  mongoose.connect(config.databaseURL, config.mongoose);
 
   const connection = mongoose.connection;
 
@@ -16,3 +12,5 @@ module.exports = async () => {
 
   return connection;
 };
+
+module.exports = mongooseLoader;

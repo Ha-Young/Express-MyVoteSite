@@ -4,14 +4,14 @@ const express = require('express');
 const initLoaders = require('./loaders');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const votingsRouter = require('./routes/votings');
 
 const app = express();
 
 initLoaders(app);
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/votings', votingsRouter);
 
 app.use(function (req, res, next) {
   next(createError(404));

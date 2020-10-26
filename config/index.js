@@ -7,7 +7,6 @@ const rootDir = path.join(__dirname, '..');
 
 const config = {
   rootDir,
-  databaseURL: process.env.MONGODB_URI,
   logs: {
     level: process.env.LOG_LEVEL || 'dev',
   },
@@ -21,6 +20,12 @@ const config = {
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: false,
+  },
+  databaseURL: process.env.MONGODB_URI,
+  mongoose: {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
   },
 };
 

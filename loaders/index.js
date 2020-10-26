@@ -7,6 +7,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const compression = require('compression');
+const helmet = require('helmet');
 const sassMiddleware = require('node-sass-middleware');
 const passport = require('passport');
 const session = require('express-session');
@@ -15,8 +16,11 @@ const MongoStore = require('connect-mongo')(session);
 const initLoaders = app => {
   if (process.env.NODE_ENV === 'development') {
     app.use(logger(config.logs.level));
-  } else if (process.env.NODE_ENV === 'production') {
+  }
+
+  if (process.env.NODE_ENV === 'production') {
     app.use(compression());
+    app.use(helmet());
   }
 
   app.use(cookieParser());
@@ -28,17 +32,14 @@ const initLoaders = app => {
 
   app.use(express.static(path.join(config.rootDir, 'public')));
 
-  app.use((req, res, next) => {
-    res.locals.user = req.user || null;
-    next();
-  });
+  const mongooseConnection = mongooseLoader();
+  const store = new MongoStore({ mongooseConnection });
+  app.use(session({ ...config.session, store }));
 
-  mongooseLoader().then(mongooseConnection => {
-    const store = new MongoStore({ mongooseConnection });
-    app.use(session({ ...config.session, store }));
-    app.use(passport.initialize());
-    app.use(passport.session());
-  });
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  app.use(require('./registerLocalsUser'));
 };
 
 module.exports = initLoaders;
