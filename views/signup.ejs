@@ -13,6 +13,7 @@
       id='email'
       name='email'
       placeholder='이메일을 입력하세요'
+      onkeyup='validatePasswords();'
       required
     ><br>
     <label for='password'>비밀번호: </label>
@@ -23,6 +24,7 @@
       id='password'
       name='password'
       placeholder='비밀번호를 설정하세요'
+      onkeyup='validatePasswords();'
       required
     ><br>
     <label for='password-confirm'>비민번호 재입력: </label>
@@ -33,10 +35,12 @@
       id='password-confirm'
       name='password-confirm'
       placeholder='비밀번호를 확인합니다'
+      onkeyup='validatePasswords();'
       required
     ><br>
-    <input type='submit' value='가입' disabled>
+    <input type='submit' id='submit-button' value='가입' disabled>
   </form>
   <a href='/login'>로그인</a>
 </body>
+<script src='/javascripts/signupPage.js'></script>
 </html>
