@@ -1,3 +1,5 @@
+if (process.env.NODE_ENV === 'development') require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 
@@ -5,7 +7,9 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
-require('./middleware')(app, express);
+
+require('./config/middleware')(app, express);
+require('./config/database')();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
