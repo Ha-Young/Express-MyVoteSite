@@ -1,19 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Noto+Sans+KR:wght@400;700&family=Righteous&display=swap');
 
 body {
-  padding: 0 50px;
+  padding: 0 30px;
   font-family: 'Fira Code', 'Noto Sans KR', sans-serif;
-  color: #e8ecf0;
-  background-color: rgb(10, 7, 37);
+  background-color: #eee;
+
+  main {
+    margin: 30px auto;
+  }
 
   header {
-    border: 1px solid #e8ecf0;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+
+    img {
+      width: 150px;
+    }
 
     .menu {
-      display: flex;
-      align-items: center;
+      font-size: 1.2rem;
+
+      ul {
+        list-style: none;
+      }
     }
   }
 
@@ -21,7 +31,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 0.6rem;
+    padding-top: 50px;
+    font-size: 0.8rem;
   }
 }
 

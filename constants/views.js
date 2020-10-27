@@ -5,7 +5,7 @@ const VIEWS = {
   MY_VOTINGS: 'my-votings',
   LOGOUT: 'logout',
   VOTING: 'voting',
-  NEW: 'new',
+  NEW: 'newVoting',
   SUCCESS: 'success',
   ERROR: 'error',
 };

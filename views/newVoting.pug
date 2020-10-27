@@ -1,0 +1,32 @@
+extends layouts/main
+
+block styles
+  link(rel='stylesheet', href='/stylesheets/form.css')
+  link(rel='stylesheet', href='/stylesheets/voting-form.css')
+
+block content
+  .form-container.voting
+    form(action=routes.VOTINGS_NEW, method="POST")
+      .title
+        label(for="title") 투표 제목
+        input(type="text", id="title", name="title", placeholder="제목을 입력하세요.", required=true)
+      .option
+        label(for="option") 옵션
+        input(type="text", id="option", name="option1", required=true)
+        input(type="text", id="option", name="option2", required=true)
+        .additional-option
+          input(type="text", id="option", name="option", required=true)
+          button.circle(type="button") -
+        .additional-option
+          input(type="text", id="option", name="option", required=true)
+          button.circle(type="button") -
+        .button-wapper
+          .add-option
+            button.circle(type="button") +
+            .option-label 항목추가
+      .expiration
+        label(for="expiration") 마감시간
+        .date
+          input(type="date", id="expiration", name="expiration", required=true)
+          input(type="time", id="expiration", name="expiration", required=true)
+      input(type="submit", value="Submit Voting")

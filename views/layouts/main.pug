@@ -3,13 +3,12 @@ html
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title= title
+    title Voting Platform
     link(rel='stylesheet', href='/stylesheets/styles.css')
     block styles
   body
     include ../partials/header
     main
-      h1= title
       block content
     include ../partials/footer
     script(src="/javascripts/main.js")

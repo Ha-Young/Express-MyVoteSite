@@ -11,8 +11,8 @@ const app = express();
 
 initLoaders(app);
 
+app.use(ROUTES.VOTINGS_HOME, votingsRouter);
 app.use(ROUTES.HOME, indexRouter);
-app.use(ROUTES.VOTINGS, votingsRouter);
 
 app.use(function (req, res, next) {
   next(createError(404));

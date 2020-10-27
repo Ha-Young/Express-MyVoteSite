@@ -1,15 +1,14 @@
 extends layouts/main
 
 block styles
-  link(rel='stylesheet', href='/stylesheets/signup.css')
+  link(rel='stylesheet', href='/stylesheets/form.css')
 
 block content
   .form-container
-    form(action=routes.SIGNUP, method="post")
+    form(action=routes.SIGNUP, method="POST")
       input(type="text", name="displayName", placeholder="Display Name", required=true)
       input(type="email", name="email", placeholder="Email", required=true)
       input(type="password", name="password", placeholder="Password", required=true)
       input(type="password", name="password2", placeholder="Verify Password")
-      input(type="submit", value="Sign Up!")
-      button(type="button")
-        a(href=routes.GOOGLE_LOGIN) Continue with Google
+      input(type="submit", value="Sign Up")
+    include partials/googleLogin

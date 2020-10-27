@@ -22,7 +22,7 @@ router.get(
   authController.postGoogleLogin
 );
 
-router.get(GLOBAL.MY_VOTINGS, votingsController.getAllMyVotings);
+router.get(GLOBAL.MY_VOTINGS, requiresLogin, votingsController.getAllMyVotings);
 
 router.get(GLOBAL.LOGOUT, requiresLogin, authController.getLogout);
 

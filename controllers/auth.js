@@ -34,7 +34,7 @@ exports.postSignup = async (req, res, next) => {
 exports.getLogin = (req, res, next) => {
   const { user } = req;
   if (user) return res.redirect('/');
-  res.render('login', { title: 'LOGIN' });
+  res.render('login', { title: 'Login' });
 };
 
 exports.postLogin = passport.authenticate('local', {
