@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>new</title>
-    <link rel='stylesheet' href='/stylesheets/new.css' />
   </head>
   <body>
-    <h1>new</h1>
-    <p></p>
+    <div class='voting-new'>
+      <form method='post'>
+        <div>
+          <input type='text' name='title' placeholder='투표제목' autocomplete='off' />
+        </div>
+        <div>
+          <input type='date' name='expire-day' />
+        </div>
+        <div id='poll-selector'>
+          <input id='poll-option' type='text' name='option' placeholder='항목 입력' autocomplete='off' />
+          <input id='poll-option' type='text' name='option' placeholder='항목 입력' autocomplete='off' />
+        </div>
+        <button type='button' id='plus-option'>항목추가</button>
+        <button id='make-voting'>투표 만들기</button>
+      </form>
+      <a href='/'>HOME</a>
+    </div>
+    <link rel='stylesheet' href='/stylesheets/new.css' />
+    <script type='text/javascript' src='/javascripts/pluspoll.js'></script>
   </body>
 </html>

@@ -5,14 +5,14 @@ exports.renderSignUp = (req, res, next) => {
 };
 
 exports.createUser = async (req, res, next) => {
+  const { username, id, password } = req.body;
   const userData = {
-    username: req.body.username,
-    id: req.body.id,
-    password: req.body.password
+    username: username,
+    id: id,
+    password: password
   };
 
   try {
-
     await User.create(userData);
 
     return res.redirect('/login');

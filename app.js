@@ -15,7 +15,7 @@ const homeRouter = require('./routes/home');
 const loginRouter = require('./routes/login');
 const signupRouter = require('./routes/signup');
 const votingRouter = require('./routes/votings');
-const myVotingRouter = require('./routes/myVotings');
+const myVotingRouter = require('./routes/my-votings');
 
 const passport = require('passport');
 const User = require('./models/User');
@@ -39,7 +39,7 @@ passport.use(new LocalStrategy(
         if (result === true) {
           return done(null, user);
         } else {
-          return done(null, false, { message: 'Incorrect password'});
+          return done(null, false, { message: 'Incorrect password' });
         }
       });
     });
@@ -47,13 +47,11 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function(user, done) {
-  console.log('serial');
-  done(null, user.id);
+  done(null, user);
 });
 
-passport.deserializeUser(function(id, done) {
-  console.log(1);
-  User.findById(id, function(err, user) {
+passport.deserializeUser(function(user, done) {
+  User.findById(user._id, function(err, user) {
     done(err, user);
   });
 });
@@ -68,12 +66,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(passport.initialize());
 app.use(session({
   secret: process.env.SESSION_SECRET_KEY,
   resave: true,
   saveUninitialized: false
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 const db = mongoose.connection;
 const port = process.env.PORT;
@@ -96,7 +96,7 @@ app.use('/', homeRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/votings', votingRouter);
-app.use('/myvotings', myVotingRouter);
+app.use('/my-votings', myVotingRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

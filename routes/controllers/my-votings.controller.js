@@ -1,3 +1,3 @@
 exports.renderMyVotings = (req, res, next) => {
-  return res.render('myVotings');
+  return res.render('my-Votings');
 };

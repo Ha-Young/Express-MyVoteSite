@@ -5,20 +5,22 @@
   </head>
   <body>
     <form method='post'>
-      <div>
+      <div class='signup-box'>
+        <div>
           <label>Username</label>
-          <input type='text' name='username' minlength='1' required />
+          <input type='text' name='username' minlength='1' placeholder='NAME' autocomplete='off' required />
+        </div>
+        <div>
+          <label>ID</label>
+          <input type='text' name='id' placeholder='ABCD@E-MAIL.COM' minlength='5' autocomplete='off' required />
       </div>
-      <div>
-        <label>ID</label>
-        <input type='text' name='id' placeholder='E-MAIL을 입력하세요' minlength='5' required />
-    </div>
-      <div>
+        <div>
           <label>PASSWORD</label>
-          <input type='password' name='password' minlength='5' maxlength='10' required />
-      </div>
-      <div>
+          <input type='password' name='password' placeholder='PASSWORD' minlength='5' maxlength='10' autocomplete='off' required />
+        </div>
+        <div>
           <input type='submit' value='JOIN'/>
+        </div>
       </div>
     </form>
   </body>

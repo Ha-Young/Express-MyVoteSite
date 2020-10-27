@@ -1,0 +1,44 @@
+body {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-box {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 700px;
+}
+
+input[type='text'],
+input[type='password'] {
+  display: flex;
+  width: 297px;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  outline: none;
+}
+
+input[type='submit'] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 306px;
+  height: 40px;
+  font-size: 13px;
+  background-color: RGB(239, 239, 239);
+  border: 1px solid grey;
+  color: black;
+  outline: none;
+  transition: all 0.4s;
+}
+
+input[type='submit']:hover {
+  background-color: cornflowerblue;
+}
