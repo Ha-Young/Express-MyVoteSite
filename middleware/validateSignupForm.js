@@ -13,10 +13,10 @@ const {
 
 const validateSignupForm = async (req, res, next) => {
   const { email, password, nickname, } = req.body;
-  const isDuplicatedEmail = await User.findOne({ email, });
+  const isExist = await User.exists({ email, });
   const message = [];
 
-  if (isDuplicatedEmail) {
+  if (isExist) {
     message.push(EMAIL_DUPLICATE_ERROR_MESSAGE);
   }
 

@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { SALT_ROUND } = require('../services/constants');
+const { SALT_ROUND, } = require('../services/constants');
 
 const bcryptPassword = async (req, res, next) => {
   try {
