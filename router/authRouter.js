@@ -2,32 +2,45 @@
 const express = require('express');
 const authRouter = express.Router();
 const votingController = require('../controllers/voting.controller');
+const authController = require('../controllers/auth.controllers');
 const authenticateUser = require('../middlewares/auth.middleware');
-const {
-  flashMessage,
-  registerUser,
-  postLogin,
-  logOut,
-} = require('../controllers/auth.controllers');
 
-authRouter.use(flashMessage);
+authRouter.use(authController.flashMessage);
 
-// authRouter.get('/', authenticateUser, (req, res, _next) =>
-//   res.redirect('/votings')
-// );
+authRouter.get(
+  '/',
+  votingController.getVotingList
+);
 
-authRouter.get('/', votingController.getVotingList);
+authRouter.get(
+  '/signup',
+  authController.getSignUp
+);
 
-authRouter.get('/signup', (req, res, _next) => res.render('index'));
+authRouter.post(
+  '/signup',
+  authController.registUser
+);
 
-authRouter.post('/signup', registerUser);
+authRouter.get(
+  '/login',
+  authController.getLogIn
+);
 
-authRouter.get('/login', (req, res, _next) => res.render('login'));
+authRouter.post(
+  '/login',
+  authController.logInUser
+);
 
-authRouter.post('/login', postLogin);
+authRouter.get(
+  '/logout',
+  authController.logOut
+);
 
-authRouter.get('/logout', logOut);
-
-authRouter.get('/my-voting', authenticateUser, votingController.getMyVoting);
+authRouter.get(
+  '/my-voting',
+  authenticateUser,
+  votingController.getMyVoting
+);
 
 module.exports = authRouter;

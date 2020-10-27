@@ -17,7 +17,6 @@
           <% for (option of vote.options) { %>
             <div class="vote-option">
               <%= option.desc %>
-              <%= option.counts %>명
               <input type="radio" name="select" value="<%= option._id %>">
             </div>
           <% } %>

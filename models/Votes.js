@@ -29,10 +29,11 @@ const VoteSchema = new mongoose.Schema({
         type: String,
         require: true,
       },
-      counts: {
-        type: Number,
-        default: 0,
-      },
+      voter: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+        unique: true,
+      }],
     },
   ],
 }, schemaOptions);

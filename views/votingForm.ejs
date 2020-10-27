@@ -21,11 +21,11 @@
       </div>
       <div id="options-list"></div>
       <input
-        type="date"
+        type="datetime-local"
         name="expiration"
         class="new-field"
         id="expiration"
-        min="<%= minDate %>"
+        min="<%= minDate %>T00:00"
         pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
         autocomplete="off"
         placeholder="투표 내용"

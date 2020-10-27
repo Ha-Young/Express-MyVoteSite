@@ -22,7 +22,12 @@ const userSchema = new mongoose.Schema({
   },
   verified: {
     type: Boolean,
+    default: false,
   },
+  voteCollection: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Votes',
+  }
 });
 
 module.exports = new mongoose.model('User', userSchema);

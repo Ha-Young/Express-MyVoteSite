@@ -37,8 +37,8 @@ exports.getVotingList = async (req, res, next) => {
   try{
     const votes = await Votes.find();
 
-    const formattedExpireDate = votes.map(vote => format(vote.expiration, 'yyyy/MM/dd'));
-    const formattedCreateDate = votes.map(vote => format(vote.createdAt, 'yyyy/MM/dd'));
+    const formattedExpireDate = votes.map(vote => format(vote.expiration, 'yyyy/MM/dd HH:mm'));
+    const formattedCreateDate = votes.map(vote => format(vote.createdAt, 'yyyy/MM/dd HH:mm'));
 
     const expiredMessage = votes.map(vote => {
       return new Date() > vote.expiration ? '투표 종료' : '투표 중';
@@ -62,6 +62,7 @@ exports.getOne = async (req, res, next) => {
   try {
     const vote = await Votes.findOne({ id });
 
+
     const formattedExpireDate = format(vote.expiration, 'yyyy/MM/dd HH:mm');
     const formattedCreateDate = format(vote.createdAt, 'yyyy/MM/dd HH:mm');
     const expiredMessage = new Date() > vote.expiration ? '투표 종료' : '투표 중';
@@ -79,20 +80,23 @@ exports.getOne = async (req, res, next) => {
 
 
 exports.updateOne = async (req, res, next) => {
-  const voteId = req.params._id;
-  const optionId = req.body.select;
+  const voteId = req.params.id;
+  const targetId = req.body.select;
+  const userId = req.user._id;
 
   try {
-    const vote = await Votes.findOne({ voteId });
-    console.log(vote);
-    let count = 0;
-    let newCount = count + 1;
+    const vote = await Votes.findById(voteId);
 
-    await Votes.findByIdAndUpdate(
-      optionId,
-      { counts: newCount },
-      { new: true },
-    );
+    const targetOption = vote.options.find(option => {
+      const optionId = option._id.toString();
+      return optionId === targetId;
+    });
+
+    if (!targetOption.voter.includes(userId)) {
+      targetOption.voter.push(userId);
+    }
+
+    await vote.save();
 
     res.redirect(`/votings/${voteId}`);
 
