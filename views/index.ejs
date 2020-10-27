@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head') %>
+<body>
+  <%- include('partials/head') %>
+  <div class="container">
+    <h1>Register</h1>
+    <% if(typeof err !== 'undefined') {%>
+      <div>
+        <h3><%= err %></h3>
+      </div>
+    <% } %>
+    <form action="/signup" method="POST">
+      <div class="form-wrap">
+        <label for="email">이메일 주소를 입력해 주세요.</label>
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          id="email"
+          autocomplete="off"
+          placeholder="Email"
+          value="<%= typeof email !== 'undefined' ? email : '' %>"
+        >
+      </div>
+      <div class="form-wrap">
+        <label for="userName">닉네임은 뭘로 할까요?</label>
+        <input
+          type="text"
+          class="form-control"
+          name="userName"
+          id="userName"
+          autocomplete="off"
+          placeholder="Username"
+          value="<%= typeof username !== 'undefined' ? username : '' %>"
+        >
+      </div>
+      <div class="form-wrap">
+        <label for="password">비밀번호를 입력해 주세요.</label>
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          id="password"
+          autocomplete="off"
+          placeholder="Password"
+        >
+      </div>
+      <div class="form-wrap">
+        <label for="confirmPassword">비밀번호를 한 번 더 입력해 주세요.</label>
+        <input
+          type="password"
+          class="form-control"
+          name="confirmPassword"
+          id="confirmPassword"
+          autocomplete="off"
+          placeholder="Confirm Password"
+        >
+      </div>
+      <div class="form-wrap">
+        <input type="submit" value="Register">
+      </div>
+      <p>
+        이미 아이디가 있으신가요?
+        <a href="/login">로그인하기</a>
+      </p>
+    </form>
+  </div>
+</body>
+
+</html>

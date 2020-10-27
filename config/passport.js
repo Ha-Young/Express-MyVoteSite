@@ -1,31 +1,30 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const Users = require('../routes/signIn');
+const localStrategy = require('passport-local').Strategy;
+const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
-module.exports = () => {
-  passport.serializeUser((user, done) => { // Strategy 성공 시 호출됨
-    done(null, user); // 여기의 user가 deserializeUser의 첫 번째 매개변수로 이동
-  });
+module.exports = passport => {
+  passport.use(
+    new localStrategy({ usernameField: 'email' }, (email, password, done) => {
+      User.findOne({ email: email }, (err, data) => {
+        if (err) throw err;
+        if (!data) return done(null, false, { message: '존재하지 않는 사용자입니다.' });
 
-  passport.deserializeUser((user, done) => { // 매개변수 user는 serializeUser의 done의 인자 user를 받은 것
-    done(null, user); // 여기의 user가 req.user가 됨
-  });
-
-  passport.use(new LocalStrategy({ // local 전략을 세움
-    usernameField: 'id',
-    passwordField: 'pw',
-    session: true, // 세션에 저장 여부
-    passReqToCallback: false,
-  }, (id, password, done) => {
-    Users.findOne({ id: id }, (findError, user) => {
-      if (findError) return done(findError); // 서버 에러 처리
-      if (!user) return done(null, false, { message: '존재하지 않는 아이디입니다' }); // 임의 에러 처리
-      return user.comparePassword(password, (passError, isMatch) => {
-        if (isMatch) {
-          return done(null, user); // 검증 성공
-        }
-        return done(null, false, { message: '비밀번호가 틀렸습니다' }); // 임의 에러 처리
+        bcrypt.compare(password, data.password, (err, match) => {
+          if (err) return done(null, false);
+          if (!match) return done(null, false, { message: '패스워드가 일치하지 않습니다.' });
+          if (match) return done(null, data);
+        });
       });
+    })
+  );
+
+  passport.serializeUser((user, cb) => {
+    cb(null, user.id);
+  });
+
+  passport.deserializeUser((id, cb) => {
+    User.findById(id, (err, user) => {
+      cb(err, user);
     });
-  }));
+  });
 };
