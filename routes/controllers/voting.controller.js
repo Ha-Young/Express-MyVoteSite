@@ -63,3 +63,17 @@ exports.updateVoteCount = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.deleteVote = async (req, res, next) => {
+  try {
+    const { voting_id } = req.params;
+    await User.update(
+      { 'my_votings': voting_id },
+      { $pull: { 'my_votings': voting_id } },
+    );
+    await Vote.findOneAndDelete(voting_id);
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
