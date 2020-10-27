@@ -20,10 +20,16 @@ router.get('/error', (req, res, next) => {
   res.send('error, new voting not created');
 });
 
-// 로그인 전 사용자도 접근 가능
-router.get('/:id', (req, res, next) => {
-  res.send('voting details');
+router.get('/:voting_id',
+  votingController.getTargetVote,
+  (req, res, next) => {
+    const targetDetails = req.targetVote;
+    res.render('vote-details', { targetDetails });
 });
 
-
+router.post('/:voting_id',
+  votingController.updateVoteCount,
+  (req, res, next) => {
+    res.send('오호');
+});
 module.exports = router;

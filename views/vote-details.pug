@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  div.vote-details-container
+    h1 투표 상세 페이지
+    h2= targetDetails.title
+    span= targetDetails.writer.nickname
+    span= targetDetails.due_date
+    form(active=`/votings/${targetDetails._id}` method='POST')
+      each option in targetDetails.options
+        input(type='radio' id= option name='vote' value= option._id)
+        label(for= option)= option.optionTitle
+      button(type='submit') 투표

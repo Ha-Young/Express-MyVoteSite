@@ -34,3 +34,17 @@ exports.createNewVote = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getTargetVote = async (req, res, next) => {
+  try {
+    const { voting_id } = req.params;
+    const targetVote = await Vote.findById(voting_id).populate('writer');
+    req.targetVote = targetVote;
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.updateVoteCount = async (req, res, next) => {
+};
