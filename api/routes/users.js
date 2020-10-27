@@ -28,9 +28,7 @@ router.post('/login', async (req, res, next) => {
   let result;
 
   try {
-    // services의 로직 실행
     result = await userServices.authenticate(req.body);
-    console.log(result);
   } catch (err) {
     next(err);
   }
@@ -39,6 +37,14 @@ router.post('/login', async (req, res, next) => {
     res.locals.errorMsg = result.message;
     res.render('login');
   } else {
+    req.session.user = {
+      id: result.userData._id,
+      username: result.userData.username,
+    };
+    req.session.save();
+
+    console.log(req.session);
+
     res.redirect('/');
   }
 
@@ -49,8 +55,14 @@ router.post('/register', async (req, res, next) => {
   try {
     const result = await userServices.createUser(req.body);
 
+    if (result.isFailed) {
+      res.render('register', {
+        errorMsg: result.errorMsg
+      });
+    }
+
     console.log('가입 성공! => ', result);
-    res.redirect('/users/register');
+    res.redirect('/users/login');
   } catch (err) {
     next(err);
   }

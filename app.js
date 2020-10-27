@@ -13,6 +13,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const indexRouter = require('./api/routes/index');
 const usersRouter = require('./api/routes/users');
+const votingsRouter = require('./api/routes/votings');
 
 const app = express();
 
@@ -29,12 +30,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
+  saveUninitialized: false,
+  cookie: { secure: false }
 }));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/votings', votingsRouter);
 
 app.use(function(req, res, next) {
   next(createError(404));
