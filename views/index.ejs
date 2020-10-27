@@ -2,69 +2,71 @@
 <html lang="en">
 <%- include('partials/head') %>
 <body>
-  <%- include('partials/head') %>
+  <%- include('partials/header') %>
   <div class="container">
-    <h1>Register</h1>
+    <h1>Sign up</h1>
+    <div class="auth-wrap">
     <% if(typeof err !== 'undefined') {%>
-      <div>
-        <h3><%= err %></h3>
+      <div class="err-wrap">
+        <h3 class="err-message"><%= err %></h3>
       </div>
     <% } %>
     <form action="/signup" method="POST">
       <div class="form-wrap">
-        <label for="email">이메일 주소를 입력해 주세요.</label>
         <input
           type="email"
-          class="form-control"
+          class="auth-field"
           name="email"
           id="email"
           autocomplete="off"
-          placeholder="Email"
+          placeholder="이메일 주소를 입력해 주세요."
           value="<%= typeof email !== 'undefined' ? email : '' %>"
         >
       </div>
       <div class="form-wrap">
-        <label for="userName">닉네임은 뭘로 할까요?</label>
         <input
           type="text"
-          class="form-control"
+          class="auth-field"
           name="userName"
           id="userName"
           autocomplete="off"
-          placeholder="Username"
+          placeholder="닉네임은 뭘로 할까요?"
           value="<%= typeof username !== 'undefined' ? username : '' %>"
         >
       </div>
       <div class="form-wrap">
-        <label for="password">비밀번호를 입력해 주세요.</label>
         <input
           type="password"
-          class="form-control"
+          class="auth-field"
           name="password"
           id="password"
           autocomplete="off"
-          placeholder="Password"
+          placeholder="비밀번호를 입력해 주세요."
         >
       </div>
       <div class="form-wrap">
-        <label for="confirmPassword">비밀번호를 한 번 더 입력해 주세요.</label>
         <input
           type="password"
-          class="form-control"
+          class="auth-field"
           name="confirmPassword"
           id="confirmPassword"
           autocomplete="off"
-          placeholder="Confirm Password"
+          placeholder="비밀번호를 한 번 더 입력해 주세요."
         >
       </div>
       <div class="form-wrap">
-        <input type="submit" value="Register">
+        <input
+          class="signup-btn"
+          type="submit"
+          value="가입할래요!"
+        >
       </div>
-      <p>
+      <p class="auth-ask">
         이미 아이디가 있으신가요?
         <a href="/login">로그인하기</a>
       </p>
     </form>
+  </div>
   </div>
 </body>
 

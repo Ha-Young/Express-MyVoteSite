@@ -3,9 +3,10 @@
 <%- include('partials/head') %>
 
 <body>
-  <%- include('partials/head') %>
+  <%- include('partials/header') %>
   <div class="container">
-    <h3>Login</h3>
+    <h1>Log in</h1>
+    <div class="auth-wrap">
     <form action="/login" method="POST">
       <% if (success_message !== '') { %>
         <h3><%= success_message %></h3>
@@ -13,40 +14,39 @@
       <% if (error !== '') { %>
         <h3><%= error %></h3>
       <% } %>
-      <div class="form-group">
-        <label for="username">Enter Your Email</label>
+      <div class="form-wrap">
         <input
           type="email"
-          class="form-control"
+          class="auth-field"
           name="email"
           id="username"
           autocomplete="off"
-          placeholder="Email"
+          placeholder="이메일을 입력해 주세요."
         >
       </div>
-      <div class="form-group">
-        <label for="password">Enter Your Password</label>
+      <div class="form-wrap">
         <input
           type="password"
-          class="form-control"
+          class="auth-field"
           name="password"
           id="password"
           autocomplete="off"
-          placeholder="Password"
+          placeholder="비밀번호를 입력해 주세요."
         >
       </div>
-      <div class="form-group">
+      <div class="form-wrap">
         <input
           type="submit"
-          value="Login"
+          value="로그인하기"
+          class="signup-btn"
         >
       </div>
-      <p>
-        New Here ?
-        <a class="card-link" href="/">Register Now</a>
+      <p class="auth-ask">
+        처음이신가요?
+        <a class="card-link" href="/">회원가입하러 가기</a>
       </p>
     </form>
-
+  </div>
   </div>
 </body>
 

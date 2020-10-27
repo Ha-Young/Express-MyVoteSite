@@ -5,23 +5,26 @@
 <body>
   <%- include('partials/header') %>
   <div class="vote-wrap">
-      <div class="vote-container">
-        <h1 class="vote-title"><%= vote.title %></h1>
-        <div class="vote-details">
-          <span class="vote-createdAt"><%= createdDate %></span>
-          <span class="vote-expirationDate"><%= expirationDate %></span>
-          <span class="vote-expired"><%= expired %></span>
-        </div>
+    <div class="vote-container">
+      <h1 class="vote-title"><%= vote.title %></h1>
+      <div class="vote-details">
+        <span class="vote-createdAt"><%= createdDate %></span>
+        <span class="vote-expirationDate"><%= expirationDate %></span>
+        <span class="vote-expired"><%= expired %></span>
+      </div>
+      <form action="/votings/<%= vote._id %>" method="POST">
         <div class="vote-options">
           <% for (option of vote.options) { %>
             <div class="vote-option">
               <%= option.desc %>
               <%= option.counts %>명
-              <button>투표하기</button>
+              <input type="radio" name="select" value="<%= option._id %>">
             </div>
           <% } %>
+          <button type="submit">투표하기</button>
         </div>
-      </div>
+      </form>
+    </div>
   </div>
 </body>
 

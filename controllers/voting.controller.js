@@ -3,13 +3,12 @@ const Votes = require('../models/Votes');
 const format = require('date-fns/format');
 
 exports.getVotingForm = (req, res, _next) => {
-  const { userName } = req.user;
+  // const { userName } = req.user;
   const nowDate = format(new Date(), 'yyyy-MM-dd');
 
-  console.log(nowDate)
+  console.log(nowDate);
 
   res.status(200).render('votingForm', {
-    userName: userName,
     minDate: nowDate,
   });
 };
@@ -34,7 +33,7 @@ exports.createVote = async (req, res, next) => {
 };
 
 exports.getVotingList = async (req, res, next) => {
-  const { userName } = req.user;
+  // const { userName } = req.user;
   try{
     const votes = await Votes.find();
 
@@ -50,7 +49,6 @@ exports.getVotingList = async (req, res, next) => {
       expirationDate: formattedExpireDate,
       createdDate: formattedCreateDate,
       expired: expiredMessage,
-      userName: userName,
     });
   } catch (err) {
     next(err);
@@ -58,7 +56,7 @@ exports.getVotingList = async (req, res, next) => {
 };
 
 exports.getOne = async (req, res, next) => {
-  const { userName } = req.user;
+  // const { userName } = req.user;
   const id = req.params._id;
 
   try {
@@ -69,7 +67,6 @@ exports.getOne = async (req, res, next) => {
     const expiredMessage = new Date() > vote.expiration ? '투표 종료' : '투표 중';
 
     res.render('vote', {
-      userName: userName,
       vote: vote,
       expirationDate: formattedExpireDate,
       createdDate: formattedCreateDate,
@@ -80,9 +77,25 @@ exports.getOne = async (req, res, next) => {
   }
 };
 
+
 exports.updateOne = async (req, res, next) => {
+  const voteId = req.params._id;
+  const optionId = req.body.select;
+
   try {
-    console.log('update item');
+    const vote = await Votes.findOne({ voteId });
+    console.log(vote);
+    let count = 0;
+    let newCount = count + 1;
+
+    await Votes.findByIdAndUpdate(
+      optionId,
+      { counts: newCount },
+      { new: true },
+    );
+
+    res.redirect(`/votings/${voteId}`);
+
   } catch (err) {
     next(err);
   }
@@ -98,7 +111,7 @@ exports.deleteOne = async (req, res, next) => {
 
 exports.getMyVoting = async (req, res, next) => {
   try {
-    console.log('my voting');
+    res.render('myVoting');
   } catch (err) {
     next(err);
   }

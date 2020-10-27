@@ -7,7 +7,13 @@ body {
 }
 
 body {
+  height: 100%;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .vote-container {
@@ -28,4 +34,86 @@ body {
 .new-field {
   height: 40px;
   width: 500px;
+}
+
+/* header */
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+}
+
+.header-column a {
+  margin: 0px 10px;
+}
+
+.icon {
+  font-size: 30px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: 50px;
+}
+
+.auth-wrap {
+  width: 300px;
+  height: 400px;
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+.form-wrap {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form-wrap label {
+  font-size: 14px;
+  color: #4e4e4e;
+}
+
+.auth-field {
+  height: 40px;
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+.signup-btn {
+  border: 1px solid black;
+  background: none;
+  height: 40px;
+  border-radius: 30px;
+  outline: none;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.signup-btn:hover {
+  color: white;
+  background-color: black;
+  border: none;
+  transition-duration: 0.8s;
+}
+
+.auth-ask {
+  color: #4e4e4e;
+}
+
+.auth-ask a {
+  font-weight: 600;
+  text-decoration: underline;
+  color: black;
+  margin-left: 10px;
+}
+
+.err-message {
+  color: coral;
 }

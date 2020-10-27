@@ -1,6 +1,5 @@
 const authenticateUser = (req, res, next) => {
   const isLoggedIn = req.isAuthenticated();
-
   if (isLoggedIn) {
     // res.set(
     //   'Cache-Control',
@@ -9,7 +8,7 @@ const authenticateUser = (req, res, next) => {
 
     return next();
   } else {
-    res.redirect('/signup');
+    res.redirect('/login');
   }
 };
 

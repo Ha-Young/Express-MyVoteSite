@@ -2,22 +2,22 @@
 const express = require('express');
 const votingRouter = express.Router();
 const votingController = require('../controllers/voting.controller');
+const authenticateUser = require('../middlewares/auth.middleware');
 
 votingRouter.get('/', votingController.getVotingList);
 
 votingRouter.get('/new', votingController.getVotingForm);
-votingRouter.post('/new', votingController.createVote);
+votingRouter.post('/new', authenticateUser, votingController.createVote);
 
 // get each voting
 votingRouter.get('/:id', votingController.getOne);
 
 // count update..
-votingRouter.post('/:id', votingController.updateOne);
+votingRouter.post('/:id', authenticateUser, votingController.updateOne);
 
 // delete
-votingRouter.delete('/:id', votingController.deleteOne);
+votingRouter.delete('/:id', authenticateUser, votingController.deleteOne);
 
 // get my voting list
-votingRouter.get('/my-voting', votingController.getMyVoting);
 
 module.exports = votingRouter;
