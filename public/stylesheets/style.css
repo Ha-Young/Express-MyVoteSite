@@ -1,7 +1,42 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
+  background-color: var(--background-color);
+  color: var(--color-black);
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: var(--color-black);
+  text-decoration: none;
+}
+
+input:focus {
+  outline: 0;
+}
+
+button {
+  background-color: var(--color-carrot);
+  color: var(--color-white);
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s linear;
+}
+
+button:hover {
+  background-color: var(--color-black);
+}
+
+.page-title {
+  color: var(--color-light-beige);
+  font-size: 1.5rem;
 }
 
 .header {
@@ -10,22 +45,30 @@ body {
   align-items: center;
   height: 10vh;
   padding: 0 30px;
-  background-color: grey;
+  background-color: var(--color-light-beige);
 }
 
-.login-user-buttons *,
-.logout-user-buttons * {
-  margin-right: 5px;
+.service-title {
+  font-size: 16px;
+  letter-spacing: 10px;
+  color: var(--color-carrot);
+}
+
+.login-user-buttons * {
+  margin: 0 2px;
 }
 
 .signup-container,
 .login-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
+  height: 80vh;
   padding: 0 30px;
+  margin-top: 50px;
+  color: var(--color-light-beige);
 }
 
 .signup-container form,
@@ -34,6 +77,41 @@ body {
   flex-direction: column;
 }
 
+.login-container form *:not(.login-button) {
+  margin: 5px 0;
+}
+
+.login-container input {
+  height: 2rem;
+  width: 20rem;
+  background-color: var(--background-color);
+  color: var(--color-carrot);
+  border: none;
+  border-bottom: 1px solid var(--color-light-beige);
+}
+
+.login-button,
+.signup-button {
+  margin-top: 20px;
+}
+
+.signup-container form *:not(.signup-button) {
+  margin: 5px 0;
+}
+
+.signup-container input {
+  height: 2rem;
+  width: 20rem;
+  background-color: var(--background-color);
+  color: var(--color-carrot);
+  border: none;
+  border-bottom: 1px solid var(--color-light-beige);
+}
+
+.login-error-message,
+.signup-error-message {
+  margin-top: 20px;
+}
 .main-container {
   padding: 0 30px;
 }
@@ -51,8 +129,9 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
-  background-color: beige;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: var(--color-carrot);
 }
 
 .completed-container {
@@ -60,8 +139,125 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
-  background-color: grey;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: var(--color-bright-grey);
+}
+
+.time-container {
+  display: flex;
+}
+.time-container * {
+  margin-top: 5px;
+}
+
+.vote-title {
+  margin: 0 0 10px;
+}
+
+.vote-details-container,
+.vote-result-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 80vh;
+  padding: 0 30px;
+  margin-top: 50px;
+  color: var(--color-light-beige);
+}
+
+.details-top-section,
+.result-top-section {
+  margin-bottom: 30px;
+}
+
+.vote-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.vote-details form * {
+  display: flex;
+}
+
+.radio-option {
+  display: flex;
+  margin-bottom: 20px;
+  width: 25vw;
+  height: 2.5rem;
+  border-radius: 20px;
+  font-size: 1.5rem;
+  align-items: center;
+  border: 1px solid var(--color-light-beige);
+}
+
+.radio-option:hover {
+  background-color: var(--color-carrot);
+  color: var(--color-white);
+}
+
+.radio-option input {
+  margin: 0 15px;
+}
+
+.vote-button {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.writer-only {
+  margin-top: 20px;
+}
+
+.writer-only * {
+  margin: 0 5px;
+}
+
+.writer-only button {
+  background-color: var(--color-black);
+}
+
+.writer-only button:hover {
+  background-color: var(--color-carrot);
+}
+
+.vote-details form * {
+  display: flex;
+}
+
+.result-top-section {
+  font-size: 1rem;
+}
+.vote-result-container ul {
+  margin: 0;
+  padding: 0;
+}
+
+.vote-result-container li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
+  margin-bottom: 20px;
+  width: 25vw;
+  height: 2.5rem;
+  border-radius: 20px;
+  font-size: 1.5rem;
+  align-items: center;
+  border: 1px solid var(--color-light-beige);
+}
+
+.vote-result-container li span {
+  color: var(--color-carrot);
+}
+
+.radio-option:hover {
+  background-color: var(--color-carrot);
+  color: var(--color-white);
 }
 
 .my-page h1 {

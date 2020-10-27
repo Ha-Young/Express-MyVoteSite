@@ -1,18 +1,22 @@
 extends layout
 
 block content
-    div.vote-details-container
-      h1 투표 상세 페이지
-      h2= targetDetails.title
-      span= targetDetails.writer.nickname
-      span= targetDetails.due_date
+  div.vote-details-container
+    div.vote-details
+      h1(class='page-title')= targetDetails.title
+      div(class='details-top-section')
+        span= targetDetails.writer.nickname
+        span= ' / ' + targetDetails.due_date
       form(active=`/votings/${targetDetails._id}` method='POST')
         each option in targetDetails.options
-          input(type='radio' id= option name='vote' value= option._id)
-          label(for= option)= option.optionTitle
-        button(type='submit') 투표
+          div(class='radio-option')
+            input(type='radio' id= option name='vote' class='vote-option' value= option._id)
+            label(for= option)= option.optionTitle
+        button(type='submit' class='vote-button') Vote
     if isIdsMatched
-      a(href=`/votings/delete/${targetDetails._id}`)
-        button(type='submit') 삭제
-      a(href=`/votings/result/${targetDetails._id}`)
-        button(type='submit') 투표 결과 보기
+      div.writer-only
+        a(href=`/votings/delete/${targetDetails._id}`)
+          button(type='submit') Delete
+        a(href=`/votings/result/${targetDetails._id}`)
+          button(type='submit') Vote result
+    span= message

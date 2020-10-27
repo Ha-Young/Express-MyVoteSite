@@ -27,17 +27,15 @@ router.get('/delete/:voting_id',
 });
 
 router.get('/result/:voting_id',
-  authenticate,
   votingController.getTargetVote,
   (req, res, next) => {
     const targetDetails = req.targetVote;
-    console.log(targetDetails);
     res.render('vote-result', { targetDetails });
 });
 
-// 투표 상세 페이지
 router.get('/:voting_id',
   votingController.getTargetVote,
+  votingController.checkValidVote,
   (req, res, next) => {
     const targetDetails = req.targetVote;
     const isIdsMatched = req.user
@@ -50,6 +48,10 @@ router.post('/:voting_id',
   authenticate,
   votingController.updateVoteCount,
   (req, res, next) => {
+    if (req.message) {
+      // 조금 더 고민해보기
+      req.flash('message', req.message);
+    }
     res.redirect('/');
 });
 

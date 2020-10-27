@@ -1,14 +1,14 @@
 header.header
   a(href='/')
-    div 내일 점심 메뉴는?
+    h2.service-title 오늘뭐먹지?🥕
   if isLoggedIn
     div.login-user-buttons
       a(href='/my-votings')
-        button 내 투표
+        button My Vote
       a(href='/votings/new')
-        button 투표 생성
+        button Create
       a(href='/logout')
-        button 로그아웃
+        button Log out
   else
     div.logout-user-buttons
       a(href='/signup')

@@ -9,6 +9,7 @@ const session = require('express-session');
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const flash = require('connect-flash');
 
 const indexRouter = require('./routes/index');
 const { localMiddleware } = require('./routes/middlewares/local');
@@ -31,6 +32,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
 }));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 

@@ -1,5 +1,6 @@
 const Vote = require('../../models/Vote');
 const User = require('../../models/User');
+const { calculateDate } = require('../utils');
 
 exports.validateInputs = (req, res, next) => {
   const { optionTitle, dueDate } = req.body;
@@ -22,7 +23,7 @@ exports.createNewVote = async (req, res, next) => {
   // push, each... 고려
   const options = [];
   optionTitle.forEach(option => {
-    options.push({ optionTitle: option, votedNumber: 0 });
+    options.push({ optionTitle: option, votedNumber: [] }); // votedNumber: 0
   });
 
   // user 업데이트는 분리하는게 좋겠지?
@@ -38,7 +39,8 @@ exports.createNewVote = async (req, res, next) => {
 exports.getTargetVote = async (req, res, next) => {
   try {
     const { voting_id } = req.params;
-    const targetVote = await Vote.findById(voting_id).populate('writer');
+    const targetVote = await Vote.findById(voting_id).populate('writer').lean();
+    targetVote.due_date = calculateDate(targetVote.due_date);
     req.targetVote = targetVote;
     next();
   } catch (error) {
@@ -48,14 +50,24 @@ exports.getTargetVote = async (req, res, next) => {
 
 exports.updateVoteCount = async (req, res, next) => {
   const optionId = req.body.vote;
+  const votingId = req.params.voting_id;
+  const userId = req.user._id;
+
   try {
+    const votedUser = await Vote.findById(votingId, 'voter');
+    if (votedUser.voter.includes(userId)) {
+      // 처리 방안 추가 고민해보기
+      req.message = '이미 투표를 하셨습니다.';
+      return next();
+    }
+
     await Vote.findOneAndUpdate(
       { 'options._id': optionId },
       { $addToSet: { 'options.$[option].votedCount': req.user._id } },
-      { arrayFilters: [{ 'option._id': optionId }] }
+      { arrayFilters: [{ 'option._id': optionId }] },
     );
     await Vote.findByIdAndUpdate(
-      req.params.voting_id,
+      votingId,
       { $addToSet: { voter: req.user._id } }
     );
     next();
@@ -76,4 +88,14 @@ exports.deleteVote = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+exports.checkValidVote = async (req, res, next) => {
+  const dueDate = req.targetVote.due_date;
+  console.log(dueDate, req.params.voting_id);
+
+  if (new Date(dueDate) <= new Date()) {
+    return res.redirect(`/votings/result/${req.params.voting_id}`);
+  }
+  next();
 };

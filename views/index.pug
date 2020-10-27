@@ -6,13 +6,15 @@ block content
       a(href=`/votings/${vote._id}`)
         if vote.isInProgress
           div.progress-container
-            h2= vote.title
-            span= vote.writer.nickname
-            span= vote.due_date
-            span 진행중
+            h2(class='vote-title')= vote.title
+            div= vote.writer.nickname
+            div.time-container
+              div= '~ ' + vote.due_date
+              div / in progress
         else
           div.completed-container
-            h2= vote.title
-            span= vote.writer.nickname
-            span= vote.due_date
-            span 종료
+            h2(class='vote-title')= vote.title
+            div= vote.writer.nickname
+            div.time-container
+              div= '~ ' + vote.due_date
+              div / end
