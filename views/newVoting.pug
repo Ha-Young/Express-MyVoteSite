@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  h1 voting maker
+  a(href='/') 목록보기
+  form(action='/', method='POST')
+    label 투표제목:
+    input(
+      type='text'
+      name='votingTitle'
+      placeholder='투표제목'
+      required=true
+      maxlength='10'
+    )
+    p=nameError
+
+    label 날짜선택:
+    input(
+      type='date'
+      name='expirationDate'
+      required=true
+    )
+
+    input(
+      type='reset'
+      name='reset'
+      value='reset'
+    )
+
+    button(
+      class='addOptionButton'
+    ) 옵션추가
+
+    div(
+      class='option-container'
+    )
+
+    button(
+      class='submitNewVoting'
+      type='submit'
+    ) 투표추가
+
+    script(src='../../javascripts/fetch.js')
