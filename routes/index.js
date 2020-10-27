@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const gateKeeper = require('./middlewares/gateKeeper');
-const Voting = require('../models/Voting');
+const sortVotings = require('../utils/sortVotings');
 
-router.get('/', gateKeeper, async (req, res, next) => {
-  const votings = await Voting.find();
+router.get('/', async (req, res, next) => {
+  const [openVotings, expiredVotings] = await sortVotings();
 
-  res.render('index', { votings });
+  res.render('index', { openVotings, expiredVotings });
 });
 
 module.exports = router;

@@ -13,10 +13,6 @@ const votingSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  is_open: {
-    type: Boolean,
-    default: true,
-  },
   options: [
     {
       content: String,

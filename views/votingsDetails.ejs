@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>투표 상세 내용</title>
+</head>
+<body>
+  <h1>투표 상세</h1>
+  <h2><%= voting.title %></h2>
+  투표 만료 시각: <%= formattedExpirationDate %>
+  <% if (userIsCreator) { %>
+    <button id='voting-delete-button'>삭제</button>
+  <% } %><br><br>
+  <form method='post' action=<%= `/votings/${voting._id}` %>>
+  <% voting.options.forEach(option => { %>
+    <input type='radio' name='<%= option.content %>' value='<%= option.content %>'>
+    <label for='male'><%= option.content %></label>
+    <span><% if (isExpired) { %> - <%= option.voters.length %>표<% } %></span><br>
+  <% }) %>
+  <input type='submit' value='투표' disabled=<%= isExpired %>>
+</form>
+<%= voting %><br>
+<%- isExpired %><br>
+<%= userIsCreator %><br>
+<%= voting.options[0].voters.length %><br>
+</body>
+<script src='/javascripts/deleteVoting.js'></script>
+</html>

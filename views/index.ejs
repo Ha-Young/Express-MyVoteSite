@@ -5,17 +5,25 @@
   <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
+  <button id='logout'>로그아웃</button><br><br>
   <a href='/votings/new'>새 투표 만들기</a>
   <h1>투표 목록</h1>
+  <h2>진행중</h2>
   <ul>
-    <% votings.forEach(voting => { %>
+    <% openVotings.forEach(voting => { %>
       <li>
-        <a><%= voting %></a></br>
-
+        <a href='/votings/<%= voting._id %>'><%= voting.title %></a>
       </li>
     <% }) %>
   </ul>
-  <button id='logout'>로그아웃</button>
+  <h2>마감</h2>
+  <ul>
+    <% expiredVotings.forEach(voting => { %>
+      <li>
+        <a href='/votings/<%= voting._id %>'><%= voting.title %></a>
+      </li>
+    <% }) %>
+  </ul>
 </body>
 <script src='/javascripts/clientLogout.js'></script>
 </html>

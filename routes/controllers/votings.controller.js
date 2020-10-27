@@ -18,7 +18,6 @@ exports.create = (req, res, next) => {
     title,
     created_by,
     expires_at,
-    is_open: true,
     options: optionsData,
   });
 
