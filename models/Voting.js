@@ -17,14 +17,15 @@ const votingSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  options: {
-    type: [],
-    minLength: 2,
-  },
-  voters: [
+  options: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      content: String,
+      voters: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        }
+      ]
     }
   ],
 });

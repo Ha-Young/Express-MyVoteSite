@@ -31,11 +31,11 @@ router.post('/', async (req, res, next) => {
     return;
   }
 
-  const newUserData = {
+  const newUserData = new User({
     email,
     password,
     votings: [],
-  };
+  });
 
   User.create(newUserData, (err, user) => {
     if (err) {
