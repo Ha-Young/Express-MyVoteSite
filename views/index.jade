@@ -1,16 +1,19 @@
 extends layout
 
 block content
-  h1= title
+  if user
+    h1 Hello #{user.nickname}!
+  else
+    h1 Hello Stranger!
   p Welcome to Voting show
-  each val in votings
-    a(href='votings/#{val._id}')
+  each voting in votings
+    a(href='votings/#{voting._id}')
       div(class='voting-card')
         ul
-          li= val.title
-          li= val.creator.nickname
-          li= val.expiration_date
-          li= val.openState
+          li= voting.title
+          li= voting.creator.nickname
+          li= voting.expiration_date
+          li #{voting.openState ? 'open' : 'closed'}
   a(href='/login') login
   br
   a(href='/logout') logout

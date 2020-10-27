@@ -7,6 +7,7 @@ const serializeForm = require('../../middleware/serializeForm');
 const validateVotingForm = require('../../middleware/validateVotingForm');
 const saveVoting = require('../../middleware/saveVoting');
 const getVoting = require('../../middleware/getVoting');
+const creatorCheck = require('../../middleware/creatorCheck');
 const verifyVoting = require('../../middleware/verifyVoting');
 const saveUserPoll = require('../../middleware/saveUserPoll');
 
@@ -23,6 +24,7 @@ router.post(
 );
 router.get('/:voting_id',
   getVoting,
+  creatorCheck,
   controller.render('votings/card')
 );
 router.get('/:voting_id/polls/:poll_id',

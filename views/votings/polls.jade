@@ -3,4 +3,11 @@ each poll in voting.polls
     a(href='/votings/#{voting._id}/polls/#{poll._id}')
       ul
         li= poll.title
-        li= poll.voted_users.length
+        -  let value = '';
+        -  if (isCreator || !voting.openState) {
+        -    value = poll.voted_users.length;
+        -  } else {
+        -    value = '?'
+        -  }
+        -
+        li #{value}

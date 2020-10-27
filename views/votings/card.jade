@@ -6,5 +6,6 @@ block content
     h2= voting.title
     h3= voting.expiration_date
     h4= voting.creator.nickname
+    h4 #{voting.openState ? 'open' : 'closed'}
     include ./polls
   a(href='/') home

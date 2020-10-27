@@ -11,7 +11,7 @@ const getVoting = async (req, res, next) => {
     return res.redirect('/');
   }
 
-  voting.openState = validateDate(voting.expiration_date) ? 'Open' : 'Closed';
+  voting.openState = validateDate(voting.expiration_date);
 
   res.locals.voting = voting;
   next();
