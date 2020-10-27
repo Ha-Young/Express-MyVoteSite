@@ -4,7 +4,7 @@ const AuthService = require('../services/AuthService');
 
 const router = express.Router();
 
-router.get('/signup', function (req, res, next) {
+router.get('/signup', (req, res, next) => {
   res.status(200).render('signup');
 });
 
@@ -52,6 +52,7 @@ router.post('/login', async (req, res, next) => {
         } else {
           res.redirect('/');
         }
+        return;
       default:
         res.redirect('/auth/login');
     }

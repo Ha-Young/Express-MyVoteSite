@@ -1,5 +1,8 @@
 const express = require('express');
+
 const Vote = require('../models/Vote');
+const User = require('../models/User');
+
 const verifyUser = require('../routes/middlewares/authorization').verifyUser;
 
 const router = express.Router();
@@ -12,11 +15,15 @@ router.get('/new', (req, res, next) => {
 });
 
 router.post('/new', async (req, res, next) => {
-  const { body, session } = req;
+  const {
+    body,
+    session: { user }
+  } = req;
+
   try {
-    await Vote.create({
+    const newVote = await Vote.create({
       title: body.title,
-      author: session.user._id,
+      author: user._id,
       expired: body.expired,
       isExpired: false,
       candidateList: body.itemList.map((item) => {
@@ -27,6 +34,11 @@ router.post('/new', async (req, res, next) => {
       })
     });
 
+    const updatedUser = await User.findByIdAndUpdate(user._id, {
+      $push: { myVoteList: newVote._id }
+    });
+
+    updatedUser.save();
     res.redirect('/');
   } catch (error) {
     next(error);
@@ -60,9 +72,47 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.post('/:id', verifyUser, (req, res, next) => {
-  const { body } = req;
-  res.status(200).send({ body });
+router.post('/:id', verifyUser, async (req, res, next) => {
+  const {
+    params: { id: vote_id },
+    body,
+    session
+  } = req;
+
+  try {
+    const vote = await Vote.findById(vote_id);
+    const targetItem = vote.candidateList.find((item) => item.title === body.item);
+    const targetExpired = vote.expired;
+
+    if (checkExpire(targetExpired) > 0) {
+      const newCount = (targetItem.count += 1);
+
+      await Vote.updateOne(
+        { _id: vote_id, 'candidateList.title': body.item },
+        {
+          $push: { participatedUser: session.user._id },
+          $set: {
+            'candidateList.$.count': newCount
+          }
+        }
+      );
+    } else {
+      await Vote.updateOne(
+        { _id: vote_id },
+        {
+          isExpired: true
+        }
+      );
+    }
+
+    res.redirect(`/votings/${vote_id}`);
+  } catch (error) {
+    next(error);
+  }
 });
+
+function checkExpire(target) {
+  return new Date(target).getTime() - new Date().getTime();
+}
 
 module.exports = router;

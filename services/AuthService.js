@@ -9,11 +9,10 @@ class AuthService {
     this.passwordConfirmation = user.passwordConfirmation;
   }
 
-  static saltRounds = 10;
-
   async signUp() {
     try {
-      if (!this.name || this.password !== this.passwordConfirmation) {
+      const isNotValidatedInput = !this.name || this.password !== this.passwordConfirmation;
+      if (isNotValidatedInput) {
         return createAction('failed-password-confirm', {
           message: 'Password confirmation failed'
         });
@@ -26,6 +25,7 @@ class AuthService {
         });
       }
 
+      const saltRounds = 10;
       const hash = await bcrypt.hash(this.password, saltRounds);
       const newUser = await User.create({
         email: this.email,

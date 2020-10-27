@@ -2,6 +2,7 @@ header
   a(href='/') Logo
   if user
     .header-username #{user.name}
+    a(href='/my-votings') My votings
     a(href='/auth/logout') Logout
   else
     a(href='/auth/signup') Signup

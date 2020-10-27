@@ -1,0 +1,17 @@
+extends ./layouts/layout
+include mixins/card
+
+block content
+  h1 My votings!
+  if votingList && votingList.length > 0
+    .vote-list
+      each vote in votingList
+        +card({
+          id: vote._id,
+          title: vote.title,
+          author: vote.author,
+          expired: vote.expired,
+          isExpired: vote.isExpired
+        })
+  else
+    p 투표 리스트가 없습니다..
