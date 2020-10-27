@@ -6,6 +6,9 @@ const EMAIL_DUPLICATE_ERROR_MESSAGE = 'Duplicated email. try another one';
 const EMAIL_FORM_ERROR_MESSAGE = 'E-mail is not a valid type';
 const PASSWORD_FORM_ERROR_MESSAGE = 'Password is not a valid type';
 const NICKNAME_FORM_ERROR_MESSAGE = 'Nickname should be contained at least 3 character';
+const TITLE_FORM_ERROR_MESSAGE = 'Title should be contained at least 3 character';
+const POLL_FORM_ERROR_MESSAGE = 'Poll should be contained at least 3 character';
+const DATE_FORM_ERROR_MESSAGE = 'Should check date again. It is a past date';
 
 const CANT_FIND_EMAIL = 'Can not foud your email. please check again';
 const DIFF_PASSWORD = 'Password does not match';
@@ -28,6 +31,9 @@ module.exports = {
   EMAIL_FORM_ERROR_MESSAGE,
   PASSWORD_FORM_ERROR_MESSAGE,
   NICKNAME_FORM_ERROR_MESSAGE,
+  TITLE_FORM_ERROR_MESSAGE,
+  POLL_FORM_ERROR_MESSAGE,
+  DATE_FORM_ERROR_MESSAGE,
   CANT_FIND_EMAIL,
   DIFF_PASSWORD,
   EMAIL_REGEX,

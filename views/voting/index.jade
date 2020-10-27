@@ -1,19 +1,5 @@
 extends ../layout
 
 block content
-  h1 this is new voting page
-  if typeof message === 'string'
-    ul
-      li= message
-  if Array.isArray(message)
-    ul
-      each val in message
-        li= val
-  form(method='post')
-    input(type='email' name='email' placeholder='email')
-    input(type='password' name='password' placeholder='password')
-    input(type='text' name='nickname' placeholder='nickname')
-    button(type='submit') submit
+  h1 voting page
   a(href='/') home
-  br
-  a(href='/signup') signup

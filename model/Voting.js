@@ -1,8 +1,21 @@
 const mongoose = require('mongoose');
 
-const PollSchema = require('./Poll');
+// const PollSchema = require('./Poll');
 
 const { ObjectId, } = mongoose.SchemaTypes;
+
+const PollSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+  },
+  voted_users: [{
+    type: ObjectId,
+    ref: 'User',
+  },],
+}, { timestamps: true, });
 
 const VotingSchema = new mongoose.Schema({
   title: {

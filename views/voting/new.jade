@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+  h1 this is new voting page
+  include ../validationMEssage
+  form(method='post')
+    input(type='text' name='title' placeholder='title')
+    br
+    ul(class='js-polls')
+      li
+        input(type='text' name='polls[0][title]' placeholder='poll')
+        br
+      li
+        input(type='text' name='polls[1][title]' placeholder='poll')
+        br
+    input(type='date' name='expiration_date' class='js-date')
+    button(type='submit') submit
+  button(class='js-addBtn') add poll
+  br
+  a(href='/') home
+  script(src='/javascripts/votingNew.js')

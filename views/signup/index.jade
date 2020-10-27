@@ -2,13 +2,7 @@ extends ../layout
 
 block content
   h1 this is signup page
-  if typeof message === 'string'
-    ul
-      li= message
-  if Array.isArray(message)
-    ul
-      each val in message
-        li= val
+  include ../validationMEssage
   form(method='post')
     input(type='email' name='email' placeholder='email')
     input(type='password' name='password' placeholder='password')

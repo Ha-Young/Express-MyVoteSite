@@ -1,0 +1,7 @@
+if typeof message === 'string'
+  ul
+    li= message
+if Array.isArray(message)
+  ul
+    each val in message
+      li= val
