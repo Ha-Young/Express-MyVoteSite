@@ -25,13 +25,11 @@ const VoteSchema = new Schema({
     votedNumber: {
       type: Number,
       default: 0,
-      required: true,
     },
   }],
   voter: [{
     type: Schema.Types.ObjectId,
     ref: 'User',
-    unique: true,
   }],
 });
 

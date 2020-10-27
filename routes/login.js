@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const loginController = require('./controllers/login.controller');
+const { isNotLoggedIn } = require('./middlewares/authenticate');
 
-// 로그인 후 사용자 이용 불가
-router.get('/', (req, res, next) => {
-  res.send('login page');
+router.get('/', isNotLoggedIn, (req, res, next) => {
+  res.render('login');
 });
+
+router.post('/', loginController.AuthenticatePassport);
 
 module.exports = router;

@@ -1,5 +1,18 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  main
+    each vote in votesData
+      a(href=`/votings/${vote._id}`)
+        if vote.isInProgress
+          div.progress-container
+            h2= vote.title
+            span= vote.writer.nickname
+            span= vote.due_date
+            span 진행중
+        else
+          div.completed-container
+            h2= vote.title
+            span= vote.writer.nickname
+            span= vote.due_date
+            span 종료

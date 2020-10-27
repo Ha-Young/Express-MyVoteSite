@@ -1,0 +1,17 @@
+header.header
+  a(href='/')
+    div 내일 점심 메뉴는?
+  if isLoggedIn
+    div.login-user-buttons
+      a(href='/my-votings')
+        button 내 투표
+      a(href='/votings/new')
+        button 투표 생성
+      a(href='/logout')
+        button 로그아웃
+  else
+    div.logout-user-buttons
+      a(href='/signup')
+        button Sign up
+      a(href='/login')
+        button Login

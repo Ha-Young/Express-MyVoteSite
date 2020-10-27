@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  div.vote-register-container
+    h1 투표 등록
+    form(active='/votings/new' method='POST')
+      label(for='title') Title
+        input(type='text' value= title name='title' id='title' placeholder='title' required)
+      label(for='options') Options
+        input(type='text' name='options' id='options' placeholder='options' class='option')
+        button(type='button' class='add-button') Add
+        div.vote-options
+      label(for='due-date') Due date
+        input(type='datetime-local' name='dueDate' id='due-date' required)
+      a(href='/')
+        button(type='button' class='return-button') Back to list
+      button(type='submit' class='register-button') Register
+    span= message
+    script(src='/javascripts/index.js' defer)

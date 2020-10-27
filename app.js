@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
+const { localMiddleware } = require('./routes/middlewares/local');
 
 const app = express(passport);
 
@@ -33,7 +34,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', indexRouter);
+app.use('/', localMiddleware, indexRouter);
 
 app.use((req, res, next) => {
   next(createError(404));

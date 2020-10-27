@@ -1,15 +1,16 @@
 extends layout
 
 block content
-  h1 회원가입 페이지입니다.
-  form(active='/signup' method='POST')
-    label(for='email') Email
-      input(type='text' name='email' id='email' placeholder='email' required)
-    label(for='nickname') Nickname
-      input(type='text' name='nickname' id='nickname' placeholder='nickname' required)
-    label(for='password') Password
-      input(type='password' name='password' id='password' placeholder='password' required)
-    label(for='confirm_password') Confirm password
-      input(type='password' name='confirm_password' id='confirm_password' placeholder='confirm_password' required)
-    button(type='submit') Sign up
-  span= message
+  div.signup-container
+    h1 회원가입
+    form(active='/signup' method='POST')
+      label(for='email') Email
+        input(type='text' name='email' id='email' placeholder='email' required)
+      label(for='nickname') Nickname
+        input(type='text' name='nickname' id='nickname' placeholder='nickname' required)
+      label(for='password') Password
+        input(type='password' name='password' id='password' placeholder='password' required)
+      label(for='confirm_password') Confirm password
+        input(type='password' name='confirm_password' id='confirm_password' placeholder='confirm_password' required)
+      button(type='submit') Sign up
+    span= message
