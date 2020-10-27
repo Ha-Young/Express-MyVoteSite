@@ -1,7 +1,6 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 
-const User = require('../models/User');
+const AuthService = require('../services/AuthService');
 
 const router = express.Router();
 
@@ -9,31 +8,22 @@ router.get('/signup', function (req, res, next) {
   res.status(200).render('signup');
 });
 
-router.post('/signup', async function (req, res, next) {
-  const {
-    body: { email, password, passwordConfirmation, name }
-  } = req;
-
-  if (password !== passwordConfirmation || !name) {
-    console.log('[/signup] check input value');
-    return res.redirect('/auth/signup');
-  }
-
+router.post('/signup', async (req, res, next) => {
+  const { body } = req;
   try {
-    const user = await User.findOne({ email });
+    const userInstance = new AuthService(body);
+    const { type, payload } = await userInstance.signUp();
 
-    if (user) {
-      res.redirect('/auth/login');
-    } else {
-      const hash = await bcrypt.hash(password, 10);
-      const newUser = await User.create({
-        email,
-        hash,
-        name
-      });
-
-      req.session.user = newUser;
-      res.redirect('/');
+    switch (type) {
+      case 'succeed':
+        req.session.user = payload;
+        return res.redirect('/');
+      case 'failed-password-confirm':
+        return res.redirect('/auth/signup');
+      case 'failed-user-exists':
+        return res.redirect('/auth/login');
+      default:
+        res.redirect('/');
     }
   } catch (error) {
     next(error);
@@ -44,25 +34,27 @@ router.get('/login', function (req, res, next) {
   res.status(200).render('login');
 });
 
-router.post('/login', async function (req, res, next) {
-  const {
-    body: { email, password },
-    cookies
-  } = req;
+router.post('/login', async (req, res, next) => {
+  const { body, cookies } = req;
 
   try {
-    const user = await User.findOne({ email });
-    if (!user) return res.redirect('/');
+    const userInstance = new AuthService(body);
+    const { type, payload } = await userInstance.signIn();
 
-    const isAuthorized = await bcrypt.compare(password, user.hash);
-    if (!isAuthorized) return res.redirect('/auth/login');
-
-    req.session.user = user;
-
-    if (cookies['callback']) {
-      return res.redirect(cookies['callback']);
+    switch (type) {
+      case 'failed-no-user':
+      case 'failed-password-mismatch':
+        return res.redirect('/auth/login');
+      case 'success':
+        req.session.user = payload;
+        if (cookies['callback']) {
+          res.redirect(cookies['callback']);
+        } else {
+          res.redirect('/');
+        }
+      default:
+        res.redirect('/auth/login');
     }
-    res.redirect('/');
   } catch (error) {
     next(error);
   }

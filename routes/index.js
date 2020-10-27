@@ -14,6 +14,6 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/my-votings', (req, res, next) => {});
+// router.get('/my-votings', (req, res, next) => {});
 
 module.exports = router;
