@@ -18,7 +18,6 @@ router.post('/', async (req, res, next) => {
     || passwordConfirm.length < 4
     || password !== passwordConfirm
   ) {
-    console.log('형식 틀림');
     res.status(302).redirect('/signup');
 
     return;
