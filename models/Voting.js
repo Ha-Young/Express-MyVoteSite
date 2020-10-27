@@ -15,28 +15,31 @@ const optionSchema = new mongoose.Schema(
   { _id: false }
 );
 
-const votingSchema = new mongoose.Schema({
-  topic: {
-    type: String,
-    required: true,
+const votingSchema = new mongoose.Schema(
+  {
+    topic: {
+      type: String,
+      required: true,
+    },
+    options: {
+      type: [optionSchema],
+      required: true,
+    },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    expiration: {
+      type: Date,
+      required: true,
+    },
+    isActivated: {
+      type: Boolean,
+      required: true,
+    },
   },
-  options: {
-    type: [optionSchema],
-    required: true,
-  },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  expiration: {
-    type: Date,
-    required: true,
-  },
-  isActivated: {
-    type: Boolean,
-    required: true,
-  },
-});
+  { timestamps: true }
+);
 
 module.exports = mongoose.model('Voting', votingSchema);

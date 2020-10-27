@@ -1,41 +1,48 @@
 const form = document.querySelector('.voting > form');
 const options = form.querySelector('.options');
+const dateInput = form.querySelector('input[name=expirationDate]');
+const timeInput = form.querySelector('input[name=expirationTime]');
 const addOptionButton = form.querySelector('.add-option');
+const shortCutButton = form.querySelector('.short-cut');
 
 const MAX_ADDITIONAL_OPTION_COUNT = 3;
+const SHORTCUT_TIME = 60 * 60 * 1000;
+
 let additionalOptionCount = 0;
 
-function setExpirationTime() {
-  const date = form.querySelector('input[name=expiration-date]');
-  const time = form.querySelector('input[name=expiration-time]');
-  const now = new Date();
-
-  const year = '' + now.getFullYear();
-  const month = '' + (now.getMonth() + 1);
-  const day = '' + now.getDate();
-  const hour = '' + now.getHours();
-  const minute = '' + now.getMinutes();
+function parseDate(dateObj) {
+  const year = '' + dateObj.getFullYear();
+  const month = '' + (dateObj.getMonth() + 1);
+  const day = '' + dateObj.getDate();
+  const hour = '' + dateObj.getHours();
+  const minute = '' + dateObj.getMinutes();
 
   const twoDigits = num => (num.length < 2 ? '0' + num : num);
 
-  const currentDate = [year, twoDigits(month), twoDigits(day)].join('-');
-  const currentTime = [twoDigits(hour), twoDigits(minute)].join(':');
+  return {
+    date: [year, twoDigits(month), twoDigits(day)].join('-'),
+    time: [twoDigits(hour), twoDigits(minute)].join(':'),
+  };
+}
 
-  date.setAttribute('value', currentDate);
-  date.setAttribute('min', currentDate);
+function setExpirationTime() {
+  const { date: currentDate, time: currentTime } = parseDate(new Date());
 
-  date.addEventListener('input', ev => {
+  dateInput.setAttribute('value', currentDate);
+  dateInput.setAttribute('min', currentDate);
+
+  dateInput.addEventListener('input', ev => {
     const { value } = ev.target;
 
     if (value !== currentDate) {
-      time.removeAttribute('min');
+      timeInput.removeAttribute('min');
     } else {
-      time.setAttribute('min', currentTime);
+      timeInput.setAttribute('min', currentTime);
     }
   });
 
-  time.setAttribute('value', currentTime);
-  time.setAttribute('min', currentTime);
+  timeInput.setAttribute('value', currentTime);
+  timeInput.setAttribute('min', currentTime);
 }
 
 function createNewOption() {
@@ -68,6 +75,14 @@ addOptionButton.addEventListener('click', () => {
   if (++additionalOptionCount >= MAX_ADDITIONAL_OPTION_COUNT) {
     addOptionButton.classList.add('invisible');
   }
+});
+
+shortCutButton.addEventListener('click', ev => {
+  const now = new Date().getTime();
+  const { date, time } = parseDate(new Date(now + SHORTCUT_TIME));
+
+  dateInput.setAttribute('value', date);
+  timeInput.setAttribute('value', time);
 });
 
 setExpirationTime();

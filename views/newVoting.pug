@@ -28,8 +28,12 @@ block content
           i.fas.fa-stopwatch
           span Expiration Time
         .date
-          input(type="date", id="expiration", name="expiration-date", required=true)
-          input(type="time", id="expiration", name="expiration-time", required=true)
+          input(type="date", id="expiration", name="expirationDate", required=true)
+          input(type="time", id="expiration", name="expirationTime", required=true)
+        .button-wapper
+          .short-cut
+            i.fas.fa-bolt
+            span Set to After 1 hour
       input(type="submit", value="Submit Voting")
 block scripts
   script(src="/javascripts/create.js")
