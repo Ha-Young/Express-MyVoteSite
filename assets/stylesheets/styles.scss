@@ -1,21 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Noto+Sans+KR:wght@400;700&family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Raleway:wght@200;400;700&display=swap');
 
 body {
-  padding: 0 30px;
-  font-family: 'Fira Code', 'Noto Sans KR', sans-serif;
-  background-color: #eee;
+  padding: 0;
+  font-family: 'Raleway', 'Noto Sans KR', sans-serif;
+  background-color: #f7f9fb;
 
   main {
-    margin: 30px auto;
+    margin-left: 200px;
+    padding-bottom: 50px;
   }
 
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
 
-    img {
-      width: 150px;
+    .logo {
+      display: flex;
+      justify-content: center;
+      padding: 30px 0;
+
+      img {
+        width: 120px;
+      }
+    }
+
+    .current-user {
+      text-align: center;
+      font-weight: 200;
+      color: #6d9cc2;
+
+      .displayName {
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
     }
 
     .menu {
@@ -23,16 +42,17 @@ body {
 
       ul {
         list-style: none;
+        padding-left: 30px;
+
+        li {
+          margin: 10px 0;
+
+          &:hover {
+            font-weight: 700;
+          }
+        }
       }
     }
-  }
-
-  footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 50px;
-    font-size: 0.8rem;
   }
 }
 

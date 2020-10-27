@@ -13,11 +13,12 @@ exports.getVoting = (req, res, next) => {};
 exports.postVoting = (req, res, next) => {};
 
 exports.getNewVoting = (req, res, next) => {
-  console.log('getNewVoting', VIEWS.NEW);
   res.render(VIEWS.NEW, { title: 'Create New Voting' });
 };
 
-exports.postNewVoting = (req, res, next) => {};
+exports.postNewVoting = (req, res, next) => {
+  console.log(req.body);
+};
 
 exports.postVotingSuccess = (req, res, next) => {};
 

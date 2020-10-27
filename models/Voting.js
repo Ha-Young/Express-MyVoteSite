@@ -16,7 +16,7 @@ const optionSchema = new mongoose.Schema(
 );
 
 const votingSchema = new mongoose.Schema({
-  title: {
+  topic: {
     type: String,
     required: true,
   },

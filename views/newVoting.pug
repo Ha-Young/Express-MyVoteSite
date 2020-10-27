@@ -7,26 +7,29 @@ block styles
 block content
   .form-container.voting
     form(action=routes.VOTINGS_NEW, method="POST")
-      .title
-        label(for="title") 투표 제목
-        input(type="text", id="title", name="title", placeholder="제목을 입력하세요.", required=true)
-      .option
-        label(for="option") 옵션
-        input(type="text", id="option", name="option1", required=true)
-        input(type="text", id="option", name="option2", required=true)
-        .additional-option
-          input(type="text", id="option", name="option", required=true)
-          button.circle(type="button") -
-        .additional-option
-          input(type="text", id="option", name="option", required=true)
-          button.circle(type="button") -
-        .button-wapper
-          .add-option
-            button.circle(type="button") +
-            .option-label 항목추가
+      .topic
+        label(for="topic")
+          i.fas.fa-vote-yea
+          span Topic
+        input(type="text", id="topic", name="topic", placeholder="오늘 점심 메뉴는?", required=true)
+      .options
+        label(for="option")
+          i.fas.fa-list-ul
+          span Options
+          span.desc (min 2, max 5)
+        input(type="text", id="option", name="option", required=true)
+        input(type="text", id="option", name="option", required=true)
+      .button-wapper
+        .add-option
+          i.far.fa-plus-square
+          span Add Option
       .expiration
-        label(for="expiration") 마감시간
+        label(for="expiration")
+          i.fas.fa-stopwatch
+          span Expiration Time
         .date
-          input(type="date", id="expiration", name="expiration", required=true)
-          input(type="time", id="expiration", name="expiration", required=true)
+          input(type="date", id="expiration", name="expiration-date", required=true)
+          input(type="time", id="expiration", name="expiration-time", required=true)
       input(type="submit", value="Submit Voting")
+block scripts
+  script(src="/javascripts/create.js")

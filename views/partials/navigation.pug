@@ -1,13 +1,16 @@
-header
+nav
   .logo
     a(href=routes.HOME)
-      img(src="/images/logo.jpg")
-  .title
-    span Current User: <b>#{user && user.email}</b>
-    h1= title
+      img(src="/images/logo.png")
+  .current-user
+    if user
+      span Current User
+      .displayName= user && user.displayName
   .menu
     ul
       if !user
+        li
+          a(href=routes.HOME) Main
         li
           a(href=routes.SIGNUP) Sign Up
         li
