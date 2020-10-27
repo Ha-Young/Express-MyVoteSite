@@ -4,7 +4,7 @@ const LOGIN = '/login';
 const LOGOUT = '/logout';
 
 const VOTINGS = '/votings';
-const VOTINGS_DETAIL = '/:id';
+const VOTING_DETAIL = '/:id';
 const MY_VOTINGS = '/my-votings';
 const NEW = '/new';
 const SUCCESS = '/success';
@@ -16,7 +16,7 @@ const routes = {
   login: LOGIN,
   logout: LOGOUT,
   votings: VOTINGS,
-  votingsDetail: VOTINGS_DETAIL,
+  votingDetail: VOTING_DETAIL,
   myVotings: MY_VOTINGS,
   new: NEW,
   success: SUCCESS,

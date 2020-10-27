@@ -13,6 +13,10 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
 header {
   display: flex;
   justify-content: center;
@@ -24,6 +28,7 @@ header {
 
 main {
   width: 100%;
+  height: 80%;
 }
 
 .header__wrap {
@@ -52,6 +57,31 @@ main {
   cursor: pointer;
 }
 
+.home__title {
+  text-align: center;
+}
+
+.home__votingListsWrap {
+  display: grid;
+  padding: 2em 2em 2em;
+  margin-bottom: 1em;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
+  column-gap: 20px;
+  row-gap: 20px;
+}
+
+.home__votingListBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  margin: 1%;
+}
+
+
 .voting__new__wrap {
   display: flex;
   flex-direction: column;
@@ -66,7 +96,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
+  width: 40%;
   border: 1px solid black;
   font-size: 1rem;
 }
@@ -111,4 +141,5 @@ main {
 
 .voting__new__endtime input {
   width: 50%;
+  font-size: 0.5rem;
 }

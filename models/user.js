@@ -7,8 +7,10 @@ const schemaOptions = {
 
 const UserSchema = new Schema(
   {
-    email: { type: String, unique: true, required: true, unique: true },
-    password: { type: String, unique: true, required: true },
+    email: { type: String, unique: true, required: true, trim: true },
+    password: { type: String, unique: true, required: true, trim: true },
+    username: { type: String, unique: true, required: true, trim: true },
+    voting: [Schema.Types.ObjectId],
   },
   schemaOptions
 );

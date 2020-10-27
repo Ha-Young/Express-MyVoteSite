@@ -2,6 +2,9 @@ extends layouts/layout
 
 block content
   form(action="/signup" method="post")
+    .sign.sign__username
+      label(for="sign__username") Username
+      input(id="sign__username" type="text" name="username")
     .sign.sign__email
       label(for="sign__email") Email
       input(id="sign__email" type="email" name="email")

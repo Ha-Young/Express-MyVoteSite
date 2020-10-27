@@ -1,5 +1,4 @@
 const express = require('express');
-const passport = require('passport');
 const globalRouter = express.Router();
 const useController = require('../controllers/userController');
 const votingsController = require('../controllers/votingsController');

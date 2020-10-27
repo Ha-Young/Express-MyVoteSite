@@ -13,8 +13,6 @@ module.exports = () => {
       let user;
       let isPasswordSame;
 
-      console.log(123);
-
       try {
         user = await User.findOne({ email });
       } catch (err) {
@@ -40,7 +38,7 @@ module.exports = () => {
   );
 
   passport.serializeUser(function (user, done) {
-    done(null, user._id);
+    done(null, user.id);
   });
 
   passport.deserializeUser(async function (userId, done) {
