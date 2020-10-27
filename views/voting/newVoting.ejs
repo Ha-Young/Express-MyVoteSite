@@ -12,22 +12,45 @@
       <label for="name">투표제목</label>
       <input type="text" name="title"></input>
     </div>
-    <div>
+    <div class="selectOptions-container">
       <label for="name">투표선택사항1</label>
-      <input type="text" name="selectOption1"></input>
-    </div>
-    <div>
+      <input type="text" name="selectOptions"></input>
       <label for="name">투표선택사항2</label>
-      <input type="text" name="selectOption2"></input>
+      <input type="text" name="selectOptions"></input>
+      <button class="addOption" type="button">add</button>
     </div>
     <div>
-      <label for="name">만료날짜</label>
-      <input type="text" name="expireDate"></input>
+      <label for="name">만료날짜 및 시간</label>
+      <select name="year">
+        <option name="">year</option>
+        <option name="2020">2020</option>
+        <option name="2021">2021</option>
+      </select>
+      <select name="month">
+        <option name="">month</option>
+        <% for (let i = 0; i < months.length; i++) {%>
+          <option value="<%=i%>"><%=months[i]%></option>
+        <%}%>
+      </select>
+
+      <select name="day">
+        <option name="">day</option>
+        <% for (let i = 0; i < days.length; i++) {%>
+          <option value="<%=i + 1%>"><%=days[i]%></option>
+        <%}%>
+      </select>
+      <select name="hour">
+        <option name="">hour</option>
+        <% for (let i = 0; i < hours.length; i++) {%>
+          <option value="<%=i%>"><%=hours[i]%></option>
+        <%}%>
+      </select>
     </div>
     <button type="submit">submit</button>
   </form>
 
   <button><a href="/">투표 목록으로 돌아가기</a></button>
+  <script src="/javascripts/optionAddEvent.js"></script>
 </body>
 
 </html>

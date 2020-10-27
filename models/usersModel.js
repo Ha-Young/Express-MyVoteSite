@@ -11,23 +11,23 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
-  passwordConfirm: String
+  passwordConfirm: String,
 });
 
 userSchema.pre('save', async function (next) {
-  console.log(this.isModified('password'), 'isM')
+  console.log(this.isModified('password'), 'isM');
   const encrypted = await bcrypt.hash(this.password, Number(process.env.SALT));
 
-  this.password = encrypted
-  this.passwordConfirm = undefined
+  this.password = encrypted;
+  this.passwordConfirm = undefined;
   next();
 });
 
 userSchema.methods.verifyPassword = async (plainPassword, encrypted) => {
   return await bcrypt.compare(plainPassword, encrypted);
-}
+};
 
 const User = mongoose.model('User', userSchema);
 

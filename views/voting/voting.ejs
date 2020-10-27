@@ -5,6 +5,31 @@
   </head>
 
   <body>
-    <h1>Votings</h1>
+    <h1>Voting :ID</h1>
+    <ul>
+      <li><%=voting.title%></li>
+      <li><%=voting.creator%></li>
+      <li><%=voting.expireDate%></li>
+      <li><%=voting.isExpired%></li>
+    </ul>
+
+    <% if (!voting.isExpired) {%>
+    <h3>고르시오</h3>
+    <form action="/votings/<%=voting._id%>" method="POST">
+      <% for (let i = 0; i < voting.selectOptions.length; i++) {%>
+      <label for="selectOption"><%=voting.selectOptions[i].name%></label>
+      <input
+        type="radio"
+        name="selectOption"
+        value="<%=voting.selectOptions[i]._id%>"
+      />
+      <%}%>
+      <button type="submit">submit</button>
+    </form>
+    <%} else {%>
+    <h3>결과</h3>
+
+    <%}%>
+    <button><a href="/">목록으로 돌아가기</a></button>
   </body>
 </html>

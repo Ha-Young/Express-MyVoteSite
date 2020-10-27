@@ -2,6 +2,7 @@ const User = require('../models/usersModel');
 const Voting = require('../models/votingsModel');
 
 exports.renderMainPage = async (req, res, next) => {
+  console.log(1);
   const votings = await Voting.find();
 
   res.render('main', {
