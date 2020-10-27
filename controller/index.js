@@ -10,7 +10,14 @@ const redirect = (page) => {
   };
 };
 
+const redirectBefore = () => {
+  return (req, res, next) => {
+    res.redirect(req.session.beforeUrl);
+  };
+};
+
 module.exports = {
   render,
   redirect,
+  redirectBefore,
 };

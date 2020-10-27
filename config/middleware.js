@@ -16,7 +16,7 @@ module.exports = (app) => {
   middleware.push(express.static(path.join(__dirname, '../public')));
   middleware.push(session({
     secret: process.env.SESSION_SECRET_KET,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     cookie: {
       secure: false,

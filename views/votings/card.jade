@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+  h1 card page
+  div
+    h2= voting.title
+    h3= voting.expiration_date
+    h4= voting.creator.nickname
+    include ./polls
+  a(href='/') home

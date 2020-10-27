@@ -13,7 +13,7 @@ router.post(
   validateLoginForm,
   verifyEmailAndPassword,
   saveSession,
-  controller.redirect('/')
+  controller.redirectBefore('back')
 );
 
 module.exports = router;

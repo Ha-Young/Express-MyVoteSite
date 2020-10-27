@@ -1,7 +1,8 @@
-const saveSession = async (req, res, next) => {
+const saveSession = (req, res, next) => {
   req.session.user = res.locals.user;
-
-  next();
+  req.session.save(() => {
+    next();
+  });
 };
 
 module.exports = saveSession;

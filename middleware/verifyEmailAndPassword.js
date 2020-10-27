@@ -19,8 +19,8 @@ const verifyPassword = async (req, res, next) => {
     });
   }
 
-  const { _id, email, nickname, } = user;
-  res.locals.user = { _id, email, nickname, };
+  const { _id, nickname, email, } = user;
+  res.locals.user = { _id, nickname, email, };
 
   next();
 };

@@ -35,7 +35,7 @@ const validateSignupForm = async (req, res, next) => {
   }
 
   if (message.length) {
-    return res.render('voting/new', {
+    return res.render('votings/new', {
       message,
     });
   }

@@ -1,0 +1,6 @@
+each poll in voting.polls
+  div(class='poll')
+    a(href='/votings/#{voting._id}/polls/#{poll._id}')
+      ul
+        li= poll.title
+        li= poll.voted_users.length
