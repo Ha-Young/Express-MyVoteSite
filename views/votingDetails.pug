@@ -4,15 +4,31 @@ block content
   a(href='/votings/new') 투표만들기
   <br/>
   a(href='/') 투표목록보기
+  if isCreator
+    button(
+      class='deleteButton'
+      id=`${id}`
+    ) 삭제
+  if !voting.isExpiration
+    div 투표마감
 
-  h1 VOTING Details
-      h2= voting.votingTitle
-      p= voting.userName
-      div= voting.expirationDate
-      div
-      each option in voting.options
-        label= option.option
-        input(
-          type='radio'
-          name='option'
-        )
+  else
+    h1 VOTING Details
+      form(action='/votings/success', method='POST')
+        h2= voting.votingTitle
+        p= voting.userName
+        div= voting.expirationDate
+        div
+          each option in voting.options
+            label= option.option
+            input(
+              type='radio'
+              name='option'
+              value=`${option._id}`
+            )
+        div
+        button(
+          type='submit'
+          name='votingButton'
+        ) 투표
+  script(src='../../javascripts/delete.js')
