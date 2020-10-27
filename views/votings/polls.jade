@@ -1,6 +1,12 @@
 each poll in voting.polls
   div(class='poll')
-    a(href='/votings/#{voting._id}/polls/#{poll._id}')
+    - let href;
+    - if (voting.openState) {
+    -   href = `/votings/${voting._id}/polls/${poll._id}`;
+    - } else {
+    -   href = '';
+    - }
+    a(href='#{href}')
       ul
         li= poll.title
         -  let value = '';

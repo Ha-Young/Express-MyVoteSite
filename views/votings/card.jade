@@ -2,10 +2,16 @@ extends ../layout
 
 block content
   h1 card page
+  h2 Hello #{user.nickname}
+  if isVotingUser
+    h2 Already Voted
   div
     h2= voting.title
     h3= voting.expiration_date
     h4= voting.creator.nickname
     h4 #{voting.openState ? 'open' : 'closed'}
     include ./polls
+  if isCreator
+    a(href='/votings/#{voting._id}/delete') delete
+  br
   a(href='/') home

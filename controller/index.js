@@ -12,7 +12,15 @@ const redirect = (page) => {
 
 const redirectBefore = () => {
   return (req, res, next) => {
-    res.redirect(req.session.beforeUrl);
+    if (req.session.previousUrl) {
+      req.session.save(() => {
+        const tempUrl = req.session.previousUrl;
+        delete req.session.previousUrl;
+        res.redirect(tempUrl);
+      });
+    } else {
+      res.redirect('/');
+    }
   };
 };
 

@@ -1,6 +1,9 @@
 const verifyAuthorization = (req, res, next) => {
   if (!req.session.user) {
-    res.redirect('/login');
+    req.session.previousUrl = req.originalUrl;
+    req.session.save(() => {
+      res.redirect('/login');
+    });
   } else {
     next();
   }
