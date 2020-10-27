@@ -7,7 +7,7 @@ block content
   p= vote.isExpired
   p= vote.author.name
   p= `${vote.expired.toUTCString()}`
-  if !vote.isExpired
+  if !isParticipated && !vote.isExpired
     form(action=`/votings/${vote.id}` method='POST')
       each item, index in vote.candidateList
         label
@@ -17,6 +17,8 @@ block content
             input(type='radio', name='item' value=`${item.title}`)
           span= item.title
       input(type='submit')
+  else if isParticipated
+    h3 이미 투표 참여했어유...!
   else
     h3 투표가 종료되었습니다.
     ul.candidate-container

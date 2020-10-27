@@ -1,3 +1,5 @@
+const createError = require('http-errors');
+
 const Vote = require('../../models/Vote');
 const User = require('../../models/User');
 
@@ -16,6 +18,8 @@ exports.postNewVote = async function postNewVote(req, res, next) {
   } = req;
 
   try {
+    if (body && body.itemList && body.itemList.length <= 1) throw createError(404);
+
     const newVote = await Vote.create({
       title: body.title,
       author: user._id,
@@ -34,6 +38,7 @@ exports.postNewVote = async function postNewVote(req, res, next) {
     });
 
     updatedUser.save();
+    req.flash('success', 'Succeed creating new vote!');
     res.redirect('/');
   } catch (error) {
     next(error);
@@ -46,19 +51,23 @@ exports.getVote = async function getVote(req, res, next) {
 
   const {
     params: { id: vote_id },
-    session: { user }
+    session
   } = req;
   let isAuthor = false;
+  let isParticipated;
 
   try {
     const vote = await Vote.findById(vote_id).populate('author', 'name');
     if (!vote) throw new Error('No exists');
 
-    if (user && user._id === vote.author._id.toString()) {
-      isAuthor = true;
+    if (session && session.user) {
+      isAuthor = session.user._id === vote.author._id.toString();
+      isParticipated = vote.participatedUser.find(
+        (user) => user._id.toString() === session.user._id
+      );
     }
 
-    res.status(200).render('voteDetail', { user, vote, isAuthor });
+    res.status(200).render('voteDetail', { user: session.user, vote, isAuthor, isParticipated });
   } catch (error) {
     next(error);
   }

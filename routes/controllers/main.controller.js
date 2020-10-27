@@ -4,7 +4,7 @@ const User = require('../../models/User');
 exports.getVotings = async function getVotings(req, res, next) {
   try {
     const votingList = await Vote.find().populate('author', 'name').lean().exec();
-    res.render('index', { user: req.session.user, votingList });
+    res.render('index', { user: req.session.user, votingList, message: req.flash('success') });
   } catch (error) {
     next(error);
   }
