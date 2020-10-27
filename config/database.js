@@ -9,15 +9,15 @@ module.exports = () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }, (err) => {
-    if (err) throw new Error(err);
+    if (err) console.error(err);
   });
 
   mongoose.connection.on('error', (err) => {
-    if (err) throw new Error(err);
+    if (err) console.error(err);
   });
 
   mongoose.connection.once('open', (err) => {
-    if (err) throw new Error(err);
+    if (err) console.error(err);
 
     console.log('mongodb is connected...');
   });

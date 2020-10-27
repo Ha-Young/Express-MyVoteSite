@@ -1,11 +1,11 @@
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
+const { SALT_ROUND } = require('../services/constants');
 
 const bcryptPassword = async (req, res, next) => {
   try {
-    const bcryptPassword = await bcrypt.hash(req.body.password, saltRounds);
+    const bcryptPassword = await bcrypt.hash(req.body.password, SALT_ROUND);
     res.locals.password = bcryptPassword;
-    console.log(bcryptPassword);
+
     next();
   } catch (err) {
     next(new Error(err));

@@ -9,7 +9,7 @@ const bcryptPassword = require('../../middleware/bcryptPassword');
 const router = express.Router();
 
 router.get('/', controller.render('./signup'));
-router.post('/', validateSignupForm, bcryptPassword, saveUser, saveSession, controller.render('index'));
+router.post('/', validateSignupForm, bcryptPassword, saveUser, saveSession, controller.redirect('index'));
 router.get('/success', controller.redirect('./signup/success'));
 
 module.exports = router;

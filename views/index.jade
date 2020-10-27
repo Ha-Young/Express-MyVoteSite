@@ -3,6 +3,13 @@ extends layout
 block content
   h1= title
   p Welcome to Voting show
+  each val in votings
+    div
+      ul
+        li= val.title
+        li= val.creator.nickname
+        li= val.expiration_date
+        li= val.openState
   a(href='/login') login
   br
   a(href='/signup') signup

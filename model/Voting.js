@@ -8,7 +8,6 @@ const PollSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    unique: true,
     trim: true,
   },
   voted_users: [{
@@ -30,8 +29,7 @@ const VotingSchema = new mongoose.Schema({
     required: true,
   },
   expiration_date: {
-    type: Date,
-    default: Date.now,
+    type: String,
     required: true,
   },
   polls: [ PollSchema,],

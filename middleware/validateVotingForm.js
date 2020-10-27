@@ -9,7 +9,7 @@ const {
   DATE_FORM_ERROR_MESSAGE,
 } = require('../services/constants');
 
-const validateSignupForm = async (req, res, next) => {
+const validateSignupForm = (req, res, next) => {
   const message = [];
 
   const { title, polls, expiration_date, } = res.locals.serializedForm;

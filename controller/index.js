@@ -1,6 +1,6 @@
-const render = (page) => {
+const render = (page, options) => {
   return (req, res, next) => {
-    res.render(page);
+    res.render(page, options);
   };
 };
 

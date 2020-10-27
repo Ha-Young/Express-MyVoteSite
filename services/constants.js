@@ -24,6 +24,8 @@ const EMAIL_REGEX = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
 //숫자 포함 8자 이상의 비밀번호
 const PASSWORD_REGEX = /(?=.*\d)(?=.*[a-z]).{8,}/;
 
+const SALT_ROUND = 10;
+
 module.exports = {
   VALIDATION,
   VALIDATION_ERROR_MESSAGE,
@@ -38,4 +40,5 @@ module.exports = {
   DIFF_PASSWORD,
   EMAIL_REGEX,
   PASSWORD_REGEX,
+  SALT_ROUND,
 };

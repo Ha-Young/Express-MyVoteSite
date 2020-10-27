@@ -9,7 +9,7 @@ const saveVoting = async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
-  console.log(form);
+
   next();
 };
 

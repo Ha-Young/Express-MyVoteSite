@@ -7,15 +7,9 @@ block content
     input(type='text' name='title' placeholder='title')
     br
     ul(class='js-polls')
-      li
-        input(type='text' name='polls[0][title]' placeholder='poll')
-        br
-      li
-        input(type='text' name='polls[1][title]' placeholder='poll')
-        br
-    input(type='date' name='expiration_date' class='js-date')
+    input(type='date' name='expiration_date' value='#{defaultDate}')
     button(type='submit') submit
   button(class='js-addBtn') add poll
   br
   a(href='/') home
-  script(src='/javascripts/votingNew.js')
+  script(src='/javascripts/votingNew.js' defer)
