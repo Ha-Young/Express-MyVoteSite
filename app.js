@@ -2,7 +2,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
 const bodyparser = require('body-parser');
 const session = require('express-session');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const express = require('express');
 const userRoute = require('./routes/userRoute');
@@ -15,14 +15,16 @@ app.use(express.static(`${__dirname}/public`));
 
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: false,
-  store: new MongoStore({
-    mongooseConnection: mongoose.connection
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: false,
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection,
+    }),
   })
-}));
+);
 
 app.use('/', userRoute);
 app.use('/votings', votingRoute);

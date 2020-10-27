@@ -1,11 +1,17 @@
-const User = require("../models/usersModel");
+const User = require('../models/usersModel');
+const Voting = require('../models/votingsModel');
 
-exports.renderMainPage = (req, res, next) => {
-  res.render('main', { data: 'welcome' });
+exports.renderMainPage = async (req, res, next) => {
+  const votings = await Voting.find();
+
+  res.render('main', {
+    data: 'welcome',
+    votings,
+  });
 };
 
 exports.renderSignup = (req, res, next) => {
-  res.render('signup')
+  res.render('auth/signup');
 };
 
 exports.registerUser = async (req, res, next) => {
@@ -15,7 +21,9 @@ exports.registerUser = async (req, res, next) => {
     const password = req.body.password;
     const passwordConfirm = req.body.passwordConfirm;
     if (password !== passwordConfirm) {
-      throw new Error('password and passwordConfirm should be exactly the same');
+      throw new Error(
+        'password and passwordConfirm should be exactly the same'
+      );
     }
 
     const user = await User.findOne({ email });
@@ -25,19 +33,20 @@ exports.registerUser = async (req, res, next) => {
     }
 
     const signedUp = await User.create({
-      email, password, passwordConfirm
+      email,
+      password,
+      passwordConfirm,
     });
-    console.log(signedUp, signedUp)
+    console.log(signedUp, signedUp);
 
-    return res.status(302).redirect('/login')
+    return res.status(302).redirect('/login');
   } catch (err) {
-    res.render('failSignup', { data: err.message })
+    res.render('auth/failSignup', { data: err.message });
   }
 };
 
 exports.renderLogin = (req, res, next) => {
-  res.render('login')
-
+  res.render('auth/login');
 };
 
 exports.login = async (req, res, next) => {
@@ -59,7 +68,6 @@ exports.login = async (req, res, next) => {
       return res.status(302).redirect('/');
     }
     return res.status(302).redirect('/login');
-
   } catch (err) {
     next(err);
   }
@@ -68,7 +76,7 @@ exports.login = async (req, res, next) => {
 exports.logout = async (req, res, next) => {
   try {
     if (!req.session) {
-      throw new Error('session does not exist')
+      throw new Error('session does not exist');
     }
 
     await req.session.destroy();
@@ -76,6 +84,6 @@ exports.logout = async (req, res, next) => {
 
     return res.status(302).redirect('/');
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
