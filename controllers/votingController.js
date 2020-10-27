@@ -1,3 +1,4 @@
+
 const Voting = require('../models/votingsModel');
 const User = require('../models/usersModel');
 const { months, days, hours } = require('../constants');
@@ -15,7 +16,7 @@ exports.createNewVoting = async (req, res, next) => {
     votingInfo.creator = user.email;
 
     const voting = await Voting.create(votingInfo);
-    console.log(voting, 'vvve');
+
     res.status(302).redirect('/');
   } catch (err) {
     console.log('err', err);
@@ -24,18 +25,15 @@ exports.createNewVoting = async (req, res, next) => {
 
 exports.renderVoting = async (req, res, next) => {
   try {
-    // console.log(req.params.id);
-    const id = req.params.id;
-    const voting = await Voting.findById(id);
+    console.log(req.body.voting, 'end');
 
-    console.log(voting, 'eee');
 
-    if (!voting) {
-      throw new Error('cant find the voting');
-    }
+    const voting = req.body.voting;
+    const result = req.body.result || [];
 
     res.render('voting/voting', {
-      voting,
+      voting: voting,
+      result: result
     });
   } catch (err) {
     console.log(err, 'voitng');
@@ -44,7 +42,21 @@ exports.renderVoting = async (req, res, next) => {
 };
 
 exports.receiveVotingResult = async (req, res, next) => {
-  console.log(req.body.selectOption);
+  try {
+    const parentId = req.params.id;
+    const childId = req.body.selectOption;
+
+    const voting = await Voting.findOne({ _id: parentId });
+    const result = voting.selectOptions.id(childId);
+
+    result.count++;
+    await voting.save();
+
+    res.status(302).redirect(`/votings/${parentId}`)
+  } catch (err) {
+    next(err)
+  }
+
 
   res.json('result');
 };

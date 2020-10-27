@@ -6,14 +6,13 @@ module.exports = (req, res, next) => {
 
     selectOptions.reduce(
       (acc, selectOption) => {
-        acc.name = selectOption;
+        acc.option = selectOption;
         temp.push(acc);
         return { count: 0 };
       },
       { count: 0 }
     );
     req.body.selectOptions = temp;
-
     next();
   } catch (err) {
     console.log(err, 'unvalid expiredate');

@@ -3,6 +3,7 @@ const router = express.Router();
 const votingController = require('../controllers/votingController');
 const expireDateValid = require('../controllers/middleware/expireDateValid');
 const modifySelectOptions = require('../controllers/middleware/modifySelectOptions');
+const handleVoting = require('../controllers/middleware/handleVoting');
 // const authController = require('../controllers/authController');
 // const isLoggedIn = require('../controllers/middleware/isLoggedIn');
 
@@ -15,7 +16,7 @@ router.post(
 );
 
 router.get('/my-voting', votingController.renderMyVoting);
-router.get('/:id', votingController.renderVoting);
+router.get('/:id', handleVoting, votingController.renderVoting);
 router.post('/:id', votingController.receiveVotingResult);
 
 module.exports = router;
