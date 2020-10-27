@@ -29,7 +29,6 @@ exports.createVoting = async (req, res, next) => {
     const votingObj = await Voting.findOne({ _id: noOptionVoting._id });
     const userObj = await User.findOne({ _id: _id });
 
-
     votingObj.options.push(savedOptions._id);
     userObj.votings.push(noOptionVoting._id);
 

@@ -4,5 +4,6 @@ const votingController = require('./controllers/voting.controller');
 const { isLoggedIn } = require('../middleware/authorization');
 
 router.get('/new', isLoggedIn, votingController.renderNewVotingMakerPage);
-router.post('/:id');
+router.get('/:id', votingController.getVotingDetails);
+
 module.exports = router;
