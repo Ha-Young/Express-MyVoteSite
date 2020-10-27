@@ -1,15 +1,16 @@
 extends ./layouts/layout
+include mixins/card
 
 block content
   if user
     a(href='/votings/new' class='btn-create-vote') Create Vote
   h1 투표해보세용!
-  ul
-  - var n = 0;
-    while n < 5
-      div(class=`card ${n++}`)
-        a(href='/')
-          h3 오늘 점심 뭐 먹지?
-          p host: TOGGO
-          p expired: 2020-10-30
-          p state: On Air
+  .vote-list
+    each vote in votingList
+      +card({
+        id: vote._id,
+        title: vote.title,
+        author: vote.author,
+        expired: vote.expired,
+        isExpired: vote.isExpired
+      })

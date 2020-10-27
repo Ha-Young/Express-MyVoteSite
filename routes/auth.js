@@ -11,29 +11,30 @@ router.get('/signup', function (req, res, next) {
 
 router.post('/signup', async function (req, res, next) {
   const {
-    body: { email, password, passwordConfirmation, username }
+    body: { email, password, passwordConfirmation, name }
   } = req;
 
-  if (password !== passwordConfirmation || !username) {
+  if (password !== passwordConfirmation || !name) {
     console.log('[/signup] check input value');
     return res.redirect('/auth/signup');
   }
 
   try {
     const user = await User.findOne({ email });
-    if (user) return res.redirect('/auth/login');
 
-    const hash = await bcrypt.hash(password, 10);
-    const newUser = await User.create({
-      email,
-      hash,
-      username
-    });
+    if (user) {
+      res.redirect('/auth/login');
+    } else {
+      const hash = await bcrypt.hash(password, 10);
+      const newUser = await User.create({
+        email,
+        hash,
+        name
+      });
 
-    req.session.user = newUser;
-    // res.locals.user = req.session.user;
-
-    res.redirect('/');
+      req.session.user = newUser;
+      res.redirect('/');
+    }
   } catch (error) {
     next(error);
   }
@@ -45,22 +46,22 @@ router.get('/login', function (req, res, next) {
 
 router.post('/login', async function (req, res, next) {
   const {
-    body: { email, password }
+    body: { email, password },
+    cookies
   } = req;
 
   try {
     const user = await User.findOne({ email });
     if (!user) return res.redirect('/');
 
-    const isUserValidated = await bcrypt.compare(password, user.hash);
-    if (!isUserValidated) return res.redirect('/auth/login');
+    const isAuthorized = await bcrypt.compare(password, user.hash);
+    if (!isAuthorized) return res.redirect('/auth/login');
 
-    req.session.user = {
-      email: user.email,
-      username: user.username,
-      myVoteList: user.myVoteList
-    };
+    req.session.user = user;
 
+    if (cookies['callback']) {
+      return res.redirect(cookies['callback']);
+    }
     res.redirect('/');
   } catch (error) {
     next(error);

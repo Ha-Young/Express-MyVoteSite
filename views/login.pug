@@ -4,9 +4,7 @@ block content
   h1 Login
   form(action='/auth/login', method='POST')
     label
-      | email
-      input(type='email', name='email' required)
+      input(required type='email', name='email' placeholder='E-mail')
     label
-      | password
-      input(type='password', name='password' required)
+      input(required type='password', name='password' placeholder='Password')
     input(type='submit' name='submit')

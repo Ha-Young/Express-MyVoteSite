@@ -4,15 +4,11 @@ block content
   h1 Sign Up
   form(action='/auth/signup', method='POST')
     label
-      | email
-      input(type='email', name='email' required)
+      input(required type='email', name='email' placeholder='E-mail')
     label
-      | name
-      input(type='text', name='username' required)
+      input(required type='text', name='name' placeholder='Name')
     label
-      | password
-      input(type='password', name='password' required)
+      input(required type='password', name='password'  placeholder='Password')
     label
-      | confirm password
-      input(type='password', name='passwordConfirmation' required)
+      input(required type='password', name='passwordConfirmation' placeholder='Cofirm password')
     input(type='submit' name='submit')

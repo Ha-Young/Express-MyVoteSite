@@ -1,12 +1,19 @@
 const express = require('express');
 
+const Vote = require('../models/Vote');
+
 const router = express.Router();
 
-router.get('/', function (req, res, next) {
+router.get('/', async (req, res, next) => {
   console.log('req.session: ', req.session);
-  res.render('index', { user: req.session.user });
+  try {
+    const votingList = await Vote.find().populate('author', 'name').lean().exec();
+    res.render('index', { user: req.session.user, votingList });
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.get('/my-votings', function (req, res, next) {});
+router.get('/my-votings', (req, res, next) => {});
 
 module.exports = router;

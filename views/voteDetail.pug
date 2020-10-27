@@ -1,0 +1,26 @@
+extends ./layouts/layout
+
+block content
+  if isAuthor
+    a(href='/votings/delete') 삭제
+  h1= vote.title
+  p= vote.isExpired
+  p= vote.author.name
+  p= vote.expired
+  if !vote.isExpired
+    form(action=`/votings/${vote.id}` method='POST')
+      each item, index in vote.candidateList
+        label
+          if index === 0
+            input(type='radio', name='item' value=`${item.title}` checked)
+          else
+            input(type='radio', name='item' value=`${item.title}`)
+          span= item.title
+      input(type='submit')
+  else
+    h3 투표가 종료되었습니다.
+    ul.candidate-container
+      each item in vote.candidateList
+        li
+          p= item.title
+          p= item.count

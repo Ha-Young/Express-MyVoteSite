@@ -3,13 +3,13 @@ const ObjectId = mongoose.SchemaTypes.ObjectId;
 
 const voteSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  author: { type: String, required: true },
-  expiredAt: { type: Date, required: true },
+  author: { type: ObjectId, ref: 'User' },
+  expired: { type: Date, required: true },
   isExpired: { type: Boolean, required: true },
   candidateList: [
     {
       title: { type: String, required: true },
-      counted: { type: Number, required: true }
+      count: { type: Number, required: true }
     }
   ],
   participatedUser: [

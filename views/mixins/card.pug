@@ -1,0 +1,7 @@
+mixin card(vote = {})
+  .card
+    a(href=`/votings/${vote.id}`)
+      h4= vote.title
+      p= vote.author.name
+      p= vote.expired
+      p= `isExpired: ${vote.isExpired}`
