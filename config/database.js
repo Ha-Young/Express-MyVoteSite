@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
 
-const { DATABASE, } = require('../services/constants');
-const mongodbError = require('../services/createError')(DATABASE);
-
 const uri = process.env.MONGODB_URI;
 
 module.exports = () => {
@@ -12,15 +9,15 @@ module.exports = () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }, (err) => {
-    if (err) throw mongodbError;
+    if (err) throw new Error(err);
   });
 
   mongoose.connection.on('error', (err) => {
-    if (err) throw mongodbError;
+    if (err) throw new Error(err);
   });
 
   mongoose.connection.once('open', (err) => {
-    if (err) throw mongodbError;
+    if (err) throw new Error(err);
 
     console.log('mongodb is connected...');
   });

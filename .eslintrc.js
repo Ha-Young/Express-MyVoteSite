@@ -43,5 +43,6 @@ module.exports = {
                 'objects': 'always',
             },
         ],
+        'no-unsafe-finally': 'off',
     },
 };

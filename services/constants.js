@@ -1,7 +1,35 @@
-const DATABASE = 'DATABASE';
-const DATABASE_ERROR_MESSAGE = 'Mongodb server error...';
+/* eslint-disable no-useless-escape */
+const VALIDATION = 'VALIDATION';
+
+const VALIDATION_ERROR_MESSAGE = 'Validation error';
+const EMAIL_DUPLICATE_ERROR_MESSAGE = 'Duplicated email. try another one';
+const EMAIL_FORM_ERROR_MESSAGE = 'E-mail is not a valid type';
+const PASSWORD_FORM_ERROR_MESSAGE = 'Password is not a valid type';
+const NICKNAME_FORM_ERROR_MESSAGE = 'Nickname should be contained at least 3 character';
+
+const CANT_FIND_EMAIL = 'Can not foud your email. please check again';
+const DIFF_PASSWORD = 'Password does not match';
+
+/*
+*  @ 앞에는 영어소문자 . _ % + - 만 허용
+*  @ 골뱅이 필수
+*  @ 뒤 . 앞에는 영어소문자 . - 만 허용
+*  . 점 필수
+*  . 뒤에는 영어소문자 2자리 이상
+*/
+const EMAIL_REGEX = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+//숫자 포함 8자 이상의 비밀번호
+const PASSWORD_REGEX = /(?=.*\d)(?=.*[a-z]).{8,}/;
 
 module.exports = {
-  DATABASE,
-  DATABASE_ERROR_MESSAGE,
+  VALIDATION,
+  VALIDATION_ERROR_MESSAGE,
+  EMAIL_DUPLICATE_ERROR_MESSAGE,
+  EMAIL_FORM_ERROR_MESSAGE,
+  PASSWORD_FORM_ERROR_MESSAGE,
+  NICKNAME_FORM_ERROR_MESSAGE,
+  CANT_FIND_EMAIL,
+  DIFF_PASSWORD,
+  EMAIL_REGEX,
+  PASSWORD_REGEX,
 };
