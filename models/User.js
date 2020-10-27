@@ -13,10 +13,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     trin: true,
   },
-  votes: [
+  votings: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Vote',
+      ref: 'Voting',
     }
   ]
 });
@@ -36,35 +36,6 @@ userSchema.pre('save', function(next) {
     next();
   });
 });
-
-userSchema.statics.authenticate = (email, password, done) => {
-  User.findOne({ email })
-    .exec((err, user) => {
-      if (err) {
-        done(err);
-
-        return;
-      }
-
-      if (!user) {
-        const error = new Error('User not found');
-        error.status = 401;
-        done(error);
-
-        return;
-      }
-
-      bcrypt.compare(password, user.password, (err, result) => {
-        if (result) {
-          done(null, user);
-
-          return;
-        }
-
-        done();
-      });
-    });
-};
 
 const User = mongoose.model('User', userSchema);
 

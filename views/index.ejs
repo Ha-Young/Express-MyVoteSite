@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <button id='logout'>로그아웃</button>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-  <script src='/javascripts/clientLogout.js'></script>
+<head>
+  <title>투표</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+  <a href='/votings/new'>새 투표 만들기</a>
+  <h1>투표 목록</h1>
+  <ul>
+    <% votings.forEach(voting => { %>
+      <li>
+        <a><%= voting %></a></br>
+
+      </li>
+    <% }) %>
+  </ul>
+  <button id='logout'>로그아웃</button>
+</body>
+<script src='/javascripts/clientLogout.js'></script>
 </html>

@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const gateKeeper = require('./middlewares/gateKeeper');
+const { create } = require('./controllers/votings.controller');
 
-/* GET users listing. */
-router.get('/votings', function (req, res, next) {
-  res.send('respond with a resource');
+router.get('/new', gateKeeper, (req, res, next) => {
+  res.status(200).render('newVoting');
 });
+
+router.post('/new', gateKeeper, create);
 
 module.exports = router;

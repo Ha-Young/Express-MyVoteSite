@@ -18,15 +18,15 @@ router.post('/', async (req, res, next) => {
     || passwordConfirm.length < 4
     || password !== passwordConfirm
   ) {
-    res.status(302).redirect('/signup');
+    res.status(200).render('signupFailure', { message: '형식을 지키세요' });
 
     return;
   }
 
-  const emailSearchResult = await User.find({ email });
+  const emailSearchResult = await User.findOne({ email });
 
-  if (emailSearchResult.length) {
-    res.status(302).redirect('/signup');
+  if (emailSearchResult) {
+    res.status(302).render('signupFailure', { message: '이미 가입한 이메일입니다' });
 
     return;
   }
@@ -34,7 +34,7 @@ router.post('/', async (req, res, next) => {
   const newUserData = {
     email,
     password,
-    votes: [],
+    votings: [],
   };
 
   User.create(newUserData, (err, user) => {

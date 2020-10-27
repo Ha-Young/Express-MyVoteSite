@@ -1,32 +1,37 @@
 const passport = require('passport');
-const User = require('../models/User');
+const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
 
-passport.use(new LocalStrategy((username, password, done) => {
-  console.log('여기---------------------');
-  User.findOne({ username: username },
-    (err, user) => {
-      console.log(user);
-      if (err) return done(err);
-      if (!user) {
-        return done(null, false, { message: '아이디 또는 비밀번호가 맞지 않습니다' });
+const User = require('../models/User');
+
+module.exports = () => {
+  passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password',
+  }, async (email, password, done) => {
+    try {
+      const user = await User.findOne({ email });
+      const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+      if (!user || !isPasswordCorrect) {
+        done(null, false, { message: '아이디 또는 비밀번호가 맞지 않습니다' });
+
+        return;
       }
-      if (!user.verifyPassword(password)) {
-        return done(null, false, { message: '아이디 또는 비밀번호가 맞지 않습니다' });
-      }
-      return done(null, user);
+
+      done(null, user);
+    } catch (err) {
+      done(error);
     }
-  );
-}));
+  }));
 
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    done(err, user);
+  passport.serializeUser((user, done) => {
+    done(null, user._id);
   });
-});
 
-module.exports = passport;
+  passport.deserializeUser((id, done) => {
+    User.findById(id, (err, user) => {
+      done(err, user);
+    });
+  });
+};
