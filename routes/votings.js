@@ -12,6 +12,7 @@ router.post('/new',
   (req, res, next) => {
     res.redirect('/');
 });
+
 router.get('/success', (req, res, next) => {
   res.send('success, new voting created');
 });
@@ -25,8 +26,13 @@ router.get('/delete/:voting_id',
     res.redirect('/');
 });
 
-router.get('/result/:voting_id', (req, res, next) => {
-  res.send('투표 결과 페이지');
+router.get('/result/:voting_id',
+  authenticate,
+  votingController.getTargetVote,
+  (req, res, next) => {
+    const targetDetails = req.targetVote;
+    console.log(targetDetails);
+    res.render('vote-result', { targetDetails });
 });
 
 // 투표 상세 페이지
@@ -46,7 +52,5 @@ router.post('/:voting_id',
   (req, res, next) => {
     res.redirect('/');
 });
-
-
 
 module.exports = router;

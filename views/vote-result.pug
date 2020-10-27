@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  div.vote-result-container
+    h1 투표 현황
+    h2= targetDetails.title
+    span= targetDetails.writer.nickname
+    span= targetDetails.due_date
+    ul
+      each option in targetDetails.options
+        li= option.optionTitle
+          span= option.votedCount.length
+    a(href=`/votings/${targetDetails._id}`)
+      button(type='button') 뒤로가기
+    a(href='/')
+      button(type='button') 메인으로

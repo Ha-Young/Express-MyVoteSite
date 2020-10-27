@@ -19,7 +19,7 @@ const UserSchema = new Schema({
   },
   my_votings: [{
     type: Schema.Types.ObjectId,
-    ref: 'Voting',
+    ref: 'Vote',
   }],
 }, {
   timestamps: true,

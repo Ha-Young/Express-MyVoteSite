@@ -1,19 +1,11 @@
 extends layout
 
 block content
-  h1 마이페이지
-  //- main
-  //-   each vote in votesData
-  //-     a(href=`/votings/${vote._id}`)
-  //-       if vote.isInProgress
-  //-         div.progress-container
-  //-           h2= vote.title
-  //-           span= vote.writer.nickname
-  //-           span= vote.due_date
-  //-           span 진행중
-  //-       else
-  //-         div.completed-container
-  //-           h2= vote.title
-  //-           span= vote.writer.nickname
-  //-           span= vote.due_date
-  //-           span 종료
+  section.my-page
+    h1 마이페이지
+    div.my-vote-container
+      each vote in myVotes
+        a(href=`/votings/${vote._id}`)
+          div.each-vote-container
+            h2= vote.title
+            span= vote.due_date

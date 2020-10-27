@@ -14,5 +14,5 @@ block content
     if isIdsMatched
       a(href=`/votings/delete/${targetDetails._id}`)
         button(type='submit') 삭제
-      form(active=`/votings/result/${targetDetails._id}` method='GET')
+      a(href=`/votings/result/${targetDetails._id}`)
         button(type='submit') 투표 결과 보기
