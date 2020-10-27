@@ -1,10 +1,20 @@
+const bcrypt = require('bcrypt');
+
+const { SALT_ROUND, } = require('../services/constants');
 const User = require('../model/User');
 
 const saveUser = async (req, res, next) => {
   let result;
+  let bcryptPassword;
 
   try {
-    result = await User.create(req.body);
+    bcryptPassword = await bcrypt.hash(req.body.password, SALT_ROUND);
+  } catch (err) {
+    return next(err);
+  }
+
+  try {
+    result = await User.create({ ...req.body, password: bcryptPassword, });
   } catch (err) {
     return next(err);
   }
