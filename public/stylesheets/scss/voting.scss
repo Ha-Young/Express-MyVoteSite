@@ -1,0 +1,21 @@
+.chart-container {
+  background-color: pink;
+  width: 300px;
+  height: 300px;
+
+}
+
+.candidates-wrapper {
+  background-color: black;
+  background-color: 500px;
+  padding: 1em;
+  display: flex;
+
+  .candidate {
+    background-color: darkorange;
+    padding: 3em;
+    width: 500px;
+    text-align: center;
+  }
+}
+

@@ -1,9 +1,66 @@
+@import 'global';
+
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  display: flex;
 }
 
-a {
-  color: black;
-  text-decoration: none;
+content {
+  padding: 50px;
+  flex: 1;
+  margin-right: 250px;
+  overflow: hidden;
+}
+
+nav {
+  background-color:darkmagenta;
+  color: white;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  padding: 1em;
+  width: 250px;
+
+  .logo {
+    font-family: 'Lobster';
+    font-size: 4em;
+    text-align: center;
+  }
+
+  .greeting {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  content {
+    margin: 0;
+  }
+
+  nav {
+    height: 100px;
+    width: 100vw;
+    top: auto;
+    bottom: 0;
+
+    display: flex;
+    justify-content: center;
+
+    ul {
+      display: flex;
+      align-items: center;
+
+      li {
+        margin: auto 1em;
+      }
+    }
+
+    .logo {
+      margin: auto 0;
+      font-size: 20px;
+    }
+  }
 }

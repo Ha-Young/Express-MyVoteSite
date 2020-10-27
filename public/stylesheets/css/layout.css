@@ -1,9 +1,91 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Lobster");
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
 }
 
 a {
-  color: black;
+  color: inherit;
   text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+content {
+  padding: 50px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin-right: 250px;
+  overflow: hidden;
+}
+
+nav {
+  background-color: darkmagenta;
+  color: white;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  padding: 1em;
+  width: 250px;
+}
+
+nav .logo {
+  font-family: 'Lobster';
+  font-size: 4em;
+  text-align: center;
+}
+
+nav .greeting {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+@media only screen and (max-width: 850px) {
+  content {
+    margin: 0;
+  }
+  nav {
+    height: 100px;
+    width: 100vw;
+    top: auto;
+    bottom: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  nav ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  nav ul li {
+    margin: auto 1em;
+  }
+  nav .logo {
+    margin: auto 0;
+    font-size: 20px;
+  }
 }

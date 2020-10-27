@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  head
+    link(rel="stylesheet", href="/stylesheets/css/new_voting.css")
+  h1 새로운 투표를 생성합시다!
+
+  form(action="" method="post")
+    .form-wrapper
+      .metaForm
+        .input-wrapper
+          label(for="subject") 주제
+          input(type="text" name="subject")
+        .input-wrapper
+          label(for="description") 설명
+          textarea(name="description")
+        .input-wrapper
+          label 언제까지
+          input(type="Date" name="dueDate")
+        .input-wrapper
+          label
+          input(type="Time" name="time")
+
+      .ballotForm
+        .input-wrapper
+          label(for="subject") 후보 1
+          input(type="text" name="subject")
+        .input-wrapper
+          label(for="subject") 후보 2
+          input(type="text" name="subject")
+        button.addCandidate 후보 추가하기
+
+    br
+
+    input(type="submit" value="투표 생성하기!")

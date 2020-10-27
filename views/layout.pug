@@ -4,4 +4,17 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/css/layout.css')
   body
-    block content
+    content
+        block content
+    nav
+      h1.logo
+        a(href='/') Let's vote
+
+      ul
+        li
+          a(href='/') 투표리스트
+        li
+          a(href='/votings/new') 새로운 투표 만들기
+        li
+          a(href='/votings/my-votings') 나의 투표
+      .greeting #{username}님, 반갑습니다!
