@@ -10,5 +10,9 @@ block content
       p= voting.userName
       div= voting.expirationDate
       div
-      each option in options
-        div= option
+      each option in voting.options
+        label= option.option
+        input(
+          type='radio'
+          name='option'
+        )

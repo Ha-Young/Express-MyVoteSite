@@ -1,5 +1,4 @@
 const Voting = require('../../models/Voting');
-const Option = require('../../models/Option');
 
 exports.renderNewVotingMakerPage = (req, res, next) => {
   res.render('newVoting');
@@ -13,9 +12,9 @@ exports.getVotingDetails = async (req, res, next) => {
   try {
     const { id } = req.params;
     const voting = await Voting.findOne({ _id: id });
-    const { options } = await Option.findOne({ _id: voting.options });
+    const isCreator = voting.createdBy === req.user._id;
 
-    res.render('votingDetails', { voting, options });
+    res.render('votingDetails', { voting, isCreator });
   } catch (err) {
     next(err);
   }

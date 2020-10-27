@@ -11,6 +11,7 @@ exports.saveUser = async (req, res, next) => {
     const { name, email, password, checkPassword } = req.body;
     const existUser = await User.findOne({ email: email });
 
+    //나중에 미들웨어로 처리하기
     const distinguishKorean = (name) => {
       const koreanPattern = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
       return name.replace(koreanPattern, '');

@@ -1,5 +1,4 @@
 const Voting = require('../../models/Voting');
-const Option = require('../../models/Option');
 const User = require('../../models/User');
 const { isExpiration } = require('../../utils');
 
@@ -17,22 +16,20 @@ exports.getAllVotings = async (req, res, next) => {
 exports.createVoting = async (req, res, next) => {
   try {
     const { body: { votingTitle, expirationDate, options }, user: { _id, name } } = req;
+    const optionObject = options.map( option => { return { option }});
     const voting = {
       createdBy: _id,
       userName: name,
       votingTitle,
       expirationDate,
+      options : optionObject,
     };
 
-    const noOptionVoting = await Voting(voting).save();
-    const savedOptions = await Option({ options }).save();
-    const votingObj = await Voting.findOne({ _id: noOptionVoting._id });
-    const userObj = await User.findOne({ _id: _id });
+    const saveVoting = await Voting(voting).save();
 
-    votingObj.options.push(savedOptions._id);
-    userObj.votings.push(noOptionVoting._id);
+    const userObj = await User.findOne({ _id });
+    userObj.votings.push(saveVoting._id);
 
-    await Voting(votingObj).save();
     await User(userObj).save();
 
     res.redirect('/');
