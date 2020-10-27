@@ -24,6 +24,7 @@ router.get('/:voting_id',
   votingController.getTargetVote,
   (req, res, next) => {
     const targetDetails = req.targetVote;
+    console.log(targetDetails);
     res.render('vote-details', { targetDetails });
 });
 

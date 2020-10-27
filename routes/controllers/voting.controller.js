@@ -47,4 +47,19 @@ exports.getTargetVote = async (req, res, next) => {
 };
 
 exports.updateVoteCount = async (req, res, next) => {
+  const optionId = req.body.vote;
+  try {
+    await Vote.findOneAndUpdate(
+      { 'options._id': optionId },
+      { $addToSet: { 'options.$[option].votedCount': req.user._id } },
+      { arrayFilters: [{ 'option._id': optionId }] }
+    );
+    await Vote.findByIdAndUpdate(
+      req.params.voting_id,
+      { $addToSet: { voter: req.user._id } }
+    );
+    next();
+  } catch (error) {
+    next(error);
+  }
 };

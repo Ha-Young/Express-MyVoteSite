@@ -22,10 +22,11 @@ const VoteSchema = new Schema({
       type: String,
       required: true,
     },
-    votedNumber: {
-      type: Number,
-      default: 0,
-    },
+    votedCount: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    }],
   }],
   voter: [{
     type: Schema.Types.ObjectId,
