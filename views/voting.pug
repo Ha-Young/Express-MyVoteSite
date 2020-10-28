@@ -1,0 +1,45 @@
+extends layouts/main
+include mixins/author
+include mixins/votingState
+
+block styles
+  link(rel='stylesheet', href='/stylesheets/voting-detail.css')
+  link(rel='stylesheet', href='/stylesheets/partials/voting-state.css')
+  link(rel='stylesheet', href='/stylesheets/partials/author.css')
+
+block content
+  span= voting.isOngoing
+  span= voting.timeRemaining
+  span= hasAdminPermission
+  span= hasParticipated
+  .voting-container
+    - console.log(voting);
+    .state
+      +votingState(voting.isOngoing)
+    .voting-detail.author
+      +author(voting.author)
+    .voting-detail.topic
+      i.fas.fa-vote-yea
+      span Topic
+      .content= voting.topic
+    .voting-detail.expiration
+      i.fas.fa-stopwatch
+      span Expiration Time
+      .content= voting.expiration
+    .voting-detail.createdAt
+      i.fas.fa-stopwatch
+      span Created At
+      .content= voting.createdAt
+    .voting-detail.options
+      i.fas.fa-list-ul
+      span Options
+      form(action=routes.VOTINGS_BY_ID, method="POST")
+        each option in voting.options
+          .content
+              .option= option.content
+              if hasAdminPermission || !voting.isOngoing
+                .option-count
+                  i.fas.fa-user  #{option.count}
+              else
+                input(type="radio", id="option", name="topic")
+        input(type="submit", value="Submit Voting")

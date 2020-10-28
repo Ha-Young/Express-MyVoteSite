@@ -1,0 +1,29 @@
+@import '../config/_variables';
+
+.displayName {
+  margin-right: 10px;
+  font-size: 0.9rem;
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid $white;
+  box-shadow: 0 3px 4px 0 $gray;
+  overflow: hidden;
+
+  i {
+    margin: 0;
+    padding: 0;
+    font-size: 30px;
+  }
+
+  img {
+    width: 110%;
+  }
+}

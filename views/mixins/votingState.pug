@@ -1,0 +1,10 @@
+mixin votingState(isOngoing)
+  .voting-state
+    if isOngoing
+      .ongoing
+        i.fas.fa-lock-open
+        span Ongoing
+    else
+      .expired
+        i.expired.fas.fa-lock
+        span Expired

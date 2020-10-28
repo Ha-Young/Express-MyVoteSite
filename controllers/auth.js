@@ -1,11 +1,11 @@
 const createError = require('http-errors');
 const passport = require('passport');
 
+const User = require('../models/User');
+
 const { googleAuth } = require('../config');
 const GLOBAL = require('../constants/routes');
 const VIEWS = require('../constants/views');
-
-const User = require('../models/User');
 
 exports.getSignup = (req, res, next) => {
   const { user } = req;

@@ -1,13 +1,12 @@
+@import './config/_variables';
+
 .form-container {
   width: 40%;
   min-width: 400px;
   padding: 30px;
-  box-sizing: border-box;
-  background-color: #fff;
-  box-shadow: rgba(11, 37, 75, 0.04) 0px 30px 40px -10px,
-    rgba(11, 37, 75, 0.01) 0px 22px 22px 0px,
-    rgba(11, 37, 75, 0.02) 0px 14px 14px 0px, rgba(11, 37, 75, 0.02) 0px 4px 4px 0px,
-    rgba(11, 37, 75, 0.02) 0px 2px 2px 0px, rgba(11, 37, 75, 0.04) 0px 0px 0px 1px;
+
+  background-color: $white;
+  box-shadow: $my-shadow;
 
   form {
     width: 100%;
@@ -17,13 +16,13 @@
     input,
     button {
       font-family: inherit;
-      border: 1px solid #979797;
+      border: 1px solid $gray;
       padding: 15px;
       margin: 10px;
       outline: none;
 
       &::placeholder {
-        color: #b9b9b9;
+        color: $gray;
         font-weight: 200;
         font-style: italic;
       }
@@ -31,21 +30,19 @@
 
     input[type='submit'],
     button {
-      background-color: #fff;
-      color: #6d9cc2;
-      border: 1px solid #6d9cc2;
+      background-color: $white;
+      color: $skyblue;
+      border: 1px solid $skyblue;
       border-radius: 5px;
       margin: 10px;
       padding: 5px;
-      transition: transform 100ms;
+      transition: all 500ms;
 
       &:hover {
-        background-color: #fff;
-        border: 1px solid #f18951;
-        color: #f18951;
         cursor: pointer;
-
-        transform: scale(1.05);
+        background-color: $white;
+        border: 1px solid $orange;
+        color: $orange;
       }
     }
   }

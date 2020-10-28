@@ -1,10 +1,15 @@
-const VIEWS = require('../constants/views');
-const { convertToVotingObject } = require('../util/date');
-
 const Voting = require('../models/Voting');
 
-exports.getAll = (req, res, next) => {
-  res.render(VIEWS.INDEX, { title: 'Main' });
+const VIEWS = require('../constants/views');
+const { convertToVotingObject } = require('../util/voting');
+
+exports.getAll = async (req, res, next) => {
+  try {
+    const votings = await Voting.find().populate('author');
+    return res.render(VIEWS.INDEX, { title: 'MAIN', votings });
+  } catch (err) {
+    next(err);
+  }
 };
 
 exports.getAllMyVotings = (req, res, next) => {
@@ -31,7 +36,24 @@ exports.postNewVoting = async (req, res, next) => {
   }
 };
 
-exports.getVoting = (req, res, next) => {};
+exports.getVoting = async (req, res, next) => {
+  const { user, voting } = req;
+
+  try {
+    const hasAdminPermission = voting.isMine(user._id);
+    const hasParticipated = voting.isParticipated(user._id);
+    await voting.execPopulate('author');
+
+    res.render(VIEWS.VOTING, {
+      title: 'Voting Detail',
+      voting,
+      hasAdminPermission,
+      hasParticipated,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 exports.postVoting = (req, res, next) => {};
 

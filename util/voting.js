@@ -1,4 +1,4 @@
-const { parse, formatISO } = require('date-fns');
+const { parse, formatISO, isBefore } = require('date-fns');
 
 const convertToISOString = (date, time) => {
   const parsedDate = parse(date + time, 'yyyy-MM-ddHH:mm', new Date());
@@ -13,6 +13,5 @@ exports.convertToVotingObject = (userId, userInputs) => {
     options: options.map(option => ({ content: option })),
     author: userId,
     expiration: convertToISOString(expirationDate, expirationTime),
-    isActivated: true,
   };
 };

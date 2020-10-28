@@ -19,10 +19,10 @@ const initLoaders = app => {
     app.use(logger(config.logs.level));
   }
 
-  if (process.env.NODE_ENV === 'production') {
-    app.use(compression());
-    app.use(helmet());
-  }
+  // if (process.env.NODE_ENV === 'production') {
+  app.use(compression());
+  app.use(helmet(config.helmet));
+  // }
 
   app.use(cookieParser());
   app.use(bodyParser.urlencoded({ extended: true }));

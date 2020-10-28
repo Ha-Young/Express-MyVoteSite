@@ -1,0 +1,7 @@
+mixin author(author = {})
+  .displayName Created By <b>#{author.displayName}</b>
+  .avatar
+    if author.photoUrl
+      img(src=author.photoUrl)
+    else
+      i.far.fa-user-circle

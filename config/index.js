@@ -33,6 +33,17 @@ const config = {
     callbackURL: process.env.GOOGLE_CALLBACK_URL,
     scope: ['profile', 'email'],
   },
+  helmet: {
+    contentSecurityPolicy: {
+      referrerPolicy: false,
+      directives: {
+        'default-src': ["'self'"],
+        'img-src': ["'self'", 'https:'],
+        'style-src': ["'self'", 'https:'],
+        'font-src': ["'self'", 'https:'],
+      },
+    },
+  },
 };
 
 module.exports = config;

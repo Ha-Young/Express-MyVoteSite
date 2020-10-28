@@ -1,0 +1,8 @@
+mixin votingBlock(voting = {})
+    .votingBlock
+        a(href=`routes.VOTINGS_HOME/${voting._id}`)
+            h2= voting.topic
+            p= options
+            .author
+                p= author.displayName
+

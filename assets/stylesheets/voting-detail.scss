@@ -1,0 +1,129 @@
+@import './config/_variables';
+
+.voting-container {
+  position: relative;
+  width: 600px;
+  padding: 20px;
+  background-color: $white;
+  box-shadow: $my-shadow;
+
+  .voting-detail {
+    margin: 30px;
+
+    .content {
+      margin: 10px 0 0 40px;
+    }
+  }
+
+  .topic,
+  .options,
+  .expiration,
+  .createdAt {
+    i,
+    span {
+      font-size: 1.2rem;
+      margin-right: 5px;
+      color: $bold-gray;
+    }
+  }
+
+  .topic {
+    .content {
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+  }
+
+  .options {
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .content {
+      width: 95%;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-top: 20px;
+      padding: 10px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      border: 1px solid $gray;
+      border-radius: 5px;
+
+      input[type='radio'] {
+        margin-right: 10px;
+
+        &:after {
+          width: 15px;
+          height: 15px;
+          border-radius: 15px;
+          top: -2px;
+          left: -1px;
+          position: relative;
+          background-color: $white;
+          content: '';
+          display: inline-block;
+          visibility: visible;
+          border: 2px solid $yellow;
+        }
+
+        &:checked:after {
+          width: 15px;
+          height: 15px;
+          border-radius: 15px;
+          top: -2px;
+          left: -1px;
+          position: relative;
+          background-color: $yellow;
+          content: '';
+          display: inline-block;
+          visibility: visible;
+          border: 2px solid $yellow;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      &:hover {
+        background-color: $lightgray;
+
+        i {
+          color: inherit;
+        }
+      }
+    }
+
+    input[type='submit'] {
+      font-size: 1.4rem;
+      padding: 5px 20px;
+      margin-top: 30px;
+      width: 50%;
+      background-color: $white;
+      color: $skyblue;
+      border: 1px solid $skyblue;
+      border-radius: 5px;
+
+      &:hover {
+        cursor: pointer;
+        border: 1px solid $orange;
+        color: $orange;
+      }
+    }
+  }
+
+  .author {
+    position: absolute;
+    top: -3px;
+    right: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}

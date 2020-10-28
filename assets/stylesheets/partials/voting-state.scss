@@ -1,0 +1,19 @@
+@import '../config/_variables';
+
+.voting-state {
+  margin: 5px;
+  font-weight: 700;
+
+  .ongoing {
+    color: $green;
+  }
+
+  .expired {
+    color: $red;
+  }
+
+  i {
+    margin-right: 10px;
+    font-size: 1.8rem;
+  }
+}
