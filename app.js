@@ -17,6 +17,7 @@ dbConfig();
 passportConfig();
 
 const globalRouter = require('./routes/globalRouter');
+const myVotingsRouter = require('./routes/myVotingsRouter');
 const votingsRouter = require('./routes/votingsRouter');
 
 const app = express();
@@ -51,6 +52,7 @@ app.use((req, res, next) => {
 
 app.use(routes.home, globalRouter);
 app.use(routes.votings, votingsRouter);
+app.use(routes.myVotings, myVotingsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

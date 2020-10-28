@@ -19,15 +19,22 @@ block content
           h2 투표 진행중
       .voting__detail__main__right
         h1 투표 목록
-        form(action=`/votings/${votingId}` method="post").voting__detail__main__list
+        .voting__detail__main__list
           each votingList in votingLists
-            .voting__detail__main__checkbox
-              input(type="radio" id=`${votingList._id}` name='id' value=`${votingList._id}`)
-              label(for=`${votingList._id}`)= votingList.listTitle
+            .voting__detail__main__checkbox__wrap
+              input(
+                type="radio"
+                id=`${votingList._id}`
+                name="list"
+                data-source-url=`votings/${votingId}`
+                class="checkbox").voting__detail__main__checkbox
+              label(for=`${votingList._id}`).checkbox__label= votingList.listTitle
+        if (isParticipated)
+          h4 투표를 완료하셨습니다.
+        else
           button.voting__detail__btn__select 투표하기
     .voting__detail__btn__wrap
       a(href="/")
         button.voting__detail__btn__gohome 목록으로 돌아가기
       if (isUserCreator)
-        form(action=`votings/${votingId}` method="delete").voting__detail__main__list
-          button.voting__detail__btn__delet 삭제하기
+        button(data-source-url=`votings/${votingId}`).voting__detail__btn__delete 삭제하기

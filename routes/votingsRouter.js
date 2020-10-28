@@ -11,6 +11,7 @@ votingsRouter.get(routes.success, votingsController.getSuccess);
 votingsRouter.get(routes.failure, votingsController.getFailure);
 
 votingsRouter.get(routes.votingDetail, votingsController.getVotingDetail);
-votingsRouter.post(routes.votingDetail, votingsController.updateVotingDetail);
+votingsRouter.put(routes.votingDetail, votingsController.updateVotingDetail);
+votingsRouter.delete(routes.votingDetail, votingsController.deleteVotingDetail);
 
 module.exports = votingsRouter;

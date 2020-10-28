@@ -15,4 +15,4 @@ function addNewList() {
   $newVotingList.insertBefore($input, $newVotingListBtn);
 }
 
-$newVotingListBtn.addEventListener('click', addNewList);
+$newVotingListBtn?.addEventListener('click', addNewList);

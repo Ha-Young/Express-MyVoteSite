@@ -4,7 +4,7 @@ const routes = require('../constants/routes');
 
 module.exports = {
   home: async (req, res, next) => {
-    const initialVotingDatas = await Voting.find();
+    const initialVotingDatas = await Voting.find().lean();
 
     initialVotingDatas.forEach((initialVotingDate) => {
       const {
@@ -26,15 +26,14 @@ module.exports = {
 
   getVotingDetail: async (req, res, next) => {
     const { id: votingId } = req.params;
-    let username;
+    const userId = req.user && req.user._id;
+    const username = req.user && req.user.username;
+    let isParticipated;
     let votingData;
-
-    if (req.user) {
-      username = req.user.username;
-    }
 
     try {
       votingData = await Voting.findById(votingId);
+      isParticipated = votingData.participants.includes(userId.toString());
     } catch (error) {
       next(error);
     }
@@ -54,41 +53,59 @@ module.exports = {
     const isExipredTimePassed =
       new Date(`${submittedExpiredTime}`) <= new Date();
 
-    if (isExipredTimePassed) {
-      filteredVotingData.isVotingEnd = true;
-    }
+    if (isExipredTimePassed) filteredVotingData.isVotingEnd = true;
 
     const isUserCreator = username === votingData.creator;
 
-    res.render('votingDetail', { ...filteredVotingData, isUserCreator });
+    res.render('votingDetail', {
+      ...filteredVotingData,
+      isUserCreator,
+      isParticipated,
+    });
   },
 
   updateVotingDetail: async (req, res, next) => {
     const { id: listId } = req.body;
     const { id: votingId } = req.params;
-    const { _id: userID } = req.user;
+    const { _id: userId } = req.user;
+    let votingData;
 
     try {
-      const votingData = await Voting.findById(votingId);
-
-    } catch (error) {
-      next(error);
-    }
-
-    try {
-      await Voting.findOneAndUpdate(
+      votingData = await Voting.findOneAndUpdate(
         { _id: votingId, 'votingLists._id': listId },
         {
           $addToSet: {
-            'votingLists.$.voter': userID,
+            participants: userId,
+            'votingLists.$.voter': userId,
           },
         }
       );
     } catch (error) {
-      next(error);
+      res.status(500).json({ result: error });
+      return;
     }
 
-    return;
+    res.json({ result: 'ok' });
+  },
+
+  deleteVotingDetail: async (req, res, next) => {
+    const { id: userId } = req.user;
+    const { id: votingId } = req.params;
+
+    try {
+      await Voting.findByIdAndDelete(votingId);
+    } catch (error) {
+      res.status(500).json({ result: error });
+      return;
+    }
+    try {
+      await User.findByIdAndUpdate(userId, { $pull: { votings: votingId } });
+    } catch (error) {
+      res.status(500).json({ result: error });
+      return;
+    }
+
+    res.json({ result: 'ok' });
   },
 
   newVoting: (req, res, next) => {

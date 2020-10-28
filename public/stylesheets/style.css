@@ -4,11 +4,14 @@ html {
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  font-family: 'Do Hyeon', sans-serif;
 }
 
 body {
   margin: 0;
   width: 100%;
+  min-width: 300px;
   height: 100%;
   font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
 }
@@ -17,18 +20,23 @@ a {
   text-decoration: none;
   color: black;
 }
+
 header {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 15%;
-  background-color: rgba(188, 143, 143, 0.1);
+  height: 20%;
+  position: relative;
+  background-color: #4a274f;
 }
 
 main {
   width: 100%;
-  height: 80%;
+  min-width: 300px;
+  min-height: 80vh;
+  padding: 2em 2em 2em;
+  background-color: #f0a07c;
 }
 
 .header__wrap {
@@ -37,20 +45,29 @@ main {
 
 .header__title {
   position: relative;
-  top: 5px;
   text-align: center;
 }
 
+.header__title h1 {
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: calc(2vw + 2vh + 0.5vmin);
+  color: #f0a07c;
+}
+
 .header__menu {
+  position: absolute;
+  bottom: 20px;
   width: 100%;
+  min-width: 300px;
   text-align: right;
+  font-size: 1rem;
 }
 
 .header__menu a button {
   margin-right: 1%;
   font-size: 1em;
   font-weight: 500;
-  color: gray;
+  color: #f0a07c;
   border: none;
   background: none;
   outline: none;
@@ -61,12 +78,17 @@ main {
   text-align: center;
 }
 
+.home__title h1 {
+  color: #4a274f;
+  font-size: 3rem;
+}
+
 .home__votingListsWrap {
   display: grid;
-  padding: 2em 2em 2em;
   margin-bottom: 1em;
+  margin-top: 1em;
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
   column-gap: 20px;
   row-gap: 20px;
@@ -75,10 +97,13 @@ main {
 .home__votingListBox {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  border: 1px solid black;
+  border: 10px solid whitesmoke;
+  border-radius: 10px;
   margin: 1%;
+  padding-top: 30px;
+  color: white;
 }
 
 .voting__detail__wrap {
@@ -93,20 +118,20 @@ main {
 .voting__detail__main {
   display: flex;
   justify-content: center;
-  width: 50%;
+  width: 80%;
+  height: 60%;
+  color: white;
+  font-size: 1.2rem;
+  border: 10px solid white;
+  border-radius: 20px;
+  margin-bottom: 20px;
 }
 
-.voting__detail__main__left {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-}
-
+.voting__detail__main__left,
 .voting__detail__main__right {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 50%;
 }
@@ -119,42 +144,73 @@ main {
   width: 100%;
 }
 
-.voting__detail__main__checkbox {
+.voting__detail__main__checkbox__wrap {
   display: flex;
   width: 80%;
   align-items: center;
+  justify-content: center;
 }
-.voting__detail__main__checkbox label {
+
+.checkbox__label {
   display: inline-block;
   position: relative;
-  bottom: 1px;
+  top: 1px;
   width: 80%;
   text-align: center;
+  border: 1px solid white;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+.checkbox__label:hover {
+  background-color:#4a274f;
+}
+
+.checkbox {
+  display: none;
 }
 
 .voting__new__wrap {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  border: 1px solid black;
+  height: 100%;
   padding: 2%;
   text-align: center;
+  color: white;
+}
+
+.voting__new__wrap {
+  font-size: 2rem;
 }
 
 .voting_new_form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 40%;
-  border: 1px solid black;
-  font-size: 1rem;
+  justify-content: center;
+  width: 50%;
+  min-width: 300px;
+  border: 10px solid white;
+  border-radius: 20px;
+  font-size: 1.5rem;
+  padding-top: 2%;
+  padding-bottom: 2%;
 }
 
 .voting_new_form input {
   width: 80%;
   padding-left: 2%;
-  font-size: 1rem;
+  font-size: 1.5rem;
+}
+
+.voting_new_form input {
+  width: 80%;
+  padding-left: 2%;
+  font-size: 1.5rem;
 }
 
 .voting__new__content {
@@ -180,6 +236,7 @@ main {
 
 .voting__new__list input {
   margin-bottom: 5%;
+  outline: none;
 }
 
 .voting__new__endtime {
