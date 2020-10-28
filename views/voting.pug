@@ -4,17 +4,14 @@ block content
   header
     link(rel="stylesheet", href="/stylesheets/css/voting.css")
 
-  h1 #{voting.subject}
+  h1= subject
 
-  p 투표 설명 blah blah blah blah
+  p= description
 
-  p 1) 투표했다면 결과차트 보여주기
-  div.chart-container
+  //- div.chart-container
 
-  p 2) 투표하지 않았다면 투표 선택지와 제출버튼 보여주기
   div.candidates-wrapper
-    div.candidate 일번 후보
-    div.candidate.selected 이번 후보
-    div.candidate 삼번 후보
-    div.candidate 사번 후보
-    div.candidate 오번 후보
+    each candidate in candidates
+      div.candidate
+        h2= candidate.title
+        p= candidate.content
