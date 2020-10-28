@@ -16,14 +16,17 @@ const userSchema = new mongoose.Schema({
     required: true,
     min: 5,
     validate: {
-      validator: function () {
+      validator: function (password) {
         const regex = new RegExp(/^[a-zA-Z0-9]{5,10}$/);
-        return regex.test(this);
+        console.log(this, 'this')
+        return regex.test(password);
       },
       message: 'Please make 5 to 10 digits password using both alphabets and numbers.'
     },
   },
-  passwordConfirm: String,
+  // passwordConfirm: {
+  //  type: String,
+  //   validator:  //디비에 넣지 않을 건데 유효성 검사를 위해서 스키마를 넣는건 이상한가요?
   createdVoting: Array,
 });
 

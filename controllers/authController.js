@@ -16,7 +16,8 @@ exports.renderSignup = (req, res, next) => {
 
 exports.registerUser = async (req, res, next) => {
   try {
-    //중복 체크 로직 미들웨어로 뺄수 있을듯?
+    //이부분은 ㅂ미들웨어로 빼는게 좋을까요? 뺄려고 하면 다 뺴버릴 수도 있을 것같은데
+    //어느정도를 남기고 어느정도를 뺴야할가요?
     const email = req.body.email;
     const password = req.body.password;
     const passwordConfirm = req.body.passwordConfirm;
@@ -29,16 +30,11 @@ exports.registerUser = async (req, res, next) => {
       throw err
     }
 
-    // const user = await User.findOne({ email });
-
-    // if (user) {
-    //   throw new Error('Email is duplicated, use another email');
-    // }
-
     const signedUp = await User.create({
       email,
       password,
     });
+
     return res.status(302).redirect('/login');
   } catch (err) {
     console.log('err')
