@@ -1,14 +1,16 @@
 const express = require('express');
 
-const verifyAuthorization = require('../middleware/verifyAuthorization');
-const getUserInfo = require('../middleware/getUserInfo');
+const {
+  verifyAuthorization,
+  getUserInfo,
+}= require('../middleware');
 const home = require('./home');
 const signup = require('./signup');
 const login = require('./login');
 const logout = require('./logout');
 const votings = require('./votings');
 const myVotings = require('./my-votings');
-const notFound = require('./notFound');
+const notFound = require('./not-found');
 const errorHandler = require('./errorHandler');
 
 const router = express.Router();

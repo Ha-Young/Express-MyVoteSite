@@ -1,6 +1,7 @@
 extends ../layout
 block style
   link(rel='stylesheet', href='/stylesheets/voting-card.css')
+  script(src='/javascripts/votingCard.js' defer)
 
 block content
   h1(class='main-message') card page
@@ -10,12 +11,8 @@ block content
     p You can vote now
   div(class='card-conteiner')
     ul
-      li.title= voting.title
-      li.expiry-date Until: #{voting.expiration_date}
-      li.nickname Creator: #{voting.creator.nickname}
-      - let isOpen = voting.openState ? 'open' : 'close';
-      li(class='openState #{isOpen}') #{isOpen}
+      include ../votingInfo
       ul(class='poll')
         include ./polls
     if isCreator
-      a(href='/votings/#{voting._id}/delete' class='delete-button') delete
+      button(data-voting-id='#{voting._id}' class='delete-button') delete

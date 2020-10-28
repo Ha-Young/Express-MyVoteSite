@@ -1,21 +1,28 @@
 const express = require('express');
 
 const controller = require('../../controller');
-const verifyAuthorization = require('../../middleware/verifyAuthorization');
-const setDefaultDate = require('../../middleware/setDefaultDate');
-const serializeForm = require('../../middleware/serializeForm');
-const validateVotingForm = require('../../middleware/validateVotingForm');
-const saveVoting = require('../../middleware/saveVoting');
-const getVoting = require('../../middleware/getVoting');
-const deleteVoting = require('../../middleware/deleteVoting');
-const creatorCheck = require('../../middleware/creatorCheck');
-const checkVotingUser = require('../../middleware/checkVotingUser');
-const verifyVoting = require('../../middleware/verifyVoting');
-const saveUserPoll = require('../../middleware/saveUserPoll');
+const {
+  verifyAuthorization,
+  setDefaultDate,
+  serializeForm,
+  validateVotingForm,
+  saveVoting,
+  getVoting,
+  deleteVoting,
+  creatorCheck,
+  checkVotingUser,
+  verifyVoting,
+  saveUserPoll,
+} = require('../../middleware');
 
 const router = express.Router();
 
-router.get('/new', verifyAuthorization, setDefaultDate, controller.render('votings/new'));
+router.get(
+  '/new',
+  verifyAuthorization,
+  setDefaultDate,
+  controller.render('votings/new')
+);
 router.post(
   '/new',
   verifyAuthorization,
@@ -30,16 +37,16 @@ router.get('/:voting_id',
   checkVotingUser,
   controller.render('votings/card')
 );
-router.get('/:voting_id/delete',
+router.delete('/:voting_id',
   deleteVoting,
-  controller.redirect('/')
+  controller.json({ result: 'ok', }, 204)
 );
-router.get('/:voting_id/polls/:poll_id',
+router.put('/:voting_id',
   verifyAuthorization,
   checkVotingUser,
   verifyVoting,
   saveUserPoll,
-  controller.redirect('./../')
+  controller.json({ result: 'good', })
 );
 
 module.exports = router;

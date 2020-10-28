@@ -4,6 +4,7 @@ const VALIDATION = 'VALIDATION';
 const VALIDATION_ERROR_MESSAGE = 'Validation error';
 const TITLE_DUPLICATE_ERROR_MESSAGE = 'Duplicated title. try another one';
 const EMAIL_DUPLICATE_ERROR_MESSAGE = 'Duplicated email. try another one';
+const NICKNAME_DUPLICATE_ERROR_MESSAGE = 'Duplicated nickname. try another one';
 const EMAIL_NOT_EXIST_ERROR_MESSAGE = 'There is no email, please check again';
 const EMAIL_FORM_ERROR_MESSAGE = 'E-mail is not a valid type';
 const PASSWORD_FORM_ERROR_MESSAGE = 'Password is not a valid type';
@@ -33,6 +34,7 @@ module.exports = {
   VALIDATION_ERROR_MESSAGE,
   TITLE_DUPLICATE_ERROR_MESSAGE,
   EMAIL_DUPLICATE_ERROR_MESSAGE,
+  NICKNAME_DUPLICATE_ERROR_MESSAGE,
   EMAIL_NOT_EXIST_ERROR_MESSAGE,
   EMAIL_FORM_ERROR_MESSAGE,
   PASSWORD_FORM_ERROR_MESSAGE,

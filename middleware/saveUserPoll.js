@@ -2,7 +2,7 @@ const Voting = require('../model/Voting');
 
 const saveUserPoll = async (req, res, next) => {
   const userId = req.session.user._id;
-  const pollId = req.params.poll_id;
+  const pollId = req.body.pollId;
 
   await Voting.updateOne(
     { 'polls._id': pollId, },

@@ -1,10 +1,14 @@
 const Voting = require('../model/Voting');
 
 const deleteVoting = async (req, res, next) => {
-  const votingId = req.params.voting_id;
-  await Voting.findByIdAndDelete(votingId);
+  try {
+    const votingId = req.params.voting_id;
+    await Voting.findByIdAndDelete(votingId);
 
-  next();
+    next();
+  } catch (err) {
+    next(err);
+  }
 };
 
 module.exports = deleteVoting;

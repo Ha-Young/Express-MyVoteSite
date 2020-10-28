@@ -9,15 +9,22 @@ const {
   PASSWORD_FORM_ERROR_MESSAGE,
   NICKNAME_FORM_ERROR_MESSAGE,
   EMAIL_DUPLICATE_ERROR_MESSAGE,
+  NICKNAME_DUPLICATE_ERROR_MESSAGE,
 } = require('../services/constants');
 
 const validateSignupForm = async (req, res, next) => {
   const { email, password, nickname, } = req.body;
-  const isExist = await User.exists({ email, });
+  const isExistEmail = await User.exists({ email, });
+  const isExistNickname = await User.exists({ nickname, });
+
   const message = [];
 
-  if (isExist) {
+  if (isExistEmail) {
     message.push(EMAIL_DUPLICATE_ERROR_MESSAGE);
+  }
+
+  if (isExistNickname) {
+    message.push(NICKNAME_DUPLICATE_ERROR_MESSAGE);
   }
 
   if (!validateEmail(email)) {

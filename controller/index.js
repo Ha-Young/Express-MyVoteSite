@@ -10,6 +10,13 @@ const redirect = (page) => {
   };
 };
 
+const json = (option, statusCode = 200) => {
+  return (req, res, next) => {
+    res.status(statusCode);
+    res.json(option);
+  };
+};
+
 const redirectBefore = () => {
   return (req, res, next) => {
     if (req.session.previousUrl) {
@@ -27,5 +34,6 @@ const redirectBefore = () => {
 module.exports = {
   render,
   redirect,
+  json,
   redirectBefore,
 };

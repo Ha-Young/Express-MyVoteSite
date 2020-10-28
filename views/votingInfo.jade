@@ -1,0 +1,5 @@
+li.title= voting.title
+li.expiry-date Until: #{voting.expiration_date}
+li.nickname Creator: #{voting.creator.nickname}
+- let isOpen = voting.openState ? 'open' : 'close';
+li(class='openState #{isOpen}') #{isOpen}

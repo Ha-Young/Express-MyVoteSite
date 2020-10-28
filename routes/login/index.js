@@ -1,9 +1,11 @@
 const express = require('express');
 
 const controller = require('../../controller');
-const validateLoginForm = require('../../middleware/validateLoginForm');
-const verifyEmailAndPassword = require('../../middleware/verifyEmailAndPassword');
-const saveSession = require('../../middleware/saveSession');
+const {
+  validateLoginForm,
+  verifyEmailAndPassword,
+  saveSession,
+} = require('../../middleware');
 
 const router = express.Router();
 

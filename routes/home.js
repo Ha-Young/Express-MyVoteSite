@@ -1,7 +1,7 @@
 const express = require('express');
 
 const controller = require('../controller');
-const getVotings = require('../middleware/getVotings');
+const { getVotings, } = require('../middleware');
 
 const router = express.Router();
 

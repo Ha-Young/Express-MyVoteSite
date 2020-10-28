@@ -11,8 +11,4 @@ block content
     each voting in votings
       a(href='votings/#{voting._id}').voting-card
         ul
-          li.title= voting.title
-          li.nickname= voting.creator.nickname
-          li.expiry-date= voting.expiration_date
-          - let isOpen = voting.openState ? 'open' : 'close';
-          li(class='openState #{isOpen}') #{isOpen}
+          include ./votingInfo

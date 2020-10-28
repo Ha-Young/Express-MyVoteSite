@@ -1,12 +1,6 @@
 each poll in voting.polls
   li
-    - let href;
-    - if (voting.openState) {
-    -   href = `/votings/${voting._id}/polls/${poll._id}`;
-    - } else {
-    -   href = '';
-    - }
-    a(href='#{href}')
+    div(class='poll-container' data-poll-id='#{poll._id}')
       ul
         li= poll.title
         -  let value = '';
