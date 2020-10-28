@@ -12,9 +12,13 @@ html
 
       ul
         li
-          a(href='/') 투표리스트
+          a(href='/') 투표 목록
         li
           a(href='/votings/new') 새로운 투표 만들기
         li
           a(href='/votings/my-votings') 나의 투표
-      .greeting #{username}님, 반갑습니다!
+
+      if username
+        .greeting #{username}님, 반갑습니다!
+      else
+        .greeting <a href="/users/login">로그인하시고 Let's vote!</a>

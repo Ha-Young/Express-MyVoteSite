@@ -1,5 +1,17 @@
 extends layout
 
 block content
-  h1 투표하쉴?
+  header
+    link(rel="stylesheet", href="/stylesheets/css/index.css")
+
+  h1 투표를 해보시겠어요?
   p 방갑습니다
+
+  each voting in votingList
+    div.voting(class= (voting.expiredAt - new Date()) < 0 ? 'expired' : '')
+      a(href=`/votings/${voting.id}`)
+        ul
+          li= voting.subject
+          li= voting.description
+          li= voting.expiredAt.toLocaleDateString()
+          li= voting.expiredAt.toLocaleTimeString()
