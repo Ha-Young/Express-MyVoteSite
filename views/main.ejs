@@ -1,38 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-  </head>
 
-  <body>
-    <h1 class="abc"><%=data%></h1>
-    <div>
-      <button><a href="/signup">signup</a></button>
-      <button><a href="/login">login</a></button>
-      <button><a href="/logout">logout</a></button>
+<head>
+  <link rel="stylesheet" href="/stylesheets/main.css" />
+</head>
+
+<body>
+  <nav class='main-nav'>
+    <span class="title">What is your Pick?</span>
+    <span class="item"><a href="/signup">sign up</a></span>
+    <span class="item"><a href="/login">login</a></span>
+    <span class="item"><a href="/logout">logout</a></span>
+  </nav>
+
+  <div class="feature">
+    <div class="feature-item feature-text-container">
+      <h1 class="feature-head">Guess who!?</h1>
+      <div class="feature-sub">Biden vs Trump</div>
+      <p class="feature-body">The Republican president is being challenged by Democratic Party nominee Joe Biden, who is
+        best known as Barack Obama's vice-president but has been in US politics since the 1970s.</br>
+        </br>
+        As election day approaches, polling companies will be trying to gauge the mood of the nation by asking voters
+        which candidate they prefer.</br></br>https://www.bbc.com/news/election-us-2020-53657174</p>
     </div>
-    <div>
-      <h2>투표리스트</h2>
-      <ul>
-        <% for (let i = 0; i < votings.length; i++) {%>
-        <li>
-          <div>
-            <span
-              ><a href="/votings/<%=votings[i]._id%>"
-                ><%=votings[i].title%></a
-              ></span
-            >
-            <span><%=votings[i].creator%></span>
-            <span><%=votings[i].expireDate%></span>
-            <span><%=votings[i].isExpired%></span>
+    <div class="feature-item feature-pic-container">
+      <img class="feature-pic" src="/images/bidentrump.gif" width="600" alt="usElection">
+      <div>https://www.plannedparenthoodaction.org/elections/biden-v-trump</div>
+    </div>
+  </div>
+
+  <div class="voting-container">
+    <div class="voting-head">
+      <div class="voting-head-title">Votings: What are you going to Pick today?</div>
+      <div><a href="/votings/new">create New voting</a></div>
+      <div><a href="/votings/my-voting">my voting</a></div>
+    </div>
+    <div class="voting-body">
+      <% for (let i = 0; i < votings.length; i++) {%>
+      <div class="voting-each">
+        <a href="/votings/<%=votings[i]._id%>">
+          <div class="voting-each-head"><%=votings[i].title%></div>
+          <div class="voting-each-body">
+            <div><%=votings[i].creator%></div>
+            <div><%=votings[i].expireDate%></div>
+            <div><%=votings[i].isExpired%></div>
           </div>
-        </li>
-        <%}%>
-      </ul>
+        </a>
+      </div>
+      <%}%>
     </div>
-    <div>
-      <button><a href="/votings/new">create New voting</a></button>
-      <button><a href="/votings/my-voting">my voting</a></button>
-    </div>
-  </body>
+  </div>
+</body>
 </html>
