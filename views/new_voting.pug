@@ -9,27 +9,39 @@ block content
     .form-wrapper
       .metaForm
         .input-wrapper
-          label(for="subject") 주제
-          input(type="text" name="subject")
+          div
+            label(for="subject") 주제
+            input(type="text" name="subject" required)
         .input-wrapper
-          label(for="description") 설명
-          textarea(name="description")
-        .input-wrapper
-          label 언제까지
-          input(type="Date" name="dueDate")
-        .input-wrapper
-          label
-          input(type="Time" name="time")
+          div
+            label(for="description") 설명
+            textarea(name="description")
+        br
+        div
+          #rangeValue 몇 시간 후 투표를 종료할까요? <br/> (설정하지 않으면 3시간 후 종료됩니다)
+          input(type="range" name="expireTo" id="expireTo" min="1", max="24")
 
       .ballotForm
         .input-wrapper
-          label(for="subject") 후보 1
-          input(type="text" name="subject")
+          div
+            label 후보 1
+            input(type="text" name="candidates[0][title]" required)
+          div
+            label 설명
+            textarea(name="candidates[0][content]" required)
         .input-wrapper
-          label(for="subject") 후보 2
-          input(type="text" name="subject")
-        button.addCandidate 후보 추가하기
+          div
+            label 후보 2
+            input(type="text" name="candidates[1][title]" required)
+          div
+            label 설명
+            textarea(name="candidates[1][content]" required)
+        button#addCandidate 후보 추가하기
 
     br
 
     input(type="submit" value="투표 생성하기!")
+
+    script(src="/utils/insertNewCandidateInput.js")
+    script(src="/utils/fetchFormData.js")
+    script(src="/javascript/new_voting.js")

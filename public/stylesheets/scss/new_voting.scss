@@ -6,25 +6,35 @@ form {
     display: flex;
   }
 
+  label {
+    width: 3em;
+    text-align: right;
+    margin-right: 10px;
+  }
+
+  input, textarea {
+    flex: 1;
+  }
+
   .input-wrapper {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-
-    label {
-      flex: 1;
-      text-align: right;
-      margin-right: 10px;
-    }
-
-    input, textarea {
-      flex: 2;
+    > div {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
     }
   }
 
   .metaForm {
     flex: 1;
     margin-right: 1em;
+
+    #rangeValue {
+      text-align: center;
+    }
+
+    input[type='range'] {
+      width: 100%;
+    }
   }
   .ballotForm {
     flex: 1;
@@ -42,5 +52,6 @@ form {
     background-color: #fff;
     position: relative;
     left: 50%;
+    transform: translate(-50%);
   }
 }
