@@ -8,7 +8,7 @@ function createOptionField() {
   const optionsDiv = document.getElementById('options');
 
   newOptionField.setAttribute('type', 'text');
-  newOptionField.setAttribute('name', 'option');
+  newOptionField.setAttribute('name', 'options');
   newOptionField.setAttribute('autocomplete', 'off');
 
   optionsDiv.appendChild(newOptionField);

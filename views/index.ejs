@@ -13,6 +13,7 @@
     <% openVotings.forEach(voting => { %>
       <li>
         <a href='/votings/<%= voting._id %>'><%= voting.title %></a>
+        <%= voting.expires_at %>까지
       </li>
     <% }) %>
   </ul>
@@ -21,6 +22,7 @@
     <% expiredVotings.forEach(voting => { %>
       <li>
         <a href='/votings/<%= voting._id %>'><%= voting.title %></a>
+        <%= voting.expires_at %>까지
       </li>
     <% }) %>
   </ul>

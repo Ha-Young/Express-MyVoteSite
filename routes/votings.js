@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const gateKeeper = require('./middlewares/gateKeeper');
-const { create } = require('./controllers/votings.controller');
+const { create, drop } = require('./controllers/votings.controller');
 const Voting = require('../models/Voting');
 const dayjs = require('dayjs');
 
@@ -11,7 +11,7 @@ router.get('/new', gateKeeper, (req, res, next) => {
 
 router.post('/new', gateKeeper, create);
 
-router.get('/:_id', gateKeeper, async (req, res, next) => {
+router.get('/:_id', async (req, res, next) => {
   const voting = await Voting.findById(req.params._id);
 
   let userIsCreator = false;
@@ -27,7 +27,7 @@ router.get('/:_id', gateKeeper, async (req, res, next) => {
     isExpired = true;
   }
 
-  res.status(200).render('votingsDetails', {
+  res.status(200).render('votingDetails', {
     voting,
     userIsCreator,
     isExpired,
@@ -35,8 +35,10 @@ router.get('/:_id', gateKeeper, async (req, res, next) => {
   });
 });
 
-router.post('/:_id', gateKeeper, async (req, res, next) => {
+router.put('/:_id', gateKeeper, async (req, res, next) => {
   console.log(req.body);
 });
+
+router.get('/drop/:_id', gateKeeper, drop);
 
 module.exports = router;

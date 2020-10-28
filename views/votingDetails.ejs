@@ -10,7 +10,9 @@
   <h2><%= voting.title %></h2>
   투표 만료 시각: <%= formattedExpirationDate %>
   <% if (userIsCreator) { %>
-    <button id='voting-delete-button'>삭제</button>
+    <a href='/votings/drop/<%= voting._id %>'>
+      <button id='voting-delete-button'>삭제</button>
+    </a>
   <% } %><br><br>
   <form method='post' action=<%= `/votings/${voting._id}` %>>
   <% voting.options.forEach(option => { %>
@@ -25,5 +27,4 @@
 <%= userIsCreator %><br>
 <%= voting.options[0].voters.length %><br>
 </body>
-<script src='/javascripts/deleteVoting.js'></script>
 </html>
