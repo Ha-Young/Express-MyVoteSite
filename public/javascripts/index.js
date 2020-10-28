@@ -16,6 +16,7 @@ const handleAddButton = () => {
     const button = document.createElement('button');
     const buttonText = document.createTextNode('Delete');
     button.setAttribute('type', 'button');
+    button.setAttribute('class', 'optionDeleteButton');
 
     button.appendChild(buttonText);
     div.appendChild(input);

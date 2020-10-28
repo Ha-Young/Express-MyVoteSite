@@ -2,7 +2,7 @@ extends layout
 
 block content
   section.my-page
-    h1 마이페이지
+    h1(class='my-votes-title') My Votes
     div.my-vote-container
       each vote in myVotes
         a(href=`/votings/${vote._id}`)
