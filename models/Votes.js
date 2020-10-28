@@ -18,13 +18,12 @@ const VoteSchema = new mongoose.Schema({
     require: true,
     default: false,
   },
-  expiration: {
+  expirationDate: {
     type: Date,
     default: Date.now(),
     required: true,
   },
-  options: [
-    {
+  options: [{
       desc: {
         type: String,
         require: true,
@@ -32,10 +31,8 @@ const VoteSchema = new mongoose.Schema({
       voter: [{
         type: mongoose.Types.ObjectId,
         ref: 'User',
-        unique: true,
       }],
-    },
-  ],
+  }],
 }, schemaOptions);
 
 module.exports = new mongoose.model('Votes', VoteSchema);

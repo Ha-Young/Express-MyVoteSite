@@ -4,6 +4,19 @@
 
 <body>
   <%- include('partials/header') %>
-  <h1>My voting</h1>
+  <div class="main-container">
+    <% for (let i = 0; i < votes.length; i++) { %>
+      <div class="vote-container">
+        <h1 class="vote-title"><%= votes[i].title %></h1>
+        <a href="/votings/<%= votes[i]._id %>">투표하기</a>
+        <div class="vote-details">
+          <span class="vote-createdAt">생성날짜<%= createdDate[i] %></span>
+          <span class="vote-expirationDate">만료날짜<%= expirationDate[i] %></span>
+          <span class="vote-expired"><%= expired[i] %></span>
+        </div>
+      </div>
+    <% } %>
+  </div>
 </body>
+
 </html>

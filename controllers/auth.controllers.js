@@ -59,7 +59,40 @@ exports.registUser = async (req, res, next) => {
     });
   }
 
+  // if (email) {
+  //   try {
+  //     const users = await User.find();
+
+  //     users.map(user => {
+  //       if (user.email === email) {
+  //         message = '이미 가입된 유저가 있습니다.';
+
+  //         return res.render('index', {
+  //           err: message,
+  //         });
+  //       }
+  //     });
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // }
+
   try {
+    if (email) {
+      const users = await User.find();
+
+      users.map(user => {
+        if (user.email === email) {
+          message = '이미 가입된 유저가 있습니다.';
+
+          res.render('index', {
+            err: message,
+          });
+        }
+        return;
+      });
+    }
+
     if (!message) {
       await User.findOne({ email: email }, (err, data) => {
         if (err) throw err;

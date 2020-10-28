@@ -3,10 +3,7 @@ const Votes = require('../models/Votes');
 const format = require('date-fns/format');
 
 exports.getVotingForm = (req, res, _next) => {
-  // const { userName } = req.user;
   const nowDate = format(new Date(), 'yyyy-MM-dd');
-
-  console.log(nowDate);
 
   res.status(200).render('votingForm', {
     minDate: nowDate,
@@ -14,14 +11,14 @@ exports.getVotingForm = (req, res, _next) => {
 };
 
 exports.createVote = async (req, res, next) => {
-  const { options, title, expiration } = req.body;
+  const { options, title, expirationDate } = req.body;
   const userId = req.user._id;
-  const option = options.map(option => ({ desc: option, count: 0 }));
+  const option = options.map(option => ({ desc: option }));
 
   try {
     await Votes.create({
       title: title,
-      expiration: expiration,
+      expirationDate: expirationDate,
       options: option,
       creator: userId,
     });
@@ -33,22 +30,22 @@ exports.createVote = async (req, res, next) => {
 };
 
 exports.getVotingList = async (req, res, next) => {
-  // const { userName } = req.user;
+
   try{
     const votes = await Votes.find();
 
-    const formattedExpireDate = votes.map(vote => format(vote.expiration, 'yyyy/MM/dd HH:mm'));
+    const formattedExpireDate = votes.map(vote => format(vote.expirationDate, 'yyyy/MM/dd HH:mm'));
     const formattedCreateDate = votes.map(vote => format(vote.createdAt, 'yyyy/MM/dd HH:mm'));
 
-    const expiredMessage = votes.map(vote => {
-      return new Date() > vote.expiration ? '투표 종료' : '투표 중';
+    const isExpired = votes.map(vote => {
+      return new Date() > vote.expirationDate ? true : false;
     });
 
     res.render('votingList', {
       votes: votes,
       expirationDate: formattedExpireDate,
       createdDate: formattedCreateDate,
-      expired: expiredMessage,
+      expired: isExpired,
     });
   } catch (err) {
     next(err);
@@ -56,14 +53,12 @@ exports.getVotingList = async (req, res, next) => {
 };
 
 exports.getOne = async (req, res, next) => {
-  // const { userName } = req.user;
   const id = req.params._id;
 
   try {
     const vote = await Votes.findOne({ id });
 
-
-    const formattedExpireDate = format(vote.expiration, 'yyyy/MM/dd HH:mm');
+    const formattedExpireDate = format(vote.expirationDate, 'yyyy/MM/dd HH:mm');
     const formattedCreateDate = format(vote.createdAt, 'yyyy/MM/dd HH:mm');
     const expiredMessage = new Date() > vote.expiration ? '투표 종료' : '투표 중';
 
@@ -77,7 +72,6 @@ exports.getOne = async (req, res, next) => {
     next(err);
   }
 };
-
 
 exports.updateOne = async (req, res, next) => {
   const voteId = req.params.id;
@@ -96,11 +90,12 @@ exports.updateOne = async (req, res, next) => {
     if (!targetOption.voter.includes(userId)) {
       targetOption.voter.push(userId);
     }
+    // targetOption.voter.push(userId);
+
 
     await vote.save();
 
     res.redirect(`/votings/${voteId}`);
-
   } catch (err) {
     next(err);
   }
@@ -115,10 +110,27 @@ exports.deleteOne = async (req, res, next) => {
 };
 
 exports.getMyVoting = async (req, res, next) => {
+  const userId = req.user._id;
+
   try {
+    const votes = await Votes.find();
+
+    const creatorIds = votes.map(vote => {
+      return vote.creator;
+    });
+
+    const voteId = creatorIds.map(id => {
+      if(id === userId) {
+        return id;
+      }
+    });
+
+    const myVote = await Votes.findById(voteId);
+
+    console.log(myVote)
+
     res.render('myVoting');
   } catch (err) {
     next(err);
   }
 };
-
