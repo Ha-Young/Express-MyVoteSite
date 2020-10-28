@@ -1,0 +1,154 @@
+body {
+  display: grid;
+  grid-template-rows: 5em 27em 1fr;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.main-nav {
+  background-color: #cabf45;
+  color: black;
+  /* height: 12vh; */
+  display: grid;
+  grid-template-columns: 6fr 1fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  font-family: 'Lucida Grande', Helvetica, Arial, sans-serif;
+  border-bottom: 1px solid #ffffa8;
+}
+
+.item {
+  color: #fef4a0;
+  font-size: 1em;
+  text-shadow: 1px 1px 1px gray;
+  transition: all .2s ease-in-out;
+}
+
+.item:hover {
+  transform: scale(1.1);
+}
+
+.title {
+  color: black;
+  font-weight: 500;
+  font-size: 2em;
+  text-shadow: 2px 2px 2px gray;
+}
+
+.feature {
+  background-color: #fff176;
+  display: grid;
+  grid-template-columns: 40% 40%;
+  grid-gap: 2em;
+  justify-items: center;
+  align-items: center;
+  border-bottom: 1px solid #cabf45;
+}
+
+.feature-pic-container {
+  margin-left: 4em;
+  border: 1px solid black;
+  box-shadow: 3px 3px 1px gray;
+  margin-left: 30%;
+  height: 335px;
+  display: grid;
+  grid-template-rows: 10fr 1fr;
+  grid-gap: 1em;
+  margin-bottom: 1em;
+}
+
+.feature-pic {
+  transition: all .2s ease-in-out;
+}
+
+.feature-pic:hover {
+  transform: scale(1.05);
+}
+
+.feature-text-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr 3fr;
+  justify-items: center;
+  align-items: center;
+  transition: all .2s ease-in-out;
+}
+
+.feature-text-container:hover {
+  transform: scale(1.1);
+}
+
+.feature-head {
+  color: black;
+  text-shadow: 1px 1px 1px gray;
+}
+
+.feature-sub {
+  color: black;
+  text-shadow: 1px 1px 1px gray;
+  font-size: 3em;
+}
+
+.feature-body {
+  font-size: 1.1em;
+  width: 85%;
+  margin-left: 2em;
+}
+
+.voting-container {
+  display: grid;
+  grid-template-rows: 5em 1fr;
+  grid-gap: 1em;
+}
+
+.voting-head {
+  border-bottom: 1px solid black;
+  display: grid;
+  grid-template-columns: 5fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+}
+
+.voting-head-title {
+  font-size: x-large;
+  padding-right: 18em;
+}
+
+.voting-head-createVoting, .voting-head-myVoting {
+  font-size: large
+}
+
+.voting-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  grid-gap: 2em;
+}
+
+.voting-each {
+  border: 1px solid blue;
+  display: grid;
+  grid-template-rows: 2fr 1fr; /*확인하기*/
+  transition: all .2s ease-in-out;
+}
+
+.voting-each:hover {
+  transform: scale(1.05);
+}
+
+.voting-each-head {
+  font-size: x-large;
+  text-align: center;
+  margin-top: 1em;
+  padding-bottom: 1em;
+  border-bottom: 2px solid black;
+}
+
+.voting-each-body {
+  font-size: large;
+  margin-top: 1em;
+  padding-left: 1em;
+}
