@@ -1,0 +1,114 @@
+body {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.myvoting-box {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  justify-content: flex-start;
+  align-items: center;
+  width: 400px;
+  height: 700px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  cursor: default;
+}
+
+#selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 306px;
+  height: 40px;
+  font-size: 14px;
+  background-color: RGB(239, 239, 239);
+  margin-bottom: 5px;
+  transition: all 0.4s;
+  color: black;
+}
+
+#selector:hover {
+  background-color: cadetblue;
+}
+
+.myvoting-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 306px;
+  margin-top: 10px;
+}
+
+#each-voting {
+  display: flex;
+  flex-direction: column;
+  width: 306px;
+  height: 100px;
+  margin-top: 10px;
+  background-color: khaki;
+  transition: all 0.4s;
+}
+
+#each-voting:hover,
+#creating-voting:hover {
+  background-color: cadetblue;
+  color: rgb(143, 12, 36);
+  border-radius: 5px;
+}
+
+.voting-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  font-size: 15px;
+}
+
+.voting-progress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+}
+
+.voting-creator {
+  display: flex;
+  justify-content: flex-end;
+  height: 20px;
+  width: 290px;
+  font-size: 12px;
+}
+
+.voting-expire {
+  display: flex;
+  justify-content: flex-end;
+  width: 290px;
+  font-size: 12px;
+}
+
+#creating-voting {
+  display: flex;
+  width: 306px;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  border: 1px solid grey;
+  background-color: RGB(239, 239, 239);
+  transition: all 0.4s
+}

@@ -33,13 +33,14 @@ input[type='submit'] {
   height: 40px;
   font-size: 13px;
   background-color: RGB(239, 239, 239);
+  outline: none;
   border: 1px solid grey;
   color: black;
   transition: all 0.4s;
 }
 
 input[type='submit']:hover {
-  background-color: cornflowerblue;
+  background-color: cadetblue;
 }
 
 a {
@@ -59,5 +60,5 @@ a {
 }
 
 a:hover {
-  background-color: cornflowerblue;
+  background-color: cadetblue;
 }

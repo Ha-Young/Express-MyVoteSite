@@ -6,6 +6,7 @@ const { verifyLoggedIn } = require('./middlewares/auth');
 
 router.get('/new', verifyLoggedIn, votingsController.renderNew);
 router.post('/new', votingsController.createVoting);
+router.get('/:voting_id', votingsController.getVotingDetail);
 
 // router.get('/success', function (req, res, next) {
 //   res.render('new', {});
@@ -15,8 +16,5 @@ router.post('/new', votingsController.createVoting);
 //   res.render('error', {});
 // });
 
-// router.get('/votings/:id', function (req, res, next) {
-//   res.render('new', {});
-// }); voting 개별 페이지
 
 module.exports = router;

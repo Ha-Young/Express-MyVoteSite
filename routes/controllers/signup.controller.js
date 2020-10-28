@@ -22,7 +22,6 @@ exports.createUser = async (req, res, next) => {
 };
 
 exports.verifyUser = async (req, res, next) => {
-  // console.log('req', req);
   const userData = {
     username: req.body.username,
     id: req.body.id,

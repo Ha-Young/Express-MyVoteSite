@@ -3,6 +3,6 @@ const router = express.Router();
 
 const homeController = require('../routes/controllers/home.controller');
 
-router.get('/', homeController.showVotings);
+router.get('/', homeController.getVotings);
 
 module.exports = router;

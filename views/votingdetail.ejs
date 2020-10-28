@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <div class='votingdetail-box'>
+      <div class='menu'>
+        <a id='selector' href='/'>HOME</a>
+        <a id='selector'>DELETE</a>
+      </div>
+      <div class='voting-detail'>
+        <div class='voting-title'><%= voting.title %></div>
+        <div class='voting-progress'>진행중<%= voting.progressStatus %></div>
+        <div class='voting-creator'>작성자: <%= voting.creator %></div>
+        <div class='voting-expire'>기한: <%= voting.expire_day %> 까지</div>
+      </div>
+      <div class='options'>
+        <% for (let i = 0; i < voting.option.length; i++) { %>
+          <div class='option'><%= voting.option[i] %></div>
+        <% } %>
+      </div>
+    </div>
+  </body>
+  <link rel='stylesheet' href='/stylesheets/votingdetail.css' />
+</html>

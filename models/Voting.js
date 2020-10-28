@@ -16,6 +16,11 @@ const votingSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  creator: {
+    type: String,
+    required: true,
+    trim: true
+  },
   userId: {
     type: String,
     unique: true,

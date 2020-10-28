@@ -1,20 +1,21 @@
 const Voting = require('../../models/Voting');
 
-exports.showVotings = async (req, res, next) => {
-  return res.render('home', {
-    message: '투표를 등록하세요'
-  });
-  // try {
-  //   const votingList = await Voting.find();
+exports.getVotings = async (req, res, next) => {
+  try {
+    const votingList = await Voting.find();
+    // if (username) {
+    //   return res.render('home', {
+    //     message: '투표를 등록하세요',
+    //     loggedInUsername: username,
+    //     votingList
+    //   });
+    // }
 
-  //   if (!votingList) {
-  //     return res.render('home', {
-  //       message: '투표를 등록하세요.'
-  //     });
-  //   }
-
-  //   // return res.render('home', votingList);
-  // } catch (err) {
-  //   console.log(err);
-  // }
+    return res.render('home', {
+      message: '투표를 등록하세요',
+      votingList
+    });
+  } catch (err) {
+    return next(err);
+  }
 };
