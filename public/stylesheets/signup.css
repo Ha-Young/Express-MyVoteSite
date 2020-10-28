@@ -1,6 +1,7 @@
 body {
   display: grid;
   grid-template-rows: 5em 27em 1fr;
+  margin-bottom: 70px;
 }
 
 a {
@@ -97,58 +98,43 @@ a {
   margin-left: 2em;
 }
 
-.voting-container {
+.signup-container {
   display: grid;
   grid-template-rows: 5em 1fr;
   grid-gap: 1em;
 }
 
-.voting-head {
+.signup-head {
   border-bottom: 1px solid black;
   display: grid;
-  grid-template-columns: 5fr 1fr 1fr;
-  justify-items: center;
-  align-items: center;
+  grid-template-columns: 10em 50em;
 }
 
-.voting-head-title {
+.signup-head-title {
+  font-size: xx-large;
+  font-weight: bold;
+  padding-top: 1em;
+  padding-left: 1.5em;
+}
+
+.signup-head-title-sub {
+  padding-top: 1.5em;
   font-size: x-large;
-  padding-right: 18em;
 }
 
-.voting-head-createVoting, .voting-head-myVoting {
-  font-size: large
-}
-
-.voting-body {
+.signup-body {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-items: center;
-  align-items: center;
-  grid-gap: 2em;
+  grid-template-columns: 8em 15em ;
+  grid-gap: 1em;
+  font-size: x-large;
+  margin-left: 2em;
 }
 
-.voting-each {
-  border: 1px solid blue;
-  display: grid;
-  grid-template-rows: 2fr 1fr; /*확인하기*/
+.signup-button {
+  font-size: large;
   transition: all .2s ease-in-out;
 }
 
-.voting-each:hover {
+.signup-button:hover {
   transform: scale(1.05);
-}
-
-.voting-each-head {
-  font-size: x-large;
-  text-align: center;
-  margin-top: 1em;
-  padding-bottom: 1em;
-  border-bottom: 2px solid black;
-}
-
-.voting-each-body {
-  font-size: large;
-  margin-top: 1em;
-  padding-left: 1em;
 }

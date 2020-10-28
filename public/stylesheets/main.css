@@ -1,6 +1,7 @@
 body {
   display: grid;
   grid-template-rows: 5em 27em 1fr;
+  margin-bottom: 70px;
 }
 
 a {
