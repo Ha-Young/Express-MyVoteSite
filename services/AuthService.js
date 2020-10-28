@@ -1,21 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
-const AUTH_ERROR_CODE = {
-  EA_0: {
-    value: 'EA_0',
-    message: 'The user already exists'
-  },
-  EA_1: {
-    value: 'EA_1',
-    message: 'No user exists'
-  },
-  EA_2: {
-    value: 'EA_2',
-    message: `Passwords don't match`
-  }
-};
-
 class AuthService {
   constructor(user) {
     this.name = user.name;
@@ -34,11 +19,11 @@ class AuthService {
       }
 
       const saltRounds = 10;
-      const hash = await bcrypt.hash(this.password, saltRounds);
+      const generatedhash = await bcrypt.hash(this.password, saltRounds);
       const newUser = await User.create({
         email: this.email,
         name: this.name,
-        password: hash
+        password: generatedhash
       });
 
       return createAction('succeed', newUser);

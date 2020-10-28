@@ -7,6 +7,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 
+const mongoose = require('mongoose');
 const createError = require('http-errors');
 const logger = require('morgan');
 
@@ -43,8 +44,18 @@ app.use(function (req, res, next) {
 });
 
 app.use(function (err, req, res, next) {
+  console.error(err);
+
+  if (process.env.NODE_ENV === 'production') {
+    if (err instanceof mongoose.Error) err = createError(500);
+    err.stack = null;
+  }
+
+  // if (err instanceof mongoose.Error) err = createError(500);
+  // err.stack = null;
+
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = err;
 
   res.status(err.status || 500);
   res.render('error');

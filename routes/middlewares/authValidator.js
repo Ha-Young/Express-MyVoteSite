@@ -1,6 +1,11 @@
 const { body, check, validationResult } = require('express-validator');
 
-exports.validateSignUp = [checkEmail(), checkPasswordExists(), checkConfirmation()];
+exports.validateSignUp = [
+  checkEmail(),
+  checkPasswordExists(),
+  checkPasswordLength(),
+  checkConfirmation()
+];
 exports.validateLogin = [checkEmail(), checkPasswordLength()];
 
 exports.checkVaildationError = function checkVaildationError(req, res, next) {
@@ -11,6 +16,7 @@ exports.checkVaildationError = function checkVaildationError(req, res, next) {
     console.log(errors.array());
     return res.redirect(`/auth${req.url}`);
   }
+
   next();
 };
 

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const ObjectId = mongoose.SchemaTypes.ObjectId;
 
+const checkExpire = require('../utils/checkExpire');
+
 const voteSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
@@ -26,7 +28,7 @@ const voteSchema = new mongoose.Schema(
 );
 
 voteSchema.virtual('isExpired').get(function () {
-  return Date.now() > new Date(this.expireAt).getTime();
+  return checkExpire(this.expireAt);
 });
 
 module.exports = mongoose.model('Vote', voteSchema);

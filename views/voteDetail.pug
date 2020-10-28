@@ -2,7 +2,7 @@ extends ./layouts/layout
 
 block content
   if isAuthor
-    a(href='/votings/delete') 삭제
+    a(href=`/votings/delete/${vote.id}`) 삭제
   h1= vote.title
   p= vote.isExpired
   p= vote.author.name

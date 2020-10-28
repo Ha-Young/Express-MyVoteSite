@@ -1,7 +1,7 @@
 const AuthService = require('../../services/AuthService');
 
 exports.getSignUp = function getSignUp(req, res, next) {
-  res.status(200).render('signup');
+  res.status(200).render('signUp');
 };
 
 exports.postSignUp = async function postSignUp(req, res, next) {

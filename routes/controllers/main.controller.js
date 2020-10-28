@@ -5,8 +5,7 @@ exports.getVotings = async function getVotings(req, res, next) {
   try {
     // const votingList = await Vote.find().populate('author', 'name').lean().exec();
     const votingList = await Vote.find().populate('author', 'name');
-    console.log(req.session.user);
-    res.render('index', { user: req.session.user, votingList, message: req.flash('success') });
+    res.render('index', { user: req.session.user, votingList });
   } catch (error) {
     next(error);
   }

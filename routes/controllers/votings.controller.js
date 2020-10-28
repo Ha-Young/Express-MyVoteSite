@@ -1,8 +1,6 @@
-const createError = require('http-errors');
-const { formatISO } = require('date-fns');
+const VoteService = require('../../services/VoteService');
 
-const Vote = require('../../models/Vote');
-const User = require('../../models/User');
+const { formatISO } = require('date-fns');
 
 exports.getNewVote = function getNewVote(req, res, next) {
   const {
@@ -12,44 +10,32 @@ exports.getNewVote = function getNewVote(req, res, next) {
   res.status(200).render('newVote', { user, time: presentTime });
 };
 
-// SHOULD BE UPDATE (item list check, handling success, failed)
 exports.postNewVote = async function postNewVote(req, res, next) {
   const {
-    body,
+    body: vote,
     session: { user }
   } = req;
 
   try {
-    if (body && body.itemList && body.itemList.length <= 1) throw createError(404);
+    if (!vote.itemList || (vote.itemList && vote.itemList.length <= 1)) {
+      req.flash('failed', 'Failed creating item must be at least 2');
+      req.app.locals.messages = req.flash('failed');
+      return res.redirect('/');
+    }
 
-    const newVote = await Vote.create({
-      title: body.title,
-      author: user._id,
-      expireAt: body.expireAt,
-      isExpired: false,
-      candidateList: body.itemList.map((item) => {
-        return {
-          title: item,
-          count: 0
-        };
-      })
-    });
+    const voteInstance = new VoteService(vote);
+    await voteInstance.createNewVote(user);
 
-    const updatedUser = await User.findByIdAndUpdate(user._id, {
-      $push: { myVoteList: newVote._id }
-    });
-
-    updatedUser.save();
-    req.flash('success', 'Succeed creating new vote!');
+    req.flash('succeed', 'Succeed creating new vote!');
+    req.app.locals.messages = req.flash('succeed');
     res.redirect('/');
   } catch (error) {
     next(error);
   }
 };
 
-// SHOULD BE UPDATE (error handling)
 exports.getVote = async function getVote(req, res, next) {
-  res.clearCookie('callback');
+  res.clearCookie('callbackURI');
 
   const {
     params: { id: vote_id },
@@ -59,67 +45,62 @@ exports.getVote = async function getVote(req, res, next) {
   let isParticipated;
 
   try {
-    const vote = await Vote.findById(vote_id).populate('author', 'name');
-    if (!vote) throw new Error('No exists');
+    const { type, payload } = await VoteService.findVote(vote_id);
 
-    if (session && session.user) {
-      isAuthor = session.user._id === vote.author._id.toString();
-      isParticipated = vote.participatedUser.find(
-        (user) => user._id.toString() === session.user._id
-      );
+    switch (type) {
+      case 'error':
+        req.flash('error', payload.message);
+        req.app.locals.messages = req.flash('error');
+        throw payload;
+      case 'success':
+        if (session && session.user) {
+          isAuthor = session.user._id === payload.author._id.toString();
+          isParticipated = payload.participatedUser.find(
+            (user) => user._id.toString() === session.user._id
+          );
+        }
+        return res
+          .status(200)
+          .render('voteDetail', { user: session.user, vote: payload, isAuthor, isParticipated });
     }
-
-    res.status(200).render('voteDetail', { user: session.user, vote, isAuthor, isParticipated });
   } catch (error) {
     next(error);
   }
 };
 
-// SHOULD BE UPDATE (user participation)
 exports.postVote = async function postVote(req, res, next) {
   const {
     params: { id: vote_id },
     body,
-    session
+    session: { user }
   } = req;
 
   try {
-    const vote = await Vote.findById(vote_id);
-    const targetItem = vote.candidateList.find((item) => item.title === body.item);
-    const targetExpired = vote.expireAt;
+    const { type, payload } = await VoteService.castVote(vote_id, user, body);
 
-    if (checkExpire(targetExpired) > 0) {
-      const newCount = (targetItem.count += 1);
-
-      await Vote.updateOne(
-        { _id: vote_id, 'candidateList.title': body.item },
-        {
-          $push: { participatedUser: session.user._id },
-          $set: {
-            'candidateList.$.count': newCount
-          }
-        }
-      );
-    } else {
-      await Vote.updateOne(
-        { _id: vote_id },
-        {
-          isExpired: true
-        }
-      );
+    switch (type) {
+      case 'error':
+        req.flash('error', payload.message);
+        req.app.locals.messages = req.flash('error');
+      case 'success':
+        req.flash('success', payload.message);
+        req.app.locals.messages = req.flash('success');
+      default:
+        return res.redirect(`/votings/${vote_id}`);
     }
-
-    res.redirect(`/votings/${vote_id}`);
   } catch (error) {
     next(error);
   }
 };
 
-// SHOULD BE UPDATE
-exports.deleteVote = function deleteVote(req, res, next) {
-  res.status(200).send({ result: 'ok' });
+exports.deleteVote = async function deleteVote(req, res, next) {
+  try {
+    const {
+      params: { id: vote_id }
+    } = req;
+    await VoteService.deleteVote(vote_id);
+    res.redirect('/');
+  } catch (error) {
+    next(error);
+  }
 };
-
-function checkExpire(target) {
-  return new Date(target).getTime() - new Date().getTime();
-}

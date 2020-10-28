@@ -7,8 +7,8 @@ const router = express.Router();
 
 router.get('/new', verifyUser, votingsController.getNewVote);
 router.post('/new', verifyUser, votingsController.postNewVote);
-router.get('/delete', verifyUser, votingsController.deleteVote);
 router.get('/:id', votingsController.getVote);
 router.post('/:id', verifyUser, votingsController.postVote);
+router.get('/delete/:id', verifyUser, votingsController.deleteVote);
 
 module.exports = router;
