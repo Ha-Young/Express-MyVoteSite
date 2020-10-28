@@ -1,12 +1,20 @@
 const Voting = require('../../models/Voting');
+const User = require('../../models/User');
 const { isExpiration } = require('../../utils');
 
 exports.renderNewVotingMakerPage = (req, res, next) => {
   res.render('newVoting');
 };
 
-exports.renderMyVotingsPage = (req, res, next) => {
-  res.render('myVotings');
+exports.renderMyVotingsPage = async (req, res, next) => {
+  try {
+    const { user: { _id } } = req;
+    const { votings } = await User.findOne({ _id }).populate('votings');
+    console.log(votings);
+    res.render('myVotings', { votings });
+  } catch (err) {
+    next(err);
+  }
 };
 
 exports.getVotingDetails = async (req, res, next) => {
@@ -21,6 +29,7 @@ exports.getVotingDetails = async (req, res, next) => {
   } catch (err) {
     console.error(err.message);
   }
+
   try {
     const { id } = req.params;
     const voting = await Voting.findOne({ _id: id });
@@ -36,6 +45,7 @@ exports.getVotingDetails = async (req, res, next) => {
 
 exports.vote = async (req, res, next) => {
   const { body: { option }, user: { _id } } = req;
+  console.log('reqBody', option, _id)
   try {
     await Voting.updateOne(
       { 'options._id': option },

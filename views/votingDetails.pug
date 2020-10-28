@@ -14,21 +14,21 @@ block content
 
   else
     h1 VOTING Details
-      form(action='/votings/success', method='POST')
-        h2= voting.votingTitle
-        p= voting.userName
-        div= voting.expirationDate
-        div
-          each option in voting.options
-            label= option.option
-            input(
-              type='radio'
-              name='option'
-              value=`${option._id}`
-            )
-        div
-        button(
-          type='submit'
-          name='votingButton'
-        ) 투표
-  script(src='../../javascripts/delete.js')
+      h2= voting.votingTitle
+      p= voting.userName
+      div= voting.expirationDate
+      div
+        each option in voting.options
+          label= option.option
+          input(
+            type='radio'
+            class='option'
+            name='option'
+            value=`${option._id}`
+          )
+      div
+      button(
+        id=`${id}`
+        class='votingButton'
+      ) 투표
+  script(src='../../javascripts/details.js')

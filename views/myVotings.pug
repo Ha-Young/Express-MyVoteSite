@@ -2,3 +2,8 @@ extends layout
 
 block content
   h1 my votings
+  div
+    each voting in votings
+      div
+        div=voting.votingTitle
+        div=voting.expirationDate
