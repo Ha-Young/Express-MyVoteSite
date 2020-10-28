@@ -32,8 +32,8 @@
   <div class="voting-container">
     <div class="voting-head">
       <div class="voting-head-title">Votings: What are you going to Pick today?</div>
-      <div><a href="/votings/new">create New voting</a></div>
-      <div><a href="/votings/my-voting">my voting</a></div>
+      <div class="voting-head-createVoting"><a href="/votings/new">create New voting</a></div>
+      <div class="voting-head-myVoting"><a href="/votings/my-voting">my voting</a></div>
     </div>
     <div class="voting-body">
       <% for (let i = 0; i < votings.length; i++) {%>
@@ -41,9 +41,10 @@
         <a href="/votings/<%=votings[i]._id%>">
           <div class="voting-each-head"><%=votings[i].title%></div>
           <div class="voting-each-body">
-            <div><%=votings[i].creator%></div>
-            <div><%=votings[i].expireDate%></div>
+            <div>Host: <%=votings[i].creator%></div>
+            <div>Expire Date:<%=votings[i].expireDate%></div>
             <div><%=votings[i].isExpired%></div>
+            <div>Description: <%=votings[i].description%></div>
           </div>
         </a>
       </div>

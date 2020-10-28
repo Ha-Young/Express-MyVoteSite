@@ -1,6 +1,11 @@
 body {
   display: grid;
-  grid-template-rows: 1fr 5fr 10fr;
+  grid-template-rows: 5em 27em 1fr;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 
 .main-nav {
@@ -35,7 +40,6 @@ body {
 
 .feature {
   background-color: #fff176;
-  /* height: 70vh; */
   display: grid;
   grid-template-columns: 40% 40%;
   grid-gap: 2em;
@@ -95,7 +99,8 @@ body {
 
 .voting-container {
   display: grid;
-  grid-template-rows: 1fr 10fr;
+  grid-template-rows: 5em 1fr;
+  grid-gap: 1em;
 }
 
 .voting-head {
@@ -111,13 +116,39 @@ body {
   padding-right: 18em;
 }
 
+.voting-head-createVoting, .voting-head-myVoting {
+  font-size: large
+}
+
 .voting-body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;
   align-items: center;
+  grid-gap: 2em;
 }
 
 .voting-each {
   border: 1px solid blue;
+  display: grid;
+  grid-template-rows: 2fr 1fr; /*확인하기*/
+  transition: all .2s ease-in-out;
+}
+
+.voting-each:hover {
+  transform: scale(1.05);
+}
+
+.voting-each-head {
+  font-size: x-large;
+  text-align: center;
+  margin-top: 1em;
+  padding-bottom: 1em;
+  border-bottom: 2px solid black;
+}
+
+.voting-each-body {
+  font-size: large;
+  margin-top: 1em;
+  padding-left: 1em;
 }

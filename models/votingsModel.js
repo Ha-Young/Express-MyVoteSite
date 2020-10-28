@@ -38,6 +38,7 @@ const votingSchema = new mongoose.Schema({
     default: false,
   },
   creator: String,
+  description: String,
   votedUsers: Array,
 });
 
