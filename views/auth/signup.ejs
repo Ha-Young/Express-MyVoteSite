@@ -34,8 +34,8 @@
       <div class="signup-head-title">SignUp</div>
       <div class="signup-head-title-sub">: Please input your email address and password</div>
     </div>
-    <div>
-      <form class="signup-body" action="/signup" method="POST">
+    <div class="signup-body">
+      <form class="signup-body-form" action="/signup" method="POST">
         <label for="name">Email address</label>
         <input type="text" name="email"></input>
 
@@ -49,6 +49,11 @@
 
         <button class="signup-button" type="submit">Sign Up</button>
       </form>
+      <div class="signup-body-err">
+        <div><%= err.email ? err.email.message : null%></div>
+        <div><%= err.password ? err.password.message : null%></div>
+        <div><%= err.passwordConfirm ? err.passwordConfirm.message : null%></div>
+      </div>
     </div>
   </div>
 </body>

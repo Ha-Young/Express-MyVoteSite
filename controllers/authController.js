@@ -1,17 +1,17 @@
 const User = require('../models/usersModel');
 const Voting = require('../models/votingsModel');
+const { PASSWORD } = require('../constants/error');
 
 exports.renderMainPage = async (req, res, next) => {
   const votings = await Voting.find();
 
   res.render('main', {
-    data: 'welcome',
     votings,
   });
 };
 
 exports.renderSignup = (req, res, next) => {
-  res.render('auth/signup');
+  res.render('auth/signup', { err: {} });
 };
 
 exports.registerUser = async (req, res, next) => {
@@ -20,28 +20,35 @@ exports.registerUser = async (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     const passwordConfirm = req.body.passwordConfirm;
+
     if (password !== passwordConfirm) {
-      throw new Error(
-        'password and passwordConfirm should be exactly the same'
+      const err = new Error(
+        'Please input the same password in both password and password confirm.'
       );
+      err.errors = { passwordConfirm: { message: err.message } }
+      throw err
     }
 
-    const user = await User.findOne({ email });
+    // const user = await User.findOne({ email });
 
-    if (user) {
-      throw new Error('Email is duplicated, use another email');
-    }
+    // if (user) {
+    //   throw new Error('Email is duplicated, use another email');
+    // }
 
     const signedUp = await User.create({
       email,
       password,
-      passwordConfirm,
     });
-    console.log(signedUp, signedUp);
-
     return res.status(302).redirect('/login');
   } catch (err) {
-    res.render('auth/failSignup', { data: err.message });
+    console.log('err')
+    // res.render('auth/failSignup', { data: err.message });
+    // console.log(err, 'err')
+    // console.log(err.errors.password.message, 'errs')
+    // console.log(err.errors.email.message, 'errs email')
+    // console.log(err.errors.passwordConfirm.message, 'errs email')
+    return res.render('auth/signup', { err: err.errors })
+
   }
 };
 
@@ -90,5 +97,3 @@ exports.logout = async (req, res, next) => {
     next(err);
   }
 };
-
-

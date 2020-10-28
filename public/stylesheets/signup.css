@@ -125,10 +125,23 @@ a {
 
 .signup-body {
   display: grid;
+  grid-template-columns: 41em 1fr ;
+  grid-gap: 1em;
+}
+
+.signup-body-form {
+  display: grid;
   grid-template-columns: 9em 15em ;
   grid-gap: 1em;
   font-size: x-large;
   margin-left: 2em;
+}
+
+.signup-body-err {
+  display: grid;
+  grid-template-rows: 3em;
+  font-size: large;
+  color: #c41f1f;
 }
 
 .signup-button {

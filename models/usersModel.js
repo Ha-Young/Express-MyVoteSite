@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     required: true,
     trim: true,
-    validate: [validator.isEmail, 'Please provide a valid email'],
+    validate: [validator.isEmail, 'Please provide a valid email.'],
   },
   password: {
     type: String,
@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
         const regex = new RegExp(/^[a-zA-Z0-9]{5,10}$/);
         return regex.test(this);
       },
-      message: 'Please make 5 to 10 digits password with alphabets and numbers'
+      message: 'Please make 5 to 10 digits password using both alphabets and numbers.'
     },
   },
   passwordConfirm: String,
