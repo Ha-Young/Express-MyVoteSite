@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    link(rel='stylesheet', href='/stylesheets/index.css')
+    link(rel='stylesheet', href='/stylesheets/account.css')
+    title  Get On the Vote
+  body
+    main
+      .account-container
+        .account-body
+          .account-logo
+            img(src='/images/logo_transparent.png', alt="logo")
+          .account-title
+            block title
+          block body
+          p.account-text or
+          .account-goto
+            block goto
+    block script

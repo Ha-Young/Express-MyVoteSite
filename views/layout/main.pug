@@ -1,11 +1,13 @@
 doctype html
 html
   head
-    title  Get On the Vote
+    link(rel='stylesheet', href='/stylesheets/index.css')
+    title VoteforVote
   body
-    header
-    main
-      block content
-    footer
-      span &copy; Get On the Vote.
-
+    .main-container
+      header
+        include ../partials/header.pug
+      main
+        include ../partials/navigator.pug
+        .vote-container
+          block content

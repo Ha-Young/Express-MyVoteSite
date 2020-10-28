@@ -1,0 +1,98 @@
+.account-container {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+}
+
+.account-logo {
+  width: 50px;
+}
+
+.account-logo img {
+  width: 100%;
+  height: 100%;
+}
+
+.account-title {
+  font-size: 20px;
+  font-weight: bold;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.account-body {
+  border: 2px solid #b89068;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.account-login-form {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+input {
+  text-align: center;
+  width: 80%;
+  height: 40px;
+  background: rgb(241, 241, 241);
+  outline: none;
+  border: none;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+.account-error {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.account-goto {
+  display: flex;
+  justify-content: center;
+  background: rgb(241, 241, 241);
+  align-items: center;
+  font-size: 20px;
+  width: 80%;
+  height: 40px;
+}
+
+.account-goto:hover {
+  background: rgb(196, 196, 196);
+  cursor: pointer;
+}
+
+.account-goto a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.account-text {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

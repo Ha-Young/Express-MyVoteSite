@@ -1,0 +1,15 @@
+extends layout/account.pug
+block title
+  p SIGNUP
+block body
+  div.account-login-form
+    input(type='text' id='email' name='email' placeholder='email' autocomplete='off')
+    input(type='text' id='name' name='name' placeholder='name' autocomplete='off')
+    input(type='password' id='password' name='password' placeholder='password')
+    input(type='password' id='password-confirm' name='password-confirm' placeholder='password-confirm')
+    p.account-error #{message}
+    input(type='button' id='signup-button' class='account-goto' value='SIGNUP')
+block goto
+  a(href='/login') GO TO LOGIN
+block script
+  script(type='text/javascript' src='/javascripts/signupForm.js')

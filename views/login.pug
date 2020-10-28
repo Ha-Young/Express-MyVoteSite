@@ -1,4 +1,12 @@
-extends layout/main.pug
+extends layout/account.pug
 
-block content
-  p Login
+block title
+  p LOGIN
+block body
+  form.account-login-form(action='/login' method='post' autocomplete='off')
+    input(type='text' name='email' placeholder='email')
+    input(type='password' name='password' placeholder='password')
+    p.account-error 오류
+    input(type='submit' class='account-goto' value='LOGIN')
+block goto
+  a(href='/signup') GO TO SIGNUP
