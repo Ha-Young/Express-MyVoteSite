@@ -1,4 +1,3 @@
-
 const Voting = require('../models/votingsModel');
 const User = require('../models/usersModel');
 const { months, days, hours } = require('../constants');
@@ -13,9 +12,11 @@ exports.createNewVoting = async (req, res, next) => {
     const votingInfo = req.body;
 
     const user = await User.findById(req.session.user_id);
-    votingInfo.creator = user.email;
+    votingInfo.creator = user._id;
 
     const voting = await Voting.create(votingInfo);
+    user.createdVoting.push(voting._id);
+    await user.save();
 
     res.status(302).redirect('/');
   } catch (err) {
@@ -25,15 +26,13 @@ exports.createNewVoting = async (req, res, next) => {
 
 exports.renderVoting = async (req, res, next) => {
   try {
-    console.log(req.body.voting, 'end');
-
-
     const voting = req.body.voting;
     const result = req.body.result || [];
-
+    // console.log(result, 'result');
     res.render('voting/voting', {
       voting: voting,
-      result: result
+      result: result,
+      isCreator: req.body.isCreator || undefined,
     });
   } catch (err) {
     console.log(err, 'voitng');
@@ -44,19 +43,11 @@ exports.renderVoting = async (req, res, next) => {
 exports.receiveVotingResult = async (req, res, next) => {
   try {
     const parentId = req.params.id;
-    const childId = req.body.selectOption;
-
-    const voting = await Voting.findOne({ _id: parentId });
-    const result = voting.selectOptions.id(childId);
-
-    result.count++;
-    await voting.save();
-
-    res.status(302).redirect(`/votings/${parentId}`)
+    console.log('receiveVotingResult');
+    return res.status(302).redirect(`/votings/${parentId}`);
   } catch (err) {
-    next(err)
+    next(err);
   }
-
 
   res.json('result');
 };

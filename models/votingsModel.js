@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const User = require('./usersModel');
 
 const selectOptionsSchema = new mongoose.Schema({
   option: String,
@@ -37,25 +38,26 @@ const votingSchema = new mongoose.Schema({
     default: false,
   },
   creator: String,
+  votedUsers: Array,
 });
 
 votingSchema.methods.findMax = async (id) => {
   const max = await Voting.aggregate([
     {
-      $match: { '_id': new mongoose.Types.ObjectId(id) }
+      $match: { _id: new mongoose.Types.ObjectId(id) },
     },
     {
-      $unwind: '$selectOptions'
+      $unwind: '$selectOptions',
     },
     {
       $group: {
-        '_id': null,
+        _id: null,
         max: { $max: '$selectOptions.count' },
-      }
+      },
     },
   ]);
   return max[0];
-}
+};
 
 const Voting = mongoose.model('Voting', votingSchema);
 

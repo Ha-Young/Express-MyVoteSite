@@ -4,6 +4,8 @@ const votingController = require('../controllers/votingController');
 const expireDateValid = require('../controllers/middleware/expireDateValid');
 const modifySelectOptions = require('../controllers/middleware/modifySelectOptions');
 const handleVoting = require('../controllers/middleware/handleVoting');
+const checkCreator = require('../controllers/middleware/checkCreator');
+const validateFirstVoting = require('../controllers/middleware/validateFirstVoting');
 // const authController = require('../controllers/authController');
 // const isLoggedIn = require('../controllers/middleware/isLoggedIn');
 
@@ -16,7 +18,9 @@ router.post(
 );
 
 router.get('/my-voting', votingController.renderMyVoting);
-router.get('/:id', handleVoting, votingController.renderVoting);
-router.post('/:id', votingController.receiveVotingResult);
+
+// router.put('/:id', validateFirstVoting, votingController.receiveVotingResult);
+router.put('/:id', votingController.receiveVotingResult);
+router.get('/:id', handleVoting, checkCreator, votingController.renderVoting);
 
 module.exports = router;

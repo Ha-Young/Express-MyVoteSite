@@ -2,7 +2,6 @@ const User = require('../models/usersModel');
 const Voting = require('../models/votingsModel');
 
 exports.renderMainPage = async (req, res, next) => {
-  console.log(1);
   const votings = await Voting.find();
 
   res.render('main', {
@@ -47,6 +46,7 @@ exports.registerUser = async (req, res, next) => {
 };
 
 exports.renderLogin = (req, res, next) => {
+  console.log('called by put method');
   res.render('auth/login');
 };
 
@@ -64,10 +64,12 @@ exports.login = async (req, res, next) => {
     const isValid = await user.verifyPassword(password, user.password);
 
     if (isValid) {
+      // console.log('login sucess');
       req.session.user_id = user._id;
       req.session.logined = true;
       return res.status(302).redirect('/');
     }
+    // console.log('login fail');
     return res.status(302).redirect('/login');
   } catch (err) {
     next(err);

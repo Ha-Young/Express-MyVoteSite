@@ -10,3 +10,7 @@ a {
 .abc {
   background-color: #00b7ff;
 }
+
+.ref {
+  display: none;
+}

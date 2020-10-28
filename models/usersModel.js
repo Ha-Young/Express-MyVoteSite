@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   passwordConfirm: String,
+  createdVoting: Array,
 });
 
 userSchema.pre('save', async function (next) {
