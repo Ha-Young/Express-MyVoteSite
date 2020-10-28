@@ -1,4 +1,5 @@
 const createError = require('http-errors');
+const { formatISO } = require('date-fns');
 
 const Vote = require('../../models/Vote');
 const User = require('../../models/User');
@@ -7,7 +8,8 @@ exports.getNewVote = function getNewVote(req, res, next) {
   const {
     session: { user }
   } = req;
-  res.status(200).render('newVote', { user });
+  const presentTime = formatISO(new Date()).slice(0, 16);
+  res.status(200).render('newVote', { user, time: presentTime });
 };
 
 // SHOULD BE UPDATE (item list check, handling success, failed)
@@ -23,7 +25,7 @@ exports.postNewVote = async function postNewVote(req, res, next) {
     const newVote = await Vote.create({
       title: body.title,
       author: user._id,
-      expired: body.expired,
+      expireAt: body.expireAt,
       isExpired: false,
       candidateList: body.itemList.map((item) => {
         return {
@@ -84,7 +86,7 @@ exports.postVote = async function postVote(req, res, next) {
   try {
     const vote = await Vote.findById(vote_id);
     const targetItem = vote.candidateList.find((item) => item.title === body.item);
-    const targetExpired = vote.expired;
+    const targetExpired = vote.expireAt;
 
     if (checkExpire(targetExpired) > 0) {
       const newCount = (targetItem.count += 1);

@@ -8,7 +8,7 @@ block content
       input(type='text', name='title' required)
     label
       | expiredAt
-      input(type='datetime-local', name='expired', step=1800 required)
+      input(type='datetime-local', name='expireAt', value=`${time}` min=`${time}` step=3600 required)
     label
       | voting List
       .item-container

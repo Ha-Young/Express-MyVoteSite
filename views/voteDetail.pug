@@ -6,7 +6,7 @@ block content
   h1= vote.title
   p= vote.isExpired
   p= vote.author.name
-  p= `${vote.expired.toUTCString()}`
+  p= `${vote.expireAt.toUTCString()}`
   if !isParticipated && !vote.isExpired
     form(action=`/votings/${vote.id}` method='POST')
       each item, index in vote.candidateList

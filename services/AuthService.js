@@ -1,6 +1,21 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
+const AUTH_ERROR_CODE = {
+  EA_0: {
+    value: 'EA_0',
+    message: 'The user already exists'
+  },
+  EA_1: {
+    value: 'EA_1',
+    message: 'No user exists'
+  },
+  EA_2: {
+    value: 'EA_2',
+    message: `Passwords don't match`
+  }
+};
+
 class AuthService {
   constructor(user) {
     this.name = user.name;
@@ -11,13 +26,6 @@ class AuthService {
 
   async signUp() {
     try {
-      const isNotValidatedInput = !this.name || this.password !== this.passwordConfirmation;
-      if (isNotValidatedInput) {
-        return createAction('failed-password-confirm', {
-          message: 'Password confirmation failed'
-        });
-      }
-
       const user = await User.findOne({ email: this.email });
       if (user) {
         return createAction('failed-user-exists', {
