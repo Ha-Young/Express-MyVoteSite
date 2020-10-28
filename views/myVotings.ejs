@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>투표</title>
+  <title>내 투표</title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
-  <button id='my-votings'>내가 만든 투표 보기</button>
-  <button id='logout'>로그아웃</button><br><br>
-  <a href='/votings/new'>새 투표 만들기</a>
-  <h1>투표 목록</h1>
+  <h1>내가 만든 투표 목록</h1>
   <h2>진행중</h2>
   <ul>
     <% openVotingsData.forEach(data => { %>

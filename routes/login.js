@@ -23,6 +23,7 @@ router.post('/', (req, res, next) => {
     }
 
     req.login(user, err => {
+      console.log('3');
       if (err) {
         next(err);
 
@@ -32,7 +33,6 @@ router.post('/', (req, res, next) => {
       req.session.userId = user._id;
       res.redirect('/');
     });
-
   })(req, res, next);
 });
 

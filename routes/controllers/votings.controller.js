@@ -6,8 +6,6 @@ exports.create = (req, res, next) => {
   const data = req.body;
   const expires_at = `${data['expiration-date'][0]} ${data['expiration-date'][1]}`;
   const { title, options } = data;
-  console.log(data);
-  console.log(options);
 
   if (options.length < 2) {
     res.status(200).render('createFailure', {
@@ -17,13 +15,13 @@ exports.create = (req, res, next) => {
     return;
   }
 
-  if (Date.parse(expires_at) <= Date.now()) {
-    res.status(200).render('createFailure', {
-      message: '투표 만료 시각을 확인하세요'
-    });
+  // if (Date.parse(expires_at) <= Date.now()) {
+  //   res.status(200).render('createFailure', {
+  //     message: '투표 만료 시각을 확인하세요'
+  //   });
 
-    return;
-  }
+  //   return;
+  // }
 
   let optionsData = [];
 
@@ -48,31 +46,44 @@ exports.create = (req, res, next) => {
       return;
     }
 
-    const newVotingId = data._id;
-    const currentUser = await User.findById(data.created_by);
+    try {
+      const newVotingId = data._id;
+      const currentUser = await User.findById(data.created_by);
 
-    currentUser.votings.push(newVotingId);
+      currentUser.votings.push(newVotingId);
 
-    await User.findByIdAndUpdate(
-      currentUser._id,
-      currentUser,
-      { new: true },
-    );
+      await User.findByIdAndUpdate(
+        currentUser._id,
+        currentUser,
+        { new: true },
+      );
 
-    res.status(201).render('createSuccess');
+      res.status(201).render('createSuccess');
+    } catch (err) {
+      next(err);
+    }
   });
 };
 
 exports.drop = async (req, res, next) => {
-  console.log(req.params);
+  try {
+    const votingData = await Voting.findById(req.params._id);
+    const creatorData = await User.findById(votingData.created_by);
+    const indexOfVoting = creatorData.votings.indexOf(votingData._id);
 
-  const votingBefore = await Voting.findById(req.params._id);
-  console.log('지우기 전 투표', votingBefore);
+    creatorData.votings.splice(indexOfVoting, 1);
 
-  const creatorBefore = await User.findById(votingBefore.created_by);
-  console.log('지우기 전 이용자 정보', creatorBefore);
+    await User.findByIdAndUpdate(
+      creatorData._id,
+      creatorData,
+      { new: true },
+    );
 
-  // await Voting.findByIdAndDelete(req.params._id);
+    await Voting.findByIdAndDelete(req.params._id);
 
-  res.status(204).render('dropSuccess');
+    console.log('ㅇㅕ기');
+    res.status(200).render('dropSuccess');
+  } catch (err) {
+    next(err);
+  }
 };

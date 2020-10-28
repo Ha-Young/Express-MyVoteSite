@@ -6,6 +6,7 @@
   <title>투표 상세 내용</title>
 </head>
 <body>
+  <a href='/'>투표 목록으로</a>
   <h1>투표 상세</h1>
   <h2><%= voting.title %></h2>
   투표 만료 시각: <%= formattedExpirationDate %>
@@ -20,10 +21,10 @@
     <label for='male'><%= option.content %></label>
     <span><% if (isExpired) { %> - <%= option.voters.length %>표<% } %></span><br>
   <% }) %>
-  <input type='submit' value='투표' disabled=<%= isExpired %>>
+  <input type='submit' value='투표' <% !isExpired ? 'disabled' : '' %>>
 </form>
 <%= voting %><br>
-<%- isExpired %><br>
+<%= isExpired %><br>
 <%= userIsCreator %><br>
 <%= voting.options[0].voters.length %><br>
 </body>

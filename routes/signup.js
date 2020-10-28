@@ -9,7 +9,7 @@ router.get('/', (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  const { email, password } = req.body;
+  const { email, password, username } = req.body;
   const passwordConfirm = req.body['password-confirm'];
 
   if (
@@ -17,8 +17,9 @@ router.post('/', async (req, res, next) => {
     || password.length < 4
     || passwordConfirm.length < 4
     || password !== passwordConfirm
+    || !username
   ) {
-    res.status(200).render('signupFailure', { message: '형식을 지키세요' });
+    res.status(200).render('signupFailure', { message: '형식을 지켜 입력칸을 모두 채우세요' });
 
     return;
   }
@@ -34,6 +35,7 @@ router.post('/', async (req, res, next) => {
   const newUserData = new User({
     email,
     password,
+    username,
     votings: [],
   });
 

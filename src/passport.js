@@ -11,7 +11,12 @@ module.exports = () => {
   }, async (email, password, done) => {
     try {
       const user = await User.findOne({ email });
-      const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+      let isPasswordCorrect;
+
+      if (user) {
+        isPasswordCorrect = await bcrypt.compare(password, user.password);
+      }
 
       if (!user || !isPasswordCorrect) {
         done(null, false, { message: '아이디 또는 비밀번호가 맞지 않습니다' });
@@ -21,7 +26,7 @@ module.exports = () => {
 
       done(null, user);
     } catch (err) {
-      done(error);
+      done(err);
     }
   }));
 

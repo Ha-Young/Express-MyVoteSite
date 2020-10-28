@@ -1,18 +1,29 @@
 const Voting = require('../models/Voting');
+const User = require('../models/User');
+const dayjs = require('dayjs');
 
-async function sortVotings() {
-  const votings = await Voting.find();
+async function sortVotings(conditionObj) {
+  const votings = await Voting.find(conditionObj);
   const openVotings = [];
   const expiredVotings = [];
 
   for (voting of votings) {
-    if (Date.parse(voting.expires_at) > Date.now()) {
-      openVotings.push(voting);
+    const creator = await User.findById(voting.created_by);
+    const expirationDate = Date.parse(voting.expires_at);
+    const formattedExpirationDate = dayjs(expirationDate).format('YYYY-MM-DD HH:mm');
+    const data = {
+      voting,
+      creatorUsername: creator.username,
+      formattedExpirationDate,
+    };
+
+    if (expirationDate > Date.now()) {
+      openVotings.push(data);
 
       continue;
     }
 
-    expiredVotings.push(voting);
+    expiredVotings.push(data);
   }
 
   return [openVotings, expiredVotings];
