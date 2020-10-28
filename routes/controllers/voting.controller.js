@@ -1,6 +1,8 @@
 const Voting = require('../../models/Voting');
 const User = require('../../models/User');
 const { isExpiration } = require('../../utils');
+const createError = require('http-errors');
+const constants = require('../../constants');
 
 exports.renderNewVotingMakerPage = (req, res, next) => {
   res.render('newVoting');
@@ -36,29 +38,32 @@ exports.getVotingDetails = async (req, res, next) => {
     const { id } = req.params;
     const voting = await Voting.findOne({ _id: id });
     const { options } = voting.populate('options');
-    const isCreator = voting.createdBy.toString() === userId.toString();
-    
+    // const isCreator = voting.createdBy.toString() === userId.toString();
+
     voting.isExpiration = isExpiration(voting.expirationDate);
 
-    res.render('votingDetails', { id, voting, isCreator, options });
+    res.render('votingDetails', { id, voting, options });
   } catch (err) {
     next(err);
   }
 };
 
 exports.vote = async (req, res, next) => {
-  const { _id } = req.user;
-  const { option } = req.body;
 
   try {
+    const { _id } = req.user;
+    const { option } = req.body;
+    // if (!_id, !option) return createError(400, constants.ERROR_MESSAGE_NOT_EXIST);
+
     await Voting.updateOne(
       { 'options._id': option },
       { $addToSet: { 'options.$[option].voters': _id } },
       { arrayFilters: [{ 'option._id': option }] }
     );
-    res.json('success');
+
+    res.json({ message: constants.SUCCESS_MESSAGE_VOTING });
   } catch (err) {
-    console.err(err);
+    next(err);
   }
 };
 
@@ -71,10 +76,14 @@ exports.deleteVoting = async (req, res, next) => {
     const { id } = req.params;
     const { _id } = req.user;
 
-    if (!id) throw Error('id is not defined');
+    if (!id) {
+      next(createError(400, constants.ERROR_MESSAGE_NOT_EXIST));
+    }
+
     await Voting.findByIdAndDelete(id);
     await User.findOne({ _id }).populate('votings').deleteOne({ id });
-    res.redirect('/');
+
+    res.json({ message: constants.SUCCESS_MESSAGE_DELETE });
 
   } catch (err) {
     next(err)

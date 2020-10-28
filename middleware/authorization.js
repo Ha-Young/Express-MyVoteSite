@@ -5,8 +5,9 @@ const isLoggedIn = (req, res, next) => {
     next();
   } else {
     req.session.redirectUrl = req.originalUrl;
-    console.log(req.originalUrl)
-    req.flash('errorMessage', constants.ERROR_MESSAGE_LOGIN);
+    if (req.body.name === 'ajax') {
+      return res.json({ message: constants.ERROR_MESSAGE_FAIL_VOTING });
+    }
     res.redirect('/login');
   }
 };

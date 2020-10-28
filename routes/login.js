@@ -6,7 +6,7 @@ const passport = require('passport');
 router.get('/', loginController.renderLogin);
 router.post('/', (req, res, next) => {
   passport.authenticate('local', function (err, user, info) {
-    var redirectUrl = '/'
+    let redirectUrl = '/'
 
     if (!user) { return res.redirect('/login'); }
     if (req.session.redirectUrl) {
@@ -21,9 +21,3 @@ router.post('/', (req, res, next) => {
 });
 
 module.exports = router;
-
-
-// {
-//     successRedirect: '/',
-//     failureRedirect: '/login'
-// }
