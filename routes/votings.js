@@ -36,7 +36,42 @@ router.get('/:_id', async (req, res, next) => {
 });
 
 router.put('/:_id', gateKeeper, async (req, res, next) => {
-  console.log(req.body);
+  const { selectedOptionValue } = req.body;
+  const currentUser = req.session.userId;
+
+  try {
+    const voting = await Voting.findById(req.params._id);
+    const { options } = voting;
+
+    for (const option of options) {
+      for (const voter of option.voters) {
+        if (voter.toString() === currentUser) {
+          res.json({ message: '이미 투표했습니다' });
+
+          return;
+        }
+      }
+    }
+
+    for (const option of options) {
+      if (option.content === selectedOptionValue) {
+        option.voters.push(currentUser);
+      }
+    }
+
+    await Voting.findByIdAndUpdate(
+      req.params._id,
+      voting,
+      { new: true },
+    );
+
+    res.json({
+      result: 'ok',
+      message: '투표 완료',
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get('/drop/:_id', gateKeeper, drop);

@@ -23,7 +23,6 @@ router.post('/', (req, res, next) => {
     }
 
     req.login(user, err => {
-      console.log('3');
       if (err) {
         next(err);
 

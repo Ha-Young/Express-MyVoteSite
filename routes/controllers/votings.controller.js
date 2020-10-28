@@ -8,7 +8,7 @@ exports.create = (req, res, next) => {
   const { title, options } = data;
 
   if (options.length < 2) {
-    res.status(200).render('createFailure', {
+    res.status(200).render('failure', {
       message: '선택지를 두 개 이상 입력하세요'
     });
 
@@ -16,20 +16,33 @@ exports.create = (req, res, next) => {
   }
 
   // if (Date.parse(expires_at) <= Date.now()) {
-  //   res.status(200).render('createFailure', {
+  //   res.status(200).render('failure', {
   //     message: '투표 만료 시각을 확인하세요'
   //   });
 
   //   return;
   // }
 
-  let optionsData = [];
+  const optionsData = [];
+  const cache = {};
 
   for (const option of options) {
-    const content = option;
+    if (cache.hasOwnProperty(option)) {
+      res.status(200).render('failure', {
+        message: '중복 선택지가 있습니다'
+      });
+
+      return;
+    }
+
+    cache[option] = true;
+
     const voters = [];
 
-    optionsData.push({ content, voters });
+    optionsData.push({
+      content: option,
+      voters
+    });
   }
 
   const newVotingData = new Voting({
@@ -81,7 +94,6 @@ exports.drop = async (req, res, next) => {
 
     await Voting.findByIdAndDelete(req.params._id);
 
-    console.log('ㅇㅕ기');
     res.status(200).render('dropSuccess');
   } catch (err) {
     next(err);

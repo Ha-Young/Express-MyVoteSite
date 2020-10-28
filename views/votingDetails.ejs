@@ -15,17 +15,24 @@
       <button id='voting-delete-button'>삭제</button>
     </a>
   <% } %><br><br>
-  <form method='post' action=<%= `/votings/${voting._id}` %>>
+  <form id='vote-form'>
   <% voting.options.forEach(option => { %>
-    <input type='radio' name='<%= option.content %>' value='<%= option.content %>'>
-    <label for='male'><%= option.content %></label>
-    <span><% if (isExpired) { %> - <%= option.voters.length %>표<% } %></span><br>
+    <input type='radio' name='option' value='<%= option.content %>'>
+    <label for='<%= option.content %>'><%= option.content %></label><br>
+    <% if (isExpired) { %><span> - <%= option.voters.length %>표</span><br><% } %>
   <% }) %>
-  <input type='submit' value='투표' <% !isExpired ? 'disabled' : '' %>>
+  <input
+    type='submit'
+    id='vote'
+    name='<%= voting._id %>'
+    value='투표'
+    <% !isExpired ? 'disabled' : '' %>
+  >
 </form>
 <%= voting %><br>
 <%= isExpired %><br>
 <%= userIsCreator %><br>
 <%= voting.options[0].voters.length %><br>
 </body>
+<script type="text/javascript" src='/javascripts/clientVote.js'></script>
 </html>
