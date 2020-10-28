@@ -13,7 +13,6 @@ const signupRouter = require('./routes/signup');
 const loginRouter = require('./routes/login');
 const votingsRouter = require('./routes/votings');
 const myVotingsRouter = require('./routes/my-votings');
-const successRouter =require('./routes/success');
 const session = require('express-session');
 const app = express();
 
@@ -39,7 +38,7 @@ app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
 app.use('/votings', votingsRouter);
 app.use('/my-votings', myVotingsRouter);
-app.use('/success', successRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

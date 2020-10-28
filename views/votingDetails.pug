@@ -9,10 +9,15 @@ block content
       class='deleteButton'
       id=`${id}`
     ) 삭제
-  if !voting.isExpiration
+    script(src='../../javascripts/delete.js')
+  if !voting.isExpiration || isCreator
     div 투표마감
-
-  else
+    div 결과
+    each option in options
+      div
+        div= option.option
+        div= option.voters.length
+  if voting.isExpiration
     h1 VOTING Details
       h2= voting.votingTitle
       p= voting.userName
@@ -31,4 +36,4 @@ block content
         id=`${id}`
         class='votingButton'
       ) 투표
-  script(src='../../javascripts/details.js')
+    script(src='../../javascripts/details.js')

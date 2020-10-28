@@ -1,11 +1,11 @@
 const addOptionButton = document.querySelector('.addOptionButton');
-const optionValue = document.getElementsByClassName('optionValue');
 
-addOptionButton.addEventListener('click', event => {
+addOptionButton.addEventListener('click', (event) => {
   event.preventDefault();
+  
+  const newInput = document.createElement('input');
+  const existInput = document.getElementsByName('options')[1];
+  newInput.setAttribute('name', 'options');
 
-  const node = document.createElement('input');
-
-  node.setAttribute('name', 'options');
-  document.querySelector('.option-container').appendChild(node);
+  existInput.parentNode.insertBefore(newInput, existInput);
 });
