@@ -5,5 +5,10 @@ block content
   div
     each voting in votings
       div
-        div=voting.votingTitle
-        div=voting.expirationDate
+        a(href=`/votings/${voting._id}`)
+          h2=voting.votingTitle
+          div=voting.expirationDate
+          if voting.isExpiration
+            div 진행중
+          else
+            div 투표완료

@@ -13,6 +13,7 @@ const signupRouter = require('./routes/signup');
 const loginRouter = require('./routes/login');
 const votingsRouter = require('./routes/votings');
 const myVotingsRouter = require('./routes/my-votings');
+const flash = require('req-flash');
 const session = require('express-session');
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
 }));
+app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());

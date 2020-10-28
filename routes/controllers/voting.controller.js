@@ -10,6 +10,9 @@ exports.renderMyVotingsPage = async (req, res, next) => {
   try {
     const { user: { _id } } = req;
     const { votings } = await User.findOne({ _id }).populate('votings');
+
+    votings.map((voting) => voting.isExpiration = isExpiration(voting.expirationDate));
+
     res.render('myVotings', { votings });
   } catch (err) {
     next(err);
@@ -32,11 +35,9 @@ exports.getVotingDetails = async (req, res, next) => {
   try {
     const { id } = req.params;
     const voting = await Voting.findOne({ _id: id });
-    const { options } = voting.populate('options')
-
-    console.log('details', options[0].voters.length);
-
+    const { options } = voting.populate('options');
     const isCreator = voting.createdBy.toString() === userId.toString();
+    
     voting.isExpiration = isExpiration(voting.expirationDate);
 
     res.render('votingDetails', { id, voting, isCreator, options });
@@ -68,9 +69,11 @@ exports.success = async (req, res, next) => {
 exports.deleteVoting = async (req, res, next) => {
   try {
     const { id } = req.params;
+    const { _id } = req.user;
 
     if (!id) throw Error('id is not defined');
     await Voting.findByIdAndDelete(id);
+    await User.findOne({ _id }).populate('votings').deleteOne({ id });
     res.redirect('/');
 
   } catch (err) {
