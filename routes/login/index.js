@@ -9,7 +9,11 @@ const {
 
 const router = express.Router();
 
-router.get('/', controller.render('./login'));
+router.get(
+  '/',
+  controller.render('./login')
+);
+
 router.post(
   '/',
   validateLoginForm,

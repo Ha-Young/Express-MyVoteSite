@@ -5,7 +5,8 @@ const { getVotingsUser, } = require('../../middleware');
 
 const router = express.Router();
 
-router.get('/',
+router.get(
+  '/',
   getVotingsUser,
   controller.render('myVotings')
 );

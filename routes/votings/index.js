@@ -17,12 +17,14 @@ const {
 
 const router = express.Router();
 
+// controller middleware services 차이점
 router.get(
   '/new',
   verifyAuthorization,
   setDefaultDate,
   controller.render('votings/new')
 );
+
 router.post(
   '/new',
   verifyAuthorization,
@@ -31,22 +33,28 @@ router.post(
   saveVoting,
   controller.redirect('/')
 );
-router.get('/:voting_id',
+
+router.get(
+  '/:voting_id',
   getVoting,
   creatorCheck,
   checkVotingUser,
   controller.render('votings/card')
 );
-router.delete('/:voting_id',
+
+router.delete(
+  '/:voting_id',
   deleteVoting,
   controller.json({ result: 'ok', }, 204)
 );
-router.put('/:voting_id',
+
+router.put(
+  '/:voting_id',
   verifyAuthorization,
   checkVotingUser,
   verifyVoting,
   saveUserPoll,
-  controller.json({ result: 'good', })
+  controller.json({ result: 'ok', }, 201)
 );
 
 module.exports = router;

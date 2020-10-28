@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 const VALIDATION = 'VALIDATION';
 
 const VALIDATION_ERROR_MESSAGE = 'Validation error';

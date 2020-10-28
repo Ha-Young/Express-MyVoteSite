@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const { ObjectId, } = mongoose.SchemaTypes;
+
 const UserSchema = new mongoose.Schema({
   nickname: {
     type: String,

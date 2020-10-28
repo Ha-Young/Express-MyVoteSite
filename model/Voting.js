@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-// const PollSchema = require('./Poll');
-
 const { ObjectId, } = mongoose.SchemaTypes;
 
 const PollSchema = new mongoose.Schema({
