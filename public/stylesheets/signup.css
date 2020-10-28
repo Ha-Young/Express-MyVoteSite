@@ -1,7 +1,8 @@
 body {
   display: grid;
-  grid-template-rows: 5em 27em 1fr;
+  grid-template-rows: 5em 30em 1fr;
   margin-bottom: 70px;
+  font-family: 'Lucida Grande', Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -107,7 +108,7 @@ a {
 .signup-head {
   border-bottom: 1px solid black;
   display: grid;
-  grid-template-columns: 10em 50em;
+  grid-template-columns: 18em 50em;
 }
 
 .signup-head-title {
@@ -124,7 +125,7 @@ a {
 
 .signup-body {
   display: grid;
-  grid-template-columns: 8em 15em ;
+  grid-template-columns: 9em 15em ;
   grid-gap: 1em;
   font-size: x-large;
   margin-left: 2em;
