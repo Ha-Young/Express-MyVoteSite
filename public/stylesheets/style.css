@@ -10,7 +10,7 @@ body {
   margin: 0;
   width: 100%;
   height: 100%;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -23,7 +23,7 @@ header {
   align-items: center;
   width: 100%;
   height: 15%;
-  background-color: aliceblue;
+  background-color: rgba(188, 143, 143, 0.1);
 }
 
 main {
@@ -81,6 +81,56 @@ main {
   margin: 1%;
 }
 
+.voting__detail__wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80%;
+}
+
+.voting__detail__main {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+}
+
+.voting__detail__main__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.voting__detail__main__right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+
+.voting__detail__main__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.voting__detail__main__checkbox {
+  display: flex;
+  width: 80%;
+  align-items: center;
+}
+.voting__detail__main__checkbox label {
+  display: inline-block;
+  position: relative;
+  bottom: 1px;
+  width: 80%;
+  text-align: center;
+}
 
 .voting__new__wrap {
   display: flex;

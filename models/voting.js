@@ -7,7 +7,7 @@ const votingSchemaOptions = {
 
 const VotingListSchema = new Schema({
   listTitle: { type: String, required: true, trim: true },
-  votedNumber: { type: Number, default: 0 },
+  voter: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
 const VotingSchema = new Schema(
@@ -17,8 +17,7 @@ const VotingSchema = new Schema(
     votingLists: { type: [VotingListSchema], required: true },
     expired_date: { type: String, required: true },
     expired_time: { type: String, required: true },
-    participants: [{ type: Schema.Types.ObjectId }],
-    isProgressed: { type: Boolean, default: true },
+    participants: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   },
   votingSchemaOptions
 );

@@ -1,0 +1,33 @@
+extends layouts/layout
+
+block content
+  .voting__detail__wrap
+    .voting__detail__main
+      .voting__detail__main__left
+        h1= title
+        div
+          span 투표기한&nbsp;
+          span= expiredDate
+            | &nbsp;
+          span= expiredTime
+        div
+          span 생성자&nbsp;
+          span= creator
+        if (isVotingEnd)
+          h2 투표 종료
+        else
+          h2 투표 진행중
+      .voting__detail__main__right
+        h1 투표 목록
+        form(action=`/votings/${votingId}` method="post").voting__detail__main__list
+          each votingList in votingLists
+            .voting__detail__main__checkbox
+              input(type="radio" id=`${votingList._id}` name='id' value=`${votingList._id}`)
+              label(for=`${votingList._id}`)= votingList.listTitle
+          button.voting__detail__btn__select 투표하기
+    .voting__detail__btn__wrap
+      a(href="/")
+        button.voting__detail__btn__gohome 목록으로 돌아가기
+      if (isUserCreator)
+        form(action=`votings/${votingId}` method="delete").voting__detail__main__list
+          button.voting__detail__btn__delet 삭제하기

@@ -1,15 +1,16 @@
 const express = require('express');
-const votingRouter = express.Router();
+const votingsRouter = express.Router();
 const votingsController = require('../controllers/votingsController');
 const routes = require('../constants/routes');
 
-votingRouter.get(routes.votingDetail, votingsController.votingDetail);
 
+votingsRouter.get(routes.new, votingsController.newVoting);
+votingsRouter.post(routes.new, votingsController.createNewVoting);
 
-votingRouter.get(routes.new, votingsController.newVoting);
-votingRouter.post(routes.new, votingsController.createNewVoting);
+votingsRouter.get(routes.success, votingsController.getSuccess);
+votingsRouter.get(routes.failure, votingsController.getFailure);
 
-votingRouter.get(routes.success, votingsController.getSuccess);
-votingRouter.get(routes.failure, votingsController.getFailure);
+votingsRouter.get(routes.votingDetail, votingsController.getVotingDetail);
+votingsRouter.post(routes.votingDetail, votingsController.updateVotingDetail);
 
-module.exports = votingRouter;
+module.exports = votingsRouter;

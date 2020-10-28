@@ -4,20 +4,21 @@ block content
   .home__title
     h1 우리집에서 투표하고 갈래?
   .home__votingListsWrap
-    if initialVotingDates
-      each votingData in initialVotingDates
+    if (initialVotingDatas.length)
+      each votingData in initialVotingDatas
         a(href=`/votings/${votingData._id}`).home__votingListBox
           h1= votingData.title
           div
-            span 생성자&nbsp;
-            span= votingData.creator
-          div
             span 투표기한&nbsp;
             span= votingData.expired_date
+              | &nbsp;
             span= votingData.expired_time
-          if (votingData.isProgressed)
-            h2 투표 진행중
-          else
+          div
+            span 생성자&nbsp;
+            span= votingData.creator
+          if (votingData.isVotingEnd)
             h2 투표 종료
+          else
+            h2 투표 진행중
     else
       h1 진행중인 투표가 없습니다.

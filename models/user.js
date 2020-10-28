@@ -10,7 +10,7 @@ const UserSchema = new Schema(
     email: { type: String, unique: true, required: true, trim: true },
     password: { type: String, unique: true, required: true, trim: true },
     username: { type: String, unique: true, required: true, trim: true },
-    voting: [Schema.Types.ObjectId],
+    votings: [{type: Schema.Types.ObjectId, ref: 'Voting'}],
   },
   schemaOptions
 );
