@@ -36,9 +36,10 @@ router.get('/:voting_id/delete',
 );
 router.get('/:voting_id/polls/:poll_id',
   verifyAuthorization,
+  checkVotingUser,
   verifyVoting,
   saveUserPoll,
-  controller.redirectBefore()
+  controller.redirect('./../')
 );
 
 module.exports = router;

@@ -1,12 +1,7 @@
-const Voting = require('../model/Voting');
-
 const verifyVoting = async (req, res, next) => {
-  const userId = req.session.user._id;
-  const isExist = await Voting.findOne({ 'polls.voted_users': userId, });
+  const isVotingUser = res.locals.isVotingUser;
 
-  console.log('isExist', isExist);
-
-  if (isExist) {
+  if (isVotingUser) {
     res.redirect(`/votings/${req.params.voting_id}`);
   } else {
     next();

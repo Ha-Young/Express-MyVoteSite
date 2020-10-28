@@ -1,0 +1,42 @@
+.content .grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(100px, 1fr));
+  grid-template-rows: repeat(3, auto);
+  grid-auto-flow: row;
+  gap: 10px;
+}
+
+.content .grid a {
+  background: #b8e994;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+.content .grid a ul {
+  padding: 10px;
+  text-align: center;
+}
+
+.content .grid a ul .title,
+.content .grid a ul .open,
+.content .grid a ul .close {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.content .grid a ul .open {
+  color: #1e3799;
+}
+
+.content .grid a ul .close {
+  color: #75423a;
+}
+
+.content .grid a ul .nickname,
+.content .grid a ul .expiry-date {
+  font-size: 14px;
+}
+
+.content .grid a:hover {
+  transform: scale(1.03);
+}

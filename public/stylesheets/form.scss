@@ -1,0 +1,49 @@
+@import './constants';
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  * {
+    margin: 10px;
+  }
+
+  input {
+    width: 200px;
+    height: 30px;
+    border: 1px solid $black;
+    border-radius: 10px;
+    transition: all 0.3s;
+
+    &::placeholder {
+      text-align: center;
+    }
+
+    &:hover {
+      background: $black;
+      color: $white;
+    }
+  }
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    background: $white;
+    border: 1px solid $black;
+    border-radius: 5px;
+    padding: 5px 10px;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $white;
+      background: $black;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,85 @@
+h2 {
+  text-align: center;
+  color: #1e3799;
+}
+
+p {
+  text-align: center;
+  color: #1e3799;
+}
+
+.card-conteiner {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  height: 400px;
+  background: #c9c76c;
+  text-align: center;
+  color: white;
+}
+
+.card-conteiner .title {
+  font-size: 24px;
+}
+
+.card-conteiner .title,
+.card-conteiner .nickname {
+  font-weight: bold;
+}
+
+.card-conteiner .open,
+.card-conteiner .close {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.card-conteiner .open {
+  color: #1e3799;
+}
+
+.card-conteiner .close {
+  color: #75423a;
+}
+
+.card-conteiner ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.card-conteiner ul > li {
+  margin: 5px;
+}
+
+.card-conteiner .delete-button {
+  background: white;
+  border: 1px solid #3d3b3b;
+  border-radius: 5px;
+  padding: 5px 10px;
+  transition: all 0.3s;
+}
+
+.card-conteiner .delete-button:hover {
+  color: white;
+  background: #3d3b3b;
+  cursor: pointer;
+}
+
+.card-conteiner .poll > li {
+  background: white;
+  width: 100px;
+  margin: 3px;
+  border: 1px solid #3d3b3b;
+  border-radius: 5px;
+  color: #3d3b3b;
+}
+
+.card-conteiner .poll > li:hover {
+  background-color: #cccccc;
+}
+
+.card-conteiner .poll li a ul {
+  color: #3d3b3b;
+}

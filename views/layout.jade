@@ -2,6 +2,9 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/init.css')
+    block style
   body
-    block content
+    include ./header
+    .content
+      block content

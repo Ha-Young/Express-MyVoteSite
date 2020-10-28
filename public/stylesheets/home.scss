@@ -1,0 +1,46 @@
+@import './constants';
+
+.content {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(100px, 1fr));
+    grid-template-rows: repeat(3, auto);
+    grid-auto-flow: row;
+    gap: 10px;
+
+    a {
+      background: $main-box-green;
+      border-radius: 5px;
+      transition: all 0.3s;
+
+      ul {
+        padding: 10px;
+        text-align: center;
+
+        .title,
+        .open,
+        .close {
+          font-size: 16px;
+          font-weight: bold;
+        }
+
+        .open {
+          color: $home-main-text-blue;
+        }
+
+        .close {
+          color: $home-main-text-red
+        }
+
+        .nickname,
+        .expiry-date {
+          font-size: 14px;
+        }
+      }
+
+      &:hover {
+        transform: scale(1.03);
+      }
+    }
+  }
+}

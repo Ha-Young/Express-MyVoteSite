@@ -1,0 +1,13 @@
+link(rel='stylesheet', href='/stylesheets/header.css')
+div.header
+  a(href='/')
+    .logo
+  .container
+    if !user
+      a(href='/login') login
+    else
+      a(href='/logout') logout
+    if !user
+      a(href='/signup') signup
+    a(href='/my-votings') my votings
+    a(href='/votings/new') new voting

@@ -1,7 +1,7 @@
 if typeof message === 'string'
-  ul
+  ul(class='validation-message')
     li= message
 if Array.isArray(message)
-  ul
+  ul(class='validation-message')
     each val in message
       li= val

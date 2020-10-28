@@ -1,15 +1,16 @@
 extends ../layout
+block style
+  link(rel='stylesheet', href='/stylesheets/form.css')
 
 block content
-  h1 this is new voting page
+  h1(class='main-message') this is new voting page
   include ../validationMEssage
   form(method='post')
     input(type='text' name='title' placeholder='title')
-    br
     ul(class='js-polls')
     input(type='date' name='expiration_date' value='#{defaultDate}')
-    button(type='submit') submit
-  button(class='js-addBtn') add poll
-  br
-  a(href='/') home
+    .container
+      button submit
+  .container
+    button(class='js-addBtn') add poll
   script(src='/javascripts/votingNew.js' defer)

@@ -13,6 +13,7 @@ module.exports = (app) => {
   middleware.push(cookieParser());
   middleware.push(express.json());
   middleware.push(express.urlencoded({ extended: false, }));
+  middleware.push(express.static(path.join(__dirname, '../dist')));
   middleware.push(express.static(path.join(__dirname, '../public')));
   middleware.push(session({
     secret: process.env.SESSION_SECRET_KET,

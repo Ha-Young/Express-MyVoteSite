@@ -1,12 +1,11 @@
 extends ../layout
+block style
+  link(rel='stylesheet', href='/stylesheets/form.css')
 
 block content
-  h1 this is login page
+  h1(class='main-message') this is login page
   include ../validationMEssage
   form(method='post')
     input(type='email' name='email' placeholder='email')
     input(type='password' name='password' placeholder='password')
     button(type='submit') submit
-  a(href='/') home
-  br
-  a(href='/signup') signup

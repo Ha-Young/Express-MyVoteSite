@@ -1,18 +1,16 @@
 extends layout
+block style
+  link(rel='stylesheet', href='/stylesheets/home.css')
 
 block content
-  h1 Hello #{user.nickname}!
-  h2 This is your votings
-  each voting in votings
-    a(href='votings/#{voting._id}')
-      div(class='voting-card')
-        ul
-          li= voting.title
-          li= user.nickname
-          li= voting.expiration_date
-          li #{voting.openState ? 'open' : 'closed'}
-  a(href='/logout') logout
-  br
-  a(href='/votings/new') new voting
-  br
-  a(href='/') to home
+  h1(class='main-message') Hello #{user.nickname}! Your Page!
+  .grid
+    each voting in votings
+      a(href='votings/#{voting._id}').voting-card
+        div(class='voting-card')
+          ul
+            li.title= voting.title
+            li.nickname= user.nickname
+            li.expiry-date= voting.expiration_date
+            - let isOpen = voting.openState ? 'open' : 'close';
+            li(class='openState #{isOpen}') #{isOpen}

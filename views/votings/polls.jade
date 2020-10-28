@@ -1,5 +1,5 @@
 each poll in voting.polls
-  div(class='poll')
+  li
     - let href;
     - if (voting.openState) {
     -   href = `/votings/${voting._id}/polls/${poll._id}`;

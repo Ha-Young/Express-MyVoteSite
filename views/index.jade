@@ -1,25 +1,18 @@
 extends layout
+block style
+  link(rel='stylesheet', href='/stylesheets/home.css')
 
 block content
   if user
-    h1 Hello #{user.nickname}!
+    h1(class='main-message') Hello #{user.nickname}!
   else
-    h1 Hello Stranger!
-  p Welcome to Voting show
-  each voting in votings
-    a(href='votings/#{voting._id}')
-      div(class='voting-card')
+    h1(class='main-message') Hello Stranger!
+  .grid
+    each voting in votings
+      a(href='votings/#{voting._id}').voting-card
         ul
-          li= voting.title
-          li= voting.creator.nickname
-          li= voting.expiration_date
-          li #{voting.openState ? 'open' : 'closed'}
-  a(href='/login') login
-  br
-  a(href='/logout') logout
-  br
-  a(href='/signup') signup
-  br
-  a(href='/my-votings') my votings
-  br
-  a(href='/votings/new') new voting
+          li.title= voting.title
+          li.nickname= voting.creator.nickname
+          li.expiry-date= voting.expiration_date
+          - let isOpen = voting.openState ? 'open' : 'close';
+          li(class='openState #{isOpen}') #{isOpen}

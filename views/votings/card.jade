@@ -1,17 +1,21 @@
 extends ../layout
+block style
+  link(rel='stylesheet', href='/stylesheets/voting-card.css')
 
 block content
-  h1 card page
-  h2 Hello #{user.nickname}
+  h1(class='main-message') card page
   if isVotingUser
-    h2 Already Voted
-  div
-    h2= voting.title
-    h3= voting.expiration_date
-    h4= voting.creator.nickname
-    h4 #{voting.openState ? 'open' : 'closed'}
-    include ./polls
-  if isCreator
-    a(href='/votings/#{voting._id}/delete') delete
-  br
-  a(href='/') home
+    p Already Voted
+  else
+    p You can vote now
+  div(class='card-conteiner')
+    ul
+      li.title= voting.title
+      li.expiry-date Until: #{voting.expiration_date}
+      li.nickname Creator: #{voting.creator.nickname}
+      - let isOpen = voting.openState ? 'open' : 'close';
+      li(class='openState #{isOpen}') #{isOpen}
+      ul(class='poll')
+        include ./polls
+    if isCreator
+      a(href='/votings/#{voting._id}/delete' class='delete-button') delete
