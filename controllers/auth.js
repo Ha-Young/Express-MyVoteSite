@@ -48,6 +48,7 @@ exports.getGoogleLogin = passport.authenticate('google', {
 
 exports.getGoogleCallback = passport.authenticate('google', {
   failureRedirect: '/login',
+  successRedirect: '/',
 });
 
 exports.postGoogleLogin = (req, res, next) => {

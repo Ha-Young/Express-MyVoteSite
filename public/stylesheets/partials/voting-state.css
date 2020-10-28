@@ -1,1 +1,1 @@
-.voting-state{margin:5px;font-weight:700}.voting-state .ongoing{color:#0f9d58}.voting-state .expired{color:#c20000}.voting-state i{margin-right:10px;font-size:1.8rem}
+.voting-state{margin:5px;font-weight:700}.voting-state.ongoing{color:#0f9d58}.voting-state.expired{color:#c20000}.voting-state i{margin-right:10px;font-size:1.8rem}

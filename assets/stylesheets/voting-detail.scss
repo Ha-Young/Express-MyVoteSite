@@ -2,7 +2,7 @@
 
 .voting-container {
   position: relative;
-  width: 600px;
+  width: 700px;
   padding: 20px;
   background-color: $white;
   box-shadow: $my-shadow;
@@ -13,6 +13,10 @@
     .content {
       margin: 10px 0 0 40px;
     }
+  }
+
+  .state {
+    margin-left: 20px;
   }
 
   .topic,

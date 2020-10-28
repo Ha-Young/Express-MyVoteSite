@@ -1,9 +1,12 @@
 extends layouts/main
+include mixins/votingBlock
 
 block styles
-  link(rel='stylesheet', href='/stylesheets/partials/authorBlock.css')
+  link(rel='stylesheet', href='/stylesheets/partials/author.css')
+  link(rel='stylesheet', href='/stylesheets/partials/voting-state.css')
+  link(rel='stylesheet', href='/stylesheets/partials/voting-block.css')
 
 
 block content
-  if user
-    h2 #{user.displayName} 님 반갑습니당
+  each voting in votings
+    +votingBlock(voting)

@@ -1,8 +1,12 @@
+include author
+include votingState
 mixin votingBlock(voting = {})
-    .votingBlock
-        a(href=`routes.VOTINGS_HOME/${voting._id}`)
-            h2= voting.topic
-            p= options
-            .author
-                p= author.displayName
+  a.voting-block(class=voting.isOngoing ? 'ongoing' : 'expired' href=routes.VOTINGS_HOME+"/"+voting._id)
+    .state
+      +votingState(voting.isOngoing)
+      if voting.isOngoing
+        span.time-remaining #{voting.timeRemaining} left
+    h2= voting.topic
+    .voting-detail.author
+      +author(voting.author, false)
 

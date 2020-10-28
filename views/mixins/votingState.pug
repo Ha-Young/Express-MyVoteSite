@@ -1,10 +1,8 @@
 mixin votingState(isOngoing)
-  .voting-state
+  .voting-state(class=isOngoing ? 'ongoing' : 'expired')
     if isOngoing
-      .ongoing
-        i.fas.fa-lock-open
-        span Ongoing
+      i.fas.fa-lock-open
+      span Ongoing
     else
-      .expired
-        i.expired.fas.fa-lock
-        span Expired
+      i.fas.fa-lock
+      span Expired

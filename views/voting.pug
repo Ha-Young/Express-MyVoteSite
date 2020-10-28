@@ -8,12 +8,7 @@ block styles
   link(rel='stylesheet', href='/stylesheets/partials/author.css')
 
 block content
-  span= voting.isOngoing
-  span= voting.timeRemaining
-  span= hasAdminPermission
-  span= hasParticipated
   .voting-container
-    - console.log(voting);
     .state
       +votingState(voting.isOngoing)
     .voting-detail.author
@@ -43,3 +38,5 @@ block content
               else
                 input(type="radio", id="option", name="topic")
         input(type="submit", value="Submit Voting")
+  span 어드민퍼미션 #{hasAdminPermission ? "있음" : "없음"}  
+  span 이미참여? #{hasParticipated? "했음" : "안했음" }

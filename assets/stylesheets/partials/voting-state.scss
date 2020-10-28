@@ -4,11 +4,11 @@
   margin: 5px;
   font-weight: 700;
 
-  .ongoing {
+  &.ongoing {
     color: $green;
   }
 
-  .expired {
+  &.expired {
     color: $red;
   }
 

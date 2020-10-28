@@ -40,8 +40,8 @@ exports.getVoting = async (req, res, next) => {
   const { user, voting } = req;
 
   try {
-    const hasAdminPermission = voting.isMine(user._id);
-    const hasParticipated = voting.isParticipated(user._id);
+    const hasAdminPermission = user && voting.isMine(user._id);
+    const hasParticipated = user && voting.isParticipated(user._id);
     await voting.execPopulate('author');
 
     res.render(VIEWS.VOTING, {

@@ -1,5 +1,5 @@
-mixin author(author = {})
-  .displayName Created By <b>#{author.displayName}</b>
+mixin author(author = {}, desc = true)
+  .displayName #{desc ? "Created By" : ""} <b>#{author.displayName}</b>
   .avatar
     if author.photoUrl
       img(src=author.photoUrl)
