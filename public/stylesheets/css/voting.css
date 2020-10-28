@@ -5,17 +5,29 @@
 }
 
 .candidates-wrapper {
-  background-color: black;
   background-color: 500px;
-  padding: 1em;
+  width: 500px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
 .candidates-wrapper .candidate {
-  background-color: darkorange;
-  padding: 3em;
-  width: 500px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-shadow: 0px 0px 4px black;
+          box-shadow: 0px 0px 4px black;
+  border-radius: 1em;
+  padding: 2em;
+  margin: 1em;
   text-align: center;
+}
+
+.candidates-wrapper .candidate:hover {
+  color: darkmagenta;
+}
+
+.candidates-wrapper .candidate.selected {
+  background-color: darkorchid;
 }

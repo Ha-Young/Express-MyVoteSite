@@ -1,1 +1,20 @@
+.voting {
+  background-color: darkturquoise;
+  color: white;
 
+  padding: 1em;
+  margin-bottom : 1em;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  &.expired {
+    background-color: black;
+    color: grey;
+    text-decoration: line-through;
+    cursor: auto;
+    // pointer-events: none;
+  }
+}
