@@ -1,17 +1,26 @@
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 const mongoose = require('mongoose');
+const ALPHABET = require('../constants');
 
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
     required: true,
+    trim: true,
     validate: [validator.isEmail, 'Please provide a valid email'],
   },
   password: {
     type: String,
     required: true,
+    min: 5,
+    validate: {
+      validator: function () {
+        const regex = new RegExp(/^[a-zA-Z0-9]{5,8}$/);
+        return regex.test(this);
+      },
+    },
   },
   passwordConfirm: String,
   createdVoting: Array,

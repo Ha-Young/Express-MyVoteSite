@@ -42,14 +42,15 @@ exports.renderVoting = async (req, res, next) => {
 
 exports.receiveVotingResult = async (req, res, next) => {
   try {
-    const parentId = req.params.id;
     console.log('receiveVotingResult');
-    return res.status(302).redirect(`/votings/${parentId}`);
+
+    console.log(req.body, 'bd');
+
+    // return res.redirect('/');
+    return res.json('sucess');
   } catch (err) {
     next(err);
   }
-
-  res.json('result');
 };
 
 exports.renderMyVoting = (req, res, next) => {
