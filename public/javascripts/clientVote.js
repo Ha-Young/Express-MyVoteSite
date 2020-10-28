@@ -37,10 +37,11 @@ async function updateVotingData(event) {
   alert(fetchedData.message);
 
   if (fetchedData.result === 'redirect') {
-    location.assign('/login'); // 왜 안 들어오지?
+    location.assign('/login');
 
     return;
   }
+
   location.assign(`/votings/${votingId}`);
 }
 

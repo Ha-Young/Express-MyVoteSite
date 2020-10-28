@@ -11,7 +11,7 @@ async function gateKeeper(req, res, next) {
       return;
     } else if (req.method === 'PUT') {
       res.json({
-        result: 'redirct',
+        result: 'redirect',
         message: '로그인 하세요',
       });
 
