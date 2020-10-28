@@ -24,10 +24,11 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  voteCollection: {
+  voteCollection: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Votes',
-  }
+    unique: true,
+  }],
 });
 
 module.exports = new mongoose.model('User', userSchema);

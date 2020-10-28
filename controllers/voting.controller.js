@@ -92,6 +92,7 @@ exports.updateOne = async (req, res, next) => {
       return optionId === targetId;
     });
 
+    // how to update sub document in mongoose --> stack overflow
     if (!targetOption.voter.includes(userId)) {
       targetOption.voter.push(userId);
     }

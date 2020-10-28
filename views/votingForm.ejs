@@ -4,9 +4,11 @@
 
 <body>
   <%- include('partials/header') %>
-  <div class="form-wrap">
-  <form action="/votings/new" method="post">
-    <div class="new-vote-container">
+  <div class="main-container">
+  <form class="new-form" action="/votings/new" method="post">
+    <h1 class="auth-title">New vote</h1>
+    <div class="auth-wrap">
+      <div class="form-wrap">
       <input
         type="text"
         name="title"
@@ -16,9 +18,8 @@
         placeholder="투표 제목"
         required
       >
-      <div class="options-container">
-        <button type="button" id="option-add-btn">add</button>
       </div>
+      <button id="option-add-btn">+</button>
       <div id="options-list"></div>
       <input
         type="datetime-local"
