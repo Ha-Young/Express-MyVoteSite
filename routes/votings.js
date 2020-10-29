@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { authenticate } = require('./middlewares/authenticate');
+const { validateVotingInputs } = require('./middlewares/validation');
 const votingController = require('./controllers/voting.controller');
 
 router.get('/new',
@@ -9,7 +10,7 @@ router.get('/new',
 );
 
 router.post('/new',
-  votingController.validateInputs,
+  validateVotingInputs,
   votingController.createNewVoting,
   (req, res, next) => {
     res.redirect('/');

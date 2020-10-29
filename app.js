@@ -1,10 +1,10 @@
 require('dotenv').config();
-require('./db');
+require('./config/db');
 
 const express = require('express');
 const path = require('path');
 const passport = require('passport');
-const passportConfig = require('./passport');
+const passportConfig = require('./config/passport');
 const session = require('express-session');
 const flash = require('connect-flash');
 const createError = require('http-errors');
@@ -12,7 +12,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-// 음.. 고민..
 const { localMiddleware } = require('./routes/middlewares/local');
 
 const app = express(passport);

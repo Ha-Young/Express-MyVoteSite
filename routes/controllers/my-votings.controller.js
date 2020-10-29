@@ -1,16 +1,9 @@
-const User = require('../../models/User');
-const { calculateDate, checkInProgress } = require('../utils');
+const myVotingsService = require('../../services/my-votings.service');
 
 exports.getAllMyVotings = async (req, res, next) => {
   try {
-    const currentUserId = req.user._id;
-    const myVotingsData = await User.findById(currentUserId).populate('myVotings').lean();
-
-    myVotingsData.myVotings.map(data => {
-      data.due_date = calculateDate(data.due_date);
-      data.isInProgress = checkInProgress(data.due_date);
-    });
-
+    const userId = req.user._id;
+    const myVotingsData = await myVotingsService.getAllMyVotings(userId);
     req.myVotingsData = myVotingsData.myVotings;
     next();
   } catch (error) {

@@ -5,7 +5,7 @@ block content
     h2(class='page-title')= targetDetails.title
     div(class='result-top-section')
       span= targetDetails.writer.nickname
-      span= ' / ' + targetDetails.due_date
+      span= ' / ' + targetDetails.dueDate
     ul
       each option in targetDetails.options
         li= option.optionTitle

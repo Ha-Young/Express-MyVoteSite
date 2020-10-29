@@ -1,3 +1,5 @@
+exports.SALT_ROUNDS = 10;
+
 exports.entryErrorMessage = {
   PASSWORD_NOT_MATCHED: 'password does not matched.',
   EMAIL_NOT_AVAILABLE: 'email is not available.',
@@ -11,4 +13,13 @@ exports.registerErrorMessage = {
   PREVIOUS_TIME_NOT_ALLOWED: 'previous time cannot be set.',
 };
 
-exports.SALT_ROUNDS = 10;
+exports.dbErrorMessage = {
+  DB_ERROR_CREATING_USER: 'Error while creating user',
+  DB_ERROR_CREATING_VOTING: 'Error while creating voting',
+  DB_ERROR_READING_VOTING: 'Error while reading voting',
+  DB_ERROR_READING_VOTERS: 'Error while reading voters',
+  DB_ERROR_UPDATING_COUNT: 'Error while updating count',
+  DB_ERROR_UPDATING_VOTERS: 'Error while updating voters',
+  DB_ERROR_DELETING_USER_VOTINGS: 'Error while deleting user votings',
+  DB_ERROR_DELETING_VOTING: 'Error while deleting voting',
+};

@@ -1,4 +1,5 @@
 const User = require('../../models/User');
+const { checkPassedDate } = require('../../utils');
 const {
   entryErrorMessage : {
     PASSWORD_NOT_MATCHED,
@@ -6,9 +7,13 @@ const {
     EMAIL_NOT_AVAILABLE,
     INVALID_EMAIL,
   },
+  registerErrorMessage: {
+    OPTIONS_NOT_ENOUGH,
+    PREVIOUS_TIME_NOT_ALLOWED,
+  },
 } = require('../../constants');
 
-exports.checkSignupValidation = async (req, res, next) => {
+exports.validateSignupInputs = async (req, res, next) => {
   const { email, password, confirm_password: confirmPassword } = req.body;
   const signupUrl = req.originalUrl;
 
@@ -38,4 +43,20 @@ exports.checkSignupValidation = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+exports.validateVotingInputs = (req, res, next) => {
+  const { optionTitle, dueDate } = req.body;
+
+  if (!optionTitle || typeof optionTitle === 'string' || optionTitle.length < 2) {
+    req.flash('message', OPTIONS_NOT_ENOUGH);
+    return res.redirect('/votings/new');
+  }
+
+  if (checkPassedDate(dueDate)) {
+    req.flash('message', PREVIOUS_TIME_NOT_ALLOWED);
+    return res.redirect('/votings/new');
+  }
+
+  next();
 };

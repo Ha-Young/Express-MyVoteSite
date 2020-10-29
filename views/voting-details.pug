@@ -3,13 +3,19 @@ extends layout
 block content
   div.vote-details-container
     div.vote-details
-      h1(class='page-title')= targetDetails.title
-      div.details-top-section
+      h1.page-title= targetDetails.title
+      .details-top-section
         span= targetDetails.writer.nickname
-        span= ' / ~' + targetDetails.due_date
+        span= ' / ~' + targetDetails.dueDate
       each option in targetDetails.options
-        div(class='radio-option')
-          input(type='radio' name='voting-option' class='voting-option' value= option._id data-votingId= targetDetails._id)
+        div.radio-option
+          input(
+            type='radio'
+            name='voting-option'
+            class='voting-option'
+            value= option._id
+            data-votingId= targetDetails._id
+          )
           label(for= option)= option.optionTitle
       button(type='button' class='voting-button') Vote
       div.writer-only(class= isIdsMatched ? 'visible' : 'hidden')
@@ -17,7 +23,6 @@ block content
         a(href=`/votings/result/${targetDetails._id}`)
           button(type='button') Vote result
     span= message
-    a.back-a(href='/')
-      button(type='button' class='back-to-list-button')
-        span 🔙
+    button(type='button' class='back-to-list-button')
+      span 🔙
   script(src='/javascripts/fetch.js')

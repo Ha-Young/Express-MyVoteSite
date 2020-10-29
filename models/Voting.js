@@ -12,7 +12,7 @@ const VotingSchema = new Schema({
     ref: 'User',
     required: true,
   },
-  due_date: {
+  dueDate: {
     type: Date,
     default: Date.now,
     requried: true,

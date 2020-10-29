@@ -1,13 +1,13 @@
 const Voting = require('../../models/Voting');
-const { calculateDate, checkInProgress } = require('../utils');
+const { calculateDate, checkInProgress } = require('../../utils');
 
 exports.getAllVotings = async (req, res, next) => {
   try {
     const allVotingsData = await Voting.find().populate('writer').lean();
 
     allVotingsData.forEach(data => {
-      data.due_date = calculateDate(data.due_date);
-      data.isInProgress = checkInProgress(data.due_date);
+      data.dueDate = calculateDate(data.dueDate);
+      data.isInProgress = checkInProgress(data.dueDate);
     });
 
     req.votingsData = allVotingsData;

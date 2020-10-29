@@ -5,15 +5,43 @@ block content
     h1(class='page-title') Register your vote!
     form(active='/votings/new' method='POST')
       label(for='title') Title
-      input(type='text' value= title name='title' id='title' placeholder='title' required)
+      input(
+        type='text'
+        value= title
+        name='title'
+        id='title'
+        placeholder='title'
+        required
+      )
       label(for='options') Options
       div.vote-options
-        input(type='text' name='optionTitle' placeholder='예. 짬뽕' required)
-        input(type='text' name='optionTitle' placeholder='예. 떡볶이' required)
-      input(type='text' name='options' id='options' placeholder='options' class='option')
+        input(
+          type='text'
+          name='optionTitle'
+          placeholder='예. 짬뽕'
+          required
+        )
+        input(
+          type='text'
+          name='optionTitle'
+          placeholder='예. 떡볶이'
+          required
+        )
+      input(
+        type='text'
+        name='options'
+        id='options'
+        placeholder='options'
+        class='option'
+      )
       button(type='button' class='add-button') Add
       label(for='due-date') Due date
-      input(type='datetime-local' name='dueDate' id='due-date' required)
+      input(
+        type='datetime-local'
+        name='dueDate'
+        id='due-date'
+        required
+      )
       span(class='register-error-message')= message
       div.buttons-container
         a(href='/')

@@ -1,27 +1,7 @@
 const Voting = require('../../models/Voting');
 const User = require('../../models/User');
-const { registerErrorMessage } = require('../../constants');
-const {
-  OPTIONS_NOT_ENOUGH,
-  PREVIOUS_TIME_NOT_ALLOWED,
-} = registerErrorMessage;
-const { calculateDate, checkPassedDate } = require('../utils');
-
-exports.validateInputs = (req, res, next) => {
-  const { optionTitle, dueDate } = req.body;
-
-  if (!optionTitle || typeof optionTitle === 'string' || optionTitle.length < 2) {
-    req.flash('message', OPTIONS_NOT_ENOUGH);
-    return res.redirect('/votings/new');
-  }
-
-  if (checkPassedDate(dueDate)) {
-    req.flash('message', PREVIOUS_TIME_NOT_ALLOWED);
-    return res.redirect('/votings/new');
-  }
-
-  next();
-};
+const { calculateDate, checkPassedDate } = require('../../utils');
+const VotingService = require('../../services/voting.service');
 
 exports.createNewVoting = async (req, res, next) => {
   const { title, optionTitle, dueDate } = req.body;
@@ -32,19 +12,17 @@ exports.createNewVoting = async (req, res, next) => {
     options.push({ optionTitle: option, votedCount: [] });
   });
 
-  try {
-    const newVoting = await Voting.create({
-      title,
-      writer: userId,
-      due_date: dueDate,
-      options,
-      voter: [],
-    });
+  const votingInfo = {
+    title,
+    writer: userId,
+    dueDate,
+    options,
+    voter: [],
+  };
 
-    await User.findByIdAndUpdate(
-      userId,
-      { $addToSet: { myVotings: newVoting.userId } }
-    );
+  try {
+    const newVoting = await VotingService.createNewVoting(votingInfo);
+    await VotingService.updateUserVotings(userId, newVoting);
     next();
   } catch (error) {
     next(error);
@@ -54,9 +32,7 @@ exports.createNewVoting = async (req, res, next) => {
 exports.getTargetVoting = async (req, res, next) => {
   try {
     const votingId = req.params.voting_id;
-    const targetVoting = await Voting.findById(votingId).populate('writer').lean();
-
-    targetVoting.due_date = calculateDate(targetVoting.due_date);
+    const targetVoting = await VotingService.getTargetVoting(votingId);
     req.targetVoting = targetVoting;
     next();
   } catch (error) {
@@ -69,23 +45,14 @@ exports.updateVoteCount = async (req, res, next) => {
   const userId = req.user._id;
 
   try {
-    const votedUsers = await Voting.findById(votingId, 'voter');
-    if (votedUsers.voter.includes(userId)) {
+    const hasAlreadyVoted = await VotingService.checkAlreadyVoted(votingId, userId);
+    if (hasAlreadyVoted) {
       req.flash('message', 'you have already voted.')
       return next();
     }
 
-    await Voting.findOneAndUpdate(
-      { 'options._id': optionId },
-      { $addToSet: { 'options.$[option].votedCount': req.user._id } },
-      { arrayFilters: [{ 'option._id': optionId }] },
-    );
-
-    await Voting.findByIdAndUpdate(
-      votingId,
-      { $addToSet: { voter: req.user._id } }
-    );
-
+    await VotingService.updateVotedCount(optionId, userId);
+    await VotingService.updateTotalVoters(votingId, userId);
     next();
   } catch (error) {
     next(error);
@@ -94,20 +61,18 @@ exports.updateVoteCount = async (req, res, next) => {
 
 exports.deleteVoting = async (req, res, next) => {
   try {
-    const { voting_id } = req.params;
-    await User.update(
-      { 'myVotings': voting_id },
-      { $pull: { 'myVotings': voting_id } },
-    );
-    await Voting.findOneAndDelete(voting_id);
+    const votingId = req.params.voting_id;
+    await VotingService.deleteUserVotings(votingId);
+    await VotingService.deleteVoting(votingId);
     next();
   } catch (error) {
     next(error);
   }
 };
 
+// 여기서부터 DB 로직 없음
 exports.checkValidVoting = async (req, res, next) => {
-  const dueDate = req.targetVoting.due_date;
+  const dueDate = req.targetVoting.dueDate;
 
   if (checkPassedDate(dueDate)) {
     return res.redirect(`/votings/result/${req.params.voting_id}`);
@@ -118,10 +83,10 @@ exports.checkValidVoting = async (req, res, next) => {
 exports.checkAuthorization = async (req, res, next) => {
   const currentUserId = req.user && req.user._id;
   const targetDetails = req.targetVoting;
-  const currentVoteWriterId = targetDetails.writer._id;
-  const dueDate = targetDetails.due_date;
+  const currentVotingWriterId = targetDetails.writer._id;
+  const dueDate = targetDetails.dueDate;
   const isIdsMatched = req.user
-    ? currentVoteWriterId.equals(currentUserId)
+    ? currentVotingWriterId.equals(currentUserId)
     : false;
 
   if (isIdsMatched) {

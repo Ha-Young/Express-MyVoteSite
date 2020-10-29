@@ -8,9 +8,9 @@ block content
         div(class= voting.isInProgress ? 'progress-container' : 'completed-container')
           h2(class='vote-title')= voting.title
           div= voting.writer.nickname
-          div.time-container
-            div= '~ ' + voting.due_date
+          .time-container
+            div= '~ ' + voting.dueDate
             if voting.isInProgress
-              div.in-progress-bullet in progress
+              .in-progress-bullet in progress
             else
-              div.completed-bullet completed
+              .completed-bullet completed
