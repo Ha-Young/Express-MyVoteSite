@@ -1,0 +1,17 @@
+header.header
+  nav.nav
+    a.nav_el(href='/') All agenda
+    span.line |
+    a.nav_el(href='/votings/new') make agenda
+    span.line |
+    if username
+      a.nav_el(href='#') Welcome, #{username}
+      span.line |
+      a.nav_el(href='/my-votings') My agenda
+      span.line |
+      a.nav_el(href='/logout') logout
+    else
+      a.nav_el(href='/login') login
+
+  //.header__logo
+  //img(src='/images/voting.jpeg' alt='Voting logo')

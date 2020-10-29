@@ -1,0 +1,15 @@
+h3.board Board
+  div.votingList
+    each voteItem in votingList
+      - const date = voteItem.date
+      - const time = voteItem.time
+      - const isValid = new Date(`${date} ${time}:00`) > new Date()
+      div.votingBox
+        div.title
+          a.title(href=`/votings/${voteItem._id}`) #{voteItem.title}
+        if isValid
+          div 진행중
+        else
+          div 마감
+        div.refer 작성자: #{voteItem.author}
+        div.refer 기한 #{voteItem.date} #{voteItem.time} 까지

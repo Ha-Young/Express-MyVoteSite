@@ -1,0 +1,21 @@
+extends index
+
+block content
+  h1 this is agenda page
+  if popUpMessage
+    div.modal #{popUpMessage}
+  form(action='/votings/new', method='POST')
+    label submit the form to create agenda
+    div.title
+      p3 Poll title:
+      input(type='text' name='title' required)
+    div.option
+      p3 Option:
+      input.optionInput(type='text')
+      button.optionAdd Add
+      ul.optionList optionList
+      script(async, defer, src='/javascripts/createAgenda.js')
+    div.time
+      input(type='date' name='date' required)
+      input(type='time' name='time' required)
+    button(type='submit') Submit

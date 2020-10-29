@@ -1,0 +1,75 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  text-align: center;
+  background-color: rgb(255, 246, 206);
+}
+
+a {
+  color: #181709;
+  font-weight: 100px;
+}
+
+.header {
+  position: relative;
+  margin-left: 150px;
+  display: flex;
+  font-size: 20px;
+}
+
+.nav_el {
+  margin: 5px 10px auto;
+}
+
+.board {
+  margin: 30px 0px 30px 0px;
+  font-size: 20px;
+}
+
+.votingList {
+  justify-content: center;
+  list-style: none;
+  width : 100%;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.votingBox {
+  background-color: rgb(192, 228, 210);
+  color: #1e3944;
+  margin: 15px 25px 15px 25px;
+  height: 300px;
+  width: 300px;
+  letter-spacing: 2px;
+  line-height: 50px;
+  font-size: 20px;
+  box-shadow: 5px 5px 5px rgb(82, 86, 90);
+}
+
+.title {
+  margin-top: 25px;
+  color: #1e3944;
+}
+
+.refer {
+  font-size: 13px;
+}
+
+.button {
+  width: 150px;
+  height: 30px;
+  background-color: rgb(192, 228, 210)
+}
+
+.button:hover {
+  background-color: rgb(74, 148, 132);
+}
+
+.modal {
+  font-size: 18px;
+  height: 30px;
+  width: 30%;
+  margin: 10px auto;
+  color: rgb(206, 41, 41);
+}

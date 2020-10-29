@@ -1,0 +1,33 @@
+extends index
+block content
+  h2 this is Voting Datail Page
+    if !isValid
+      h3 해당 투표는 마감되었습니다
+    h3=title
+    h5 written by #{author}
+    h5 Until #{dateAndTime}
+  if isValid
+    div
+      each option in options
+        div
+          - const targetOptionId = option._id
+          button.button(type='button' onclick='putRequestFunc("' + targetVotingId + ',' + targetOptionId + '")') #{option.description}
+        if matchCurrentUserAndAuthor
+          - const targetOptionDescription = option.description
+          - const targetOptionVotes = option.votes
+          h5 #{targetOptionDescription} (현 득표수: #{targetOptionVotes})
+  else
+    if finalResult.length === 1
+      h4 최다득표
+        div #{finalResult[0].description} 총 #{finalResult[0].votes} 표를 얻었습니다.
+    else
+      h4 동점이 있어요
+      ul
+        each result in finalResult
+          li
+            h4 #{result.description} 총 #{result.votes} 표를 얻었습니다.
+  if matchCurrentUserAndAuthor
+    button(type='button' onclick='deleteRequestFunc("' + targetVotingId + '")') delete
+
+    //위 상황에서 로그인하지 않았던 사용자가 로그인 페이지에서 로그인 할 경우, 다시 방문했던 투표 페이지로 돌아와야 합니다.
+  script(async, defer, src='/javascripts/updateVoting.js')
