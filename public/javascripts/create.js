@@ -17,7 +17,9 @@ function parseDate(dateObj) {
   const hour = '' + dateObj.getHours();
   const minute = '' + dateObj.getMinutes();
 
-  const twoDigits = num => (num.length < 2 ? '0' + num : num);
+  function twoDigits(num) {
+    return num.length < 2 ? '0' + num : num;
+  }
 
   return {
     date: [year, twoDigits(month), twoDigits(day)].join('-'),
@@ -31,7 +33,7 @@ function setExpirationTime() {
   dateInput.setAttribute('value', currentDate);
   dateInput.setAttribute('min', currentDate);
 
-  dateInput.addEventListener('input', ev => {
+  dateInput.addEventListener('input', function (ev) {
     const { value } = ev.target;
 
     if (value !== currentDate) {
@@ -59,7 +61,7 @@ function createNewOption() {
 
   newOption.append(newInput, newDeleteButton);
 
-  newDeleteButton.addEventListener('click', ev => {
+  newDeleteButton.addEventListener('click', function (ev) {
     const currentOption = ev.target.parentNode;
     options.removeChild(currentOption);
     if (--additionalOptionCount < MAX_ADDITIONAL_OPTION_COUNT) {
@@ -70,14 +72,14 @@ function createNewOption() {
   return newOption;
 }
 
-addOptionButton.addEventListener('click', () => {
+addOptionButton.addEventListener('click', function () {
   options.appendChild(createNewOption());
   if (++additionalOptionCount >= MAX_ADDITIONAL_OPTION_COUNT) {
     addOptionButton.classList.add('invisible');
   }
 });
 
-shortCutButton.addEventListener('click', ev => {
+shortCutButton.addEventListener('click', function (ev) {
   const now = new Date().getTime();
   const { date, time } = parseDate(new Date(now + SHORTCUT_TIME));
 

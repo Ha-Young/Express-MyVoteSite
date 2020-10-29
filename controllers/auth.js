@@ -4,12 +4,12 @@ const passport = require('passport');
 const User = require('../models/User');
 
 const { googleAuth } = require('../config');
-const GLOBAL = require('../constants/routes');
+const ROUTES = require('../constants/routes');
 const VIEWS = require('../constants/views');
 
 exports.getSignup = (req, res, next) => {
   const { user } = req;
-  if (user) return res.redirect(GLOBAL.HOME);
+  if (user) return res.redirect(ROUTES.HOME);
   res.render(VIEWS.SIGNUP, { title: 'Sign Up' });
 };
 
@@ -33,31 +33,46 @@ exports.postSignup = async (req, res, next) => {
 
 exports.getLogin = (req, res, next) => {
   const { user } = req;
-  if (user) return res.redirect('/');
-  res.render('login', { title: 'Login' });
+  if (user) return res.redirect(ROUTES.HOME);
+  res.render(VIEWS.LOGIN, { title: 'Login' });
 };
 
-exports.postLogin = passport.authenticate('local', {
-  failureRedirect: '/login',
-  successRedirect: '/',
-});
+exports.postLogin = (req, res, next) => {
+  const { referer } = req.session;
+
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err);
+
+    if (!user) return res.redirect(ROUTES.LOGIN);
+
+    req.logIn(user, err => {
+      if (err) return next(err);
+      res.redirect(referer || ROUTES.HOME);
+      delete req.session.referer;
+    });
+  })(req, res, next);
+};
 
 exports.getGoogleLogin = passport.authenticate('google', {
   scope: googleAuth.scope,
 });
 
 exports.getGoogleCallback = passport.authenticate('google', {
-  failureRedirect: '/login',
+  failureRedirect: ROUTES.LOGIN,
 });
 
-exports.redirectHome = (req, res, next) => res.redirect('/');
+exports.successGoogleLogin = (req, res, next) => {
+  const { referer } = req.session;
+  res.redirect(referer || ROUTES.HOME);
+  delete req.session.referer;
+};
 
 exports.getLogout = (req, res, next) => {
   if (req.session) {
     req.session.destroy(err => {
       if (err) return next(err);
       req.logout();
-      return res.redirect('/');
+      return res.redirect(ROUTES.HOME);
     });
   }
 };

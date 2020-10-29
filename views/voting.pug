@@ -20,31 +20,36 @@ block content
       i.fas.fa-vote-yea
       span Topic
       .content= voting.topic
-    .voting-detail.expiration
-      i.fas.fa-stopwatch
-      span Expiration Time
-      .content= voting.expiration
-    .voting-detail.createdAt
-      i.fas.fa-stopwatch
-      span Created At
-      .content= voting.createdAt
+    .voting-detail.times
+      .expiration
+        i.fas.fa-stopwatch
+        span Expiration Time
+        .content= voting.formattedExpiration
+      .createdAt
+        i.far.fa-clock
+        span Created At
+        .content= voting.formattedCreateAt
     .voting-detail.options
       i.fas.fa-list-ul
       span Options
       form(class="vote-form")
-        each option in voting.options
-          .content
+        each option in sortedOptions
+          .content(class=option.elected && "elected")
             .option= option.content
             .option-count
               if hasAdminPermission || !voting.isOngoing
                 i.fas.fa-user  #{option.count}
-              if !hasParticipated && voting.isOngoing
-                input(type="radio", id="option", name="option" value=option._id required)
-        if !hasParticipated && voting.isOngoing
+              if voting.isOngoing
+                input(type="radio",  name="option" value=option._id required)
+        if voting.isOngoing
           input(type="submit", value="Submit Voting")
+        if hasParticipated
+          .already
+            h2 ✅ 이미 참여 완료한 투표입니다
+            p 투표 오너가 아닌 경우, 결과는 투표만료 후 확인 가능합니다
 
 block scripts
   if !hasParticipated && voting.isOngoing
-    script(src="/javascripts/update.js")
+    script(src="/javascripts/update.js" type="module")
   if hasAdminPermission
-    script(src="/javascripts/delete.js")
+    script(src="/javascripts/delete.js" type="module")

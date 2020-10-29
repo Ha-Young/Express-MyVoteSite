@@ -19,7 +19,7 @@ router.get(GLOBAL.GOOGLE_LOGIN, authController.getGoogleLogin);
 router.get(
   GLOBAL.GOOGLE_LOGIN_CALLBACK,
   authController.getGoogleCallback,
-  authController.redirectHome
+  authController.successGoogleLogin
 );
 
 router.get(GLOBAL.MY_VOTINGS, requiresLogin, votingsController.getAllMyVotings);

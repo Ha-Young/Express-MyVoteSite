@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const { isFuture, formatDistanceToNow } = require('date-fns');
 
+const { formatDate } = require('../util/voting');
+
 const optionSchema = new mongoose.Schema({
   content: {
     type: String,
@@ -46,6 +48,14 @@ votingSchema.virtual('isOngoing').get(function () {
 
 votingSchema.virtual('timeRemaining').get(function () {
   return formatDistanceToNow(this.expiration);
+});
+
+votingSchema.virtual('formattedExpiration').get(function () {
+  return formatDate(this.expiration);
+});
+
+votingSchema.virtual('formattedCreateAt').get(function () {
+  return formatDate(this.createdAt);
 });
 
 votingSchema.method('isMine', function (userId) {

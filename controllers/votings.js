@@ -1,9 +1,11 @@
+const createError = require('http-errors');
+
 const User = require('../models/User');
 const Voting = require('../models/Voting');
 
 const VIEWS = require('../constants/views');
+const ROUTES = require('../constants/routes');
 const { convertToVotingObject } = require('../util/voting');
-const createError = require('http-errors');
 
 exports.getAll = async (req, res, next) => {
   try {
@@ -53,7 +55,7 @@ exports.postNewVoting = async (req, res, next) => {
     currentUser.myVotings.addToSet(newVoting._id);
     await currentUser.save();
 
-    res.redirect('/');
+    res.redirect(ROUTES.HOME);
   } catch (error) {
     next(error);
   }
@@ -82,16 +84,30 @@ exports.deleteVoting = async (req, res, next) => {
 exports.getVoting = async (req, res, next) => {
   const { user, voting } = req;
 
-  if (!user || !voting) return next(createError('no user or voting'));
+  if (!voting) return next(createError('no voting'));
 
   try {
     const hasAdminPermission = user && voting.isMine(user._id);
     const hasParticipated = user && voting.isParticipated(user._id);
     await voting.execPopulate('author');
 
+    let sortedOptions = voting.options;
+    if (!voting.isOngoing) {
+      const { options } = voting;
+      const maxCount = Math.max(...options.map(option => option.count));
+      sortedOptions = options
+        .sort((a, b) => b.count - a.count)
+        .map(option => ({
+          content: option.content,
+          count: option.count,
+          elected: option.count === maxCount,
+        }));
+    }
+
     res.render(VIEWS.VOTING, {
       title: 'Voting Detail',
       voting,
+      sortedOptions,
       hasAdminPermission,
       hasParticipated,
     });
@@ -107,15 +123,17 @@ exports.updateVoting = async (req, res, next) => {
     body: { selectedOptionId },
   } = req;
 
-  voting.voters.addToSet(user._id);
+  const added = voting.voters.addToSet(user._id);
+  await voting.save();
 
   const selectedOption = voting.options.find(
     option => option._id.toString() === selectedOptionId
   );
 
-  selectedOption.count += 1;
-
-  await voting.save();
+  if (added) {
+    selectedOption.count += 1;
+    await voting.save();
+  }
 
   return res.status(200).json({
     topic: voting.topic,
