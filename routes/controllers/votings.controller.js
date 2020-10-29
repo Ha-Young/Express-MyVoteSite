@@ -1,5 +1,6 @@
 const VoteService = require('../../services/VoteService');
-const { SERVICE_ERROR_CODE, SUCCESS } = require('../../services/ActionCreator');
+const { SERVICE_ERROR_CODE } = require('../../services/ActionCreator');
+const { SUCCESS, ERROR } = require('../../constants');
 
 const { formatISO } = require('date-fns');
 
@@ -19,14 +20,14 @@ exports.postNewVote = async function postNewVote(req, res, next) {
 
   try {
     if (!vote.itemList || (vote.itemList && vote.itemList.length <= 1)) {
-      req.flash('error', 'Failed creating item must be at least 2');
+      req.flash(ERROR, 'Failed creating item must be at least 2');
       return res.redirect('/');
     }
 
     const voteInstance = new VoteService(vote);
     await voteInstance.createNewVote(user);
 
-    req.flash('success', 'Succeed creating new vote!');
+    req.flash(SUCCESS, 'Succeed creating new vote!');
     req.app.locals.messages = req.flash('succeed');
     res.redirect('/');
   } catch (error) {
@@ -49,8 +50,7 @@ exports.getVote = async function getVote(req, res, next) {
 
     switch (type) {
       case SERVICE_ERROR_CODE._10:
-        req.flash('error', payload.message);
-        console.log('hello???');
+        req.flash(ERROR, payload.message);
         return res.redirect('/');
       case SUCCESS:
         if (session && session.user) {
@@ -80,9 +80,9 @@ exports.postVote = async function postVote(req, res, next) {
 
     switch (type) {
       case SERVICE_ERROR_CODE._11:
-        req.flash('error', payload.message);
+        req.flash(ERROR, payload.message);
       case SUCCESS:
-        req.flash('success', 'Succeed voting!');
+        req.flash(SUCCESS, 'Succeed voting!');
       default:
         return res.redirect(`/votings/${vote_id}`);
     }

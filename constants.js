@@ -13,3 +13,6 @@ exports.ROUTES = {
   SUCCESS: '/success',
   ERROR: '/error'
 };
+
+exports.SUCCESS = 'success';
+exports.ERROR = 'error';

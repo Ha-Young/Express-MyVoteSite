@@ -26,8 +26,6 @@ const SERVICE_ERROR = {
   }
 };
 
-exports.SUCCESS = 'success';
-exports.ERROR = 'error';
 exports.SERVICE_ERROR_CODE = {
   _00: 'error-00',
   _01: 'error-01',

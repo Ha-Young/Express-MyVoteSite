@@ -5,7 +5,6 @@ const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-// const flash = require('connect-flash');
 const flash = require('express-flash');
 
 const mongoose = require('mongoose');
@@ -51,9 +50,6 @@ app.use(function (err, req, res, next) {
     if (err instanceof mongoose.Error) err = createError(500);
     err.stack = null;
   }
-
-  // if (err instanceof mongoose.Error) err = createError(500);
-  // err.stack = null;
 
   res.locals.message = err.message;
   res.locals.error = err;

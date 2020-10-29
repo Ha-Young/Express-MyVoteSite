@@ -3,5 +3,5 @@ mixin card(vote = {})
     a(href=`/votings/${vote.id}`)
       h4= vote.title
       p= vote.author.name
-      p= `${vote.expireAt.toUTCString()}`
+      p= `${vote.expireAt.toLocaleString()}`
       p= `isExpired: ${vote.isExpired}`
