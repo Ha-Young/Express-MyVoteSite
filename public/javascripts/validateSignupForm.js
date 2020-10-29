@@ -11,7 +11,7 @@ function validateSignupForm() {
     && $password.length >= 4
     && $passwordConfirm.length >= 4
     && $password === $passwordConfirm
-    && username
+    && $username
   ) {
     $submitButton.disabled = false;
   } else {
