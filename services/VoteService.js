@@ -1,7 +1,7 @@
 const Vote = require('../models/Vote');
 const User = require('../models/User');
 
-const checkExpire = require('../utils/checkExpire');
+const checkExpiration = require('../utils/checkExpiration');
 
 class VoteService {
   constructor(vote) {
@@ -29,6 +29,8 @@ class VoteService {
       });
 
       updatedUser.save();
+
+      return createAction('success');
     } catch (error) {
       throw error;
     }
@@ -38,9 +40,9 @@ class VoteService {
     try {
       const vote = await Vote.findById(id).populate('author', 'name');
       if (!vote) {
-        return { type: 'error', payload: { message: 'Cannot found the vote' } };
+        return createAction('error', { message: 'Cannot found the vote' });
       }
-      return { type: 'success', payload: vote };
+      return createAction('success', vote);
     } catch (error) {
       throw error;
     }
@@ -60,26 +62,31 @@ class VoteService {
       const targetItem = vote.candidateList.find((item) => item.title === body.item);
       const targetExpire = vote.expireAt;
 
-      if (!checkExpire(targetExpire)) {
-        const newCount = (targetItem.count += 1);
-
-        await Vote.updateOne(
-          { _id: id, 'candidateList.title': body.item },
-          {
-            $push: { participatedUser: user._id },
-            $set: {
-              'candidateList.$.count': newCount
-            }
-          }
-        );
-        return { type: 'success', payload: { message: 'Succeed voting!' } };
+      if (checkExpiration(targetExpire)) {
+        return createAction('error', { message: 'The vote is expired' });
       }
 
-      return { type: 'error', payload: { message: 'The vote is expired' } };
+      const newCount = (targetItem.count += 1);
+
+      await Vote.updateOne(
+        { _id: id, 'candidateList.title': body.item },
+        {
+          $push: { participatedUser: user._id },
+          $set: {
+            'candidateList.$.count': newCount
+          }
+        }
+      );
+
+      return createAction('success', { message: 'Succeed voting!' });
     } catch (error) {
       throw error;
     }
   }
+}
+
+function createAction(type, payload) {
+  return { type, payload };
 }
 
 module.exports = VoteService;
