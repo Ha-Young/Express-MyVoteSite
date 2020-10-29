@@ -38,11 +38,14 @@ exports.getVotingDetails = async (req, res, next) => {
     const { id } = req.params;
     const voting = await Voting.findOne({ _id: id });
     const { options } = voting.populate('options');
-    // const isCreator = voting.createdBy.toString() === userId.toString();
+    let isCreator;
+
+    if (userId) {
+      isCreator = voting.createdBy.toString() === userId.toString();
+    }
 
     voting.isExpiration = isExpiration(voting.expirationDate);
-
-    res.render('votingDetails', { id, voting, options });
+    res.render('votingDetails', { id, voting, isCreator, options });
   } catch (err) {
     next(err);
   }
@@ -53,7 +56,7 @@ exports.vote = async (req, res, next) => {
   try {
     const { _id } = req.user;
     const { option } = req.body;
-    // if (!_id, !option) return createError(400, constants.ERROR_MESSAGE_NOT_EXIST);
+    if (!_id, !option) return createError(400, constants.ERROR_MESSAGE_NOT_EXIST);
 
     await Voting.updateOne(
       { 'options._id': option },

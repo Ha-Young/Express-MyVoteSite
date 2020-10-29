@@ -1,20 +1,20 @@
 extends layout
 
 block content
-  a(href='/votings/new') 투표만들기
-  <br/>
-  a(href='/my-votings') 내 투표 보기
-
-  h1 VOTING LIST
-  div
-    each voting in votings
-      div
-        if voting.isExpiration
-          div 투표중
-        else
-          div 투표마감
-
-        a(href=`/votings/${voting._id}`)
-          div= voting.userName
-          div= voting.votingTitle
-          div= voting.expirationDate
+  section
+    h1 Main
+    .voting-list-container
+      .title
+        h2 VOTING LIST
+      .voting-list
+        each voting in votings
+          .list-item
+            a(href=`/votings/${voting._id}`)
+              if voting.isExpiration
+                .item-notExpiration 투표중
+              else
+                .item-expiration 투표마감
+              .item-details
+                .item-detail= voting.userName
+                .item-detail= voting.votingTitle
+                .item-detail= voting.expirationDate

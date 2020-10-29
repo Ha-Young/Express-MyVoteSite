@@ -1,5 +1,19 @@
-header
-  h1 header
-  a(href='/login') 로그인하러가기
-  </br>
-  a(href='/signup') 가입하러가기
+header#header
+  section(
+    class='header'
+  )
+  .navbar
+    .navbar-title
+      a(href='/')
+        h1 vote
+    .navbar-menu
+      if !user
+        .menu
+          a(href='/login') Login
+        .menu
+          a(href='/signup') Sign up
+      else
+        .menu
+          a(href='/votings/new') Create Voting
+        .menu
+          a(href='/my-votings') My votings

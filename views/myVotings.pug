@@ -2,13 +2,14 @@ extends layout
 
 block content
   h1 my votings
-  div
-    each voting in votings
-      div
-        a(href=`/votings/${voting._id}`)
-          h2=voting.votingTitle
-          div=voting.expirationDate
-          if voting.isExpiration
-            div 진행중
-          else
-            div 투표완료
+  .myvoting-container
+    .myvoting-list
+      each voting in votings
+        .myvoting-item-container
+          a.myvoting-item(href=`/votings/${voting._id}`)
+            if voting.isExpiration
+              .myvoting-detail-active 진행중
+            else
+              .myvoting-detail-expire 마감
+            .myvoting-detail=voting.votingTitle
+            .myvoting-detail=voting.expirationDate

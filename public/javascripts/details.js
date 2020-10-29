@@ -29,7 +29,6 @@ votingButton.addEventListener('click', async () => {
       return location.assign('http://localhost:3000/votings/success');
     }
     if (result.message === ERROR_MESSAGE_FAIL_VOTING) {
-      console.log(result.message)
       return location.assign('http://localhost:3000/login');
     }
   } catch (err) {

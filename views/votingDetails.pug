@@ -1,39 +1,48 @@
 extends layout
 
 block content
-  a(href='/votings/new') 투표만들기
-  <br/>
-  a(href='/') 투표목록보기
+  section
+    h1 Voting
+    .voting-container
+      .title
+        h2=voting.votingTitle
+      .voting-details
+        .voting-detail= voting.userName
+        .voting-detail= voting.expirationDate
+        if isCreator
+          .delete-button-container
+            button.delete-button(
+              id=`${id}`
+            ) delete
+      if voting.isExpiration
+        .voting-option-list
+          each option in voting.options
+            .option-list-item
+              .label
+                label= option.option
+              .input
+                input(
+                  type='radio'
+                  class='option'
+                  name='option'
+                  value=`${option._id}`
+                )
+        .voting-submit-button
+          button(
+            id=`${id}`
+            class='votingButton'
+          ) 투표
+    if !voting.isExpiration || isCreator
+      .result-container
+        .result
+          .title Result
+        each option in options
+          .result-details
+            .detail-option-name= option.option
+            .detail-voting-count= option.voters.length
+
+block script
   if isCreator
-    button(
-      class='deleteButton'
-      id=`${id}`
-    ) 삭제
     script(src='../../javascripts/delete.js')
-  if !voting.isExpiration || isCreator
-    div 투표마감
-    div 결과
-    each option in options
-      div
-        div= option.option
-        div= option.voters.length
   if voting.isExpiration
-    h1 VOTING Details
-      h2= voting.votingTitle
-      p= voting.userName
-      div= voting.expirationDate
-      div
-        each option in voting.options
-          label= option.option
-          input(
-            type='radio'
-            class='option'
-            name='option'
-            value=`${option._id}`
-          )
-      div
-      button(
-        id=`${id}`
-        class='votingButton'
-      ) 투표
     script(src='../../javascripts/details.js')

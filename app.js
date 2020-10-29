@@ -35,6 +35,11 @@ app.use(bodyParser.json())
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+})
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/signup', signupRouter);
