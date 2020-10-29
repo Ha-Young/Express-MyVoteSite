@@ -25,6 +25,11 @@
     <% expiredVotingsData.forEach(data => { %>
       <li>
         <a href='/votings/<%= data.voting._id %>'><%= data.voting.title %></a><br>
+        <span>최다 득표 선택지: <% data.mostVoted.forEach(mostVotedOption => { %>
+          <span>
+            <%= mostVotedOption %>
+          </span>
+        <% }) %></span><br>
         <%= data.formattedExpirationDate %>까지<br>
         만든 사람: <%= data.creatorUsername %><br><br>
       </li>
