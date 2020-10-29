@@ -18,7 +18,6 @@ const userSchema = new mongoose.Schema({
     validate: {
       validator: function (password) {
         const regex = new RegExp(/^[a-zA-Z0-9]{5,10}$/);
-        console.log(this, 'this')
         return regex.test(password);
       },
       message: 'Please make 5 to 10 digits password using both alphabets and numbers.'
@@ -30,19 +29,38 @@ const userSchema = new mongoose.Schema({
   createdVoting: Array,
 });
 
-userSchema.pre('save', async function (next) {
-  console.log(this.isModified('password'), 'isM');
-  const encrypted = await bcrypt.hash(this.password, Number(process.env.SALT));
+const User = mongoose.model('User', userSchema);
 
-  this.password = encrypted;
-  this.passwordConfirm = undefined;
-  next();
+userSchema.pre('save', async function (next) {
+  console.log('pre')
+  try {
+    // console.log(this.isModified('password'), 'isM');
+
+    const encrypted = await bcrypt.hash(this.password, Number(process.env.SALT));
+
+    this.password = encrypted;
+    this.passwordConfirm = undefined;
+    next();
+  } catch (err) {
+    next(err);
+  }
 });
+
+userSchema.pre('save', async function (next) {
+  console.log('pre 2nd')
+  try {
+
+    const checkDuplication = await User.findById(this._id);
+    console.log(checkDuplication, 'chD')
+  } catch (err) {
+    console.log(err, 'pre 2nd')
+  }
+
+})
+
 
 userSchema.methods.verifyPassword = async (plainPassword, encrypted) => {
   return await bcrypt.compare(plainPassword, encrypted);
 };
-
-const User = mongoose.model('User', userSchema);
 
 module.exports = User;

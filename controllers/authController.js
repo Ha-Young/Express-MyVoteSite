@@ -1,17 +1,25 @@
 const User = require('../models/usersModel');
 const Voting = require('../models/votingsModel');
-const { PASSWORD } = require('../constants/error');
 
 exports.renderMainPage = async (req, res, next) => {
-  const votings = await Voting.find();
+  try {
+    const votings = await Voting.find();
+    res.render('main', {
+      votings,
+    });
+  } catch (err) {
+    console.log(err, 'renderMainPage')
+  }
 
-  res.render('main', {
-    votings,
-  });
 };
 
 exports.renderSignup = (req, res, next) => {
-  res.render('auth/signup', { err: {} });
+  try {
+    res.render('auth/signup', { err: {} });
+  } catch (err) {
+    console.log(err, 'renderSignup')
+  }
+
 };
 
 exports.registerUser = async (req, res, next) => {
@@ -37,9 +45,9 @@ exports.registerUser = async (req, res, next) => {
 
     return res.status(302).redirect('/login');
   } catch (err) {
-    console.log('err')
+    console.log(err, 'err')
+
     // res.render('auth/failSignup', { data: err.message });
-    // console.log(err, 'err')
     // console.log(err.errors.password.message, 'errs')
     // console.log(err.errors.email.message, 'errs email')
     // console.log(err.errors.passwordConfirm.message, 'errs email')
