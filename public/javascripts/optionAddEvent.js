@@ -1,8 +1,12 @@
-console.log('123ab');
 let count = 3;
-const $seletOptionContainer = document.querySelector(
-  '.selectOptions-container'
+const $seletOptionsHeadContainer = document.querySelector(
+  '.selectOptions-head-container'
 );
+
+const $seletOptionsBodyContainer = document.querySelector(
+  '.selectOptions-body-container'
+);
+
 const $addOption = document.querySelector('.addOption');
 
 $addOption.addEventListener('click', (e) => {
@@ -12,9 +16,9 @@ $addOption.addEventListener('click', (e) => {
   $input.setAttribute('name', 'selectOptions');
   const $label = document.createElement('label');
   $label.setAttribute('for', 'selectOptions');
-  $label.innerText = `투표선택사항 ${count}`;
+  $label.innerText = `Select Option ${count}`;
   count++;
 
-  $seletOptionContainer.appendChild($label);
-  $seletOptionContainer.appendChild($input);
+  $seletOptionsHeadContainer.appendChild($label);
+  $seletOptionsBodyContainer.appendChild($input);
 });

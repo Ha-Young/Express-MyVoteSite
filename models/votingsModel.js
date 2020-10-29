@@ -3,44 +3,57 @@ const User = require('./usersModel');
 
 const selectOptionsSchema = new mongoose.Schema({
   option: String,
-  count: {
-    type: Number,
-    default: 0,
-  },
-});
-
-const votingSchema = new mongoose.Schema({
-  title: {
-    type: String,
-  },
-  selectOptions: {
-    type: [selectOptionsSchema],
-    validate: {
-      validator: function () {
-        return this.selectOptions.length > 1;
-      },
-      message: 'selectOptions should more than 2',
-    },
-  },
-
-  // selectOptions: {
-  //   type: Array,
-  //   validate: {
-  //     validator: function () {
-  //       return this.selectOptions.length > 1;
-  //     },
-  //     message: 'selectOptions should more than 2',
-  //   },
-  // },
-  expireDate: Date,
-  isExpired: {
-    type: Boolean,
-    default: false,
-  },
-  creator: String,
-  description: String,
   votedUsers: Array,
 });
+
+const votingSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      validate: [
+        {
+          validator: function (title) {
+            while (title.includes(' ')) {
+              title = title.replace(' ', '');
+            }
+            if (!title.length) return false;
+          },
+          message: 'Using only space is not allowed for the Vote Title.',
+        },
+        {
+          validator: function (title) {
+            const converted = Number(title);
+            if (!Number.isNaN(converted)) return false;
+          },
+          message: 'Using only number is not allowed for the Vote Title.',
+        },
+      ],
+    },
+    selectOptions: {
+      type: [selectOptionsSchema],
+      validate: {
+        validator: function (selectOptions) {
+          if (selectOptions.length < 2) return false;
+
+          const filtered = selectOptions.filter(
+            (selectOption) => selectOption.option
+          );
+          console.log(filtered, 'in SO val');
+          if (filtered.length < 2) return false;
+        },
+        message: 'Please write more than 2 select options.',
+      },
+    },
+    description: String,
+    expireDate: Date,
+    // isExpired: { // virtual
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // creator: String, // virtual
+  },
+  { timestamps: { createdAt: 'created_at' } }
+);
 
 votingSchema.methods.findMax = async (id) => {
   const max = await Voting.aggregate([

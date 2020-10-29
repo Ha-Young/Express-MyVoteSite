@@ -1,20 +1,18 @@
 module.exports = (req, res, next) => {
   try {
-    const year = req.body.year;
-    const month = req.body.month;
-    const day = req.body.day;
-    const hour = req.body.hour;
-    const expireDate = new Date(year, month, day, hour).toISOString();
+    // console.log('expireDateValid 1st middleware');
+    const expireDate = req.body.expireDate;
     const present = new Date().toISOString();
 
     if (expireDate < present) {
-      throw new Error('expire date should be later than present time');
+      const err = new Error('Expire date should be later than present time');
+      err.errors = { expireDate: { message: err.message } };
+      throw err;
     }
 
     req.body.expireDate = expireDate;
     next();
   } catch (err) {
-    console.log(err, 'unvalid expiredate');
-    next(err);
+    res.render('voting/newVoting', { err: err.errors });
   }
 };

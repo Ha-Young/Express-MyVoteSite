@@ -4,11 +4,12 @@ const { months, days, hours } = require('../constants');
 
 // 투표 제목, 투표 선택 사항, 만료 날짜 및 시간을 입력할 수 있어야 합니다.
 exports.renderCreateVoting = (req, res, next) => {
-  res.render('voting/newVoting', { months, days, hours });
+  res.render('voting/newVoting', { months, days, hours, err: {} });
 };
 
 exports.createNewVoting = async (req, res, next) => {
   try {
+    // console.log('createNewVoting controller 3st middleware');
     const votingInfo = req.body;
 
     const user = await User.findById(req.session.user_id);
@@ -16,11 +17,13 @@ exports.createNewVoting = async (req, res, next) => {
 
     const voting = await Voting.create(votingInfo);
     user.createdVoting.push(voting._id);
-    await user.save();
+
+    await user.updateOne({ $push: { createdVoting: voting._id } });
 
     res.status(302).redirect('/');
   } catch (err) {
-    console.log('err', err);
+    // console.log(err, 'err in new votig');
+    res.render('voting/newVoting', { err: err.errors });
   }
 };
 

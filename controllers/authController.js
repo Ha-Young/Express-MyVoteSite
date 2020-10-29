@@ -73,9 +73,9 @@ exports.login = async (req, res, next) => {
     const isValid = await user.verifyPassword(password, user.password);
 
     if (isValid) {
-      // console.log('login sucess');
       req.session.user_id = user._id;
       req.session.logined = true;
+      console.log(req.session, 'logged in');
       return res.status(302).redirect('/');
     }
     // console.log('login fail');

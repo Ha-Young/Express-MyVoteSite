@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 const mongoose = require('mongoose');
-const ALPHABET = require('../constants');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -23,16 +22,13 @@ const userSchema = new mongoose.Schema({
         'Please make 5 to 10 digits password using both alphabets and numbers.',
     },
   },
-  // passwordConfirm: {
-  //  type: String,
-  //   validator:  //디비에 넣지 않을 건데 유효성 검사를 위해서 스키마를 넣는건 이상한가요?
   createdVoting: Array,
 });
 
 userSchema.pre('save', async function (next) {
   try {
     // console.log(this.isModified('password'), 'isM');
-
+    console.log('pre hook bcrypt');
     const encrypted = await bcrypt.hash(
       this.password,
       Number(process.env.SALT)

@@ -1,21 +1,22 @@
 module.exports = (req, res, next) => {
   try {
-    console.log(req.body, 'db');
+    // console.log('modifySelectOptions 2st middleware');
     const selectOptions = req.body.selectOptions;
+
     const temp = [];
 
     selectOptions.reduce(
       (acc, selectOption) => {
         acc.option = selectOption;
         temp.push(acc);
-        return { count: 0 };
+        return { votedUsers: [] };
       },
-      { count: 0 }
+      { votedUsers: [] }
     );
     req.body.selectOptions = temp;
     next();
   } catch (err) {
-    console.log(err, 'unvalid expiredate');
+    // console.log(err, 'unvalid expiredate');
     next(err);
   }
 };
