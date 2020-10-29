@@ -5,10 +5,14 @@ const passport = require('passport');
 
 
 router.get('/', (req, res, next) => {
-  res.status(200).render('login');
+  res.status(200).render('login', {
+    referer: req.headers.referer
+  });
 });
 
 router.post('/', (req, res, next) => {
+  console.log(req.body.referer);
+
   passport.authenticate('local', (err, user) => {
     if (err) {
       next(err);
@@ -30,7 +34,8 @@ router.post('/', (req, res, next) => {
       }
 
       req.session.userId = user._id;
-      res.redirect('/');
+
+      res.redirect(req.body.referer);
     });
   })(req, res, next);
 });

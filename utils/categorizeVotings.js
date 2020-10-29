@@ -15,6 +15,8 @@ async function categorizeVotings(userIdObj, isFindAll = true) {
 
   for (voting of votings) {
     const creator = await User.findById(voting.created_by);
+    const userIsCreator
+      = voting.created_by.toString() === userIdObj.created_by.toString();
     const expirationDate = Date.parse(voting.expires_at);
     const formattedExpirationDate = dayjs(expirationDate).format('YYYY-MM-DD HH:mm');
 
@@ -34,11 +36,9 @@ async function categorizeVotings(userIdObj, isFindAll = true) {
       }
     }
 
-    console.log('최다 득표 선택지 배열: ', mostVoted);
-
     const data = {
       voting,
-      userIsCreator: voting.created_by.toString() === userIdObj.created_by,
+      userIsCreator,
       creatorUsername: creator.username,
       formattedExpirationDate,
       mostVoted,
