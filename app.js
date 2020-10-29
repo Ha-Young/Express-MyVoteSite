@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
 const flash = require('connect-flash');
-const flashMessage = require('./middlewares/flash.middleware')
 
 const db = require('./config/mongoose');
 const passportModule = require('./config/passport');
@@ -21,7 +20,7 @@ app.use(
   session({
     secret: process.env.SECRET_CODE,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
       maxAge: 60 * 60 * 1000,
     },
@@ -43,8 +42,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-app.use('/', flashMessage, authRouter);
-app.use('/votings', flashMessage, votingRouter);
+app.use('/', authRouter);
+app.use('/votings', votingRouter);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');

@@ -8,8 +8,8 @@
     <div class="form">
       <h1 class="auth-title">Sign up</h1>
       <div class="auth-wrap">
-        <% if (error_message) { %>
-          <h3><%= error_message %></h3>
+        <% if (result_message) { %>
+          <h3><%= result_message %></h3>
         <% } %>
         <form action="/signup" method="POST">
           <div class="form-wrap">

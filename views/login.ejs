@@ -9,11 +9,8 @@
       <h1 class="auth-title">Log in</h1>
       <div class="auth-wrap">
         <form action="/login" method="POST">
-          <% if (success_message !== '') { %>
-            <h3><%= success_message %></h3>
-          <% } %>
-          <% if (error !== '') { %>
-            <h3><%= error %></h3>
+          <% if (result_message) { %>
+            <h3><%= result_message %></h3>
           <% } %>
           <div class="form-wrap">
             <input type="email" class="auth-field" name="email" id="username" autocomplete="off"

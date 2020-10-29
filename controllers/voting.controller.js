@@ -9,6 +9,7 @@ exports.getVotingForm = (req, res, _next) => {
   const nowDate = format(new Date(), 'yyyy-MM-dd');
 
   res.status(200).render('votingForm', {
+    result_message: req.flash('result_message'),
     minDate: nowDate,
   });
 };
@@ -19,10 +20,10 @@ exports.createVote = async (req, res, next) => {
   const nowDate = format(new Date(), 'yyyy-MM-dd');
 
   if (typeof options === 'string' || options.includes('')) {
-    req.flash('error_message', '옵션은 두개 이상 만들어주세요.');
+    req.flash('result_message', '옵션은 두개 이상 만들어주세요.');
 
     return res.render('votingForm', {
-      error_message: req.flash('error_message'),
+      result_message: req.flash('result_message'),
       minDate: nowDate,
     });
   }
@@ -44,6 +45,11 @@ exports.createVote = async (req, res, next) => {
 
     await user.save();
     await vote.save();
+
+    req.flash(
+      'result_message',
+      '투표가 생성되었습니다.',
+    );
 
     res.redirect('/votings');
   } catch (err) {
@@ -68,6 +74,7 @@ exports.getVotingList = async (req, res, next) => {
       expirationDate: formattedExpireDate,
       createdDate: formattedCreateDate,
       expired: isExpired,
+      result_message: req.flash('result_message'),
     });
   } catch (err) {
     next(err);
@@ -94,6 +101,7 @@ exports.getMyVoting = async (req, res, next) => {
       expirationDate: formattedExpireDate,
       createdDate: formattedCreateDate,
       expired: isExpired,
+      result_message: req.flash('result_message')
     });
   } catch (err) {
     next(err);
@@ -163,21 +171,15 @@ exports.deleteOne = async (req, res, next) => {
 
   try {
     const vote = await Vote.findByIdAndDelete(id);
+    const updateUser = await User.findById(req.user._id);
 
-    await User.findByIdAndUpdate(
-      req.user._id,
-      {
-        $pull: {
-          voteCollection: {
-            _id: new ObjectId(id),
-          },
-        },
-      },
-      { multi: true }
-    );
+    updateUser.voteCollection.pull(id);
+    await updateUser.save();
+
+    req.flash('result_message', '투표가 삭제되었습니다.');
 
     res.json(vote);
-  } catch (error) {
+  } catch (err) {
     next();
   }
 };

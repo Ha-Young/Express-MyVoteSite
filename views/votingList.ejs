@@ -5,6 +5,9 @@
 <body>
   <%- include('partials/header') %>
   <div class="main-container">
+    <% if (result_message) { %>
+      <h1><%= result_message %></h1>
+    <% } %>
     <% for (let i = 0; i < votes.length; i++) { %>
       <div class="vote-container">
         <div class="vote-column">

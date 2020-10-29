@@ -10,8 +10,8 @@
       <div class="auth-wrap">
         <div class="form-wrap">
           <input type="text" name="title" class="new-field" id="title" autocomplete="off" placeholder="투표 제목" required>
-          <% if (error_message !== '') { %>
-            <h3><%= error_message %></h3>
+          <% if (result_message) { %>
+            <h3><%= result_message %></h3>
           <% } %>
         </div>
         <div class="new-form-column">

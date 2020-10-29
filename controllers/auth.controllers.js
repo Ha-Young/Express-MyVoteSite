@@ -4,11 +4,15 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 exports.getSignUp = (req, res, _next) => {
-  res.render('index');
+  res.render('index', {
+    result_message: req.flash('result_message')
+  });
 };
 
 exports.getLogIn = (req, res, _next) => {
-  res.render('login');
+  res.render('login', {
+    result_message: req.flash('result_message')
+  });
 };
 
 exports.registUser = async (req, res, next) => {
@@ -18,19 +22,19 @@ exports.registUser = async (req, res, next) => {
   if (!email || !userName || !password || !confirmPassword) {
     message = '양식을 모두 채워주세요';
 
-    req.flash('error_message', message);
+    req.flash('result_message', message);
     res.redirect('/signup');
   }
 
   if (password.length < 7) {
     message = '비밀번호는 8자 이상 작성해주세요.';
-    req.flash('error_message', message);
+    req.flash('result_message', message);
     res.redirect('/signup');
   }
 
   if (password !== confirmPassword) {
     message = '비밀번호가 일치하지 않습니다.';
-    req.flash('error_message', message);
+    req.flash('result_message', message);
     res.redirect('/signup');
   }
 
@@ -41,7 +45,7 @@ exports.registUser = async (req, res, next) => {
 
         if (data) {
           message = '이미 가입된 유저가 있습니다.';
-          req.flash('error_message', message);
+          req.flash('result_message', message);
           res.redirect('/signup');
         }
 
@@ -62,7 +66,7 @@ exports.registUser = async (req, res, next) => {
               if (err) throw err;
 
               req.flash(
-                'success_message',
+                'result_message',
                 '회원가입을 축하합니다. 로그인을 진행해주세요',
               );
 
