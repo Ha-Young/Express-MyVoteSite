@@ -13,7 +13,7 @@ const signupRouter = require('./routes/signup');
 const loginRouter = require('./routes/login');
 const votingsRouter = require('./routes/votings');
 const myVotingsRouter = require('./routes/my-votings');
-const flash = require('req-flash');
+const successRouter = require('./routes/success')
 const session = require('express-session');
 const app = express();
 
@@ -23,7 +23,6 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -46,7 +45,11 @@ app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
 app.use('/votings', votingsRouter);
 app.use('/my-votings', myVotingsRouter);
+app.use('/success', successRouter);
 
+app.use('/error', (req, res, next) => {
+  res.render('error')
+})
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

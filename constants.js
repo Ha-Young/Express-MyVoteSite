@@ -5,7 +5,8 @@ module.exports = Object.freeze({
     ERROR_MESSAGE_INPUT_EMAIL: '"@"를 포함해주세요',
     ERROR_MESSAGE_INPUT_PASSWORD: '비밀번호가 일치하지 않습니다',
     ERROR_MESSAGE_LOGIN: '로그인 후 이용 가능합니다',
-    ERROR_MESSAGE_FAIL_VOTING: '투표에 실패하였습니다',
+    ERROR_MESSAGE_REQUEST_FAIL: '요청이 실패했습니다',
+    ERROR_MESSAGE_NOT_EXIST_VOTINGS: '생성한 투표가 없습니다',
     SUCCESS_MESSAGE_VOTING: '투표가 완료 되었습니다',
     SUCCESS_MESSAGE_DELETE: '투표가 삭제 되었습니다',
 });

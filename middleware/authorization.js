@@ -5,8 +5,8 @@ const isLoggedIn = (req, res, next) => {
     next();
   } else {
     req.session.redirectUrl = req.originalUrl;
-    if (req.body.name === 'ajax') {
-      return res.json({ message: constants.ERROR_MESSAGE_FAIL_VOTING });
+    if (req.method === 'PUT' || req.method === 'DELETE') {
+      return res.json({ message: constants.ERROR_MESSAGE_REQUEST_FAIL});
     }
     res.redirect('/login');
   }

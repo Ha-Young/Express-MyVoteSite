@@ -1,11 +1,10 @@
 const votingButton = document.querySelector('.votingButton');
 const SUCCESS_MESSAGE_VOTING = '투표가 완료 되었습니다';
-const ERROR_MESSAGE_FAIL_VOTING = '투표에 실패하였습니다';
 
 votingButton.addEventListener('click', async () => {
   const { id } = event.target;
   const optionInput = document.getElementsByName('option');
-  let data = { name: 'ajax' };
+  let data = {};
   let result;
 
   for (let i = 0; i < optionInput.length; i++) {
@@ -26,12 +25,13 @@ votingButton.addEventListener('click', async () => {
     result = await response.json();
 
     if (result.message === SUCCESS_MESSAGE_VOTING) {
-      return location.assign('http://localhost:3000/votings/success');
+      return location.assign(`http://localhost:3000/success/${result.message}`);
     }
-    if (result.message === ERROR_MESSAGE_FAIL_VOTING) {
+    if (result.message === ERROR_MESSAGE_REQUEST_FAIL) {
       return location.assign('http://localhost:3000/login');
     }
   } catch (err) {
     console.error(err);
+    return location.assign(`http://localhost:3000/error/${err.message}`);
   }
 });

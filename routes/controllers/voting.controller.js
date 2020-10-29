@@ -4,16 +4,19 @@ const { isExpiration } = require('../../utils');
 const createError = require('http-errors');
 const constants = require('../../constants');
 
-exports.renderNewVotingMakerPage = (req, res, next) => {
+exports.getRenderNewVoting = (req, res, next) => {
   res.render('newVoting');
 };
 
 exports.renderMyVotingsPage = async (req, res, next) => {
   try {
-    const { user: { _id } } = req;
+    const { _id } = req.user;
     const { votings } = await User.findOne({ _id }).populate('votings');
 
-    votings.map((voting) => voting.isExpiration = isExpiration(voting.expirationDate));
+    votings.map(
+      voting =>
+        voting.isExpiration = isExpiration(voting.expirationDate)
+    );
 
     res.render('myVotings', { votings });
   } catch (err) {
@@ -21,30 +24,27 @@ exports.renderMyVotingsPage = async (req, res, next) => {
   }
 };
 
-exports.getVotingDetails = async (req, res, next) => {
-  let userId;
-
-  try {
-    if (req.user) {
-      userId = req.user._id;
-    } else {
-      userId = null;
-    }
-  } catch (err) {
-    console.error(err.message);
-  }
-
+exports.getRenderVotingDetails = async (req, res, next) => {
   try {
     const { id } = req.params;
     const voting = await Voting.findOne({ _id: id });
     const { options } = voting.populate('options');
-    let isCreator;
 
-    if (userId) {
-      isCreator = voting.createdBy.toString() === userId.toString();
+    if (!voting || !options) {
+      return next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL));
     }
 
+    let isCreator;
+    let userId;
+
+    if (req.user) {
+      userId = req.user._id;
+      isCreator = voting.createdBy.toString() === userId.toString();
+    } else {
+      userId = null;
+    }
     voting.isExpiration = isExpiration(voting.expirationDate);
+
     res.render('votingDetails', { id, voting, isCreator, options });
   } catch (err) {
     next(err);
@@ -52,11 +52,13 @@ exports.getVotingDetails = async (req, res, next) => {
 };
 
 exports.vote = async (req, res, next) => {
-
   try {
     const { _id } = req.user;
     const { option } = req.body;
-    if (!_id, !option) return createError(400, constants.ERROR_MESSAGE_NOT_EXIST);
+
+    if (!_id, !option) {
+      return createError(400, constants.ERROR_MESSAGE_NOT_EXIST);
+    }
 
     await Voting.updateOne(
       { 'options._id': option },
@@ -70,10 +72,6 @@ exports.vote = async (req, res, next) => {
   }
 };
 
-exports.success = async (req, res, next) => {
-  res.render('success');
-}
-
 exports.deleteVoting = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -84,10 +82,11 @@ exports.deleteVoting = async (req, res, next) => {
     }
 
     await Voting.findByIdAndDelete(id);
-    await User.findOne({ _id }).populate('votings').deleteOne({ id });
-
+    // await User.updateOne(
+    //   { '_id': _id },
+    //   { $pull: { 'votings': id } }
+    // );
     res.json({ message: constants.SUCCESS_MESSAGE_DELETE });
-
   } catch (err) {
     next(err)
   }

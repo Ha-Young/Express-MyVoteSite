@@ -1,6 +1,8 @@
+const createError = require('http-errors');
 const Voting = require('../../models/Voting');
 const User = require('../../models/User');
 const { isExpiration } = require('../../utils');
+const constants = require('../../constants');
 
 exports.getAllVotings = async (req, res, next) => {
   try {
@@ -15,21 +17,25 @@ exports.getAllVotings = async (req, res, next) => {
 
 exports.createVoting = async (req, res, next) => {
   try {
-    const { body: { votingTitle, expirationDate, options }, user: { _id, name } } = req;
-    const optionObject = options.map( option => { return { option }});
+    const { _id, name } = req.user;
+    const { votingTitle, expirationDate, options } = req.body;
+    const optionObject = options.map(option => { return { option } });
     const voting = {
       createdBy: _id,
       userName: name,
       votingTitle,
       expirationDate,
-      options : optionObject,
+      options: optionObject,
     };
 
     const saveVoting = await Voting(voting).save();
-
     const userObj = await User.findOne({ _id });
-    userObj.votings.push(saveVoting._id);
 
+    if(!userObj) {
+      return next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL));
+    }
+
+    userObj.votings.push(saveVoting._id);
     await User(userObj).save();
 
     res.redirect('/');

@@ -4,12 +4,16 @@ block content
   h1 my votings
   .myvoting-container
     .myvoting-list
-      each voting in votings
-        .myvoting-item-container
-          a.myvoting-item(href=`/votings/${voting._id}`)
-            if voting.isExpiration
-              .myvoting-detail-active 진행중
-            else
-              .myvoting-detail-expire 마감
-            .myvoting-detail=voting.votingTitle
-            .myvoting-detail=voting.expirationDate
+      if votings
+        each voting in votings
+          .myvoting-item-container
+            a.myvoting-item(href=`/votings/${voting._id}`)
+              if voting.isExpiration
+                .myvoting-detail-active 진행중
+              else
+                .myvoting-detail-expire 마감
+              .myvoting-detail=voting.votingTitle
+              .myvoting-detail=voting.expirationDate
+      else
+        .notExist
+          h1 투표를 만들어주세요:>

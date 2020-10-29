@@ -1,6 +1,7 @@
-const User = require('../../models/User');
 const bcrypt = require('bcrypt');
+const createError = require('http-errors');
 const constants = require('../../constants');
+const User = require('../../models/User');
 
 exports.renderSignup = (req, res, next) => {
   res.render('signup');
@@ -8,21 +9,12 @@ exports.renderSignup = (req, res, next) => {
 
 exports.saveUser = async (req, res, next) => {
   try {
-    const { name, email, password, checkPassword } = req.body;
-
+    const { name, email, password } = req.body;
     const existUser = await User.findOne({ email });
-
-    if (!existUser) {
-      return res.status().json()
-    }
 
     const hash = await bcrypt.hash(password, 12);
 
-    User({
-      name,
-      email,
-      password: hash,
-    }).save();
+    await User({ name, email, password: hash }).save();
 
     return res.redirect('/login');
   } catch (err) {
