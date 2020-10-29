@@ -6,7 +6,9 @@
 </head>
 <body>
   <button id='my-votings'>내가 만든 투표 보기</button>
-  <button id='login'>로그인</button>
+  <% if (!isLoggedIn) { %>
+    <button id='login'>로그인</button>
+  <% } %>
   <button id='logout'>로그아웃</button><br><br>
   <a href='/votings/new'>새 투표 만들기</a>
   <h1>투표 목록</h1>

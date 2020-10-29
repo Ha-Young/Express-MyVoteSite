@@ -4,13 +4,16 @@ const dayjs = require('dayjs');
 
 exports.getAll = async (req, res, next) => {
   const currentUserId = req.session.userId;
-  console.log(currentUserId);
 
   try {
     const [openVotingsData, expiredVotingsData]
       = await categorizeVotings({ created_by: currentUserId });
 
-    res.status(200).render('index', { openVotingsData, expiredVotingsData });
+    res.status(200).render('index', {
+      openVotingsData,
+      expiredVotingsData,
+      isLoggedIn: !!req.user,
+    });
   } catch (err) {
     next(err);
   }
@@ -30,25 +33,29 @@ exports.getMine = async (req, res, next) => {
 };
 
 exports.getOne = async (req, res, next) => {
-  const voting = await Voting.findById(req.params._id);
-
   let userIsCreator = false;
   let isExpired = false;
-  const expirationDate = Date.parse(voting.expires_at);
-  const formattedExpirationDate = dayjs(expirationDate).format('YYYY-MM-DD HH:mm');
 
-  if (req.session.userId === voting.created_by.toString()) {
-    userIsCreator = true;
+  try {
+    const voting = await Voting.findById(req.params._id);
+    const expirationDate = Date.parse(voting.expires_at);
+    const formattedExpirationDate = dayjs(expirationDate).format('YYYY년 M월 D일 HH시mm분');
+
+    if (req.session.userId === voting.created_by.toString()) {
+      userIsCreator = true;
+    }
+
+    if (expirationDate < Date.now()) {
+      isExpired = true;
+    }
+
+    res.status(200).render('votingDetails', {
+      voting,
+      userIsCreator,
+      isExpired,
+      formattedExpirationDate
+    });
+  } catch (err) {
+    next(err);
   }
-
-  if (expirationDate < Date.now()) {
-    isExpired = true;
-  }
-
-  res.status(200).render('votingDetails', {
-    voting,
-    userIsCreator,
-    isExpired,
-    formattedExpirationDate
-  });
 };

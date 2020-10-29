@@ -18,7 +18,7 @@ async function categorizeVotings(userIdObj, isFindAll = true) {
     const userIsCreator
       = voting.created_by.toString() === userIdObj.created_by;
     const expirationDate = Date.parse(voting.expires_at);
-    const formattedExpirationDate = dayjs(expirationDate).format('YYYY-MM-DD HH:mm');
+    const formattedExpirationDate = dayjs(expirationDate).format('YYYY년 M월 D일 HH시 mm분');
 
     let votesOfMostVoted = voting.options[0].voters.length;
 
