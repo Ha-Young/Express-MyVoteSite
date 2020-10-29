@@ -2,7 +2,7 @@ const Voting = require('../models/Voting');
 const User = require('../models/User');
 const dayjs = require('dayjs');
 
-async function categorizeVotings(userIdObj, isFindAll = true) {
+async function categorizeVotingsByExpiration(userIdObj, isFindAll = true) {
   const openVotings = [];
   const expiredVotings = [];
   let votings;
@@ -56,4 +56,4 @@ async function categorizeVotings(userIdObj, isFindAll = true) {
   return [openVotings, expiredVotings];
 }
 
-module.exports = categorizeVotings;
+module.exports = categorizeVotingsByExpiration;

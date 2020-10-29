@@ -1,5 +1,5 @@
 const Voting = require('../../models/Voting');
-const categorizeVotings = require('../../utils/categorizeVotings');
+const categorizeVotingsByExpiration = require('../../utils/categorizeVotingsByExpiration');
 const dayjs = require('dayjs');
 
 exports.getAll = async (req, res, next) => {
@@ -7,7 +7,7 @@ exports.getAll = async (req, res, next) => {
 
   try {
     const [openVotingsData, expiredVotingsData]
-      = await categorizeVotings({ created_by: currentUserId });
+      = await categorizeVotingsByExpiration({ created_by: currentUserId });
 
     res.status(200).render('index', {
       openVotingsData,
@@ -24,7 +24,7 @@ exports.getMine = async (req, res, next) => {
 
   try {
     const [openVotingsData, expiredVotingsData]
-      = await categorizeVotings({ created_by: currentUserId }, false);
+      = await categorizeVotingsByExpiration({ created_by: currentUserId }, false);
 
     res.status(200).render('myVotings', { openVotingsData, expiredVotingsData });
   } catch (err) {
