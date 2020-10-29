@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const indexController = require('./controllers/index.controller');
+
 const loginRouter = require('./login');
 const signupRouter = require('./signup');
-const userRouter = require('./my-votings');
 const votingRouter = require('./votings');
-const indexController = require('./controllers/index.controller');
+const userRouter = require('./my-votings');
 
 router.get('/',
   indexController.getAllVotings,

@@ -25,16 +25,26 @@ exports.validateInputs = (req, res, next) => {
 
 exports.createNewVoting = async (req, res, next) => {
   const { title, optionTitle, dueDate } = req.body;
-  const { _id } = req.user;
-
+  const userId = req.user._id;
   const options = [];
+
   optionTitle.forEach(option => {
-    options.push({ optionTitle: option, votedNumber: [] });
+    options.push({ optionTitle: option, votedCount: [] });
   });
 
   try {
-    const newVote = await Voting.create({ title, writer: _id, due_date: dueDate, options, voter: [] });
-    await User.findByIdAndUpdate(_id, { $addToSet: { myVotings: newVote._id } });
+    const newVoting = await Voting.create({
+      title,
+      writer: userId,
+      due_date: dueDate,
+      options,
+      voter: [],
+    });
+
+    await User.findByIdAndUpdate(
+      userId,
+      { $addToSet: { myVotings: newVoting.userId } }
+    );
     next();
   } catch (error) {
     next(error);
@@ -43,10 +53,11 @@ exports.createNewVoting = async (req, res, next) => {
 
 exports.getTargetVoting = async (req, res, next) => {
   try {
-    const { voting_id } = req.params;
-    const targetVote = await Voting.findById(voting_id).populate('writer').lean();
-    targetVote.due_date = calculateDate(targetVote.due_date);
-    req.targetVote = targetVote;
+    const votingId = req.params.voting_id;
+    const targetVoting = await Voting.findById(votingId).populate('writer').lean();
+
+    targetVoting.due_date = calculateDate(targetVoting.due_date);
+    req.targetVoting = targetVoting;
     next();
   } catch (error) {
     next(error);
@@ -58,8 +69,8 @@ exports.updateVoteCount = async (req, res, next) => {
   const userId = req.user._id;
 
   try {
-    const votedUser = await Voting.findById(votingId, 'voter');
-    if (votedUser.voter.includes(userId)) {
+    const votedUsers = await Voting.findById(votingId, 'voter');
+    if (votedUsers.voter.includes(userId)) {
       req.flash('message', 'you have already voted.')
       return next();
     }
@@ -95,8 +106,8 @@ exports.deleteVoting = async (req, res, next) => {
   }
 };
 
-exports.checkValidVote = async (req, res, next) => {
-  const dueDate = req.targetVote.due_date;
+exports.checkValidVoting = async (req, res, next) => {
+  const dueDate = req.targetVoting.due_date;
 
   if (checkPassedDate(dueDate)) {
     return res.redirect(`/votings/result/${req.params.voting_id}`);
@@ -106,7 +117,7 @@ exports.checkValidVote = async (req, res, next) => {
 
 exports.checkAuthorization = async (req, res, next) => {
   const currentUserId = req.user && req.user._id;
-  const targetDetails = req.targetVote;
+  const targetDetails = req.targetVoting;
   const currentVoteWriterId = targetDetails.writer._id;
   const dueDate = targetDetails.due_date;
   const isIdsMatched = req.user
@@ -136,7 +147,7 @@ exports.renderVotingRegister = (req, res, next) => {
 };
 
 exports.renderVotingDetails = (req, res, next) => {
-  const targetDetails = req.targetVote;
+  const targetDetails = req.targetVoting;
   const isIdsMatched = req.user
     ? targetDetails.writer._id.equals(req.user._id)
     : false;

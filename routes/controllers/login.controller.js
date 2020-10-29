@@ -2,8 +2,11 @@ const passport = require('passport');
 
 exports.AuthenticatePassport = (req, res, next) => {
   passport.authenticate('local', (error, user, info) => {
-    if (error) next(error);
+    if (error) {
+      next(error)
+    };
     if (!user) {
+      req.flash('message', info.message);
       return res.redirect('/login');
     }
 
@@ -20,5 +23,6 @@ exports.AuthenticatePassport = (req, res, next) => {
 };
 
 exports.renderLogin = (req, res, next) => {
-  res.render('login');
+  const message = req.flash('message');
+  res.render('login', { message });
 };

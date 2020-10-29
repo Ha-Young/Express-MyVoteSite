@@ -1,6 +1,8 @@
 const localStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const { entryErrorMessage } = require('../constants');
+const { PASSWORD_NOT_MATCHED, USER_NOT_EXIST } = entryErrorMessage;
 
 module.exports = passport => {
   passport.serializeUser((user, done) => {
@@ -22,11 +24,11 @@ module.exports = passport => {
       if (existedUser) {
         const result = await bcrypt.compare(password, existedUser.password);
         if (!result) {
-          return done(null, false, { message: '비밀번호가 일치하지 않습니다. 다시 확인해주세요.' });
+          return done(null, false, { message: PASSWORD_NOT_MATCHED });
         }
         return done(null, existedUser);
       }
-      return done(null, false, { message: '존재하지 않는 사용자입니다. 다시 확인해주세요.' });
+      return done(null, false, { message: USER_NOT_EXIST });
     } catch (error) {
       return done(error);
     }

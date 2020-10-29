@@ -8,7 +8,7 @@ const handleAddButton = () => {
 
   list.map(option => {
     const div = document.createElement('div');
-    div.setAttribute('class', 'optionTitle');
+    div.setAttribute('class', 'option-wrapper');
     const input = document.createElement('input');
     input.setAttribute('name', 'optionTitle');
     input.setAttribute('value', option);
@@ -16,7 +16,7 @@ const handleAddButton = () => {
     const button = document.createElement('button');
     const buttonText = document.createTextNode('Delete');
     button.setAttribute('type', 'button');
-    button.setAttribute('class', 'optionDeleteButton');
+    button.setAttribute('class', 'option-delete-button');
 
     button.appendChild(buttonText);
     div.appendChild(input);

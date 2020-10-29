@@ -245,7 +245,7 @@ my-page {
 
 .voting-button {
   margin-top: 10px;
-  width: 100%;
+  width: 70%;
   text-align: center;
   vertical-align: middle;
 }
@@ -266,6 +266,22 @@ my-page {
   background-color: var(--color-carrot);
 }
 
+.back-to-list-button {
+  position: relative;
+  text-align: left;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+  margin-top: 50px;
+  background-color: var(--color-bright-grey);
+}
+
+.back-to-list-button span {
+  position: absolute;
+  left: 10px;
+  top: 8px;
+}
 /* vote result */
 .vote-details form * {
   display: flex;
@@ -344,12 +360,12 @@ my-page {
   flex-direction: column;
 }
 
-.optionTitle input {
+.option-wrapper input {
   width: 15rem;
   height: 2rem;
 }
 
-.optionDeleteButton {
+.option-delete-button {
   font-size: 10px;
   background-color: black;
 }

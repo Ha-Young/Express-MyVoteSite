@@ -22,7 +22,7 @@ router.get('/result/:voting_id',
 
 router.get('/:voting_id',
   votingController.getTargetVoting,
-  votingController.checkValidVote,
+  votingController.checkValidVoting,
   votingController.renderVotingDetails,
 );
 

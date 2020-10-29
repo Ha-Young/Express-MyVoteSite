@@ -4,17 +4,20 @@ block content
   div.vote-details-container
     div.vote-details
       h1(class='page-title')= targetDetails.title
-      div(class='details-top-section')
+      div.details-top-section
         span= targetDetails.writer.nickname
-        span= ' / ' + targetDetails.due_date
+        span= ' / ~' + targetDetails.due_date
       each option in targetDetails.options
         div(class='radio-option')
           input(type='radio' name='voting-option' class='voting-option' value= option._id data-votingId= targetDetails._id)
           label(for= option)= option.optionTitle
-      button(type='submit' class='voting-button') Vote
+      button(type='button' class='voting-button') Vote
       div.writer-only(class= isIdsMatched ? 'visible' : 'hidden')
-        button(type='submit' class='delete-button') Delete
+        button(type='button' class='delete-button') Delete
         a(href=`/votings/result/${targetDetails._id}`)
-          button(type='submit') Vote result
+          button(type='button') Vote result
     span= message
+    a.back-a(href='/')
+      button(type='button' class='back-to-list-button')
+        span 🔙
   script(src='/javascripts/fetch.js')
