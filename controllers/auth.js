@@ -48,8 +48,9 @@ exports.getGoogleLogin = passport.authenticate('google', {
 
 exports.getGoogleCallback = passport.authenticate('google', {
   failureRedirect: '/login',
-  successRedirect: '/',
 });
+
+exports.redirectHome = (req, res, next) => res.redirect('/');
 
 exports.getLogout = (req, res, next) => {
   if (req.session) {

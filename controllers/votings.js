@@ -3,6 +3,7 @@ const Voting = require('../models/Voting');
 
 const VIEWS = require('../constants/views');
 const { convertToVotingObject } = require('../util/voting');
+const createError = require('http-errors');
 
 exports.getAll = async (req, res, next) => {
   try {
@@ -61,7 +62,7 @@ exports.postNewVoting = async (req, res, next) => {
 exports.deleteVoting = async (req, res, next) => {
   const { user, voting } = req;
 
-  if (!user || !voting) return next('no user or voting');
+  if (!user || !voting) return next(createError('no user or voting'));
 
   if (voting.isMine(user._id)) {
     const deletedVoting = await Voting.findByIdAndDelete(voting._id);
@@ -69,8 +70,9 @@ exports.deleteVoting = async (req, res, next) => {
 
     currentUser.myVotings.pull(voting._id);
     await currentUser.save();
-    return res.json({
-      message: `${currentUser.displayName}님이 작성하신 ${deletedVoting.topic}을 삭제하는데 성공하였습니다.`,
+    return res.status(200).json({
+      displayName: currentUser.displayName,
+      topic: deletedVoting.topic,
     });
   }
 
@@ -79,6 +81,8 @@ exports.deleteVoting = async (req, res, next) => {
 
 exports.getVoting = async (req, res, next) => {
   const { user, voting } = req;
+
+  if (!user || !voting) return next(createError('no user or voting'));
 
   try {
     const hasAdminPermission = user && voting.isMine(user._id);
@@ -113,7 +117,8 @@ exports.updateVoting = async (req, res, next) => {
 
   await voting.save();
 
-  return res.json({
-    message: `${voting.topic}: ${selectedOption.content}에 투표하셨습니다.`,
+  return res.status(200).json({
+    topic: voting.topic,
+    selectedOption: selectedOption.content,
   });
 };

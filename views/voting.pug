@@ -44,5 +44,7 @@ block content
           input(type="submit", value="Submit Voting")
 
 block scripts
-  script(src="/javascripts/update.js")
-  script(src="/javascripts/delete.js")
+  if !hasParticipated && voting.isOngoing
+    script(src="/javascripts/update.js")
+  if hasAdminPermission
+    script(src="/javascripts/delete.js")

@@ -6,10 +6,13 @@ html
     title Voting Platform
     link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.15.1/css/all.css' integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous")
     link(rel='stylesheet', href='/stylesheets/styles.css')
+    link(rel='stylesheet', href='/stylesheets/partials/modal.css')
     block styles
   body
+    include ../partials/modal
     include ../partials/navigation
     main
       h1= title
       block content
+    script(src="/javascripts/modal.js")
     block scripts

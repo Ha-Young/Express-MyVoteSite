@@ -16,7 +16,11 @@ router.get(GLOBAL.LOGIN, authController.getLogin);
 router.post(GLOBAL.LOGIN, authController.postLogin);
 
 router.get(GLOBAL.GOOGLE_LOGIN, authController.getGoogleLogin);
-router.get(GLOBAL.GOOGLE_LOGIN_CALLBACK, authController.getGoogleCallback);
+router.get(
+  GLOBAL.GOOGLE_LOGIN_CALLBACK,
+  authController.getGoogleCallback,
+  authController.redirectHome
+);
 
 router.get(GLOBAL.MY_VOTINGS, requiresLogin, votingsController.getAllMyVotings);
 

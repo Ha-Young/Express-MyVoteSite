@@ -8,5 +8,8 @@ block styles
 
 
 block content
-  each voting in votings
-    +votingBlock(voting, isMyVotings)
+  if !votings.length
+    H1 No Votings...
+  else
+    each voting in votings
+      +votingBlock(voting, isMyVotings)

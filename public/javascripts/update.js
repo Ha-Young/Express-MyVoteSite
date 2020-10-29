@@ -17,8 +17,13 @@ const voteSubmitHandler = async ev => {
       },
       body: JSON.stringify({ selectedOptionId: value }),
     });
-    const json = await res.json();
-    console.log(json);
+
+    const { topic, selectedOption } = await res.json();
+
+    openModal(
+      `${topic} 투표 완료`,
+      `${selectedOption} 에 투표를 완료하였습니다.`
+    );
   } catch (error) {
     console.error(error);
   }
