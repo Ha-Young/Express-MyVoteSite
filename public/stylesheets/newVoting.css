@@ -132,6 +132,14 @@ a {
 .createvote-head-myVoting {
   font-size: large;
   padding-top: 2em;
+  transition: all 0.2s ease-in-out;
+}
+
+.createvote-head-backtomain:hover {
+  transform: scale(1.05);
+}
+.createvote-head-myVoting:hover {
+  transform: scale(1.05);
 }
 
 .createvote-body {

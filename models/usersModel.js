@@ -35,7 +35,7 @@ userSchema.pre('save', async function (next) {
     );
 
     this.password = encrypted;
-    this.passwordConfirm = undefined;
+
     next();
   } catch (err) {
     next(err); //500error

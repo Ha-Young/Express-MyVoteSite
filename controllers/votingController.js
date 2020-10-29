@@ -13,13 +13,16 @@ exports.createNewVoting = async (req, res, next) => {
     const votingInfo = req.body;
 
     const user = await User.findById(req.session.user_id);
-    votingInfo.creator = user._id;
-
+    votingInfo.creator = {
+      _id: user._id,
+      email: user.email,
+    };
     const voting = await Voting.create(votingInfo);
     user.createdVoting.push(voting._id);
 
     await user.updateOne({ $push: { createdVoting: voting._id } });
-
+    console.log(votingInfo, 'votingInfo');
+    console.log(voting, 'voting');
     res.status(302).redirect('/');
   } catch (err) {
     // console.log(err, 'err in new votig');
@@ -29,6 +32,7 @@ exports.createNewVoting = async (req, res, next) => {
 
 exports.renderVoting = async (req, res, next) => {
   try {
+    // console.log('/:id route final controller');
     const voting = req.body.voting;
     const result = req.body.result || [];
     // console.log(result, 'result');

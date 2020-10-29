@@ -39,9 +39,14 @@
       <% for (let i = 0; i < votings.length; i++) {%>
       <div class="voting-each">
         <a href="/votings/<%=votings[i]._id%>">
-          <div class="voting-each-head"><%=votings[i].title%></div>
+          <h2 class="voting-each-head"><%=votings[i].title%></h2>
           <div class="voting-each-body">
-            <div>Host: <%=votings[i].creator%></div>
+            <% if (votings[i].isContinuing) { %>
+              <h3 id="on">Continuing</h3>
+            <%} else {%>
+              <h3 id="off">Closed</h3>
+              <%}%>
+            <div>Host: <%=votings[i].creator.email%></div>
             <div>Expire Date:<%=votings[i].expireDate%></div>
             <div><%=votings[i].isExpired%></div>
             <div>Description: <%=votings[i].description%></div>

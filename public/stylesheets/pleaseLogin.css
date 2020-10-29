@@ -18,6 +18,7 @@ a {
   grid-template-columns: 6fr 1fr 1fr 1fr;
   justify-items: center;
   align-items: center;
+  font-family: 'Lucida Grande', Helvetica, Arial, sans-serif;
   border-bottom: 1px solid #ffffa8;
 }
 
@@ -98,75 +99,43 @@ a {
   margin-left: 2em;
 }
 
-.voting-container {
+.please-login-container {
   display: grid;
   grid-template-rows: 5em 1fr;
   grid-gap: 1em;
 }
 
-.voting-head {
+.please-login-head {
   border-bottom: 1px solid black;
   display: grid;
-  grid-template-columns: 5fr 1fr 1fr;
-  justify-items: center;
-  align-items: center;
+  grid-template-columns: 18em 50em;
 }
 
-.voting-head-title {
+.please-login-head-title {
+  font-size: xx-large;
+  font-weight: bold;
+  padding-top: 1em;
+  padding-left: 1.5em;
+}
+
+.please-login-head-title-sub {
+  padding-top: 1.5em;
   font-size: x-large;
-  padding-right: 18em;
 }
 
-.voting-head-createVoting,
-.voting-head-myVoting {
+.please-login-body {
+  display: grid;
+  grid-template-columns: 15em 15em 15em;
+  grid-gap: 1em;
+  margin-top: 2em;
+  margin-left: 3em;
+}
+
+.please-login-button {
   font-size: large;
   transition: all 0.2s ease-in-out;
 }
 
-.voting-head-createVoting:hover {
+.please-login-button:hover {
   transform: scale(1.05);
-}
-.voting-head-myVoting:hover {
-  transform: scale(1.05);
-}
-
-.voting-body {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-items: center;
-  align-items: center;
-  grid-gap: 2em;
-}
-
-.voting-each {
-  border: 1px solid blue;
-  display: grid;
-  grid-template-rows: 2fr 1fr; /*확인하기*/
-  transition: all 0.2s ease-in-out;
-}
-
-.voting-each:hover {
-  transform: scale(1.05);
-}
-
-.voting-each-head {
-  font-size: x-large;
-  text-align: center;
-  margin-top: 1em;
-  padding-bottom: 1em;
-  border-bottom: 2px solid black;
-}
-
-.voting-each-body {
-  font-size: large;
-  margin-top: 1em;
-  padding-left: 1em;
-}
-
-#on {
-  color: rgb(16, 157, 16);
-}
-
-#off {
-  color: rgb(194, 51, 51);
 }

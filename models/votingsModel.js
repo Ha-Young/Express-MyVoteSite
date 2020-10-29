@@ -46,11 +46,7 @@ const votingSchema = new mongoose.Schema(
     },
     description: String,
     expireDate: Date,
-    // isExpired: { // virtual
-    //   type: Boolean,
-    //   default: false,
-    // },
-    // creator: String, // virtual
+    creator: Object,
   },
   {
     timestamps: { createdAt: 'created_at' },
@@ -66,23 +62,7 @@ votingSchema.virtual('isContinuing').get(function () {
   return expireDate > presentTime;
 });
 
-votingSchema.virtual('host', async function (cb) {
-  console.log(this._id, 'vote id in host virtual');
-  const [host] = await User.find({ createdVoting: { $eq: this._id } });
-  console.log(host.email, 'host virtual');
-  if (host) cb(host.email);
-
-  cb(null);
-});
-
-// votingSchema.virtual('host').get(async function () {
-//   console.log(this._id, 'vote id in host virtual');
-//   const [host] = await User.find({ createdVoting: { $eq: this._id } });
-//   console.log(host.email, 'host virtual');
-//   return host.email;
-// });
-
-votingSchema.methods.findMax = async (id) => {
+votingSchema.methods.sperateOption = async (id) => {
   const max = await Voting.aggregate([
     {
       $match: { _id: new mongoose.Types.ObjectId(id) },
@@ -90,14 +70,10 @@ votingSchema.methods.findMax = async (id) => {
     {
       $unwind: '$selectOptions',
     },
-    {
-      $group: {
-        _id: null,
-        max: { $max: '$selectOptions.count' },
-      },
-    },
   ]);
-  return max[0];
+
+  // console.log(max, '/:id route method middleware in findResult');
+  return max;
 };
 
 const Voting = mongoose.model('Voting', votingSchema);
