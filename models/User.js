@@ -16,9 +16,9 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  my_votings: [{
+  myVotings: [{
     type: Schema.Types.ObjectId,
-    ref: 'Vote',
+    ref: 'Voting',
   }],
 }, {
   timestamps: true,

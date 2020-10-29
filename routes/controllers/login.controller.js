@@ -18,3 +18,7 @@ exports.AuthenticatePassport = (req, res, next) => {
     });
   })(req, res, next);
 };
+
+exports.renderLogin = (req, res, next) => {
+  res.render('login');
+};

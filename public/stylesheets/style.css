@@ -1,3 +1,4 @@
+/* 공통 */
 * {
   box-sizing: border-box;
 }
@@ -47,6 +48,7 @@ button:hover {
   font-size: 1.5rem;
 }
 
+/* header */
 .header {
   display: flex;
   justify-content: space-between;
@@ -62,11 +64,19 @@ button:hover {
   color: var(--color-carrot);
 }
 
+.main-title {
+  margin-top: 50px;
+  color: var(--color-light-beige);
+  font-size: 1.5rem;
+}
+
+/* 로그인 */
 .login-user-buttons *,
 .logout-user-buttons * {
   margin: 0 2px;
 }
 
+/* 가입 */
 .signup-container,
 .login-container {
   display: flex;
@@ -122,10 +132,8 @@ button:hover {
 .register-error-message {
   margin-top: 20px;
 }
-.main-container {
-  padding: 0 30px;
-}
 
+/* 메인, 마이페이지 */
 main,
 my-page {
   display: grid;
@@ -135,6 +143,9 @@ my-page {
   padding: 3vw 10vw;
 }
 
+.main-title {
+  padding: 0 10vw;
+}
 .progress-container {
   display: flex;
   flex-direction: column;
@@ -162,6 +173,7 @@ my-page {
   margin-top: 5px;
 }
 
+/* vote details, result */
 .vote-title {
   margin: 0 0 10px;
 }
@@ -239,6 +251,7 @@ my-page {
   background-color: var(--color-carrot);
 }
 
+/* vote result */
 .vote-details form * {
   display: flex;
 }
@@ -273,6 +286,7 @@ my-page {
   color: var(--color-white);
 }
 
+/* vote register */
 .vote-register-container {
   display: flex;
   flex-direction: column;
@@ -339,12 +353,6 @@ my-page {
   column-gap: 20px;
   row-gap: 20px;
   padding: 3vw 10vw;
-}
-
-.my-votes-title {
-  margin-top: 50px;
-  color: var(--color-light-beige);
-  font-size: 1.5rem;
 }
 
 .each-vote-container {

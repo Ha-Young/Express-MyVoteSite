@@ -1,20 +1,13 @@
 extends layout
 
 block content
+  h1(class='main-title') Pick me!
   main
     each vote in votesData
       a(href=`/votings/${vote._id}`)
-        if vote.isInProgress
-          div.progress-container
-            h2(class='vote-title')= vote.title
-            div= vote.writer.nickname
-            div.time-container
-              div= '~ ' + vote.due_date
-              div / in progress
-        else
-          div.completed-container
-            h2(class='vote-title')= vote.title
-            div= vote.writer.nickname
-            div.time-container
-              div= '~ ' + vote.due_date
-              div / end
+        div(class= vote.isInProgress ? 'progress-container' : 'completed-container')
+          h2(class='vote-title')= vote.title
+          div= vote.writer.nickname
+          div.time-container
+            div= '~ ' + vote.due_date
+            div / in progress

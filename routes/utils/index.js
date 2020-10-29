@@ -16,3 +16,7 @@ exports.calculateDate = date => {
 exports.checkInProgress = date => {
   return new Date(date) > new Date();
 };
+
+exports.checkPassedDate = date => {
+  return new Date(date) <= new Date();
+};

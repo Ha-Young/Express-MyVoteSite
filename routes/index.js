@@ -4,14 +4,12 @@ const loginRouter = require('./login');
 const signupRouter = require('./signup');
 const userRouter = require('./my-votings');
 const votingRouter = require('./votings');
-const mainController = require('./controllers/main.controller');
+const indexController = require('./controllers/index.controller');
 
 router.get('/',
-  mainController.getAllVotes,
-  (req, res, next) => {
-    const votesData = req.votesData;
-    res.render('index', { votesData });
-});
+  indexController.getAllVotes,
+  indexController.renderIndex,
+);
 
 router.use('/login', loginRouter);
 router.use('/logout', (req, res, next) => {

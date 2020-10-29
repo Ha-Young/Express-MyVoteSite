@@ -3,14 +3,11 @@ const router = express.Router();
 const signupController = require('./controllers/signup.controller');
 const { isNotLoggedIn } = require('./middlewares/authenticate');
 
-router.get('/', isNotLoggedIn, (req, res, next) => {
-  res.render('signup');
-});
+router.get('/', isNotLoggedIn, signupController.renderSignup);
 
 router.post('/',
   signupController.createNewUser,
-  (req, res, next) => {
-    res.redirect('/login');
-});
+  signupController.redirectToLogin,
+);
 
 module.exports = router;

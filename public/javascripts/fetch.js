@@ -28,11 +28,14 @@ const handleUpdateRequest = async () => {
 
   try {
     const response = await fetch(`http://localhost:3000/votings/${votingId}`, option);
-    if (response.result = 'ok') {
+    if (response.status === 200) {
       window.location.href = 'http://localhost:3000/';
     }
+
+    if (response.status === 401) {
+      window.location.href = 'http://localhost:3000/login';
+    }
   } catch (error) {
-    // 에러 어떻게 보여줄지 고민
     console.log(error);
   }
 };
@@ -46,11 +49,11 @@ const handleDeleteRequest = async () => {
         'Content-Type': 'application/json',
       },
     });
+
     if (response.result = 'ok') {
       window.location.href = 'http://localhost:3000/';
     }
   } catch (error) {
-    // 에러 어떻게 보여줄지 고민
     console.log(error);
   }
 };

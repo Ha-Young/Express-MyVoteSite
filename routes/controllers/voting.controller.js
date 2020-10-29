@@ -1,45 +1,50 @@
-const Vote = require('../../models/Vote');
+const Voting = require('../../models/Voting');
 const User = require('../../models/User');
-const { calculateDate } = require('../utils');
+const { registerErrorMessage } = require('../../constants');
+const {
+  OPTIONS_NOT_ENOUGH,
+  PREVIOUS_TIME_NOT_ALLOWED,
+} = registerErrorMessage;
+const { calculateDate, checkPassedDate } = require('../utils');
 
 exports.validateInputs = (req, res, next) => {
   const { optionTitle, dueDate } = req.body;
 
   if (!optionTitle || typeof optionTitle === 'string' || optionTitle.length < 2) {
-    return res.render('vote-register', { message: '옵션을 2개 이상 생성하세요.' });
+    req.flash('message', OPTIONS_NOT_ENOUGH);
+    return res.redirect('/votings/new');
   }
 
-  if (new Date(dueDate) <= new Date()) {
-    return res.render('vote-register', { message: '이전 시간은 설정 불가합니다.' });
+  if (checkPassedDate(dueDate)) {
+    req.flash('message', PREVIOUS_TIME_NOT_ALLOWED);
+    return res.redirect('/votings/new');
   }
 
   next();
 };
 
-exports.createNewVote = async (req, res, next) => {
+exports.createNewVoting = async (req, res, next) => {
   const { title, optionTitle, dueDate } = req.body;
   const { _id } = req.user;
 
-  // push, each... 고려
   const options = [];
   optionTitle.forEach(option => {
-    options.push({ optionTitle: option, votedNumber: [] }); // votedNumber: 0
+    options.push({ optionTitle: option, votedNumber: [] });
   });
 
-  // user 업데이트는 분리하는게 좋겠지?
   try {
-    const newVote = await Vote.create({ title, writer: _id, due_date: dueDate, options, voter: [] });
-    await User.findByIdAndUpdate(_id, { $addToSet: { my_votings: newVote._id } });
+    const newVote = await Voting.create({ title, writer: _id, due_date: dueDate, options, voter: [] });
+    await User.findByIdAndUpdate(_id, { $addToSet: { myVotings: newVote._id } });
     next();
   } catch (error) {
     next(error);
   }
 };
 
-exports.getTargetVote = async (req, res, next) => {
+exports.getTargetVoting = async (req, res, next) => {
   try {
     const { voting_id } = req.params;
-    const targetVote = await Vote.findById(voting_id).populate('writer').lean();
+    const targetVote = await Voting.findById(voting_id).populate('writer').lean();
     targetVote.due_date = calculateDate(targetVote.due_date);
     req.targetVote = targetVote;
     next();
@@ -53,19 +58,19 @@ exports.updateVoteCount = async (req, res, next) => {
   const userId = req.user._id;
 
   try {
-    const votedUser = await Vote.findById(votingId, 'voter');
+    const votedUser = await Voting.findById(votingId, 'voter');
     if (votedUser.voter.includes(userId)) {
-      req.message = '이미 투표를 하셨습니다.';
+      req.flash('message', 'you have already voted.')
       return next();
     }
 
-    await Vote.findOneAndUpdate(
+    await Voting.findOneAndUpdate(
       { 'options._id': optionId },
       { $addToSet: { 'options.$[option].votedCount': req.user._id } },
       { arrayFilters: [{ 'option._id': optionId }] },
     );
 
-    await Vote.findByIdAndUpdate(
+    await Voting.findByIdAndUpdate(
       votingId,
       { $addToSet: { voter: req.user._id } }
     );
@@ -76,14 +81,14 @@ exports.updateVoteCount = async (req, res, next) => {
   }
 };
 
-exports.deleteVote = async (req, res, next) => {
+exports.deleteVoting = async (req, res, next) => {
   try {
     const { voting_id } = req.params;
     await User.update(
-      { 'my_votings': voting_id },
-      { $pull: { 'my_votings': voting_id } },
+      { 'myVotings': voting_id },
+      { $pull: { 'myVotings': voting_id } },
     );
-    await Vote.findOneAndDelete(voting_id);
+    await Voting.findOneAndDelete(voting_id);
     next();
   } catch (error) {
     next(error);
@@ -93,7 +98,7 @@ exports.deleteVote = async (req, res, next) => {
 exports.checkValidVote = async (req, res, next) => {
   const dueDate = req.targetVote.due_date;
 
-  if (new Date(dueDate) <= new Date()) {
+  if (checkPassedDate(dueDate)) {
     return res.redirect(`/votings/result/${req.params.voting_id}`);
   }
   next();
@@ -109,12 +114,32 @@ exports.checkAuthorization = async (req, res, next) => {
     : false;
 
   if (isIdsMatched) {
-    return res.render('vote-result', { targetDetails, isIdsMatched });
+    return res.render('voting-result', {
+      targetDetails, isIdsMatched
+    });
   }
 
-  if (new Date(dueDate) <= new Date()) {
-    return res.render('vote-result', { targetDetails, isIdsMatched });
+  if (checkPassedDate(dueDate)) {
+    return res.render('voting-result', {
+      targetDetails, isIdsMatched
+    });
   } else {
-    return res.render('vote-details', { targetDetails, isIdsMatched });
+    return res.render('voting-details', {
+      targetDetails, isIdsMatched
+    });
   }
-}
+};
+
+exports.renderVotingRegister = (req, res, next) => {
+  const message = req.flash('message');
+  res.render('voting-register', { message });
+};
+
+exports.renderVotingDetails = (req, res, next) => {
+  const targetDetails = req.targetVote;
+  const isIdsMatched = req.user
+    ? targetDetails.writer._id.equals(req.user._id)
+    : false;
+
+  res.render('voting-details', { targetDetails, isIdsMatched });
+};
