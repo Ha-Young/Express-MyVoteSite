@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const mongooseLeanVirtuals = require('mongoose-lean-virtuals');
 const { isFuture, formatDistanceToNow } = require('date-fns');
 
 const optionSchema = new mongoose.Schema({
@@ -8,7 +7,7 @@ const optionSchema = new mongoose.Schema({
     required: true,
   },
   count: {
-    type: String,
+    type: Number,
     default: 0,
   },
 });
@@ -56,7 +55,5 @@ votingSchema.method('isMine', function (userId) {
 votingSchema.method('isParticipated', function (userId) {
   return this.voters.some(voter => voter.equals(userId));
 });
-
-votingSchema.plugin(mongooseLeanVirtuals);
 
 module.exports = mongoose.model('Voting', votingSchema);

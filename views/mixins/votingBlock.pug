@@ -1,12 +1,15 @@
 include author
 include votingState
-mixin votingBlock(voting = {})
+mixin votingBlock(voting = {}, isMyVotings = false)
   a.voting-block(class=voting.isOngoing ? 'ongoing' : 'expired' href=routes.VOTINGS_HOME+"/"+voting._id)
     .state
       +votingState(voting.isOngoing)
       if voting.isOngoing
         span.time-remaining #{voting.timeRemaining} left
+    .voters
+      i.fas.fa-user
+      span= voting.voters.length
     h2= voting.topic
     .voting-detail.author
-      +author(voting.author, false)
-
+      if(!isMyVotings)
+        +author(voting.author, false)

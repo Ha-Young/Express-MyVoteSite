@@ -19,13 +19,14 @@ const initLoaders = app => {
     app.use(logger(config.logs.level));
   }
 
-  // if (process.env.NODE_ENV === 'production') {
-  app.use(compression());
-  app.use(helmet(config.helmet));
-  // }
+  if (process.env.NODE_ENV === 'production') {
+    app.use(compression());
+    app.use(helmet(config.helmet));
+  }
 
   app.use(cookieParser());
   app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
 
   app.set('views', path.join(config.rootDir, 'views'));
   app.set('view engine', 'pug');
@@ -40,7 +41,7 @@ const initLoaders = app => {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  app.use(require('./localsMiddleware'));
+  app.use(require('./locals'));
 };
 
 module.exports = initLoaders;

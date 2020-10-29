@@ -10,13 +10,10 @@ const findVotingById = require('../controllers/middlewares/findVotingById');
 router.get(VOTINGS.NEW, requiresLogin, votingsController.getNewVoting);
 router.post(VOTINGS.NEW, requiresLogin, votingsController.postNewVoting);
 
-router.post(VOTINGS.SUCCESS, votingsController.postVotingSuccess);
-
-router.post(VOTINGS.ERROR, votingsController.postVotingError);
-
 router.param('id', findVotingById);
 
 router.get(VOTINGS.BY_ID, votingsController.getVoting);
-router.post(VOTINGS.BY_ID, votingsController.postVoting);
+router.put(VOTINGS.BY_ID, requiresLogin, votingsController.updateVoting);
+router.delete(VOTINGS.BY_ID, requiresLogin, votingsController.deleteVoting);
 
 module.exports = router;

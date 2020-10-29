@@ -1,5 +1,41 @@
 @import './config/_variables';
 
+.admin-area,
+.voting-container {
+  width: 700px;
+}
+
+.admin-area {
+  display: flex;
+  justify-content: flex-end;
+
+  .delete-voting {
+    padding: 10px 15px;
+    margin: 10px 0;
+    background-color: $red;
+    border: 1px solid $white;
+    outline: none;
+    border-radius: 5px;
+    color: $white;
+    font-family: inherit;
+    transition: all 300ms;
+
+    &:hover {
+      cursor: pointer;
+      border: 1px solid $orange;
+      color: $orange;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: $white;
+      border: 1px solid $red;
+
+      color: $red;
+    }
+  }
+}
+
 .voting-container {
   position: relative;
   width: 700px;

@@ -51,10 +51,6 @@ exports.getGoogleCallback = passport.authenticate('google', {
   successRedirect: '/',
 });
 
-exports.postGoogleLogin = (req, res, next) => {
-  res.redirect('/');
-};
-
 exports.getLogout = (req, res, next) => {
   if (req.session) {
     req.session.destroy(err => {

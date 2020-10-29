@@ -22,11 +22,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-    myVotings: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: 'Voting',
-      default: [],
-    },
+    myVotings: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Voting',
+      },
+    ],
   },
   { timestamps: true }
 );

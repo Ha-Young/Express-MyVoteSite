@@ -8,6 +8,9 @@ block styles
   link(rel='stylesheet', href='/stylesheets/partials/author.css')
 
 block content
+  if hasAdminPermission
+    form(class="admin-area")
+      input.delete-voting(type="submit", value="Delete")
   .voting-container
     .state
       +votingState(voting.isOngoing)
@@ -28,15 +31,18 @@ block content
     .voting-detail.options
       i.fas.fa-list-ul
       span Options
-      form(action=routes.VOTINGS_BY_ID, method="POST")
+      form(class="vote-form")
         each option in voting.options
           .content
-              .option= option.content
+            .option= option.content
+            .option-count
               if hasAdminPermission || !voting.isOngoing
-                .option-count
-                  i.fas.fa-user  #{option.count}
-              else
-                input(type="radio", id="option", name="topic")
-        input(type="submit", value="Submit Voting")
-  span 어드민퍼미션 #{hasAdminPermission ? "있음" : "없음"}  
-  span 이미참여? #{hasParticipated? "했음" : "안했음" }
+                i.fas.fa-user  #{option.count}
+              if !hasParticipated && voting.isOngoing
+                input(type="radio", id="option", name="option" value=option._id required)
+        if !hasParticipated && voting.isOngoing
+          input(type="submit", value="Submit Voting")
+
+block scripts
+  script(src="/javascripts/update.js")
+  script(src="/javascripts/delete.js")

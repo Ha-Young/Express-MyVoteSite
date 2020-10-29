@@ -8,9 +8,9 @@ nav
       .displayName= user && user.displayName
   .menu
     ul
+      li
+        a(href=routes.HOME) Main
       if !user
-        li
-          a(href=routes.HOME) Main
         li
           a(href=routes.SIGNUP) Sign Up
         li

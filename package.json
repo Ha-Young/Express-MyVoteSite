@@ -20,7 +20,6 @@
     "helmet": "^4.1.1",
     "http-errors": "~1.6.3",
     "mongoose": "^5.10.10",
-    "mongoose-lean-virtuals": "^0.7.2",
     "morgan": "~1.9.1",
     "node-sass-middleware": "0.11.0",
     "passport": "^0.4.1",
