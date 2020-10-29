@@ -14,9 +14,10 @@ exports.postSignUp = async function postSignUp(req, res, next) {
     switch (type) {
       case SUCCESS:
         req.session.user = payload;
+        req.flash('success', `Welcome, ${payload.name}`);
         return res.redirect('/');
       case SERVICE_ERROR_CODE._00:
-        console.log(payload);
+        req.flash('error', payload.message);
         return res.redirect('/auth/login');
       default:
         res.redirect('/');
@@ -39,10 +40,11 @@ exports.postLogin = async function postLogin(req, res, next) {
     switch (type) {
       case SERVICE_ERROR_CODE._01:
       case SERVICE_ERROR_CODE._02:
-        console.log(payload);
+        req.flash('error', payload.message);
         return res.redirect('/auth/login');
       case SUCCESS:
         req.session.user = payload;
+        req.flash('success', 'Succeed Login!');
         if (cookies['callback']) {
           res.redirect(cookies['callback']);
         } else {

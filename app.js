@@ -5,7 +5,8 @@ const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const flash = require('connect-flash');
+// const flash = require('connect-flash');
+const flash = require('express-flash');
 
 const mongoose = require('mongoose');
 const createError = require('http-errors');

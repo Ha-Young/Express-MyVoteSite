@@ -41,7 +41,7 @@ class VoteService {
     try {
       const vote = await Vote.findById(id).populate('author', 'name');
       if (!vote) {
-        return createAction('error', { message: 'Cannot found the vote' });
+        return createAction(ERROR, '10');
       }
       return createAction(SUCCESS, vote);
     } catch (error) {
@@ -64,8 +64,7 @@ class VoteService {
       const targetExpire = vote.expireAt;
 
       if (checkExpiration(targetExpire)) {
-        return createAction(ERROR, 11);
-        // return createAction('error', { message: 'The vote is expired' });
+        return createAction(ERROR, '11');
       }
 
       const newCount = (targetItem.count += 1);
@@ -80,23 +79,11 @@ class VoteService {
         }
       );
 
-      // return createAction('success', { message: 'Succeed voting!' });
-      return createAction(SUCCESS, { message: 'Succeed voting!' });
+      return createAction(SUCCESS);
     } catch (error) {
       throw error;
     }
   }
 }
-
-// function createAction(type, payload) {
-//   return { type, payload };
-// }
-
-// function createAction(type, payload) {
-//   if (type === 'error') {
-//     return { type: `error-${payload}`, payload: SERVICE_ERROR[`CODE_${payload}`] };
-//   }
-//   return { type, payload };
-// }
 
 module.exports = VoteService;

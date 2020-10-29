@@ -1,5 +1,5 @@
 const VoteService = require('../../services/VoteService');
-const SERVICE_ERROR_CODE = require('../../services/ActionCreator').SERVICE_ERROR_CODE;
+const { SERVICE_ERROR_CODE, SUCCESS } = require('../../services/ActionCreator');
 
 const { formatISO } = require('date-fns');
 
@@ -19,15 +19,14 @@ exports.postNewVote = async function postNewVote(req, res, next) {
 
   try {
     if (!vote.itemList || (vote.itemList && vote.itemList.length <= 1)) {
-      req.flash('failed', 'Failed creating item must be at least 2');
-      req.app.locals.messages = req.flash('failed');
+      req.flash('error', 'Failed creating item must be at least 2');
       return res.redirect('/');
     }
 
     const voteInstance = new VoteService(vote);
     await voteInstance.createNewVote(user);
 
-    req.flash('succeed', 'Succeed creating new vote!');
+    req.flash('success', 'Succeed creating new vote!');
     req.app.locals.messages = req.flash('succeed');
     res.redirect('/');
   } catch (error) {
@@ -49,11 +48,11 @@ exports.getVote = async function getVote(req, res, next) {
     const { type, payload } = await VoteService.findVote(vote_id);
 
     switch (type) {
-      case 'error':
+      case SERVICE_ERROR_CODE._10:
         req.flash('error', payload.message);
-        req.app.locals.messages = req.flash('error');
-        throw payload;
-      case 'success':
+        console.log('hello???');
+        return res.redirect('/');
+      case SUCCESS:
         if (session && session.user) {
           isAuthor = session.user._id === payload.author._id.toString();
           isParticipated = payload.participatedUser.find(
@@ -80,12 +79,10 @@ exports.postVote = async function postVote(req, res, next) {
     const { type, payload } = await VoteService.castVote(vote_id, user, body);
 
     switch (type) {
-      case 'error':
+      case SERVICE_ERROR_CODE._11:
         req.flash('error', payload.message);
-        req.app.locals.messages = req.flash('error');
-      case 'success':
-        req.flash('success', payload.message);
-        req.app.locals.messages = req.flash('success');
+      case SUCCESS:
+        req.flash('success', 'Succeed voting!');
       default:
         return res.redirect(`/votings/${vote_id}`);
     }
