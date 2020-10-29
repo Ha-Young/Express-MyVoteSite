@@ -1,0 +1,25 @@
+.button {
+  cursor: pointer;
+  padding: 10px 16px;
+  margin: 6px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: 0.3s;
+  background: rgb(61, 107, 255);
+  color: white;
+}
+
+.button:hover {
+  background: rgb(32, 66, 179);
+  color: white;
+}
+
+.button-fixed {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+}
+
+.button-small {
+  padding: 8px 12px;
+}

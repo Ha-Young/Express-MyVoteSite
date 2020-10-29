@@ -2,27 +2,39 @@ extends ./layouts/layout
 
 block content
   if isAuthor
-    a(href=`/votings/delete/${vote.id}`) 삭제
-  h1= vote.title
-  p= vote.isExpired
-  p= vote.author.name
-  p= `${vote.expireAt.toLocaleString()}`
-  if !isParticipated && !vote.isExpired
-    form(action=`/votings/${vote.id}` method='POST')
-      each item, index in vote.candidateList
-        label
-          if index === 0
-            input(type='radio', name='item' value=`${item.title}` checked)
-          else
-            input(type='radio', name='item' value=`${item.title}`)
-          span= item.title
-      input(type='submit')
-  else if isParticipated
-    h3 투표 참여가 완료되었습니다.
-  else
-    h3 투표가 종료되었습니다.
-    ul.candidate-container
-      each item in vote.candidateList
-        li
-          p= item.title
-          p= item.count
+    a.button.button-fixed(href=`/votings/delete/${vote.id}`) Delete
+  .head-container
+    h1= vote.title
+    if vote.isExpired
+      p.card-expired.tag.black Expired
+    else
+      p.card-expired.tag.green Progress
+    p= vote.author.name
+    p= `${vote.expireAt.toLocaleString()}`
+  .sub-container
+    if !isParticipated && !vote.isExpired
+      form.detail(action=`/votings/${vote.id}` method='POST')
+        h1 어서 고르세유.😎
+        each item, index in vote.candidateList
+          label
+            if index === 0
+              input(type='radio', name='item' value=`${item.title}` checked)
+            else
+              input(type='radio', name='item' value=`${item.title}`)
+            span= item.title
+        input.button(type='submit' value='Submit')
+    else if isParticipated
+      h1 투표 참여가 완료되었습니다.👏
+      if isAuthor
+        ul.vote-list.detail
+          each item in vote.candidateList
+            .card.detail
+              p= item.title
+              p= item.count
+    else
+      h1 투표가 종료되었습니다.⏰
+      ul.vote-list.detail
+        each item in vote.candidateList
+          .card.detail
+            p= item.title
+            p= item.count

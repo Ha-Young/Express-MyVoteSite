@@ -1,9 +1,11 @@
 header
-  a(href='/') VOTE-IT!
-  if user
-    .header-username #{user.name}
-    a(href='/my-votings') My votings
-    a(href='/auth/logout') Logout
-  else
-    a(href='/auth/signup') Signup
-    a(href='/auth/login') Login
+  .header-brand
+    a(href='/') VOTE-ITT!
+  .header-menu
+    if user
+      span.header-user-name #{user.name}
+      a.button(href='/my-votings') My votings
+      a.button.gray(href='/auth/logout') Logout
+    else
+      a.button(href='/auth/signup') Sign Up
+      a.button(href='/auth/login') Login

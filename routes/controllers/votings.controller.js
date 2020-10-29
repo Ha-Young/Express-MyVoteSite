@@ -2,13 +2,13 @@ const VoteService = require('../../services/VoteService');
 const { SERVICE_ERROR_CODE } = require('../../services/ActionCreator');
 const { SUCCESS, ERROR } = require('../../constants');
 
-const { formatISO } = require('date-fns');
+const { formatISO, addHours } = require('date-fns');
 
 exports.getNewVote = function getNewVote(req, res, next) {
   const {
     session: { user }
   } = req;
-  const presentTime = formatISO(new Date()).slice(0, 16);
+  const presentTime = formatISO(addHours(new Date(), 1)).slice(0, 14) + '00';
   res.status(200).render('newVote', { user, time: presentTime });
 };
 

@@ -1,8 +1,8 @@
 extends ./layouts/layout
 
 block content
-  h1 Sign Up
   form(action='/auth/signup', method='POST')
+    h1 Sign Up
     label
       input(required type='email', name='email' placeholder='E-mail')
     label
@@ -11,4 +11,4 @@ block content
       input(required type='password', name='password'  placeholder='Password')
     label
       input(required type='password', name='passwordConfirmation' placeholder='Cofirm password')
-    input(type='submit' name='submit')
+    input.button(type='submit' name='submit' value='Sign Up')

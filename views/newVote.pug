@@ -1,19 +1,16 @@
 extends ./layouts/layout
 
 block content
-  h1 New vote
-  form(action='/votings/new', method='POST')
+  form.new-vote(action='/votings/new', method='POST')
+    h1 New vote
     label
-      | title
-      input(type='text', name='title' required)
+      input(type='text', name='title' required placeholder='Title')
     label
-      | expiredAt
-      input(type='datetime-local', name='expireAt', value=`${time}` min=`${time}` step=3600 required)
+      input(required type='datetime-local', name='expireAt', value=`${time}` min=`${time}` step=3600)
     label
-      | voting List
       .item-container
-        input(type='text', id='item' required)
-        button#btn-add-item 추가
+        input(type='text', id='item' placeholder='Voting List')
+        button.button.button-small#btn-add-item Add
       ul.item-list
-    input(type='submit')
+    input.button(type='submit' value='Submit')
   script(src='/javascripts/index.js')

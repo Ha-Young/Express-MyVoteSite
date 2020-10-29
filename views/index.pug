@@ -3,14 +3,16 @@ include mixins/card
 
 block content
   if user
-    a(href='/votings/new' class='btn-create-vote') Create Vote
-  h1 투표해보세용!
-  .vote-list
-    each vote in votingList
-      +card({
-        id: vote._id,
-        title: vote.title,
-        author: vote.author,
-        expireAt: vote.expireAt,
-        isExpired: vote.isExpired
-      })
+    a.button.button-fixed(href='/votings/new' class='btn-create-vote') Create Vote
+  .head-container
+    h1 🗳 투표하세용!
+  .container
+    .vote-list
+      each vote in votingList
+        +card({
+          id: vote._id,
+          title: vote.title,
+          author: vote.author,
+          expireAt: vote.expireAt,
+          isExpired: vote.isExpired
+        })

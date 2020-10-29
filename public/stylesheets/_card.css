@@ -1,0 +1,63 @@
+.card {
+  width: 300px;
+  height: 160px;
+  padding: 24px;
+  margin: 16px;
+  border-radius: 16px;
+  border: 0.1px solid rgb(240, 240, 240);
+  background: white;
+  transition: 0.3s;
+  flex-grow: 1;
+}
+
+.card:hover {
+  box-shadow: 20px 20px 60px rgb(228, 228, 228), -20px -20px 60px rgb(228, 228, 228);
+}
+
+.card a {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card .card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: no-wrap;
+}
+
+.card h3 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.card .card-expired {
+  margin-bottom: 20px;
+}
+
+.card .card-author-name {
+  font-weight: 500;
+  margin-right: 16px;
+}
+
+.card .card-expireAt {
+  font-size: 12px;
+  line-height: 18px;
+  color: lightgray;
+}
+
+.card.detail p {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.card.detail p:nth-child(2) {
+  font-size: 48px;
+  color: rgb(0, 179, 0);
+  font-weight: 700;
+  margin-bottom: 16px;
+}

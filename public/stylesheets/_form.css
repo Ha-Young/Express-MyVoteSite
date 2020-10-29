@@ -1,0 +1,88 @@
+form {
+  width: 300px;
+  /* height: 60vh; */
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 40px;
+  border-radius: 16px;
+  border: 0.1px solid rgb(240, 240, 240);
+  transition: 0.3s;
+}
+
+form:hover {
+  box-shadow: 20px 20px 60px rgb(228, 228, 228), -20px -20px 60px rgb(228, 228, 228);
+}
+
+form h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+form input:not([type='radio']) {
+  cursor: text;
+  min-width: 180px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  margin-right: 8px;
+  border-radius: 8px;
+  border: 0 solid black;
+  background: rgb(237, 237, 237);
+}
+
+form input.button {
+  cursor: pointer;
+  margin-top: 18px;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 10px 16px;
+  background-color: rgb(10, 191, 10);
+}
+
+form input.button:hover {
+  background-color: rgb(12, 154, 12);
+}
+
+form.new-vote {
+  display: flex;
+  justify-content: flex-start;
+  padding: 40px;
+}
+
+form.new-vote h1 {
+  width: 100%;
+}
+
+form.new-vote label {
+  width: 100%;
+}
+
+form.detail {
+  width: 50%;
+}
+
+form.detail label {
+  cursor: pointer;
+  width: 60%;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  padding: 16px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: rgb(254, 111, 111);
+  color: white;
+}
+
+form.detail label input {
+  margin: 0;
+  margin-right: 10px;
+}
+
+form.detail label span {
+  font-size: 16px;
+}

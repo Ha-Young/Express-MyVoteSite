@@ -5,9 +5,10 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     if messages.success
-      p(style='background:cyan')= messages.success
+      p.message.success= messages.success
     if messages.error
-      p(style='background:red')= messages.error
+      p.message.error= messages.error
     include ../partials/header
-    block content
+    .content
+      block content
     include ../partials/footer

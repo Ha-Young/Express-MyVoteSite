@@ -1,7 +1,12 @@
 mixin card(vote = {})
   .card
     a(href=`/votings/${vote.id}`)
-      h4= vote.title
-      p= vote.author.name
-      p= `${vote.expireAt.toLocaleString()}`
-      p= `isExpired: ${vote.isExpired}`
+      .card-header
+        h3= vote.title
+        if vote.isExpired
+          p.card-expired.tag.black Expired
+        else
+          p.card-expired.tag.green Progress
+      .card-footer
+        span.card-author-name= vote.author.name
+        span.card-expireAt= `Expire At ${vote.expireAt.toLocaleString()}`
