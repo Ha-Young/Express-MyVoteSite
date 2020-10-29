@@ -25,7 +25,6 @@ router.get('/login', (req, res, next) => {
 router.post('/login', passportAuthenticate);
 
 router.get('/logout', (req, res, next) => {
-  console.log('clicked');
   req.session.destroy((err) => {
     if (err) {
       next(err);

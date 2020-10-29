@@ -11,7 +11,7 @@ exports.registerNewUser = async (req, res, next) => {
     votings: [],
   });
 
-  User.create(newUserData, (err, user) => {
+  User.create(newUserData, err => {
     if (err) {
       next(err);
 

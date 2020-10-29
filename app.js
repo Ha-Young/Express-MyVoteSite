@@ -12,9 +12,6 @@ const path = require('path');
 const logger = require('morgan');
 
 const index = require('./routes/index');
-// const signup = require('./routes/signup');
-// const login = require('./routes/login');
-// const logout = require('./routes/logout');
 const votings = require('./routes/votings');
 
 const app = express();
@@ -36,9 +33,6 @@ app.use(passport.session());
 require('./src/passport')();
 
 app.use('/', index);
-// app.use('/signup', signup);
-// app.use('/login', login);
-// app.use('/logout', logout);
 app.use('/votings', votings);
 
 app.use(function(req, res, next) {

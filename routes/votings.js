@@ -13,7 +13,6 @@ router.post('/new', gateKeeper, validateVote, create);
 
 router.get('/:_id', getOne);
 router.put('/:_id', gateKeeper, checkHasSelectedOption, applyVote);
-
-router.get('/drop/:_id', gateKeeper, drop);
+router.delete('/:_id', gateKeeper, drop);
 
 module.exports = router;

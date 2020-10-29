@@ -50,14 +50,16 @@ exports.create = (req, res, next) => {
 };
 
 exports.drop = async (req, res, next) => {
+  let votingData;
+  let creatorData;
+
   try {
-    const votingData = await Voting.findById(req.params._id);
-    const creatorData = await User.findById(votingData.created_by);
+    votingData = await Voting.findById(req.params._id);
+    creatorData = await User.findById(votingData.created_by);
   } catch (err) {
     next(err);
   }
 
-  const creatorDataCopy = { ...creatorData };
   const indexOfVoting = creatorData.votings.indexOf(votingData._id);
 
   creatorData.votings.splice(indexOfVoting, 1);
@@ -69,8 +71,15 @@ exports.drop = async (req, res, next) => {
       { new: true },
     );
   } catch (err) {
+    res.json({
+      result: 'error',
+      message: '오류가 발생했습니다',
+    });
+
     next(err);
   }
+
+  const creatorDataCopy = { ...creatorData };
 
   try {
     await Voting.findByIdAndDelete(req.params._id);
@@ -82,14 +91,26 @@ exports.drop = async (req, res, next) => {
         { new: true },
       );
 
+      res.json({
+        result: 'error',
+        message: '오류가 발생했습니다',
+      });
+
       next(err);
     } catch (err) {
+      res.json({
+        result: 'error',
+        message: '오류가 발생했습니다',
+      });
+
       next(err);
     }
   }
 
-  res.status(200).render('dropSuccess');
-
+  res.json({
+    result: 'ok',
+    message: '삭제 완료',
+  });
 };
 
 exports.applyVote = async (req, res, next) => {
