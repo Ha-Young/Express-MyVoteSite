@@ -6,6 +6,7 @@
 </head>
 
 <body>
+  <div class="ref"><%=voting._id%></div>
   <nav class='main-nav'>
     <span class="title"><a href="/">What is your Pick?</a></span>
     <span class="item"><a href="/signup">sign up</a></span>
@@ -54,14 +55,19 @@
         <div>Option<%=i + 1%></div>
         <div class="selectoptions-body-container">
           <label for="option"><%=voting.selectOptions[i].option%></label>
-          <input id="selectoptions-body-radio" name="option" type="radio" />
+          <input id="selectoptions-body-radio" name="option" type="radio" value="<%=voting.selectOptions[i]._id%>" />
         </div>
         <%}%>
         <% if (isLoggedin) {%>
+        <% if (isVoted) {%>
+        <button class="voting-button" type="submit" disabled>Vote</button>
+        <div>Voted</div>
+        <%} else {%>
         <button class="voting-button" type="submit">Vote</button>
+        <%}%>
       </form>
       <%} else {%>
-      <a id="tologin" href="../login"><button class="voting-button-tologin" type="button">Vote</button></a>
+        <a id="tologin" href="/login"><button class="voting-button-tologin" type="button">Vote</button></a>
       </form>
       <%}%>
 

@@ -55,10 +55,12 @@ exports.registerUser = async (req, res, next) => {
 };
 
 exports.renderLogin = (req, res, next) => {
+  console.log(req.session, 'login in controller');
   res.render('auth/login', { err: {} });
 };
 
 exports.login = async (req, res, next) => {
+  // console.log(req.session, 'login in controller');
   try {
     const email = req.body.email;
     const password = req.body.password;
@@ -76,10 +78,11 @@ exports.login = async (req, res, next) => {
     if (isValid) {
       req.session.user_id = user._id;
       req.session.logined = true;
-      console.log(req.session, 'logged in');
+      // console.log(req.session, 'logged in');
+      if (req.session.redirectUrl) return res.status(302).redirect(`${req.session.redirectUrl}`);
       return res.status(302).redirect('/');
     }
-    // console.log('login fail');
+
     return res.status(302).redirect('/login');
   } catch (err) {
     console.log(err, 'err1');

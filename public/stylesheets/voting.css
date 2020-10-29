@@ -197,9 +197,12 @@ a {
 .voting-button-tologin {
   font-size: large;
   width: 12em;
-  
 }
 
 #tologin {
   display: block;
+}
+
+.ref {
+  display: none;
 }

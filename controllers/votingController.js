@@ -33,27 +33,38 @@ exports.createNewVoting = async (req, res, next) => {
 exports.renderVoting = async (req, res, next) => {
   try {
 
-    //1. 진행중?
-    //2. 로그인? req.session.logined
-    //3. 작성자?
+    //1. 진행중? done
+    //2. 로그인? req.session.logined done
+    console.log('/:id route final controller');
+    const isLoggedin = req.session.logined;
+    const userId = req.session.user_id;
+    const votingId = req.params.id;
+    const voting = await Voting.findById(votingId);
+
+    if (!isLoggedin) req.session.redirectUrl = `/votings/${votingId}`
+    console.log('/:id route final controller');
+    //3. 기투표자?
+    // req.session.user_id 현재 이용하고 있는 사람 아이디 
+
+    // 서버에서 리다이렉트 하는 것 찾기 
+    리다이렉트해야함
+    let isVoted = false;
+    voting.selectOptions.forEach((selectOption) => {
+      if (selectOption.votedUsers.includes(userId)) {
+        isVoted = true;
+      }
+    });
+
+    //4. 작성자?
     // req.body.voting[0].creator._id 작성자 아이디
     // req.session.user_id 현재 이용하고 있는 사람 아이디
 
-    //4. 기투표자?
-    // req.session.user_id 현재 이용하고 있는 사람 아이디
-    // aggregate로 votedUsers 풀어서 찾기?
 
-    const isLoggedin = req.session.logined;
-    const votingId = req.params.id;
-    const voting = await Voting.findById(votingId);
-    console.log(isLoggedin, '/:id route final controller');
 
-    // const voting = req.body.voting;
-    // const result = req.body.result || [];
-    // console.log(result, 'result');
     res.render('voting/voting', {
       voting,
       isLoggedin,
+      isVoted,
     });
     // res.json({ status: 'success' })
   } catch (err) {
@@ -64,9 +75,9 @@ exports.renderVoting = async (req, res, next) => {
 
 exports.receiveVotingResult = async (req, res, next) => {
   try {
-    console.log('receiveVotingResult');
+    console.log('fetch put last step in receiveVotingResult controller');
 
-    console.log(req.body, 'bd');
+
 
     // return res.redirect('/');
     return res.json('sucess');

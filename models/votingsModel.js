@@ -38,7 +38,7 @@ const votingSchema = new mongoose.Schema(
           const filtered = selectOptions.filter(
             (selectOption) => selectOption.option
           );
-          console.log(filtered, 'in SO val');
+
           if (filtered.length < 2) return false;
         },
         message: 'Please write more than 2 select options.',
@@ -62,7 +62,21 @@ votingSchema.virtual('isContinuing').get(function () {
   return expireDate > presentTime;
 });
 
-votingSchema.methods.sperateOption = async (id) => {
+
+votingSchema.methods.findVotedUser = async function (id) {
+  const votedUsers = await Voting.aggregate([
+    {
+      $match: { _id: new mongoose.Types.ObjectId(id) },
+    },
+    {
+      $unwind: '$selectOptions',
+    },
+  ]);
+  console.log(votedUsers, 'in findVotedUser method in rendervoting method')
+  return votedUsers
+};
+
+votingSchema.methods.sperateOptionforResult = async (id) => {
   const max = await Voting.aggregate([
     {
       $match: { _id: new mongoose.Types.ObjectId(id) },
