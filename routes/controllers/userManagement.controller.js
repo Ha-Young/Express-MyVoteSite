@@ -45,7 +45,7 @@ exports.passportAuthenticate = (req, res, next) => {
 
       req.session.userId = user._id;
 
-      res.redirect(req.body.referer);
+      res.redirect('/');
     });
   })(req, res, next);
 };
