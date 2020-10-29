@@ -7,7 +7,7 @@ const votingRouter = require('./votings');
 const indexController = require('./controllers/index.controller');
 
 router.get('/',
-  indexController.getAllVotes,
+  indexController.getAllVotings,
   indexController.renderIndex,
 );
 

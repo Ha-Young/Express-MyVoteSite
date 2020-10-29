@@ -1,16 +1,17 @@
 const User = require('../../models/User');
-const { calculateDate } = require('../utils');
+const { calculateDate, checkInProgress } = require('../utils');
 
-exports.getAllMyVotes = async (req, res, next) => {
+exports.getAllMyVotings = async (req, res, next) => {
   try {
     const currentUserId = req.user._id;
-    const myVotes = await User.findById(currentUserId).populate('myVotings').lean();
+    const myVotingsData = await User.findById(currentUserId).populate('myVotings').lean();
 
-    myVotes.myVotings.map(vote => {
-      return vote.due_date = calculateDate(vote.due_date);
+    myVotingsData.myVotings.map(data => {
+      data.due_date = calculateDate(data.due_date);
+      data.isInProgress = checkInProgress(data.due_date);
     });
 
-    req.myVotes = myVotes.myVotings;
+    req.myVotingsData = myVotingsData.myVotings;
     next();
   } catch (error) {
     next(error);
@@ -18,6 +19,6 @@ exports.getAllMyVotes = async (req, res, next) => {
 };
 
 exports.renderMyVotings = (req, res, next) => {
-  const myVotes = req.myVotes;
-  res.render('my-votings', { myVotes });
+  const myVotings = req.myVotingsData;
+  res.render('my-votings', { myVotings });
 };

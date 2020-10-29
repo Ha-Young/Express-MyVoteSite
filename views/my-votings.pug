@@ -1,11 +1,14 @@
 extends layout
 
 block content
-  section.my-page
-    h1(class='main-title') My Votes
-    div.my-vote-container
-      each vote in myVotes
-        a(href=`/votings/${vote._id}`)
-          div.each-vote-container
-            h2= vote.title
-            span= vote.due_date
+  h1(class='main-title') My Votings
+  div.my-vote-container
+    each voting in myVotings
+      a(href=`/votings/${voting._id}`)
+        div(class= voting.isInProgress ? 'progress-container' : 'completed-container')
+          h2= voting.title
+          span= voting.due_date
+          if voting.isInProgress
+              div.in-progress-bullet in progress
+          else
+            div.completed-bullet completed

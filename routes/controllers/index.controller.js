@@ -1,17 +1,16 @@
 const Voting = require('../../models/Voting');
 const { calculateDate, checkInProgress } = require('../utils');
 
-exports.getAllVotes = async (req, res, next) => {
+exports.getAllVotings = async (req, res, next) => {
   try {
-    const allVotesData = await Voting.find().populate('writer').lean();
+    const allVotingsData = await Voting.find().populate('writer').lean();
 
-    allVotesData.forEach(data => {
-      const modifiedDate = calculateDate(data.due_date);
-      data.due_date = modifiedDate;
+    allVotingsData.forEach(data => {
+      data.due_date = calculateDate(data.due_date);
       data.isInProgress = checkInProgress(data.due_date);
     });
 
-    req.votesData = allVotesData;
+    req.votingsData = allVotingsData;
     next();
   } catch (error) {
     next(error);
@@ -19,6 +18,6 @@ exports.getAllVotes = async (req, res, next) => {
 };
 
 exports.renderIndex = (req, res, next) => {
-  const votesData = req.votesData;
-  res.render('index', { votesData });
+  const votingsData = req.votingsData;
+  res.render('index', { votingsData });
 };

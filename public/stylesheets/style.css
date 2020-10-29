@@ -146,6 +146,7 @@ my-page {
 .main-title {
   padding: 0 10vw;
 }
+
 .progress-container {
   display: flex;
   flex-direction: column;
@@ -173,6 +174,20 @@ my-page {
   margin-top: 5px;
 }
 
+.in-progress-bullet {
+  background-color: var(--color-light-beige);
+  border-radius: 20px;
+  padding: 1px 5px;
+  margin-left: 10px;
+}
+
+.completed-bullet {
+  background-color: var(--color-black);
+  color: white;
+  border-radius: 20px;
+  padding: 1px 5px;
+  margin-left: 10px;
+}
 /* vote details, result */
 .vote-title {
   margin: 0 0 10px;
@@ -355,12 +370,6 @@ my-page {
   padding: 3vw 10vw;
 }
 
-.each-vote-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  border-radius: 20px;
-  background-color: var(--color-carrot);
+.my-vote-container span {
+  margin-bottom: 10px;
 }

@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const { signupErrorMessage } = require('../constants');
+const {
+  INVALID_EMAIL,
+  INVALID_PASSWORD,
+} = signupErrorMessage;
 
 const UserSchema = new Schema({
   id: Schema.Types.ObjectId,

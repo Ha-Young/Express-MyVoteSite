@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/',
   authenticate,
-  myVotingController.getAllMyVotes,
+  myVotingController.getAllMyVotings,
   myVotingController.renderMyVotings,
   );
 

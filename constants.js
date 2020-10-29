@@ -1,6 +1,8 @@
-exports.loginErrorMessage = {
+exports.signupErrorMessage = {
   PASSWORD_NOT_MATCHED: 'password does not matched.',
   EMAIL_NOT_AVAILABLE: 'email is not available.',
+  INVALID_PASSWORD: 'password should be at least 8 characters.',
+  INVALID_EMAIL: 'Should be a vaild email address.',
 };
 
 exports.registerErrorMessage = {
