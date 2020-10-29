@@ -7,16 +7,14 @@ block content
       div(class='details-top-section')
         span= targetDetails.writer.nickname
         span= ' / ' + targetDetails.due_date
-      form(active=`/votings/${targetDetails._id}` method='POST')
-        each option in targetDetails.options
-          div(class='radio-option')
-            input(type='radio' id= option name='vote' class='vote-option' value= option._id)
-            label(for= option)= option.optionTitle
-        button(type='submit' class='vote-button') Vote
-    if isIdsMatched
-      div.writer-only
-        a(href=`/votings/delete/${targetDetails._id}`)
-          button(type='submit') Delete
+      each option in targetDetails.options
+        div(class='radio-option')
+          input(type='radio' name='voting-option' class='voting-option' value= option._id data-votingId= targetDetails._id)
+          label(for= option)= option.optionTitle
+      button(type='submit' class='voting-button') Vote
+      div.writer-only(class= isIdsMatched ? 'visible' : 'hidden')
+        button(type='submit' class='delete-button') Delete
         a(href=`/votings/result/${targetDetails._id}`)
           button(type='submit') Vote result
     span= message
+  script(src='/javascripts/fetch.js')

@@ -10,7 +10,8 @@ block content
       each option in targetDetails.options
         li= option.optionTitle
           span= option.votedCount.length
-    //- a(href=`/votings/${targetDetails._id}`)
-    //-   button(type='button') 뒤로가기
     a(href='/')
       button(type='button') Main
+    div.writer-only(class= isIdsMatched ? 'visible' : 'hidden')
+      button(type='submit' class='delete-button') Delete
+

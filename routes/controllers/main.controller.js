@@ -5,7 +5,6 @@ exports.getAllVotes = async (req, res, next) => {
   try {
     const allVotesData = await Vote.find().populate('writer').lean();
 
-    // date 예쁘게, 진행여부 판단
     allVotesData.forEach(data => {
       const modifiedDate = calculateDate(data.due_date);
       data.due_date = modifiedDate;

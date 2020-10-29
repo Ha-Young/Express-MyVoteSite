@@ -49,14 +49,12 @@ exports.getTargetVote = async (req, res, next) => {
 };
 
 exports.updateVoteCount = async (req, res, next) => {
-  const optionId = req.body.vote;
-  const votingId = req.params.voting_id;
+  const { votingId, optionId } = req.body;
   const userId = req.user._id;
 
   try {
     const votedUser = await Vote.findById(votingId, 'voter');
     if (votedUser.voter.includes(userId)) {
-      // 처리 방안 추가 고민해보기
       req.message = '이미 투표를 하셨습니다.';
       return next();
     }
@@ -66,10 +64,12 @@ exports.updateVoteCount = async (req, res, next) => {
       { $addToSet: { 'options.$[option].votedCount': req.user._id } },
       { arrayFilters: [{ 'option._id': optionId }] },
     );
+
     await Vote.findByIdAndUpdate(
       votingId,
       { $addToSet: { voter: req.user._id } }
     );
+
     next();
   } catch (error) {
     next(error);
@@ -92,10 +92,29 @@ exports.deleteVote = async (req, res, next) => {
 
 exports.checkValidVote = async (req, res, next) => {
   const dueDate = req.targetVote.due_date;
-  console.log(dueDate, req.params.voting_id);
 
   if (new Date(dueDate) <= new Date()) {
     return res.redirect(`/votings/result/${req.params.voting_id}`);
   }
   next();
 };
+
+exports.checkAuthorization = async (req, res, next) => {
+  const currentUserId = req.user && req.user._id;
+  const targetDetails = req.targetVote;
+  const currentVoteWriterId = targetDetails.writer._id;
+  const dueDate = targetDetails.due_date;
+  const isIdsMatched = req.user
+    ? currentVoteWriterId.equals(currentUserId)
+    : false;
+
+  if (isIdsMatched) {
+    return res.render('vote-result', { targetDetails, isIdsMatched });
+  }
+
+  if (new Date(dueDate) <= new Date()) {
+    return res.render('vote-result', { targetDetails, isIdsMatched });
+  } else {
+    return res.render('vote-details', { targetDetails, isIdsMatched });
+  }
+}

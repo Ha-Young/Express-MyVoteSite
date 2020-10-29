@@ -34,6 +34,14 @@ button:hover {
   background-color: var(--color-black);
 }
 
+.visible {
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
 .page-title {
   color: var(--color-light-beige);
   font-size: 1.5rem;
@@ -208,7 +216,7 @@ my-page {
   margin: 0 15px;
 }
 
-.vote-button {
+.voting-button {
   margin-top: 10px;
   width: 100%;
   text-align: center;
