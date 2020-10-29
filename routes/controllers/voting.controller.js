@@ -1,8 +1,8 @@
+const createError = require('http-errors');
 const Voting = require('../../models/Voting');
 const User = require('../../models/User');
-const { isExpiration } = require('../../utils');
-const createError = require('http-errors');
 const constants = require('../../constants');
+const { isExpiration } = require('../../utils');
 
 exports.getRenderNewVoting = (req, res, next) => {
   res.render('newVoting');
@@ -11,7 +11,12 @@ exports.getRenderNewVoting = (req, res, next) => {
 exports.renderMyVotingsPage = async (req, res, next) => {
   try {
     const { _id } = req.user;
+    const isValidObjectId = mongoose.isValidObjectId(_id);
     const { votings } = await User.findOne({ _id }).populate('votings');
+
+    if (!isValidObjectId) {
+      return next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL));
+    }
 
     votings.map(
       voting =>
@@ -27,10 +32,11 @@ exports.renderMyVotingsPage = async (req, res, next) => {
 exports.getRenderVotingDetails = async (req, res, next) => {
   try {
     const { id } = req.params;
+    const isValidObjectId = mongoose.isValidObjectId(_id);
     const voting = await Voting.findOne({ _id: id });
     const { options } = voting.populate('options');
 
-    if (!voting || !options) {
+    if (!voting || !options || !isValidObjectId) {
       return next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL));
     }
 
@@ -55,9 +61,10 @@ exports.vote = async (req, res, next) => {
   try {
     const { _id } = req.user;
     const { option } = req.body;
+    const isValidObjectId = mongoose.isValidObjectId(_id);
 
-    if (!_id, !option) {
-      return createError(400, constants.ERROR_MESSAGE_NOT_EXIST);
+    if (!isValidObjectId, !option) {
+      return createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL);
     }
 
     await Voting.updateOne(
@@ -74,11 +81,11 @@ exports.vote = async (req, res, next) => {
 
 exports.deleteVoting = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const { _id } = req.user;
+    const { params: { id }, user: { _id } } = req;
+    const isValidObjectId = mongoose.isValidObjectId(_id);
 
-    if (!id) {
-      next(createError(400, constants.ERROR_MESSAGE_NOT_EXIST));
+    if (!isValidObjectId) {
+      next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL));
     }
 
     await Voting.findByIdAndDelete(id);
