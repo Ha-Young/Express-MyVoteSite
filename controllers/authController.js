@@ -8,18 +8,16 @@ exports.renderMainPage = async (req, res, next) => {
       votings,
     });
   } catch (err) {
-    console.log(err, 'renderMainPage')
+    console.log(err, 'renderMainPage');
   }
-
 };
 
 exports.renderSignup = (req, res, next) => {
   try {
     res.render('auth/signup', { err: {} });
   } catch (err) {
-    console.log(err, 'renderSignup')
+    console.log(err, 'renderSignup');
   }
-
 };
 
 exports.registerUser = async (req, res, next) => {
@@ -34,8 +32,8 @@ exports.registerUser = async (req, res, next) => {
       const err = new Error(
         'Please input the same password in both password and password confirm.'
       );
-      err.errors = { passwordConfirm: { message: err.message } }
-      throw err
+      err.errors = { passwordConfirm: { message: err.message } };
+      throw err;
     }
 
     const signedUp = await User.create({
@@ -45,20 +43,18 @@ exports.registerUser = async (req, res, next) => {
 
     return res.status(302).redirect('/login');
   } catch (err) {
-    console.log(err, 'err')
+    console.log(err, 'err in controller');
 
     // res.render('auth/failSignup', { data: err.message });
     // console.log(err.errors.password.message, 'errs')
     // console.log(err.errors.email.message, 'errs email')
     // console.log(err.errors.passwordConfirm.message, 'errs email')
-    return res.render('auth/signup', { err: err.errors })
-
+    return res.render('auth/signup', { err: err.errors });
   }
 };
 
 exports.renderLogin = (req, res, next) => {
-  console.log('called by put method');
-  res.render('auth/login');
+  res.render('auth/login', { err: {} });
 };
 
 exports.login = async (req, res, next) => {
@@ -69,7 +65,9 @@ exports.login = async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      throw new Error('there is no user using the email');
+      const err = new Error('The given email address does not exist.');
+      err.email = { message: err.message };
+      throw err;
     }
 
     const isValid = await user.verifyPassword(password, user.password);
@@ -83,7 +81,8 @@ exports.login = async (req, res, next) => {
     // console.log('login fail');
     return res.status(302).redirect('/login');
   } catch (err) {
-    next(err);
+    console.log(err, 'err1');
+    return res.render('auth/login', { err });
   }
 };
 

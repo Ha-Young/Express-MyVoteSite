@@ -7,9 +7,8 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
-    required: true,
     trim: true,
-    validate: [validator.isEmail, 'Please provide a valid email.'],
+    validate: [validator.isEmail, 'Please provide a valid form of an email.'],
   },
   password: {
     type: String,
@@ -20,7 +19,8 @@ const userSchema = new mongoose.Schema({
         const regex = new RegExp(/^[a-zA-Z0-9]{5,10}$/);
         return regex.test(password);
       },
-      message: 'Please make 5 to 10 digits password using both alphabets and numbers.'
+      message:
+        'Please make 5 to 10 digits password using both alphabets and numbers.',
     },
   },
   // passwordConfirm: {
@@ -29,38 +29,46 @@ const userSchema = new mongoose.Schema({
   createdVoting: Array,
 });
 
-const User = mongoose.model('User', userSchema);
-
 userSchema.pre('save', async function (next) {
-  console.log('pre')
   try {
     // console.log(this.isModified('password'), 'isM');
 
-    const encrypted = await bcrypt.hash(this.password, Number(process.env.SALT));
+    const encrypted = await bcrypt.hash(
+      this.password,
+      Number(process.env.SALT)
+    );
 
     this.password = encrypted;
     this.passwordConfirm = undefined;
     next();
   } catch (err) {
-    next(err);
+    next(err); //500error
   }
 });
 
 userSchema.pre('save', async function (next) {
-  console.log('pre 2nd')
-  try {
+  const checkDuplication = await User.find({ email: this.email });
 
-    const checkDuplication = await User.findById(this._id);
-    console.log(checkDuplication, 'chD')
-  } catch (err) {
-    console.log(err, 'pre 2nd')
+  if (checkDuplication.length) {
+    const err = new Error(
+      'Other user is already using the provied email, Please use another email.'
+    );
+    err.errors = { email: { message: err.message } };
+    throw err;
   }
-
-})
-
+});
 
 userSchema.methods.verifyPassword = async (plainPassword, encrypted) => {
-  return await bcrypt.compare(plainPassword, encrypted);
+  const result = await bcrypt.compare(plainPassword, encrypted);
+
+  if (!result) {
+    const err = new Error('Password is not correct.');
+    err.password = { message: err.message };
+    throw err;
+  }
+  return result;
 };
+
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

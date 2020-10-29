@@ -1,0 +1,154 @@
+body {
+  display: grid;
+  grid-template-rows: 5em 30em 1fr;
+  margin-bottom: 70px;
+  font-family: 'Lucida Grande', Helvetica, Arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.main-nav {
+  background-color: #cabf45;
+  color: black;
+  /* height: 12vh; */
+  display: grid;
+  grid-template-columns: 6fr 1fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  font-family: 'Lucida Grande', Helvetica, Arial, sans-serif;
+  border-bottom: 1px solid #ffffa8;
+}
+
+.item {
+  color: #fef4a0;
+  font-size: 1em;
+  text-shadow: 1px 1px 1px gray;
+  transition: all 0.2s ease-in-out;
+}
+
+.item:hover {
+  transform: scale(1.1);
+}
+
+.title {
+  color: black;
+  font-weight: 500;
+  font-size: 2em;
+  text-shadow: 2px 2px 2px gray;
+}
+
+.feature {
+  background-color: #fff176;
+  display: grid;
+  grid-template-columns: 40% 40%;
+  grid-gap: 2em;
+  justify-items: center;
+  align-items: center;
+  border-bottom: 1px solid #cabf45;
+}
+
+.feature-pic-container {
+  margin-left: 4em;
+  border: 1px solid black;
+  box-shadow: 3px 3px 1px gray;
+  margin-left: 30%;
+  height: 335px;
+  display: grid;
+  grid-template-rows: 10fr 1fr;
+  grid-gap: 1em;
+  margin-bottom: 1em;
+}
+
+.feature-pic {
+  transition: all 0.2s ease-in-out;
+}
+
+.feature-pic:hover {
+  transform: scale(1.05);
+}
+
+.feature-text-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr 3fr;
+  justify-items: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.feature-text-container:hover {
+  transform: scale(1.1);
+}
+
+.feature-head {
+  color: black;
+  text-shadow: 1px 1px 1px gray;
+}
+
+.feature-sub {
+  color: black;
+  text-shadow: 1px 1px 1px gray;
+  font-size: 3em;
+}
+
+.feature-body {
+  font-size: 1.1em;
+  width: 85%;
+  margin-left: 2em;
+}
+
+.login-container {
+  display: grid;
+  grid-template-rows: 5em 1fr;
+  grid-gap: 1em;
+}
+
+.login-head {
+  border-bottom: 1px solid black;
+  display: grid;
+  grid-template-columns: 18em 50em;
+}
+
+.login-head-title {
+  font-size: xx-large;
+  font-weight: bold;
+  padding-top: 1em;
+  padding-left: 1.5em;
+}
+
+.login-head-title-sub {
+  padding-top: 1.5em;
+  font-size: x-large;
+}
+
+.login-body {
+  display: grid;
+  grid-template-columns: 41em 1fr;
+  grid-gap: 1em;
+}
+
+.login-body-form {
+  display: grid;
+  grid-template-columns: 9em 15em;
+  grid-gap: 1em;
+  font-size: x-large;
+  margin-left: 2em;
+}
+
+.login-body-err {
+  display: grid;
+  grid-template-rows: 3em;
+  font-size: large;
+  color: #c41f1f;
+}
+
+.login-button {
+  font-size: large;
+  transition: all 0.2s ease-in-out;
+}
+
+.login-button:hover {
+  transform: scale(1.05);
+}

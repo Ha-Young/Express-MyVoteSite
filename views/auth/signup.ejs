@@ -7,7 +7,7 @@
 
 <body>
   <nav class='main-nav'>
-    <span class="title">What is your Pick?</span>
+    <span class="title"><a href="/">What is your Pick?</a></span>
     <span class="item"><a href="/signup">sign up</a></span>
     <span class="item"><a href="/login">login</a></span>
     <span class="item"><a href="/logout">logout</a></span>
@@ -49,6 +49,7 @@
 
         <button class="signup-button" type="submit">Sign Up</button>
       </form>
+    </div>
       <div class="signup-body-err">
         <div><%= err.email ? err.email.message : null%></div>
         <div><%= err.password ? err.password.message : null%></div>

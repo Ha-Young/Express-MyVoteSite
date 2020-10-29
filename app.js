@@ -31,6 +31,11 @@ app.use('/votings', votingRoute);
 
 app.use((err, req, res, next) => {
   console.log('Global error', err);
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  err.status = err.status || 500;
 });
 
 module.exports = app;
