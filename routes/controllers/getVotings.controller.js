@@ -35,6 +35,7 @@ exports.getMine = async (req, res, next) => {
 exports.getOne = async (req, res, next) => {
   let userIsCreator = false;
   let isExpired = false;
+  let currentUsersPick = null;
 
   try {
     const voting = await Voting.findById(req.params._id);
@@ -49,11 +50,20 @@ exports.getOne = async (req, res, next) => {
       isExpired = true;
     }
 
+    for (const option of voting.options) {
+      for (const voter of option.voters) {
+        if (voter.toString() === req.session.userId) {
+          currentUsersPick = option.content;
+        }
+      }
+    }
+
     res.status(200).render('votingDetails', {
       voting,
       userIsCreator,
       isExpired,
-      formattedExpirationDate
+      formattedExpirationDate,
+      currentUsersPick,
     });
   } catch (err) {
     next(err);

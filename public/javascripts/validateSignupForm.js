@@ -18,4 +18,3 @@ function validateSignupForm() {
     $submitButton.disabled = true;
   }
 }
-

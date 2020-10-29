@@ -43,4 +43,3 @@ async function updateVotingData(event) {
 
   location.assign(`/votings/${votingId}`);
 }
-

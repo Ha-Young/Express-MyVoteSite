@@ -15,7 +15,14 @@
   <% } %><br><br>
   <form id='vote-form'>
   <% voting.options.forEach(option => { %>
-    <input type='radio' name='option' value='<%= option.content %>'>
+    <input
+      type='radio'
+      name='option'
+      value='<%= option.content %>'
+      <% if (currentUsersPick === option.content) { %>
+        checked
+      <% } %>
+    >
     <label for='<%= option.content %>'><%= option.content %></label>
     <% if (isExpired || userIsCreator) { %><span> - <%= option.voters.length %>표</span><br><% } %>
   <% }) %><br>

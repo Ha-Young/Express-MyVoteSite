@@ -14,4 +14,3 @@ async function deleteVoting() {
   alert(fetchedData.message);
   location.assign('/');
 }
-
