@@ -6,15 +6,14 @@
   <%- include('partials/header') %>
   <div class="main-container">
     <% for (let i = 0; i < votes.length; i++) { %>
-      creatorId: <%= votes[i].creator %>
       <div class="vote-container">
         <h1 class="vote-title"><%= votes[i].title %></h1>
           <a href="/votings/<%= votes[i]._id %>">
-            <% if (!expired[i]) { %>
-              <button>투표하기</button>
+            <% if (expired[i]) { %>
+              <button>결과보기</button>
             <% } else { %>
-              <button disabled>투표종료</button>
-              <% } %>
+              <button>투표보기</button>
+            <% } %>
           </a>
         <div class="vote-details">
           <p class="vote-createdAt">생성날짜<%= createdDate[i] %></p>

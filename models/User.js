@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // FIXME: 각 유저에게 _id 옵션을 주는게 좋을까? --> 자동생성..
 // 각 유저 이메일 유니크..??
-const UserSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
@@ -24,8 +24,8 @@ const UserSchema = new mongoose.Schema({
   },
   voteCollection: [{
     type: mongoose.Types.ObjectId,
-    ref: 'Votes',
+    ref: 'Vote',
   }],
 });
 
-module.exports = new mongoose.model('User', UserSchema);
+module.exports = new mongoose.model('User', userSchema);

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head') %>
+
+<body>
+  <%- include('partials/header') %>
+  <div class="main-container">
+  <div class="vote-wrap">
+    <div class="vote-container">
+      <h1 class="vote-title"><%= vote.title %></h1>
+      <div class="vote-details">
+        <p class="vote-createdAt">생성날짜 <%= createdDate %></p>
+        <p class="vote-expirationDate">종료날짜 <%= expirationDate %></p>
+        <% if (expired) { %>
+          <span class="vote-expired">투표종료</span>
+        <% } else { %>
+          <span class="vote-expired">투표중</span>
+        <% } %>
+        <% if (isCreator) { %>
+          <button name="delete" id="delete-button" data-id="<%= vote._id %>">delete</button>
+        <% } %>
+      </div>
+      <form action="/votings/<%= vote._id %>" method="POST">
+        <div class="vote-options">
+          <% let arr = [] %>
+          <% for (option of vote.options) { %>
+            <% arr.push(option.voter.length) %>
+            <% arr.sort((a, b) => b - a) %>
+            <div class="vote-option">
+              <% if (!expired) { %>
+                <%= option.desc %>
+                <input type="radio" name="select" value="<%= option._id %>">
+                <button type="submit">투표하기</button>
+              <% } %>
+            </div>
+          <% } %>
+          <% if (expired) { %>
+            <% for (let i = 0; i < arr.length; i++) { %>
+              <div class="vote-option">
+                <input type="radio" disabled>
+                <span><%= vote.options[i].desc %></span>
+                <%= arr[i] %>
+              </div>
+            <% } %>
+          <% } %>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+  <script>
+    const $deleteButton = document.getElementById('delete-button')
+
+    $deleteButton.addEventListener('click', async () => {
+    const id = $deleteButton.dataset.id;
+
+    await fetch(`/votings/${id}`, { method: 'DELETE' });
+    window.location.href = '/';
+  });
+  </script>
+</body>
+
+</html>

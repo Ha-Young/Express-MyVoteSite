@@ -4,7 +4,7 @@ const schemaOptions = {
   timestamps: true,
 };
 
-const VoteSchema = new mongoose.Schema({
+const voteSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -35,4 +35,4 @@ const VoteSchema = new mongoose.Schema({
   }],
 }, schemaOptions);
 
-module.exports = new mongoose.model('Votes', VoteSchema);
+module.exports = new mongoose.model('Vote', voteSchema);

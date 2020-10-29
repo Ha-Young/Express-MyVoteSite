@@ -3,7 +3,7 @@ const express = require('express');
 const authRouter = express.Router();
 const votingController = require('../controllers/voting.controller');
 const authController = require('../controllers/auth.controllers');
-const authenticateUser = require('../middlewares/auth.middleware');
+const { authenticateUser } = require('../middlewares/auth.middleware');
 
 authRouter.use(authController.flashMessage);
 
