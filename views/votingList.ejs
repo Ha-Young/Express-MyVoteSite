@@ -7,17 +7,25 @@
   <div class="main-container">
     <% for (let i = 0; i < votes.length; i++) { %>
       <div class="vote-container">
-        <h1 class="vote-title"><%= votes[i].title %></h1>
+        <div class="vote-column">
+          <h2 class="vote-title"><%= votes[i].title %></h2>
           <a href="/votings/<%= votes[i]._id %>">
             <% if (expired[i]) { %>
-              <button>결과보기</button>
+              <button class="show-result-button">결과보기</button>
             <% } else { %>
-              <button>투표보기</button>
+              <button class="show-vote-button">투표하기</button>
             <% } %>
           </a>
+        </div>
         <div class="vote-details">
-          <p class="vote-createdAt">생성날짜<%= createdDate[i] %></p>
-          <p class="vote-expirationDate">만료날짜<%= expirationDate[i] %></p>
+          <span class="vote-date">
+            생성날짜
+            <span class="vote-createdAt date-detail"><%= createdDate[i] %></span>
+          </span>
+          <span class="vote-date">
+            만료날짜
+            <span class="vote-expirationDate date-detail"><%= expirationDate[i] %></span>
+          </span>
         </div>
       </div>
     <% } %>

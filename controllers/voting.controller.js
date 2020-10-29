@@ -16,9 +16,21 @@ exports.getVotingForm = (req, res, _next) => {
 exports.createVote = async (req, res, next) => {
   const { options, title, expirationDate } = req.body;
   const userId = req.user._id;
+  const nowDate = format(new Date(), 'yyyy-MM-dd');
+
+  if (typeof options === 'string' || options.includes('')) {
+    req.flash('error_message', '옵션은 두개 이상 만들어주세요.');
+
+    return res.render('votingForm', {
+      error_message: req.flash('error_message'),
+      minDate: nowDate,
+    });
+  }
+
   const option = options.map(option => ({ desc: option }));
 
   try {
+
     const vote = new Vote({
       title: title,
       expirationDate: expirationDate,
@@ -43,11 +55,12 @@ exports.getVotingList = async (req, res, next) => {
   try{
     const votes = await Vote.find();
 
+    //TODO: 아래 세개 중복. 따로 빼주기..
     const formattedExpireDate = votes.map(vote => format(vote.expirationDate, 'yyyy/MM/dd HH:mm'));
     const formattedCreateDate = votes.map(vote => format(vote.createdAt, 'yyyy/MM/dd HH:mm'));
 
     const isExpired = votes.map(vote => {
-      return new Date() > vote.expirationDate ? true : false;
+      return new Date() > vote.expirationDate;
     });
 
     res.render('votingList', {
@@ -68,8 +81,19 @@ exports.getMyVoting = async (req, res, next) => {
     const user = await User.findById(userId).populate('voteCollection');
     const voteCollection = user.voteCollection;
 
-    res.render('myVoting', {
-      myVotings: voteCollection,
+    const formattedExpireDate = voteCollection.map(vote => format(vote.expirationDate, 'yyyy/MM/dd HH:mm'));
+    const formattedCreateDate = voteCollection.map(vote => format(vote.createdAt, 'yyyy/MM/dd HH:mm'));
+
+    const isExpired = voteCollection.map(vote => {
+      return new Date() > vote.expirationDate;
+    });
+
+    //TODO: delete myVoting.ejs
+    res.render('votingList', {
+      votes: voteCollection,
+      expirationDate: formattedExpireDate,
+      createdDate: formattedCreateDate,
+      expired: isExpired,
     });
   } catch (err) {
     next(err);
@@ -139,6 +163,18 @@ exports.deleteOne = async (req, res, next) => {
 
   try {
     const vote = await Vote.findByIdAndDelete(id);
+
+    await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $pull: {
+          voteCollection: {
+            _id: new ObjectId(id),
+          },
+        },
+      },
+      { multi: true }
+    );
 
     res.json(vote);
   } catch (error) {

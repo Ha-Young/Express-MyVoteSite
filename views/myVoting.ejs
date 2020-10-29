@@ -7,13 +7,22 @@
   <div class="main-container">
     <% for (let i = 0; i < myVotings.length; i++) { %>
       <div class="vote-container">
-        <h1 class="vote-title"><%= myVotings[i].title %></h1>
-        <div class="vote-details">
-          <span class="vote-createdAt">생성날짜<%= myVotings[i].createdAt %></span>
-          <span class="vote-expirationDate">만료날짜<%= myVotings[i].expirationDate %></span>
-          <span class="vote-expired"><%= myVotings[i].expired %></span>
+        <div class="vote-column">
+          <h2 class="vote-title"><%= myVotings[i].title %></h2>
+          <a href="/votings/<%= myVotings[i]._id %>">
+            <button class="show-vote-button">투표 보기</button>
+          </a>
         </div>
-        <a href="/votings/<%= myVotings[i]._id %>"><button>투표 보기</button></a>
+        <div class="vote-details">
+          <span class="vote-date">
+            생성날짜
+            <span class="date-detail"><%= myVotings[i].createdAt %></span>
+          </span>
+          <span class="vote-date">
+            만료날짜
+            <span class="date-detail"><%= myVotings[i].expirationDate %></span>
+          </span>
+        </div>
       </div>
     <% } %>
   </div>

@@ -2,14 +2,6 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
-const { isValidEmail } = require('../utils/util');
-
-exports.flashMessage = (req, res, next) => {
-  res.locals.success_message = req.flash('success_message');
-  res.locals.error_message = req.flash('error_message');
-  res.locals.error = req.flash('error');
-  next();
-};
 
 exports.getSignUp = (req, res, _next) => {
   res.render('index');
@@ -24,87 +16,33 @@ exports.registUser = async (req, res, next) => {
   let message;
 
   if (!email || !userName || !password || !confirmPassword) {
-    message = '양식을 모두 채워주세요.';
+    message = '양식을 모두 채워주세요';
 
-    res.render('index', {
-      err: message,
-    });
+    req.flash('error_message', message);
+    res.redirect('/signup');
   }
 
   if (password.length < 7) {
-    message = '비밀번호는 문자 숫자의 조합으로 8자 이상 작성해주세요.';
-
-    res.render('index', {
-      err: message,
-    });
+    message = '비밀번호는 8자 이상 작성해주세요.';
+    req.flash('error_message', message);
+    res.redirect('/signup');
   }
 
   if (password !== confirmPassword) {
     message = '비밀번호가 일치하지 않습니다.';
-
-    res.render('index', {
-      err: message,
-      email: email,
-      username: userName,
-    });
+    req.flash('error_message', message);
+    res.redirect('/signup');
   }
-
-  if (!isValidEmail(email)) {
-    message = '유효한 이메일을 적어주세요';
-
-    res.render('index', {
-      err: message,
-      email: email,
-      username: userName,
-    });
-  }
-
-  // if (email) {
-  //   try {
-  //     const users = await User.find();
-
-  //     users.map(user => {
-  //       if (user.email === email) {
-  //         message = '이미 가입된 유저가 있습니다.';
-
-  //         return res.render('index', {
-  //           err: message,
-  //         });
-  //       }
-  //     });
-  //   } catch (err) {
-  //     next(err);
-  //   }
-  // }
 
   try {
-    if (email) {
-      const users = await User.find();
-
-      users.map(user => {
-        if (user.email === email) {
-          message = '이미 가입된 유저가 있습니다.';
-
-          res.render('index', {
-            err: message,
-          });
-        }
-        return;
-      });
-    }
-
     if (!message) {
       await User.findOne({ email: email }, (err, data) => {
         if (err) throw err;
 
         if (data) {
-          message = '이 이메일을 사용한 다른 사용자가 있습니다.';
-
-          res.render('index', {
-            err: message,
-            email: email,
-            username: userName,
-          });
+          message = '이미 가입된 유저가 있습니다.';
+          req.flash('error_message', message);
+          res.redirect('/signup');
         }
 
         bcrypt.genSalt(10, (err, salt) => {

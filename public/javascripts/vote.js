@@ -17,15 +17,16 @@ $addButton.addEventListener('click', (e) => {
   input.setAttribute('name', 'options');
   $optionsList.appendChild(button);
   button.className = 'option-delete-btn';
+  button.setAttribute('type', 'button');
   button.appendChild(deleteMessage);
-
-  // $optionInput.value = '';
 });
 
-// FIXME: delete button 처리....
-// for(let i = 0; i < $options.length; i++) {
-//   $deleteButton[i].addEventListener('click', (e) => {
-//     e.preventDefault();
+// FIXME: delete button 처리 완료시키기
+
+// $deleteButton.addEventListener('click', () => {
+//   for(let i = 0; i < $options.length; i++) {
+//     console.log($options[i])
 //     $optionsList.removeChild($options[i]);
-//   });
-// }
+//   }
+// });
+

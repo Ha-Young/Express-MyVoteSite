@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
 const flash = require('connect-flash');
+const flashMessage = require('./middlewares/flash.middleware')
 
 const db = require('./config/mongoose');
 const passportModule = require('./config/passport');
@@ -40,8 +41,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', authRouter);
-app.use('/votings', votingRouter);
+
+
+app.use('/', flashMessage, authRouter);
+app.use('/votings', flashMessage, votingRouter);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');

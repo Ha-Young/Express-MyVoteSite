@@ -4,50 +4,36 @@
 
 <body>
   <%- include('partials/header') %>
-  <div class="container">
-    <h1 class="auth-title">Log in</h1>
-    <div class="auth-wrap">
-    <form action="/login" method="POST">
-      <% if (success_message !== '') { %>
-        <h3><%= success_message %></h3>
-      <% } %>
-      <% if (error !== '') { %>
-        <h3><%= error %></h3>
-      <% } %>
-      <div class="form-wrap">
-        <input
-          type="email"
-          class="auth-field"
-          name="email"
-          id="username"
-          autocomplete="off"
-          placeholder="이메일을 입력해 주세요."
-        >
+  <div class="main-container">
+    <div class="form">
+      <h1 class="auth-title">Log in</h1>
+      <div class="auth-wrap">
+        <form action="/login" method="POST">
+          <% if (success_message !== '') { %>
+            <h3><%= success_message %></h3>
+          <% } %>
+          <% if (error !== '') { %>
+            <h3><%= error %></h3>
+          <% } %>
+          <div class="form-wrap">
+            <input type="email" class="auth-field" name="email" id="username" autocomplete="off"
+              placeholder="이메일을 입력해 주세요.">
+          </div>
+          <div class="form-wrap">
+            <input type="password" class="auth-field" name="password" id="password" autocomplete="off"
+              placeholder="비밀번호를 입력해 주세요.">
+          </div>
+          <div class="form-wrap">
+            <input type="submit" value="로그인하기" class="signup-btn">
+          </div>
+          <p class="auth-ask">
+            처음이신가요?
+            <a class="card-link" href="/signup">회원가입하러 가기</a>
+          </p>
+        </form>
+        <div></div>
       </div>
-      <div class="form-wrap">
-        <input
-          type="password"
-          class="auth-field"
-          name="password"
-          id="password"
-          autocomplete="off"
-          placeholder="비밀번호를 입력해 주세요."
-        >
-      </div>
-      <div class="form-wrap">
-        <input
-          type="submit"
-          value="로그인하기"
-          class="signup-btn"
-        >
-      </div>
-      <p class="auth-ask">
-        처음이신가요?
-        <a class="card-link" href="/signup">회원가입하러 가기</a>
-      </p>
-    </form>
-  </div>
-  </div>
+    </div>
 </body>
 
 </html>
