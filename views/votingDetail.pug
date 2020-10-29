@@ -6,35 +6,36 @@ block content
       .voting__detail__main__left
         h1= title
         div
-          span 투표기한&nbsp;
-          span= expiredDate
-            | &nbsp;
-          span= expiredTime
+          span 투표기한 #{votingDetailData.expiredTime}
         div
-          span 생성자&nbsp;
-          span= creator
-        if (isVotingEnd)
+          span 생성자 #{votingDetailData.creator}
+        if (votingDetailData.isVotingClosed)
           h2 투표 종료
         else
           h2 투표 진행중
       .voting__detail__main__right
         h1 투표 목록
         .voting__detail__main__list
-          each votingList in votingLists
+          each votingList in votingDetailData.votingLists
             .voting__detail__main__checkbox__wrap
               input(
                 type="radio"
                 id=`${votingList._id}`
                 name="list"
-                data-source-url=`votings/${votingId}`
+                data-source-url=`votings/${votingDetailData.votingId}`
+                data-voted-num=`${votingList.voter.length}`
                 class="checkbox").voting__detail__main__checkbox
               label(for=`${votingList._id}`).checkbox__label= votingList.listTitle
-        if (isParticipated)
+            if (votingDetailData.isUserCreator || votingDetailData.isVotingClosed)
+              span 득표수 : #{votingList.voter.length}
+        if (votingDetailData.isVotingClosed)
+          h4 투표가 종료되었습니다.
+        else if (votingDetailData.isUserParticipated)
           h4 투표를 완료하셨습니다.
         else
           button.voting__detail__btn__select 투표하기
     .voting__detail__btn__wrap
       a(href="/")
         button.voting__detail__btn__gohome 목록으로 돌아가기
-      if (isUserCreator)
-        button(data-source-url=`votings/${votingId}`).voting__detail__btn__delete 삭제하기
+      if (votingDetailData.isUserCreator)
+        button(data-source-url=`votings/${votingDetailData.votingId}`).voting__detail__btn__delete 삭제하기

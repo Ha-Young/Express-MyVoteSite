@@ -9,10 +9,7 @@ block content
         a(href=`/votings/${votingData._id}`).home__votingListBox
           h1= votingData.title
           div
-            span 투표기한&nbsp;
-            span= votingData.expired_date
-              | &nbsp;
-            span= votingData.expired_time
+            span 투표기한 #{votingData.expiredTime}
           div
             span 생성자&nbsp;
             span= votingData.creator

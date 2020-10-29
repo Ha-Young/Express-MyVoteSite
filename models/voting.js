@@ -15,8 +15,7 @@ const VotingSchema = new Schema(
     title: { type: String, required: true, trim: true },
     creator: { type: String, required: true },
     votingLists: { type: [VotingListSchema], required: true },
-    expired_date: { type: String, required: true },
-    expired_time: { type: String, required: true },
+    expiredTime: { type: Date, required: true },
     participants: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   },
   votingSchemaOptions

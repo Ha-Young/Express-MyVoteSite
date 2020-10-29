@@ -1,14 +1,14 @@
 extends layouts/layout
 
 block content
-  form(action="/login" method="post")
-    .login.login__email
+  form(action="/login" method="post").login__form
+    .login__content
       label(for="email") Email
       input(id="email" type="email" name="email")
-    .login.login__password
+    .login__content
       label(for="password") Password
       input(id="password" type="password" name="password")
-    .login.login__btn
+    .login__content
       button(id="btn-login" type="submit") Login
-  a(href="/signup")
-    button Sign Up
+      a(href="/signup")
+        button(type="button") Sign Up

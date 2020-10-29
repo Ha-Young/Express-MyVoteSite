@@ -79,17 +79,30 @@ module.exports = {
     res.render('login');
   },
 
-  postLogin: passport.authenticate('local', {
-    successRedirect: routes.home,
-    failureRedirect: routes.login,
-  }),
+  postLogin: (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+      console.log(info);
+
+      if (err) return next(err);
+      if (!user) return res.redirect(routes.login);
+
+      req.logIn(user, (err) => {
+        if (err) return next(err);
+
+        const redirectUrl = req.session.redirectUrl || routes.home;
+        delete req.session.redirectUrl;
+
+        return res.redirect(redirectUrl);
+      });
+    })(req, res, next);
+  },
 
   logout: (req, res, next) => {
     req.session.destroy((err) => {
       if (err) return next(err);
-    });
 
-    req.logout();
-    res.redirect(routes.home);
+      req.logout();
+      res.redirect(routes.home);
+    });
   },
 };

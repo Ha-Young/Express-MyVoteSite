@@ -1,19 +1,19 @@
 extends layouts/layout
 
 block content
-  form(action="/signup" method="post")
-    .sign.sign__username
+  form(action="/signup" method="post").sign__form
+    .sign__content
       label(for="sign__username") Username
-      input(id="sign__username" type="text" name="username")
-    .sign.sign__email
+      input(id="sign__username" type="text" name="username" required)
+    .sign__content
       label(for="sign__email") Email
-      input(id="sign__email" type="email" name="email")
-    .sign.sign__password
+      input(id="sign__email" type="email" name="email" required)
+    .sign__content
       label(for="sign__password") Password
-      input(id="sign__password" type="password" name="password")
-    .sign.sign__password__confirm
+      input(id="sign__password" type="password" name="password" required)
+    .sign__content
       label(for="sign__password__confirm") Confirm Password
-      input(id="sign__password__confirm" type="password" name="password-confirm")
-    .sign.sign__btn__submit
+      input(id="sign__password__confirm" type="password" name="password-confirm" required)
+    .sign__content
       button(type="submit") Sign Up
   h4= error

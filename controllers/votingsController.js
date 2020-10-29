@@ -1,85 +1,53 @@
 const Voting = require('../models/voting');
 const User = require('../models/user');
+const VotingService = require('../services/votingService');
 const routes = require('../constants/routes');
+
+const votingServiceInstance = new VotingService(Voting, User);
 
 module.exports = {
   home: async (req, res, next) => {
-    const initialVotingDatas = await Voting.find().lean();
+    let initialVotingData;
 
-    initialVotingDatas.forEach((initialVotingDate) => {
-      const {
-        expired_date: expiredDate,
-        expired_time: expiredTime,
-      } = initialVotingDate;
+    try {
+      initialVotingData = await votingServiceInstance.getAllVotingData();
+    } catch (error) {
+      next(error);
+      return;
+    }
 
-      const submittedExpiredTime = `${expiredDate} ${expiredTime}`;
-      const isExipredTimePassed =
-        new Date(`${submittedExpiredTime}`) <= new Date();
-
-      if (isExipredTimePassed) {
-        initialVotingDate.isVotingEnd = true;
-      }
-    });
-
-    res.render('home', { initialVotingDatas });
+    res.render('home', { initialVotingData });
   },
 
   getVotingDetail: async (req, res, next) => {
     const { id: votingId } = req.params;
     const userId = req.user && req.user._id;
     const username = req.user && req.user.username;
-    let isParticipated;
-    let votingData;
+    let votingDetailData;
 
     try {
-      votingData = await Voting.findById(votingId);
-      isParticipated = votingData.participants.includes(userId.toString());
+      votingDetailData = await votingServiceInstance.getVotingDetailData(
+        votingId,
+        userId,
+        username
+      );
     } catch (error) {
       next(error);
+      return;
     }
 
-    const filteredVotingData = {
-      title: votingData.title,
-      creator: votingData.creator,
-      votingId: votingData._id,
-      votingLists: votingData.votingLists,
-      expiredDate: votingData.expired_date,
-      expiredTime: votingData.expired_time,
-    };
-
-    const { expiredDate, expiredTime } = filteredVotingData;
-
-    const submittedExpiredTime = `${expiredDate} ${expiredTime}`;
-    const isExipredTimePassed =
-      new Date(`${submittedExpiredTime}`) <= new Date();
-
-    if (isExipredTimePassed) filteredVotingData.isVotingEnd = true;
-
-    const isUserCreator = username === votingData.creator;
-
     res.render('votingDetail', {
-      ...filteredVotingData,
-      isUserCreator,
-      isParticipated,
+      votingDetailData
     });
   },
 
   updateVotingDetail: async (req, res, next) => {
-    const { id: listId } = req.body;
     const { id: votingId } = req.params;
     const { _id: userId } = req.user;
-    let votingData;
+    const { id: listId } = req.body;
 
     try {
-      votingData = await Voting.findOneAndUpdate(
-        { _id: votingId, 'votingLists._id': listId },
-        {
-          $addToSet: {
-            participants: userId,
-            'votingLists.$.voter': userId,
-          },
-        }
-      );
+      await votingServiceInstance.updateVotingDetail(votingId, userId, listId)
     } catch (error) {
       res.status(500).json({ result: error });
       return;
@@ -93,13 +61,7 @@ module.exports = {
     const { id: votingId } = req.params;
 
     try {
-      await Voting.findByIdAndDelete(votingId);
-    } catch (error) {
-      res.status(500).json({ result: error });
-      return;
-    }
-    try {
-      await User.findByIdAndUpdate(userId, { $pull: { votings: votingId } });
+      await votingServiceInstance.deleteVotingData(votingId, userId)
     } catch (error) {
       res.status(500).json({ result: error });
       return;
@@ -117,8 +79,7 @@ module.exports = {
     const {
       vote_title: votingTitle,
       vote_list: votingLists,
-      vote_enddate: votingEndDate,
-      vote_endtime: votingEndTime,
+      vote_expired_time: votingExpiredTime,
     } = req.body;
 
     const mappedVotingLists = votingLists
@@ -127,15 +88,8 @@ module.exports = {
         return { listTitle: votingList };
       });
 
-    const newVotingData = {
-      title: votingTitle,
-      creator: username,
-      votingLists: mappedVotingLists,
-      expired_date: votingEndDate,
-      expired_time: votingEndTime,
-    };
-
-    const submittedExpiredTime = `${votingEndDate} ${votingEndTime}`;
+      console.log(votingExpiredTime);
+    const submittedExpiredTime = `${votingExpiredTime}`;
     const isExipredTimePassed =
       new Date(`${submittedExpiredTime}`) <= new Date();
 
@@ -146,12 +100,20 @@ module.exports = {
       return;
     }
 
+    const newVotingData = {
+      title: votingTitle,
+      creator: username,
+      votingLists: mappedVotingLists,
+      expiredTime: votingExpiredTime,
+    };
+
     let newVoting;
 
     try {
       newVoting = await Voting.create(newVotingData);
     } catch (err) {
       res.redirect(`${routes.votings}${routes.failure}`);
+      next(err);
       return;
     }
 
@@ -161,6 +123,7 @@ module.exports = {
       });
     } catch (err) {
       next(err);
+      return;
     }
 
     res.redirect(`${routes.votings}${routes.success}`);

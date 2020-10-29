@@ -1,9 +1,16 @@
+const rotues = require('../constants/routes');
+
 exports.requiresLogin = (req, res, next) => {
-  if (req.session && req.session.userId) {
-    return next();
-  } else {
-    const err = new Error('You must be logged in to view this page.');
-    err.status = 401;
-    return next(err);
+  if (req.isAuthenticated()) return next();
+
+  req.session.redirectUrl = req.originalUrl;
+
+  const isFetch = req.headers.accept.indexOf('json') !== -1;
+
+  if (isFetch) {
+    res.json({ result: 'required login' });
+    return;
   }
+
+  res.redirect(rotues.login);
 };

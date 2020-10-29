@@ -2,21 +2,17 @@ extends layouts/layout
 
 block content
   .home__title
-    h1 우리집에서 투표하고 갈래?
+    h1 전체 투표
   .home__votingListsWrap
-    if (initialVotingDatas.length)
-      each votingData in initialVotingDatas
-        a(href=`/votings/${votingData._id}`).home__votingListBox
-          h1= votingData.title
+    if (initialVotingData.length)
+      each currentVotingData in initialVotingData
+        a(href=`/votings/${currentVotingData._id}`).home__votingListBox
+          h1= currentVotingData.title
           div
-            span 투표기한&nbsp;
-            span= votingData.expired_date
-              | &nbsp;
-            span= votingData.expired_time
+            span 투표기한 #{currentVotingData.expiredTime}
           div
-            span 생성자&nbsp;
-            span= votingData.creator
-          if (votingData.isVotingEnd)
+            span 생성자 #{currentVotingData.creator}
+          if (currentVotingData.isVotingClosed)
             h2 투표 종료
           else
             h2 투표 진행중

@@ -14,12 +14,9 @@ module.exports = {
     } catch (error) {
       next(error);
     }
-    console.log(votingDatas);
+
     votingDatas.forEach((votingData) => {
-      const {
-        expired_date: expiredDate,
-        expired_time: expiredTime,
-      } = votingData;
+      const { expiredDate, expiredTime } = votingData;
 
       const submittedExpiredTime = `${expiredDate} ${expiredTime}`;
       const isExipredTimePassed =

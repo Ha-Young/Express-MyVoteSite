@@ -16,9 +16,8 @@ block content
           button(type="button").voting__new__list__btn 항목 추가
       .voting__new__content
         label(for="vote-end-date") 마감 시간 설정
-        .voting__new__endtime
-          input(id="vote-end-date" type="date" name="vote_enddate" required)
-          input(id="vote-end-time" type="time" name="vote_endtime" step='3600' required)
+        .voting__new__datetime
+          input(id="vote-end-date" type="datetime-local" name="vote_expired_time" required)
       .voting__new__content
         .voting__new__btn__wrap
           button(id="btn-voting-new" type="submit") 투표 생성

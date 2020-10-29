@@ -9,6 +9,7 @@ const passport = require('passport');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
+const { localsMiddleware } = require('./middlewares/localsMiddleware');
 const dbConfig = require('./config/db');
 const passportConfig = require('./config/passport');
 const routes = require('./constants/routes');
@@ -45,10 +46,7 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use((req, res, next) => {
-  res.locals.user = req.user;
-  next();
-});
+app.use(localsMiddleware);
 
 app.use(routes.home, globalRouter);
 app.use(routes.votings, votingsRouter);
