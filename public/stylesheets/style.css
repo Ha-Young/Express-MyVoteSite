@@ -243,3 +243,28 @@ section {
 .myvoting-detail-expire {
   color: var(--color-pink)
 }
+
+.voting-form-container {
+  width: 100%;
+  text-align: center;
+}
+
+.form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-item {
+  padding: 1rem;
+}
+
+.option-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.option-container input {
+  width: 80%;
+  padding: 1rem;
+  margin: auto;
+}

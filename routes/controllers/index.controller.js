@@ -8,6 +8,9 @@ const constants = require('../../constants');
 exports.getAllVotings = async (req, res, next) => {
   try {
     const votings = await Voting.find();
+    if(!votings) {
+      return next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL));
+    }
     votings.map(voting => voting.isExpiration = isExpiration(voting.expirationDate));
 
     res.render('index', { votings });

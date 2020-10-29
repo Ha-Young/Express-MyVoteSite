@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const signupController = require('./controllers/signup.controller');
-
+const {validationResult} = require('../middleware/validator')
 router.get('/', signupController.renderSignup);
-router.post('/', signupController.saveUser);
+router.post('/', validationResult, signupController.saveUser);
 
 module.exports = router;

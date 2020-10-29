@@ -2,6 +2,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const passport  = require('passport');
 const bcrypt = require('bcrypt');
 const User = require('./models/User');
+const constants = require('./constants');
 
 passport.use(
   new LocalStrategy({
@@ -11,12 +12,12 @@ passport.use(
     try {
       const user = await User.findOne({ email: email });
       if (!user) {
-        return done(null, false, { message: 'Incorrect email.' });
+        return done(null, false, { message: constants.ERROR_MESSAGE_INCORRECT_EMAIL });
       }
       const result = await bcrypt.compare(password, user.password);
 
       if (!result) {
-        return done(null, false, { message: 'Incorrect password.' });
+        return done(null, false, { message: constants.ERROR_MESSAGE_INCORRECT_PASSWORD });
       }
 
       return done(null, user);

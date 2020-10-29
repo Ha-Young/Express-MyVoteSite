@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const createError = require('http-errors');
 const Voting = require('../../models/Voting');
 const User = require('../../models/User');
@@ -32,8 +33,8 @@ exports.renderMyVotingsPage = async (req, res, next) => {
 exports.getRenderVotingDetails = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const isValidObjectId = mongoose.isValidObjectId(_id);
     const voting = await Voting.findOne({ _id: id });
+    const isValidObjectId = mongoose.isValidObjectId(id);
     const { options } = voting.populate('options');
 
     if (!voting || !options || !isValidObjectId) {
@@ -66,7 +67,7 @@ exports.vote = async (req, res, next) => {
     if (!isValidObjectId, !option) {
       return createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL);
     }
-
+    
     await Voting.updateOne(
       { 'options._id': option },
       { $addToSet: { 'options.$[option].voters': _id } },
@@ -89,10 +90,10 @@ exports.deleteVoting = async (req, res, next) => {
     }
 
     await Voting.findByIdAndDelete(id);
-    // await User.updateOne(
-    //   { '_id': _id },
-    //   { $pull: { 'votings': id } }
-    // );
+    await User.update(
+      { _id: req.user._id },
+      { $pull: { 'votings': id } }
+    );
     res.json({ message: constants.SUCCESS_MESSAGE_DELETE });
   } catch (err) {
     next(err)

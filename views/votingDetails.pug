@@ -40,9 +40,3 @@ block content
           .result-details
             .detail-option-name= option.option
             .detail-voting-count= option.voters.length
-
-block script
-  if isCreator
-    script(src='../../javascripts/delete.js')
-  if voting.isExpiration
-    script(src='../../javascripts/details.js')

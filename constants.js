@@ -7,6 +7,8 @@ module.exports = Object.freeze({
     ERROR_MESSAGE_LOGIN: '로그인 후 이용 가능합니다',
     ERROR_MESSAGE_REQUEST_FAIL: '요청이 실패했습니다',
     ERROR_MESSAGE_NOT_EXIST_VOTINGS: '생성한 투표가 없습니다',
+    ERROR_MESSAGE_INCORRECT_EMAIL: 'Incorrect email',
+    ERROR_MESSAGE_INCORRECT_PASSWORD: 'Incorrect password',
     SUCCESS_MESSAGE_VOTING: '투표가 완료 되었습니다',
     SUCCESS_MESSAGE_DELETE: '투표가 삭제 되었습니다',
 });
