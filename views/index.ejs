@@ -5,9 +5,15 @@
   <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
-  <button id='my-votings'>내가 만든 투표 보기</button>
-  <button id='login' <% if (isLoggedIn) { %>class='hidden'<% } %>>로그인</button>
-  <button id='logout'>로그아웃</button><br><br>
+  <button
+    id='login'
+    <% if (isLoggedIn) { %>class='hidden'<% } %>
+  >로그인</button>
+  <button
+    id='logout'
+    <% if (!isLoggedIn) { %>class='hidden'<% } %>
+  >로그아웃</button><br><br>
+  <button id='my-votings'>내가 만든 투표 보기</button><br><br>
   <a href='/votings/new'>새 투표 만들기</a>
   <h1>투표 목록</h1>
   <h2>진행중</h2>
@@ -16,14 +22,14 @@
       <li>
         <a href='/votings/<%= data.voting._id %>'><%= data.voting.title %></a><br>
         <% if (data.userIsCreator) { %>
-          <span>최다 득표 선택지: <% data.mostVoted.forEach(mostVotedOption => { %>
+          <span>현재 결과: <% data.mostVoted.forEach(mostVotedOption => { %>
             <span>
               <%= mostVotedOption %>
             </span>
           <% }) %></span><br>
         <% } %>
         <%= data.formattedExpirationDate %>까지<br>
-        만든 사람: <%= data.creatorUsername %><br><br>
+        만든 사람: <%= data.creatorUsername %><br>
       </li>
     <% }) %>
   </ul>
@@ -32,13 +38,12 @@
     <% expiredVotingsData.forEach(data => { %>
       <li>
         <a href='/votings/<%= data.voting._id %>'><%= data.voting.title %></a><br>
-        <span>최다 득표 선택지: <% data.mostVoted.forEach(mostVotedOption => { %>
+        <span>결과: <% data.mostVoted.forEach(mostVotedOption => { %>
           <span>
             <%= mostVotedOption %>
           </span>
         <% }) %></span><br>
-        <%= data.formattedExpirationDate %>까지<br>
-        만든 사람: <%= data.creatorUsername %><br><br>
+        만든 사람: <%= data.creatorUsername %><br>
       </li>
     <% }) %>
   </ul>

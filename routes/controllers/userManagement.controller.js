@@ -31,7 +31,9 @@ exports.passportAuthenticate = (req, res, next) => {
     }
 
     if (!user) {
-      res.status(200).render('wrongIdOrPw');
+      res.status(200).render('message', {
+        message: '아이디 또는 비밀번호가 틀렸습니다'
+      });
 
       return;
     }

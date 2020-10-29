@@ -42,7 +42,9 @@ exports.create = (req, res, next) => {
         { new: true },
       );
 
-      res.status(201).render('createSuccess');
+      res.status(201).render('message', {
+        message: '투표를 새로 만들었습니다'
+      });
     } catch (err) {
       next(err);
     }
@@ -60,9 +62,9 @@ exports.drop = async (req, res, next) => {
     next(err);
   }
 
-  const indexOfVoting = creatorData.votings.indexOf(votingData._id);
+  const votingIndex = creatorData.votings.indexOf(votingData._id);
 
-  creatorData.votings.splice(indexOfVoting, 1);
+  creatorData.votings.splice(votingIndex, 1);
 
   try {
     await User.findByIdAndUpdate(

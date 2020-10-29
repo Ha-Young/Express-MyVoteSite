@@ -6,6 +6,7 @@
 </head>
 <body>
   <button id='logout'>로그아웃</button><br><br>
+  <a href='/'>투표 목록으로</a>
   <h1>내가 만든 투표 목록</h1>
   <h2>진행중</h2>
   <ul>
@@ -13,7 +14,6 @@
       <li>
         <a href='/votings/<%= data.voting._id %>'><%= data.voting.title %></a><br>
         <%= data.formattedExpirationDate %>까지<br>
-        만든 사람: <%= data.creatorUsername %><br><br>
       </li>
     <% }) %>
   </ul>
@@ -22,8 +22,6 @@
     <% expiredVotingsData.forEach(data => { %>
       <li>
         <a href='/votings/<%= data.voting._id %>'><%= data.voting.title %></a><br>
-        <%= data.formattedExpirationDate %>까지<br>
-        만든 사람: <%= data.creatorUsername %><br><br>
       </li>
     <% }) %>
   </ul>

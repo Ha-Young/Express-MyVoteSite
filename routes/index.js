@@ -13,7 +13,6 @@ router.get('/my-votings', gateKeeper, getMine);
 router.get('/signup', (req, res, next) => {
   res.status(200).render('signup');
 });
-
 router.post('/signup', validateSignupForm, checkIsEmailRegistered, registerNewUser);
 
 router.get('/login', (req, res, next) => {
@@ -21,7 +20,6 @@ router.get('/login', (req, res, next) => {
     referer: req.headers.referer
   });
 });
-
 router.post('/login', passportAuthenticate);
 
 router.get('/logout', (req, res, next) => {

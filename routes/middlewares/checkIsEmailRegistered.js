@@ -5,7 +5,7 @@ async function checkIsEmailRegistered(req, res, next) {
   const emailSearchResult = await User.findOne({ email });
 
   if (emailSearchResult) {
-    res.status(302).render('signupFailure', { message: '이미 가입한 이메일입니다' });
+    res.status(302).render('message', { message: '이미 가입한 이메일입니다' });
 
     return;
   }

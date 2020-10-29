@@ -4,39 +4,37 @@
   <meta charset='UTF-8'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
   <title>투표 상세 내용</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
   <a href='/'>투표 목록으로</a>
   <h1>투표 상세</h1>
   <h2><%= voting.title %></h2>
-  투표 만료 시각: <%= formattedExpirationDate %>
+  만료 시각: <%= formattedExpirationDate %>
   <% if (userIsCreator) { %>
     <button id='voting-delete-button'>삭제</button>
   <% } %><br><br>
   <form id='vote-form'>
-  <% voting.options.forEach(option => { %>
+    <% voting.options.forEach(option => { %>
+      <input
+        type='radio'
+        name='option'
+        value='<%= option.content %>'
+        <% if (currentUsersPick === option.content) { %>
+          checked
+        <% } %>
+      >
+      <label for='<%= option.content %>'><%= option.content %></label><br>
+      <% if (isExpired || userIsCreator) { %><span><%= option.voters.length %>표</span><br><% } %>
+    <% }) %><br>
+    <input type='hidden' id='voting-id' value='<%= voting._id %>'>
     <input
-      type='radio'
-      name='option'
-      value='<%= option.content %>'
-      <% if (currentUsersPick === option.content) { %>
-        checked
-      <% } %>
+      type='submit'
+      id='vote'
+      value='투표'
+      <% if (isExpired) { %>disabled<% } %>
     >
-    <label for='<%= option.content %>'><%= option.content %></label>
-    <% if (isExpired || userIsCreator) { %><span> - <%= option.voters.length %>표</span><br><% } %>
-  <% }) %><br>
-  <input type='hidden' id='voting-id' value='<%= voting._id %>'>
-  <input
-    type='submit'
-    id='vote'
-    value='투표'
-    <% if (isExpired) { %>disabled<% } %>
-  >
-</form>
-<%= voting %><br>
-isExpired: <%= isExpired %><br>
-userIsCreator: <%= userIsCreator %><br>
+  </form>
 </body>
 <script type="text/javascript" src='/javascripts/clientVote.js'></script>
 <% if (userIsCreator) { %>
