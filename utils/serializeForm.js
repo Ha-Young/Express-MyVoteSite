@@ -1,4 +1,4 @@
-const destruct = (key) => {
+const destruct = ({ key, }) => {
   let type = '';
   let index = '';
   let prop = '';
@@ -48,25 +48,28 @@ const destruct = (key) => {
   };
 };
 
-const serializeForm = (req, res, next) => {
-  const form = req.body;
-  const result = {};
+const serializeForm = (form) => {
+  try {
+    const result = {};
 
-  for (let key in form) {
-    if (key.includes('[')) {
-      const { type, index, prop, } = destruct(key);
+    for (let key in form) {
+      if (key.includes('[')) {
+        const { type, index, prop, } = destruct({ key, });
 
-      if (!result[type]) result[type] = [];
-      if (!result[type][index]) result[type][index] = {};
+        if (!result[type]) result[type] = [];
+        if (!result[type][index]) result[type][index] = {};
 
-      result[type][index][prop] = form[key];
-    } else {
-      result[key] = form[key];
+        result[type][index][prop] = form[key];
+      } else {
+        result[key] = form[key];
+      }
     }
-  }
 
-  res.locals.serializedForm = result;
-  next();
+    return result;
+  } catch (err) {
+    console.error('🔥 serialize form: error', err);
+    throw Error(err);
+  }
 };
 
 module.exports = serializeForm;

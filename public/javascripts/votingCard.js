@@ -1,13 +1,19 @@
 const deleteButton = document.querySelector('.delete-button');
 const patchButtons = [...document.getElementsByClassName('poll-container'),];
 
-const handleDeleteCard = async (e) => {
-  const path = window.location.pathname;
-  await fetch(path, {
-    method: 'delete',
-  });
+const handleDeleteCard = async () => {
+  try {
+    const path = window.location.pathname;
 
-  window.location = '/';
+    const result = await fetch(path, {
+      method: 'delete',
+    });
+
+    const { redirectUrl, } = await result.json();
+    window.location = redirectUrl;
+  } catch (err) {
+    window.location = '/error';
+  }
 };
 
 const handlePatchPoll = async (e) => {
@@ -16,22 +22,23 @@ const handlePatchPoll = async (e) => {
   const path = window.location.pathname;
 
   try {
-    const result = await fetch(path, {
+    const { redirectUrl, } = await fetch(path, {
       headers: {
         'content-type': 'application/json',
       },
       method: 'put',
       body: JSON.stringify({ pollId, }),
+    }).then((res) => {
+      return res.json();
     });
 
-    console.log(result);
-
+    window.location = redirectUrl;
   } catch (err) {
-    console.log(err);
+    window.location = '/error';
   }
 };
 
-deleteButton.addEventListener('click', handleDeleteCard);
-patchButtons.forEach((button) => {
+deleteButton && deleteButton.addEventListener('click', handleDeleteCard);
+patchButtons && patchButtons.forEach((button) => {
   button.addEventListener('click', handlePatchPoll);
 });

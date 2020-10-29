@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { ObjectId, } = mongoose.SchemaTypes;
 
 const PollSchema = new mongoose.Schema({
-  title: {
+  poll_title: {
     type: String,
     required: true,
     trim: true,
@@ -15,7 +15,7 @@ const PollSchema = new mongoose.Schema({
 }, { timestamps: true, });
 
 const VotingSchema = new mongoose.Schema({
-  title: {
+  voting_title: {
     type: String,
     required: true,
     unique: true,

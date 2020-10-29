@@ -5,10 +5,6 @@ const { destroySession, } = require('../../middleware');
 
 const router = express.Router();
 
-router.get(
-  '/',
-  destroySession,
-  controller.redirect('/')
-);
+router.get('/', destroySession, controller.logout.getMainPage);
 
 module.exports = router;

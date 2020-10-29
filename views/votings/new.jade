@@ -4,11 +4,15 @@ block style
 
 block content
   h1(class='main-message') this is new voting page
-  include ../validationMEssage
+  include ../validationMessage
   form(method='post')
-    input(type='text' name='title' placeholder='title')
+    input(type='text' name='voting_title' placeholder='title')
     ul(class='js-polls')
-    input(type='date' name='expiration_date' value='#{defaultDate}')
+    - const newDate = new Date();
+    - const year = newDate.getFullYear();
+    - const month = newDate.getMonth() + 1;
+    - const date = newDate.getDate();
+    input(type='date' name='expiration_date' value='#{`${year}-${month}-${date}`}')
     .container
       button submit
   .container

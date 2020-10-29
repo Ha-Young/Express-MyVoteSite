@@ -8,7 +8,7 @@ const createPoll = () => {
   const br = document.createElement('br');
 
   input.type = 'text';
-  input.name = `polls[${index++}][title]`;
+  input.name = `polls[${index++}][poll_title]`;
   input.placeholder = 'poll';
 
   li.appendChild(input);
