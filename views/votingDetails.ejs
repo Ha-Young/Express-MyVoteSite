@@ -26,13 +26,12 @@
     id='vote'
     name='<%= voting._id %>'
     value='투표'
-    <% !isExpired ? 'disabled' : '' %>
+    <% if (isExpired) { %>disabled<% } %>
   >
 </form>
 <%= voting %><br>
-<%= isExpired %><br>
-<%= userIsCreator %><br>
-<%= voting.options[0].voters.length %><br>
+isExpired: <%= isExpired %><br>
+userIsCreator: <%= userIsCreator %><br>
 </body>
 <script type="text/javascript" src='/javascripts/clientVote.js'></script>
 </html>

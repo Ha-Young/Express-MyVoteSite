@@ -8,7 +8,7 @@ async function updateVotingData(event) {
 
   const votingId = event.target.name;
   const options = document.getElementsByName('option');
-  let selectedOptionValue;
+  let selectedOptionValue = null;
 
   for (let i = 0; i < options.length; i++) {
     if (options[i].checked) {
@@ -16,12 +16,6 @@ async function updateVotingData(event) {
 
       break;
     }
-  }
-
-  if (selectedOptionValue === undefined) {
-    alert('선택하세요');
-
-    location.reload();
   }
 
   const res = await fetch(`/votings/${votingId}`, {
@@ -36,8 +30,15 @@ async function updateVotingData(event) {
 
   alert(fetchedData.message);
 
-  if (fetchedData.result === 'redirect') {
+  if (fetchedData.result === 'login') {
     location.assign('/login');
+
+    return;
+  }
+
+  if (fetchedData.result === 'select') {
+    console.log('여기 들어와야 함');
+    location.reload();
 
     return;
   }
