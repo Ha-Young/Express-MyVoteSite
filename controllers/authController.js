@@ -4,6 +4,7 @@ const Voting = require('../models/votingsModel');
 exports.renderMainPage = async (req, res, next) => {
   try {
     const votings = await Voting.find();
+    console.log(votings, 'in renderMainPage');
     res.render('main', {
       votings,
     });

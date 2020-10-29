@@ -52,8 +52,35 @@ const votingSchema = new mongoose.Schema(
     // },
     // creator: String, // virtual
   },
-  { timestamps: { createdAt: 'created_at' } }
+  {
+    timestamps: { createdAt: 'created_at' },
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
 );
+
+votingSchema.virtual('isContinuing').get(function () {
+  const presentTime = new Date().toISOString();
+  const expireDate = this.expireDate.toISOString();
+
+  return expireDate > presentTime;
+});
+
+votingSchema.virtual('host', async function (cb) {
+  console.log(this._id, 'vote id in host virtual');
+  const [host] = await User.find({ createdVoting: { $eq: this._id } });
+  console.log(host.email, 'host virtual');
+  if (host) cb(host.email);
+
+  cb(null);
+});
+
+// votingSchema.virtual('host').get(async function () {
+//   console.log(this._id, 'vote id in host virtual');
+//   const [host] = await User.find({ createdVoting: { $eq: this._id } });
+//   console.log(host.email, 'host virtual');
+//   return host.email;
+// });
 
 votingSchema.methods.findMax = async (id) => {
   const max = await Voting.aggregate([

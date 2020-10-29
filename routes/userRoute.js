@@ -4,7 +4,7 @@ const authController = require('../controllers/authController');
 const checkExpired = require('../controllers/middleware/checkExpired');
 const isLoggedIn = require('../controllers/middleware/isLoggedIn');
 
-router.get('/', checkExpired, authController.renderMainPage);
+router.get('/', authController.renderMainPage);
 router.get('/signup', authController.renderSignup);
 router.post('/signup', authController.registerUser);
 

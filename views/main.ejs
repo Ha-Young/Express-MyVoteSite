@@ -32,8 +32,8 @@
   <div class="voting-container">
     <div class="voting-head">
       <div class="voting-head-title">Votings: What are you going to Pick today?</div>
-      <div class="voting-head-createVoting"><a href="/votings/new">create New voting</a></div>
-      <div class="voting-head-myVoting"><a href="/votings/my-voting">my voting</a></div>
+      <div class="voting-head-createVoting"><a href="/votings/new">Create New Voting</a></div>
+      <div class="voting-head-myVoting"><a href="/votings/my-voting">My voting</a></div>
     </div>
     <div class="voting-body">
       <% for (let i = 0; i < votings.length; i++) {%>
@@ -51,5 +51,6 @@
       <%}%>
     </div>
   </div>
+  <div><%=votings[0].host%></div>
 </body>
 </html>
