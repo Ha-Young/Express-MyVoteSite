@@ -32,15 +32,30 @@ exports.createNewVoting = async (req, res, next) => {
 
 exports.renderVoting = async (req, res, next) => {
   try {
-    // console.log('/:id route final controller');
-    const voting = req.body.voting;
-    const result = req.body.result || [];
+
+    //1. 진행중?
+    //2. 로그인? req.session.logined
+    //3. 작성자?
+    // req.body.voting[0].creator._id 작성자 아이디
+    // req.session.user_id 현재 이용하고 있는 사람 아이디
+
+    //4. 기투표자?
+    // req.session.user_id 현재 이용하고 있는 사람 아이디
+    // aggregate로 votedUsers 풀어서 찾기?
+
+    const isLoggedin = req.session.logined;
+    const votingId = req.params.id;
+    const voting = await Voting.findById(votingId);
+    console.log(isLoggedin, '/:id route final controller');
+
+    // const voting = req.body.voting;
+    // const result = req.body.result || [];
     // console.log(result, 'result');
     res.render('voting/voting', {
-      voting: voting,
-      result: result,
-      isCreator: req.body.isCreator || undefined,
+      voting,
+      isLoggedin,
     });
+    // res.json({ status: 'success' })
   } catch (err) {
     console.log(err, 'voitng');
     next(err);

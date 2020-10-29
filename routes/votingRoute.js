@@ -10,16 +10,15 @@ const validateFirstVoting = require('../controllers/middleware/validateFirstVoti
 const findResult = require('../controllers/middleware/findResult');
 // const authController = require('../controllers/authController');
 
-router.get('/new', isLoggedIn, votingController.renderCreateVoting);
+router.get('/new', votingController.renderCreateVoting);
 router.post(
   '/new',
-  isLoggedIn,
   expireDateValid,
   modifySelectOptions,
   votingController.createNewVoting
 );
 
-router.get('/my-voting', isLoggedIn, votingController.renderMyVoting);
+router.get('/my-voting', votingController.renderMyVoting);
 
 // router.put('/:id', validateFirstVoting, votingController.receiveVotingResult);
 

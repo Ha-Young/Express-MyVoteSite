@@ -1,40 +1,100 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-  </head>
 
-  <body>
-    <div class="ref"><%=voting._id%></div>
-    <h1>Voting :ID</h1>
+<head>
+  <link rel="stylesheet" href="/stylesheets/voting.css" />
+</head>
 
-    <ul>
-      <li><%=voting.title%></li>
-      <li><%=voting.creator%></li>
-      <li><%=voting.expireDate%></li>
-      <li><%=voting.isExpired%></li>
-    </ul>
+<body>
+  <nav class='main-nav'>
+    <span class="title"><a href="/">What is your Pick?</a></span>
+    <span class="item"><a href="/signup">sign up</a></span>
+    <span class="item"><a href="/login">login</a></span>
+    <span class="item"><a href="/logout">logout</a></span>
+  </nav>
 
-    <% if (!voting.isExpired) {%>
-    <h3>고르시오</h3>
-    <form class="vote">
-      <% for (let i = 0; i < voting.selectOptions.length; i++) {%>
-      <label for="selectOption"><%=voting.selectOptions[i].option%></label>
-      <input
-        type="radio"
-        name="selectOption"
-        value="<%=voting.selectOptions[i]._id%>"
-      />
+  <div class="feature">
+    <div class="feature-item feature-text-container">
+      <h1 class="feature-head">Guess who!?</h1>
+      <div class="feature-sub">Biden vs Trump</div>
+      <p class="feature-body">The Republican president is being challenged by Democratic Party nominee Joe Biden, who is
+        best known as Barack Obama's vice-president but has been in US politics since the 1970s.</br>
+        </br>
+        As election day approaches, polling companies will be trying to gauge the mood of the nation by asking voters
+        which candidate they prefer.</br></br>https://www.bbc.com/news/election-us-2020-53657174</p>
+    </div>
+    <div class="feature-item feature-pic-container">
+      <img class="feature-pic" src="/images/bidentrump.gif" width="600" alt="usElection">
+      <div>https://www.plannedparenthoodaction.org/elections/biden-v-trump</div>
+    </div>
+  </div>
+
+  <div class="voting-container">
+    <div class="voting-head">
+      <div class="voting-head-child">
+        <div class="voting-head-title">Vote</div>
+        <div class="voting-head-title-sub"><%=voting.title%></div>
+      </div>
+      <div class="voting-head-backtomain"><a href="/">Vote List</a></div>
+      <div class="voting-head-myVoting"><a href="/votings/my-voting">My votings</a></div>
+    </div>
+    <div class="voting-body">
+      <form class="voting-body-form">
+        <div>Continuing</div>
+        <div class="continuing-<%=voting.isContinuing%>"><%=voting.isContinuing%></div>
+
+        <div>Expire date</div>
+        <input id='expireDate' type="datetime-local" name="expireDate"
+          value="<%=voting.expireDate.toISOString().substring(0, 16)%>" disabled></input>
+
+        <div>Description</div>
+        <div id="description"><%=voting.description%></div>
+
+        <% for(let i = 0; i < voting.selectOptions.length; i++) {%>
+        <div>Option<%=i + 1%></div>
+        <div class="selectoptions-body-container">
+          <label for="option"><%=voting.selectOptions[i].option%></label>
+          <input id="selectoptions-body-radio" name="option" type="radio" />
+        </div>
+        <%}%>
+        <% if (isLoggedin) {%>
+        <button class="voting-button" type="submit">Vote</button>
+      </form>
+      <%} else {%>
+      <a id="tologin" href="../login"><button class="voting-button-tologin" type="button">Vote</button></a>
+      </form>
       <%}%>
-      <button type="submit">submit</button>
-    </form>
-    <%}%> <% if (voting.isExpired || isCreator) {%>
-    <h3>결과</h3>
-    <h5><%=result[0]%></h5>
-    <h5><%=result[1]%></h5>
+
+      <form class="voting-body-form">
+        <div>Continuing</div>
+        <div class="continuing-<%=voting.isContinuing%>"><%=voting.isContinuing%>
+    </div>
+
+    <div>Expire date</div>
+    <input id='expireDate' type="datetime-local" name="expireDate"
+      value="<%=voting.expireDate.toISOString().substring(0, 16)%>" disabled></input>
+
+    <label for="name">최다득표</label>
+    <div>1</div>
+
+    <% for(let i = 0; i < voting.selectOptions.length; i++) {%>
+    <div>Option<%=i + 1%></div>
+    <div class="selectoptions-body-container">
+      <div><%=voting.selectOptions[i].option%></div>
+      <div id="">1</div>
+    </div>
     <%}%>
-    <button><a href="/">목록으로 돌아가기</a></button>
-    <button>결과보기</button>
-    <script src="/javascripts/clickVoteButton.js"></script>
-  </body>
+
+    <button class="voting-button" type="submit">Delete</button>
+    <div>1</div>
+
+    </form>
+  </div>
+  </div>
+  </div>
+
+
+  <script src="/javascripts/clickVoteButton.js"></script>
+</body>
+
 </html>
