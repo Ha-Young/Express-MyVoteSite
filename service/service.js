@@ -1,15 +1,16 @@
-// export default class UserService() {
+const User = require('../models/User');
 
-//   async Signup(user) {
-//     const userRecord = await UserModel.create(user);
-//     const companyRecord = await CompanyModel.create(userRecord); // needs userRecord to have the database id 
-//     const salaryRecord = await SalaryModel.create(userRecord, companyRecord); // depends on user and company to be created
-      
+class UserService {
+  async Signup(user) {
+    const userRecord = await User({
+      name: user.name,
+      email: user.email,
+      password: user.password
+    }).save();
+    console.log('success');
+    return userRecord;
+  }
+}
 
-
-//     await EmailService.startSignupSequence(userRecord)
-  
-
-//       return { user: userRecord, company: companyRecord };
-//   }
-// }
+module.exports = UserService;
+// await User({ name, email, password: hash }).save();

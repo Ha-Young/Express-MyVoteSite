@@ -11,6 +11,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const signupRouter = require('./routes/signup');
 const loginRouter = require('./routes/login');
+const logoutRouter = require('./routes/logout');
 const votingsRouter = require('./routes/votings');
 const myVotingsRouter = require('./routes/my-votings');
 const successRouter = require('./routes/success')
@@ -43,6 +44,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
 app.use('/votings', votingsRouter);
 app.use('/my-votings', myVotingsRouter);
 app.use('/success', successRouter);
