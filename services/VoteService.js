@@ -1,7 +1,8 @@
 const Vote = require('../models/Vote');
 const User = require('../models/User');
 
-const { createAction, SUCCESS, ERROR } = require('./ActionCreator');
+const { createAction } = require('./ActionCreator');
+const { SUCCESS, ERROR } = require('../constants');
 const checkExpiration = require('../utils/checkExpiration');
 
 class VoteService {
@@ -32,6 +33,15 @@ class VoteService {
       updatedUser.save();
 
       return createAction(SUCCESS);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getVotings() {
+    try {
+      const votingList = await Vote.find().populate('author', 'name');
+      return votingList;
     } catch (error) {
       throw error;
     }

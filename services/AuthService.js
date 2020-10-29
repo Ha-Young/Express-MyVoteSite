@@ -1,7 +1,8 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
-const { createAction, SUCCESS, ERROR } = require('./ActionCreator');
+const { createAction } = require('./ActionCreator');
+const { SUCCESS, ERROR } = require('../constants');
 
 class AuthService {
   constructor(user) {
@@ -45,6 +46,15 @@ class AuthService {
       }
 
       return createAction(SUCCESS, user);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async findUser(id) {
+    try {
+      const user = await User.findById(id).populate('myVoteList');
+      return user;
     } catch (error) {
       throw error;
     }
