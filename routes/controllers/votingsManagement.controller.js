@@ -1,5 +1,6 @@
 const User = require('../../models/User');
 const Voting = require('../../models/Voting');
+const dayjs = require('dayjs');
 
 exports.create = (req, res, next) => {
   const created_by = req.session.userId;
@@ -95,6 +96,45 @@ exports.drop = async (req, res, next) => {
     await Voting.findByIdAndDelete(req.params._id);
 
     res.status(200).render('dropSuccess');
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.applyVote = async (req, res, next) => {
+  const { selectedOptionValue } = req.body;
+  const currentUser = req.user._id;
+
+  try {
+    const voting = await Voting.findById(req.params._id);
+    const { options } = voting;
+
+    for (const option of options) {
+      for (const voter of option.voters) {
+        if (voter.toString() === currentUser.toString()) {
+          res.json({ message: '이미 투표했습니다' });
+
+          return;
+        }
+      }
+    }
+
+    for (const option of options) {
+      if (option.content === selectedOptionValue) {
+        option.voters.push(currentUser);
+      }
+    }
+
+    await Voting.findByIdAndUpdate(
+      req.params._id,
+      voting,
+      { new: true },
+    );
+
+    res.json({
+      result: 'ok',
+      message: '투표 완료',
+    });
   } catch (err) {
     next(err);
   }
