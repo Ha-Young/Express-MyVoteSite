@@ -1,4 +1,5 @@
 const VoteService = require('../../services/VoteService');
+const SERVICE_ERROR_CODE = require('../../services/ActionCreator').SERVICE_ERROR_CODE;
 
 const { formatISO } = require('date-fns');
 

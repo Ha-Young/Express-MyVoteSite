@@ -15,59 +15,41 @@ exports.ROUTES = {
 };
 
 // WILL BE UPDATED
-const AUTH_ERROR_CODE = {
-  EA_0: {
-    value: 'EA_0',
-    message: 'The user already exists'
-  },
-  EA_1: {
-    value: 'EA_1',
-    message: 'No user exists'
-  },
-  EA_2: {
-    value: 'EA_2',
-    message: `Passwords don't match`
-  }
+exports.SUCCESS = 'success';
+exports.ERROR = 'error';
+
+exports.SERVICE_ERROR_CODE = {
+  _00: 'error-00',
+  _01: 'error-01',
+  _02: 'error-02',
+  _10: 'error-10',
+  _11: 'error-11'
 };
 
-const ERROR = 'error';
-const SUCCESS = 'success';
-
-const AUTH_ERROR_MESSAGE = {
-  CODE_0: {
-    code: '0',
+exports.SERVICE_ERROR = {
+  CODE_00: {
+    code: '00',
     value: 'auth',
     message: 'The user already exists'
   },
-  CODE_1: {
-    code: '1',
+  CODE_01: {
+    code: '01',
     value: 'auth',
     message: 'No user exists'
   },
-  CODE_2: {
-    code: '2',
+  CODE_02: {
+    code: '02',
     value: 'auth',
-    message: `Passwords don't match`
+    message: `Passwords mismatch`
   },
-  CODE_0: {
-    code: '0',
+  CODE_10: {
+    code: '10',
     value: 'vote',
     message: 'Cannot found the vote'
   },
-  CODE_1: {
-    code: '1',
+  CODE_11: {
+    code: '11',
     value: 'vote',
-    message: 'The vote is expired'
-  }
-};
-
-const VOTE_ERROR_MESSAGE = {
-  CODE_0: {
-    code: '0',
-    message: 'Cannot found the vote'
-  },
-  CODE_1: {
-    code: '1',
     message: 'The vote is expired'
   }
 };

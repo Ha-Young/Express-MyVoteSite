@@ -1,4 +1,5 @@
 const AuthService = require('../../services/AuthService');
+const { SERVICE_ERROR_CODE, SUCCESS } = require('../../services/ActionCreator');
 
 exports.getSignUp = function getSignUp(req, res, next) {
   res.status(200).render('signUp');
@@ -11,12 +12,11 @@ exports.postSignUp = async function postSignUp(req, res, next) {
     const { type, payload } = await userInstance.signUp();
 
     switch (type) {
-      case 'succeed':
+      case SUCCESS:
         req.session.user = payload;
         return res.redirect('/');
-      case 'failed-password-confirm':
-        return res.redirect('/auth/signup');
-      case 'failed-user-exists':
+      case SERVICE_ERROR_CODE._00:
+        console.log(payload);
         return res.redirect('/auth/login');
       default:
         res.redirect('/');
@@ -37,10 +37,11 @@ exports.postLogin = async function postLogin(req, res, next) {
     const { type, payload } = await userInstance.signIn();
 
     switch (type) {
-      case 'failed-no-user':
-      case 'failed-password-mismatch':
+      case SERVICE_ERROR_CODE._01:
+      case SERVICE_ERROR_CODE._02:
+        console.log(payload);
         return res.redirect('/auth/login');
-      case 'success':
+      case SUCCESS:
         req.session.user = payload;
         if (cookies['callback']) {
           res.redirect(cookies['callback']);

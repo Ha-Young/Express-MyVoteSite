@@ -1,6 +1,7 @@
 const Vote = require('../models/Vote');
 const User = require('../models/User');
 
+const { createAction, SUCCESS, ERROR } = require('./ActionCreator');
 const checkExpiration = require('../utils/checkExpiration');
 
 class VoteService {
@@ -30,7 +31,7 @@ class VoteService {
 
       updatedUser.save();
 
-      return createAction('success');
+      return createAction(SUCCESS);
     } catch (error) {
       throw error;
     }
@@ -42,7 +43,7 @@ class VoteService {
       if (!vote) {
         return createAction('error', { message: 'Cannot found the vote' });
       }
-      return createAction('success', vote);
+      return createAction(SUCCESS, vote);
     } catch (error) {
       throw error;
     }
@@ -63,7 +64,8 @@ class VoteService {
       const targetExpire = vote.expireAt;
 
       if (checkExpiration(targetExpire)) {
-        return createAction('error', { message: 'The vote is expired' });
+        return createAction(ERROR, 11);
+        // return createAction('error', { message: 'The vote is expired' });
       }
 
       const newCount = (targetItem.count += 1);
@@ -78,15 +80,23 @@ class VoteService {
         }
       );
 
-      return createAction('success', { message: 'Succeed voting!' });
+      // return createAction('success', { message: 'Succeed voting!' });
+      return createAction(SUCCESS, { message: 'Succeed voting!' });
     } catch (error) {
       throw error;
     }
   }
 }
 
-function createAction(type, payload) {
-  return { type, payload };
-}
+// function createAction(type, payload) {
+//   return { type, payload };
+// }
+
+// function createAction(type, payload) {
+//   if (type === 'error') {
+//     return { type: `error-${payload}`, payload: SERVICE_ERROR[`CODE_${payload}`] };
+//   }
+//   return { type, payload };
+// }
 
 module.exports = VoteService;
