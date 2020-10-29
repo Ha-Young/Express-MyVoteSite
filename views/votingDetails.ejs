@@ -19,7 +19,7 @@
   <% voting.options.forEach(option => { %>
     <input type='radio' name='option' value='<%= option.content %>'>
     <label for='<%= option.content %>'><%= option.content %></label><br>
-    <% if (isExpired) { %><span> - <%= option.voters.length %>표</span><br><% } %>
+    <% if (isExpired || userIsCreator) { %><span> - <%= option.voters.length %>표</span><br><% } %>
   <% }) %>
   <input
     type='submit'
