@@ -18,13 +18,13 @@
   <form id='vote-form'>
   <% voting.options.forEach(option => { %>
     <input type='radio' name='option' value='<%= option.content %>'>
-    <label for='<%= option.content %>'><%= option.content %></label><br>
+    <label for='<%= option.content %>'><%= option.content %></label>
     <% if (isExpired || userIsCreator) { %><span> - <%= option.voters.length %>표</span><br><% } %>
-  <% }) %>
+  <% }) %><br>
+  <input type='hidden' id='voting-id' value='<%= voting._id %>'>
   <input
     type='submit'
     id='vote'
-    name='<%= voting._id %>'
     value='투표'
     <% if (isExpired) { %>disabled<% } %>
   >

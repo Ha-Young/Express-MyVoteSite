@@ -16,7 +16,7 @@ async function categorizeVotings(userIdObj, isFindAll = true) {
   for (voting of votings) {
     const creator = await User.findById(voting.created_by);
     const userIsCreator
-      = voting.created_by.toString() === userIdObj.created_by.toString();
+      = voting.created_by.toString() === userIdObj.created_by;
     const expirationDate = Date.parse(voting.expires_at);
     const formattedExpirationDate = dayjs(expirationDate).format('YYYY-MM-DD HH:mm');
 

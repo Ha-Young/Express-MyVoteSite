@@ -3,9 +3,8 @@ const categorizeVotings = require('../../utils/categorizeVotings');
 const dayjs = require('dayjs');
 
 exports.getAll = async (req, res, next) => {
-  let currentUserId = '';
-
-  if (req.user) currentUserId = req.user._id;
+  const currentUserId = req.session.userId;
+  console.log(currentUserId);
 
   try {
     const [openVotingsData, expiredVotingsData]
@@ -18,7 +17,7 @@ exports.getAll = async (req, res, next) => {
 };
 
 exports.getMine = async (req, res, next) => {
-  const currentUserId = req.user._id;
+  const currentUserId = req.session.userId;
 
   try {
     const [openVotingsData, expiredVotingsData]

@@ -103,7 +103,7 @@ exports.drop = async (req, res, next) => {
 
 exports.applyVote = async (req, res, next) => {
   const { selectedOptionValue } = req.body;
-  const currentUser = req.user._id;
+  const currentUser = req.session.userId;
 
   try {
     const voting = await Voting.findById(req.params._id);
@@ -111,7 +111,7 @@ exports.applyVote = async (req, res, next) => {
 
     for (const option of options) {
       for (const voter of option.voters) {
-        if (voter.toString() === currentUser.toString()) {
+        if (voter.toString() === currentUser) {
           res.json({ message: '이미 투표했습니다' });
 
           return;

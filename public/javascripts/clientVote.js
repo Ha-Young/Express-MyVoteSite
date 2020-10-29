@@ -1,12 +1,11 @@
 const voteButton = document.getElementById('vote');
-const voteForm = document.getElementById('vote-form');
 
-vote.addEventListener('click', updateVotingData);
+voteButton.addEventListener('click', updateVotingData);
 
 async function updateVotingData(event) {
   event.preventDefault();
 
-  const votingId = event.target.name;
+  const votingId = document.getElementById('voting-id').value;
   const options = document.getElementsByName('option');
   let selectedOptionValue = null;
 
@@ -37,7 +36,6 @@ async function updateVotingData(event) {
   }
 
   if (fetchedData.result === 'select') {
-    console.log('여기 들어와야 함');
     location.reload();
 
     return;
