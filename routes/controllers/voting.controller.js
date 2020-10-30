@@ -4,6 +4,8 @@ const Voting = require('../../models/Voting');
 const User = require('../../models/User');
 const constants = require('../../constants');
 const { isExpiration } = require('../../utils');
+const UserService = require('../../service/service');
+const userService = new UserService();
 
 exports.getRenderNewVoting = (req, res, next) => {
   res.render('newVoting');
@@ -13,16 +15,12 @@ exports.renderMyVotingsPage = async (req, res, next) => {
   try {
     const { _id } = req.user;
     const isValidObjectId = mongoose.isValidObjectId(_id);
-    const { votings } = await User.findOne({ _id }).populate('votings');
 
     if (!isValidObjectId) {
       return next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL));
     }
 
-    votings.map(
-      voting =>
-        voting.isExpiration = isExpiration(voting.expirationDate)
-    );
+    const votings = await userService.getVotings(_id);
 
     res.render('myVotings', { votings });
   } catch (err) {
@@ -33,32 +31,13 @@ exports.renderMyVotingsPage = async (req, res, next) => {
 exports.getRenderVotingDetails = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const voting = await Voting.findOne({ _id: id });
     const isValidObjectId = mongoose.isValidObjectId(id);
-    const { options } = voting.populate('options');
 
-    if (!voting || !options || !isValidObjectId) {
+    if (!isValidObjectId) {
       return next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL));
     }
-
-    let isCreator;
-    let userId;
-    let isVoter;
-
-    if (req.user) {
-      userId = req.user._id;
-      isCreator = voting.createdBy.equals(userId);
-      options.map(option => {
-        console.log('option',option.voters.includes(userId))
-        if (option.voters.includes(userId)) {
-          isVoter = true;
-        }
-      });
-    } else {
-      userId = null;
-    }
-
-    voting.isExpiration = isExpiration(voting.expirationDate);
+    
+    const { voting, isCreator, options, isVoter } = await userService.getVotinDetails(id, req.user);
 
     res.render('votingDetails', { id, voting, isCreator, options, isVoter });
   } catch (err) {
