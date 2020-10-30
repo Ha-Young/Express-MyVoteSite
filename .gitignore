@@ -3,3 +3,10 @@ node_modules
 .DS_STORE
 sessions
 cypress.env.json
+.gitignore
+.elasticbeanstalk/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
