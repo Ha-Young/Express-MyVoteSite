@@ -22,7 +22,7 @@
       <% openVotingsData.forEach(data => { %>
         <li>
           <a href='/votings/<%= data.voting._id %>'><%= data.voting.title %></a><br>
-          <% if (data.userIsCreator) { %>
+          <% if (data.isUserCreator) { %>
             <span>현재 최다 득표: <% data.mostVoted.forEach(mostVotedOption => { %>
               <span>
                 <%= mostVotedOption %>

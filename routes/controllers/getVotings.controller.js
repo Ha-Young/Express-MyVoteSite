@@ -33,7 +33,7 @@ exports.getMine = async (req, res, next) => {
 };
 
 exports.getOne = async (req, res, next) => {
-  let userIsCreator = false;
+  let isUserCreator = false;
   let isExpired = false;
   let currentUsersPick = null;
 
@@ -43,7 +43,7 @@ exports.getOne = async (req, res, next) => {
     const formattedExpirationDate = dayjs(expirationDate).format('YYYY년 M월 D일 HH시mm분');
 
     if (req.session.userId === voting.created_by.toString()) {
-      userIsCreator = true;
+      isUserCreator = true;
     }
 
     if (expirationDate < Date.now()) {
@@ -60,7 +60,7 @@ exports.getOne = async (req, res, next) => {
 
     res.status(200).render('votingDetails', {
       voting,
-      userIsCreator,
+      isUserCreator,
       isExpired,
       formattedExpirationDate,
       currentUsersPick,
