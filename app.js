@@ -56,8 +56,6 @@ app.use(function (req, res, next) {
 });
 
 app.use(function (err, req, res, next) {
-  console.error(err);
-
   if (process.env.NODE_ENV === 'production') {
     if (err instanceof mongoose.Error) err = createError(500);
     err.stack = null;

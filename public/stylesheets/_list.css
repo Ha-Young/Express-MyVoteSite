@@ -1,0 +1,10 @@
+.vote-list {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.vote-list.detail {
+  justify-content: center;
+}

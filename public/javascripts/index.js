@@ -1,9 +1,9 @@
 (function () {
   const itemInput = document.getElementById('item');
   const itemList = document.querySelector('.item-list');
-  const addItemBtn = document.getElementById('btn-add-item');
+  const addItemButton = document.getElementById('button-add-item');
 
-  addItemBtn.addEventListener('click', function (e) {
+  addItemButton.addEventListener('click', function (e) {
     e.preventDefault();
     if (!itemInput.value) return;
 
@@ -20,7 +20,7 @@
 
     input.name = 'itemList';
     input.value = itemInput.value;
-    button.className = 'btn-delete-item';
+    button.className = 'button-delete-item';
     button.textContent = 'X';
 
     li.appendChild(input);
@@ -29,7 +29,7 @@
   });
 
   itemList.addEventListener('click', function ({ target }) {
-    if (target.className !== 'btn-delete-item') return;
+    if (target.className !== 'button-delete-item') return;
     target.parentElement.remove();
   });
 })();

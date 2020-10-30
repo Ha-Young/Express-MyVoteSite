@@ -7,6 +7,5 @@ exports.verifyUser = function verifyUser(req, res, next) {
     if (params && params.id) res.cookie(CALLBACK_URI, `${ROUTES.VOTINGS}/${params.id}`);
     return res.redirect(ROUTES.AUTH + ROUTE_AUTH.LOGIN);
   }
-
   next();
 };

@@ -12,9 +12,10 @@ exports.getVotings = async function getVotings(req, res, next) {
 };
 
 exports.getMyVotings = async function getMyVotings(req, res, next) {
+  const { session } = req;
   try {
     const user = await AuthService.findUser(session.user._id);
-    res.render(VIEWS.MY_VOTINGS, { user: req.session.user, votingList: user.myVoteList });
+    res.render(VIEWS.MY_VOTINGS, { user: session.user, votingList: user.myVoteList });
   } catch (error) {
     next(error);
   }

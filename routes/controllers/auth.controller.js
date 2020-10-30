@@ -25,7 +25,7 @@ exports.postSignUp = async function postSignUp(req, res, next) {
         return res.redirect(ROUTES.AUTH + ROUTE_AUTH.LOGIN);
       case SUCCESS:
         req.session.user = payload;
-        req.flash(SUCCESS, `Welcome, ${payload.name}`);
+        req.flash(SUCCESS, `Succeed Sign up! Welcome, ${payload.name}`);
       default:
         res.redirect(ROUTES.HOME);
     }

@@ -32,27 +32,6 @@ pre {
   align-items: center;
 }
 
-.message {
-  position: fixed;
-  left: 24px;
-  bottom: 24px;
-  padding: 14px;
-  border-radius: 10px;
-  animation: fadeInOut 5s ease-in-out forwards;
-}
-
-.message.success {
-  color: rgb(28, 176, 21);
-  border: 0.4px solid rgb(10, 179, 10);
-  background: rgb(211, 255, 212);
-}
-
-.message.error {
-  color: rgb(255, 81, 81);
-  border: 0.4px solid rgb(255, 98, 81);
-  background: rgb(255, 213, 213);
-}
-
 .tag {
   display: inline-block;
   width: 60px;
@@ -70,32 +49,4 @@ pre {
 .black {
   background-color: black;
   color: white;
-}
-
-.vote-list {
-  width: 90%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.vote-list.detail {
-  justify-content: center;
-}
-
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-    transform: translateY(80px);
-  }
-  15% {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
 }

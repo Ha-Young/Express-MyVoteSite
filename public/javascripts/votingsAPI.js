@@ -1,7 +1,7 @@
 (function () {
   const castVoteForm = document.getElementById('form-cast-vote');
-  const castingButton = document.getElementById('submit-casting-vote');
-  const deleteButton = document.getElementById('submit-delete-vote');
+  const castingButton = document.getElementById('button-casting-vote');
+  const deleteButton = document.getElementById('button-delete-vote');
 
   if (deleteButton) {
     deleteButton.addEventListener('click', handleDeleteVote);
@@ -11,9 +11,9 @@
   castVoteForm.addEventListener('submit', handleSubmitCastingVote);
 
   function handleDeleteVote({ target }) {
-    const targetRoute = '/votings/delete';
-    let targetURI = target.baseURI.split('/votings');
-    targetURI = targetURI[0] + targetRoute + targetURI[1];
+    const targetRouter = '/votings/delete';
+    const [url, id] = target.baseURI.split('/votings');
+    const targetURI = url + targetRouter + id;
 
     fetch(targetURI, {
       method: 'DELETE'
@@ -47,7 +47,6 @@
       body: JSON.stringify(selectedItem)
     })
       .then((res) => {
-        console.log(res);
         if (res.redirected) {
           window.location.replace(res.url);
         } else {
@@ -55,7 +54,7 @@
         }
       })
       .catch((err) => {
-        console.log(err);
+        window.location.replace('/');
       });
   }
 })();

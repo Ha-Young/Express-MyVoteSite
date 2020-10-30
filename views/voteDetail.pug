@@ -2,7 +2,7 @@ extends ./layouts/layout
 
 block content
   if isAuthor
-    a.button.button-fixed#submit-delete-vote Delete
+    a.button.button-fixed#button-delete-vote Delete
   .head-container
     h1= vote.title
     if vote.isExpired
@@ -29,7 +29,7 @@ block content
             else
               input(type='radio', name='item' value=`${item.title}`)
             span= item.title
-        input.button(type='submit' value='Submit' id='submit-casting-vote')
+        input.button(type='submit' value='Submit' id='button-casting-vote')
     else if isParticipated
       h1 투표 참여가 완료되었습니다.👏
       if isAuthor
@@ -39,4 +39,4 @@ block content
               p= item.title
               p= item.count
     a.button(href='/') 🏠 Back
-  script(src="/javascripts/voteAPI.js")
+  script(src="/javascripts/votingsAPI.js")

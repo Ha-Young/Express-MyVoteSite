@@ -14,11 +14,9 @@ exports.checkVaildationError = function checkVaildationError(req, res, next) {
   const isErrors = !errors.isEmpty();
 
   if (isErrors) {
-    console.log(errors.array());
     req.flash(ERROR, errors.array()[0].msg);
     return res.redirect(`${ROUTES.AUTH}${req.url}`);
   }
-
   next();
 };
 
