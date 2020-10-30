@@ -51,18 +51,15 @@ class VotingService {
       let userId;
       let isVoter;
 
-      if (!user) {
-        userId = null;
-      } else {
-        userId = user._id
-        isCreator = voting.createdBy.equals(userId);
-        options.map(option => {
-          if (option.voters.includes(userId)) {
-            isVoter = true;
-          }
-        });
-      }
+      userId = user ? user._id : null;
+      isCreator = voting.createdBy.equals(userId);
+      options.map(option => {
+        if (option.voters.includes(userId)) {
+          isVoter = true;
+        }
+      });
 
+      console.log(voting,)
       return { voting, isCreator, options, isVoter };
     } catch (err) {
       return err;
@@ -110,7 +107,7 @@ class UserService {
     const userObj = await User.findOne({ _id: userId });
 
     userObj.votings.push(votingId);
-    
+
     if (!userObj) {
       return createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL);
     }
