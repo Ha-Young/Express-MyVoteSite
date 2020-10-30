@@ -1,7 +1,7 @@
-node_modules
+node_modules/
 .env
 .DS_STORE
-sessions
+sessions/
 cypress.env.json
 .gitignore
 .elasticbeanstalk/
