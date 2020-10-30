@@ -62,20 +62,6 @@ votingSchema.virtual('isContinuing').get(function () {
   return expireDate > presentTime;
 });
 
-
-votingSchema.methods.findVotedUser = async function (id) {
-  const votedUsers = await Voting.aggregate([
-    {
-      $match: { _id: new mongoose.Types.ObjectId(id) },
-    },
-    {
-      $unwind: '$selectOptions',
-    },
-  ]);
-  console.log(votedUsers, 'in findVotedUser method in rendervoting method')
-  return votedUsers
-};
-
 votingSchema.methods.sperateOptionforResult = async (id) => {
   const max = await Voting.aggregate([
     {

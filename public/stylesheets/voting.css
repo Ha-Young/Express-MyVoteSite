@@ -166,13 +166,6 @@ a {
   margin-top: 0.5em;
 }
 
-.voting-body-result {
-  display: grid;
-  grid-template-rows: 2em;
-  font-size: large;
-  color: #c41f1f;
-}
-
 .voting-button {
   font-size: large;
   transition: all 0.2s ease-in-out;
@@ -205,4 +198,28 @@ a {
 
 .ref {
   display: none;
+}
+
+/* // */
+.result-body {
+  display: grid;
+  grid-template-columns: 9em 15em;
+  grid-gap: 1em;
+  font-size: x-large;
+  margin-left: 2em;
+}
+
+.selectoptions-body-container {
+  display: grid;
+  grid-template-columns: 4em 1fr;
+  grid-gap: 1em;
+}
+
+.delete-button {
+  font-size: large;
+  transition: all 0.2s ease-in-out;
+}
+
+.delete-button:hover {
+  transform: scale(1.05);
 }

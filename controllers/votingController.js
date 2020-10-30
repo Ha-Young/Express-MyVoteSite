@@ -42,12 +42,12 @@ exports.renderVoting = async (req, res, next) => {
     const voting = await Voting.findById(votingId);
 
     if (!isLoggedin) req.session.redirectUrl = `/votings/${votingId}`
-    console.log('/:id route final controller');
+
     //3. 기투표자?
     // req.session.user_id 현재 이용하고 있는 사람 아이디 
 
     // 서버에서 리다이렉트 하는 것 찾기 
-    리다이렉트해야함
+
     let isVoted = false;
     voting.selectOptions.forEach((selectOption) => {
       if (selectOption.votedUsers.includes(userId)) {
@@ -58,13 +58,16 @@ exports.renderVoting = async (req, res, next) => {
     //4. 작성자?
     // req.body.voting[0].creator._id 작성자 아이디
     // req.session.user_id 현재 이용하고 있는 사람 아이디
-
+    let isCreator = false;
+    console.log(req.session, '/:id route final controller');
+    if (voting.creator._id === userId) isCreator = true;
 
 
     res.render('voting/voting', {
       voting,
       isLoggedin,
       isVoted,
+      isCreator
     });
     // res.json({ status: 'success' })
   } catch (err) {

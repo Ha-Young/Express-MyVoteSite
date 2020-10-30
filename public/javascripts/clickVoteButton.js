@@ -19,8 +19,10 @@ $form.addEventListener('submit', async (e) => {
     if (response.ok) {
       console.log('ok');
       let json = await response.json();
+      window.location.href = `http://localhost:3000/votings/${$ref}`
       console.log(json);
     }
+
   } catch (err) {
     console.log('err', err);
   }

@@ -92,6 +92,7 @@ exports.login = async (req, res, next) => {
 
 exports.logout = async (req, res, next) => {
   try {
+    consolelog('in log out')
     if (!req.session) {
       throw new Error('session does not exist');
     }
