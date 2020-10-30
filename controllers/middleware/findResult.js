@@ -12,11 +12,11 @@ module.exports = async (req, res, next) => {
       $unwind: '$selectOptions',
     },
   ]);
-  //static methods or schema method
+
   const count = byOptions.map((voting) => {
     return voting.selectOptions.votedUsers.length;
   });
-  const max = Math.max(...count)
+  const max = Math.max(...count);
   const maxOption = [];
   byOptions.forEach((voting) => {
     const count = voting.selectOptions.votedUsers.length;
@@ -28,5 +28,6 @@ module.exports = async (req, res, next) => {
   req.body.voting = byOptions;
   req.body.maxCount = max;
   req.body.maxOption = maxOption;
+  console.log(req.body, 'fetch put find result');
   next();
 };
