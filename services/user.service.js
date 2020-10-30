@@ -1,6 +1,6 @@
 const User = require('../models/User');
 
-class userService {
+class UserService {
   async registerUser(email, password, username) {
     const newUserData = new User({
       email,
@@ -19,4 +19,4 @@ class userService {
   }
 }
 
-module.exports = userService;
+module.exports = UserService;

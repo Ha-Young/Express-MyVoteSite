@@ -1,4 +1,3 @@
-const User = require('../../models/User');
 const passport = require('passport');
 const { LOGIN, ROOT } = require('../../constants/urls');
 const { MESSAGE } = require('../../constants/views');
