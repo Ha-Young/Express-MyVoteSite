@@ -8,7 +8,23 @@ if (addOptionButton) {
     const existInput = document.getElementsByName('options')[0];
 
     newInput.setAttribute('name', 'options');
+    newInput.setAttribute('required', 'true');
+
     existInput.parentNode.insertBefore(newInput, existInput);
+  });
+}
+
+const formResetbutton = document.querySelector('.form-reset-button');
+
+if (formResetbutton) {
+  formResetbutton.addEventListener('click', () => {
+    const existInput = document.getElementsByName('options');
+
+    if (2 < existInput.length) {
+      for (let i = 0; i < existInput.length; i++) {
+        existInput[i].remove();
+      }
+    }
   });
 }
 
@@ -24,7 +40,7 @@ if (votingButton) {
     let data = {};
     let result;
 
-    for (let i = 0; i < optionInput.length; i++) {
+    for (let i = 1; i < optionInput.length; i++) {
       if (optionInput[i].checked) {
         data.option = optionInput[i].value;
       }

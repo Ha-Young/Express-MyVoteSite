@@ -27,11 +27,16 @@ block content
                   name='option'
                   value=`${option._id}`
                 )
-        .voting-submit-button
-          button(
-            id=`${id}`
-            class='votingButton'
-          ) 투표
+          if isVoter
+            .description-container
+              .description 이미 투표하셨습니다:>
+          else
+            .voting-submit-button
+              button(
+                id=`${id}`
+                class='votingButton'
+              ) 투표
+
     if !voting.isExpiration || isCreator
       .result-container
         .result

@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const User = require('../../models/User');
 const UserService = require('../../service/service');
 
 exports.renderSignup = (req, res, next) => {
@@ -9,8 +10,8 @@ exports.signUp = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
     const hash = await bcrypt.hash(password, 12);
-    // await User({ name, email, password: hash }).save();
-    await UserService.Signup({name, email, hash});
+    await User({ name, email, password: hash }).save();
+    // await UserService.Signup({name, email, hash});
     return res.redirect('/login');
   } catch (err) {
     next(err);

@@ -32,6 +32,7 @@ exports.createVoting = async (req, res, next) => {
       expirationDate,
       options: optionObject,
     };
+
     const saveVoting = await Voting(voting).save();
     const userObj = await User.findOne({ _id });
 

@@ -43,16 +43,24 @@ exports.getRenderVotingDetails = async (req, res, next) => {
 
     let isCreator;
     let userId;
+    let isVoter;
 
     if (req.user) {
       userId = req.user._id;
-      isCreator = voting.createdBy.toString() === userId.toString();
+      isCreator = voting.createdBy.equals(userId);
+      options.map(option => {
+        console.log('option',option.voters.includes(userId))
+        if (option.voters.includes(userId)) {
+          isVoter = true;
+        }
+      });
     } else {
       userId = null;
     }
+
     voting.isExpiration = isExpiration(voting.expirationDate);
 
-    res.render('votingDetails', { id, voting, isCreator, options });
+    res.render('votingDetails', { id, voting, isCreator, options, isVoter });
   } catch (err) {
     next(err);
   }
@@ -67,7 +75,7 @@ exports.vote = async (req, res, next) => {
     if (!isValidObjectId, !option) {
       return createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL);
     }
-    
+
     await Voting.updateOne(
       { 'options._id': option },
       { $addToSet: { 'options.$[option].voters': _id } },
