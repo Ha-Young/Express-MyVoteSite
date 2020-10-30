@@ -4,8 +4,6 @@ const Voting = require('../../models/Voting');
 const User = require('../../models/User');
 const { isExpiration } = require('../../utils');
 const constants = require('../../constants');
-const UserService = require('../../service/service');
-const userService = new UserService();
 
 
 exports.getAllVotings = async (req, res, next) => {

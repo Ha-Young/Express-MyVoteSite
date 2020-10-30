@@ -3,9 +3,7 @@ const createError = require('http-errors');
 const Voting = require('../../models/Voting');
 const User = require('../../models/User');
 const constants = require('../../constants');
-const { isExpiration } = require('../../utils');
-const UserService = require('../../service/service');
-const userService = new UserService();
+const { UserService, VotingService } = require('../../service/service');
 
 exports.getRenderNewVoting = (req, res, next) => {
   res.render('newVoting');
@@ -20,7 +18,7 @@ exports.renderMyVotingsPage = async (req, res, next) => {
       return next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL));
     }
 
-    const votings = await userService.getVotings(_id);
+    const votings = await new UserService().getVotings(_id);
 
     res.render('myVotings', { votings });
   } catch (err) {
@@ -36,8 +34,8 @@ exports.getRenderVotingDetails = async (req, res, next) => {
     if (!isValidObjectId) {
       return next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL));
     }
-    
-    const { voting, isCreator, options, isVoter } = await userService.getVotinDetails(id, req.user);
+
+    const { voting, isCreator, options, isVoter } = await new VotingService().getVotinDetails(id, req.user);
 
     res.render('votingDetails', { id, voting, isCreator, options, isVoter });
   } catch (err) {

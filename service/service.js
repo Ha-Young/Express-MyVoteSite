@@ -2,28 +2,8 @@ const Voting = require('../models/Voting');
 const User = require('../models/User');
 const { isExpiration } = require('../utils');
 
-//error...
-class UserService {
-  async signUp(user) {
-    await User(
-      {
-        name: user.name,
-        email: user.email,
-        password: user.hash
-      })
-      .save();
-  }
 
-  async getVotings(userId) {
-    const { votings } = await User.findOne({ _id: userId }).populate('votings');
-
-    for (let i = 0; i < votings; i++) {
-      voting.isExpiration = isExpiration(voting.expirationDate);
-    }
-
-    return votings;
-  }
-
+class VotingService {
   async getVotinDetails(votingId, user) {
     const voting = await Voting.findOne({ _id: votingId });
     const { options } = voting.populate('options');
@@ -54,4 +34,31 @@ class UserService {
   }
 }
 
-module.exports = UserService;
+
+//error...
+class UserService {
+  async signUp(user) {
+    await User(
+      {
+        name: user.name,
+        email: user.email,
+        password: user.hash
+      })
+      .save();
+  }
+
+  async getVotings(userId) {
+    const { votings } = await User.findOne({ _id: userId }).populate('votings');
+
+    for (let i = 0; i < votings; i++) {
+      voting.isExpiration = isExpiration(voting.expirationDate);
+    }
+
+    return votings;
+  }
+}
+
+module.exports = {
+  UserService,
+  VotingService,
+};
