@@ -1,10 +1,18 @@
 const User = require('../../models/User');
 const Voting = require('../../models/Voting');
+const { EXPIRATION_DATE, ERROR, OK } = require('../../constants');
+const { MESSAGE } = require('../../constants/views');
+const {
+  CREATE_SUCCESS,
+  DELETE_SUCCESS,
+  VOTED,
+  VOTE_DONE,
+} = require('../../constants/messages');
 
 exports.create = (req, res, next) => {
   const created_by = req.session.userId;
   const data = req.body;
-  const expires_at = `${data['expiration-date'][0]} ${data['expiration-date'][1]}`;
+  const expires_at = `${data[EXPIRATION_DATE][0]} ${data[EXPIRATION_DATE][1]}`;
   const { title, options } = data;
 
   const optionsData = [];
@@ -42,8 +50,8 @@ exports.create = (req, res, next) => {
         { new: true },
       );
 
-      res.status(201).render('message', {
-        message: '투표를 새로 만들었습니다'
+      res.status(201).render(MESSAGE, {
+        message: CREATE_SUCCESS
       });
     } catch (err) {
       next(err);
@@ -74,8 +82,8 @@ exports.drop = async (req, res, next) => {
     );
   } catch (err) {
     res.json({
-      result: 'error',
-      message: '오류가 발생했습니다',
+      result: ERROR,
+      message: CREATE_FAILURE,
     });
 
     next(err);
@@ -94,15 +102,15 @@ exports.drop = async (req, res, next) => {
       );
 
       res.json({
-        result: 'error',
-        message: '오류가 발생했습니다',
+        result: ERROR,
+        message: CREATE_FAILURE,
       });
 
       next(err);
     } catch (err) {
       res.json({
-        result: 'error',
-        message: '오류가 발생했습니다',
+        result: ERROR,
+        message: CREATE_FAILURE,
       });
 
       next(err);
@@ -110,8 +118,8 @@ exports.drop = async (req, res, next) => {
   }
 
   res.json({
-    result: 'ok',
-    message: '삭제 완료',
+    result: OK,
+    message: DELETE_SUCCESS,
   });
 };
 
@@ -126,7 +134,7 @@ exports.applyVote = async (req, res, next) => {
     for (const option of options) {
       for (const voter of option.voters) {
         if (voter.toString() === currentUser) {
-          res.json({ message: '이미 투표했습니다' });
+          res.json({ message: VOTED });
 
           return;
         }
@@ -146,8 +154,8 @@ exports.applyVote = async (req, res, next) => {
     );
 
     res.json({
-      result: 'ok',
-      message: '투표 완료',
+      result: OK,
+      message: VOTE_DONE,
     });
   } catch (err) {
     next(err);

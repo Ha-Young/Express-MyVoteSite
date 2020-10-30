@@ -1,5 +1,8 @@
 const User = require('../../models/User');
 const passport = require('passport');
+const { LOGIN, ROOT } = require('../../constants/urls');
+const { MESSAGE } = require('../../constants/views');
+const { WRONG_ID_OR_PASSWORD } = require('../../constants/messages');
 
 exports.registerNewUser = async (req, res, next) => {
   const { email, password, username } = req.body;
@@ -18,7 +21,7 @@ exports.registerNewUser = async (req, res, next) => {
       return;
     }
 
-    res.status(302).redirect('/login');
+    res.status(302).redirect(LOGIN);
   });
 };
 
@@ -31,8 +34,8 @@ exports.passportAuthenticate = (req, res, next) => {
     }
 
     if (!user) {
-      res.status(200).render('message', {
-        message: '아이디 또는 비밀번호가 틀렸습니다'
+      res.status(200).render(MESSAGE, {
+        message: WRONG_ID_OR_PASSWORD
       });
 
       return;
@@ -47,7 +50,7 @@ exports.passportAuthenticate = (req, res, next) => {
 
       req.session.userId = user._id;
 
-      res.redirect('/');
+      res.redirect(ROOT);
     });
   })(req, res, next);
 };

@@ -1,6 +1,7 @@
 const Voting = require('../../models/Voting');
 const categorizeVotingsByExpiration = require('../../utils/categorizeVotingsByExpiration');
 const dayjs = require('dayjs');
+const { INDEX, MY_VOTINGS, VOTING_DETAILS } = require('../../constants/views');
 
 exports.getAll = async (req, res, next) => {
   const currentUserId = req.session.userId;
@@ -9,7 +10,7 @@ exports.getAll = async (req, res, next) => {
     const [openVotingsData, expiredVotingsData]
       = await categorizeVotingsByExpiration({ created_by: currentUserId });
 
-    res.status(200).render('index', {
+    res.status(200).render(INDEX, {
       openVotingsData,
       expiredVotingsData,
       isLoggedIn: !!req.user,
@@ -26,7 +27,7 @@ exports.getMine = async (req, res, next) => {
     const [openVotingsData, expiredVotingsData]
       = await categorizeVotingsByExpiration({ created_by: currentUserId }, false);
 
-    res.status(200).render('myVotings', { openVotingsData, expiredVotingsData });
+    res.status(200).render(MY_VOTINGS, { openVotingsData, expiredVotingsData });
   } catch (err) {
     next(err);
   }
@@ -58,7 +59,7 @@ exports.getOne = async (req, res, next) => {
       }
     }
 
-    res.status(200).render('votingDetails', {
+    res.status(200).render(VOTING_DETAILS, {
       voting,
       isUserCreator,
       isExpired,

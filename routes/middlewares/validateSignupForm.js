@@ -1,4 +1,6 @@
 const User = require('../../models/User');
+const { MESSAGE } = require('../../constants/views');
+const { VALIDATION_PROBLEM, ALREADY_REGISTERED } = require('../../constants/messages');
 
 async function validateSignupForm(req, res, next) {
   const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -12,8 +14,8 @@ async function validateSignupForm(req, res, next) {
     || password !== passwordConfirm
     || !username
   ) {
-    res.status(200).render('message', {
-      message: '형식을 지켜 입력칸을 모두채우세요'
+    res.status(200).render(MESSAGE, {
+      message: VALIDATION_PROBLEM
     });
 
     return;
@@ -22,8 +24,8 @@ async function validateSignupForm(req, res, next) {
   const emailSearchResult = await User.findOne({ email });
 
   if (emailSearchResult) {
-    res.status(302).render('message', {
-      message: '이미 가입한 이메일입니다'
+    res.status(302).render(MESSAGE, {
+      message: ALREADY_REGISTERED
     });
 
     return;
