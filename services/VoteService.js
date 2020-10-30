@@ -2,7 +2,7 @@ const Vote = require('../models/Vote');
 const User = require('../models/User');
 
 const { createAction } = require('./ActionCreator');
-const { SUCCESS, ERROR } = require('../constants');
+const { SUCCESS, ERROR } = require('../config/constants');
 const checkExpiration = require('../utils/checkExpiration');
 
 class VoteService {

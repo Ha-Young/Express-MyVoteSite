@@ -1,5 +1,5 @@
 require('dotenv').config();
-require('./db');
+require('./config/db');
 
 const path = require('path');
 const express = require('express');
@@ -15,6 +15,8 @@ const logger = require('morgan');
 const index = require('./routes/index');
 const auth = require('./routes/auth');
 const votings = require('./routes/votings');
+
+const { ROUTES, VIEWS } = require('./config/constants');
 
 const app = express();
 const store = new MongoDBStore({
@@ -33,8 +35,8 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
-    store
+    saveUninitialized: true
+    // store
   })
 );
 
@@ -45,9 +47,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 
-app.use('/', index);
-app.use('/auth', auth);
-app.use('/votings', votings);
+app.use(ROUTES.HOME, index);
+app.use(ROUTES.AUTH, auth);
+app.use(ROUTES.VOTINGS, votings);
 
 app.use(function (req, res, next) {
   next(createError(404));
@@ -65,7 +67,7 @@ app.use(function (err, req, res, next) {
   res.locals.error = err;
 
   res.status(err.status || 500);
-  res.render('error');
+  res.render(VIEWS.ERROR);
 });
 
 app.listen(function () {

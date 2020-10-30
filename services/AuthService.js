@@ -2,7 +2,7 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
 const { createAction } = require('./ActionCreator');
-const { SUCCESS, ERROR } = require('../constants');
+const { SUCCESS, ERROR } = require('../config/constants');
 
 class AuthService {
   constructor(user) {

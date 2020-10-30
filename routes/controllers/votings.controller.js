@@ -1,6 +1,6 @@
 const VoteService = require('../../services/VoteService');
 const { SERVICE_ERROR_CODE } = require('../../services/ActionCreator');
-const { SUCCESS, ERROR } = require('../../constants');
+const { ROUTES, VIEWS, SUCCESS, ERROR, CALLBACK_URI } = require('../../config/constants');
 
 const { formatISO, addHours } = require('date-fns');
 
@@ -9,7 +9,7 @@ exports.getNewVote = function getNewVote(req, res, next) {
     session: { user }
   } = req;
   const presentTime = formatISO(addHours(new Date(), 1)).slice(0, 14) + '00';
-  res.status(200).render('newVote', { user, time: presentTime });
+  res.status(200).render(VIEWS.NEW_VOTE, { user, time: presentTime });
 };
 
 exports.postNewVote = async function postNewVote(req, res, next) {
@@ -21,22 +21,21 @@ exports.postNewVote = async function postNewVote(req, res, next) {
   try {
     if (!vote.itemList || (vote.itemList && vote.itemList.length <= 1)) {
       req.flash(ERROR, 'Failed creating item must be at least 2');
-      return res.redirect('/');
+      return res.redirect(ROUTES.HOME);
     }
 
     const voteInstance = new VoteService(vote);
     await voteInstance.createNewVote(user);
 
     req.flash(SUCCESS, 'Succeed creating new vote!');
-    req.app.locals.messages = req.flash('succeed');
-    res.redirect('/');
+    res.redirect(ROUTES.HOME);
   } catch (error) {
     next(error);
   }
 };
 
 exports.getVote = async function getVote(req, res, next) {
-  res.clearCookie('callbackURI');
+  res.clearCookie(CALLBACK_URI);
 
   const {
     params: { id: vote_id },
@@ -51,7 +50,7 @@ exports.getVote = async function getVote(req, res, next) {
     switch (type) {
       case SERVICE_ERROR_CODE._10:
         req.flash(ERROR, payload.message);
-        return res.redirect('/');
+        return res.redirect(ROUTES.HOME);
       case SUCCESS:
         if (session && session.user) {
           isAuthor = session.user._id === payload.author._id.toString();
@@ -59,9 +58,12 @@ exports.getVote = async function getVote(req, res, next) {
             (user) => user._id.toString() === session.user._id
           );
         }
-        return res
-          .status(200)
-          .render('voteDetail', { user: session.user, vote: payload, isAuthor, isParticipated });
+        return res.status(200).render(VIEWS.VOTE_DETAIL, {
+          user: session.user,
+          vote: payload,
+          isAuthor,
+          isParticipated
+        });
     }
   } catch (error) {
     next(error);
@@ -98,7 +100,7 @@ exports.deleteVote = async function deleteVote(req, res, next) {
     } = req;
     await VoteService.deleteVote(vote_id);
     req.flash(SUCCESS, 'Succeed delete');
-    res.redirect('/');
+    res.redirect(ROUTES.HOME);
   } catch (error) {
     next(error);
   }

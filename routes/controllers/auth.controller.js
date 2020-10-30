@@ -1,9 +1,16 @@
 const AuthService = require('../../services/AuthService');
 const { SERVICE_ERROR_CODE } = require('../../services/ActionCreator');
-const { SUCCESS, ERROR } = require('../../constants');
+const {
+  ROUTES,
+  ROUTE_AUTH,
+  VIEWS,
+  SUCCESS,
+  ERROR,
+  CALLBACK_URI
+} = require('../../config/constants');
 
 exports.getSignUp = function getSignUp(req, res, next) {
-  res.status(200).render('signUp');
+  res.status(200).render(VIEWS.SIGN_UP);
 };
 
 exports.postSignUp = async function postSignUp(req, res, next) {
@@ -15,13 +22,12 @@ exports.postSignUp = async function postSignUp(req, res, next) {
     switch (type) {
       case SERVICE_ERROR_CODE._00:
         req.flash(ERROR, payload.message);
-        return res.redirect('/auth/login');
+        return res.redirect(ROUTES.AUTH + ROUTE_AUTH.LOGIN);
       case SUCCESS:
         req.session.user = payload;
         req.flash(SUCCESS, `Welcome, ${payload.name}`);
-        return res.redirect('/');
       default:
-        res.redirect('/');
+        res.redirect(ROUTES.HOME);
     }
   } catch (error) {
     next(error);
@@ -29,7 +35,7 @@ exports.postSignUp = async function postSignUp(req, res, next) {
 };
 
 exports.getLogin = function getLogin(req, res, next) {
-  res.status(200).render('login');
+  res.status(200).render(VIEWS.LOGIN);
 };
 
 exports.postLogin = async function postLogin(req, res, next) {
@@ -42,18 +48,18 @@ exports.postLogin = async function postLogin(req, res, next) {
       case SERVICE_ERROR_CODE._01:
       case SERVICE_ERROR_CODE._02:
         req.flash(ERROR, payload.message);
-        return res.redirect('/auth/login');
+        return res.redirect(ROUTES.AUTH + ROUTE_AUTH.LOGIN);
       case SUCCESS:
         req.session.user = payload;
         req.flash(SUCCESS, 'Succeed Login!');
-        if (cookies['callbackURI']) {
-          res.redirect(cookies['callbackURI']);
+        if (cookies[CALLBACK_URI]) {
+          res.redirect(cookies[CALLBACK_URI]);
         } else {
-          res.redirect('/');
+          res.redirect(ROUTES.HOME);
         }
         return;
       default:
-        res.redirect('/auth/login');
+        res.redirect(ROUTES.AUTH + ROUTE_AUTH.LOGIN);
     }
   } catch (error) {
     next(error);
