@@ -16,7 +16,6 @@ class UserService {
 
       return result;
     } catch (err) {
-      console.error('🔥 user service: create user', err);
       callback(err);
     }
   }
@@ -32,7 +31,6 @@ class UserService {
 
       return result;
     } catch (err) {
-      console.error('🔥 user service: create user', err);
       callback(err);
     }
   }
@@ -48,7 +46,6 @@ class UserService {
 
       return result;
     } catch (err) {
-      console.error('🔥 user service: verify password', err);
       callback(err);
     }
   }

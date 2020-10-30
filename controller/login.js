@@ -10,12 +10,14 @@ const loginUser = async (req, res, next) => {
   try {
     const { email, password, } = req.body;
 
-    const user = await authService.loginUser({ email, password, }, (err) => {
-      if (err) {
-        res.locals.message = err.message;
-        return res.render('login');
-      }
-    });
+    let user = null;
+
+    try {
+      user = await authService.loginUser({ email, password, });
+    } catch (err) {
+      res.locals.message = err.message;
+      return res.render('login');
+    }
 
     const { _id, nickname, } = user;
     req.session.user = { id: _id.toString(), email, nickname, };

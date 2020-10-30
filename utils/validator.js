@@ -55,8 +55,7 @@ const signUpForm = async ({ email, password, nickname, }, callback) => {
       validError.push(NICKNAME_DUPLICATE_ERROR_MESSAGE);
     }
   } catch (err) {
-    console.error('🔥 validator: sign up form', err);
-    throw Error(err);
+    callback(err);
   }
 
   if (validError.hasMessage) {
@@ -87,8 +86,7 @@ const loginForm = async ({ email, password, }, callback) => {
       validError.push(DIFF_PASSWORD);
     }
   } catch (err) {
-    console.error('🔥 validator: sign up form', err);
-    throw Error(err);
+    callback(err);
   }
 
   if (validError.hasMessage) {

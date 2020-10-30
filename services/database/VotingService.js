@@ -22,7 +22,6 @@ class VotingService {
 
       return votingsWithState;
     } catch (err) {
-      console.error('🔥 voting service: getVotings', err);
       callback(err);
     }
   }
@@ -38,7 +37,6 @@ class VotingService {
 
       return votingsWithState;
     } catch (err) {
-      console.error('🔥 voting service: getVotingsByUserId', err);
       callback(err);
     }
   }
@@ -54,7 +52,6 @@ class VotingService {
 
       return votingWithState;
     } catch (err) {
-      console.error('🔥 voting service: getVotingsByVotingId', err);
       callback(err);
     }
   }
@@ -69,7 +66,6 @@ class VotingService {
 
       return result;
     } catch (err) {
-      console.error('🔥 voting service: createVoting', err);
       callback(err);
     }
   }
@@ -89,35 +85,40 @@ class VotingService {
       callback(null, result);
       return result;
     } catch (err) {
-      console.error('🔥 voting service: deleteVoting', err);
       callback(err);
     }
   }
 
-  checkIfUserVoted({ userId, voting, }) {
+  checkIfUserVoted({ userId, voting, }, callback) {
+    if (!callback) callback = DEFAULT_CALLBACK;
+
     try {
-      return voting.polls.find((poll) => {
+      const result = voting.polls.find((poll) => {
         return poll.voted_users.find((user) => {
           return user._id.toString() === userId.toString();
         });
       });
+
+      callback(null, result);
     } catch (err) {
-      console.error('🔥 voting service: checkIfUserVoted', err);
-      throw Error(err);
+      callback(err);
     }
   }
 
-  async vote({ pollId, userId, }) {
+  async vote({ pollId, userId, }, callback) {
+    if (!callback) callback = DEFAULT_CALLBACK;
+
     try {
-      await Voting.updateOne(
+      const result = await Voting.updateOne(
         { 'polls._id': pollId, },
         { $addToSet: { 'polls.$[poll].voted_users': userId, }, },
         {
           arrayFilters: [{ 'poll._id': pollId, },],
         });
+
+      callback(null, result);
     } catch (err) {
-      console.error('🔥 voting service: vote', err);
-      throw Error(err);
+      callback(err);
     }
   }
 
@@ -131,8 +132,7 @@ class VotingService {
 
       return result;
     } catch (err) {
-      console.error('🔥 voting service: exists', err);
-      throw Error(err);
+      callback(err);
     }
   }
 }

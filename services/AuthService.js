@@ -15,8 +15,7 @@ class AuthService extends UserService {
 
       return result;
     } catch (err) {
-      console.error('🔥 auth service: signUpUser error', err);
-      throw Error(err);
+      callback(err);
     }
   }
 
@@ -32,8 +31,7 @@ class AuthService extends UserService {
 
       return result;
     } catch (err) {
-      console.error('🔥 auth service: signUpUser error', err);
-      throw Error(err);
+      callback(err);
     }
   }
 }

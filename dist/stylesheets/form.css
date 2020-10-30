@@ -45,3 +45,7 @@ form input:hover {
   background: #3d3b3b;
   cursor: pointer;
 }
+
+p {
+  text-align: center;
+}
