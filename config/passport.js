@@ -1,6 +1,6 @@
 const localStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const { entryErrorMessage } = require('../constants');
 const { PASSWORD_NOT_MATCHED, USER_NOT_EXIST } = entryErrorMessage;
 
