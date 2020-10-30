@@ -19,7 +19,7 @@ exports.postNewVote = async function postNewVote(req, res, next) {
   } = req;
 
   try {
-    if (!vote.itemList || (vote.itemList && vote.itemList.length <= 1)) {
+    if (!Array.isArray(vote.itemList) || vote.itemList.length <= 1) {
       req.flash(ERROR, 'Failed creating item must be at least 2');
       return res.redirect(ROUTES.HOME);
     }
