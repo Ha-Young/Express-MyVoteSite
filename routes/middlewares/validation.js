@@ -17,7 +17,7 @@ exports.validateSignupInputs = async (req, res, next) => {
   const {
     email,
     password,
-    ['confirm-password']: confirmPassword
+    ['confirm-password']: confirmPassword,
   } = req.body;
   const signupUrl = req.originalUrl;
 
@@ -40,7 +40,7 @@ exports.validateSignupInputs = async (req, res, next) => {
 
     const existedUser = await User.findOne({ email: email });
     if (existedUser) {
-      req.flash('message', EMAIL_NOT_AVAILABLE)
+      req.flash('message', EMAIL_NOT_AVAILABLE);
       return res.redirect(signupUrl);
     }
     next();
@@ -50,7 +50,10 @@ exports.validateSignupInputs = async (req, res, next) => {
 };
 
 exports.validateVotingInputs = (req, res, next) => {
-  const { ['option-title']: optionTitle, ['due-date']: dueDate } = req.body;
+  const {
+    ['option-title']: optionTitle,
+    ['due-date']: dueDate,
+  } = req.body;
 
   if (!optionTitle || typeof optionTitle === 'string' || optionTitle.length < 2) {
     req.flash('message', OPTIONS_NOT_ENOUGH);

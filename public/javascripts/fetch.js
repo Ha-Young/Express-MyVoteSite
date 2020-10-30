@@ -35,13 +35,13 @@ const handleUpdateRequest = async () => {
 };
 
 const handleDeleteRequest = async () => {
-  try {
-    const option = {
-      method: 'DELETE',
-      redirect: 'follow',
-      headers: { 'Content-Type': 'application/json' },
-    };
+  const option = {
+    method: 'DELETE',
+    redirect: 'follow',
+    headers: { 'Content-Type': 'application/json' },
+  };
 
+  try {
     const response = await fetch(`http://localhost:3000/votings/${votingId}`, option);
 
     if (response.result = 'ok') {

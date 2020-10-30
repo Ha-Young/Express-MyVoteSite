@@ -1,12 +1,12 @@
 const votingService = require('../../services/voting.service');
-const { checkPassedDate, checkAlreadyVoted, checkIsIdsMatcehd } = require('../../utils');
+const { checkPassedDate, checkAlreadyVoted, checkIsIdsMatched } = require('../../utils');
 const { otherMessage: { ALREADY_VOTED, RESULT_OK } } = require('../../constants');
 
 exports.createNewVoting = async (req, res, next) => {
   const {
     title,
     ['option-title']: optionTitle,
-    ['due-date']: dueDate
+    ['due-date']: dueDate,
   } = req.body;
   const userId = req.user._id;
 
@@ -90,23 +90,17 @@ exports.checkAuthorization = async (req, res, next) => {
   const { dueDate, voter: voterList, writer } = targetDetails;
   const currentVotingWriterId = writer._id;
 
-  const isIdsMatched = checkIsIdsMatcehd(userId, currentVotingWriterId);
+  const isIdsMatched = checkIsIdsMatched(userId, currentVotingWriterId);
   const hasAlreadyVoted = checkAlreadyVoted(voterList, userId);
 
   if (isIdsMatched) {
-    return res.render('voting-result', {
-      targetDetails, isIdsMatched,
-    });
+    return res.render('voting-result', { targetDetails, isIdsMatched });
   }
 
   if (checkPassedDate(dueDate)) {
-    return res.render('voting-result', {
-      targetDetails, isIdsMatched,
-    });
+    return res.render('voting-result', { targetDetails, isIdsMatched });
   } else {
-    return res.render('voting-details', {
-      targetDetails, isIdsMatched, hasAlreadyVoted,
-    });
+    return res.render('voting-details', { targetDetails, isIdsMatched, hasAlreadyVoted });
   }
 };
 
@@ -116,11 +110,11 @@ exports.renderVotingRegister = (req, res, next) => {
 };
 
 exports.renderVotingDetails = (req, res, next) => {
+  const userId = req.user && req.user._id;
   const targetDetails = req.targetVoting;
+  const currentVotingWriterId = targetDetails.writer._id;
   const hasAlreadyVoted = req.hasAlreadyVoted;
-  const isIdsMatched = req.user
-    ? targetDetails.writer._id.equals(req.user._id)
-    : false;
+  const isIdsMatched = checkIsIdsMatched(userId, currentVotingWriterId);
 
   res.render('voting-details', { targetDetails, isIdsMatched, hasAlreadyVoted });
 };

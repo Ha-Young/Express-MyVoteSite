@@ -22,10 +22,10 @@ exports.checkPassedDate = date => {
 };
 
 exports.checkAlreadyVoted = (list, id) => {
-  return list.some(el => el.equals(id));
+  return list.some(element => element.equals(id));
 };
 
-exports.checkIsIdsMatcehd = (compareId, id) => {
+exports.checkIsIdsMatched = (compareId, id) => {
   if (!compareId) return false;
   return id.equals(compareId);
 };
