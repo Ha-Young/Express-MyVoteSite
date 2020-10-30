@@ -47,8 +47,7 @@ mongoose.connect('mongodb://localhost/voting', {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false,
-}).then(() => console.log('monogo db on..'))
-  .catch((err) => console.log('mongodb connedt err: ', err));
+});
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -65,10 +64,6 @@ app.use('/votings', votingRouter);
 app.use('/', indexRouter);
 
 app.use((req, res, next) => {
-  console.log('invalid url => / ');
-  console.log(req.url);
-  console.log('req.originalUrl: ', req.originalUrl);
-
   let preUrl;
   if (req.url.includes('/login')) {
     preUrl = req.url.split('/login')[1];
@@ -83,8 +78,8 @@ app.use((req, res, next) => {
     });
   }
 });
+
 app.use((err, req, res, next) => {
-  console.log('in error handler... err: ', err);
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
