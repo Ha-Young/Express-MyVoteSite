@@ -53,9 +53,9 @@ exports.getVote = async function getVote(req, res, next) {
         return res.redirect(ROUTES.HOME);
       case SUCCESS:
         if (session && session.user) {
-          isAuthor = session.user._id === payload.author._id.toString();
-          isParticipated = payload.participatedUser.find(
-            (user) => user._id.toString() === session.user._id
+          isAuthor = payload.author._id.equals(session.user._id);
+          isParticipated = payload.participatedUser.find((user) =>
+            user._id.equals(session.user._id)
           );
         }
         return res.status(200).render(VIEWS.VOTE_DETAIL, {
