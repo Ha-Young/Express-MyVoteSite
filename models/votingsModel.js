@@ -62,19 +62,19 @@ votingSchema.virtual('isContinuing').get(function () {
   return expireDate > presentTime;
 });
 
-votingSchema.methods.sperateOptionforResult = async (id) => {
-  const max = await Voting.aggregate([
-    {
-      $match: { _id: new mongoose.Types.ObjectId(id) },
-    },
-    {
-      $unwind: '$selectOptions',
-    },
-  ]);
+// votingSchema.methods.sperateOptionforResult = async (id) => {
+//   const max = await Voting.aggregate([
+//     {
+//       $match: { _id: new mongoose.Types.ObjectId(id) },
+//     },
+//     {
+//       $unwind: '$selectOptions',
+//     },
+//   ]);
 
-  // console.log(max, '/:id route method middleware in findResult');
-  return max;
-};
+// console.log(max, '/:id route method middleware in findResult');
+//   return max;
+// };
 
 const Voting = mongoose.model('Voting', votingSchema);
 
