@@ -32,21 +32,20 @@ exports.createNewVoting = async (req, res, next) => {
 
 exports.renderVoting = async (req, res, next) => {
   try {
-
     //1. 진행중? done
     //2. 로그인? req.session.logined done
-    console.log('/:id route final controller');
+    // console.log(req.session, '/:id route final controller + session');
     const isLoggedin = req.session.logined;
     const userId = req.session.user_id;
     const votingId = req.params.id;
     const voting = await Voting.findById(votingId);
 
-    if (!isLoggedin) req.session.redirectUrl = `/votings/${votingId}`
+    if (!isLoggedin) req.session.redirectUrl = `/votings/${votingId}`;
 
     //3. 기투표자?
-    // req.session.user_id 현재 이용하고 있는 사람 아이디 
+    // req.session.user_id 현재 이용하고 있는 사람 아이디
 
-    // 서버에서 리다이렉트 하는 것 찾기 
+    // 서버에서 리다이렉트 하는 것 찾기
 
     let isVoted = false;
     voting.selectOptions.forEach((selectOption) => {
@@ -58,16 +57,21 @@ exports.renderVoting = async (req, res, next) => {
     //4. 작성자?
     // req.body.voting[0].creator._id 작성자 아이디
     // req.session.user_id 현재 이용하고 있는 사람 아이디
-    let isCreator = false;
-    console.log(req.session, '/:id route final controller');
-    if (voting.creator._id === userId) isCreator = true;
+    //로그인이 되있는 지 판별도 필요할듯 (로그인 이면서 유저 ||| 로그인 아님) 실행안되게
+    // console.log(voting.creator._id, '/:id route creator._id');
+    console.log(req.session, '/:id route userId');
 
+    let isCreator = false;
+    if (voting.creator._id.toString() === userId) {
+      console.log('/:id isCreator');
+      isCreator = true;
+    }
 
     res.render('voting/voting', {
       voting,
       isLoggedin,
       isVoted,
-      isCreator
+      isCreator,
     });
     // res.json({ status: 'success' })
   } catch (err) {
@@ -79,8 +83,6 @@ exports.renderVoting = async (req, res, next) => {
 exports.receiveVotingResult = async (req, res, next) => {
   try {
     console.log('fetch put last step in receiveVotingResult controller');
-
-
 
     // return res.redirect('/');
     return res.json('sucess');

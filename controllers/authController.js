@@ -1,12 +1,16 @@
 const User = require('../models/usersModel');
 const Voting = require('../models/votingsModel');
+const { promisify } = require('util');
 
 exports.renderMainPage = async (req, res, next) => {
   try {
+    console.log(req.session, 'in renderMainPage');
+    const logined = req.session.logined || undefined;
     const votings = await Voting.find();
-    // console.log(votings, 'in renderMainPage');
+
     res.render('main', {
       votings,
+      logined,
     });
   } catch (err) {
     console.log(err, 'renderMainPage');
@@ -55,12 +59,17 @@ exports.registerUser = async (req, res, next) => {
 };
 
 exports.renderLogin = (req, res, next) => {
-  console.log(req.session, 'login in controller');
-  res.render('auth/login', { err: {} });
+  console.log(req.session, 'login render');
+  const isLogined = req.session.logined || undefined;
+
+  return res.render('auth/login', {
+    err: {},
+    isLogined,
+  });
 };
 
 exports.login = async (req, res, next) => {
-  // console.log(req.session, 'login in controller');
+  console.log(req.session, 'login in controller start');
   try {
     const email = req.body.email;
     const password = req.body.password;
@@ -76,10 +85,20 @@ exports.login = async (req, res, next) => {
     const isValid = await user.verifyPassword(password, user.password);
 
     if (isValid) {
+      // const session = { ...req.session };
+      // session.user_id = user._id;
+      // session.logined = true;
+      // const test = await req.sessionStore.set(req.session._id, session);
+      // console.log(test, 'tses');
       req.session.user_id = user._id;
       req.session.logined = true;
-      // console.log(req.session, 'logged in');
-      if (req.session.redirectUrl) return res.status(302).redirect(`${req.session.redirectUrl}`);
+      await new Promise((resolve) => req.session.save(() => resolve()));
+
+      if (req.session.redirectUrl) {
+        console.log(req.session.id, 'logged when redirect exist');
+        return res.status(302).redirect(`${req.session.redirectUrl}`);
+      }
+      console.log(req.session, 'logged without redirect');
       return res.status(302).redirect('/');
     }
 
@@ -92,13 +111,21 @@ exports.login = async (req, res, next) => {
 
 exports.logout = async (req, res, next) => {
   try {
-    consolelog('in log out')
+    console.log(req.session, 'in log out start');
+
     if (!req.session) {
       throw new Error('session does not exist');
     }
+    // console.log(req.session, 'in log out2');
+    // delete req.session;
+    // await req.sessionStore.destroy(req.sessionID);
+    // req.sessionID = undefined;
 
-    await req.session.destroy();
-    req.sessionID = undefined;
+    await new Promise((resolve) => req.session.destroy(() => resolve()));
+    // await req.session.destroy();
+    // console.log(test, 'promisify in logout');
+
+    // console.log(req.sessionID, 'in log out after destroy');
 
     return res.status(302).redirect('/');
   } catch (err) {
