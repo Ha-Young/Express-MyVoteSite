@@ -21,10 +21,7 @@ router.get('/my-votings', authenticate, async (req, res, next) => {
     const { id, username } = req.session.user;
     res.locals.username = username;
 
-    // populate로 유저가 가지고 있는 모든 투표 데이터 가져오기
     const { voted } = await votingServices.findUserVotings(username);
-
-    console.log(voted);
 
     res.render('my_votings', {
       userId: id,
@@ -40,7 +37,6 @@ router.get('/:votingId', async (req, res) => {
 
   let locals = {};
 
-  // 찾지 못한 경우
   if (voting.length === 0) {
     locals = {
       subject: '못찾았어요..'
@@ -58,7 +54,7 @@ router.get('/:votingId', async (req, res) => {
   if (req.session.user) {
     const { id, username } = req.session.user;
 
-    const result = await userServices.hasVoted(id, req.params.votingId); // vote를 가지고 있는지
+    const result = await userServices.hasVoted(id, req.params.votingId);
 
     if (result) {
       res.locals.hasVoted = true;
@@ -88,8 +84,6 @@ router.put('/:votingId/:candidateId', async (req, res, next) => {
   try {
     const result = await votingServices.updateVoting(votingId, candidateId, voterId);
 
-    console.log(result);
-
     res.json(result);
   } catch (err) {
     next(err);
@@ -100,8 +94,9 @@ router.delete('/:votingId', async (req, res, next) => {
   const { votingId } = req.params;
 
   try {
-    await votingServices.deleteVoting(votingId);
+    const result = await votingServices.deleteVoting(votingId);
 
+    res.json(result);
   } catch (err) {
     next(err);
   }

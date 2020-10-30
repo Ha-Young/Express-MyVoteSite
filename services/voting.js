@@ -1,5 +1,6 @@
 const Voting = require('../models/Voting');
 const User = require('../models/User');
+const mongoose = require('mongoose');
 
 module.exports = class VotingServices {
   constructor () {
@@ -58,22 +59,31 @@ module.exports = class VotingServices {
     return {
       hasVoted: false,
       success: true
-    }
+    };
   }
 
   async deleteVoting (votingId) {
-    // 삭제하려는 투표에 투표한 유저들의 정보
-    const voters = await Voting.findOne({ _id: votingId }).populate('voters');
-    // 그들이 투표한 전체 투표 정보 목록에서 삭제하려는 투표의 아이디를 삭제(..;)
-    console.log(voters);
-    voters.voters.forEach(async (voter) => {
-      console.log(voter.voted)
-      await voter.voted.pull({ _id: votingId });
-      console.log(voter.voted)
-      // await voter.save();
-    });
+    try {
+      const result = await Voting.aggregate([
+        { $match: { _id: mongoose.Types.ObjectId(votingId) } },
+        { $unwind: { path: '$candidates' } },
+        { $unwind: { path: '$candidates.voters' } },
+        { $group: { _id:"$_id",  voters: { $push: "$candidates.voters" } } },
+      ]);
 
-    console.log('after removing votes from list...', voters);
+      const [ { voters } ] = result;
 
+      for (let voterId of voters) {
+        const user = await User.findOne({ _id: voterId });
+        await user.voted.pull({ _id: votingId });
+        await user.save();
+      }
+
+      const deletedDocument = await Voting.findOneAndDelete({ _id: votingId });
+
+      return deletedDocument;
+    } catch (err) {
+      console.log(err);
+    }
   }
 };

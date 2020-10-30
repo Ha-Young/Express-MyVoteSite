@@ -22,13 +22,13 @@ addCandidateBtn.addEventListener('click', (event) => {
       후보 ${inputLength + 1}
     </label>
     <input type="text" name="candidates[${inputLength}][title]" required />
-  `
+  `;
   content.innerHTML = `
     <label>
       설명
     </label>
     <textarea name="candidates[${inputLength}][content]" required />
-  `
+  `;
 
   newCandidateInput.appendChild(title);
   newCandidateInput.appendChild(content);

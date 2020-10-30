@@ -1,13 +1,17 @@
 const deleteBtn = document.getElementById('delete');
-console.log(deleteBtn);
 
 deleteBtn?.addEventListener('click', async (e) => {
   e.preventDefault();
-  console.log('삭 제');
   const paths = location.pathname.split('/');
   const votingId = paths[paths.length - 1];
 
-  const result = await axios.delete(`/votings/${votingId}`);
+  await axios.delete(`/votings/${votingId}`);
+
+  const confirm = window.confirm('메인페이지로 이동하시겠습니까?');
+
+  if (confirm) {
+    window.location.href = '/';
+  }
 });
 
 const candidates = document.getElementsByClassName('candidates-wrapper')[0];
@@ -33,8 +37,6 @@ if (candidates) {
           method: 'put',
           url: `/votings/${votingId}/${candidateId}`,
         });
-
-        console.log(result);
 
         if (result) {
           alert('성공적으로 투표 완료!');

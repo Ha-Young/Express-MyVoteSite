@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const { ObjectId } = mongoose.Types;
+const { Schema, Types : { ObjectId } } = mongoose;
 
-const votingSchema = new mongoose.Schema(
+const votingSchema = new Schema(
   {
     subject: {
       type: String,

@@ -12,7 +12,7 @@ module.exports = class UserServices {
   }
 
   async hasVoted (userId, votingId) {
-    const user = await User.findOne({ _id: userId })
+    const user = await User.findOne({ _id: userId });
 
     const result = user.voted.includes(votingId);
 
@@ -26,7 +26,7 @@ module.exports = class UserServices {
       return {
         isFailed: true,
         errorMsg: 'User is already registered!'
-      }
+      };
     }
 
     const user = new User({

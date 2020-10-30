@@ -9,7 +9,6 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
-  // 세션을 지워주어야..
   req.session.destroy();
 
   res.json({ success: true });
@@ -26,10 +25,8 @@ router.get('/register', (req, res) => {
 router.get('/', async (req, res, next) => {
   try {
     const user = await userServices.getUser(req.query.username);
-    // findOne으로 쿼리를 보냈기 때문에 찾지 못했다면 user는 null이다
 
     res.render('user', { user });
-
   } catch (err) {
     next(err);
   }
@@ -59,7 +56,6 @@ router.post('/login', async (req, res, next) => {
 
     res.redirect(path);
   }
-
 });
 
 router.post('/register', async (req, res, next) => {
@@ -68,7 +64,7 @@ router.post('/register', async (req, res, next) => {
 
     if (result.isFailed) {
       if (req.session.user) {
-        res.locals.username = req.session.user.username
+        res.locals.username = req.session.user.username;
       }
 
       res.render('register', {

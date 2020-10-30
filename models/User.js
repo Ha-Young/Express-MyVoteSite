@@ -24,12 +24,10 @@ const userSchema = new Schema(
 );
 
 userSchema.pre('save', function (next) {
-  // 유저가 새롭게 만들어지거나, 패스워드가 변경되었을 때에만 해싱
   if (!this.isModified('password')) {
     return next();
   }
 
-  // 해싱
   this.password = bcrypt.hashSync(this.password, 10);
   next();
 });
