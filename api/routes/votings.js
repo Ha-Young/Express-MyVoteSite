@@ -1,60 +1,79 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const { ObjectId } = mongoose.Types;
 const VotingServices = require('../../services/voting');
+const UserServices = require('../../services/user');
+const authenticate = require('../middlewares/authenticate');
 
 const router = express.Router();
 const votingServices = new VotingServices();
+const userServices = new UserServices();
 
-router.get('/new', (req, res) => {
+router.get('/new', authenticate, (req, res) => {
   if (req.session.user) {
-    res.locals.username = req.session.user.username
+    res.locals.username = req.session.user.username;
+    res.locals.userId = req.session.user.id;
   }
 
   res.render('new_voting');
 });
 
-router.get('/my-votings', (req, res) => {
-  if (req.session.user) {
-    res.locals.username = req.session.user.username
-  }
+router.get('/my-votings', authenticate, async (req, res, next) => {
+  try {
+    const { id, username } = req.session.user;
+    res.locals.username = username;
 
-  res.render('my_votings');
+    // populate로 유저가 가지고 있는 모든 투표 데이터 가져오기
+    const { voted } = await votingServices.findUserVotings(username);
+
+    console.log(voted);
+
+    res.render('my_votings', {
+      userId: id,
+      userVotings: voted
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get('/:votingId', async (req, res) => {
-  const result = await votingServices.findVoting({ _id: req.params.votingId });
+  const voting = await votingServices.findVoting({ _id: req.params.votingId });
 
   let locals = {};
 
   // 찾지 못한 경우
-  if (result.length === 0) {
+  if (voting.length === 0) {
     locals = {
       subject: '못찾았어요..'
     };
   } else {
-    const { subject, description, candidates } = result[0];
+    const { subject, author, description, candidates } = voting[0];
     locals = {
-      subject,
+      subject: JSON.stringify(subject),
+      author,
       description,
-      candidates
+      candidates: JSON.stringify(candidates)
     };
   }
 
   if (req.session.user) {
-    res.locals.username = req.session.user.username
+    const { id, username } = req.session.user;
+
+    const result = await userServices.hasVoted(id, req.params.votingId); // vote를 가지고 있는지
+
+    if (result) {
+      res.locals.hasVoted = true;
+    }
+
+    res.locals.username = username;
+    res.locals.userId = id;
   }
 
   res.render('voting', locals);
 });
 
-router.post('/new', async (req, res) => {
-  console.log(req.body);
-
+router.post('/new', async (req, res, next) => {
   try {
-    const result = await votingServices.createVoting(req.body);
-
-    console.log(result);
+    await votingServices.createVoting(req.body);
 
     res.redirect('/votings/new');
   } catch (err) {
@@ -62,5 +81,30 @@ router.post('/new', async (req, res) => {
   }
 });
 
+router.put('/:votingId/:candidateId', async (req, res, next) => {
+  const { votingId, candidateId } = req.params;
+  const voterId = req.session.user.id;
+
+  try {
+    const result = await votingServices.updateVoting(votingId, candidateId, voterId);
+
+    console.log(result);
+
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.delete('/:votingId', async (req, res, next) => {
+  const { votingId } = req.params;
+
+  try {
+    await votingServices.deleteVoting(votingId);
+
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;

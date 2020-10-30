@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const { Schema, Types: { ObjectId } } = mongoose;
 const bcrypt = require('bcryptjs');
 
 const userSchema = new Schema(
@@ -14,7 +14,11 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true
-    }
+    },
+    voted: [ {
+      type: ObjectId,
+      ref: 'Voting'
+    } ]
   },
   { timestamps: true }
 );

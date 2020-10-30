@@ -4,14 +4,29 @@ block content
   header
     link(rel="stylesheet", href="/stylesheets/css/voting.css")
 
-  h1= subject
+  h1 #{JSON.parse(subject)}
+
+  if (author.toString() === userId)
+    button#delete 투표 삭제하기
 
   p= description
 
-  //- div.chart-container
+  if (hasVoted || !username)
+    div.chart-container
+      canvas#chartjs-1
+  else
+    div.candidates-wrapper
+      each candidate in JSON.parse(candidates)
+        div.candidate(class= (hasVoted || !username) ? 'unauthorized' : '' data-candidate-id=`${candidate._id}`)
+          h2= candidate.title
+          p= candidate.content
 
-  div.candidates-wrapper
-    each candidate in candidates
-      div.candidate
-        h2= candidate.title
-        p= candidate.content
+  script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+  if (hasVoted || !username)
+    script(src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js")
+    script.
+      const subject = !{subject};
+      const candidatesData = !{candidates};
+    script(src="/lib/chartjs.js")
+
+  script(src="/javascript/voting.js")
