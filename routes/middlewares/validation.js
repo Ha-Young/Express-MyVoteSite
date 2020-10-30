@@ -14,7 +14,11 @@ const {
 } = require('../../constants');
 
 exports.validateSignupInputs = async (req, res, next) => {
-  const { email, password, confirm_password: confirmPassword } = req.body;
+  const {
+    email,
+    password,
+    ['confirm-password']: confirmPassword
+  } = req.body;
   const signupUrl = req.originalUrl;
 
   try {
@@ -46,7 +50,7 @@ exports.validateSignupInputs = async (req, res, next) => {
 };
 
 exports.validateVotingInputs = (req, res, next) => {
-  const { optionTitle, dueDate } = req.body;
+  const { ['option-title']: optionTitle, ['due-date']: dueDate } = req.body;
 
   if (!optionTitle || typeof optionTitle === 'string' || optionTitle.length < 2) {
     req.flash('message', OPTIONS_NOT_ENOUGH);

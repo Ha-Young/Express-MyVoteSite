@@ -36,7 +36,7 @@ const handleUpdateRequest = async () => {
       window.location.href = 'http://localhost:3000/login';
     }
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 };
 
@@ -54,7 +54,7 @@ const handleDeleteRequest = async () => {
       window.location.href = 'http://localhost:3000/';
     }
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 };
 

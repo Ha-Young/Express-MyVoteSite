@@ -6,7 +6,7 @@ block content
       h1.page-title= targetDetails.title
       .details-top-section
         span= targetDetails.writer.nickname
-        span= ' / ~' + targetDetails.dueDate
+        span= '/~' + targetDetails.dueDate
       each option in targetDetails.options
         div.radio-option
           input(
@@ -15,6 +15,7 @@ block content
             class='voting-option'
             value= option._id
             data-votingId= targetDetails._id
+            disabled= hasAlreadyVoted
           )
           label(for= option)= option.optionTitle
       button(type='button' class='voting-button') Vote
@@ -22,7 +23,9 @@ block content
         button(type='button' class='delete-button') Delete
         a(href=`/votings/result/${targetDetails._id}`)
           button(type='button') Vote result
-    span= message
-    button(type='button' class='back-to-list-button')
-      span 🔙
+    if hasAlreadyVoted
+      span You have already voted🙆‍♀️
+    a(href='/')
+      button(type='button' class='back-to-list-button')
+        span 🔙
   script(src='/javascripts/fetch.js')

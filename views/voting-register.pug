@@ -13,32 +13,32 @@ block content
         placeholder='title'
         required
       )
-      label(for='options') Options
+      label(for='option') Options
       div.vote-options
         input(
           type='text'
-          name='optionTitle'
+          name='option-title'
           placeholder='예. 짬뽕'
           required
         )
         input(
           type='text'
-          name='optionTitle'
+          name='option-title'
           placeholder='예. 떡볶이'
           required
         )
       input(
         type='text'
-        name='options'
-        id='options'
-        placeholder='options'
+        name='option'
+        id='option'
+        placeholder='option'
         class='option'
       )
       button(type='button' class='add-button') Add
       label(for='due-date') Due date
       input(
         type='datetime-local'
-        name='dueDate'
+        name='due-date'
         id='due-date'
         required
       )

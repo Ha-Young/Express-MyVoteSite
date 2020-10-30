@@ -5,13 +5,10 @@ block content
     h2(class='page-title')= targetDetails.title
     div(class='result-top-section')
       span= targetDetails.writer.nickname
-      span= ' / ' + targetDetails.dueDate
+      span= '/' + targetDetails.dueDate
     ul
       each option in targetDetails.options
         li= option.optionTitle
           span= option.votedCount.length
     a(href='/')
       button(type='button') Main
-    div.writer-only(class= isIdsMatched ? 'visible' : 'hidden')
-      button(type='submit' class='delete-button') Delete
-

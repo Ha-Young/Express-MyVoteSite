@@ -20,3 +20,12 @@ exports.checkInProgress = date => {
 exports.checkPassedDate = date => {
   return new Date(date) <= new Date();
 };
+
+exports.checkAlreadyVoted = (list, id) => {
+  return list.some(el => el.equals(id));
+};
+
+exports.checkIsIdsMatcehd = (id, compareId) => {
+  if (!id) return false;
+  return id.equals(compareId);
+};

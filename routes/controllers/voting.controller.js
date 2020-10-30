@@ -1,10 +1,12 @@
-const Voting = require('../../models/Voting');
-const User = require('../../models/User');
-const { calculateDate, checkPassedDate } = require('../../utils');
+const { checkPassedDate, checkAlreadyVoted, checkIsIdsMatcehd } = require('../../utils');
 const VotingService = require('../../services/voting.service');
 
 exports.createNewVoting = async (req, res, next) => {
-  const { title, optionTitle, dueDate } = req.body;
+  const {
+    title,
+    ['option-title']: optionTitle,
+    ['due-date']: dueDate
+  } = req.body;
   const userId = req.user._id;
   const options = [];
 
@@ -70,9 +72,10 @@ exports.deleteVoting = async (req, res, next) => {
   }
 };
 
-// 여기서부터 DB 로직 없음
-exports.checkValidVoting = async (req, res, next) => {
-  const dueDate = req.targetVoting.dueDate;
+exports.checkParticipatingVoting = async (req, res, next) => {
+  const userId = req.user && req.user._id;
+  const { dueDate, voter: voterList } = req.targetVoting;
+  req.hasAlreadyVoted = checkAlreadyVoted(voterList, userId);
 
   if (checkPassedDate(dueDate)) {
     return res.redirect(`/votings/result/${req.params.voting_id}`);
@@ -81,13 +84,13 @@ exports.checkValidVoting = async (req, res, next) => {
 };
 
 exports.checkAuthorization = async (req, res, next) => {
-  const currentUserId = req.user && req.user._id;
+  const userId = req.user && req.user._id;
   const targetDetails = req.targetVoting;
-  const currentVotingWriterId = targetDetails.writer._id;
-  const dueDate = targetDetails.dueDate;
-  const isIdsMatched = req.user
-    ? currentVotingWriterId.equals(currentUserId)
-    : false;
+  const { dueDate, voter: voterList, writer } = targetDetails;
+  const currentVotingWriterId = writer._id;
+
+  const isIdsMatched = checkIsIdsMatcehd(userId, currentVotingWriterId);
+  const hasAlreadyVoted = checkAlreadyVoted(voterList, userId);
 
   if (isIdsMatched) {
     return res.render('voting-result', {
@@ -101,7 +104,7 @@ exports.checkAuthorization = async (req, res, next) => {
     });
   } else {
     return res.render('voting-details', {
-      targetDetails, isIdsMatched
+      targetDetails, isIdsMatched, hasAlreadyVoted
     });
   }
 };
@@ -113,9 +116,10 @@ exports.renderVotingRegister = (req, res, next) => {
 
 exports.renderVotingDetails = (req, res, next) => {
   const targetDetails = req.targetVoting;
+  const hasAlreadyVoted = req.hasAlreadyVoted;
   const isIdsMatched = req.user
     ? targetDetails.writer._id.equals(req.user._id)
     : false;
 
-  res.render('voting-details', { targetDetails, isIdsMatched });
+  res.render('voting-details', { targetDetails, isIdsMatched, hasAlreadyVoted });
 };

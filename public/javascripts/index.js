@@ -1,16 +1,16 @@
-const $voteOption = document.querySelector('.option');
-const $addButton = document.querySelector('.add-button');
-const $voteList = document.querySelector('.vote-options');
+const voteOption = document.querySelector('.option');
+const addButton = document.querySelector('.add-button');
+const voteList = document.querySelector('.vote-options');
 
 let list = [];
 const handleAddButton = () => {
-  list.push($voteOption.value);
+  list.push(voteOption.value);
 
   list.map(option => {
     const div = document.createElement('div');
     div.setAttribute('class', 'option-wrapper');
     const input = document.createElement('input');
-    input.setAttribute('name', 'optionTitle');
+    input.setAttribute('name', 'option-title');
     input.setAttribute('value', option);
     input.setAttribute('readonly', true);
     const button = document.createElement('button');
@@ -21,21 +21,22 @@ const handleAddButton = () => {
     button.appendChild(buttonText);
     div.appendChild(input);
     div.appendChild(button);
-    $voteList.appendChild(div);
+    voteList.appendChild(div);
   });
 
   list = [];
-  const voteElements = document.getElementsByClassName('optionTitle');
+  const voteElements = document.getElementsByClassName('option-wrapper');
 
   [...voteElements].forEach(el => {
     el.addEventListener('click', event => {
       handleDeleteButton(event);
     });
   });
+  voteOption.value = '';
 };
 
 const handleDeleteButton = event => {
   event.currentTarget.remove();
 };
 
-$addButton.addEventListener('click', handleAddButton);
+addButton.addEventListener('click', handleAddButton);
