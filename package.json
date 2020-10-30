@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=product node ./bin/www",
+    "start": "node ./bin/www",
     "sass": "node-sass --watch --output-style expanded public/stylesheets --output dist/stylesheets",
     "cypress": "NODE_ENV=development node ./bin/www & cypress open",
     "dev": "NODE_ENV=development nodemon ./bin/www"
