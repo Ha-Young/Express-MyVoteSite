@@ -16,12 +16,12 @@
     "http-errors": "~1.6.3",
     "mongoose": "^5.10.10",
     "passport": "^0.4.1",
+    "dotenv": "^8.2.0",
     "passport-local": "^1.0.0",
-    "pug": "2.0.0-beta11"
+    "pug": "2.0.0-beta11",
+    "debug": "~2.6.9"
   },
   "devDependencies": {
-    "debug": "~2.6.9",
-    "dotenv": "^8.2.0",
     "nodemon": "^2.0.6"
   }
 }
