@@ -1,7 +1,7 @@
 module.exports = {
   WRONG_ID_OR_PASSWORD: '아이디 또는 비밀번호가 틀렸습니다',
   CREATE_SUCCESS: '투표를 새로 만들었습니다',
-  CREATE_FAILURE: '오류가 발생했습니다',
+  FAILURE: '오류가 발생했습니다',
   DELETE_SUCCESS: '삭제 완료',
   VOTED: '이미 투표했습니다',
   VOTE_DONE: '투표 완료',

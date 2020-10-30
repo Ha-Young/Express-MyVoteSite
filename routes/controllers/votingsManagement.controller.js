@@ -1,5 +1,3 @@
-const User = require('../../models/User');
-const Voting = require('../../models/Voting');
 const { EXPIRATION_DATE, ERROR, OK } = require('../../constants');
 const { MESSAGE } = require('../../constants/views');
 const {
@@ -7,9 +5,14 @@ const {
   DELETE_SUCCESS,
   VOTED,
   VOTE_DONE,
+  FAILURE,
 } = require('../../constants/messages');
+const UserService = require('../../services/user.service');
+const VotingService = require('../../services/voting.service');
+const userService = new UserService();
+const votingService = new VotingService();
 
-exports.create = (req, res, next) => {
+exports.create = async (req, res, next) => {
   const created_by = req.session.userId;
   const data = req.body;
   const expires_at = `${data[EXPIRATION_DATE][0]} ${data[EXPIRATION_DATE][1]}`;
@@ -24,39 +27,15 @@ exports.create = (req, res, next) => {
     });
   }
 
-  const newVotingData = new Voting({
-    title,
-    created_by,
-    expires_at,
-    options: optionsData,
-  });
+  try {
+    await votingService.createVoting(title, created_by, expires_at, optionsData);
 
-  Voting.create(newVotingData, async (err, data) => {
-    if (err) {
-      next(err);
-
-      return;
-    }
-
-    try {
-      const newVotingId = data._id;
-      const currentUser = await User.findById(data.created_by);
-
-      currentUser.votings.push(newVotingId);
-
-      await User.findByIdAndUpdate(
-        currentUser._id,
-        currentUser,
-        { new: true },
-      );
-
-      res.status(201).render(MESSAGE, {
-        message: CREATE_SUCCESS
-      });
-    } catch (err) {
-      next(err);
-    }
-  });
+    res.status(201).render(MESSAGE, {
+      message: CREATE_SUCCESS
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
 exports.drop = async (req, res, next) => {
@@ -64,56 +43,65 @@ exports.drop = async (req, res, next) => {
   let creatorData;
 
   try {
-    votingData = await Voting.findById(req.params._id);
-    creatorData = await User.findById(votingData.created_by);
-  } catch (err) {
-    next(err);
-  }
+    votingData = await votingService.getVoting(req.params._id);
+    creatorData = await userService.getUser(votingData.created_by);
 
-  const votingIndex = creatorData.votings.indexOf(votingData._id);
+    const votingIndex = creatorData.votings.indexOf(votingData._id);
 
-  creatorData.votings.splice(votingIndex, 1);
-
-  try {
-    await User.findByIdAndUpdate(
-      creatorData._id,
-      creatorData,
-      { new: true },
-    );
+    creatorData.votings.splice(votingIndex, 1);
   } catch (err) {
     res.json({
       result: ERROR,
-      message: CREATE_FAILURE,
+      message: FAILURE,
     });
 
-    next(err);
+    if (process.env.NODE_ENV === 'development') {
+      console.error(err);
+    }
+
+    return;
+  }
+
+  try {
+    userService.updateUser(creatorData._id, creatorData);
+  } catch (err) {
+    res.json({
+      result: ERROR,
+      message: FAILURE,
+    });
+
+    if (process.env.NODE_ENV === 'development') {
+      console.error(err);
+    }
+
+    return;
   }
 
   const creatorDataCopy = { ...creatorData };
 
   try {
-    await Voting.findByIdAndDelete(req.params._id);
+    votingService.deleteVoting(req.params._id);
   } catch (err) {
     try {
-      await User.findByIdAndUpdate(
-        creatorData._id,
-        creatorDataCopy,
-        { new: true },
-      );
+      userService.updateUser(creatorData._id, creatorDataCopy);
 
       res.json({
         result: ERROR,
-        message: CREATE_FAILURE,
+        message: FAILURE,
       });
 
-      next(err);
+      return;
     } catch (err) {
       res.json({
         result: ERROR,
-        message: CREATE_FAILURE,
+        message: FAILURE,
       });
 
-      next(err);
+      if (process.env.NODE_ENV === 'development') {
+        console.error(err);
+      }
+
+      return;
     }
   }
 
@@ -128,7 +116,7 @@ exports.applyVote = async (req, res, next) => {
   const currentUser = req.session.userId;
 
   try {
-    const voting = await Voting.findById(req.params._id);
+    const voting = await votingService.getVoting(req.params._id);
     const { options } = voting;
 
     for (const option of options) {
@@ -147,11 +135,20 @@ exports.applyVote = async (req, res, next) => {
       }
     }
 
-    await Voting.findByIdAndUpdate(
-      req.params._id,
-      voting,
-      { new: true },
-    );
+    try {
+      votingService.updateVoting(req.params._id, voting);
+    } catch (err) {
+      res.json({
+        result: ERROR,
+        message: FAILURE,
+      });
+
+      if (process.env.NODE_ENV === 'development') {
+        console.error(err);
+      }
+
+      return;
+    }
 
     res.json({
       result: OK,
