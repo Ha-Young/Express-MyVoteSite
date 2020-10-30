@@ -51,9 +51,11 @@
             </div>
           <% } %>
           </div>
-          <div class="new-form-column">
-            <button class="form-submit-button" type="submit">투표하기</button>
-          </div>
+          <% if (!expired) { %>
+            <div class="new-form-column">
+              <button class="form-submit-button" type="submit">투표하기</button>
+            </div>
+          <% } %>
         </form>
       </div>
     </div>
