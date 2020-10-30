@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const User = require('./model/User');
 const DEFAULT_CALLBACK = require('../../utils/defaultCallback');
