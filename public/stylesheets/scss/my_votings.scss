@@ -1,0 +1,16 @@
+.userVoting {
+  background-color: darkmagenta;
+  color: white;
+  margin: 1em;
+  padding: 2em;
+
+  h2 {
+    margin-top: 0;
+  }
+}
+
+.selected {
+  &::after {
+    content: ' ✓';
+  }
+}

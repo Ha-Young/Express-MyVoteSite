@@ -1,0 +1,15 @@
+@charset "UTF-8";
+.userVoting {
+  background-color: darkmagenta;
+  color: white;
+  margin: 1em;
+  padding: 2em;
+}
+
+.userVoting h2 {
+  margin-top: 0;
+}
+
+.selected::after {
+  content: ' ✓';
+}

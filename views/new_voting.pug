@@ -3,7 +3,7 @@ extends layout
 block content
   head
     link(rel="stylesheet", href="/stylesheets/css/new_voting.css")
-  h1 새로운 투표를 생성합시다!
+  h1 새로운 투표를 생성!
 
   form(action="" method="post")
     .form-wrapper
@@ -16,10 +16,11 @@ block content
           div
             label(for="description") 설명
             textarea(name="description")
+        input(type="hidden" name="author" value=`${userId}`)
         br
         div
           #rangeValue 몇 시간 후 투표를 종료할까요? <br/> (설정하지 않으면 3시간 후 종료됩니다)
-          input(type="range" name="expireTo" id="expireTo" min="1", max="24")
+          input(type="range" name="expireTo" id="expireTo" min="1", max="24" value="3")
 
       .ballotForm
         .input-wrapper
@@ -43,5 +44,4 @@ block content
     input(type="submit" value="투표 생성하기!")
 
     script(src="/utils/insertNewCandidateInput.js")
-    script(src="/utils/fetchFormData.js")
     script(src="/javascript/new_voting.js")

@@ -8,7 +8,18 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+router.get('/logout', (req, res) => {
+  // 세션을 지워주어야..
+  req.session.destroy();
+
+  res.json({ success: true });
+})
+
 router.get('/register', (req, res) => {
+  if (req.session.user) {
+    res.locals.username = req.session.user.username
+  }
+
   res.render('register');
 });
 
@@ -43,25 +54,28 @@ router.post('/login', async (req, res, next) => {
     };
     req.session.save();
 
-    console.log(req.session);
+    const path = req.session.unreached ? req.session.unreached : '/';
+    delete req.session.unreached;
 
-    res.redirect('/');
+    res.redirect(path);
   }
 
 });
 
 router.post('/register', async (req, res, next) => {
-  console.log(req.body);
   try {
     const result = await userServices.createUser(req.body);
 
     if (result.isFailed) {
+      if (req.session.user) {
+        res.locals.username = req.session.user.username
+      }
+
       res.render('register', {
         errorMsg: result.errorMsg
       });
     }
 
-    console.log('가입 성공! => ', result);
     res.redirect('/users/login');
   } catch (err) {
     next(err);

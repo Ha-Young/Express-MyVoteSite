@@ -1,4 +1,16 @@
 extends layout
 
 block content
+  head
+    link(rel="stylesheet", href="/stylesheets/css/my_votings.css")
+
   h1 나의 투표
+  h2 내가 만든 투표
+  
+  h2 내가 한 투표
+  each userVoting in userVotings
+    .userVoting
+      h2= userVoting.subject
+      ul
+        each candidate in userVoting.candidates
+          li(class= (candidate.voters.includes(userId)) ? 'selected' : '')= candidate.title

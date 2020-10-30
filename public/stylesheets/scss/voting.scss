@@ -1,8 +1,15 @@
-.chart-container {
-  background-color: pink;
-  width: 300px;
-  height: 300px;
+#delete {
+  color: darkmagenta;
+  background-color: #fff;
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  padding: 10px;
+}
 
+.chart-container {
+  width: 500px;
+  height: 500px;
 }
 
 .candidates-wrapper {
@@ -15,16 +22,21 @@
     box-shadow: 0px 0px 4px black;
     border-radius: 1em;
     padding: 2em;
-    margin: 1em;
+    margin: 10px;
     text-align: center;
 
     &:hover {
       // box-shadow: 0px 0px 4px darkorchid;
+      cursor: pointer;
       color: darkmagenta;
     }
 
     &.selected {
       background-color: darkorchid;
+    }
+
+    &.unauthorized {
+      pointer-events: none;
     }
   }
 }

@@ -5,7 +5,13 @@ html
     link(rel='stylesheet', href='/stylesheets/css/layout.css')
   body
     content
-        block content
+      block content
+
+    if username
+      .greeting#logout #{username}님, 반갑습니다!
+    else
+      .greeting <a href="/users/login">로그인하시고 Let's vote!</a>
+
     nav
       h1.logo
         a(href='/') Let's vote
@@ -17,8 +23,5 @@ html
           a(href='/votings/new') 새로운 투표 만들기
         li
           a(href='/votings/my-votings') 나의 투표
-
-      if username
-        .greeting #{username}님, 반갑습니다!
-      else
-        .greeting <a href="/users/login">로그인하시고 Let's vote!</a>
+    script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+    script(src="/javascript/layout.js")

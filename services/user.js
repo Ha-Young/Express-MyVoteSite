@@ -8,15 +8,19 @@ module.exports = class UserServices {
   async getUser (username) {
     const user = await User.findOne({ username });
 
-    console.log(user);
-
     return user;
+  }
+
+  async hasVoted (userId, votingId) {
+    const user = await User.findOne({ _id: userId })
+
+    const result = user.voted.includes(votingId);
+
+    return result;
   }
 
   async createUser (userDTO) {
     const isUser = await this.getUser(userDTO.username);
-
-    console.log(isUser);
 
     if (isUser) {
       return {
@@ -49,7 +53,6 @@ module.exports = class UserServices {
     let result;
 
     user.comparePassword(userDTO.password, (err, match) => {
-      console.log('패스워드 일치? =>', match);
       if (!match) {
         result = {
           isFailed: true,

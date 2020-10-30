@@ -4,14 +4,22 @@ block content
   header
     link(rel="stylesheet", href="/stylesheets/css/index.css")
 
-  h1 투표를 해보시겠어요?
-  p 방갑습니다
+  h1 투표하시죠!
+  h2 과연 집단지성은 옳은 결론을 내릴것인가..
+  .toggle-switch-container
+    label
+      input(type="checkbox")
+      span.slider
 
   each voting in votingList
-    div.voting(class= (voting.expiredAt - new Date()) < 0 ? 'expired' : '')
+    div.voting(
+      class= (voting.expiredAt - new Date()) < 0 ? 'expired' : ''
+      class= (votedList.includes(voting.id)) ? 'voted' : ''
+    )
       a(href=`/votings/${voting.id}`)
         ul
-          li= voting.subject
+          li
+            h2= voting.subject
           li= voting.description
-          li= voting.expiredAt.toLocaleDateString()
-          li= voting.expiredAt.toLocaleTimeString()
+          br
+          li #{voting.expiredAt.toLocaleDateString()}, #{voting.expiredAt.getHours()}시 #{voting.expiredAt.getMinutes()}분에 투표가 종료됩니다.

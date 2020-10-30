@@ -9,7 +9,22 @@ content {
   padding: 50px;
   flex: 1;
   margin-right: 250px;
+  margin-bottom: 100px;
   overflow: hidden;
+  position: relative;
+}
+
+.greeting {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+
+  padding: 1em;
+  border-top-left-radius: 1em;
+  border-bottom-left-radius: 1em;
+  box-shadow: 1px 1px 2px black;
+  background-color: #fff;
 }
 
 nav {
@@ -27,17 +42,16 @@ nav {
     font-size: 4em;
     text-align: center;
   }
-
-  .greeting {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-  }
 }
 
 @media only screen and (max-width: 850px) {
   content {
-    margin: 0;
+    margin-right: 0;
+  }
+
+  .greeting {
+    bottom: auto;
+    top: 0;
   }
 
   nav {
@@ -48,6 +62,7 @@ nav {
 
     display: flex;
     justify-content: center;
+    box-shadow: 0px -1px 3px black;
 
     ul {
       display: flex;

@@ -1,8 +1,72 @@
+.toggle-switch-container {
+  position: absolute;
+  top: 150px;
+  right: 40px;
+}
+
+.toggle-switch-container label {
+  width: 60px;
+  height: 34px;
+  display: inline-block;
+}
+
+.toggle-switch-container input[type='checkbox'] {
+  width: 0;
+  height: 0;
+}
+
+.toggle-switch-container .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.toggle-switch-container .slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.toggle-switch-container input:checked + .slider {
+  background-color: darkmagenta;
+}
+
+.toggle-switch-container input:focus + .slider {
+  -webkit-box-shadow: 0 0 1px darkmagenta;
+          box-shadow: 0 0 1px darkmagenta;
+}
+
+.toggle-switch-container input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
 .voting {
-  background-color: darkturquoise;
-  color: white;
+  border: 3px solid darkmagenta;
+  border-radius: 1em;
+  color: darkmagenta;
   padding: 1em;
   margin-bottom: 1em;
+}
+
+.voting h2 {
+  margin: 10px 0;
+}
+
+.voting ul {
+  padding-left: 15px;
 }
 
 .voting:hover {
