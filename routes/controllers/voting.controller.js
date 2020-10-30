@@ -50,7 +50,7 @@ exports.vote = async (req, res, next) => {
     if (!isValidObjectId, !option) {
       return createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL);
     }
-    
+
     const isUpdate = await new VotingService().updateVoter(_id, option);
 
     if (isUpdate) {

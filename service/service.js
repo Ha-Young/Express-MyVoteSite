@@ -10,9 +10,10 @@ class VotingService {
       if (!votings) {
         return createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL);
       }
-      for (let i = 0; i < votings.length; i++) {
-        votings[i].isExpiration = isExpiration(votings[i].expirationDate);
-      }
+      votings.forEach(voting => {
+        voting.isExpiration = isExpiration(voting.expirationDate);
+      });
+
       return votings;
     } catch (err) {
       return err;
@@ -31,6 +32,7 @@ class VotingService {
       };
 
       const saveVoting = await Voting(voting).save();
+
       return saveVoting;
     } catch (err) {
       return err;
@@ -59,7 +61,6 @@ class VotingService {
         }
       });
 
-      console.log(voting,)
       return { voting, isCreator, options, isVoter };
     } catch (err) {
       return err;
@@ -119,10 +120,9 @@ class UserService {
   async getUserVotings(userId) {
     const { votings } = await User.findOne({ _id: userId }).populate('votings');
 
-    for (let i = 0; i < votings.length; i++) {
-      votings[i].isExpiration = isExpiration(votings[i].expirationDate);
-    }
-
+    votings.forEach(voting => {
+      voting.isExpiration = isExpiration(voting.expirationDate);
+    });
     return votings;
   }
 
