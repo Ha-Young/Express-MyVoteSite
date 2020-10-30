@@ -7,12 +7,15 @@ block content
   .head-container
     h1 🗳 투표하세용!
   .container
-    .vote-list
-      each vote in votingList
-        +card({
-          id: vote._id,
-          title: vote.title,
-          author: vote.author,
-          expireAt: vote.expireAt,
-          isExpired: vote.isExpired
-        })
+    if votingList.length <= 0
+      h1 새로운 투표를 만들어보세요..!🙏
+    else
+      .vote-list
+        each vote in votingList
+          +card({
+            id: vote._id,
+            title: vote.title,
+            author: vote.author,
+            expireAt: vote.expireAt,
+            isExpired: vote.isExpired
+          })

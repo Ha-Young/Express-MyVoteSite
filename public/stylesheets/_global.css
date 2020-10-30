@@ -17,6 +17,21 @@ a {
   color: black;
 }
 
+pre {
+  margin-left: 24px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .message {
   position: fixed;
   left: 24px;
@@ -55,20 +70,6 @@ a {
 .black {
   background-color: black;
   color: white;
-}
-
-.content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.container {
-  width: 100;
-  display: flex;
-  justify-content: center;
 }
 
 .vote-list {

@@ -84,7 +84,7 @@ exports.postVote = async function postVote(req, res, next) {
       case SUCCESS:
         req.flash(SUCCESS, 'Succeed voting!');
       default:
-        return res.redirect(`/votings/${vote_id}`);
+        return res.status(200).json(body);
     }
   } catch (error) {
     next(error);

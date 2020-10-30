@@ -4,6 +4,7 @@ require('./db');
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 const cookieParser = require('cookie-parser');
 const flash = require('express-flash');
 
@@ -16,6 +17,14 @@ const auth = require('./routes/auth');
 const votings = require('./routes/votings');
 
 const app = express();
+const store = new MongoDBStore({
+  uri:
+    process.env.NODE_ENV === 'production'
+      ? process.env.DB_PRODUCTION_ADDRESS
+      : process.env.DB_LOCAL_ADDRESS,
+  databaseName: 'voting-platform-toggo',
+  collection: 'session'
+});
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
@@ -24,7 +33,8 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store
   })
 );
 
