@@ -5,7 +5,7 @@ const { ERROR, TEMPLATE, BCRYPT } = require('../constants');
 
 const userServiceInstance = new UserService(User);
 
-exports.validateSignUp = async (req, res, next) => {
+exports.validateSignup = async (req, res, next) => {
   const {
     username,
     email,
