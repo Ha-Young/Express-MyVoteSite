@@ -94,19 +94,23 @@ class VotingService {
 
 class UserService {
   async signUp(user) {
-    await User(
-      {
-        name: user.name,
-        email: user.email,
-        password: user.hash
-      })
-      .save();
+    try {
+      await User(
+        {
+          name: user.name,
+          email: user.email,
+          password: user.hash
+        }).save();
+    } catch (err) {
+      return err;
+    }
   }
 
   async updateUserVoting(userId, votingId) {
     const userObj = await User.findOne({ _id: userId });
 
     userObj.votings.push(votingId);
+    
     if (!userObj) {
       return createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL);
     }

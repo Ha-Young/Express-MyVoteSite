@@ -30,9 +30,8 @@ const validationResult = async (req, res, next) => {
       passwordError: constants.ERROR_MESSAGE_INPUT_PASSWORD
     });
   }
-  console.log('validator')
+
   next();
 };
-
 
 exports.validationResult = validationResult;

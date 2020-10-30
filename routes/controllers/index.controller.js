@@ -21,7 +21,7 @@ exports.createVoting = async (req, res, next) => {
     const isValidObjectId = mongoose.isValidObjectId(_id);
 
     if (!isValidObjectId) {
-      return next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL))
+      return next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL));
     }
 
     const saveVoting = await new VotingService().createVoting({ _id, name, votingTitle, expirationDate, options });
