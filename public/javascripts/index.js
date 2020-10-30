@@ -26,9 +26,8 @@ const handleAddButton = () => {
 
   list = [];
   const voteElements = document.getElementsByClassName('option-wrapper');
-
-  [...voteElements].forEach(el => {
-    el.addEventListener('click', event => {
+  [...voteElements].forEach(element => {
+    element.addEventListener('click', event => {
       handleDeleteButton(event);
     });
   });

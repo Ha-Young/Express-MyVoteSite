@@ -12,17 +12,11 @@ const handleUpdateRequest = async () => {
     }
   }
 
-  const votingData = {
-    votingId,
-    optionId,
-  };
-
+  const votingData = { votingId, optionId };
   const option = {
     method: 'PUT',
     redirect: 'follow',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(votingData),
   };
 
@@ -42,13 +36,13 @@ const handleUpdateRequest = async () => {
 
 const handleDeleteRequest = async () => {
   try {
-    const response = await fetch(`http://localhost:3000/votings/${votingId}`, {
+    const option = {
       method: 'DELETE',
       redirect: 'follow',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+      headers: { 'Content-Type': 'application/json' },
+    };
+
+    const response = await fetch(`http://localhost:3000/votings/${votingId}`, option);
 
     if (response.result = 'ok') {
       window.location.href = 'http://localhost:3000/';

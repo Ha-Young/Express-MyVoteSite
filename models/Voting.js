@@ -1,6 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const OptionSchema = new Schema({
+  optionTitle: {
+    type: String,
+    required: true,
+  },
+  votedCount: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  }],
+});
+
 const VotingSchema = new Schema({
   id: Schema.Types.ObjectId,
   title: {
@@ -17,17 +29,7 @@ const VotingSchema = new Schema({
     default: Date.now,
     requried: true,
   },
-  options: [{
-    optionTitle: {
-      type: String,
-      required: true,
-    },
-    votedCount: [{
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    }],
-  }],
+  options: [OptionSchema],
   voter: [{
     type: Schema.Types.ObjectId,
     ref: 'User',

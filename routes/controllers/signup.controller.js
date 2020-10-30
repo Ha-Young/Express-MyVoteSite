@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const { SALT_ROUNDS } = require('../../constants');
-const UserService = require('../../services/signup.service');
+const signupService = require('../../services/signup.service');
 
 exports.createNewUser = async (req, res, next) => {
   try {
@@ -13,7 +13,7 @@ exports.createNewUser = async (req, res, next) => {
       myVotings: [],
     };
 
-    await UserService.createNewUser(userInfo);
+    await signupService.createNewUser(userInfo);
     next();
   } catch (error) {
     next(error);

@@ -1,9 +1,6 @@
 const User = require('../models/User');
 const { calculateDate, checkInProgress } = require('../utils');
-const { dbErrorMessage } = require('../constants');
-const {
-  DB_ERROR_READING_MY_VOTINGS,
-} = dbErrorMessage;
+const { dbErrorMessage: { DB_ERROR_READING_MY_VOTINGS } } = require('../constants');
 
 exports.getAllMyVotings = async userId => {
   try {
@@ -14,6 +11,7 @@ exports.getAllMyVotings = async userId => {
     });
     return myVotingsData;
   } catch (error) {
-    throw new Error(DB_ERROR_READING_MY_VOTINGS + error);
+    console.error(DB_ERROR_READING_MY_VOTINGS);
+    throw new Error(error);
   }
 };

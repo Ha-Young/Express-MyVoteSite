@@ -1,13 +1,15 @@
 extends layout
 
 block content
+  - const optionList = targetDetails.options;
+  - optionList.sort((a, b) => b.votedCount.length - a.votedCount.length);
   div.vote-result-container
     h2(class='page-title')= targetDetails.title
     div(class='result-top-section')
       span= targetDetails.writer.nickname
       span= '/' + targetDetails.dueDate
     ul
-      each option in targetDetails.options
+      each option in optionList
         li= option.optionTitle
           span= option.votedCount.length
     a(href='/')

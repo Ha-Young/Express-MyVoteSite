@@ -3,6 +3,7 @@ const router = express.Router();
 const indexController = require('./controllers/index.controller');
 
 const loginRouter = require('./login');
+const logoutRouter = require('./logout');
 const signupRouter = require('./signup');
 const votingRouter = require('./votings');
 const userRouter = require('./my-votings');
@@ -13,10 +14,7 @@ router.get('/',
 );
 
 router.use('/login', loginRouter);
-router.use('/logout', (req, res, next) => {
-  req.logout();
-  res.redirect('/');
-});
+router.use('/logout', logoutRouter);
 router.use('/signup', signupRouter);
 router.use('/votings', votingRouter);
 router.use('/my-votings', userRouter);

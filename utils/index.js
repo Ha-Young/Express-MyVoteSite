@@ -25,7 +25,7 @@ exports.checkAlreadyVoted = (list, id) => {
   return list.some(el => el.equals(id));
 };
 
-exports.checkIsIdsMatcehd = (id, compareId) => {
-  if (!id) return false;
+exports.checkIsIdsMatcehd = (compareId, id) => {
+  if (!compareId) return false;
   return id.equals(compareId);
 };

@@ -18,7 +18,11 @@ block content
             disabled= hasAlreadyVoted
           )
           label(for= option)= option.optionTitle
-      button(type='button' class='voting-button') Vote
+      button(
+        type='button'
+        class='voting-button'
+        disabled= hasAlreadyVoted
+      ) Vote
       div.writer-only(class= isIdsMatched ? 'visible' : 'hidden')
         button(type='button' class='delete-button') Delete
         a(href=`/votings/result/${targetDetails._id}`)

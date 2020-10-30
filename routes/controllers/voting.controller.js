@@ -1,5 +1,6 @@
+const votingService = require('../../services/voting.service');
 const { checkPassedDate, checkAlreadyVoted, checkIsIdsMatcehd } = require('../../utils');
-const VotingService = require('../../services/voting.service');
+const { otherMessage: { ALREADY_VOTED, RESULT_OK } } = require('../../constants');
 
 exports.createNewVoting = async (req, res, next) => {
   const {
@@ -8,23 +9,22 @@ exports.createNewVoting = async (req, res, next) => {
     ['due-date']: dueDate
   } = req.body;
   const userId = req.user._id;
-  const options = [];
 
-  optionTitle.forEach(option => {
-    options.push({ optionTitle: option, votedCount: [] });
+  const mappedOptions = optionTitle.map(option => {
+    return { optionTitle: option, votedCount: [] };
   });
 
   const votingInfo = {
     title,
     writer: userId,
     dueDate,
-    options,
+    options: mappedOptions,
     voter: [],
   };
 
   try {
-    const newVoting = await VotingService.createNewVoting(votingInfo);
-    await VotingService.updateUserVotings(userId, newVoting);
+    const newVoting = await votingService.createNewVoting(votingInfo);
+    await votingService.updateUserVotings(userId, newVoting);
     next();
   } catch (error) {
     next(error);
@@ -34,7 +34,7 @@ exports.createNewVoting = async (req, res, next) => {
 exports.getTargetVoting = async (req, res, next) => {
   try {
     const votingId = req.params.voting_id;
-    const targetVoting = await VotingService.getTargetVoting(votingId);
+    const targetVoting = await votingService.getTargetVoting(votingId);
     req.targetVoting = targetVoting;
     next();
   } catch (error) {
@@ -47,14 +47,14 @@ exports.updateVoteCount = async (req, res, next) => {
   const userId = req.user._id;
 
   try {
-    const hasAlreadyVoted = await VotingService.checkAlreadyVoted(votingId, userId);
+    const hasAlreadyVoted = await votingService.checkAlreadyVoted(votingId, userId);
     if (hasAlreadyVoted) {
-      req.flash('message', 'you have already voted.')
+      req.flash('message', ALREADY_VOTED);
       return next();
     }
 
-    await VotingService.updateVotedCount(optionId, userId);
-    await VotingService.updateTotalVoters(votingId, userId);
+    await votingService.updateVotedCount(optionId, userId);
+    await votingService.updateTotalVoters(votingId, userId);
     next();
   } catch (error) {
     next(error);
@@ -64,8 +64,8 @@ exports.updateVoteCount = async (req, res, next) => {
 exports.deleteVoting = async (req, res, next) => {
   try {
     const votingId = req.params.voting_id;
-    await VotingService.deleteUserVotings(votingId);
-    await VotingService.deleteVoting(votingId);
+    await votingService.deleteUserVotings(votingId);
+    await votingService.deleteVoting(votingId);
     next();
   } catch (error) {
     next(error);
@@ -74,11 +74,12 @@ exports.deleteVoting = async (req, res, next) => {
 
 exports.checkParticipatingVoting = async (req, res, next) => {
   const userId = req.user && req.user._id;
+  const votingId = req.params.voting_id;
   const { dueDate, voter: voterList } = req.targetVoting;
   req.hasAlreadyVoted = checkAlreadyVoted(voterList, userId);
 
   if (checkPassedDate(dueDate)) {
-    return res.redirect(`/votings/result/${req.params.voting_id}`);
+    return res.redirect(`/votings/result/${votingId}`);
   }
   next();
 };
@@ -94,17 +95,17 @@ exports.checkAuthorization = async (req, res, next) => {
 
   if (isIdsMatched) {
     return res.render('voting-result', {
-      targetDetails, isIdsMatched
+      targetDetails, isIdsMatched,
     });
   }
 
   if (checkPassedDate(dueDate)) {
     return res.render('voting-result', {
-      targetDetails, isIdsMatched
+      targetDetails, isIdsMatched,
     });
   } else {
     return res.render('voting-details', {
-      targetDetails, isIdsMatched, hasAlreadyVoted
+      targetDetails, isIdsMatched, hasAlreadyVoted,
     });
   }
 };
@@ -122,4 +123,8 @@ exports.renderVotingDetails = (req, res, next) => {
     : false;
 
   res.render('voting-details', { targetDetails, isIdsMatched, hasAlreadyVoted });
+};
+
+exports.responseSuccessResult = (req, res, next) => {
+  res.status(200).json({ result: RESULT_OK });
 };

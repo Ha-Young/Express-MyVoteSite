@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const votingController = require('./controllers/voting.controller');
 const { authenticate } = require('./middlewares/authenticate');
 const { validateVotingInputs } = require('./middlewares/validation');
-const votingController = require('./controllers/voting.controller');
 
 router.get('/new',
   authenticate,
@@ -30,14 +30,12 @@ router.get('/:voting_id',
 router.put('/:voting_id',
   authenticate,
   votingController.updateVoteCount,
-  (req, res, next) => {
-    res.status(200).json({ result: 'ok' });
-});
+  votingController.responseSuccessResult,
+);
 
 router.delete('/:voting_id',
   votingController.deleteVoting,
-  (req, res, next) => {
-    res.status(200).json({ result: 'ok' });
-});
+  votingController.responseSuccessResult,
+);
 
 module.exports = router;
