@@ -6,15 +6,16 @@ block content
   .home__votingListsWrap
     if (initialVotingData.length)
       each currentVotingData in initialVotingData
-        a(href=`/votings/${currentVotingData._id}`).home__votingListBox
-          h1= currentVotingData.title
-          div
-            span 투표기한 #{currentVotingData.expiredTime}
-          div
-            span 생성자 #{currentVotingData.creator}
-          if (currentVotingData.isVotingClosed)
-            h2 투표 종료
-          else
-            h2 투표 진행중
+        a.home__votingListBox(href=`/votings/${currentVotingData._id}`
+          class=currentVotingData.isVotingClosed ? "voting__end" : "")
+            h1= currentVotingData.title
+            div
+              span 투표기한 #{currentVotingData.expiredTime}
+            div
+              span 생성자 #{currentVotingData.creator}
+            if (currentVotingData.isVotingClosed)
+              h2 투표 종료
+            else
+              h2 투표 진행중
     else
       h1 진행중인 투표가 없습니다.

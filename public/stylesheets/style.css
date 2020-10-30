@@ -107,6 +107,9 @@ main {
   padding-top: 20px;
   padding-bottom: 20px;
 }
+.sign__form h4{
+  text-align: center;
+}
 
 .login__content,
 .sign__content {
@@ -163,6 +166,10 @@ main {
   padding: 10px;
   color: white;
   transition: ease-in-out 0.2s;
+}
+
+.voting__end {
+  opacity: 0.5;
 }
 
 .home__votingListBox:hover {
@@ -324,4 +331,9 @@ main {
 
 .voting__new__datetime {
   width: 50%;
+}
+
+.voting__success {
+  height: 200%;
+  text-align: center;
 }

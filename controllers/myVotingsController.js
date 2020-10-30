@@ -1,29 +1,20 @@
+const Voting = require('../models/voting');
 const User = require('../models/user');
+const VotingService = require('../services/votingService');
+
+const votingServiceInstance = new VotingService(Voting, User);
 
 module.exports = {
   getMyVotings: async (req, res, next) => {
     const { id: userId } = req.user;
-    let votingDatas;
+    let myVotingData;
 
     try {
-      const { votings } = await User.findById(userId)
-        .populate('votings')
-        .lean();
-
-      votingDatas = votings;
+      myVotingData = await votingServiceInstance.getmyVotingData(userId);
     } catch (error) {
       next(error);
     }
 
-    votingDatas.forEach((votingData) => {
-      const { expiredDate, expiredTime } = votingData;
-
-      const submittedExpiredTime = `${expiredDate} ${expiredTime}`;
-      const isExipredTimePassed =
-        new Date(`${submittedExpiredTime}`) <= new Date();
-
-      if (isExipredTimePassed) votingData.isVotingEnd = true;
-    });
-    res.render('myVotings', { votingDatas });
+    res.render('myVotings', { myVotingData });
   },
 };

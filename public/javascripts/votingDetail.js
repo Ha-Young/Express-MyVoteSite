@@ -91,8 +91,20 @@ function handleLabelClick(e) {
   clickedLabel.style.backgroundColor = '#4a274f';
 }
 
-$votingDeleteBtn?.addEventListener('click', handleVotingDeleteBtnClick);
-$votingSelectBtn?.addEventListener('click', handleVotingSelectBtnClick);
+$votingDeleteBtn?.addEventListener(
+  'click',
+  _.throttle(handleVotingDeleteBtnClick, 5000, {
+    leading: true,
+  })
+);
+
+$votingSelectBtn?.addEventListener(
+  'click',
+  _.throttle(handleVotingSelectBtnClick, 5000, {
+    leading: true,
+  })
+);
+
 $checkBoxLabels.forEach((checkBoxLabel) =>
   checkBoxLabel.addEventListener('click', handleLabelClick)
 );

@@ -17,7 +17,10 @@ module.exports = class VotingService {
     }
 
     votingData.forEach((currentVotingData) => {
-      currentVotingData.isVotingClosed = isVotingExpired(currentVotingData);
+      currentVotingData.isVotingClosed = isVotingExpired(
+        currentVotingData.expiredTime
+      );
+
       currentVotingData.expiredTime = dateFormat(
         currentVotingData.expiredTime,
         'yyyy-mm-dd h:MM'
@@ -25,6 +28,34 @@ module.exports = class VotingService {
     });
 
     return votingData;
+  }
+
+  async getmyVotingData(userId) {
+    let myVotingData;
+
+    try {
+      const { votings } = await this.userModel
+        .findById(userId)
+        .populate('votings')
+        .lean();
+
+      myVotingData = votings;
+    } catch (error) {
+      next(error);
+    }
+
+    myVotingData.forEach((currentVotingData) => {
+      currentVotingData.isVotingClosed = isVotingExpired(
+        currentVotingData.expiredTime
+      );
+
+      currentVotingData.expiredTime = dateFormat(
+        currentVotingData.expiredTime,
+        'yyyy-mm-dd h:MM'
+      );
+    });
+
+    return myVotingData;
   }
 
   async getVotingDetailData(votingId, userId, username) {
@@ -45,7 +76,10 @@ module.exports = class VotingService {
     };
 
     filteredVotingData.isUserCreator = username === votingData.creator;
-    filteredVotingData.isVotingClosed = isVotingExpired(filteredVotingData);
+    filteredVotingData.isVotingClosed = isVotingExpired(
+      filteredVotingData.expiredTime
+    );
+
     filteredVotingData.expiredTime = dateFormat(
       filteredVotingData.expiredTime,
       'yyyy-mm-dd h:MM'
@@ -86,6 +120,45 @@ module.exports = class VotingService {
       });
     } catch (error) {
       throw new Error(error);
+    }
+  }
+
+  async createVotingData(votingData, userId, username) {
+    const {
+      vote_title: votingTitle,
+      vote_list: votingLists,
+      vote_expired_time: votingExpiredTime,
+    } = votingData;
+
+    const mappedVotingLists = votingLists
+      .filter((votingList) => votingList !== '')
+      .map((votingList) => {
+        return { listTitle: votingList };
+      });
+
+    const newVotingData = {
+      title: votingTitle,
+      creator: username,
+      votingLists: mappedVotingLists,
+      expiredTime: votingExpiredTime,
+    };
+
+    let newVoting;
+
+    try {
+      newVoting = await this.votingModel.create(newVotingData);
+    } catch (err) {
+      res.redirect(`${routes.votings}${routes.failure}`);
+      return;
+    }
+
+    try {
+      await this.userModel.findByIdAndUpdate(userId, {
+        $push: { votings: newVoting._id },
+      });
+    } catch (err) {
+      next(err);
+      return;
     }
   }
 };

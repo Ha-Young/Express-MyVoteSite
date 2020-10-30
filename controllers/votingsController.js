@@ -2,11 +2,12 @@ const Voting = require('../models/voting');
 const User = require('../models/user');
 const VotingService = require('../services/votingService');
 const routes = require('../constants/routes');
+const isVotingExpired = require('../utils/isVotingExpired');
 
 const votingServiceInstance = new VotingService(Voting, User);
 
 module.exports = {
-  home: async (req, res, next) => {
+  getAllVotings: async (req, res, next) => {
     let initialVotingData;
 
     try {
@@ -37,7 +38,7 @@ module.exports = {
     }
 
     res.render('votingDetail', {
-      votingDetailData
+      votingDetailData,
     });
   },
 
@@ -47,7 +48,7 @@ module.exports = {
     const { id: listId } = req.body;
 
     try {
-      await votingServiceInstance.updateVotingDetail(votingId, userId, listId)
+      await votingServiceInstance.updateVotingDetail(votingId, userId, listId);
     } catch (error) {
       res.status(500).json({ result: error });
       return;
@@ -61,7 +62,7 @@ module.exports = {
     const { id: votingId } = req.params;
 
     try {
-      await votingServiceInstance.deleteVotingData(votingId, userId)
+      await votingServiceInstance.deleteVotingData(votingId, userId);
     } catch (error) {
       res.status(500).json({ result: error });
       return;
@@ -70,59 +71,34 @@ module.exports = {
     res.json({ result: 'ok' });
   },
 
-  newVoting: (req, res, next) => {
+  getNewVoting: (req, res, next) => {
     res.render('newVoting');
   },
 
   createNewVoting: async (req, res, next) => {
     const { username, _id: userId } = req.user;
-    const {
-      vote_title: votingTitle,
-      vote_list: votingLists,
-      vote_expired_time: votingExpiredTime,
-    } = req.body;
+    const submittedVotingData = req.body;
+    const { vote_expired_time: expiredTime } = submittedVotingData;
+    req.session.blockSameRequest = true;
 
-    const mappedVotingLists = votingLists
-      .filter((votingList) => votingList !== '')
-      .map((votingList) => {
-        return { listTitle: votingList };
-      });
-
-      console.log(votingExpiredTime);
-    const submittedExpiredTime = `${votingExpiredTime}`;
-    const isExipredTimePassed =
-      new Date(`${submittedExpiredTime}`) <= new Date();
-
-    if (isExipredTimePassed) {
+    if (isVotingExpired(new Date(expiredTime))) {
       res.render('newVoting', {
         error: '현재 시간보다 이후 시간으로 만료시간을 정해주세요',
       });
-      return;
-    }
 
-    const newVotingData = {
-      title: votingTitle,
-      creator: username,
-      votingLists: mappedVotingLists,
-      expiredTime: votingExpiredTime,
-    };
-
-    let newVoting;
-
-    try {
-      newVoting = await Voting.create(newVotingData);
-    } catch (err) {
-      res.redirect(`${routes.votings}${routes.failure}`);
-      next(err);
       return;
     }
 
     try {
-      await User.findByIdAndUpdate(userId, {
-        $push: { votings: newVoting._id },
-      });
-    } catch (err) {
-      next(err);
+      await votingServiceInstance.createVotingData(
+        submittedVotingData,
+        userId,
+        username
+      );
+
+      delete req.session.blockSameRequest;
+    } catch (error) {
+      res.status(500).json({ result: error });
       return;
     }
 

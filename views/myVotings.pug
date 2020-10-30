@@ -4,16 +4,15 @@ block content
   .home__title
     h1 내가 만든 투표
   .home__votingListsWrap
-    if (votingDatas.length)
-      each votingData in votingDatas
+    if (myVotingData.length)
+      each votingData in myVotingData
         a(href=`/votings/${votingData._id}`).home__votingListBox
           h1= votingData.title
           div
             span 투표기한 #{votingData.expiredTime}
           div
-            span 생성자&nbsp;
-            span= votingData.creator
-          if (votingData.isVotingEnd)
+            span 생성자 #{votingData.creator}
+          if (votingData.isVotingClosed)
             h2 투표 종료
           else
             h2 투표 진행중

@@ -1,8 +1,5 @@
-function isVotingExpired(votingData) {
-  const { expiredTime } = votingData;
-  const isExipredTimePassed = expiredTime <= new Date();
-
-  return isExipredTimePassed;
+function isVotingExpired(expiredTime) {
+  return expiredTime <= new Date();
 }
 
-module.exports = isVotingExpired
+module.exports = isVotingExpired;
