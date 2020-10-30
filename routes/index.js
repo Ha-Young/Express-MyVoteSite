@@ -14,10 +14,6 @@ const errorHandler = require('./errorHandler');
 const router = express.Router();
 
 router.use(getUserInfo);
-router.use((req, res, next) => {
-  console.log(req.method);
-  next();
-});
 
 router.use('/error', error);
 router.use('/', home);

@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "start": "NODE_ENV=development nodemon ./bin/www",
-    "sass": "node-sass --watch --output-style expanded public/stylesheets --output dist/stylesheets"
+    "sass": "node-sass --watch --output-style expanded public/stylesheets --output dist/stylesheets",
+    "cypress": "NODE_ENV=development node ./bin/www & cypress open"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
-    "chai": "^4.2.0",
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.4",
+    "cypress": "^5.5.0",
     "date-fns": "^2.16.1",
     "express": "~4.16.1",
     "express-session": "^1.17.1",
@@ -21,10 +22,12 @@
     "session-file-store": "^1.5.0"
   },
   "devDependencies": {
-    "node-sass": "^4.14.1",
+    "chai": "^4.2.0",
     "dotenv": "^8.2.0",
+    "eslint": "^7.12.0",
+    "eslint-plugin-cypress": "^2.11.2",
     "morgan": "~1.9.1",
-    "nodemon": "^2.0.6",
-    "eslint": "^7.12.0"
+    "node-sass": "^4.14.1",
+    "nodemon": "^2.0.6"
   }
 }

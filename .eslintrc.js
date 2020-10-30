@@ -9,6 +9,10 @@ module.exports = {
         'ecmaVersion': 12,
         'sourceType': 'module',
     },
+    'plugins': [
+        'cypress',
+        'chai-friendly',
+    ],
     'rules': {
         'semi': [
             'error',

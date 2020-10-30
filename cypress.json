@@ -1,0 +1,20 @@
+{
+  "watchForFileChanges": true,
+  "testFiles": [
+    "**/*.js",
+    "**/*.ts"
+  ],
+  "baseUrl": "http://localhost:3000",
+  "includeShadowDom": true,
+  "$schema": "https://on.cypress.io/cypress.schema.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": "../node_modules",
+    "types": [
+      "cypress"
+    ]
+  },
+  "include": [
+    "**/*.*"
+  ]
+}
