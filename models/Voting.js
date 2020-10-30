@@ -24,7 +24,7 @@ const votingSchema = new mongoose.Schema(
       type: [optionSchema],
       required: true,
     },
-    author: {
+    createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
@@ -58,8 +58,8 @@ votingSchema.virtual('formattedCreateAt').get(function () {
   return formatDate(this.createdAt);
 });
 
-votingSchema.method('isMine', function (userId) {
-  return userId.equals(this.author);
+votingSchema.method('isCreatedBy', function (userId) {
+  return this.createdBy.equals(userId);
 });
 
 votingSchema.method('isParticipated', function (userId) {

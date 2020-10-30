@@ -1,66 +1,63 @@
 const passport = require('passport');
 const { validationResult } = require('express-validator');
 
+const UserService = require('../services/user');
+
 const ROUTES = require('../constants/routes');
 const VIEWS = require('../constants/views');
 const { googleAuth } = require('../config');
 
-const User = require('../models/User');
-
 exports.getSignup = (req, res, next) => {
-  const { user } = req;
-  if (user) return res.redirect(ROUTES.HOME);
-  res.render(VIEWS.SIGNUP, { title: 'Sign Up' });
+  if (req.user) return res.redirect(ROUTES.HOME);
+
+  return res.render(VIEWS.SIGNUP, { title: 'Sign Up' });
 };
 
 exports.postSignup = async (req, res, next) => {
   const validationErrors = validationResult(req).array();
-  const { displayName, email, password } = req.body;
+  const { body: userInputs } = req;
 
-  if (validationErrors) {
-    return res.render(VIEWS.SIGNUP, {
-      title: 'Sign Up',
-      displayName,
-      email,
-      validationErrors,
-    });
+  if (validationErrors.length) {
+    return res.render(VIEWS.SIGNUP, { title: 'Sign Up', userInputs, validationErrors });
   }
 
   try {
-    const user = await User({ displayName, email });
-    await User.register(user, password);
+    const userInstance = new UserService(userInputs);
+    await userInstance.signup(userInputs);
     next();
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 
 exports.getLogin = (req, res, next) => {
-  const { user } = req;
-  if (user) return res.redirect(ROUTES.HOME);
-  res.render(VIEWS.LOGIN, { title: 'Login' });
+  if (req.user) return res.redirect(ROUTES.HOME);
+
+  return res.render(VIEWS.LOGIN, { title: 'Login' });
 };
 
 exports.postLogin = (req, res, next) => {
-  const { referer } = req.session;
+  const {
+    body: userInputs,
+    session: { referer },
+  } = req;
 
-  passport.authenticate(
-    'local',
-    (error, authenticatedUser, validationError) => {
+  const authCallback = (error, authenticatedUser, validationError) => {
+    if (error) return next(error);
+
+    if (!authenticatedUser) {
+      return res.render(VIEWS.LOGIN, { title: 'Login', userInputs, validationError });
+    }
+
+    req.logIn(authenticatedUser, error => {
       if (error) return next(error);
 
-      if (!authenticatedUser) {
-        return res.render(VIEWS.LOGIN, { title: 'Login', validationError });
-      }
+      res.redirect(referer || ROUTES.HOME);
+      delete req.session.referer;
+    });
+  };
 
-      req.logIn(authenticatedUser, error => {
-        if (error) return next(error);
-
-        res.redirect(referer || ROUTES.HOME);
-        delete req.session.referer;
-      });
-    }
-  )(req, res, next);
+  passport.authenticate('local', authCallback)(req, res, next);
 };
 
 exports.getGoogleLogin = passport.authenticate('google', {
@@ -78,11 +75,10 @@ exports.successGoogleLogin = (req, res, next) => {
 };
 
 exports.getLogout = (req, res, next) => {
-  if (req.session) {
-    req.session.destroy(err => {
-      if (err) return next(err);
-      req.logout();
-      return res.redirect(ROUTES.HOME);
-    });
-  }
+  req.session.destroy(error => {
+    if (error) return next(error);
+
+    req.logout();
+    return res.redirect(ROUTES.HOME);
+  });
 };

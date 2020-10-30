@@ -4,7 +4,7 @@ const express = require('express');
 const initLoaders = require('./loaders');
 
 const ROUTES = require('./constants/routes');
-const indexRouter = require('./routes/index');
+const globalRouter = require('./routes/global');
 const votingsRouter = require('./routes/votings');
 
 const app = express();
@@ -12,7 +12,7 @@ const app = express();
 initLoaders(app);
 
 app.use(ROUTES.VOTINGS_HOME, votingsRouter);
-app.use(ROUTES.HOME, indexRouter);
+app.use(ROUTES.HOME, globalRouter);
 
 app.use(function (req, res, next) {
   next(createError(404));

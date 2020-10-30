@@ -1,7 +1,5 @@
 const createError = require('http-errors');
 
-const ROUTES = require('../../constants/routes');
-
 const requiresLogin = (req, res, next) => {
   const { user, session, method } = req;
 

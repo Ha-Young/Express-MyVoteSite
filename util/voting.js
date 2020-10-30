@@ -11,15 +11,28 @@ const convertToVotingObject = (userId, userInputs) => {
   return {
     topic,
     options: options.map(option => ({ content: option })),
-    author: userId,
+    createdBy: userId,
     expiration: formatISO(parseUserInputs(expirationDate, expirationTime)),
   };
 };
 
 const formatDate = date => format(date, 'yyyy년 M월 d일  H시 m분');
 
+const getSortedOptions = options => {
+  const maxCount = Math.max(...options.map(option => option.count));
+
+  return options
+    .sort((a, b) => b.count - a.count)
+    .map(option => ({
+      content: option.content,
+      count: option.count,
+      elected: option.count === maxCount,
+    }));
+};
+
 module.exports = {
   parseUserInputs,
   convertToVotingObject,
   formatDate,
+  getSortedOptions,
 };

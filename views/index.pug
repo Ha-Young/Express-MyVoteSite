@@ -2,7 +2,7 @@ extends layouts/main
 include mixins/votingBlock
 
 block styles
-  link(rel='stylesheet', href='/stylesheets/partials/author.css')
+  link(rel='stylesheet', href='/stylesheets/partials/createdBy.css')
   link(rel='stylesheet', href='/stylesheets/partials/voting-state.css')
   link(rel='stylesheet', href='/stylesheets/partials/voting-block.css')
 
@@ -12,4 +12,4 @@ block content
     H1 No Votings...
   else
     each voting in votings
-      +votingBlock(voting, isMyVotings)
+      +votingBlock(voting, showCreator)

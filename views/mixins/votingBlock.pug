@@ -1,6 +1,6 @@
-include author
+include createdBy
 include votingState
-mixin votingBlock(voting = {}, isMyVotings = false)
+mixin votingBlock(voting = {}, showCreator = true)
   a.voting-block(class=voting.isOngoing ? 'ongoing' : 'expired' href=routes.VOTINGS_HOME+"/"+voting._id)
     .state
       +votingState(voting.isOngoing)
@@ -10,6 +10,6 @@ mixin votingBlock(voting = {}, isMyVotings = false)
       i.fas.fa-user
       span= voting.voters.length
     h2= voting.topic
-    .voting-detail.author
-      if(!isMyVotings)
-        +author(voting.author, false)
+    .voting-detail.createdBy
+      if(showCreator)
+        +createdBy(voting.createdBy, false)

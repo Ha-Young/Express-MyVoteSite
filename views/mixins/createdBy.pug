@@ -1,0 +1,7 @@
+mixin createdBy(createdBy = {}, desc = true)
+  .displayName #{desc ? "Created By" : ""} <b>#{createdBy.displayName}</b>
+  .avatar
+    if createdBy.photoUrl
+      img(src=createdBy.photoUrl)
+    else
+      i.far.fa-user-circle

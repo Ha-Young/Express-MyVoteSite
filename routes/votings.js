@@ -5,7 +5,7 @@ const VOTINGS = require('../constants/routes').VOTINGS;
 
 const votingsController = require('../controllers/votings');
 const requiresLogin = require('../controllers/middlewares/requiresLogin');
-const findVotingById = require('../controllers/middlewares/findVotingById');
+const attachCurrentVoting = require('../controllers/middlewares/attachCurrentVoting');
 
 const validator = require('../controllers/validator/votings');
 
@@ -17,7 +17,7 @@ router.post(
   votingsController.postNewVoting
 );
 
-router.param('id', findVotingById);
+router.param('id', attachCurrentVoting);
 
 router.get(VOTINGS.BY_ID, votingsController.getVoting);
 router.put(VOTINGS.BY_ID, requiresLogin, votingsController.updateVoting);

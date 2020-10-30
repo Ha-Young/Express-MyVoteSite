@@ -1,11 +1,11 @@
 extends layouts/main
-include mixins/author
+include mixins/createdBy
 include mixins/votingState
 
 block styles
   link(rel='stylesheet', href='/stylesheets/voting-detail.css')
   link(rel='stylesheet', href='/stylesheets/partials/voting-state.css')
-  link(rel='stylesheet', href='/stylesheets/partials/author.css')
+  link(rel='stylesheet', href='/stylesheets/partials/createdBy.css')
 
 block content
   if hasAdminPermission
@@ -14,8 +14,8 @@ block content
   .voting-container
     .state
       +votingState(voting.isOngoing)
-    .voting-detail.author
-      +author(voting.author)
+    .voting-detail.createdBy
+      +createdBy(voting.createdBy)
     .voting-detail.topic
       i.fas.fa-vote-yea
       span Topic
@@ -33,7 +33,7 @@ block content
       i.fas.fa-list-ul
       span Options
       form(class="vote-form")
-        each option in sortedOptions
+        each option in options
           .content(class=option.elected && "elected")
             .option= option.content
             .option-count
