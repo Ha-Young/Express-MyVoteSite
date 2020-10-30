@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const createError = require('http-errors');
-const Voting = require('../../models/Voting');
-const User = require('../../models/User');
 const constants = require('../../constants');
 const { UserService, VotingService } = require('../../service/service');
 
@@ -18,7 +16,7 @@ exports.renderMyVotingsPage = async (req, res, next) => {
       return next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL));
     }
 
-    const votings = await new UserService().getVotings(_id);
+    const votings = await new UserService().getUserVotings(_id);
 
     res.render('myVotings', { votings });
   } catch (err) {
@@ -52,11 +50,13 @@ exports.vote = async (req, res, next) => {
     if (!isValidObjectId, !option) {
       return createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL);
     }
-
-    await new VotingService().updateVoter(_id, option);
-    res.json({ message: constants.SUCCESS_MESSAGE_VOTING });
+    const isUpdate = await new VotingService().updateVoter(_id, option);
+    if (isUpdate) {
+      res.json({ message: constants.SUCCESS_MESSAGE_VOTING });
+    } else {
+      res.json({ message: constants.ERROR_MESSAGE_REQUEST_FAIL });
+    }
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };
@@ -70,12 +70,15 @@ exports.deleteVoting = async (req, res, next) => {
       next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL));
     }
 
-    await Voting.findByIdAndDelete(id);
-    await User.update(
-      { _id: req.user._id },
-      { $pull: { 'votings': id } }
-    );
-    res.json({ message: constants.SUCCESS_MESSAGE_DELETE });
+    await new VotingService().deleteVoting(id);
+    const isDeleteUserVoting = await new UserService().deleteUserVotings(_id, id);
+
+    if (isDeleteUserVoting) {
+      res.json({ message: constants.SUCCESS_MESSAGE_DELETE });
+    } else {
+      res.json({ message: constants.ERROR_MESSAGE_DELETE_FAIL });
+    }
+
   } catch (err) {
     next(err)
   }

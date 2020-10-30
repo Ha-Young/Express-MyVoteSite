@@ -1,18 +1,12 @@
 const mongoose = require('mongoose');
 const createError = require('http-errors');
-const Voting = require('../../models/Voting');
-const User = require('../../models/User');
-const { isExpiration } = require('../../utils');
 const constants = require('../../constants');
+const { VotingService, UserService } = require('../../service/service');
 
 
 exports.getAllVotings = async (req, res, next) => {
   try {
-    const votings = await Voting.find();
-    if(!votings) {
-      return next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL));
-    }
-    votings.map(voting => voting.isExpiration = isExpiration(voting.expirationDate));
+    const votings = await new VotingService().findAllVotings();
 
     res.render('index', { votings });
   } catch (err) {
@@ -25,24 +19,13 @@ exports.createVoting = async (req, res, next) => {
     const { _id, name } = req.user;
     const { votingTitle, expirationDate, options } = req.body;
     const isValidObjectId = mongoose.isValidObjectId(_id);
-    const optionObject = options.map(option => { return { option } });
-    const voting = {
-      createdBy: _id,
-      userName: name,
-      votingTitle,
-      expirationDate,
-      options: optionObject,
-    };
 
-    const saveVoting = await Voting(voting).save();
-    const userObj = await User.findOne({ _id });
-
-    if(!isValidObjectId || !userObj) {
+    if (!isValidObjectId) {
       return next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL))
     }
 
-    userObj.votings.push(saveVoting._id);
-    await User(userObj).save();
+    const saveVoting = await new VotingService().createVoting({ _id, name, votingTitle, expirationDate, options });
+    await new UserService().updateUserVoting(_id, saveVoting._id);
 
     res.redirect('/');
   } catch (err) {

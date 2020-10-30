@@ -32,6 +32,7 @@ const votingButton = document.querySelector('.votingButton');
 const SUCCESS_MESSAGE_VOTING = '투표가 완료 되었습니다';
 const ERROR_MESSAGE_REQUEST_FAIL = '요청이 실패했습니다';
 const SUCCESS_MESSAGE_DELETE = '투표가 삭제 되었습니다';
+const ERROR_MESSAGE_DELETE_FAIL = '삭제 실패했습니다';
 
 if (votingButton) {
   votingButton.addEventListener('click', async () => {
@@ -56,12 +57,15 @@ if (votingButton) {
       });
 
       result = await response.json();
-
+      
       if (result.message === SUCCESS_MESSAGE_VOTING) {
         return location.assign(`http://localhost:3000/success/${result.message}`);
       }
       if (result.message === ERROR_MESSAGE_REQUEST_FAIL) {
         return location.assign('http://localhost:3000/login');
+      }
+      if (result.message === ERROR_MESSAGE_DELETE_FAIL) {
+        return location.assign(`http://localhost:3000/error/${result.message}`);
       }
     } catch (err) {
       console.error(err);
