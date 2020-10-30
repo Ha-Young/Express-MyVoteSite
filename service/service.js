@@ -18,7 +18,7 @@ class VotingService {
     } catch (err) {
       return err;
     }
-  };
+  }
 
   async createVoting({ userId, userName, votingTitle, expirationDate, options }) {
     try {
@@ -38,6 +38,7 @@ class VotingService {
       return err;
     }
   }
+
   async getVotinDetails(votingId, user) {
     try {
       const voting = await Voting.findOne({ _id: votingId });
@@ -105,25 +106,34 @@ class UserService {
   }
 
   async updateUserVoting(userId, votingId) {
-    const userObj = await User.findOne({ _id: userId });
+    try {
+      const userObj = await User.findOne({ _id: userId });
 
-    userObj.votings.push(votingId);
+      userObj.votings.push(votingId);
 
-    if (!userObj) {
-      return createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL);
+      if (!userObj) {
+        return createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL);
+      }
+      const isUpdate = await User(userObj).save();
+
+      return isUpdate;
+    } catch (err) {
+      return err;
     }
-    const isUpdate = await User(userObj).save();
-
-    return isUpdate;
   }
 
   async getUserVotings(userId) {
-    const { votings } = await User.findOne({ _id: userId }).populate('votings');
+    try {
+      const { votings } = await User.findOne({ _id: userId }).populate('votings');
 
-    votings.forEach(voting => {
-      voting.isExpiration = isExpiration(voting.expirationDate);
-    });
-    return votings;
+      votings.forEach(voting => {
+        voting.isExpiration = isExpiration(voting.expirationDate);
+      });
+
+      return votings;
+    } catch (err) {
+      return err;
+    }
   }
 
   async deleteUserVotings(userId, votingId) {
