@@ -19,6 +19,8 @@
       padding: 15px;
       margin: 10px;
       outline: none;
+      font-weight: 700;
+      font-size: 1.2rem;
 
       &::placeholder {
         color: $gray;
@@ -43,6 +45,24 @@
         background-color: $white;
         border: 1px solid $orange;
         color: $orange;
+      }
+    }
+  }
+}
+
+.errors {
+  margin: 20px;
+  color: $error;
+
+  .error {
+    margin: 10px 0;
+
+    span {
+      margin-right: 10px;
+
+      &.name {
+        font-weight: 700;
+        font-size: 1.2rem;
       }
     }
   }

@@ -10,3 +10,7 @@ block content
       input(type="password", name="password", placeholder="Password", required=true)
       input(type="submit", value="Login")
     include partials/googleLogin
+  if(validationError)
+    .errors
+      h1 ❌ Error
+      p= validationError

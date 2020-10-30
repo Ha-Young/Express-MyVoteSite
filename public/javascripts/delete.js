@@ -9,6 +9,7 @@ const deleteSubmitHandler = async function (ev) {
 
   try {
     deleteButton.setAttribute('value', '삭제 중..');
+    deleteButton.setAttribute('disabled', true);
 
     const res = await fetch(action, { method: 'DELETE' });
     const { displayName, topic } = await res.json();

@@ -12,6 +12,8 @@ const voteSubmitHandler = async function (ev) {
 
   try {
     submitButton.setAttribute('value', '투표 반영 중..');
+    submitButton.setAttribute('disabled', 'true');
+
     const res = await fetch(action, {
       method: 'PUT',
       headers: {

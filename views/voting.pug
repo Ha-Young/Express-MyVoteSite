@@ -39,9 +39,9 @@ block content
             .option-count
               if hasAdminPermission || !voting.isOngoing
                 i.fas.fa-user  #{option.count}
-              if voting.isOngoing
+              if !hasParticipated && voting.isOngoing
                 input(type="radio",  name="option" value=option._id required)
-        if voting.isOngoing
+        if !hasParticipated && voting.isOngoing
           input(type="submit", value="Submit Voting")
         if hasParticipated
           .already

@@ -1,10 +1,12 @@
 const createError = require('http-errors');
+const { validationResult } = require('express-validator');
+
+const VIEWS = require('../constants/views');
+const ROUTES = require('../constants/routes');
 
 const User = require('../models/User');
 const Voting = require('../models/Voting');
 
-const VIEWS = require('../constants/views');
-const ROUTES = require('../constants/routes');
 const { convertToVotingObject } = require('../util/voting');
 
 exports.getAll = async (req, res, next) => {
@@ -42,13 +44,18 @@ exports.getNewVoting = (req, res, next) => {
 };
 
 exports.postNewVoting = async (req, res, next) => {
-  const {
-    user: { _id },
-    body: userInputs,
-  } = req;
+  const validationErrors = validationResult(req).array();
+  const { user, body } = req;
+
+  if (validationErrors) {
+    return res.render(VIEWS.NEW, {
+      title: 'Create New Voting',
+      validationErrors,
+    });
+  }
 
   try {
-    const newVotingObject = convertToVotingObject(_id, userInputs);
+    const newVotingObject = convertToVotingObject(user._id, body);
     const newVoting = await Voting.create(newVotingObject);
 
     const currentUser = await User.findById(_id);

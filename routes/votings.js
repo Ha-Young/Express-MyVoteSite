@@ -7,8 +7,15 @@ const votingsController = require('../controllers/votings');
 const requiresLogin = require('../controllers/middlewares/requiresLogin');
 const findVotingById = require('../controllers/middlewares/findVotingById');
 
+const validator = require('../controllers/validator/votings');
+
 router.get(VOTINGS.NEW, requiresLogin, votingsController.getNewVoting);
-router.post(VOTINGS.NEW, requiresLogin, votingsController.postNewVoting);
+router.post(
+  VOTINGS.NEW,
+  requiresLogin,
+  validator.createVoting,
+  votingsController.postNewVoting
+);
 
 router.param('id', findVotingById);
 

@@ -1,11 +1,11 @@
-const createError = require('http-errors');
 const passport = require('passport');
+const { validationResult } = require('express-validator');
 
-const User = require('../models/User');
-
-const { googleAuth } = require('../config');
 const ROUTES = require('../constants/routes');
 const VIEWS = require('../constants/views');
+const { googleAuth } = require('../config');
+
+const User = require('../models/User');
 
 exports.getSignup = (req, res, next) => {
   const { user } = req;
@@ -14,12 +14,16 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postSignup = async (req, res, next) => {
-  const {
-    body: { displayName, email, password, password2 },
-  } = req;
+  const validationErrors = validationResult(req).array();
+  const { displayName, email, password } = req.body;
 
-  if (password !== password2) {
-    return next(createError(400, 'Passwords do not match'));
+  if (validationErrors) {
+    return res.render(VIEWS.SIGNUP, {
+      title: 'Sign Up',
+      displayName,
+      email,
+      validationErrors,
+    });
   }
 
   try {
@@ -40,17 +44,23 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
   const { referer } = req.session;
 
-  passport.authenticate('local', (err, user, info) => {
-    if (err) return next(err);
+  passport.authenticate(
+    'local',
+    (error, authenticatedUser, validationError) => {
+      if (error) return next(error);
 
-    if (!user) return res.redirect(ROUTES.LOGIN);
+      if (!authenticatedUser) {
+        return res.render(VIEWS.LOGIN, { title: 'Login', validationError });
+      }
 
-    req.logIn(user, err => {
-      if (err) return next(err);
-      res.redirect(referer || ROUTES.HOME);
-      delete req.session.referer;
-    });
-  })(req, res, next);
+      req.logIn(authenticatedUser, error => {
+        if (error) return next(error);
+
+        res.redirect(referer || ROUTES.HOME);
+        delete req.session.referer;
+      });
+    }
+  )(req, res, next);
 };
 
 exports.getGoogleLogin = passport.authenticate('google', {

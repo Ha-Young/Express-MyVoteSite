@@ -35,6 +35,14 @@ block content
             i.fas.fa-bolt
             span Set to After 1 hour
       input(type="submit", value="Submit Voting")
+  if(validationErrors)
+    .errors
+      h1 ❌ Validation Error
+      each error in validationErrors
+        .error
+          span.name= error.param
+          span.msg= error.msg
+
 
 block scripts
   script(src="/javascripts/create.js")

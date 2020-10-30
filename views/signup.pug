@@ -6,9 +6,16 @@ block styles
 block content
   .form-container
     form(action=routes.SIGNUP, method="POST")
-      input(type="text", name="displayName", placeholder="Display Name", required=true)
-      input(type="email", name="email", placeholder="Email", required=true)
+      input(type="text", name="displayName", placeholder="Display Name", value=displayName, required=true)
+      input(type="email", name="email", placeholder="Email", value=email,required=true)
       input(type="password", name="password", placeholder="Password", required=true)
-      input(type="password", name="password2", placeholder="Verify Password")
+      input(type="password", name="confirmPassword", placeholder="Verify Password")
       input(type="submit", value="Sign Up")
     include partials/googleLogin
+  if(validationErrors)
+    .errors
+      h1 ❌ Validation Error
+      each error in validationErrors
+        .error
+          span.name= error.param
+          span.msg= error.msg
