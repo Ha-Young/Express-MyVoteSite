@@ -29,10 +29,10 @@ button {
 button {
   background-color: #4a274f;
   color: white;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 10px;
   transition: ease-in-out 0.1s;
-  font-size: 0.7rem;
+  font-size: 1rem;
 }
 
 header {
@@ -90,6 +90,11 @@ main {
   border: none;
   background: none;
   cursor: pointer;
+  transition: ease-in-out 0.2s;
+}
+
+.header__menu a button:hover {
+  color: white;
 }
 
 .login__form,
@@ -107,7 +112,7 @@ main {
   padding-top: 20px;
   padding-bottom: 20px;
 }
-.sign__form h4{
+.sign__form h4 {
   text-align: center;
 }
 
@@ -141,7 +146,7 @@ main {
 
 .home__title h1 {
   color: #4a274f;
-  font-size: 3rem;
+  font-size: calc(1.7vw + 1.7vh + 0.5vmin);
 }
 
 .home__votingListsWrap {
@@ -242,6 +247,7 @@ main {
   cursor: pointer;
   margin-top: 1%;
   margin-bottom: 1%;
+  transition: linear 0.2s;
 }
 
 .checkbox__label:hover {
@@ -319,7 +325,7 @@ main {
 }
 
 .voting__new__list input {
-  margin-bottom: 5%
+  margin-bottom: 5%;
 }
 
 .voting__new__endtime {
@@ -333,7 +339,8 @@ main {
   width: 50%;
 }
 
-.voting__success {
+.voting__success,
+.voting__failure {
   height: 200%;
   text-align: center;
 }

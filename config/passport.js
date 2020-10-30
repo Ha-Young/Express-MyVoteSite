@@ -1,7 +1,8 @@
 const passport = require('passport');
+const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user');
-const bcrypt = require('bcrypt');
+const { ERROR } = require('../constants/index');
 
 module.exports = () => {
   passport.use(
@@ -20,7 +21,7 @@ module.exports = () => {
       }
 
       if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false, { message: ERROR.INCORRECT_EMAIL });
       }
 
       try {
@@ -30,7 +31,7 @@ module.exports = () => {
       }
 
       if (!isPasswordSame) {
-        return done(null, false, { message: 'Incorrect password.' });
+        return done(null, false, { message: ERROR.INCORRECT_PASSWORD });
       }
 
       return done(null, user);

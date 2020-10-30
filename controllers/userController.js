@@ -2,12 +2,13 @@ const passport = require('passport');
 const User = require('../models/user');
 const UserService = require('../services/userService');
 const routes = require('../constants/routes');
+const { TEMPLATE } = require('../constants');
 
 const userServiceInstance = new UserService(User);
 
 module.exports = {
   getSignUp: (req, res, next) => {
-    res.render('signup');
+    res.render(TEMPLATE.SIGNUP);
   },
 
   postSignUp: async (req, res, next) => {
@@ -24,7 +25,7 @@ module.exports = {
   },
 
   getLogin: (req, res, next) => {
-    res.render('login');
+    res.render(TEMPLATE.LOGIN);
   },
 
   postLogin: (req, res, next) => {

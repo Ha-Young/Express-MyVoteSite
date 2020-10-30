@@ -7,7 +7,6 @@
 const app = require('../app');
 const debug = require('debug')('voting-platform:server');
 const http = require('http');
-const dotenv = require('dotenv');
 
 /**
  * Get port from environment and store in Express.

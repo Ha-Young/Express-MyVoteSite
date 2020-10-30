@@ -1,6 +1,5 @@
 const $newVotingListBtn = document.querySelector('.voting__new__list__btn');
 const $newVotingList = document.querySelector('.voting__new__list');
-
 let listNum = 3;
 
 function addNewList() {
@@ -13,6 +12,10 @@ function addNewList() {
   listNum++;
 
   $newVotingList.insertBefore($input, $newVotingListBtn);
+}
+
+function preventContinuousRequest() {
+  $newVotingCreateBtn.setAttribute('disabled', true);
 }
 
 $newVotingListBtn?.addEventListener('click', addNewList);

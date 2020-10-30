@@ -16,7 +16,6 @@ $votingCheckBoxes.forEach((votingCheckBox) => {
   } = votingCheckBox;
 
   if (biggestNum === Number(votedNum)) {
-    console.log(123);
     votingCheckBox.nextSibling.style.backgroundColor = '#4a274f';
     votingCheckBox.nextSibling.style.transform = 'scale(1.2)';
   }

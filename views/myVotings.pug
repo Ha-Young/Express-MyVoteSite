@@ -2,11 +2,12 @@ extends layouts/layout
 
 block content
   .home__title
-    h1 내가 만든 투표
+    h1 My Voting Lists
   .home__votingListsWrap
     if (myVotingData.length)
       each votingData in myVotingData
-        a(href=`/votings/${votingData._id}`).home__votingListBox
+        a.home__votingListBox(href=`/votings/${votingData._id}`
+          class=votingData.isVotingClosed ? "voting__end" : "")
           h1= votingData.title
           div
             span 투표기한 #{votingData.expiredTime}

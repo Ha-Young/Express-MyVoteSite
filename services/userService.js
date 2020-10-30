@@ -1,37 +1,36 @@
+const { ERROR } = require('../constants/');
+
 module.exports = class UserService {
   constructor(userModel) {
     this.userModel = userModel;
   }
 
   async getUserbyName(username) {
-    let currentUserData;
-
     try {
-      currentUserData = await this.userModel.findOne({ username });
+      const currentUserData = await this.userModel.findOne({ username });
+      return currentUserData;
     } catch (error) {
-      throw new Error(error);
+      console.log(error);
+      throw new Error(ERROR.SERVER);
     }
-
-    return currentUserData;
   }
 
   async getUserbyEmail(email) {
-    let currentUserData;
-
     try {
-      currentUserData = await this.userModel.findOne({ email });
+      const currentUserData = await this.userModel.findOne({ email });
+      return currentUserData;
     } catch (error) {
-      throw new Error(error);
+      console.log(error);
+      throw new Error(ERROR.SERVER);
     }
-
-    return currentUserData;
   }
 
   async createUser(userData) {
     try {
       await this.userModel.create(userData);
     } catch (error) {
-      throw new Error(error);
+      console.log(error);
+      throw new Error(ERROR.SERVER);
     }
   }
 };

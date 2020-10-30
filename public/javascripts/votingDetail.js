@@ -38,6 +38,7 @@ async function handleVotingSelectBtnClick() {
     if (data.result === 'ok') {
       votedMessage.textContent = '투표를 완료하셨습니다.';
       $votingSelectBtn.remove();
+      $votingSelectBtn.setAttribute('disabled', true);
       $votingSelectorZone.appendChild(votedMessage);
     } else if (data.result === 'required login') {
       location.assign('http://localhost:3000/login');
@@ -45,7 +46,7 @@ async function handleVotingSelectBtnClick() {
       throw new Error(data.result);
     }
   } catch (error) {
-    votedMessage.textContent = error;
+    votedMessage.textContent = '서버 에러';
     $votingDetailMain.appendChild(votedMessage);
     console.warn(error);
   }
@@ -69,6 +70,7 @@ async function handleVotingDeleteBtnClick(e) {
 
     if (response.result === 'ok') {
       deletedMessage.textContent = '삭제를 완료하셨습니다.';
+      $votingDeleteBtn.setAttribute('disabled', true);
       $votingDeleteBtn.remove();
       $votingZoneWrap.remove();
     } else {

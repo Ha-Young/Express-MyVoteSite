@@ -3,43 +3,49 @@ const User = require('../models/user');
 const VotingService = require('../services/votingService');
 const routes = require('../constants/routes');
 const isVotingExpired = require('../utils/isVotingExpired');
+const processVotingDetailData = require('../utils/processVotingDetailData');
+const processVotingData = require('../utils/processVotingData');
+const processVotingLists = require('../utils/processVotingLists');
+const { ERROR, TEMPLATE, RESPONSE } = require('../constants');
 
 const votingServiceInstance = new VotingService(Voting, User);
 
 module.exports = {
   getAllVotings: async (req, res, next) => {
-    let initialVotingData;
-
     try {
-      initialVotingData = await votingServiceInstance.getAllVotingData();
+      let initialVotingData = await votingServiceInstance.getAllVotingData();
+      initialVotingData = processVotingData(initialVotingData);
+
+      res.render(TEMPLATE.HOME, { initialVotingData });
     } catch (error) {
       next(error);
-      return;
     }
-
-    res.render('home', { initialVotingData });
   },
 
   getVotingDetail: async (req, res, next) => {
     const { id: votingId } = req.params;
     const userId = req.user && req.user._id;
     const username = req.user && req.user.username;
-    let votingDetailData;
 
     try {
-      votingDetailData = await votingServiceInstance.getVotingDetailData(
+      const votingData = await votingServiceInstance.getVotingDetailData(
         votingId,
         userId,
         username
       );
+
+      const votingDetailData = processVotingDetailData(
+        votingData,
+        userId,
+        username
+      );
+
+      res.render(TEMPLATE.VOTING_DETAIL, {
+        votingDetailData,
+      });
     } catch (error) {
       next(error);
-      return;
     }
-
-    res.render('votingDetail', {
-      votingDetailData,
-    });
   },
 
   updateVotingDetail: async (req, res, next) => {
@@ -49,12 +55,10 @@ module.exports = {
 
     try {
       await votingServiceInstance.updateVotingDetail(votingId, userId, listId);
+      res.json({ result: RESPONSE.SUCCESS });
     } catch (error) {
       res.status(500).json({ result: error });
-      return;
     }
-
-    res.json({ result: 'ok' });
   },
 
   deleteVotingDetail: async (req, res, next) => {
@@ -63,53 +67,53 @@ module.exports = {
 
     try {
       await votingServiceInstance.deleteVotingData(votingId, userId);
+      res.json({ result: RESPONSE.SUCCESS });
     } catch (error) {
       res.status(500).json({ result: error });
-      return;
     }
-
-    res.json({ result: 'ok' });
   },
 
   getNewVoting: (req, res, next) => {
-    res.render('newVoting');
+    res.render(TEMPLATE.NEW_VOTING);
   },
 
   createNewVoting: async (req, res, next) => {
     const { username, _id: userId } = req.user;
-    const submittedVotingData = req.body;
-    const { vote_expired_time: expiredTime } = submittedVotingData;
-    req.session.blockSameRequest = true;
+    const {
+      vote_title: votingTitle,
+      vote_list: votingLists,
+      vote_expired_time: votingExpiredTime,
+    } = req.body;
 
-    if (isVotingExpired(new Date(expiredTime))) {
-      res.render('newVoting', {
-        error: '현재 시간보다 이후 시간으로 만료시간을 정해주세요',
+    if (isVotingExpired(new Date(votingExpiredTime))) {
+      res.render(TEMPLATE.NEW_VOTING, {
+        error: ERROR.INVAILD_DATE,
       });
 
       return;
     }
 
+    const newVotingData = {
+      title: votingTitle,
+      creator: username,
+      votingLists: processVotingLists(votingLists),
+      expiredTime: votingExpiredTime,
+    };
+
     try {
-      await votingServiceInstance.createVotingData(
-        submittedVotingData,
-        userId,
-        username
-      );
+      await votingServiceInstance.createVotingData(newVotingData, userId);
 
-      delete req.session.blockSameRequest;
+      res.redirect(`${routes.votings}${routes.success}`);
     } catch (error) {
-      res.status(500).json({ result: error });
-      return;
+      res.redirect(`${routes.votings}${routes.failure}`);
     }
-
-    res.redirect(`${routes.votings}${routes.success}`);
   },
 
   getSuccess: (req, res, next) => {
-    res.render('success');
+    res.render(TEMPLATE.SUCCESS);
   },
 
   getFailure: (req, res, next) => {
-    res.render('failure');
+    res.render(TEMPLATE.FAILURE);
   },
 };
