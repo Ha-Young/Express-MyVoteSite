@@ -98,9 +98,11 @@ exports.deleteVote = async function deleteVote(req, res, next) {
     const {
       params: { id: vote_id }
     } = req;
+
     await VoteService.deleteVote(vote_id);
+
     req.flash(SUCCESS, 'Succeed delete');
-    res.redirect(ROUTES.HOME);
+    res.status(200).json({ result: SUCCESS });
   } catch (error) {
     next(error);
   }

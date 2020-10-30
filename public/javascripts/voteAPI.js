@@ -1,10 +1,30 @@
 (function () {
   const castVoteForm = document.getElementById('form-cast-vote');
   const castingButton = document.getElementById('submit-casting-vote');
+  const deleteButton = document.getElementById('submit-delete-vote');
+
+  if (deleteButton) {
+    deleteButton.addEventListener('click', handleDeleteVote);
+  }
 
   if (!castVoteForm || !castingButton) return;
-
   castVoteForm.addEventListener('submit', handleSubmitCastingVote);
+
+  function handleDeleteVote({ target }) {
+    const targetRoute = '/votings/delete';
+    let targetURI = target.baseURI.split('/votings');
+    targetURI = targetURI[0] + targetRoute + targetURI[1];
+
+    fetch(targetURI, {
+      method: 'DELETE'
+    })
+      .then((res) => {
+        window.location.replace('/');
+      })
+      .catch((err) => {
+        window.location.replace('/');
+      });
+  }
 
   function handleSubmitCastingVote(e) {
     e.preventDefault();
@@ -27,6 +47,7 @@
       body: JSON.stringify(selectedItem)
     })
       .then((res) => {
+        console.log(res);
         if (res.redirected) {
           window.location.replace(res.url);
         } else {

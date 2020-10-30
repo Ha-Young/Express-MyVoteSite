@@ -21,7 +21,7 @@
     input.name = 'itemList';
     input.value = itemInput.value;
     button.className = 'btn-delete-item';
-    button.textContent = '삭제';
+    button.textContent = 'X';
 
     li.appendChild(input);
     li.appendChild(button);

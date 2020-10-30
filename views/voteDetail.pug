@@ -2,7 +2,7 @@ extends ./layouts/layout
 
 block content
   if isAuthor
-    a.button.button-fixed(href=`/votings/delete/${vote.id}`) Delete
+    a.button.button-fixed#submit-delete-vote Delete
   .head-container
     h1= vote.title
     if vote.isExpired

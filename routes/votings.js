@@ -9,6 +9,6 @@ router.get(ROUTE_VOTINGS.NEW, verifyUser, votingsController.getNewVote);
 router.post(ROUTE_VOTINGS.NEW, verifyUser, votingsController.postNewVote);
 router.get(ROUTE_VOTINGS.ID, votingsController.getVote);
 router.put(ROUTE_VOTINGS.ID, verifyUser, votingsController.postVote);
-router.get(ROUTE_VOTINGS.DELETE, verifyUser, votingsController.deleteVote);
+router.delete(ROUTE_VOTINGS.DELETE, verifyUser, votingsController.deleteVote);
 
 module.exports = router;
