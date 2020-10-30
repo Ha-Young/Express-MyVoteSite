@@ -1,0 +1,27 @@
+extends layout/main.pug
+
+block link
+  link(rel='stylesheet', href='/stylesheets/createVoting.css')
+
+block content
+  form.create-voting-form(action='/votings/new' method='post' autocomplete='off')
+    input(type='text' id='title' name='title' placeholder='제목')
+    textarea(id='description' name='description' placeholder='설명')
+    .voting-list
+      .voting-list-header
+        img(src='/images/remove-button-white.png', id='remove-vote-item-button' alt="선택지삭제")
+        div
+          p 선택지
+        img(src='/images/add-button-white.png', id='add-vote-item-button' alt='선택지추가')
+      .voting-list-contents
+        div(class='voting-list-item' id='voting-list-item-1')
+          input(type='text' name='choice' placeholder='선택지')
+        div(class='voting-list-item' id='voting-list-item-2')
+          input(type='text' name='choice' placeholder='선택지')
+
+    .voting-expired-date
+      p 만료일
+    input(type='date' name='date')
+    input(type='submit' value='투표 생성')
+block script
+  script(type='text/javascript' src='/javascripts/createVoting.js')

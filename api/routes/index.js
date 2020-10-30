@@ -1,50 +1,82 @@
 const express = require('express');
 const passport = require('passport');
 const UserService = require('../../services/UserService');
+const VoteService = require('../../services/VoteService');
+const changeDateForm = require('../utils/changeDateForm');
+const { isLoggedIn, isNotLoggedIn, setLocals } = require('../middlewares/middlewares');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-  res.render('home');
+router.get('/', setLocals, async (req, res, next) => {
+  try {
+    const items = await VoteService.getInProgress();
+    changeDateForm(items);
+
+    res.render('home', { voteItems: items });
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.get('/expired', (req, res, next) => {
-  res.render('expired')
+router.get('/expired', setLocals, async (req, res, next) => {
+  try {
+    const items = await VoteService.getExpired();
+    changeDateForm(items);
+
+    return res.render('expired', { voteItems: items });
+  } catch (error) {
+    return next(error);
+  }
 });
 
-router.get('/my-votings', (req, res, next) => {
-  res.render('myVotings')
+router.get('/my-votings', isLoggedIn, setLocals, async (req, res, next) => {
+  const userId = req.user;
+
+  try {
+    const items = await VoteService.getMyVoting(userId);
+    changeDateForm(items);
+
+    return res.render('myVotings', { voteItems: items });
+  } catch (error) {
+
+    return next(error);
+  }
 });
 
-
-router.get('/signup', (req, res, next) => {
-  res.render('signup');
+router.get('/signup', isNotLoggedIn, (req, res, next) => {
+  return res.render('signup');
 });
 
-router.post('/signup', async (req, res, next) => {
+router.post('/signup', isNotLoggedIn, async (req, res, next) => {
   const user = req.body;
 
   try {
     const result = await UserService.signup(user);
 
     if (result) return res.json({ redirect: '/login' });
+
     return res.json({ signupResult: 'Email Already Exist' });
   } catch (error) {
-    next(error); //500 interal error
+    return next(error);
   }
 
 });
 
-router.get('/login', (req, res, next) => {
-  res.render('login');
+router.get('/login', isNotLoggedIn, (req, res, next) => {
+  const { callbackUrl } = req.query;
+  return res.render('login', { callbackUrl });
 });
 
 router.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
-  res.redirect('/');
+  const { callbackUrl } = req.body;
+
+  if (!callbackUrl) return res.redirect(callbackUrl);
+  return res.redirect('/');
 });
 
-router.get('/logout', (req, res, next) => {
-  res.render('logout');
+router.get('/logout', isLoggedIn, (req, res, next) => {
+  req.logout();
+  res.redirect('/');
 });
 
 module.exports = router;

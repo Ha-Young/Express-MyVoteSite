@@ -1,2 +1,9 @@
 header.header
-  p VoteforVote
+  .header-block
+  .header-title
+    a(href='/') vOtebOt
+  .header-block
+    if login
+      a(href='/logout') 로그아웃
+    else
+      a(href='/login') 로그인

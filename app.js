@@ -8,6 +8,7 @@ const passport = require('passport');
 const dbConfig = require('./config/db');
 const passportConfig = require('./config/passport');
 const index = require('./api/routes/index');
+const votings = require('./api/routes/votings');
 
 const app = express();
 dotenv.config();
@@ -32,6 +33,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', index);
+app.use('/votings', votings);
 
 app.use(function(req, res, next) {
   const err = new Error('Not Found');
@@ -39,6 +41,7 @@ app.use(function(req, res, next) {
   next(err);
 });
 app.use(function(err, req, res, next) {
+  console.log(err);
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);

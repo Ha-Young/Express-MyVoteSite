@@ -2,7 +2,8 @@ doctype html
 html
   head
     link(rel='stylesheet', href='/stylesheets/index.css')
-    title VoteforVote
+    block link
+    title vOtebOt
   body
     .main-container
       header
@@ -11,3 +12,5 @@ html
         include ../partials/navigator.pug
         .vote-container
           block content
+    script(src='/javascripts/main.js')
+    block script

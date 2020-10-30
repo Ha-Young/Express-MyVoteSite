@@ -1,4 +1,13 @@
 extends layout/main.pug
 
+block link
+  link(rel='stylesheet', href='/stylesheets/votingDetail.css')
 block content
-  p Voting
+  if voteItem.voteResult
+    include ./partials/votingOpen.pug
+  else
+    include ./partials/votingClose.pug
+  if canDelete
+    p.vote-delete-button 삭제
+block script
+  script(src='/javascripts/votingDetail.js')

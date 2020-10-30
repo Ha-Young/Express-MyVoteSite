@@ -1,0 +1,14 @@
+
+div(class='voting-item-container' id=`${voteItem.voteId}`)
+  .vote-number
+    p= `No. ${voteItem.voteId}`
+  .vote-title
+    p= voteItem.voteTitle
+  .vote-descrption
+    p= voteItem.voteDescription
+  .vote-choice-container
+    p= voteItem.voteResult[0]
+    each val, index in voteItem.voteChoice
+      if (voteItem)
+      .vote-choice
+        p= val

@@ -1,4 +1,12 @@
 extends layout/main.pug
 
 block content
-  p home
+  each item in voteItems
+    a(href=`/votings/${item._id}` class='vote-item-continer')
+      .vote-item-header
+        p= `${item.participationList.length} 명 투표`
+        div
+        p= `${item.formDate} 까지`
+      .vote-item-body
+        p.vote-item-title= item.title
+        p.vote-item-description= item.description

@@ -24,7 +24,9 @@ const UserService = {
         return done(null, false, { loginResult: 'The password is incorrect.' });
       });
     } catch (error) {
-      throw error;
+      throw {
+        message: '로그인 오류',
+      };
     }
   },
   logout: async () => {
@@ -33,7 +35,7 @@ const UserService = {
   find: async (userId, done) => {
     try {
       const user = await User.findById(userId);
-      if (user) return done(null, user);
+      if (user) return done(null, user._id);
     } catch (error) {
       next(error);
     }

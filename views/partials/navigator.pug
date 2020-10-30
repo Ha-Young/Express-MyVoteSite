@@ -1,7 +1,9 @@
 .navigator
   .mode
-    a(href='/') 진행중인 투표
-    a(href='/expired') 만료된 투표
-    a(href='/my-votings') 내가 만든 투표
-  .create-vote-button
-    img(src='/images/create-button.png', alt='투표 만들기')
+    a(href='/' id='navigate-inprogress') 진행중인 투표
+    a(href='/expired' id='navigate-expired') 만료된 투표
+    a(href='/my-votings' id='my-voting') 내가 만든 투표
+  .create-voting-button
+    p 투표 만들기
+    a(href='/votings/new')
+      img(src='/images/create-button.png', alt='투표 만들기')

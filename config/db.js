@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-module.exports = () => {
+const dbConnect = () => {
   if (process.env.NODE_ENV !== 'production') {
     mongoose.set('debug', true);
   }
@@ -22,5 +22,7 @@ mongoose.connection.on('error', (error) => {
 });
 mongoose.connection.on('disconnected', () => {
   console.error('몽고디비 연결이 끊겼습니다. 재시작합니다.');
-  connect();
+  dbConnect();
 });
+
+module.exports = dbConnect;
