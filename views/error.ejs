@@ -1,3 +1,12 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <div class='error-box'>
+      <div class=error-message><% errorMessage %></div>
+      <a id='creating-voting' href='/'>HOME</a>
+    </div>
+  </body>
+  <link rel='stylesheet' href='/stylesheets/error.css' />
+</html>

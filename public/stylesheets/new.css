@@ -28,25 +28,33 @@ form {
 }
 
 input[name='title'] {
-  width: 297px;
-  height: 40px;
+  width: 287px;
+  height: 35px;
   margin-top: 10px;
   outline: none;
+  padding: 5px;
+  padding-left: 10px;
+  font-size: 15px;
 }
 
 input[name='expire-day'] {
-  width: 300px;
-  height: 40px;
+  width: 287px;
+  height: 35px;
   margin-top: 10px;
   outline: none;
+  padding: 5px;
+  padding-left: 10px;
+  font-size: 15px;
 }
 
 input[name='option'] {
+  width: 287px;
+  height: 35px;
   margin-top: 10px;
-  width: 300px;
-  height: 40px;
-  border: 1px solid grey;
   outline: none;
+  padding: 5px;
+  padding-left: 10px;
+  font-size: 15px;
 }
 
 button {
@@ -58,6 +66,7 @@ button {
   font-size: 14px;
   border: 1px solid grey;
   outline: none;
+  letter-spacing: 5px;
   transition: all 0.4s;
 }
 
@@ -74,6 +83,7 @@ a {
   border: 1px solid grey;
   color: black;
   cursor: default;
+  letter-spacing: 5px;
   transition: all 0.4s;
 }
 

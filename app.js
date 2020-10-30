@@ -1,11 +1,12 @@
 require('dotenv').config();
+require('./config/db');
+require('./config/passport');
 
 const express = require('express');
-const mongoose = require('mongoose');
+const passport = require('passport');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const bcrypt = require('bcrypt');
 const app = express();
 
 const path = require('path');
@@ -17,50 +18,10 @@ const signupRouter = require('./routes/signup');
 const votingRouter = require('./routes/votings');
 const myVotingRouter = require('./routes/my-votings');
 
-const passport = require('passport');
-const User = require('./models/User');
-const LocalStrategy = require('passport-local').Strategy;
-
-// passport 랑 DB 로직 밖으로 분리하기
-passport.use(new LocalStrategy(
-  {
-    usernameField: 'id',
-    passwordField: 'password'
-  },
-  function (username, password, done) {
-    User.findOne({ id: username }, (err, user) => {
-      if (err) { return done(err); }
-
-      if (!user) {
-        return done(null, false, { message: 'Incorrect E-MAIL' });
-      }
-
-      bcrypt.compare(password, user.password, (err, result) => {
-        if (result === true) {
-          return done(null, user);
-        } else {
-          return done(null, false, { message: 'Incorrect password' });
-        }
-      });
-    });
-  }
-));
-
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-  User.findById(user._id, function(err, user) {
-    done(err, user);
-  });
-});
-
-// view engine setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// app.use(logger('dev'));
+app.use(logger('dev'));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -74,23 +35,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-const db = mongoose.connection;
-const port = process.env.PORT;
-
-mongoose.connect( // mongodb 주고도 env에 넣어야 되나..?
-  `mongodb+srv://theyyyzzz3:1234@cluster0.r2mjk.mongodb.net/votingPlatform?retryWrites=true&w=majority`,
-  {
-    dbName: 'votingPlatform',
-    useNewUrlParser: true,
-    useCreateIndex:true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
-  }
-);
-
-db.on('error', () => console.log('mongoDB-error'));
-db.once('open', () => console.log('mongoDB-connected'));
 
 app.use('/', homeRouter);
 app.use('/login', loginRouter);
@@ -108,7 +52,7 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
+  res.locals.errorMessage = err.message || 'Internal Server Error';
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page

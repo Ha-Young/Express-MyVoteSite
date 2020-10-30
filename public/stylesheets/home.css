@@ -14,7 +14,6 @@ body {
   align-items: center;
   width: 400px;
   height: 700px;
-
 }
 
 .menu {
@@ -29,7 +28,6 @@ body {
   align-items: center;
   width: 306px;
   height: 50px;
-  border: 1px solid black;
 }
 
 a {
@@ -47,6 +45,7 @@ a {
   font-size: 14px;
   background-color: RGB(239, 239, 239);
   margin-bottom: 5px;
+  letter-spacing: 5px;
   transition: all 0.4s;
   color: black;
 }
@@ -61,7 +60,15 @@ a {
   justify-content: center;
   align-items: center;
   width: 306px;
-  margin-top: 10px;
+}
+
+.no-votinglist {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 306px;
+  height: 400px;
+  font-size: 15px;
 }
 
 #each-voting {
@@ -114,11 +121,12 @@ a {
 #creating-voting {
   display: flex;
   width: 306px;
-  height: 100px;
+  height: 80px;
   justify-content: center;
   align-items: center;
   margin-top: 10px;
   border: 1px solid grey;
   background-color: RGB(239, 239, 239);
+  letter-spacing: 5px;
   transition: all 0.4s
 }

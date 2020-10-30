@@ -8,15 +8,19 @@
         <a id='selector' href='/login'>LOGIN</a>
         <a id='selector' href='/my-votings'>나의 투표함</a>
       </div>
-      <div class='voting-caution'><%= message %></div>
+      <div class='voting-caution'></div>
       <div class='voting-list'>
+        <% if (!votingList.length) { %>
+          <div class='no-votinglist'>😜 투표를 등록하세요! 😜</div>
+        <% } else { %>
         <% for(let i = 0; i < votingList.length; i++) { %>
           <a id='each-voting' href='votings/<%= votingList[i]._id %>'>
             <div class='voting-title'><%= votingList[i].title %></div>
-            <div class='voting-progress'>진행중<%= votingList[i].progressStatus %></div>
+            <div class='voting-progress'><%= votingList[i].progress %></div>
             <div class='voting-creator'><%= votingList[i].creator %></div>
             <div class='voting-expire'><%= votingList[i].expire_day %></div>
           </a>
+        <% } %>
         <% } %>
         <a id='creating-voting' href='/votings/new'>투표만들기</a>
       </div>

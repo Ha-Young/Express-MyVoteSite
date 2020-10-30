@@ -1,0 +1,44 @@
+body {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.error-box {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 700px;
+}
+
+.error-message {
+  display: flex;
+  width: 400px;
+  height: 200px;
+  justify-content: center;
+  align-items: center;
+}
+
+#creating-voting {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 306px;
+  height: 40px;
+  font-size: 14px;
+  background-color: RGB(239, 239, 239);
+  margin-bottom: 5px;
+  letter-spacing: 5px;
+  transition: all 0.4s;
+  color: black;
+  text-decoration: none;
+}
+
+#selector:hover {
+  background-color: cadetblue;
+}

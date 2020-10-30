@@ -7,14 +7,7 @@ const { verifyLoggedIn } = require('./middlewares/auth');
 router.get('/new', verifyLoggedIn, votingsController.renderNew);
 router.post('/new', votingsController.createVoting);
 router.get('/:voting_id', votingsController.getVotingDetail);
-
-// router.get('/success', function (req, res, next) {
-//   res.render('new', {});
-// });
-
-// router.get('/error', function (req, res, next) {
-//   res.render('error', {});
-// });
-
+router.put('/:voting_id', votingsController.updateOptionVoter);
+router.delete('/:voting_id', votingsController.deleteVoting);
 
 module.exports = router;

@@ -1,7 +1,6 @@
 const plusPollButton = document.getElementById('plus-option');
 const pollForm = document.getElementById('poll-selector');
 
-
 plusPollButton.addEventListener('click', () => {
   const inputOption = document.createElement('input');
 

@@ -5,21 +5,42 @@
   <body>
     <div class='votingdetail-box'>
       <div class='menu'>
-        <a id='selector' href='/'>HOME</a>
-        <a id='selector'>DELETE</a>
+        <a id='home-selector' href='/'>HOME</a>
+        <% if (isCreator) { %>
+          <a id='delete-selector'>DELETE</a>
+        <% } %>
       </div>
       <div class='voting-detail'>
         <div class='voting-title'><%= voting.title %></div>
-        <div class='voting-progress'>진행중<%= voting.progressStatus %></div>
-        <div class='voting-creator'>작성자: <%= voting.creator %></div>
-        <div class='voting-expire'>기한: <%= voting.expire_day %> 까지</div>
+        <% if (isAlive) { %>
+          <div id='voting-progress'>진행중</div>
+        <% } else { %>
+          <div id='voting-progress'>기한만료</div>
+        <% } %>
+          <div class='voting-creator'>작성자: <%= voting.creator %></div>
+          <div class='voting-expire'>기한: <%= voting.expire_day %> 까지</div>
       </div>
       <div class='options'>
+      <% if (!isCreator && isVoted && isAlive) { %>
+        <div class='voted-notice'>
+          😎 이미 투표를 완료하셧네요? 😎
+        </div>
+      <% } else { %>
         <% for (let i = 0; i < voting.option.length; i++) { %>
-          <div class='option'><%= voting.option[i] %></div>
+          <% if (!isCreator && isAlive) { %>
+            <a class='option'><%= voting.option[i].text %></a>
+          <% } else { %>
+            <a class='option'><%= voting.option[i].text %>
+              <% if (isCreator || !isAlive) { %>
+               <div class='score'><%= voting.option[i].voter.length %></div>
+              <% } %>
+            </a>
+          <% } %>
         <% } %>
+      <% } %>
       </div>
     </div>
   </body>
-  <link rel='stylesheet' href='/stylesheets/votingdetail.css' />
+  <link rel='stylesheet' href='/stylesheets/votingDetail.css' />
+  <script type='text/javascript' src='/javascripts/votingDetail.js'></script>
 </html>

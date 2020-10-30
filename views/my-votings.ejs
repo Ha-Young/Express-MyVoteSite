@@ -12,7 +12,7 @@
         <% for (let i = 0; i < myVotingList.length; i++) { %>
           <a id='each-voting' href='votings/<%= myVotingList[i]._id %>'>
             <div class='voting-title'><%= myVotingList[i].title %></div>
-            <div class='voting-progress'>진행중<%= myVotingList[i].progressStatus %></div>
+            <div class='voting-progress'><%= myVotingList[i].progress %></div>
             <div class='voting-creator'><%= myVotingList[i].creator %></div>
             <div class='voting-expire'><%= myVotingList[i].expire_day %></div>
           </a>

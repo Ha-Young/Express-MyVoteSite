@@ -11,11 +11,22 @@ const votingSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  option: {
-    type: Array,
-    required: true,
-    trim: true
-  },
+  option: [
+    {
+      text: {
+        type: String,
+        require: true,
+        trim: true
+      },
+      voter: [
+        {
+          type: String,
+          unique: true,
+          trim: true
+        }
+      ]
+    }
+  ],
   creator: {
     type: String,
     required: true,
