@@ -53,14 +53,10 @@ exports.vote = async (req, res, next) => {
       return createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL);
     }
 
-    await Voting.updateOne(
-      { 'options._id': option },
-      { $addToSet: { 'options.$[option].voters': _id } },
-      { arrayFilters: [{ 'option._id': option }] }
-    );
-
+    await new VotingService().updateVoter(_id, option);
     res.json({ message: constants.SUCCESS_MESSAGE_VOTING });
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };

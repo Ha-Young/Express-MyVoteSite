@@ -1,11 +1,13 @@
 const Voting = require('../models/Voting');
 const User = require('../models/User');
 const { isExpiration } = require('../utils');
+const createError = require('http-errors');
 
 
 class VotingService {
   async getVotinDetails(votingId, user) {
-    const voting = await Voting.findOne({ _id: votingId });
+    try {
+      const voting = await Voting.findOne({ _id: votingId });
     const { options } = voting.populate('options');
 
     if (!voting || !options) {
@@ -30,8 +32,24 @@ class VotingService {
       });
     }
 
-    return { voting, isCreator, options, isVoter }
+    return { voting, isCreator, options, isVoter };
+    } catch (err) {
+      return err;
+    }
   }
+
+  async updateVoter(userId, optionId) {
+    try {
+      await Voting.updateOne(
+        { 'options._id': optionId },
+        { $addToSet: { 'options.$[option].voters': userId } },
+        { arrayFilters: [{ 'option._id': optionId }] }
+      );
+    } catch (err){
+      return err;
+    }
+  }
+
 }
 
 
