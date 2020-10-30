@@ -1,8 +1,8 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
-
 const User = require('../models/User');
+const { WRONG_ID_OR_PASSWORD } = require('../constants/messages');
 
 module.exports = () => {
   passport.use(new LocalStrategy({
@@ -19,7 +19,7 @@ module.exports = () => {
       }
 
       if (!user || !isPasswordCorrect) {
-        done(null, false, { message: '아이디 또는 비밀번호가 맞지 않습니다' });
+        done(null, false, { message: WRONG_ID_OR_PASSWORD });
 
         return;
       }

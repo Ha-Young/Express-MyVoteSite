@@ -1,6 +1,7 @@
 const Voting = require('../models/Voting');
 const User = require('../models/User');
 const dayjs = require('dayjs');
+const { FULL_DATE_KOREAN } = require('../constants');
 
 async function categorizeVotingsByExpiration(userIdObj, isFindAll = true) {
   const openVotings = [];
@@ -18,7 +19,7 @@ async function categorizeVotingsByExpiration(userIdObj, isFindAll = true) {
     const isUserCreator
       = voting.created_by.toString() === userIdObj.created_by;
     const expirationDate = Date.parse(voting.expires_at);
-    const formattedExpirationDate = dayjs(expirationDate).format('YYYY년 M월 D일 HH시 mm분');
+    const formattedExpirationDate = dayjs(expirationDate).format(FULL_DATE_KOREAN);
 
     let votesOfMostVoted = voting.options[0].voters.length;
 

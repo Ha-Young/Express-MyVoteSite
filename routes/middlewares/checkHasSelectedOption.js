@@ -1,5 +1,5 @@
 const { SELECT } = require('../../constants');
-const { CHOOSE } = rerequire('../../constants/messages');
+const { CHOOSE } = require('../../constants/messages');
 
 function checkHasSelectedOption(req, res, next) {
   if (req.body.selectedOptionValue === null) {

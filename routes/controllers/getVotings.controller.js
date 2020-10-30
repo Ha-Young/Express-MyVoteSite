@@ -2,6 +2,7 @@ const Voting = require('../../models/Voting');
 const categorizeVotingsByExpiration = require('../../utils/categorizeVotingsByExpiration');
 const dayjs = require('dayjs');
 const { INDEX, MY_VOTINGS, VOTING_DETAILS } = require('../../constants/views');
+const { FULL_DATE_KOREAN } = require('../../constants/');
 
 exports.getAll = async (req, res, next) => {
   const currentUserId = req.session.userId;
@@ -41,7 +42,7 @@ exports.getOne = async (req, res, next) => {
   try {
     const voting = await Voting.findById(req.params._id);
     const expirationDate = Date.parse(voting.expires_at);
-    const formattedExpirationDate = dayjs(expirationDate).format('YYYY년 M월 D일 HH시mm분');
+    const formattedExpirationDate = dayjs(expirationDate).format(FULL_DATE_KOREAN);
 
     if (req.session.userId === voting.created_by.toString()) {
       isUserCreator = true;
