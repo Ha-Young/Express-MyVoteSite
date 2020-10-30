@@ -1,8 +1,9 @@
 const User = require('../../models/User');
 const { MESSAGE } = require('../../constants/views');
 const { VALIDATION_PROBLEM, ALREADY_REGISTERED } = require('../../constants/messages');
+const tryCatchWrapper = require('../../utils/tryCatchWrapper');
 
-async function validateSignupForm(req, res, next) {
+const validateSignupForm = tryCatchWrapper(async (req, res, next) => {
   const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   const { email, password, username } = req.body;
   const passwordConfirm = req.body['password-confirm'];
@@ -32,6 +33,6 @@ async function validateSignupForm(req, res, next) {
   }
 
   next();
-};
+});
 
 module.exports = validateSignupForm;

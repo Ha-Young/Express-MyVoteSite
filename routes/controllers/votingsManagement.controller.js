@@ -11,8 +11,9 @@ const UserService = require('../../services/user.service');
 const VotingService = require('../../services/voting.service');
 const userService = new UserService();
 const votingService = new VotingService();
+const tryCatchWrapper = require('../../utils/tryCatchWrapper');
 
-exports.create = async (req, res, next) => {
+exports.create = tryCatchWrapper(async (req, res) => {
   const created_by = req.session.userId;
   const data = req.body;
   const expires_at = `${data[EXPIRATION_DATE][0]} ${data[EXPIRATION_DATE][1]}`;
@@ -27,16 +28,12 @@ exports.create = async (req, res, next) => {
     });
   }
 
-  try {
-    await votingService.createVoting(title, created_by, expires_at, optionsData);
+  await votingService.createVoting(title, created_by, expires_at, optionsData);
 
-    res.status(201).render(MESSAGE, {
-      message: CREATE_SUCCESS
-    });
-  } catch (err) {
-    next(err);
-  }
-};
+  res.status(201).render(MESSAGE, {
+    message: CREATE_SUCCESS
+  });
+});
 
 exports.drop = async (req, res, next) => {
   let votingData;
@@ -111,50 +108,46 @@ exports.drop = async (req, res, next) => {
   });
 };
 
-exports.applyVote = async (req, res, next) => {
+exports.applyVote = tryCatchWrapper(async (req, res) => {
   const { selectedOptionValue } = req.body;
   const currentUser = req.session.userId;
 
-  try {
-    const voting = await votingService.getVoting(req.params._id);
-    const { options } = voting;
+  const voting = await votingService.getVoting(req.params._id);
+  const { options } = voting;
 
-    for (const option of options) {
-      for (const voter of option.voters) {
-        if (voter.toString() === currentUser) {
-          res.json({ message: VOTED });
+  for (const option of options) {
+    for (const voter of option.voters) {
+      if (voter.toString() === currentUser) {
+        res.json({ message: VOTED });
 
-          return;
-        }
+        return;
       }
     }
-
-    for (const option of options) {
-      if (option.content === selectedOptionValue) {
-        option.voters.push(currentUser);
-      }
-    }
-
-    try {
-      votingService.updateVoting(req.params._id, voting);
-    } catch (err) {
-      res.json({
-        result: ERROR,
-        message: FAILURE,
-      });
-
-      if (process.env.NODE_ENV === 'development') {
-        console.error(err);
-      }
-
-      return;
-    }
-
-    res.json({
-      result: OK,
-      message: VOTE_DONE,
-    });
-  } catch (err) {
-    next(err);
   }
-};
+
+  for (const option of options) {
+    if (option.content === selectedOptionValue) {
+      option.voters.push(currentUser);
+    }
+  }
+
+  try {
+    votingService.updateVoting(req.params._id, voting);
+  } catch (err) {
+    res.json({
+      result: ERROR,
+      message: FAILURE,
+    });
+
+    if (process.env.NODE_ENV === 'development') {
+      console.error(err);
+    }
+
+    return;
+  }
+
+  res.json({
+    result: OK,
+    message: VOTE_DONE,
+  });
+});

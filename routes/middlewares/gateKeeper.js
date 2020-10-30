@@ -3,8 +3,9 @@ const { GET, POST, PUT } = require('../../constants/methods');
 const { REDIRECT_LOGIN } = require('../../constants');
 const { LOGIN } = require('../../constants/urls');
 const { LOGIN_PLEASE } = require('../../constants/messages');
+const tryCatchWrapper = require('../../utils/tryCatchWrapper');
 
-async function gateKeeper(req, res, next) {
+const gateKeeper = tryCatchWrapper(async (req, res, next) => {
   const { userId } = req.session;
   const dbSearchResult = await User.findById(userId);
 
@@ -24,6 +25,6 @@ async function gateKeeper(req, res, next) {
   }
 
   next();
-}
+});
 
 module.exports = gateKeeper;
