@@ -2,6 +2,12 @@
 ./
 ../package-lock.json
 .DS_Store
+../.DS_Store
 node_modules/
 .gitignore
 .elasticbeanstalk/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
