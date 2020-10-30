@@ -10,6 +10,8 @@ const $checkBoxLabels = document.querySelectorAll('.checkbox__label');
 const $votingSelectBtn = document.querySelector('.voting__detail__btn__select');
 const $votingDeleteBtn = document.querySelector('.voting__detail__btn__delete');
 
+
+console.log(location);
 async function handleVotingSelectBtnClick() {
   const checkedBox = Array.from($votingCheckBoxes).filter((votingCheckBoxe) => {
     return votingCheckBoxe.checked;
@@ -24,7 +26,7 @@ async function handleVotingSelectBtnClick() {
   const votedMessage = document.createElement('h4');
 
   try {
-    const response = await fetch(`http://localhost:3000/${sourceUrl}`, {
+    const response = await fetch(`${location.origin}/${sourceUrl}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -41,7 +43,7 @@ async function handleVotingSelectBtnClick() {
       $votingSelectBtn.setAttribute('disabled', true);
       $votingSelectorZone.appendChild(votedMessage);
     } else if (data.result === 'required login') {
-      location.assign('http://localhost:3000/login');
+      location.assign(`${location.origin}/login`);
     } else {
       throw new Error(data.result);
     }
@@ -59,7 +61,7 @@ async function handleVotingDeleteBtnClick(e) {
   const deletedMessage = document.createElement('h4');
 
   try {
-    const data = await fetch(`http://localhost:3000/${sourceUrl}`, {
+    const data = await fetch(`${location.origin}/${sourceUrl}`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
