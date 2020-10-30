@@ -1,5 +1,4 @@
-require('dotenv').config();
-require('./db');//객체
+require('./db');
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -8,6 +7,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const indexRouter = require('./routes/index');
 const votingsRouter = require('./routes/votings');
+const { SESSION_SECRET } = require('./config/index');
 
 const app = express();
 
@@ -17,14 +17,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
-const passportConfig = require('./passport-config');
+const passportConfig = require('./config/passport-config');
 passportConfig(passport);
 
 app.use('/', indexRouter);

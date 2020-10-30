@@ -1,0 +1,11 @@
+extends index
+
+block content
+  h2 myVotingList
+  div.myVotingList
+    each myVoting in myVotingList
+      div.myVoting
+        h4.myVotingTitle= myVoting.title
+        - const options = myVoting.option
+          each option in options
+            h4 #{option.description} (득표수: #{option.votes})

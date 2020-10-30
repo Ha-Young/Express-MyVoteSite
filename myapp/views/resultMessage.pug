@@ -1,0 +1,7 @@
+extends index
+
+block content
+  if successMessage
+    div.successMessage #{successMessage}
+  else
+    div.failureMessage #{failureMessage}

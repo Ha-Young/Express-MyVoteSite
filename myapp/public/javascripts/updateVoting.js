@@ -17,10 +17,11 @@ async function putRequestFunc(votingID) {
       window.location.href = '/login';
     } else {
       const data = await response.json();
-      return alert(data.message);
+      alert(data.message);
+      return window.location.href = `/votings/${targetVotingId}`;
     }
   } catch (err) {
-    console.log('PUT 요청 에러');
+    return alert('새로운 투표를 생성하는 도중 문제가 발생했습니다. 다시 시도해주세요.');
   }
 }
 
@@ -38,6 +39,6 @@ async function deleteRequestFunc(votingID) {
     alert(data.message);
     return window.location.href = '/';
   } catch (err) {
-    console.log(err);
+    return alert('삭제하는 도중 문제가 발생했습니다. 다시 시도해주세요.');
   }
 }
