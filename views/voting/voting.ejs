@@ -82,19 +82,21 @@
       <input id='expireDate' type="datetime-local" name="expireDate"
         value="<%=voting.expireDate.toISOString().substring(0, 16)%>" disabled></input>
 
-      <label for="name">최다득표</label>
-      <div>1</div>
+      <div>Result</div>
+      <div class="selectoptions-body-container">
+        <div class='result'><%=voteResult.maxOption%></div>
+        <div class='result'><%=voteResult.maxCount%></div>
+      </div>
 
-      <% for(let i = 0; i < voting.selectOptions.length; i++) {%>
+      <% for(let i = 0; i < resultByOptions.length; i++) {%>
       <div>Option<%=i + 1%></div>
       <div class="selectoptions-body-container">
-        <div><%=voting.selectOptions[i].option%></div>
-        <div id="">1</div>
+        <div><%=resultByOptions[i].selectOptions.option%></div>
+        <div><%=resultByOptions[i].selectOptions.votedUsers.length%></div>
       </div>
       <%}%>
 
     <button class="delete-button" type="submit">Delete</button>
-    <div>1</div>
     <%}%>
     </div>
   </div>

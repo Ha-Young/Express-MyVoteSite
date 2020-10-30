@@ -223,3 +223,8 @@ a {
 .delete-button:hover {
   transform: scale(1.05);
 }
+
+.result {
+  color: rgb(16, 157, 16);
+  font-weight: bold;
+}

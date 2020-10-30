@@ -32,7 +32,11 @@ exports.createNewVoting = async (req, res, next) => {
 
 exports.renderVoting = async (req, res, next) => {
   try {
-    const voteResult = req.session.voteResult || undefined;
+    const voteResult = {
+      maxOption: req.body.maxOption,
+      maxCount: req.body.maxCount,
+    };
+    const resultByOptions = req.body.voting;
     console.log(voteResult, '/:id render voting');
     const isLoggedin = req.session.logined;
     const userId = req.session.user_id || '5f9bd73e3eaed512dd43c321';
@@ -58,6 +62,7 @@ exports.renderVoting = async (req, res, next) => {
       isLoggedin,
       isVoted,
       isCreator,
+      resultByOptions,
       voteResult,
     });
     // res.json({ status: 'success' })
@@ -70,8 +75,8 @@ exports.renderVoting = async (req, res, next) => {
 exports.receiveVotingResult = async (req, res, next) => {
   try {
     console.log('fetch put last step in receiveVotingResult controller');
-    delete req.body.data;
-    req.session.voteResult = req.body;
+    // delete req.body.data;
+    // req.session.voteResult = req.body;
 
     return res.json('sucess');
   } catch (err) {

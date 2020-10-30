@@ -20,12 +20,7 @@ router.post(
 
 router.get('/my-voting', isLoggedIn, votingController.renderMyVoting);
 
-router.get('/:id', votingController.renderVoting);
-router.put(
-  '/:id',
-  handleFetchPut,
-  findResult,
-  votingController.receiveVotingResult
-);
+router.get('/:id', findResult, votingController.renderVoting);
+router.put('/:id', handleFetchPut, votingController.receiveVotingResult);
 
 module.exports = router;
