@@ -7,13 +7,12 @@
   <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
-  <a href='/'>투표 목록으로</a>
-  <h1>투표 상세</h1>
-  <h2><%= voting.title %></h2>
-  만료 시각: <%= formattedExpirationDate %>
+  <a href='/'>투표 목록으로</a><br><br>
   <% if (isUserCreator) { %>
     <button id='voting-delete-button'>삭제</button>
-  <% } %><br><br>
+  <% } %><br>
+  <h1>투표 상세</h1>
+  <h2><%= voting.title %></h2>
   <form id='vote-form'>
     <% voting.options.forEach(option => { %>
       <input
@@ -24,8 +23,10 @@
           checked
         <% } %>
       >
-      <label for='<%= option.content %>'><%= option.content %></label><br>
-      <% if (isExpired || isUserCreator) { %><span><%= option.voters.length %>표</span><br><% } %>
+      <label for='<%= option.content %>'><%= option.content %></label>
+      <% if (isExpired || isUserCreator) { %>
+        <span class='vote-number'><%= option.voters.length %>표</span><br>
+      <% } %>
     <% }) %><br>
     <input type='hidden' id='voting-id' value='<%= voting._id %>'>
     <input
@@ -35,6 +36,9 @@
       <% if (isExpired) { %>disabled<% } %>
     >
   </form>
+  <% if (!isExpired) { %>
+    만료 시각: <%= formattedExpirationDate %>
+  <% } %>
 </body>
 <script type="text/javascript" src='/javascripts/clientVote.js'></script>
 <% if (isUserCreator) { %>
