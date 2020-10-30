@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div>
+      <% if (islogined) { %>
+        <button tpye="button" onclick="location.href='/logout'">LogOut</button>
+        <% } else { %>
+          <button tpye="button" onclick="location.href='/login'">Login</button>
+          <% } %>
+    </div>
+    <h1>메인페이지</h1>
+
+
+    <ul>
+      <% for (let index = 0; index < votingList.length; index++) { %>
+        <% if (votingList[index].isExpire) { %>
+          <li class='expire' onclick="location.href='/votings/<%=votingList[index]._id%>'">
+        <% } else { %>
+          <li class='layout' onclick="location.href='/votings/<%=votingList[index]._id%>'">
+        <% } %>
+          <div>
+            제목: <%=votingList[index].subject%>
+          </div>
+          <div>
+            생성자: <%=votingList[index].userName%>
+          </div>
+          <div>
+            만료 날짜:
+               🕟
+               <%=votingList[index].date.toLocaleDateString()%> 
+               <%=votingList[index].date.toLocaleTimeString()%>
+               🕥
+             </div>
+             <div>
+              <% if (votingList[index].isExpire) { %>
+                투표가 종료되었습니다
+              <% } else { %>
+                투표가 진행중입니다.
+              <% } %>
+            </div>
+        </li>
+        <% } %>
+        </li>
+      </ul>
+      <% if (islogined) { %>
+        <button tpye="button" onclick="location.href='/votings/new'">투표 생성</button>
+        <button tpye="button" onclick="location.href='/my-votings'">내 투표 보기</button>
+        <% } %>
+    
+  </body>
+</html>
+
+

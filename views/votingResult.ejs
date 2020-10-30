@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div>
+      <% if (islogined) { %>
+        <button tpye="button" onclick="location.href='/logout'">LogOut</button>
+        <% } else { %>
+          <button tpye="button" onclick="location.href='/login'">Login</button>
+          <% } %>
+    </div>
+    <h1>투표 결과</h1>
+          <div>
+            <h2><%=voting.subject%></h2>
+          </div>
+            <div>
+              <% for (let index = 0; index < voting.options.length; index++) { %>
+                <% if (voting.options[index].count === maxCount) { %> 
+                <div class="marking" id='vote'>✅
+                <% } else { %>
+                  <div class="option" id='vote'>
+                <% } %>
+                  <input type='radio' name="option" value="votings" id="<%=index%>" >
+                  <%=voting.options[index].text%>       | 투표수: <%=voting.options[index].count%>
+  
+                  </input>
+              </div>
+              <% } %>
+            </div>
+            <div>
+
+              <% if (isCreator) { %> 
+              <button tpye="button" onclick="location.href='/votings/delete/<%=voting._id%>'">삭제하기</button>
+                <% } %>
+            </div>
+          </form>
+          <div>
+            만료된 날짜:
+               🕟
+               <%=voting.date.toLocaleDateString()%> 
+               <%=voting.date.toLocaleTimeString()%>
+               🕥
+             </div>
+    <button tpye="button" onclick="location.href='/'">메인 이동</button>
+    <% if (islogined) { %>
+      <button tpye="button" onclick="location.href='/my-votings'">내 투표 보기</button>
+      <% } %>
+  </body>
+  <script src="/javascripts/vote.js"></script>
+</html>
+
+

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div>
+      <button tpye="button" onclick="location.href='/logout'">LogOut</button>
+    </div>
+    <h1><%=userName%>님이 만드신 투표 목록</h1>
+
+
+    <ul>
+      <% for (let index = 0; index < votingList.length; index++) { %>
+        <li class="layout" onclick="location.href='/votings/<%=votingList[index]._id%>'">
+          <div>
+            제목: <%=votingList[index].subject%>
+          </div>
+          <div>
+            생성자: <%=votingList[index].userName%>
+          </div>
+          <div>
+            만료 날짜:
+               🕟
+               <%=votingList[index].date.toLocaleDateString()%> 
+               <%=votingList[index].date.toLocaleTimeString()%>
+               🕥
+             </div>
+             <div>
+              진행중 여부: <%=!votingList[index].isExpire%>
+            </div>
+        </li>
+        <% } %>
+        </li>
+      </ul>
+    <button tpye="button" onclick="location.href='/votings/new'">투표 생성</button>
+    <button tpye="button" onclick="location.href='/'">메인 이동</button>
+    
+  </body>
+</html>
+
+

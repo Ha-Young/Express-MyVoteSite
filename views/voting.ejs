@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+  </head>
+  <body>
+    <div>
+      <% if (islogined) { %>
+        <button tpye="button" onclick="location.href='/logout'">LogOut</button>
+        <% } else { %>
+          <button tpye="button" onclick="location.href='/login'">Login</button>
+          <% } %>
+    </div>
+    <h1>투표 페이지</h1>
+          <div>
+            <h2><%=voting.subject%></h2>
+          </div>
+            <div>
+              <% for (let index = 0; index < voting.options.length; index++) { %>
+                  <div class="option" id='vote'>
+                    <input type='radio' name="option" value="votings" id="<%=index%>" >
+                    <%=voting.options[index].text%>
+                  </input>
+              </div>
+              <% } %>
+              voters: <%=voting.voters%> 
+              <div>
+                counts= <%=voting.counts%>
+              </div>
+            </div>
+            <div>
+              <% if (!voting.isExpire) { %>
+                <% if (voting.canReVote) { %>
+                  <button tpye="button" onclick="location.href='/votings/revote/<%=voting._id%>'">다시하기</button>
+                <% } else { %>
+                  <button tpye="button" id='button'>투표하기</button>
+                  <% } %>
+                   <% }  else { %>
+                    <button tpye="button" id='button'>결과보기</button>
+                    <% } %>
+
+              <% if (isCreator) { %> 
+              <button tpye="button" onclick="location.href='/votings/delete/<%=voting._id%>'">삭제하기</button>
+                <% } %>
+            </div>
+          </form>
+          <div>
+            만료 날짜:
+               🕟
+               <%=voting.date.toLocaleDateString()%> 
+               <%=voting.date.toLocaleTimeString()%>
+               🕥
+             </div>
+    <button tpye="button" onclick="location.href='/'">메인 이동</button>
+    <% if (islogined) { %>
+      <button tpye="button" onclick="location.href='/my-votings'">내 투표 보기</button>
+      <% } %>
+  </body>
+  <script src="/javascripts/vote.js"></script>
+</html>
+
+

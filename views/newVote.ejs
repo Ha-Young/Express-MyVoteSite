@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+    
+  </head>
+  <body>
+    <div>
+      <button tpye="button" onclick="location.href='/logout'">LogOut</button>
+    </div>
+    <h1 id='test'>투표생성페이지</h1>
+    <form action="/votings/new" method="post">
+      <div>
+        제목:
+        <input type="text" name='subject' placeholder="제목을 입력해주세요">
+      </div>
+      <div id>
+        <% for (let index = 0; index < textItemCount; index++) { %>
+          <div>
+            <input type="text" name="texts" placeholder="투표 항목을 입력해주세요">
+            <button type="button">항목 제거</button>
+          </div>
+        <% } %>
+        <% if (notificationMessage.invalidText) { %>
+          <div  style="color:red"><%=notificationMessage.invalidText%></div>
+          <% } %>
+        <button type="button" onclick="location.href='/votings/addTextItem'">항목 추가</button>
+      </div>
+      <div>
+          만료 날짜:  📅
+          <input
+            id="date"
+            type="date"
+            name="date"
+          />
+          📅
+          <div>
+            시간:🕣
+            <input
+              id="time"
+              type="time"
+              name="time"
+              step="1"
+            />
+            🕣
+        </div>
+      </div>
+      <% if (notificationMessage.invalidDate) { %>
+        <div  style="color:red"><%=notificationMessage.invalidDate%></div>
+        <% } %>
+      <button tpye="submit">투표 생성</button>
+    </form>
+    <button tpye="button" onclick="location.href='/'">메인 이동</button>
+  </body>
+  <script src="/javascripts/date.js"></script>
+</html>
+

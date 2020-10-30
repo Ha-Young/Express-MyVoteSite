@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+    
+  </head>
+  <body>
+    <div>
+      <button tpye="button" onclick="location.href='/logout'">LogOut</button>
+      <button type="button" id="btn" value="<%=testValue%>">test</button>
+      <input id="test" type="text" name="test" value="<%= testValue %>" required="">
+    </div>
+    <h1 id='test'>메인페이지</h1>
+    <h2 id='voting'>투표중...</h2>
+    <button tpye="button" onclick="location.href='/votings/new'">투표 생성</button>
+  </body>
+  <script src="/javascripts/test.js"></script>
+</html>
+
+
+
+<% for (let index = 0; index < textItemCount; index++) { %>
+  <div>
+    <input id="<% index %>"type="text" name='text1' placeholder="투표 항목을 입력해주세요">
+    <button type="button">항목 제거</button>
+  </div>
+<% } %>
+
+<button tpye="button" onclick="location.href='/addTextItem">항목 추가</button>
+
+/addTextItem
+<div>
+  <input type="text" name='text1' placeholder="투표 항목을 입력해주세요">
+  <button type="button">항목 제거</button>
+</div>
+<div>
+  <input type="text" name='text2' placeholder="투표 항목을 입력해주세요">
+  <button type="button">항목 제거</button>
+</div>
+<div>
+  <input type="text" name='text3' placeholder="투표 항목을 입력해주세요">
+  <button type="button">항목 제거</button>
+</div>
+
+
+
+<div>
+  <input type="text" name="text<%=index%>" placeholder="투표 항목을 입력해주세요">
+  <button type="button">항목 제거</button>
+</div>
+
+
+{date.toLocaleDateString()}
+{date.toLocaleTimeString()}
+
+<% for (let index = 0; index < votingList.length; index++) { %>
+  <li onclick="location.href='/votings/<%=votingList[index]._id%>'">
+    <div>
+      제목: <%=votingList[index].subject%>
+투표옵션: <%=voting.texts%>
+
+
+<% for (let index = 0; index < votingList.length; index++) { %>
+  <li onclick="location.href='/votings/<%=votingList[index]._id%>'">
+    <div>
+      제목: <%=votingList[index].subject%>
+투표옵션: <%=voting.texts%>
+
+<input type='radio' name="test" value="test">
+<%=voting.texts[2]%>
+</input>
+
+<div>
+  진행중 여부: <%=!voting.isExpire%>
+</div>
+
+<% if (isCreator) { %> 
+  <button tpye="button" id='button'>결과보기</button>
+  <button tpye="button" onclick="location.href='/votings/delete/<%=voting._id%>'">삭제하기</button>
+  <% } %>
