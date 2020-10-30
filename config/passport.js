@@ -1,18 +1,20 @@
 const localStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const { PASSWORD_WRONG, USER_NOT_EXIST } = require('../constants/constants');
 
 module.exports = passport => {
   passport.use(
     new localStrategy({ usernameField: 'email' }, (email, password, done) => {
-      User.findOne({ email: email }, (err, data) => {
+      User.findOne({ email: email }, (err, user) => {
         if (err) throw err;
-        if (!data) return done(null, false, { message: '존재하지 않는 사용자입니다.' });
+        if (!user) return done(null, false, { message: USER_NOT_EXIST });
 
-        bcrypt.compare(password, data.password, (err, match) => {
+        bcrypt.compare(password, user.password, (err, match) => {
           if (err) return done(null, false);
-          if (!match) return done(null, false, { message: '패스워드가 일치하지 않습니다.' });
-          if (match) return done(null, data);
+          match
+            ? done(null, user)
+            : done(null, false, { message: PASSWORD_WRONG });
         });
       });
     })

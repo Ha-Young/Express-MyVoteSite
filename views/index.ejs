@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('partials/head') %>
-
+  <%- include('partials/head') %>
 <body>
   <%- include('partials/header') %>
   <div class="main-container">
@@ -13,23 +12,52 @@
         <% } %>
         <form action="/signup" method="POST">
           <div class="form-wrap">
-            <input type="email" class="auth-field" name="email" id="email" autocomplete="off"
-              placeholder="이메일 주소를 입력해 주세요." value="<%= typeof email !== 'undefined' ? email : '' %>">
+            <input
+              type="email"
+              class="auth-field"
+              name="email"
+              id="email"
+              autocomplete="off"
+              placeholder="이메일 주소를 입력해 주세요."
+              value="<%= typeof email !== 'undefined' ? email : '' %>"
+            >
           </div>
           <div class="form-wrap">
-            <input type="text" class="auth-field" name="userName" id="userName" autocomplete="off"
-              placeholder="닉네임은 뭘로 할까요?" value="<%= typeof username !== 'undefined' ? username : '' %>">
+            <input
+              type="text"
+              class="auth-field"
+              name="userName"
+              id="userName"
+              autocomplete="off"
+              placeholder="닉네임은 뭘로 할까요?"
+              value="<%= typeof username !== 'undefined' ? username : '' %>"
+            >
           </div>
           <div class="form-wrap">
-            <input type="password" class="auth-field" name="password" id="password" autocomplete="off"
-              placeholder="비밀번호를 입력해 주세요.">
+            <input
+              type="password"
+              class="auth-field"
+              name="password"
+              id="password"
+              autocomplete="off"
+              placeholder="비밀번호를 입력해 주세요."
+            >
           </div>
           <div class="form-wrap">
-            <input type="password" class="auth-field" name="confirmPassword" id="confirmPassword" autocomplete="off"
+            <input
+              type="password"
+              class="auth-field"
+              name="confirmPassword"
+              id="confirmPassword"
+              autocomplete="off"
               placeholder="비밀번호를 한 번 더 입력해 주세요.">
           </div>
           <div class="form-wrap">
-            <input class="signup-btn" type="submit" value="가입할래요!">
+            <input
+              class="signup-btn"
+              type="submit"
+              value="가입할래요!"
+            >
           </div>
           <p class="auth-ask">
             이미 아이디가 있으신가요?
@@ -40,5 +68,4 @@
     </div>
   </div>
 </body>
-
 </html>

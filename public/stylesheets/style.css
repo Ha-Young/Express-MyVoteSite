@@ -37,7 +37,6 @@ a {
   align-items: center;
 }
 
-/* header */
 .header-container {
   top: 0;
   height: 100%;
@@ -189,6 +188,20 @@ a {
   outline: none;
 }
 
+#delete-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  border-radius: 50px;
+  background: #fff;
+  box-shadow:  6px 6px 11px #d9d9d9, -6px -6px 11px #fff;
+  margin: 30px;
+  padding: 6px 14px;
+  cursor: pointer;
+  outline: none;
+}
+
 .show-vote-button {
   width: 80px;
   height: 25px;
@@ -254,5 +267,45 @@ a {
   box-shadow:  4px 4px 8px #d9d9d9, -4px -4px 8px #fff;
   cursor: pointer;
   outline: none;
-  font-size: 18px;
+}
+
+.detail-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.vote-expired {
+  width: 100%;
+  border-bottom: 1px solid #c0c0c0;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  font-weight: 600;
+}
+
+.options-container {
+  margin-top: 50px;
+}
+
+.vote-option {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vote-options {
+  margin-bottom: 40px;
+}
+
+.option-column {
+  display: flex;
+  align-items: center;
+}
+
+.radio {
+  margin-right: 30px;
 }

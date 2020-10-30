@@ -2,16 +2,24 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const {
+  RESULT_MESSAGE,
+  FILL_FORM,
+  PASSWORD_LENGTH,
+  PASSWORD_WRONG,
+  USER_DUPLICATED,
+  SUCCESS_SIGN_UP,
+} = require('../constants/constants');
 
 exports.getSignUp = (req, res, _next) => {
   res.render('index', {
-    result_message: req.flash('result_message')
+    result_message: req.flash(RESULT_MESSAGE),
   });
 };
 
 exports.getLogIn = (req, res, _next) => {
   res.render('login', {
-    result_message: req.flash('result_message')
+    result_message: req.flash(RESULT_MESSAGE),
   });
 };
 
@@ -20,21 +28,17 @@ exports.registUser = async (req, res, next) => {
   let message;
 
   if (!email || !userName || !password || !confirmPassword) {
-    message = '양식을 모두 채워주세요';
-
-    req.flash('result_message', message);
+    req.flash(RESULT_MESSAGE, FILL_FORM);
     res.redirect('/signup');
   }
 
   if (password.length < 7) {
-    message = '비밀번호는 8자 이상 작성해주세요.';
-    req.flash('result_message', message);
+    req.flash(RESULT_MESSAGE, PASSWORD_LENGTH);
     res.redirect('/signup');
   }
 
   if (password !== confirmPassword) {
-    message = '비밀번호가 일치하지 않습니다.';
-    req.flash('result_message', message);
+    req.flash(RESULT_MESSAGE, PASSWORD_WRONG);
     res.redirect('/signup');
   }
 
@@ -44,8 +48,7 @@ exports.registUser = async (req, res, next) => {
         if (err) throw err;
 
         if (data) {
-          message = '이미 가입된 유저가 있습니다.';
-          req.flash('result_message', message);
+          req.flash(RESULT_MESSAGE, USER_DUPLICATED);
           res.redirect('/signup');
         }
 
@@ -65,10 +68,7 @@ exports.registUser = async (req, res, next) => {
             }).save((err, _data) => {
               if (err) throw err;
 
-              req.flash(
-                'result_message',
-                '회원가입을 축하합니다. 로그인을 진행해주세요',
-              );
+              req.flash(RESULT_MESSAGE, SUCCESS_SIGN_UP);
 
               res.redirect('/login');
             });
@@ -82,9 +82,13 @@ exports.registUser = async (req, res, next) => {
 };
 
 exports.logInUser = (req, res, next) => {
+  if (req.user) {
+    req.session.redirectUrl = '/votings';
+  }
+
   passport.authenticate('local', {
     failureRedirect: '/login',
-    successRedirect: '/votings',
+    successRedirect: `${req.session.redirectUrl}`,
     failureFlash: true,
   })(req, res, next);
 };

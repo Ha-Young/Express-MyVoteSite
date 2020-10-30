@@ -1,4 +1,3 @@
-/*eslint no-unused-vars: ["error", { "argsIgnorePattern": "^_" }]*/
 const express = require('express');
 const votingRouter = express.Router();
 const votingController = require('../controllers/voting.controller');
@@ -31,7 +30,6 @@ votingRouter.post(
   votingController.updateOne
 );
 
-// 삭제 어디서 할건지 확실히 정해서 라우터 이동시키기
 votingRouter.delete(
   '/:id',
   private,

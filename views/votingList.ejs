@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('partials/head') %>
-
+  <%- include('partials/head') %>
 <body>
   <%- include('partials/header') %>
   <div class="main-container">
@@ -21,12 +20,10 @@
           </a>
         </div>
         <div class="vote-details">
-          <span class="vote-date">
-            생성날짜
+          <span class="vote-date">생성날짜
             <span class="vote-createdAt date-detail"><%= createdDate[i] %></span>
           </span>
-          <span class="vote-date">
-            만료날짜
+          <span class="vote-date">만료날짜
             <span class="vote-expirationDate date-detail"><%= expirationDate[i] %></span>
           </span>
         </div>

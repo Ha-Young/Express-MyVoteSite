@@ -1,15 +1,27 @@
 /*eslint no-unused-vars: ["error", { "argsIgnorePattern": "^_" }]*/
 const Vote = require('../models/Vote');
-const format = require('date-fns/format');
 const User = require('../models/User');
 const mongoose = require('mongoose');
+const format = require('date-fns/format');
+const {
+  RESULT_MESSAGE,
+  OPTION_ERROR,
+  VOTE_CREATE,
+  VOTE_DUPLICATED,
+  VOTE_DELETED,
+} = require('../constants/constants');
+const {
+  formatExpireDate,
+  formatCreatDate,
+  isExpired
+} = require('../lib/helpers');
+
 const ObjectId = mongoose.Types.ObjectId;
+const nowDate = format(new Date(), 'yyyy-MM-dd');
 
 exports.getVotingForm = (req, res, _next) => {
-  const nowDate = format(new Date(), 'yyyy-MM-dd');
-
   res.status(200).render('votingForm', {
-    result_message: req.flash('result_message'),
+    result_message: req.flash(RESULT_MESSAGE),
     minDate: nowDate,
   });
 };
@@ -17,13 +29,12 @@ exports.getVotingForm = (req, res, _next) => {
 exports.createVote = async (req, res, next) => {
   const { options, title, expirationDate } = req.body;
   const userId = req.user._id;
-  const nowDate = format(new Date(), 'yyyy-MM-dd');
 
   if (typeof options === 'string' || options.includes('')) {
-    req.flash('result_message', '옵션은 두개 이상 만들어주세요.');
+    req.flash(RESULT_MESSAGE, OPTION_ERROR);
 
     return res.render('votingForm', {
-      result_message: req.flash('result_message'),
+      result_message: req.flash(RESULT_MESSAGE),
       minDate: nowDate,
     });
   }
@@ -31,7 +42,6 @@ exports.createVote = async (req, res, next) => {
   const option = options.map(option => ({ desc: option }));
 
   try {
-
     const vote = new Vote({
       title: title,
       expirationDate: expirationDate,
@@ -41,15 +51,12 @@ exports.createVote = async (req, res, next) => {
 
     const user = await User.findById(userId);
 
-    user.voteCollection.push(ObjectId(vote._id));
+    user.myVotingList.push(ObjectId(vote._id));
 
     await user.save();
     await vote.save();
 
-    req.flash(
-      'result_message',
-      '투표가 생성되었습니다.',
-    );
+    req.flash(RESULT_MESSAGE, VOTE_CREATE);
 
     res.redirect('/votings');
   } catch (err) {
@@ -58,23 +65,15 @@ exports.createVote = async (req, res, next) => {
 };
 
 exports.getVotingList = async (req, res, next) => {
-  try{
+  try {
     const votes = await Vote.find();
-
-    //TODO: 아래 세개 중복. 따로 빼주기..
-    const formattedExpireDate = votes.map(vote => format(vote.expirationDate, 'yyyy/MM/dd HH:mm'));
-    const formattedCreateDate = votes.map(vote => format(vote.createdAt, 'yyyy/MM/dd HH:mm'));
-
-    const isExpired = votes.map(vote => {
-      return new Date() > vote.expirationDate;
-    });
 
     res.render('votingList', {
       votes: votes,
-      expirationDate: formattedExpireDate,
-      createdDate: formattedCreateDate,
-      expired: isExpired,
-      result_message: req.flash('result_message'),
+      expirationDate: formatExpireDate(votes),
+      createdDate: formatCreatDate(votes),
+      expired: isExpired(votes),
+      result_message: req.flash(RESULT_MESSAGE),
     });
   } catch (err) {
     next(err);
@@ -85,23 +84,15 @@ exports.getMyVoting = async (req, res, next) => {
   const userId = req.user._id;
 
   try {
-    const user = await User.findById(userId).populate('voteCollection');
-    const voteCollection = user.voteCollection;
+    const user = await User.findById(userId).populate('myVotingList');
+    const myVotingList = user.myVotingList;
 
-    const formattedExpireDate = voteCollection.map(vote => format(vote.expirationDate, 'yyyy/MM/dd HH:mm'));
-    const formattedCreateDate = voteCollection.map(vote => format(vote.createdAt, 'yyyy/MM/dd HH:mm'));
-
-    const isExpired = voteCollection.map(vote => {
-      return new Date() > vote.expirationDate;
-    });
-
-    //TODO: delete myVoting.ejs
     res.render('votingList', {
-      votes: voteCollection,
-      expirationDate: formattedExpireDate,
-      createdDate: formattedCreateDate,
-      expired: isExpired,
-      result_message: req.flash('result_message')
+      votes: myVotingList,
+      expirationDate: formatExpireDate(myVotingList),
+      createdDate: formatCreatDate(myVotingList),
+      expired: isExpired(myVotingList),
+      result_message: req.flash(RESULT_MESSAGE),
     });
   } catch (err) {
     next(err);
@@ -109,14 +100,14 @@ exports.getMyVoting = async (req, res, next) => {
 };
 
 exports.getOne = async (req, res, next) => {
-  const id = req.params.id;
+  const voteId = req.params.id;
 
   try {
-    const vote = await Vote.findById(id);
+    const vote = await Vote.findById(voteId);
 
     const formattedExpireDate = format(vote.expirationDate, 'yyyy/MM/dd HH:mm');
     const formattedCreateDate = format(vote.createdAt, 'yyyy/MM/dd HH:mm');
-    const expiredMessage = (vote) => {
+    const expiredMessage = vote => {
       return new Date() > vote.expirationDate;
     };
 
@@ -132,6 +123,7 @@ exports.getOne = async (req, res, next) => {
       createdDate: formattedCreateDate,
       expired: expiredMessage(vote),
       isCreator: isCreator,
+      result_message: req.flash(RESULT_MESSAGE),
     });
   } catch (err) {
     next(err);
@@ -151,12 +143,9 @@ exports.updateOne = async (req, res, next) => {
       return optionId === targetId;
     });
 
-    // how to update sub document in mongoose --> stack overflow
-    if (!targetOption.voter.includes(userId)) {
-      targetOption.voter.push(userId);
-    }
-    // targetOption.voter.push(userId);
-
+    targetOption.voter.includes(userId)
+      ? req.flash(RESULT_MESSAGE, VOTE_DUPLICATED)
+      : targetOption.voter.push(userId);
 
     await vote.save();
 
@@ -167,16 +156,17 @@ exports.updateOne = async (req, res, next) => {
 };
 
 exports.deleteOne = async (req, res, next) => {
-  const id = req.params.id;
+  const voteId = req.params.id;
+  const userId = req.user._id;
 
   try {
-    const vote = await Vote.findByIdAndDelete(id);
-    const updateUser = await User.findById(req.user._id);
+    const vote = await Vote.findByIdAndDelete(voteId);
+    const updateUser = await User.findById(userId);
 
-    updateUser.voteCollection.pull(id);
+    updateUser.myVotingList.pull(voteId);
     await updateUser.save();
 
-    req.flash('result_message', '투표가 삭제되었습니다.');
+    req.flash(RESULT_MESSAGE, VOTE_DELETED);
 
     res.json(vote);
   } catch (err) {

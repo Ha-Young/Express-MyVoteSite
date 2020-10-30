@@ -11,6 +11,7 @@ const db = require('./config/mongoose');
 const passportModule = require('./config/passport');
 const authRouter = require('./router/authRouter');
 const votingRouter = require('./router/votingRouter');
+const myVotingRouter = require('./router/myVotingRouter');
 
 const app = express();
 
@@ -40,10 +41,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-
 app.use('/', authRouter);
 app.use('/votings', votingRouter);
+app.use('/my-voting', myVotingRouter);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');

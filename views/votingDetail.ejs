@@ -1,63 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('partials/head') %>
-
+  <%- include('partials/head') %>
 <body>
   <%- include('partials/header') %>
   <div class="main-container">
-  <div class="vote-wrap">
-    <div class="vote-container">
-      <h1 class="vote-title"><%= vote.title %></h1>
-      <div class="vote-details">
-        <p class="vote-createdAt">생성날짜 <%= createdDate %></p>
-        <p class="vote-expirationDate">종료날짜 <%= expirationDate %></p>
-        <% if (expired) { %>
-          <span class="vote-expired">투표종료</span>
-        <% } else { %>
-          <span class="vote-expired">투표중</span>
-        <% } %>
+    <div class="detail-container">
+      <% if (result_message) { %>
+        <h1><%= result_message %></h1>
+      <% } %>
+      <div class="auth-wrap">
+        <h1 class="vote-title"><%= vote.title %></h1>
         <% if (isCreator) { %>
-          <button name="delete" id="delete-button" data-id="<%= vote._id %>">delete</button>
+          <button name="delete" id="delete-button" data-id="<%= vote._id %>">투표삭제</button>
         <% } %>
-      </div>
-      <form action="/votings/<%= vote._id %>" method="POST">
-        <div class="vote-options">
-          <% let arr = [] %>
+        <div class="vote-details">
+          <% if (expired) { %>
+            <span class="vote-expired">투표종료</span>
+          <% } else { %>
+            <span class="vote-expired">투표중</span>
+          <% } %>
+          <span class="vote-date">생성날짜
+            <span class="vote-createdAt date-detail"><%= createdDate %></span>
+          </span>
+          <span class="vote-date">만료날짜
+            <span class="vote-expirationDate date-detail"><%= expirationDate %></span>
+          </span>
+        </div>
+        <form class="options-container" action="/votings/<%= vote._id %>" method="POST">
+          <div class="vote-options">
           <% for (option of vote.options) { %>
-            <% arr.push(option.voter.length) %>
-            <% arr.sort((a, b) => b - a) %>
             <div class="vote-option">
+              <% if (expired) { %>
+                <div class="option-column">
+                  <input class="radio" type="radio" disabled>
+                  <h2><%= option.desc %></h2>
+                </div>
+                <div class="option-column">
+                  <%= option.voter.length %>명
+                </div>
+              <% } %>
               <% if (!expired) { %>
-                <%= option.desc %>
-                <input type="radio" name="select" value="<%= option._id %>">
-                <button type="submit">투표하기</button>
+                <div class="option-column">
+                  <input class="radio" type="radio" name="select" value="<%= option._id %>">
+                  <h2><%= option.desc %></h2>
+                </div>
+                <% if (isCreator) { %>
+                  <%= option.voter.length %>명
+                <% } %>
               <% } %>
             </div>
           <% } %>
-          <% if (expired) { %>
-            <% for (let i = 0; i < arr.length; i++) { %>
-              <div class="vote-option">
-                <input type="radio" disabled>
-                <span><%= vote.options[i].desc %></span>
-                <%= arr[i] %>
-              </div>
-            <% } %>
-          <% } %>
-        </div>
-      </form>
+          </div>
+          <div class="new-form-column">
+            <button class="form-submit-button" type="submit">투표하기</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-  </div>
-  <script>
-    const $deleteButton = document.getElementById('delete-button')
-
-    $deleteButton.addEventListener('click', async () => {
-    const id = $deleteButton.dataset.id;
-
-    await fetch(`/votings/${id}`, { method: 'DELETE' });
-    window.location.href = '/';
-  });
-  </script>
+  <script src="/javascripts/delete.js"></script>
 </body>
-
 </html>
