@@ -22,5 +22,6 @@ router.get('/my-voting', isLoggedIn, votingController.renderMyVoting);
 
 router.get('/:id', findResult, votingController.renderVoting);
 router.put('/:id', handleFetchPut, votingController.receiveVotingResult);
+router.delete('/:id', votingController.deleteVoting);
 
 module.exports = router;

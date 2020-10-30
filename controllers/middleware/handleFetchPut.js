@@ -1,6 +1,7 @@
 const Voting = require('../../models/votingsModel');
 
 module.exports = async (req, res, next) => {
+  console.log('put');
   const selectedOptionId = req.body.data;
   const votingId = req.params.id;
   const userId = req.session.user_id;

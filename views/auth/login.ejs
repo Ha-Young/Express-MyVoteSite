@@ -47,7 +47,6 @@
           <%} else {%>
           <button class="login-button" type="submit">Log In</button>
           <%}%>
-        
       </form>
       <div class="login-body-err">
         <% if (isLogined) {%>
@@ -55,7 +54,6 @@
           <%} else {%>
             <div><%= err.email ? err.email.message : null%></div>
           <%}%>
-        
         <div><%= err.password ? err.password.message : null%></div>
       </div>
     </div>

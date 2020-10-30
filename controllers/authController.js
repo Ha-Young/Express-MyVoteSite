@@ -3,7 +3,7 @@ const Voting = require('../models/votingsModel');
 
 exports.renderMainPage = async (req, res, next) => {
   try {
-    console.log(req.session, 'in renderMainPage');
+    console.log('in renderMainPage');
     const logined = req.session.logined || undefined;
     const votings = await Voting.find();
 

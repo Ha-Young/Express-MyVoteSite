@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const Voting = require('../../models/votingsModel');
-const User = require('../../models/usersModel');
 
 module.exports = async (req, res, next) => {
+  // console.log('fetch put find result');
   const votingId = req.params.id;
   const byOptions = await Voting.aggregate([
     {
@@ -16,6 +16,7 @@ module.exports = async (req, res, next) => {
   const count = byOptions.map((voting) => {
     return voting.selectOptions.votedUsers.length;
   });
+
   const max = Math.max(...count);
   const maxOption = [];
   byOptions.forEach((voting) => {
@@ -28,6 +29,6 @@ module.exports = async (req, res, next) => {
   req.body.voting = byOptions;
   req.body.maxCount = max;
   req.body.maxOption = maxOption;
-  console.log(req.body, 'fetch put find result');
+
   next();
 };

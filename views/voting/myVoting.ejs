@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/stylesheets/main.css" />
+</head>
+
+<body>
+  <nav class='main-nav'>
+    <span class="title"><a href="/">What is your Pick?</a></span>
+    <span class="item"><a href="/signup">sign up</a></span>
+    <span class="item"><a href="/login">login</a></span>
+    <span class="item"><a href="/logout">logout</a></span>
+  </nav>
+
+  <div class="feature">
+    <div class="feature-item feature-text-container">
+      <h1 class="feature-head">Guess who!?</h1>
+      <div class="feature-sub">Biden vs Trump</div>
+      <p class="feature-body">The Republican president is being challenged by Democratic Party nominee Joe Biden, who is
+        best known as Barack Obama's vice-president but has been in US politics since the 1970s.</br>
+        </br>
+        As election day approaches, polling companies will be trying to gauge the mood of the nation by asking voters
+        which candidate they prefer.</br></br>https://www.bbc.com/news/election-us-2020-53657174</p>
+    </div>
+    <div class="feature-item feature-pic-container">
+      <img class="feature-pic" src="/images/bidentrump.gif" width="600" alt="usElection">
+      <div>https://www.plannedparenthoodaction.org/elections/biden-v-trump</div>
+    </div>
+  </div>
+
+  <div class="voting-container">
+    <div class="voting-head">
+      <div class="voting-head-title">My Votings</div>
+      <div class="voting-head-createVoting"><a href="/votings/new">Create New Voting</a></div>
+      <div class="voting-head-myVoting"><a href="/">Vote List</a></div>
+    </div>
+    <div class="voting-body">
+      <% for (let i = 0; i < votings.length; i++) {%>
+        <div class="voting-each">
+          <a href="/votings/<%=votings[i]._id%>">
+            <h2 class="voting-each-head"><%=votings[i].title%></h2>
+            <div class="voting-each-body">
+              <% if (votings[i].isContinuing) { %>
+              <h3 id="on">Continuing</h3>
+              <%} else {%>
+              <h3 id="off">Closed</h3>
+              <%}%>
+              <div>Host: <%=votings[i].creator.email%></div>
+            <div>Expire Date:<%=votings[i].expireDate%></div>
+            <div><%=votings[i].isExpired%></div>
+            <div>Description: <%=votings[i].description%></div>
+        </div>
+        </a>
+      </div>
+      <%}%>
+    </div>
+  </div>
+</body>
+</html>
