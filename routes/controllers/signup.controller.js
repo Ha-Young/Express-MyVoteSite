@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const { UserService } = require('../../service/service');
 
-
 exports.renderSignup = (req, res, next) => {
   res.render('signup');
 };

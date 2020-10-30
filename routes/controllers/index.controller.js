@@ -24,7 +24,8 @@ exports.createVoting = async (req, res, next) => {
       return next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL));
     }
 
-    const saveVoting = await new VotingService().createVoting({ _id, name, votingTitle, expirationDate, options });
+    const saveVoting = await new VotingService().createVoting( _id, name, votingTitle, expirationDate, options );
+
     await new UserService().updateUserVoting(_id, saveVoting._id);
 
     res.redirect('/');

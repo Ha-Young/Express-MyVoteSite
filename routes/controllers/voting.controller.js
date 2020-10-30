@@ -27,13 +27,14 @@ exports.renderMyVotingsPage = async (req, res, next) => {
 exports.getRenderVotingDetails = async (req, res, next) => {
   try {
     const { id } = req.params;
+    const userId = req.user ? req.user : null;
     const isValidObjectId = mongoose.isValidObjectId(id);
 
     if (!isValidObjectId) {
       return next(createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL));
     }
 
-    const { voting, isCreator, options, isVoter } = await new VotingService().getVotinDetails(id, req.user);
+    const { voting, isCreator, options, isVoter } = await new VotingService().getVotinDetails(id, userId);
 
     res.render('votingDetails', { id, voting, isCreator, options, isVoter });
   } catch (err) {

@@ -7,6 +7,7 @@ class VotingService {
   async findAllVotings() {
     try {
       const votings = await Voting.find();
+
       if (!votings) {
         return createError(400, constants.ERROR_MESSAGE_REQUEST_FAIL);
       }
@@ -20,12 +21,12 @@ class VotingService {
     }
   }
 
-  async createVoting({ userId, userName, votingTitle, expirationDate, options }) {
+  async createVoting(userId, userName, votingTitle, expirationDate, options) {
     try {
       const optionObject = options.map(option => { return { option } });
       const voting = {
         createdBy: userId,
-        userName: userName,
+        userName,
         votingTitle,
         expirationDate,
         options: optionObject,
