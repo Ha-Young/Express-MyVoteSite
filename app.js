@@ -2,6 +2,8 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
+const { ROOT, VOTINGS } = require('./constants/urls');
+
 const createError = require('http-errors');
 const express = require('express');
 require('./src/db')();
@@ -32,14 +34,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 require('./src/passport')();
 
-app.use('/', index);
-app.use('/votings', votings);
+app.use(ROOT, index);
+app.use(VOTINGS, votings);
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 

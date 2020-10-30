@@ -6,4 +6,5 @@ module.exports = {
   SIGNUP: '/signup',
   NEW: '/new',
   ID_VARIABLE: '/:_id',
+  VOTINGS: '/votings',
 };
