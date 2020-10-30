@@ -1,0 +1,14 @@
+.wrap-vote-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: whitesmoke;
+  width: 50%;
+  height: 80%;
+}
+
+.voterIdInDB {
+  visibility: hidden;
+}

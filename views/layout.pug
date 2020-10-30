@@ -1,0 +1,37 @@
+doctype html
+html
+  head
+    link(rel='stylesheet' href='/stylesheets/layout.css')
+    block title
+  body
+    header
+      a(href="/")
+        h1 Voting Platform
+    div(class='content')
+      nav(class='nav')
+        if isLoggedIn
+          div(class=login-user)
+            h3 Welcome
+            h1= user.email
+          div(class=buttons)
+            a(href="/votings/new")
+              button New Vote
+            a(href="/my-votings")
+              button My votes
+            a(href="/logout")
+              button Logout
+        else
+          div(class=login)
+            a(href="/login")
+              h1 Click here to Login!
+          div(class=buttons)
+            a(href="/votings/new")
+              button New Vote
+            a(href="/login")
+              button Login
+            a(href="/signup")
+              button Sign up
+      section(class='section')
+        section(class='main-section')
+          block content
+        section(class='sub-section')

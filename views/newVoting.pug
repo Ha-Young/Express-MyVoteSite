@@ -1,0 +1,62 @@
+extends ./layout.pug
+
+block title
+  title Voting | New Vote
+  link(rel='stylesheet', href='/stylesheets/new-voting.css')
+block content
+  div(class='new-voting-form')
+    form(
+      method='POST',
+      actions='/votings/new'
+    )
+      label(htmlFor='title')
+        h3 Title
+        input(
+          type='text'
+          id='title'
+          name='title'
+          autofocus
+          )
+      label(htmlFor='due-date')
+        h3 Due Date
+        input(
+          type='datetime-local',
+          id='due-date',
+          name='dueDate',
+          value= `${tomorrow}T00:00`
+        )
+      input(
+        type='button'
+        id='add-selection-button'
+        value='+ add selection'
+      )
+      div(id='selections')
+        label(
+          htmlFor='selection1'
+        ) Selection 1
+          input(
+            type='text'
+            id='selection1'
+            name='selections'
+            placeholder='selection 1'
+          )
+        label(
+          htmlFor='selection2'
+        ) Selection 2
+          input(
+            type='text'
+            id='selection2'
+            name='selections'
+            placeholder='selection 2'
+          )
+      if isLoggedIn
+        input(
+          type='submit'
+          id='submit-button'
+          value='Add New Vote!'
+        )
+      else
+        a(href="/login")
+          button go to login
+
+  script(src='/javascripts/addSelection.js')

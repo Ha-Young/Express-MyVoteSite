@@ -1,0 +1,70 @@
+extends ./layout.pug
+
+block title
+  title Voting
+  link(rel='stylesheet', href='/stylesheets/voting.css')
+block content
+  - isAuthorVisited= author
+  - data= voteData
+    div(class='wrap-vote-data')
+      h1(class='title')= data.title
+      div(class='vote-data')
+        h2= data.author.email
+        h2= data.dueDate
+        h2= `만료 여부 ${isExpired}`
+        div
+          form(
+            id='vote-form'
+            name= `${data._id}`
+          )
+            div(id='voter-id-in-db' name= `${voterId}`)
+            each selection,index in data.selections
+              label(
+                htmlFor=`selection${index}`
+              )
+                input(
+                  type='radio'
+                  class='checkbox'
+                  id=`selection${index}`
+                  name='selections'
+                  value= data.selections[index]._id
+                  checked=false
+                  disabled= !isLoggedIn ? true : false
+                )
+                h3= selection.subTitle
+            if isLoggedIn
+              input(
+                id= data
+                type='submit'
+                value='Submit!'
+              )
+
+        if !isLoggedIn  
+          a(href="/login")
+            button Go to login for voting
+
+    if isAuthorVisited
+      div(class='buttons')
+        form(
+          id='delete-button'
+          name= `${data._id}`
+        )
+          button(
+            type='submit'
+            class='delete-vote-button'
+            ) Delete this vote!
+        button(class='vote-result-button') Voting Result!
+        a(href="/")
+          button(class='go-home-button') Go Home!
+      div(class="vote")
+    else if isLoggedIn && hasVote
+      div(
+        id='voter-buttons'
+        class='buttons'
+      )
+        button(class='my-votes-button') My Votings
+        a(href="/")
+          button(class='go-home-button') Go Home!
+
+  script(src='/javascripts/updateVoteSelection.js')
+  script(src='/javascripts/deleteVote.js')

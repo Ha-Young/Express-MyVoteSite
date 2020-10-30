@@ -1,0 +1,17 @@
+extends ./layout.pug
+
+block title
+  title Voting | My Votings
+  link(rel='stylesheet', href='/stylesheets/my-votings.css')
+block content
+  div(class='background')
+    h1  List of votes you made
+    if voteMadeByUser.length !== 0
+      each vote, index in voteMadeByUser
+        div(class='wrap-my-votings')
+          a(href=`/votings/${vote._id}`)
+            div(class='vote')= `${vote.title} Vote`
+    else
+      div(class='wrap-my-votings')
+        a(href="/votings/new")
+          div(class='not-vote') You haven't voted anything yet. 

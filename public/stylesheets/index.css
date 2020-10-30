@@ -1,0 +1,94 @@
+.wrap-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding-top: 5%;
+}
+
+.vote-list-entry {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 100px;
+  margin: 10px;
+  border: 1px solid grey;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px grey;
+}
+
+.left-side-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  height: 100%;
+  border-radius: 10px 0 0 10px;
+}
+
+.center-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 10px;
+  width: 60%;
+}
+
+.right-side-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  height: 100%;
+}
+
+.empty {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50%;
+}
+
+.vote-button,
+.show-detail-button {
+  width: 75px;
+  height: 40px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px grey;
+}
+
+.vote-button:hover {
+  background-color: green;
+}
+
+.show-detail-button:hover {
+  background-color: green;
+}
+
+.expired {
+  background-color: red;
+}
+
+.voted {
+  background-color: grey;
+}
+
+.already-vote {
+  background-color: grey;
+}
+
+.in-progress {
+  background-color: yellowgreen;
+}

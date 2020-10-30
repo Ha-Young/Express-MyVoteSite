@@ -1,0 +1,20 @@
+extends ./layout.pug
+
+block title
+  title Voting | Result
+  link(rel='stylesheet', href='/stylesheets/result.css')
+block content
+  div(class='wrap-result')
+    each selection,index in selections
+      if selection.count === max
+        div(class='max')
+          div(class='title')
+            h1= selection.subTitle
+          div(class='count')
+            h2= selection.count
+      else
+        div(class='selection')
+          div(class='title')
+            h2= selection.subTitle
+          div(class='count')
+            h3= selection.count

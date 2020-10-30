@@ -1,0 +1,71 @@
+extends ./layout.pug
+
+block title
+  title Voting Platform
+  link(rel='stylesheet', href='/stylesheets/index.css')
+block content
+  div(class='wrap-list')
+    if voteList.length !== 0
+      if !user
+        each voteEntry, index in voteList
+            div(class='vote-list-entry')
+              if expired[index]
+                div(class='left-side-wrap' class='expired') 만료
+                div(class='center-wrap')
+                  h1(class='title')= voteEntry.title
+                  div(class='author')= voteEntry.author.email
+                  div(class='due-date')= `Due - ${voteEntry.dueDate.getYear()-100}년 ${voteEntry.dueDate.getMonth() + 1}월 ${voteEntry.dueDate.getDate()}일`
+                div(class='right-side-wrap')
+                  a(href=`/votings/${voteEntry._id}/result`)
+                    button(class='show-detail-button') Result
+              else
+                if voted[index]
+                  div(class='left-side-wrap' class='voted') Voted
+                  div(class='center-wrap')
+                    h1(class='title')= voteEntry.title
+                    div(class='author')= voteEntry.author.email
+                    div(class='due-date')= voteEntry.dueDate
+                  div(class='right-side-wrap')
+                else
+                  div(class='left-side-wrap' class='in-progress') Voting possible
+                  div(class='center-wrap')
+                    h1(class='title')= voteEntry.title
+                    div(class='author')= voteEntry.author.email
+                    div(class='due-date')= `Due - ${voteEntry.dueDate.getYear()-100}년 ${voteEntry.dueDate.getMonth() + 1}월 ${voteEntry.dueDate.getDate()}일`
+                  div(class='right-side-wrap')
+                    a(href=`/votings/${voteEntry._id}`)
+                      button(class='vote-button') Vote
+      else
+          each voteEntry, index in voteList
+            div(class='vote-list-entry')
+              if expired[index]
+                  div(class='left-side-wrap' class='expired') 만료
+                  div(class='center-wrap')
+                    h1(class='title')= voteEntry.title
+                    div(class='author')= voteEntry.author.email
+                    div(class='due-date')= `Due - ${voteEntry.dueDate.getYear()-100}년 ${voteEntry.dueDate.getMonth() + 1}월 ${voteEntry.dueDate.getDate()}일`
+                  div(class='right-side-wrap')
+                    a(href=`/votings/${voteEntry._id}/result`)
+                      button(class='show-detail-button') Result
+              else
+                if voted[index]
+                  div(class='left-side-wrap' class='voted') Voted
+                  div(class='center-wrap')
+                    h1(class='title')= voteEntry.title
+                    div(class='author')= voteEntry.author.email
+                    div(class='due-date')= `Due - ${voteEntry.dueDate.getYear()-100}년 ${voteEntry.dueDate.getMonth() + 1}월 ${voteEntry.dueDate.getDate()}일`
+                  div(class='right-side-wrap')
+                else
+                  div(class='left-side-wrap' class='in-progress') Voting possible
+                  div(class='center-wrap')
+                    h1(class='title')= voteEntry.title
+                    div(class='author')= voteEntry.author.email
+                    div(class='due-date')= `Due - ${voteEntry.dueDate.getYear()-100}년 ${voteEntry.dueDate.getMonth() + 1}월 ${voteEntry.dueDate.getDate()}일`
+                  div(class='right-side-wrap')
+                    a(href=`/votings/${voteEntry._id}`)
+                      button(class='vote-button') Vote
+    else
+      div(class='empty')
+        h1 Empty! Please add a new vote!
+
+  script(src='/javascripts/showAllVotes.js')

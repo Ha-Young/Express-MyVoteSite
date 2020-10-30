@@ -1,0 +1,41 @@
+extends ./layout.pug
+
+block title
+  title Voting | Signup
+  link(rel='stylesheet', href='/stylesheets/signup.css')
+block content
+
+  form(
+    method='post'
+    action='/signup'
+  )
+    label(htmlFor='email') Email
+      input(
+        type='email'
+        id='email'
+        name='email'
+        palceholder='Email'
+        value= email
+        required
+        autofocus
+      )
+    label(htmlFor='password') Password
+      input(
+        type='password'
+        id='password'
+        name='password'
+      )
+    label(htmlFor='confirm-password') Confirm Password
+      input(
+        type='password'
+        id='confirm-password'
+        name='confirm-password'
+      )
+    input(
+      type='submit'
+      name='submit-button'
+      value='Sign Up'
+    )
+
+
+

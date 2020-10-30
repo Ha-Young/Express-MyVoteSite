@@ -1,0 +1,34 @@
+extends ./layout.pug
+
+block title
+  title Voting | Login
+  link(rel='stylesheet', href='/stylesheets/login.css')
+block content
+  form(
+    method='post'
+    action='/login'
+  )
+    label(htmlFor='email')
+      p Email
+      input(
+        type='email'
+        id='email'
+        name='email'
+        palceholder='Email'
+        value= email
+        required
+        autofocus
+      )
+    label(htmlFor='password')
+      p Password
+      input(
+        type='password'
+        id='password'
+        name='password'
+      )
+    input(
+      type='submit'
+      class='submit-button'
+      name='submit-button'
+      value='LOGIN'
+    )
