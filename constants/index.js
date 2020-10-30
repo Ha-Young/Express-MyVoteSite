@@ -4,6 +4,6 @@ module.exports = {
   ERROR: 'error',
   OK: 'ok',
   SELECT: 'select',
-  LOGIN: 'login',
+  REDIRECT_LOGIN: 'login',
   FULL_DATE_KOREAN: 'YYYY년 M월 D일 HH시 mm분',
 };

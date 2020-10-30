@@ -1,6 +1,8 @@
 const User = require('../../models/User');
 const { GET, POST, PUT } = require('../../constants/methods');
-const { LOGIN } = require('../../constants');
+const { REDIRECT_LOGIN } = require('../../constants');
+const { LOGIN } = require('../../constants/urls');
+const { LOGIN_PLEASE } = require('../../constants/messages');
 
 async function gateKeeper(req, res, next) {
   const { userId } = req.session;
@@ -8,13 +10,13 @@ async function gateKeeper(req, res, next) {
 
   if (!req.isAuthenticated() || !dbSearchResult) {
     if (req.method === GET || req.method === POST) {
-      res.status(302).redirect('/login');
+      res.status(302).redirect(LOGIN);
 
       return;
     } else if (req.method === PUT) {
       res.json({
-        result: LOGIN,
-        message: LOGIN,
+        result: REDIRECT_LOGIN,
+        message: LOGIN_PLEASE,
       });
 
       return;
