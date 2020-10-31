@@ -2,8 +2,6 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 
-const NEW_ACCOUNT = require('../constants/login');
-
 router.get('/', (req, res, next) => {
   try {
     const isLoggedIn = req.session.passport ? true : false;

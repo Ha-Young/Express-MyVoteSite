@@ -5,7 +5,7 @@ block title
   link(rel='stylesheet', href='/stylesheets/result.css')
 block content
   div(class='wrap-result')
-    each selection,index in selections
+    each selection, index in selections
       if selection.count === max
         div(class='max')
           div(class='title')
@@ -18,4 +18,13 @@ block content
             h2= selection.subTitle
           div(class='count')
             h3= selection.count
-            
+    form(
+      id='delete-form'
+      name= voteId
+    )
+      button(
+        type='submit' 
+        class='delete-vote-button'
+        ) Delete this vote!
+
+  script(src='/javascripts/deleteVote.js')

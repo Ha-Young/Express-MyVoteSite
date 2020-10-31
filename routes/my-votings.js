@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
 
     allVotesInfo.forEach((vote) => {
       if (vote.author.objectIdInDB.equals(userInfo._id)) {
-        voteMadBuIser.push(vote);
+        voteMadeByUser.push(vote);
       }
     });
 

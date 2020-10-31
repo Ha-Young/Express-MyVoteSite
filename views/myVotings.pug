@@ -9,9 +9,13 @@ block content
     if voteMadeByUser.length !== 0
       each vote, index in voteMadeByUser
         div(class='wrap-my-votings')
-          a(href=`/votings/${vote._id}`)
-            div(class='vote')= `${vote.title} Vote`
+          div(class='vote')= vote.title
+          div(class='wrap-buttons')
+            a(href=`/votings/${vote._id}`)
+              button(class='show-vote-result') Result
     else
       div(class='wrap-my-votings')
         a(href="/votings/new")
-          div(class='not-vote') You haven't voted anything yet. 
+          div(class='not-vote') You haven't voted anything yet.
+  
+  script(src='/javascripts/deleteVote.js')

@@ -1,6 +1,6 @@
-const $form = document.getElementById('vote-form');
+const $voteForm = document.getElementById('vote-form');
 const $voterIdInDB = document.getElementById('voter-id-in-db');
-const $selection = document.getElementsByClassName('checkbox');
+const $selections = document.getElementsByClassName('checkbox');
 
 const updateVoteSelection = async (url, fetchData) => {
   const fetchResponse = await fetch(url, {
@@ -14,21 +14,21 @@ const updateVoteSelection = async (url, fetchData) => {
   return fetchResponse.json();
 };
 
-$form.addEventListener('submit', (e) => {
+$voteForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  const voteId = $form.name;
+  const voteId = $voteForm.name;
   const voterId = $voterIdInDB.getAttribute('name');
   const fetchData = {};
 
   fetchData.voteId = voteId;
   fetchData.voterId = voterId;
 
-  $selection.forEach((selection) => {
-    if (selection.checked) {
-      fetchData.selectionId = selection.value;
+  for (let i = 0; i < $selections.length; i++) {
+    if ($selections[i].checked === true) {
+      fetchData.selectionId = $selections[i].value;
     }
-  });
+  }
 
   updateVoteSelection(`http://localhost:3000/votings/${voteId}`, fetchData)
     .then(message => {

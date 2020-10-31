@@ -1,9 +1,9 @@
 const passport = require('passport');
-``;
+
 const User = require('./models/User');
 const LocalStrategy = require('passport-local').Strategy;
-const NEW_ACCOUNT = require('./constants/login');
 
+const { STRATEGE_MESSAGE } = require('./constants');
 passport.use(new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
@@ -18,7 +18,7 @@ passport.use(new LocalStrategy({
           email: email
         };
 
-        return done(null, passNewAcountInfo, { message: NEW_ACCOUNT });
+        return done(null, passNewAcountInfo, { message: STRATEGE_MESSAGE.NEW_ACCOUNT });
       }
 
       return done(null, user);

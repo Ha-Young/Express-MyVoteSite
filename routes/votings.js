@@ -5,14 +5,6 @@ const router = express.Router();
 const User = require('../models/User');
 const Vote = require('../models/Vote');
 
-router.get('/', (req, res, next) => {
-  try {
-    res.render('votingsList');
-  } catch (err) {
-    next(err);
-  }
-});
-
 router.get('/new', async (req, res, next) => {
   try {
     const isLoggedIn = req.session.passport ? true : false;
@@ -35,7 +27,7 @@ router.post('/new', async (req, res, next) => {
 
     selections.forEach((selection, index) => {
       transformedArray[index] = {
-        subTitle: selection[index],
+        subTitle: selection,
         count: 0
       };
     });
@@ -78,11 +70,11 @@ router.get('/:id', async (req, res, next) => {
     const isLoggedIn = req.session.passport ? true : false;
     const loggedInUser = isLoggedIn ? await User.findOne({ email: req.session.passport.user.email }) : undefined;
     const voterIdInDB = isLoggedIn ? loggedInUser._id : undefined;
-    const isAuthor = voteData.author === loggedInUser ? true : false;
-    const voter = voteData.voter;
-    let voters = true;
+    const isAuthorVisited = voteData.author.email === loggedInUser.email ? true : false;
+    const voters = voteData.voter;
+    let voter = true;
 
-    voters.forEach((voter, index) => {
+    voters.forEach((voter) => {
       if (voter === req.sessionID) {
         voter = false;
       }
@@ -91,6 +83,7 @@ router.get('/:id', async (req, res, next) => {
     const due = voteData.dueDate.valueOf();
     const now = new Date().valueOf();
     const isExpired = due > now ? false : true;
+    const parsedDue = `Due - ${voteData.dueDate.getYear() - 100}년 ${voteData.dueDate.getMonth() + 1}월 ${voteData.dueDate.getDate()}일`;
 
     if (isExpired) {
       res.redirect(`/votings/${req.params.id}/result`);
@@ -99,10 +92,11 @@ router.get('/:id', async (req, res, next) => {
         isLoggedIn: isLoggedIn,
         user: loggedInUser,
         voterId: voterIdInDB,
-        author: isAuthor,
+        isAuthorVisited: isAuthorVisited,
         hasVote: voter,
         voteData: voteData,
-        isExpired: isExpired
+        isExpired: isExpired,
+        due: parsedDue
       });
     }
   } catch (err) {
@@ -170,7 +164,8 @@ router.get('/:id/result', async (req, res, next) => {
       isLoggedIn: isLoggedIn,
       user: user,
       selections: voteInfo.selections,
-      max: maxNumberVoted
+      max: maxNumberVoted,
+      voteId: voteId
     });
   } catch (err) {
     next(err);

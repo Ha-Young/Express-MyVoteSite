@@ -58,7 +58,6 @@ app.use('/signup', signupRouter);
 app.use('/votings', votingsRouter);
 app.use('/my-votings', myVotingsRouter);
 
-
 app.use((req, res, next) => {
   next(createError(404));
 });

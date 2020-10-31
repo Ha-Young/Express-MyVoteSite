@@ -1,4 +1,4 @@
-const $deleteButton = document.getElementById('delete-button');
+const $form = document.getElementById('delete-form');
 
 const deleteVote = async (url) => {
   const fetchResponse = await fetch(url, {
@@ -11,7 +11,7 @@ const deleteVote = async (url) => {
   return fetchResponse.json();
 };
 
-$deleteButton.addEventListener('submit', (e) => {
+$form.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const voteId = $form.name;

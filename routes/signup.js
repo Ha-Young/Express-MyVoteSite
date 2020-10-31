@@ -3,7 +3,6 @@ const { body, validationResult } = require('express-validator');
 const router = express.Router();
 
 const User = require('../models/User');
-const NEW_ACCOUNT = require('../constants/login');
 
 router.get('/', (req, res, next) => {
   try {
