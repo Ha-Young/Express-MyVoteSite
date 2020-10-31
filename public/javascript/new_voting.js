@@ -23,8 +23,6 @@ submitButton.addEventListener('click', async (e) => {
 
     const result = await axios.post('/votings/new', formData);
 
-    console.log(result);
-
     if (result.data.success) {
       alert('성공적으로 투표가 생성되었습니다!');
 
