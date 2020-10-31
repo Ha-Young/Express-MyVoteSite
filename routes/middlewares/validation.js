@@ -27,7 +27,7 @@ exports.validateSignupInputs = async (req, res, next) => {
       return res.redirect(signupUrl);
     }
 
-    if (password.length < 9) {
+    if (password.length < 8) {
       req.flash('message', INVALID_PASSWORD);
       return res.redirect(signupUrl);
     }
