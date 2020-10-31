@@ -22,6 +22,6 @@ block content
             h2= voting.subject
           li= voting.description
           br
-          li #{voting.expiredAt.toLocaleDateString()}, #{voting.expiredAt.getHours()}시 #{voting.expiredAt.getMinutes()}분에 투표가 종료됩니다.
+          li #{voting.expiredAt.toLocaleDateString()}일, #{voting.expiredAt.getHours()}시 #{voting.expiredAt.getMinutes()}분에 투표가 종료됩니다.
 
   script(src="/javascript/index.js")
