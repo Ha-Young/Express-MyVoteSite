@@ -111,7 +111,7 @@ class VotingService {
       if (isFindAll) {
         votings = await Voting.find().sort([['createdAt', -1]]);
       } else {
-        votings = await Voting.find(userIdObj);
+        votings = await Voting.find(userIdObj).sort([['createdAt', -1]]);
       }
 
       for (const voting of votings) {
