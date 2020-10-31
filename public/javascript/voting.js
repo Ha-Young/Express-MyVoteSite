@@ -2,15 +2,16 @@ const deleteBtn = document.getElementById('delete');
 
 deleteBtn?.addEventListener('click', async (e) => {
   e.preventDefault();
-  const paths = location.pathname.split('/');
-  const votingId = paths[paths.length - 1];
 
-  await axios.delete(`/votings/${votingId}`);
+  if (window.confirm('정말 삭제하시겠습니까?')) {
+    const paths = location.pathname.split('/');
+    const votingId = paths[paths.length - 1];
 
-  const confirm = window.confirm('메인페이지로 이동하시겠습니까?');
+    await axios.delete(`/votings/${votingId}`);
 
-  if (confirm) {
-    window.location.href = '/';
+    if (window.confirm('삭제 완료! 투표 리스트로 이동하시겠습니까?')) {
+      window.location.href = '/';
+    }
   }
 });
 
@@ -24,6 +25,7 @@ if (candidates) {
       e.preventDefault();
       if (hasVoted) {
         alert('이미 투표하셨습니다.');
+        return;
       }
 
       hasVoted = true;
