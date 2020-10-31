@@ -1,3 +1,6 @@
+const passport = require('passport');
+
+exports.getAuthenticated = passport.authenticate('local', { failureRedirect: '/login' });
 exports.isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) return next();
   const { callbackUrl } = req.body;
