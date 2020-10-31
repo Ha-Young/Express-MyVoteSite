@@ -1,5 +1,5 @@
-const User = require('../models/usersModel');
-const Voting = require('../models/votingsModel');
+const User = require('../../models/usersModel');
+const Voting = require('../../models/votingsModel');
 
 exports.renderMainPage = async (req, res, next) => {
   try {
@@ -90,7 +90,7 @@ exports.login = async (req, res, next) => {
     return res.status(302).redirect('/login');
   } catch (err) {
     console.log(err, 'err1');
-    return res.render('auth/login', { err });
+    return res.render('auth/login', { err, isLogined: false });
   }
 };
 

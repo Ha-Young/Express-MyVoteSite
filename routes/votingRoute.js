@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const votingController = require('../controllers/votingController');
-const expireDateValid = require('../controllers/middleware/expireDateValid');
-const modifySelectOptions = require('../controllers/middleware/modifySelectOptions');
-const checkCreator = require('../controllers/middleware/checkCreator');
-const isLoggedIn = require('../controllers/middleware/isLoggedIn');
-const validateFirstVoting = require('../controllers/middleware/validateFirstVoting');
-const findResult = require('../controllers/middleware/findResult');
-const handleFetchPut = require('../controllers/middleware/handleFetchPut');
+const votingController = require('../api/controllers/votingController');
+const expireDateValid = require('../api/middleware/expireDateValid');
+const modifySelectOptions = require('../api/middleware/modifySelectOptions');
+const isLoggedIn = require('../api/middleware/isLoggedIn');
+const findResult = require('../api/middleware/findResult');
+const handleFetchPut = require('../api/middleware/handleFetchPut');
 
 router.get('/new', isLoggedIn, votingController.renderCreateVoting);
 router.post(

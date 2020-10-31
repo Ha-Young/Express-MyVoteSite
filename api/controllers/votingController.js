@@ -1,7 +1,7 @@
-const Voting = require('../models/votingsModel');
-const User = require('../models/usersModel');
-const { months, days, hours } = require('../constants');
-const { create } = require('../models/usersModel');
+const Voting = require('../../models/votingsModel');
+const User = require('../../models/usersModel');
+const { months, days, hours } = require('../../constants/constants');
+const { create } = require('../../models/usersModel');
 
 // 투표 제목, 투표 선택 사항, 만료 날짜 및 시간을 입력할 수 있어야 합니다.
 exports.renderCreateVoting = (req, res, next) => {
@@ -20,7 +20,6 @@ exports.createNewVoting = async (req, res, next) => {
     };
 
     const voting = await Voting.create(votingInfo);
-    user.createdVoting.push(voting._id);
 
     await user.updateOne({ $push: { createdVoting: voting._id } });
 
