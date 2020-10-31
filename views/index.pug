@@ -8,7 +8,7 @@ block content
   h2 과연 집단지성은 옳은 결론을 내릴것인가..
   .toggle-switch-container
     label
-      input(type="checkbox")
+      input(type="checkbox" checked= (filtered) ? true : false)#expiredFilterSwitch
       span.slider
 
   each voting in votingList
@@ -23,3 +23,5 @@ block content
           li= voting.description
           br
           li #{voting.expiredAt.toLocaleDateString()}, #{voting.expiredAt.getHours()}시 #{voting.expiredAt.getMinutes()}분에 투표가 종료됩니다.
+
+  script(src="/javascript/index.js")

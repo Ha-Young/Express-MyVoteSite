@@ -8,7 +8,18 @@ const userServices = new UserServices();
 
 router.get('/', async (req, res, next) => {
   try {
-    const votingList = await votingServices.findVoting(req.body);
+    let query = {};
+    let filtered;
+
+    if (req.query.filterExpired === 'on') {
+      query = { expiredAt: { $gt: new Date() } };
+      filtered = true;
+    } else {
+      filtered = false;
+    }
+
+    const votingList = await votingServices.findVoting(query);
+
     let votedList = [];
 
     if (req.session.user) {
@@ -19,7 +30,11 @@ router.get('/', async (req, res, next) => {
       votedList = user.voted;
     }
 
-    res.render('index', { votingList, votedList });
+    res.render('index', {
+      votingList,
+      votedList,
+      filtered
+    });
   } catch(err) {
     next(err);
   }
