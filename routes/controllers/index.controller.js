@@ -3,7 +3,6 @@ const createError = require('http-errors');
 const constants = require('../../constants');
 const { VotingService, UserService } = require('../../service/service');
 
-
 exports.getAllVotings = async (req, res, next) => {
   try {
     const votings = await new VotingService().findAllVotings();

@@ -29,9 +29,9 @@ if (formResetbutton) {
 }
 
 const SUCCESS_MESSAGE_VOTING = '투표가 완료 되었습니다';
-const ERROR_MESSAGE_REQUEST_FAIL = '요청이 실패했습니다';
 const SUCCESS_MESSAGE_DELETE = '투표가 삭제 되었습니다';
 const ERROR_MESSAGE_DELETE_FAIL = '삭제 실패했습니다';
+const ERROR_MESSAGE_REQUEST_FAIL = '요청이 실패했습니다';
 
 const votingButton = document.querySelector('.votingButton');
 
