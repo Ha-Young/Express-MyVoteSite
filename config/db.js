@@ -10,16 +10,12 @@ const dbConnect = () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }, (error) => {
-    if (error) {
-      console.log('몽고디비 연결 에러');
-    } else {
-      console.log('몽고디비 연결 성공');
-    }
+    if (error) return console.log('몽고디비 연결 에러');
+
+    return console.log('몽고디비 연결 성공');
   });
 };
-mongoose.connection.on('error', (error) => {
-  console.error('몽고디비 에러 ', error);
-});
+mongoose.connection.on('error', (error) => console.error('몽고디비 에러 ', error));
 mongoose.connection.on('disconnected', () => {
   console.error('몽고디비 연결이 끊겼습니다. 재시작합니다.');
   dbConnect();

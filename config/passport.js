@@ -16,9 +16,8 @@ module.exports = () => {
 
   passport.deserializeUser(async (userId, done) => {
     try {
-      await UserService.find(userId, done);
+      await UserService.findUser(userId, done);
     } catch (error) {
-      
     }
   });
 };

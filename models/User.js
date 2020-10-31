@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const findOneOrCreate = require('mongoose-find-one-or-create');
 
 const UserSchema = new mongoose.Schema({
   email: {
@@ -18,7 +17,7 @@ const UserSchema = new mongoose.Schema({
 },{
   timestamps: true,
 });
-UserSchema.plugin(findOneOrCreate);
+
 UserSchema.methods.comparePassword = function (inputPassword, cb) {
   if (inputPassword === this.password) return cb(null, true);
   return cb('error');

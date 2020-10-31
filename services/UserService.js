@@ -29,10 +29,11 @@ const UserService = {
       };
     }
   },
-  logout: async () => {
-
+  logout: async (req, res) => {
+    req.logout();
+    res.redirect('/');
   },
-  find: async (userId, done) => {
+  findUser: async (userId, done) => {
     try {
       const user = await User.findById(userId);
       if (user) return done(null, user._id);

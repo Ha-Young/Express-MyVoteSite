@@ -1,12 +1,9 @@
 exports.isLoggedIn = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next();
-  } else {
-    const { callbackUrl } = req.body;
+  if (req.isAuthenticated()) return next();
+  const { callbackUrl } = req.body;
 
-    if (callbackUrl) return res.json({ callbackUrl: `/login?callbackUrl=${callbackUrl}` });
-    return res.redirect('/login');
-  }
+  if (callbackUrl) return res.json({ callbackUrl: `/login?callbackUrl=${callbackUrl}` });
+  return res.redirect('/login');
 };
 
 exports.isNotLoggedIn = (req, res, next) => {

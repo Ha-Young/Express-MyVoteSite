@@ -5,9 +5,8 @@ const { isLoggedIn, setLocals } = require('../middlewares/middlewares');
 const router = express.Router();
 
 router.get('/new', isLoggedIn, setLocals, (req, res, next) => {
-  res.render('createVoting');
+  return res.render('createVoting');
 });
-
 router.post('/new', isLoggedIn, async (req, res, next) => {
   const userId = req.user;
   const { title, description, choice, date } = req.body;
@@ -20,8 +19,9 @@ router.post('/new', isLoggedIn, async (req, res, next) => {
   };
 
   try {
-    await VoteService.create(voteItem);
-    res.redirect('/');
+    const result = await VoteService.create(voteItem);
+
+    if (result) return res.redirect('/');
   } catch (error) {
     console.log(error)
     next(error);

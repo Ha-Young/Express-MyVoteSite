@@ -4,7 +4,7 @@ const VoteService = {
   getContents: async (voteId, userId) => {
     try {
       const item = await Vote.findOne({ _id: voteId });
-      console.log(item);
+      let authority;
       const currentMillisecond = new Date().getTime();
       const returnObj = {
         authorId: item.authorId,
@@ -14,7 +14,6 @@ const VoteService = {
         voteChoice: item.choiceList,
         voteExpiredDate: item.expiredDate,
       };
-      let authority;
 
       if (userId && String(item.authorId) === String(userId)) {
         authority = true;
@@ -27,8 +26,8 @@ const VoteService = {
       } else {
         const voteResult = [];
 
-        for (let i = 0; i < item.participationList; i++) {
-          const countVote = item.participationList.filter(arg => arg.choice === i).length;
+        for (let i = 0; i < item.choiceList.length; i++) {
+          const countVote = item.participationList.filter(arg => String(arg.choice) === String(i)).length;
           voteResult[i] = countVote;
         }
 
@@ -43,7 +42,7 @@ const VoteService = {
   },
   create: async item => {
     try {
-      await Vote.create(item);
+      return await Vote.create(item);
     } catch (error) {
       throw error;
     }

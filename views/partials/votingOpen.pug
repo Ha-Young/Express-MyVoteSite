@@ -7,8 +7,7 @@ div(class='voting-item-container' id=`${voteItem.voteId}`)
   .vote-descrption
     p= voteItem.voteDescription
   .vote-choice-container
-    p= voteItem.voteResult[0]
     each val, index in voteItem.voteChoice
-      if (voteItem)
       .vote-choice
-        p= val
+        p= `- ${val}`
+        p(class='choice-result' id='')= `(${voteItem.voteResult[index]} 명)`

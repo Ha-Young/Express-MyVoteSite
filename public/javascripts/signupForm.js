@@ -22,13 +22,12 @@ const set = async () => {
   });
   const result = await response.json();
 
-  if (result.redirect) {
-    alert('성공적으로 회원가입 되었습니다.\n로그인 페이지로 이동합니다');
-    window.location.href = result.redirect;
-  } else {
-    $accountError.textContent = result.signupResult;
-  }
+  if (!result.redirect) $accountError.textContent = result.signupResult;
+  alert('성공적으로 회원가입 되었습니다.\n로그인 페이지로 이동합니다');
+
+  return window.location.href = result.redirect;
 };
+
 $email.addEventListener('change', updateValue);
 $name.addEventListener('change', updateValue);
 $password.addEventListener('change', updateValue);

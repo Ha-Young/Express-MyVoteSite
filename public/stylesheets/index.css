@@ -14,6 +14,7 @@ a {
 }
 
 p {
+  display: inline-block;
   margin: 0;
 }
 
@@ -49,6 +50,7 @@ header {
   color: white;
   padding: 20px;
 }
+
 .header-block a{
   color: white;
 }
