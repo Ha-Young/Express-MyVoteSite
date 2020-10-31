@@ -3,7 +3,6 @@ const { MESSAGE } = require('../../constants/views');
 const {
   CREATE_SUCCESS,
   DELETE_SUCCESS,
-  VOTED,
   VOTE_DONE,
   FAILURE,
 } = require('../../constants/messages');
@@ -12,6 +11,7 @@ const VotingService = require('../../services/voting.service');
 const userService = new UserService();
 const votingService = new VotingService();
 const tryCatchWrapper = require('../../utils/tryCatchWrapper');
+const checkHasVoted = require('../../utils/hasVoted');
 
 exports.create = tryCatchWrapper(async (req, res) => {
   const created_by = req.session.userId;
@@ -114,16 +114,6 @@ exports.applyVote = tryCatchWrapper(async (req, res) => {
 
   const voting = await votingService.getVoting(req.params._id);
   const { options } = voting;
-
-  for (const option of options) {
-    for (const voter of option.voters) {
-      if (voter.toString() === currentUser) {
-        res.json({ message: VOTED });
-
-        return;
-      }
-    }
-  }
 
   for (const option of options) {
     if (option.content === selectedOptionValue) {

@@ -1,5 +1,5 @@
 const passport = require('passport');
-const { LOGIN, ROOT } = require('../../constants/urls');
+const { LOGIN } = require('../../constants/urls');
 const { MESSAGE } = require('../../constants/views');
 const { WRONG_ID_OR_PASSWORD } = require('../../constants/messages');
 const UserService = require('../../services/user.service');
