@@ -1,108 +1,105 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <link rel="stylesheet" href="/stylesheets/voting.css" />
+  </head>
 
-<head>
-  <link rel="stylesheet" href="/stylesheets/voting.css" />
-</head>
+  <body>
+    <div class="ref"><%=voting._id%></div>
+    <nav class='main-nav'>
+      <span class="title"><a href="/">What is your Pick?</a></span>
+      <span class="item"><a href="/signup">sign up</a></span>
+      <span class="item"><a href="/login">login</a></span>
+      <span class="item"><a href="/logout">logout</a></span>
+    </nav>
 
-<body>
-  <div class="ref"><%=voting._id%></div>
-  <nav class='main-nav'>
-    <span class="title"><a href="/">What is your Pick?</a></span>
-    <span class="item"><a href="/signup">sign up</a></span>
-    <span class="item"><a href="/login">login</a></span>
-    <span class="item"><a href="/logout">logout</a></span>
-  </nav>
-
-  <div class="feature">
-    <div class="feature-item feature-text-container">
-      <h1 class="feature-head">Guess who!?</h1>
-      <div class="feature-sub">Biden vs Trump</div>
-      <p class="feature-body">The Republican president is being challenged by Democratic Party nominee Joe Biden, who is
-        best known as Barack Obama's vice-president but has been in US politics since the 1970s.</br>
-        </br>
-        As election day approaches, polling companies will be trying to gauge the mood of the nation by asking voters
-        which candidate they prefer.</br></br>https://www.bbc.com/news/election-us-2020-53657174</p>
-    </div>
-    <div class="feature-item feature-pic-container">
-      <img class="feature-pic" src="/images/bidentrump.gif" width="600" alt="usElection">
-      <div>https://www.plannedparenthoodaction.org/elections/biden-v-trump</div>
-    </div>
-  </div>
-
-  <div class="voting-container">
-    <div class="voting-head">
-      <div class="voting-head-child">
-        <div class="voting-head-title">Vote</div>
-        <div class="voting-head-title-sub"><%=voting.title%></div>
+    <div class="feature">
+      <div class="feature-item feature-text-container">
+        <h1 class="feature-head">Guess who!?</h1>
+        <div class="feature-sub">Biden vs Trump</div>
+        <p class="feature-body">The Republican president is being challenged by Democratic Party nominee Joe Biden, who is
+          best known as Barack Obama's vice-president but has been in US politics since the 1970s.</br>
+          </br>
+          As election day approaches, polling companies will be trying to gauge the mood of the nation by asking voters
+          which candidate they prefer.</br></br>https://www.bbc.com/news/election-us-2020-53657174
+        </p>
       </div>
-      <div class="voting-head-backtomain"><a href="/">Vote List</a></div>
-      <div class="voting-head-myVoting"><a href="/votings/my-voting">My votings</a></div>
+      <div class="feature-item feature-pic-container">
+        <img class="feature-pic" src="/images/bidentrump.gif" width="600" alt="usElection">
+        <div>https://www.plannedparenthoodaction.org/elections/biden-v-trump</div>
+      </div>
     </div>
-    <div class="voting-body">
-      <form class="voting-body-form">
-        <div>Continuing</div>
-        <div class="continuing-<%=voting.isContinuing%>"><%=voting.isContinuing%></div>
 
-        <div>Expire date</div>
-        <input id='expireDate' type="datetime-local" name="expireDate"
-          value="<%=voting.expireDate.toISOString().substring(0, 16)%>" disabled></input>
-
-        <div>Description</div>
-        <div id="description"><%=voting.description%></div>
-
-        <% for(let i = 0; i < voting.selectOptions.length; i++) {%>
-        <div>Option<%=i + 1%></div>
-        <div class="selectoptions-body-container">
-          <label for="option"><%=voting.selectOptions[i].option%></label>
-          <input id="selectoptions-body-radio" name="option" type="radio" value="<%=voting.selectOptions[i]._id%>" />
+    <div class="voting-container">
+      <div class="voting-head">
+        <div class="voting-head-child">
+          <div class="voting-head-title">Vote</div>
+          <div class="voting-head-title-sub"><%=voting.title%></div>
         </div>
-        <%}%>
-        <% if (isLoggedin) {%>
-        <% if (isVoted) {%>
-        <button class="voting-button" type="submit" disabled>Vote</button>
-        <div class="continuing-true">Voted</div>
-        <%} else {%>
-        <button class="voting-button" type="submit">Vote</button>
-        <%}%>
-      </form>
-      <%} else {%>
-        <a id="tologin" href="/login"><button class="voting-button-tologin" type="button">Vote</button></a>
-      </form>
-      <%}%>
-
-      <div class="result-body">
-      <% if (isCreator || !voting.isContinuing) {%>
-
-      <div>Continuing</div>
-      <div class="continuing-<%=voting.isContinuing%>"><%=voting.isContinuing%>
+        <div class="voting-head-backtomain"><a href="/">Vote List</a></div>
+        <div class="voting-head-myVoting"><a href="/votings/my-voting">My votings</a></div>
       </div>
+      <div class="voting-body">
+        <form class="voting-body-form">
+          <div>Continuing</div>
+          <div class="continuing-<%=voting.isContinuing%>"><%=voting.isContinuing%></div>
 
-      <div>Expire date</div>
-      <input id='expireDate' type="datetime-local" name="expireDate"
-        value="<%=voting.expireDate.toISOString().substring(0, 16)%>" disabled></input>
+          <div>Expire date</div>
+          <input id='expireDate' type="datetime-local" name="expireDate"
+            value="<%=voting.expireDate.toISOString().substring(0, 16)%>" disabled>
+          </input>
 
-      <div>Result</div>
-      <div class="selectoptions-body-container">
-        <div class='result'><%=voteResult.maxOption%></div>
-        <div class='result'><%=voteResult.maxCount%></div>
+          <div>Description</div>
+          <div id="description"><%=voting.description%></div>
+
+          <% for(let i = 0; i < voting.selectOptions.length; i++) {%>
+            <div>Option<%=i + 1%></div>
+            <div class="selectoptions-body-container">
+              <label for="option"><%=voting.selectOptions[i].option%></label>
+              <input id="selectoptions-body-radio" name="option" type="radio" value="<%=voting.selectOptions[i]._id%>" />
+            </div>
+          <%}%>
+          <% if (isLoggedin) {%>
+            <% if (isVoted) {%>
+              <button class="voting-button" type="submit" disabled>Vote</button>
+              <div class="continuing-true">Voted</div>
+            <%} else {%>
+              <button class="voting-button" type="submit">Vote</button>
+            <%}%>
+            </form>
+          <%} else {%>
+            <a id="tologin" href="/login"><button class="voting-button-tologin" type="button">Vote</button></a>
+            </form>
+          <%}%>
+
+        <div class="result-body">
+          <% if (isCreator || !voting.isContinuing) {%>
+            <div>Continuing</div>
+            <div class="continuing-<%=voting.isContinuing%>"><%=voting.isContinuing%></div>
+
+            <div>Expire date</div>
+            <input id='expireDate' type="datetime-local" name="expireDate"
+              value="<%=voting.expireDate.toISOString().substring(0, 16)%>" disabled>
+            </input>
+
+            <div>Result</div>
+            <div class="selectoptions-body-container">
+              <div class='result'><%=voteResult.maxOption%></div>
+              <div class='result'><%=voteResult.maxCount%></div>
+            </div>
+
+            <% for(let i = 0; i < resultByOptions.length; i++) {%>
+              <div>Option<%=i + 1%></div>
+              <div class="selectoptions-body-container">
+                <div><%=resultByOptions[i].selectOptions.option%></div>
+                <div><%=resultByOptions[i].selectOptions.votedUsers.length%></div>
+              </div>
+            <%}%>
+            <button class="delete-button" type="button" class='delete-button'>Delete</button>
+          <%}%>
+        </div>
       </div>
-
-      <% for(let i = 0; i < resultByOptions.length; i++) {%>
-      <div>Option<%=i + 1%></div>
-      <div class="selectoptions-body-container">
-        <div><%=resultByOptions[i].selectOptions.option%></div>
-        <div><%=resultByOptions[i].selectOptions.votedUsers.length%></div>
-      </div>
-      <%}%>
-
-    <button class="delete-button" type="button" class='delete-button'>Delete</button>
-    <%}%>
     </div>
-  </div>
-  </div>
-  </div>
-  <script src="/javascripts/clickDeleteButton.js"></script>
-</body>
-
+    <script src="/javascripts/clickDeleteButton.js"></script>
+  </body>
 </html>

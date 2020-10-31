@@ -27,8 +27,6 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre('save', async function (next) {
   try {
-    // console.log(this.isModified('password'), 'isM');
-    console.log('pre hook bcrypt');
     const encrypted = await bcrypt.hash(
       this.password,
       Number(process.env.SALT)
@@ -38,19 +36,7 @@ userSchema.pre('save', async function (next) {
 
     next();
   } catch (err) {
-    next(err); //500error
-  }
-});
-
-userSchema.pre('save', async function (next) {
-  const checkDuplication = await User.find({ email: this.email });
-
-  if (checkDuplication.length) {
-    const err = new Error(
-      'Other user is already using the provied email, Please use another email.'
-    );
-    err.errors = { email: { message: err.message } };
-    throw err;
+    next(err);
   }
 });
 
@@ -65,6 +51,4 @@ userSchema.methods.verifyPassword = async (plainPassword, encrypted) => {
   return result;
 };
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+module.exports = mongoose.model('User', userSchema);

@@ -3,7 +3,6 @@ const Voting = require('../../models/votingsModel');
 
 exports.renderMainPage = async (req, res, next) => {
   try {
-    console.log('in renderMainPage');
     const logined = req.session.logined || undefined;
     const votings = await Voting.find();
 
@@ -12,7 +11,7 @@ exports.renderMainPage = async (req, res, next) => {
       logined,
     });
   } catch (err) {
-    console.log(err, 'renderMainPage');
+    next(err);
   }
 };
 
@@ -20,7 +19,7 @@ exports.renderSignup = (req, res, next) => {
   try {
     res.render('auth/signup', { err: {} });
   } catch (err) {
-    console.log(err, 'renderSignup');
+    next(err);
   }
 };
 
@@ -38,20 +37,18 @@ exports.registerUser = async (req, res, next) => {
       throw err;
     }
 
-    const signedUp = await User.create({
+    await User.create({
       email,
       password,
     });
 
     return res.status(302).redirect('/login');
   } catch (err) {
-    console.log(err, 'err in controller');
     return res.render('auth/signup', { err: err.errors });
   }
 };
 
 exports.renderLogin = (req, res, next) => {
-  // console.log(req.session, 'login render');
   const isLogined = req.session.logined || undefined;
 
   return res.render('auth/login', {
@@ -61,11 +58,9 @@ exports.renderLogin = (req, res, next) => {
 };
 
 exports.login = async (req, res, next) => {
-  // console.log(req.session, 'login in controller start');
   try {
     const email = req.body.email;
     const password = req.body.password;
-
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -89,15 +84,12 @@ exports.login = async (req, res, next) => {
 
     return res.status(302).redirect('/login');
   } catch (err) {
-    console.log(err, 'err1');
     return res.render('auth/login', { err, isLogined: false });
   }
 };
 
 exports.logout = async (req, res, next) => {
   try {
-    // console.log(req.session, 'in log out start');
-
     if (!req.session) {
       throw new Error('session does not exist');
     }

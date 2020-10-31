@@ -1,6 +1,5 @@
 module.exports = (req, res, next) => {
   try {
-    // console.log('expireDateValid 1st middleware');
     const expireDate = req.body.expireDate;
     const present = new Date().toISOString();
 

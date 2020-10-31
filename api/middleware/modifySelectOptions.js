@@ -1,6 +1,5 @@
 module.exports = (req, res, next) => {
   try {
-    // console.log('modifySelectOptions 2st middleware');
     const selectOptions = req.body.selectOptions;
 
     const temp = [];
@@ -16,7 +15,6 @@ module.exports = (req, res, next) => {
     req.body.selectOptions = temp;
     next();
   } catch (err) {
-    // console.log(err, 'unvalid expiredate');
     next(err);
   }
 };

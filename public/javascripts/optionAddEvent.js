@@ -2,15 +2,13 @@ let count = 3;
 const $seletOptionsHeadContainer = document.querySelector(
   '.selectOptions-head-container'
 );
-
 const $seletOptionsBodyContainer = document.querySelector(
   '.selectOptions-body-container'
 );
 
 const $addOption = document.querySelector('.addOption');
 
-$addOption.addEventListener('click', (e) => {
-  console.log('clicked');
+$addOption.addEventListener('click', () => {
   const $input = document.createElement('input');
   $input.setAttribute('type', 'text');
   $input.setAttribute('name', 'selectOptions');

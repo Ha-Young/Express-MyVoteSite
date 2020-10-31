@@ -1,78 +1,73 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <link rel="stylesheet" href="/stylesheets/newVoting.css" />
+  </head>
 
-<head>
-  <link rel="stylesheet" href="/stylesheets/newVoting.css" />
-</head>
+  <body>
+    <nav class='main-nav'>
+      <span class="title"><a href="/">What is your Pick?</a></span>
+      <span class="item"><a href="/signup">sign up</a></span>
+      <span class="item"><a href="/login">login</a></span>
+      <span class="item"><a href="/logout">logout</a></span>
+    </nav>
 
-<body>
-  <nav class='main-nav'>
-    <span class="title"><a href="/">What is your Pick?</a></span>
-    <span class="item"><a href="/signup">sign up</a></span>
-    <span class="item"><a href="/login">login</a></span>
-    <span class="item"><a href="/logout">logout</a></span>
-  </nav>
-
-  <div class="feature">
-    <div class="feature-item feature-text-container">
-      <h1 class="feature-head">Guess who!?</h1>
-      <div class="feature-sub">Biden vs Trump</div>
-      <p class="feature-body">The Republican president is being challenged by Democratic Party nominee Joe Biden, who is
-        best known as Barack Obama's vice-president but has been in US politics since the 1970s.</br>
-        </br>
-        As election day approaches, polling companies will be trying to gauge the mood of the nation by asking voters
-        which candidate they prefer.</br></br>https://www.bbc.com/news/election-us-2020-53657174</p>
-    </div>
-    <div class="feature-item feature-pic-container">
-      <img class="feature-pic" src="/images/bidentrump.gif" width="600" alt="usElection">
-      <div>https://www.plannedparenthoodaction.org/elections/biden-v-trump</div>
-    </div>
-  </div>
-
-  <div class="createvote-container">
-    <div class="createvote-head">
-      <div class="createvote-head-child">
-        <div class="createvote-head-title">Create Vote</div>
-        <div class="createvote-head-title-sub">: Make your own vote!</div>
+    <div class="feature">
+      <div class="feature-item feature-text-container">
+        <h1 class="feature-head">Guess who!?</h1>
+        <div class="feature-sub">Biden vs Trump</div>
+        <p class="feature-body">The Republican president is being challenged by Democratic Party nominee Joe Biden, who is
+          best known as Barack Obama's vice-president but has been in US politics since the 1970s.</br>
+          </br>
+          As election day approaches, polling companies will be trying to gauge the mood of the nation by asking voters
+          which candidate they prefer.</br></br>https://www.bbc.com/news/election-us-2020-53657174
+        </p>
       </div>
-      <div class="createvote-head-backtomain"><a href="/">Vote List</a></div>
-    <div class="createvote-head-myVoting"><a href="/votings/my-voting">My votings</a></div>
-    </div>
-    <div class="createvote-body">
-      <form class="createvote-body-form" action="/votings/new" method="POST">
-        <label for="name">Vote Title</label>
-        <input type="text" name="title"></input>
-
-        <div class="selectOptions-head-container">
-          <label for="name">Select Option 1</label>
-          <label for="name">Select Option 2</label>
-        </div>
-        <div class="selectOptions-body-container">
-          <input type="text" name="selectOptions"></input>
-          <input type="text" name="selectOptions"></input>
-        </div>
-
-        <label for="name">Vote Description</label>
-        <textarea name="description" rows="4"></textarea>
-
-        <label for="name">Expire Date</label>
-        <input id='expireDate' type="datetime-local" name="expireDate"></input>
-
-        <button class="createvote-button" type="submit">Create</button>
-        <button class="addOption" type="button">Add Select Options</button>
-      </form>
-      <div class="createvote-body-err">
-        <div><%= err.title ? err.title.message : null%></div>
-        <div><%= err.selectOptions ? err.selectOptions.message : null%></div>
-        <div id="err-expireDate"><%= err.expireDate ? err.expireDate.message : null%></div>
+      <div class="feature-item feature-pic-container">
+        <img class="feature-pic" src="/images/bidentrump.gif" width="600" alt="usElection">
+        <div>https://www.plannedparenthoodaction.org/elections/biden-v-trump</div>
       </div>
     </div>
+
+    <div class="createvote-container">
+      <div class="createvote-head">
+        <div class="createvote-head-child">
+          <div class="createvote-head-title">Create Vote</div>
+          <div class="createvote-head-title-sub">: Make your own vote!</div>
+        </div>
+        <div class="createvote-head-backtomain"><a href="/">Vote List</a></div>
+        <div class="createvote-head-myVoting"><a href="/votings/my-voting">My votings</a></div>
+      </div>
+      <div class="createvote-body">
+        <form class="createvote-body-form" action="/votings/new" method="POST">
+          <label for="name">Vote Title</label>
+          <input type="text" name="title"></input>
+
+          <div class="selectOptions-head-container">
+            <label for="name">Select Option 1</label>
+            <label for="name">Select Option 2</label>
+          </div>
+          <div class="selectOptions-body-container">
+            <input type="text" name="selectOptions"></input>
+            <input type="text" name="selectOptions"></input>
+          </div>
+
+          <label for="name">Vote Description</label>
+          <textarea name="description" rows="4"></textarea>
+
+          <label for="name">Expire Date</label>
+          <input id='expireDate' type="datetime-local" name="expireDate"></input>
+
+          <button class="createvote-button" type="submit">Create</button>
+          <button class="addOption" type="button">Add Select Options</button>
+        </form>
+        <div class="createvote-body-err">
+          <div><%= err.title ? err.title.message : null%></div>
+          <div><%= err.selectOptions ? err.selectOptions.message : null%></div>
+          <div id="err-expireDate"><%= err.expireDate ? err.expireDate.message : null%></div>
+        </div>
+      </div>
     </div>
-
-  </div>
-
-
-  <script src="/javascripts/optionAddEvent.js"></script>
-</body>
-
+    <script src="/javascripts/optionAddEvent.js"></script>
+  </body>
 </html>

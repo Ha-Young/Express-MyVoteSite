@@ -1,9 +1,8 @@
 const $ref = document.querySelector('.ref').innerHTML;
 const $deleteButton = document.querySelector('.delete-button');
 
-$deleteButton.addEventListener('click', async (e) => {
+$deleteButton.addEventListener('click', async () => {
   try {
-    console.log($ref, 'in delete');
     const response = await fetch(`http://localhost:3000/votings/${$ref}`, {
       method: 'DELETE',
       headers: {
@@ -13,8 +12,6 @@ $deleteButton.addEventListener('click', async (e) => {
     });
 
     if (response.ok) {
-      console.log('ok');
-      let json = await response.json();
       window.location.href = `http://localhost:3000/`;
     }
   } catch (err) {

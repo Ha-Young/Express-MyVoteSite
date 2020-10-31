@@ -13,7 +13,6 @@ a {
 .main-nav {
   background-color: #cabf45;
   color: black;
-  /* height: 12vh; */
   display: grid;
   grid-template-columns: 6fr 1fr 1fr 1fr;
   justify-items: center;
@@ -141,7 +140,7 @@ a {
 .voting-each {
   border: 1px solid blue;
   display: grid;
-  grid-template-rows: 2fr 1fr; /*확인하기*/
+  grid-template-rows: 2fr 1fr;
   transition: all 0.2s ease-in-out;
 }
 
