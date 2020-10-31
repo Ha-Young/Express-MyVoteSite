@@ -21,7 +21,7 @@ exports.checkVaildationError = function checkVaildationError(req, res, next) {
 };
 
 function checkEmail() {
-  return body('email').isEmail().withMessage('Ivaild E-mail input type');
+  return body('email').isEmail().withMessage('Invaild E-mail input type');
 }
 
 function checkPasswordLength() {
