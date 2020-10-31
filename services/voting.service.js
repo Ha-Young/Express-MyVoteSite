@@ -100,6 +100,64 @@ class VotingService {
       throw new Error(err);
     }
   }
+
+  async getVotingsByExpiration(userIdObj, isFindAll = true) {
+    const openVotings = [];
+    const expiredVotings = [];
+    let votings;
+
+    try {
+      if (isFindAll) {
+        votings = await Voting.find();
+      } else {
+        votings = await Voting.find(userIdObj);
+      }
+
+      for (const voting of votings) {
+        const creator = await User.findById(voting.created_by);
+        const isUserCreator
+          = voting.created_by.toString() === userIdObj.created_by;
+        const expirationDate = Date.parse(voting.expires_at);
+        const formattedExpirationDate = dayjs(expirationDate).format(FULL_DATE_KOREAN);
+
+        let votesOfMostVoted = voting.options[0].voters.length;
+
+        for (let i = 1; i < voting.options.length; i++) {
+          if (voting.options[i].voters.length > votesOfMostVoted) {
+            votesOfMostVoted = voting.options[i].voters.length;
+          }
+        }
+
+        const mostVoted = [];
+
+        for (const option of voting.options) {
+          if (option.voters.length === votesOfMostVoted) {
+            mostVoted.push(option.content);
+          }
+        }
+
+        const data = {
+          voting,
+          isUserCreator,
+          creatorUsername: creator.username,
+          formattedExpirationDate,
+          mostVoted,
+        };
+
+        if (expirationDate > Date.now()) {
+          openVotings.push(data);
+
+          continue;
+        }
+
+        expiredVotings.push(data);
+      }
+
+      return [openVotings, expiredVotings];
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
 }
 
 module.exports = VotingService;
