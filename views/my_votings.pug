@@ -6,11 +6,16 @@ block content
 
   h1 나의 투표
   h2 내가 만든 투표
+  each voting in votingsUserCreated
+    .userVoting.votingUserCreated
+      a(href=`/votings/${voting._id}`)
+        h2= voting.subject
+        p= voting.description
 
   h2 내가 한 투표
-  each userVoting in userVotings
+  each voting in votingsUserVoted
     .userVoting
-      h2= userVoting.subject
+      h2= voting.subject
       ul
-        each candidate in userVoting.candidates
+        each candidate in voting.candidates
           li(class= (candidate.voters.includes(userId)) ? 'selected' : '')= candidate.title

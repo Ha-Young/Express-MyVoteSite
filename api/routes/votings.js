@@ -21,11 +21,14 @@ router.get('/my-votings', authenticate, async (req, res, next) => {
     const { id, username } = req.session.user;
     res.locals.username = username;
 
-    const { voted } = await votingServices.findUserVotings(username);
+    const { voted } = await votingServices.findUserVotedVotings(username);
+
+    const votingsUserCreated = await votingServices.findVoting({ author: id });
 
     res.render('my_votings', {
       userId: id,
-      userVotings: voted
+      votingsUserVoted: voted,
+      votingsUserCreated
     });
   } catch (err) {
     next(err);

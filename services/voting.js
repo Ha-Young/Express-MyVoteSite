@@ -12,8 +12,8 @@ module.exports = class VotingServices {
     return votings;
   }
 
-  async findUserVotings (username) {
-    const result = await (await User.findOne({ username }).populate('voted'));
+  async findUserVotedVotings (username) {
+    const result = await User.findOne({ username }).populate('voted');
 
     return result;
   }
