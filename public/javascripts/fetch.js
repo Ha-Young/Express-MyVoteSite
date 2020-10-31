@@ -21,13 +21,13 @@ const handleUpdateRequest = async () => {
   };
 
   try {
-    const response = await fetch(`http://localhost:3000/votings/${votingId}`, option);
+    const response = await fetch(`${location.origin}/votings/${votingId}`, option);
     if (response.status === 200) {
-      window.location.href = 'http://localhost:3000/';
+      window.location.href = `${location.origin}/`;
     }
 
     if (response.status === 401) {
-      window.location.href = 'http://localhost:3000/login';
+      window.location.href = `${location.origin}/login`;
     }
   } catch (error) {
     throw new Error(error);
@@ -42,10 +42,10 @@ const handleDeleteRequest = async () => {
   };
 
   try {
-    const response = await fetch(`http://localhost:3000/votings/${votingId}`, option);
+    const response = await fetch(`${location.origin}/votings/${votingId}`, option);
 
     if (response.result = 'ok') {
-      window.location.href = 'http://localhost:3000/';
+      window.location.href = `${location.origin}/`;
     }
   } catch (error) {
     throw new Error(error);
