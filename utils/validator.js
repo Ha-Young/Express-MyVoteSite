@@ -120,7 +120,7 @@ const votingForm = async (form, callback) => {
     }
   });
 
-  if (expiration_date > CURRENT_DATE) {
+  if (expiration_date < CURRENT_DATE) {
     validError.push(DATE_FORM_ERROR_MESSAGE);
   }
 
