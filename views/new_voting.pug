@@ -5,7 +5,7 @@ block content
     link(rel="stylesheet", href="/stylesheets/css/new_voting.css")
   h1 새로운 투표를 생성!
 
-  form(action="" method="post")
+  form
     .form-wrapper
       .metaForm
         .input-wrapper
@@ -43,5 +43,7 @@ block content
 
     input(type="submit" value="투표 생성하기!")#submit
 
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.1.17/validator.min.js")
+    script(src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous")
     script(src="/utils/insertNewCandidateInput.js")
     script(src="/javascript/new_voting.js")

@@ -9,10 +9,30 @@ const submitButton = document.getElementById('submit');
 
 let hasSubmitted = false;
 
-submitButton.addEventListener('click', (e) => {
+submitButton.addEventListener('click', async (e) => {
+  e.preventDefault();
+
   if (hasSubmitted) {
-    e.preventDefault();
-  } else {
-    hasSubmitted = true;
+    return;
+  }
+
+  hasSubmitted = true;
+
+  try {
+    var formData = $('form').serialize();
+
+    const result = await axios.post('/votings/new', formData);
+
+    console.log(result);
+
+    if (result.data.success) {
+      alert('성공적으로 투표가 생성되었습니다!');
+
+      window.location.href = '/';
+    } else {
+      alert('투표 생성 실패..');
+    }
+  } catch (err) {
+    console.log(err);
   }
 });

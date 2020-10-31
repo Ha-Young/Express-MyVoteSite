@@ -69,9 +69,17 @@ router.get('/:votingId', async (req, res) => {
 
 router.post('/new', async (req, res, next) => {
   try {
-    await votingServices.createVoting(req.body);
+    const result = await votingServices.createVoting(req.body);
 
-    res.redirect('/votings/new');
+    if (result) {
+      res.json({
+        success: true
+      });
+    } else {
+      res.json({
+        success: false
+      });
+    }
   } catch (err) {
     next(err);
   }
