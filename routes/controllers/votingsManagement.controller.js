@@ -11,7 +11,6 @@ const VotingService = require('../../services/voting.service');
 const userService = new UserService();
 const votingService = new VotingService();
 const tryCatchWrapper = require('../../utils/tryCatchWrapper');
-const checkHasVoted = require('../../utils/hasVoted');
 
 exports.create = tryCatchWrapper(async (req, res) => {
   const created_by = req.session.userId;
