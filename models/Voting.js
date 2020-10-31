@@ -12,7 +12,7 @@ const VotingSchema = new mongoose.Schema({
   expires_at: {
     type: Date,
     required: true,
-    expires: 10,
+    expires: 60 * 60 * 24 * 7,
   },
   options: [
     {
