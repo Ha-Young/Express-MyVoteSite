@@ -72,6 +72,12 @@ nav .logo {
   text-align: center;
 }
 
+nav li {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 1em;
+}
+
 @media only screen and (max-width: 850px) {
   content {
     margin-right: 0;
