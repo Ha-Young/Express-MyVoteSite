@@ -3,7 +3,7 @@ extends layout/main.pug
 block link
   link(rel='stylesheet', href='/stylesheets/votingDetail.css')
 block content
-  if voteItem.voteResult
+  if voteItem.result
     include ./partials/votingOpen.pug
   else
     include ./partials/votingClose.pug

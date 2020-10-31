@@ -1,7 +1,8 @@
 const VoteService = require('../../../services/VoteService');
+const { TEMPLATE } = require('../../../config/constants');
 
 exports.GETNew = (req, res, next) => {
-  return res.render('createVoting');
+  return res.render(TEMPLATE.CREATEVOTING);
 };
 exports.POSTNew = async (req, res, next) => {
   const userId = req.user;
@@ -17,7 +18,7 @@ exports.POSTNew = async (req, res, next) => {
   try {
     const result = await VoteService.create(voteItem);
 
-    if (result) return res.redirect('/');
+    if (result) return res.redirect(TEMPLATE.HOME);
   } catch (error) {
     console.log(error)
     next(error);
@@ -30,8 +31,8 @@ exports.GETVotings = async (req, res, next) => {
   try {
     const item = await VoteService.getContents(votingId, userId);
 
-    if (String(item.authorId) === String(userId)) return res.render('voting', { voteItem: item, canDelete: true });
-    return res.render('voting', { voteItem: item });
+    if (String(item.authorId) === String(userId)) return res.render(TEMPLATE.VOTING, { voteItem: item, canDelete: true });
+    return res.render(TEMPLATE.VOTING, { voteItem: item });
   } catch (error) {
     next(error);
   }

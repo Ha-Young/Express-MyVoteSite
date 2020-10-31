@@ -17,16 +17,20 @@ const {
   GETExpireds,
   GETMyVotings,
 } = require('./controllers/globalController');
+const {
+  ROUTES_GLOBAL,
+  ROUTES_USER
+} = require('../../config/constants');
 
 const router = express.Router();
 
-router.get('/', setLocals, GETHome);
-router.get('/expired', setLocals, GETExpireds);
-router.get('/my-votings', isLoggedIn, setLocals, GETMyVotings);
-router.get('/signup', isNotLoggedIn, GETSignup);
-router.post('/signup', isNotLoggedIn, POSTSignup);
-router.get('/login', isNotLoggedIn, GETLogin);
-router.post('/login', getAuthenticated, POSTLogin);
-router.get('/logout', isLoggedIn, GETLogout);
+router.get(ROUTES_GLOBAL.HOME, setLocals, GETHome);
+router.get(ROUTES_GLOBAL.EXPIRED, setLocals, GETExpireds);
+router.get(ROUTES_GLOBAL.MYVOTINGS, isLoggedIn, setLocals, GETMyVotings);
+router.get(ROUTES_USER.SIGNUP, isNotLoggedIn, GETSignup);
+router.post(ROUTES_USER.SIGNUP, isNotLoggedIn, POSTSignup);
+router.get(ROUTES_USER.LOGIN, isNotLoggedIn, GETLogin);
+router.post(ROUTES_USER.LOGIN, getAuthenticated, POSTLogin);
+router.get(ROUTES_USER.LOGOUT, isLoggedIn, GETLogout);
 
 module.exports = router;

@@ -1,13 +1,14 @@
 const UserService = require('../../../services/UserService');
+const { TEMPLATE } = require('../../../config/constants');
 
 exports.GETSignup = (_, res) => {
-  return res.render('signup');
+  return res.render(TEMPLATE.SIGNUP);
 };
 exports.POSTSignup = async (req, res, next) => {
   try {
     const user = req.body;
     const result = await UserService.signup(user);
-    if (result) return res.json({ redirect: '/login' });
+    if (result) return res.json({ redirect: TEMPLATE.LOGIN });
 
     return res.json({ signupResult: 'Email Already Exist' });
   } catch (error) {
@@ -16,13 +17,13 @@ exports.POSTSignup = async (req, res, next) => {
 };
 exports.GETLogin = (req, res) => {
   const { callbackUrl } = req.query;
-  return res.render('login', { callbackUrl });
+  return res.render(TEMPLATE.LOGIN, { callbackUrl });
 };
 exports.POSTLogin = (req, res) => {
   const { callbackUrl } = req.body;
   if (!callbackUrl) return res.redirect(callbackUrl);
 
-  return res.redirect('/');
+  return res.redirect(TEMPLATE.HOME);
 };
 exports.GETLogout = () => {
   UserService.logout();

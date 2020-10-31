@@ -1,12 +1,12 @@
-div(class='voting-item-container' id=`${voteItem.voteId}`)
+div(class='voting-item-container' id=`${voteItem._id}`)
   .vote-number
-    p= `No. ${voteItem.voteId}`
+    p= `No. ${voteItem._id}`
   .vote-title
-    p= voteItem.voteTitle
+    p= voteItem.title
   .vote-descrption
-    p= voteItem.voteDescription
+    p= voteItem.description
   .vote-choice-container
-    each val, index in voteItem.voteChoice
+    each val, index in voteItem.choiceList
       .vote-choice
         input(type='radio' id=`choice-${index}` name='choice' value=val)
         label(for=`choice-${val}`)=val

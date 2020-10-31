@@ -10,13 +10,16 @@ const {
   PUTVotings,
   DELETEVotings
 } = require('./controllers/voteController');
+const {
+  ROUTES_VOTE,
+} = require('../../config/constants');
 
 const router = express.Router();
 
-router.get('/new', isLoggedIn, setLocals, GETNew);
-router.post('/new', isLoggedIn, POSTNew);
-router.get('/:votingId', setLocals, GETVotings);
-router.put('/:votingId', isLoggedIn, setLocals, PUTVotings);
-router.delete('/:votingId', isLoggedIn, setLocals, DELETEVotings);
+router.get(ROUTES_VOTE.NEW, isLoggedIn, setLocals, GETNew);
+router.post(ROUTES_VOTE.NEW, isLoggedIn, POSTNew);
+router.get(ROUTES_VOTE.VOTING_ITEM, setLocals, GETVotings);
+router.put(ROUTES_VOTE.VOTING_ITEM, isLoggedIn, setLocals, PUTVotings);
+router.delete(ROUTES_VOTE.VOTING_ITEM, isLoggedIn, setLocals, DELETEVotings);
 
 module.exports = router;
