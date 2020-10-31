@@ -31,6 +31,8 @@ submitButton.addEventListener('click', async (e) => {
       alert('투표 생성 실패..');
     }
   } catch (err) {
+    alert('투표 생성 실패..');
     console.log(err);
+    window.location.href = '/votings/new';
   }
 });
