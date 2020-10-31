@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const votingSchema = new mongoose.Schema({
+const VotingSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -12,6 +12,7 @@ const votingSchema = new mongoose.Schema({
   expires_at: {
     type: Date,
     required: true,
+    expires: 10,
   },
   options: [
     {
@@ -24,6 +25,6 @@ const votingSchema = new mongoose.Schema({
       ]
     }
   ],
-});
+}, { timestamps: true });
 
-module.exports = mongoose.model('Voting', votingSchema);
+module.exports = mongoose.model('Voting', VotingSchema);

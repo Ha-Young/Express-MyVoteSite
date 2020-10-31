@@ -9,6 +9,7 @@ class VotingService {
   async getVoting(id) {
     try {
       const voting = await Voting.findById(id);
+
       return voting;
     } catch (err) {
       throw new Error(err);
@@ -108,7 +109,7 @@ class VotingService {
 
     try {
       if (isFindAll) {
-        votings = await Voting.find();
+        votings = await Voting.find().sort([['createdAt', -1]]);
       } else {
         votings = await Voting.find(userIdObj);
       }

@@ -13,9 +13,9 @@ const votingService = new VotingService();
 const tryCatchWrapper = require('../../utils/tryCatchWrapper');
 
 exports.create = tryCatchWrapper(async (req, res) => {
-  const created_by = req.session.userId;
+  const createdBy = req.session.userId;
   const data = req.body;
-  const expires_at = `${data[EXPIRATION_DATE][0]} ${data[EXPIRATION_DATE][1]}`;
+  const expiresAt = `${data[EXPIRATION_DATE][0]} ${data[EXPIRATION_DATE][1]}`;
   const { title, options } = data;
 
   const optionsData = [];
@@ -27,7 +27,7 @@ exports.create = tryCatchWrapper(async (req, res) => {
     });
   }
 
-  await votingService.createVoting(title, created_by, expires_at, optionsData);
+  await votingService.createVoting(title, createdBy, expiresAt, optionsData);
 
   res.status(201).render(MESSAGE, {
     message: CREATE_SUCCESS
