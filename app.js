@@ -4,6 +4,7 @@ const session = require('express-session');
 const path = require('path');
 const dotenv = require('dotenv');
 const passport = require('passport');
+const mongoose = require('mongoose');
 
 const dbConfig = require('./config/db');
 const passportConfig = require('./config/passport');
@@ -46,8 +47,11 @@ app.use(function(req, res, next) {
   next(err);
 });
 app.use(function(err, req, res, next) {
+  if (err instanceof mongoose.Error && req.app.get('env') !== 'development') err.message = 'Internal Error';
+  if (!err.status) err.status = 500;
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.status = err.status;
+  res.locals.stack = req.app.get('env') === 'development' ? err.stack : '';
   res.status(err.status || 500);
   res.render('error');
 });

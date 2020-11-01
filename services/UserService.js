@@ -18,15 +18,13 @@ const UserService = {
       if (!user) return done(null, false, { loginResult: 'This email does not exist.' });
 
       return user.comparePassword(password, (error, isMatch) => {
-        if (error) return done(error);
+        if (error) throw error;
         if (isMatch) return done(null, user);
 
         return done(null, false, { loginResult: 'The password is incorrect.' });
       });
     } catch (error) {
-      throw {
-        message: '로그인 오류',
-      };
+      return done(error);
     }
   },
   logout: async (req, res) => {

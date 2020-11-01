@@ -1,6 +1,7 @@
 const $email = document.querySelector('#email');
 const $name = document.querySelector('#name');
 const $password = document.querySelector('#password');
+const $passwordConfirm = document.querySelector('#password-confirm');
 const $signupButton = document.querySelector('#signup-button');
 const $accountError = document.querySelector('.account-error');
 
@@ -9,8 +10,13 @@ const data = {
   name: $name.value,
   password: $password.value,
 };
-const updateValue = e => data[e.target.name] = e.target.value;
-const set = async () => {
+const updateValueHandler = e => {
+  const validationResult = checkInputValueValidity(e);
+
+  if (!validationResult) return;
+  return data[e.target.name] = e.target.value;
+};
+const signupHandler = async () => {
   const response = await fetch('/signup', {
     method:'POST',
     headers: {
@@ -28,7 +34,8 @@ const set = async () => {
   return window.location.href = result.redirect;
 };
 
-$email.addEventListener('change', updateValue);
-$name.addEventListener('change', updateValue);
-$password.addEventListener('change', updateValue);
-$signupButton.addEventListener('click', set);
+$email.addEventListener('change', updateValueHandler);
+$name.addEventListener('change', updateValueHandler);
+$password.addEventListener('change', updateValueHandler);
+$passwordConfirm.addEventListener('change', updateValueHandler);
+$signupButton.addEventListener('click', signupHandler);

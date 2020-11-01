@@ -10,4 +10,4 @@ div(class='voting-item-container' id=`${voteItem.voteId}`)
     each val, index in voteItem.voteChoice
       .vote-choice
         p= `- ${val}`
-        p(class='choice-result' id= `(${voteItem.voteResult[index]} 명)`
+        p(class='choice-result' id= `(${voteItem.voteResult[index]} 명)`)

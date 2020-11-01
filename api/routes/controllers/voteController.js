@@ -1,5 +1,5 @@
 const VoteService = require('../../../services/VoteService');
-const { TEMPLATE } = require('../../../config/constants');
+const { TEMPLATE, ROUTES_GLOBAL } = require('../../../config/constants');
 
 exports.GETNew = (req, res, next) => {
   return res.render(TEMPLATE.CREATEVOTING);
@@ -18,9 +18,8 @@ exports.POSTNew = async (req, res, next) => {
   try {
     const result = await VoteService.create(voteItem);
 
-    if (result) return res.redirect(TEMPLATE.HOME);
+    if (result) return res.redirect(ROUTES_GLOBAL.HOME);
   } catch (error) {
-    console.log(error)
     next(error);
   }
 };

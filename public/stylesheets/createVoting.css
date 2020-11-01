@@ -61,6 +61,7 @@ input:focus, textarea:focus {
   color: rgba(255, 255, 255, 0.4);
   font-size: 20px;
   padding-bottom: 10px;
+  padding-left: 10px;
   padding-right: 10px;
   display: flex;
   flex-direction: row;
@@ -71,10 +72,8 @@ input:focus, textarea:focus {
 
 .voting-list-header div {
   flex: 1;
-}
-
-.voting-list-header div > p {
-  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .voting-list-header img {

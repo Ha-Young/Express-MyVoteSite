@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon node ./bin/www"
+    "start": "set NODE_ENV=production&&node ./bin/www",
+    "dev": "set NODE_ENV=development&&node ./bin/www"
   },
   "dependencies": {
     "axios": "^0.21.0",

@@ -1,9 +1,10 @@
 const express = require('express');
+
 const {
   isLoggedIn,
   isNotLoggedIn,
   setLocals,
-  getAuthenticated,
+  authenticate,
 } = require('../middlewares/middlewares');
 const {
   GETSignup,
@@ -30,7 +31,7 @@ router.get(ROUTES_GLOBAL.MYVOTINGS, isLoggedIn, setLocals, GETMyVotings);
 router.get(ROUTES_USER.SIGNUP, isNotLoggedIn, GETSignup);
 router.post(ROUTES_USER.SIGNUP, isNotLoggedIn, POSTSignup);
 router.get(ROUTES_USER.LOGIN, isNotLoggedIn, GETLogin);
-router.post(ROUTES_USER.LOGIN, getAuthenticated, POSTLogin);
+router.post(ROUTES_USER.LOGIN, authenticate, POSTLogin);
 router.get(ROUTES_USER.LOGOUT, isLoggedIn, GETLogout);
 
 module.exports = router;

@@ -1,13 +1,14 @@
-div(class='voting-item-container' id=`${voteItem._id}`)
+div(class='voting-item-container' id=`${voteItem.voteId}`)
   .vote-number
-    p= `No. ${voteItem._id}`
+    p= `No. ${voteItem.voteId}`
   .vote-title
-    p= voteItem.title
+    p= voteItem.voteTitle
   .vote-descrption
-    p= voteItem.description
+    p= voteItem.voteDescription
   .vote-choice-container
-    each val, index in voteItem.choiceList
+    each val, index in voteItem.voteChoice
       .vote-choice
         input(type='radio' id=`choice-${index}` name='choice' value=val)
-        label(for=`choice-${val}`)=val
+        label(for=`choice-${index}`)=val
+if !canDelete
   p.vote-button 투표하기

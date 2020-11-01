@@ -59,8 +59,11 @@ if ($voteDeleteButton !== null) $voteDeleteButton.addEventListener('click', dele
 
 (function setMostVotes() {
   const choiceResultsArray = Array.from($choiceResults);
-  const mostVotes = choiceResultsArray.reduce((accum, current) => {
-    return accum.id < current.id ? current : accum;
-  });
-  mostVotes.style.color='#40ff8c';
+
+  if (choiceResultsArray.length) {
+    const mostVotes = choiceResultsArray.reduce((accum, current) => {
+      return accum.id < current.id ? current : accum;
+    });
+    mostVotes.style.color='#40ff8c';
+  }
 })();

@@ -14,8 +14,10 @@ a {
 }
 
 p {
+  width: 100%;
   display: inline-block;
   margin: 0;
+  text-align: center;
 }
 
 .main-container {

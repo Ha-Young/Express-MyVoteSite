@@ -1,5 +1,5 @@
 const UserService = require('../../../services/UserService');
-const { TEMPLATE } = require('../../../config/constants');
+const { ROUTES_GLOBAL, TEMPLATE } = require('../../../config/constants');
 
 exports.GETSignup = (_, res) => {
   return res.render(TEMPLATE.SIGNUP);
@@ -21,10 +21,10 @@ exports.GETLogin = (req, res) => {
 };
 exports.POSTLogin = (req, res) => {
   const { callbackUrl } = req.body;
-  if (!callbackUrl) return res.redirect(callbackUrl);
+    if (!callbackUrl) return res.redirect(callbackUrl);
 
-  return res.redirect(TEMPLATE.HOME);
+    return res.redirect(ROUTES_GLOBAL.HOME);
 };
-exports.GETLogout = () => {
-  UserService.logout();
+exports.GETLogout = (req, res) => {
+  UserService.logout(req, res);
 };
