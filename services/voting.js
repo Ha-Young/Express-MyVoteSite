@@ -50,7 +50,6 @@ module.exports = class VotingServices {
     });
 
     candidate.voters.addToSet(voterId);
-    voting.voters.addToSet(voterId);
     await voting.save();
 
     user.voted.addToSet(votingId);

@@ -13,7 +13,6 @@ const votingSchema = new Schema(
       type: Date,
       default: new Date(+new Date() + 3 * 60 * 60 * 1000)
     },
-    voters: [ { type: ObjectId, ref: 'User' } ],
     candidates: [
       {
         title: String,
