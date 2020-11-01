@@ -4,6 +4,7 @@ const {
   ROUTES,
   ROUTE_AUTH,
   VIEWS,
+  MESSAGES,
   SUCCESS,
   ERROR,
   CALLBACK_URI
@@ -25,7 +26,7 @@ exports.postSignUp = async function postSignUp(req, res, next) {
         return res.redirect(ROUTES.AUTH + ROUTE_AUTH.LOGIN);
       case SUCCESS:
         req.session.user = payload;
-        req.flash(SUCCESS, `Succeed Sign up! Welcome, ${payload.name}`);
+        req.flash(SUCCESS, `${MESSAGES.SUCCESS_SIGNUP} ${payload.name}`);
       default:
         res.redirect(ROUTES.HOME);
     }
@@ -51,7 +52,7 @@ exports.postLogin = async function postLogin(req, res, next) {
         return res.redirect(ROUTES.AUTH + ROUTE_AUTH.LOGIN);
       case SUCCESS:
         req.session.user = payload;
-        req.flash(SUCCESS, 'Succeed Login!');
+        req.flash(SUCCESS, MESSAGES.SUCCESS_LOGIN);
         if (cookies[CALLBACK_URI]) {
           res.redirect(cookies[CALLBACK_URI]);
         } else {
@@ -68,5 +69,5 @@ exports.postLogin = async function postLogin(req, res, next) {
 
 exports.getLogout = function getLogout(req, res, next) {
   req.session.destroy();
-  res.redirect('/');
+  res.redirect(ROUTES.HOME);
 };

@@ -1,6 +1,6 @@
 const VoteService = require('../../services/VoteService');
 const { SERVICE_ERROR_CODE } = require('../../services/ActionCreator');
-const { ROUTES, VIEWS, SUCCESS, ERROR, CALLBACK_URI } = require('../../config/constants');
+const { ROUTES, VIEWS, MESSAGES, SUCCESS, ERROR, CALLBACK_URI } = require('../../config/constants');
 
 const { formatISO, addHours } = require('date-fns');
 
@@ -20,14 +20,14 @@ exports.postNewVote = async function postNewVote(req, res, next) {
 
   try {
     if (!Array.isArray(vote.itemList) || vote.itemList.length <= 1) {
-      req.flash(ERROR, 'Failed creating item must be at least 2');
+      req.flash(ERROR, MESSAGES.ERROR_CREATE_NEW_VOTE);
       return res.redirect(ROUTES.HOME);
     }
 
     const voteInstance = new VoteService(vote);
     await voteInstance.createNewVote(user);
 
-    req.flash(SUCCESS, 'Succeed creating new vote!');
+    req.flash(SUCCESS, MESSAGES.SUCCESS_CRAETE_NEW_VOTE);
     res.redirect(ROUTES.HOME);
   } catch (error) {
     next(error);
@@ -84,7 +84,7 @@ exports.postVote = async function postVote(req, res, next) {
       case SERVICE_ERROR_CODE._11:
         req.flash(ERROR, payload.message);
       case SUCCESS:
-        req.flash(SUCCESS, 'Succeed voting!');
+        req.flash(SUCCESS, MESSAGES.SUCCESS_VOTING);
       default:
         return res.status(200).json(body);
     }

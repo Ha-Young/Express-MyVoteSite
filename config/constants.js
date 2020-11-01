@@ -34,3 +34,15 @@ exports.VIEWS = {
   NEW_VOTE: 'newVote',
   ERROR: 'error'
 };
+
+exports.MESSAGES = {
+  EMAIL_INVAILD: 'Invaild E-mail input type',
+  PASSWORD_MINIMUM_LENGTH: 'Password must be at least 4',
+  PASSWORD_CONFIRMATION_MISMATCH: 'Password fields must have the same value',
+  SUCCESS_SIGNUP: 'Succeed sign up! Welcome,',
+  SUCCESS_LOGIN: 'Succeed Login!',
+  SUCCESS_CRAETE_NEW_VOTE: 'Succeed creating new vote!',
+  ERROR_CREATE_NEW_VOTE: 'Failed creating item must be at least 2',
+  SUCCESS_VOTING: 'Succeed voting!',
+  SUCCESS_DELETE_VOTE: 'Succeed delete'
+};
