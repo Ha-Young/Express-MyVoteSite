@@ -12,18 +12,15 @@ const mongoose = require('mongoose');
 const createError = require('http-errors');
 const logger = require('morgan');
 
-const index = require('./routes/index');
-const auth = require('./routes/auth');
-const votings = require('./routes/votings');
+const indexRouter = require('./routes/index');
+const authRouter = require('./routes/auth');
+const votingsRouter = require('./routes/votings');
 
-const { ROUTES, VIEWS } = require('./config/constants');
+const { ROUTES, VIEWS, HOUR } = require('./config/constants');
 
 const app = express();
 const store = new MongoDBStore({
-  uri:
-    process.env.NODE_ENV === 'production'
-      ? process.env.DB_PRODUCTION_ADDRESS
-      : process.env.DB_LOCAL_ADDRESS,
+  uri: process.env.DB_URL,
   databaseName: 'voting-platform-toggo',
   collection: 'session'
 });
@@ -36,6 +33,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    maxAge: HOUR,
     store
   })
 );
@@ -47,9 +45,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 
-app.use(ROUTES.HOME, index);
-app.use(ROUTES.AUTH, auth);
-app.use(ROUTES.VOTINGS, votings);
+app.use(ROUTES.HOME, indexRouter);
+app.use(ROUTES.AUTH, authRouter);
+app.use(ROUTES.VOTINGS, votingsRouter);
 
 app.use(function (req, res, next) {
   next(createError(404));
@@ -69,7 +67,7 @@ app.use(function (err, req, res, next) {
 });
 
 app.listen(function () {
-  console.log(`[Sever] Listening ${process.env.PORT || '3000'} - env: ${process.env.NODE_ENV}`);
+  console.log(`[Sever] Listening ${process.env.PORT || '3000'}`);
 });
 
 module.exports = app;

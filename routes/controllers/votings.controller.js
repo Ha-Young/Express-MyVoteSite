@@ -4,7 +4,7 @@ const { ROUTES, VIEWS, MESSAGES, SUCCESS, ERROR, CALLBACK_URI } = require('../..
 
 const { formatISO, addHours } = require('date-fns');
 
-exports.getNewVote = function getNewVote(req, res, next) {
+exports.renderNewVote = function renderNewVote(req, res, next) {
   const {
     session: { user }
   } = req;
@@ -12,7 +12,7 @@ exports.getNewVote = function getNewVote(req, res, next) {
   res.status(200).render(VIEWS.NEW_VOTE, { user, time: presentTime });
 };
 
-exports.postNewVote = async function postNewVote(req, res, next) {
+exports.createNewVote = async function createNewVote(req, res, next) {
   const {
     body: vote,
     session: { user }
@@ -34,7 +34,7 @@ exports.postNewVote = async function postNewVote(req, res, next) {
   }
 };
 
-exports.getVote = async function getVote(req, res, next) {
+exports.renderVoteDetail = async function renderVoteDetail(req, res, next) {
   res.clearCookie(CALLBACK_URI);
 
   const {
@@ -42,22 +42,23 @@ exports.getVote = async function getVote(req, res, next) {
     session
   } = req;
   let isAuthor = false;
-  let isParticipated;
+  let isParticipated = false;
 
   try {
-    const { type, payload } = await VoteService.findVote(vote_id);
+    const { status, payload } = await VoteService.findVote(vote_id);
 
-    switch (type) {
+    switch (status) {
       case SERVICE_ERROR_CODE._10:
         req.flash(ERROR, payload.message);
         return res.redirect(ROUTES.HOME);
       case SUCCESS:
         if (session && session.user) {
           isAuthor = payload.author._id.equals(session.user._id);
-          isParticipated = payload.participatedUser.find((user) =>
+          isParticipated = payload.participatedUser.some((user) =>
             user._id.equals(session.user._id)
           );
         }
+        console.log(isParticipated);
         return res.status(200).render(VIEWS.VOTE_DETAIL, {
           user: session.user,
           vote: payload,
@@ -70,7 +71,7 @@ exports.getVote = async function getVote(req, res, next) {
   }
 };
 
-exports.postVote = async function postVote(req, res, next) {
+exports.castVote = async function castVote(req, res, next) {
   const {
     params: { id: vote_id },
     body,
@@ -78,9 +79,9 @@ exports.postVote = async function postVote(req, res, next) {
   } = req;
 
   try {
-    const { type, payload } = await VoteService.castVote(vote_id, user, body);
+    const { status, payload } = await VoteService.castVote(vote_id, user, body);
 
-    switch (type) {
+    switch (status) {
       case SERVICE_ERROR_CODE._11:
         req.flash(ERROR, payload.message);
       case SUCCESS:

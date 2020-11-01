@@ -34,9 +34,9 @@ exports.SERVICE_ERROR_CODE = {
   _11: 'error-11'
 };
 
-exports.createAction = function createAction(type, payload) {
-  if (type === 'error') {
-    return { type: `error-${payload}`, payload: SERVICE_ERROR[`CODE_${payload}`] };
+exports.createAction = function createAction(status, payload) {
+  if (status === 'error') {
+    return { status: `error-${payload}`, payload: SERVICE_ERROR[`CODE_${payload}`] };
   }
-  return { type, payload };
+  return { status, payload };
 };

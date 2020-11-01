@@ -10,17 +10,17 @@ const {
   CALLBACK_URI
 } = require('../../config/constants');
 
-exports.getSignUp = function getSignUp(req, res, next) {
+exports.renderSignUp = function renderSignUp(req, res, next) {
   res.status(200).render(VIEWS.SIGN_UP);
 };
 
-exports.postSignUp = async function postSignUp(req, res, next) {
+exports.signUpUser = async function signUpUser(req, res, next) {
   const { body } = req;
   try {
     const userInstance = new AuthService(body);
-    const { type, payload } = await userInstance.signUp();
+    const { status, payload } = await userInstance.signUp();
 
-    switch (type) {
+    switch (status) {
       case SERVICE_ERROR_CODE._00:
         req.flash(ERROR, payload.message);
         return res.redirect(ROUTES.AUTH + ROUTE_AUTH.LOGIN);
@@ -35,17 +35,17 @@ exports.postSignUp = async function postSignUp(req, res, next) {
   }
 };
 
-exports.getLogin = function getLogin(req, res, next) {
+exports.renderLogin = function renderLogin(req, res, next) {
   res.status(200).render(VIEWS.LOGIN);
 };
 
-exports.postLogin = async function postLogin(req, res, next) {
+exports.loginUser = async function loginUser(req, res, next) {
   const { body, cookies } = req;
   try {
     const userInstance = new AuthService(body);
-    const { type, payload } = await userInstance.signIn();
+    const { status, payload } = await userInstance.signIn();
 
-    switch (type) {
+    switch (status) {
       case SERVICE_ERROR_CODE._01:
       case SERVICE_ERROR_CODE._02:
         req.flash(ERROR, payload.message);
@@ -67,7 +67,7 @@ exports.postLogin = async function postLogin(req, res, next) {
   }
 };
 
-exports.getLogout = function getLogout(req, res, next) {
+exports.logoutUser = function logoutUser(req, res, next) {
   req.session.destroy();
   res.redirect(ROUTES.HOME);
 };

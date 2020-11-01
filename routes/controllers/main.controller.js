@@ -2,7 +2,7 @@ const AuthService = require('../../services/AuthService');
 const VoteService = require('../../services/VoteService');
 const VIEWS = require('../../config/constants').VIEWS;
 
-exports.getVotings = async function getVotings(req, res, next) {
+exports.renderAllVotings = async function renderAllVotings(req, res, next) {
   try {
     const votingList = await VoteService.getVotings();
     res.render(VIEWS.HOME, { user: req.session.user, votingList });
@@ -11,7 +11,7 @@ exports.getVotings = async function getVotings(req, res, next) {
   }
 };
 
-exports.getMyVotings = async function getMyVotings(req, res, next) {
+exports.renderMyVotings = async function renderMyVotings(req, res, next) {
   const { session } = req;
   try {
     const user = await AuthService.findUser(session.user._id);

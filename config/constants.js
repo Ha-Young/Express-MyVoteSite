@@ -1,6 +1,7 @@
 exports.SUCCESS = 'success';
 exports.ERROR = 'error';
 exports.CALLBACK_URI = 'callbackURI';
+exports.HOUR = 3600000;
 
 exports.ROUTES = {
   HOME: '/',
