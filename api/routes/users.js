@@ -12,7 +12,7 @@ router.get('/logout', (req, res) => {
   req.session.destroy();
 
   res.json({ success: true });
-})
+});
 
 router.get('/register', (req, res) => {
   if (req.session.user) {
