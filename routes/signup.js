@@ -1,16 +1,13 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 const { body, validationResult } = require('express-validator');
 const router = express.Router();
 
 const User = require('../models/User');
 
-router.get('/', (req, res, next) => {
-  try {
-    res.render('signup');
-  } catch (err) {
-    next(err);
-  }
-});
+const { renderSignup, redirectBackpageOrHome } = require('./controller/signup.controller');
+
+router.get('/', renderSignup);
 
 router.post('/', [
   body('email').isEmail(),
@@ -25,32 +22,20 @@ router.post('/', [
       }
       return true;
     })
-], async (req, res, next) => {
-  try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      throw new Error('Not Valid');
-    }
-
-    const newUserDataSavedInDB = await User.create({
-      email: req.body.email,
-      password: req.body.password
-    });
-
-    if (req.session.backpageUrl === `http://localhost:3000/votings/${req.session.lastVisitedVoteId}`)
-      if (newUserDataSavedInDB) {
-        req.flash('email', newUserDataSavedInDB.email);
-        res.redirect('/login');
-      } else {
-        next();
+],
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        throw new Error('Not Valid');
       }
-    else {
-      res.redirect('/');
+
+      await redirectBackpageOrHome(req, res, next);
+    } catch (err) {
+      return next(err);
     }
-  } catch (err) {
-    return next(err);
   }
-});
+
+);
 
 module.exports = router;
