@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+
 const User = require("../../models/User");
 const catchAsync = require("../../utils/catchAsync");
 const AppError = require("../../utils/AppError");
@@ -25,7 +27,8 @@ exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    next(new AppError("Provide email and password.", 400));
+    res.locals.message = "Provide email and password.";
+    res.redirect("/auth/login");
     return;
   }
 
@@ -33,7 +36,17 @@ exports.login = catchAsync(async (req, res, next) => {
   const correct = await user?.correctPassword(req.body.password, user.password);
 
   if (!user || !correct) {
-    next(new AppError("Incorrect email or password.", 400));
+    res.locals.message = "Incorrect email or password.";
+    res.redirect("/auth/login");
     return;
   }
+
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+
+  res.cookie("voting_platform", token, {
+    httpOnly: true,
+    maxAge: 60 * 60 * 24,
+  });
+
+  res.redirect("/");
 });
