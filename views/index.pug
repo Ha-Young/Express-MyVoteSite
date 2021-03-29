@@ -3,9 +3,3 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  form.joinForm(action="signup" method="POST")
-    input.email(type="email" name="email")
-    input.password(type="password" name="password")
-    input.passwordChecker(type="password" name="password2")
-    input.name(type="text" name="name")
-    button.joinSubmit(type="submit") submit

@@ -13,7 +13,6 @@ router.get("/", function(req, res, next) {
 
 router.get("/signIn", function(req, res, next) {
   const warningMessage = req.cookies["warningMessage"];
-  console.log(warningMessage);
   res.clearCookie("warningMessage", { httpOnly: true });
   res.render("signIn", { title: "Express" });
 });
@@ -24,7 +23,6 @@ router.post("/signIn", passport.authenticate("jwt", { session: false }),
     body: { password },
     user
   } = req;
-  console.log(user);
 
   if (!user) {
     res.cookie("warningMessage", "pls check your Email", { httpOnly: true });
@@ -50,9 +48,8 @@ router.post("/signUp", async function(req, res, next) {
     body: { email, password, password2, name },
   } = req;
 
-  // validation
   if (password !== password2) {
-    res.cookie("warningMessage", "invalid Password", { httpOnly: true });
+    res.cookie("warningMessage", "both Password is not same", { httpOnly: true });
     return res.redirect("/signUp");
   }
 
