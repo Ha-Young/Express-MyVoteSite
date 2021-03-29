@@ -1,5 +1,6 @@
 @import "index.css";
 @import "signup.css";
+@import "login.css";
 
 html,
 body {
@@ -16,7 +17,7 @@ body {
   align-items: center;
 }
 
-a {
+.index-title-signUp {
   text-decoration: none;
   color: white;
 }

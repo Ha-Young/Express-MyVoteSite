@@ -9,6 +9,18 @@
   overflow: hidden;
 }
 
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .index-font-upper {
   font-family: "Times New Roman", Times, serif;
   font-weight: 100;
@@ -31,6 +43,8 @@
     rgba(93, 52, 236, 1) 100.2%
   );
   color: white;
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
 }
 
 .index-font-low {
@@ -47,4 +61,6 @@
     rgba(64, 198, 238, 1) 55.2%,
     rgba(177, 36, 224, 1) 98.4%
   );
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
 }

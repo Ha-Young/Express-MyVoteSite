@@ -3,6 +3,7 @@
 <div class="signup-wrapper">
   <div class="signup-image-board">
     <span class="signup-image-font">SIGN UP!</span>
+    <img class="signup-main-image" src="/images/smileface.jpg">
   </div>
   <div class="signup-board">
     <h1>회원가입</h1>
@@ -27,6 +28,7 @@
         <span class="form-error-message"><%= messages.filter((message) => message.includes('match') ? true : false )%></span>
         <input name="passwordConfirmation" placeholder="Please confirm your password" type="password"></input>
       </div>
+      <span>Already signed Up? <a className="signup-login-button" href="/login">Log In</a></span>
       <div class="form-button-board">
         <button type="submit" class="button">GO!</button>
       </div>

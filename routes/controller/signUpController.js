@@ -10,18 +10,14 @@ exports.renderSignUpPage = function (req, res, next) {
 exports.createUser = async function (req, res, next) {
   console.log("validated body", req.body);
   try {
-    const emailExist = await User.findOne({ email: req.body.email });
+    const isUser = await User.findOne({ email: req.body.email });
 
-    if (emailExist) {
+    if (isUser) {
       const createdErr = createError(400, errorMessage.EMAIL_EXIST);
       next(createdErr);
     }
 
-    // const salt = await bcrypt.genSalt(10);
-    // const hashedPassword = await bcrypt.hash(req.body.password, salt);
-
     const password = await encryptUserPassword(10, req.body.password);
-    console.log("password is............", password);
 
     const user = new User({
       name: req.body.name,
@@ -33,7 +29,6 @@ exports.createUser = async function (req, res, next) {
       await user.save();
       return res.status(200).redirect("/");
     } catch (error) {
-      console.log("in", error);
       const createdErr = createError(500, errorMessage.SERVER_ERROR);
       next(createdErr);
     }

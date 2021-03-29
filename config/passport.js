@@ -4,21 +4,17 @@ const dotenv = require("dotenv");
 
 const JwtStrategy = require("passport-jwt").Strategy;
 const LocalStrategy = require("passport-local").Strategy;
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 dotenv.config();
 
-const UserModel = require("../models/User");
-require("dotenv").config();
+const User = require("../models/User");
 
-const cookieExtractor = (req) => {
-  let jwt = null;
-
-  if (req && req.cookies) {
-    jwt = req.cookies["jwt"];
-  }
-
-  return jwt;
+const extractCookie = (req) => {
+  return req.cookies ? req.cookies["jwt"] : null;
 };
+
+console.log(process.env.GOOGLE_CLIENT_ID);
 
 module.exports = () => {
   passport.use(
@@ -30,18 +26,39 @@ module.exports = () => {
         session: false,
       },
       async function (email, password, done) {
-        const user = await UserModel.findOne({ email });
+        try {
+          const user = await User.findOne({ email });
 
-        if (!user) {
-          return done(null, false);
+          if (!user) {
+            return done(null, false);
+          }
+
+          const validPassword = await bcrypt.compare(password, user.password);
+          if (!validPassword) {
+            return done(null, false);
+          }
+
+          return done(null, user);
+        } catch (error) {
+          return done(error);
         }
+      }
+    )
+  );
 
-        const validPassword = await bcrypt.compare(password, user.password);
-        if (!validPassword) {
-          return done(null, false);
-        }
-
-        return done(null, user);
+  passport.use(
+    "google",
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: "http://localhost:3000/login/auth/google/callback",
+      },
+      function (accessToken, refreshToken, profile, done) {
+        console.log("inside google strategy");
+        User.findOrCreate({ googleId: profile.id }, function (err, user) {
+          return done(err, user);
+        });
       }
     )
   );
@@ -50,19 +67,23 @@ module.exports = () => {
     "jwt",
     new JwtStrategy(
       {
-        jwtFromRequest: cookieExtractor,
+        jwtFromRequest: extractCookie,
         secretOrKey: process.env.JWT_SECRET_KEY,
         session: false,
       },
       async function (jwtPayload, done) {
-        const user = await UserModel.findById(jwtPayload._id);
-
         try {
-          if (!user) {
-            return done(null, false);
-          }
+          const user = await User.findById(jwtPayload._id);
 
-          return done(null, user);
+          try {
+            if (!user) {
+              return done(null, false);
+            }
+
+            return done(null, user);
+          } catch (error) {
+            return done(error);
+          }
         } catch (error) {
           return done(error);
         }
