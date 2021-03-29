@@ -5,6 +5,10 @@ const status = require('statuses');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+
+const session = require('express-session');
+const flash = require('connect-flash');
+
 require('dotenv').config();
 
 const db = mongoose.connection;
@@ -25,11 +29,18 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  cookie: { maxAge: 60000 },
+  secret: process.env.JWT_SECRET,
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(flash());
 
 app.use(require('./routes'));
 

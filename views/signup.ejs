@@ -8,26 +8,36 @@
 </head>
 <body>
   <div class="">
-    <form action="" class="">
+    <form action="/auth/register" method="POST">
       <div class="">
         <div class="">
           <label> e-mail
-            <input type="text" class="">
+            <input type="text" class="" name="email">
           </label>
         </div>
         <div class="">
           <label>닉네임
-            <input type="text" class="">
+            <input type="text" class="" name="name">
           </label>
         </div>
         <div class="">
           <label>비밀번호
-            <input type="text" class="">
+            <input type="text" class="" name="password">
           </label>
         </div>
         <div class="">
           <label>비밀번호 확인
-            <input type="text" class="">
+            <input type="text" class="" name="passwordCheck">
+          </label>
+        </div>
+        <% if (locals.message) { %>
+          <div class="">
+            <h2><%= message.fail %></h2>
+          </div>
+        <% } %>
+        <div class="">
+          <label>회원가입
+            <input type="submit" class="">
           </label>
         </div>
       </div>
