@@ -15,13 +15,13 @@ function validateUserData(userInfo) {
 }
 
 function validateVoting(votingInfo) {
-  const { title, expired_at, voting_options } = votingInfo;
+  const { title, expired_at, options } = votingInfo;
 
-  if (!title || !expired_at || !voting_options) {
+  if (!title || !expired_at || !options) {
     return "Please enter every information";
   }
 
-  if (voting_options.length < 2) {
+  if (options.length < 2) {
     return "Please enter options more then 2";
   }
 

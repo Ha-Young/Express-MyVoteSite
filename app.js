@@ -48,6 +48,7 @@ app.use(passport.session());
 
 app.use("/", index);
 app.use("/users", users);
+app.use("/votings", voting);
 
 app.use((req, res, next) => {
   next(404);

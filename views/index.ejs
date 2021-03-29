@@ -1,1 +1,9 @@
-<h2>hello</h2>
+<a href="/my-votings">내 투표 보기</a>
+<% votings.forEach((voting) => { %>
+  <a href="/votings/<%= voting._id %>">
+    <div><%= voting.title %></div>
+    <div><%= voting.proponent %></div>
+    <div><%= voting.expired_at %></div>
+  </a>
+<% }) %>
+<a href="/votings/new">투표 생성하기</a>

@@ -8,7 +8,7 @@ function confirmUserData(req, res, next) {
 
     return;
   }
-  
+
   delete req.body.confirmPassword; // 여기서 가공해줘도 되나..?
 
   next();
@@ -16,14 +16,13 @@ function confirmUserData(req, res, next) {
 
 function confirmVotingData(req, res, next) {
   const validationMessage = validateVoting(req.body);
-  console.log(req.body);
+
   if (validationMessage) {
-    console.log(validationMessage);
     res.status(200).render("newVoting", { message: validationMessage });
 
     return;
   }
-  
+
   next();
 }
 
