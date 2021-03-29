@@ -20,7 +20,8 @@ module.exports = function ({ app, routerLoader }) {
     src: path.resolve(__dirname, "../../scss"),
     dest: path.resolve(__dirname, "../../public/stylesheets"),
     indentedSyntax: false,
-    outputStyle: 'compressed',
+    force: true,
+    // outputStyle: 'compressed',
   }));
 
   app.use(express.static(path.resolve(__dirname, "../../public")));
