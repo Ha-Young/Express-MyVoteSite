@@ -6,6 +6,7 @@ const DB = process.env.DB_URL.replace(
 );
 
 mongoose.connect(
+  // process.env.DB_LOCAL,
   DB,
   {
     useNewUrlParser: true,
