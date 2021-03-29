@@ -10,4 +10,10 @@ router.get("/signup", function (req, res, next) {
   res.render("signup");
 });
 
+router.post("/signup", function (req, res, next) {
+  console.log(req.body);
+
+  res.send("signup");
+});
+
 module.exports = router;
