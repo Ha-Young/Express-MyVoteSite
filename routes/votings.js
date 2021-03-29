@@ -1,15 +1,12 @@
 const express = require('express');
-const router = express.Router();
 const votingController = require('../controller/votings.controller');
+
+const router = express.Router();
 
 router.get('/', votingController.getAll);
 
-router.post('/votings/new', function(req, res, next) {
+router.post('/votings/new');
 
-});
-
-router.get('/votings/:id', function(req, res, next) {
-
-});
+router.get('/votings/:id');
 
 module.exports = router;
