@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  form#signup-form(action="/users/login" method="post")
+    .form-box
+      label(for="email") E-MAIL
+      input(id="email" type="email" name="email")
+    .form-box
+      label(for="password") PASSWORD
+      input(id="password" type="password" name="password")
+    .form-box
+      label(for="checkedPassword") PASSWORD CHECK
+      input(id="checkedPassword" type="password" name="checkedPassword")
+  ul.button-list
+    li
+      button(type="submit" class="button" form="signup-form") SIGN UP
+    li
+      a(href="/" class="button") GO TO MAIN

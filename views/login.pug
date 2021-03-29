@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  form#login-form(action="/users/login" method="post")
+    .form-box
+      label(for="email") E-MAIL
+      input(id="email" type="email" name="email")
+    .form-box
+      label(for="password") PASSWORD
+      input(id="password" type="password" name="password")
+  ul.button-list
+    li
+      button(type="submit" class="button" form="login-form") LOGIN
+    li
+      button(type="button" class="button") LOGIN WITH GOOGLE
+    li
+      a(href="/users/signup" class="button") CREATE ACCOUNT
