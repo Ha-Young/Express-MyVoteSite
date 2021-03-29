@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const { check, validationResult } = require('express-validator');
+const User = require('../models/User');
 
 exports.getMain = (req, res, next) => {
   const sess = req.session;
@@ -12,16 +13,32 @@ exports.signup = (req, res, next) => {
   res.render('partial/signup');
 };
 
+// eslint-disable-next-line consistent-return
 exports.post = async (req, res, next) => {
-  await check('email').isEmail().run(req);
-  await check('password')
-    .custom(value => value === req.body.confirm).run(req);
+  try {
+    await check('email').isEmail().run(req);
+    await check('password')
+      .custom(value => value === req.body.confirm).run(req);
 
-  const error = validationResult(req);
-  if (!error.isEmpty()) {
-    return next(createError(error.message));
+    console.log(1);
+    const validateError = validationResult(req);
+    if (!validateError.isEmpty()) {
+      console.log(2);
+      next(createError(validateError.status));
+      return;
+    }
+
+    console.log(3);
+    const { username, email, password } = req.body;
+    const result = await new User({ username, email, password }).save();
+    console.log(4);
+    console.log(result);
+    res.redirect('/login');
+  } catch (err) {
+    // res.render('partial/message', {
+    //   message: '이미 가입된 계정입니다',
+    // });
   }
-  res.redirect('/');
 };
 
 exports.login = (req, res, next) => {
