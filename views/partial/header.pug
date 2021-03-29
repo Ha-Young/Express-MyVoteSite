@@ -1,4 +1,10 @@
 #header
-  h1 Voting Platform
-  if (message)
-    h2 #{message}
+  div Voting Platform
+  if (username)
+    div #{username}
+    a(href="myVotings") MY VOUTINGS
+  else
+    div
+      a(href="signup") SIGNUP
+    div
+      a(href="login") LOGIN

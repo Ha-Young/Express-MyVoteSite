@@ -1,8 +1,41 @@
+:root {
+  --graish-blue: #FAFAFA;
+  --skyblue: #E3F2FD;
+  --redish: #DB5461;
+  --navy-deep: #5D737E;
+  --purple-deep: #3D0814;
+  --graish-green: #8AA29E;
+}
+
 body {
-  padding: 50px;
+  all: unset;
+  width: 100vw;
+  height: 100vh;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  overflow: hidden;
 }
 
 a {
-  color: #00B7FF;
+  all: unset;
+  color: var(--graish-blue);
+}
+
+#header {
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: var(--graish-blue);
+  background-color: var(--navy-deep);
+}
+
+#header div {
+  padding: 2vw;
+  margin: 0 2vw;
+  background-color: var(--graish-green);
+}
+
+img {
+  width: 100%;
 }

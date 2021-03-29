@@ -3,7 +3,8 @@ require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const logger = require('morgan');
 const pug = require('pug');
 
@@ -19,8 +20,12 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: process.env.SECRET_KEY,
+  cookie: { maxAge: 60000 }
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -38,6 +43,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
+  res.locals.cats = `https://http.cat/${err.status}`;
   res.render('error');
 });
 

@@ -2,8 +2,10 @@ doctype html
 html
   head
     meta(charset='utf-8')
+    link(rel="stylesheet", href="/stylesheets/style.css")
     title #{title}
   body
     include partial/header
 
     block content
+    block error
