@@ -1,0 +1,17 @@
+.signup-container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  height: 100%;
+}
+
+.signup-label {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.signup-form {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
