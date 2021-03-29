@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const VoteSchema = new mongoose.Schema({
-  title: {type: String, required: true},
-  author: {type: String, required: true},
-  finish_date: {type: Date, required: true},
+  title: { type: String, required: true },
+  author: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  finish_date: { type: Date, required: true },
   status: {
     type: String,
     enum: ['inprogress', 'finished'],
