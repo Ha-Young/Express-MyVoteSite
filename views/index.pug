@@ -1,5 +1,14 @@
 extends layout
 
 block content
-  h1= title
-  p HELLO #{title}
+  h1= votehere
+  p HELLO #{name}
+  if (user)
+    img(src=`${user.avatar_url}`)
+    p=`${user.email}`
+  if (isAuthenticated)
+    form(action='/auth/logout?_method=DELETE' method='POST')
+      button(type='submit') LOGOUT
+  else
+    form(action='/auth/github' method='GET')
+      button(type='submit') LOGIN WITH GITHUB

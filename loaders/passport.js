@@ -12,7 +12,7 @@ function initialize() {
     done(null, user);
   });
   
-  async function authenticateUser(accessToken, refreshToken, profile, done) {
+  function authenticateUser(accessToken, refreshToken, profile, done) {
     try {
       // const user = await User.findOne({ email });
   
@@ -20,7 +20,7 @@ function initialize() {
       //   return done(null, false, { message: "unknown email" });
       // }
   
-      return done(null, user);
+      return done(null, profile);
     } catch (error) {
       return done(error);
     }

@@ -6,6 +6,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
+const methodOverride = require('method-override');
 
 const initializeDB = require('./configs/db');
 const initializePassport = require('./loaders/passport');
@@ -17,17 +18,17 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-initializeDB();
-initializePassport();
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'dist')));
+app.use(require('./configs/session'));
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(methodOverride('_method'));
 
-app.use(require('./configs/session'));
+initializeDB();
+initializePassport();
 
 app.use('/', require('./routes'));
 
