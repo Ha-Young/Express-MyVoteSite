@@ -6,5 +6,17 @@
   </head>
   <body>
     <h1>Home</h1>
+    <div class="vote-container">
+      <% if (votes.length > 0) { %>
+        <% votes.map((vote) => { %>
+          <div class="vote">
+            <h1><%= vote.title %></h1>
+            <p><%= vote.creator %></p>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <div>No votes..😥</div>
+      <% }%>
+    </div>
   </body>
 </html>

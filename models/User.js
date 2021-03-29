@@ -8,13 +8,20 @@ const UserSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    unique: true,
     required: [true, "A user must have a email"],
-    unipue: true,
+    validate: {
+      validator: function (el) {
+        return el.match(/^([\w-]+@([\w-]+\.)+[\w-]{2,4})?$/);
+      },
+      message: "Invalid email",
+    },
   },
   password: {
     type: String,
     select: false,
     required: [true, "A user must have a password"],
+    minLength: 8,
   },
   passwordConfirm: {
     type: String,

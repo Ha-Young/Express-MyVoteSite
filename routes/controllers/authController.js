@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../../models/User");
 const catchAsync = require("../../utils/catchAsync");
-const AppError = require("../../utils/AppError");
 
 exports.renderSignupPage = (req, res, next) => {
   res.render("signup");
