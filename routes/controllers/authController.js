@@ -2,6 +2,8 @@ const passport = require("passport");
 
 const User = require("../../models/User");
 
+const AUTH_MESSAGE = require("../../constants/authConstants");
+
 const Controller = {};
 
 // @route   GET auth/signup
@@ -21,20 +23,20 @@ Controller.postSignup = async (req, res, next) => {
     const checkedUser = await User.findOne({ email });
 
     if (checkedUser) {
-      return res.render("error", { message: "이미 가입된 정보입니다." });
+      return res.render("error", { message: AUTH_MESSAGE.EXISTING_USER });
     }
 
     const user = await User({ email });
 
     if (password !== checkingPassword) {
-      return res.render("error", { message: "비밀번호가 서로 다릅니다. 다시 시도해주세요"});
+      return res.render("error", { message: AUTH_MESSAGE.DIFFERENT_PASSWORD });
     }
 
     await User.register(user, password);
     next();
   } catch (error) {
     console.error(error.message);
-    res.render("error", { message: "회원가입에 실패했습니다. 다시 시도해주세요" });
+    res.render("error", { message: AUTH_MESSAGE.FAIL_REGISTER });
   }
 };
 
