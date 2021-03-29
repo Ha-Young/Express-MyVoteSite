@@ -1,0 +1,50 @@
+<h2>Sign up</h2>
+
+<form method="post" action="/signup">
+  <p>
+    <input 
+      class="signup-input" 
+      type="text" 
+      name="name" 
+      placeholder="&#xf1d8; name" 
+      required
+    >
+  </p>
+  <p>
+    <input
+      class="signup-input" 
+      type="email" 
+      name="email" 
+      placeholder="&#xf0e0; email"
+      required
+    >
+  </p>
+  <p>
+    <input 
+      class="signup-input" 
+      type="password" 
+      name="password" 
+      placeholder="&#xf084; Password" 
+      required
+    >
+  </p>
+  <p>
+    <input 
+      class="signup-input" 
+      type="password" 
+      name="confirmPassword" 
+      placeholder="&#xf084; confirmPassword" 
+      required
+    >
+  </p>
+  <%- include("partials/message") %>
+  <p class="signup-button">
+    <input class="signup-submit" type="submit" value="Signup">
+  </p>
+  <p class="github-button">
+    <a class="github-button-content" href="/login/github">
+      Sign In with Github
+      <i class="fab fa-github"></i>
+    </a>
+  </p>
+</form>
