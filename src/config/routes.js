@@ -1,27 +1,28 @@
-const routeConfig = {
-  home: "/",
-  signup: "/signup",
-  login: "/login",
-  votings: {
-    prefix: "/votings",
-    detail: "/:id",
-    new: "/new",
-    success: "/success",
-    error: "/error",
-  },
-  my: {
-    votings: "my-votings",
+const ROUTE = {
+  HOME: "/",
+  SIGNUP: "/signup",
+  LOGIN: "/login",
+  VOTINGS: {
+    PREFIX: "/votings",
+    DETAIL: "/:id",
+    NEW: "/new",
+    SUCCESS: "/success",
+    ERROR: "/error",
   },
 
-  api: {
-    prefix: "/api",
-    auth: {
-      prefix: "/auth",
-      signup: "/signup",
-      signin: "/signin",
-      logout: "/logout",
+  MY: {
+    VOTHINGS: "my-votings",
+  },
+
+  API: {
+    PREFIX: "/api",
+    AUTH: {
+      PREFIX: "/auth",
+      SIGNUP: "/signup",
+      SIGNIN: "/signin",
+      LOGOUT: "/logout",
     },
   },
 };
 
-module.exports = routeConfig;
+module.exports = ROUTE;
