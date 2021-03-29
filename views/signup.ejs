@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="/stylesheets/style.css" />
+
+<div class="signup-wrapper">
+  <div class="signup-image-board">
+    <span class="signup-image-font">SIGN UP!</span>
+  </div>
+  <div class="signup-board">
+    <h1>회원가입</h1>
+    <form class="signup-form" action="/signup" method="POST">
+      <div class="form-item name">
+        <label for="name"></label>
+        <span class="form-error-message"><%= messages.filter((message) => message.includes('name') ? true : false )%></span>
+        <input name="name" placeholder="name"></input>
+      </div>  
+      <div class="form-item email">
+        <label for="email"></label>
+        <span class="form-error-message"><%= messages.filter((message) => message.includes('email') ? true : false )%></span>
+        <input name="email" placeholder="email"></input>
+      </div>  
+      <div class="form-item password">
+        <label for="password"></label>
+        <span class="form-error-message"><%= messages.filter((message) => message.includes('password') ? true : false )%></span>
+        <input name="password" placeholder="password" type="password"></input>
+      </div>
+      <div class="form-item password-confirmation">
+        <label for="passwordConfirmation"></label>
+        <span class="form-error-message"><%= messages.filter((message) => message.includes('match') ? true : false )%></span>
+        <input name="passwordConfirmation" placeholder="Please confirm your password" type="password"></input>
+      </div>
+      <div class="form-button-board">
+        <button type="submit" class="button">GO!</button>
+      </div>
+    </form>
+  </div>
+</div>
