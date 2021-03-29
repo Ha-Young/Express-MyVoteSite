@@ -1,8 +1,7 @@
 const createError = require('http-errors');
 
 const User = require('../models/User');
-//const catchAsync = require('../middlewares/catchAsync');
-const validateEmail = require('../utils/validateEmail');
+const { validateSignUpInputs } = require('../utils/validateInputs');
 
 exports.getLoginForm = (req, res) => {
   const title = 'Log In';
@@ -16,32 +15,24 @@ exports.getLoginForm = (req, res) => {
 
 exports.getSignUpForm = (req, res) => {
   const title = 'Sign Up';
-  const message = req.flash('info');
+  const messages = req.flash('info');
 
   res.render('signup', {
     title,
-    message,
+    messages
   });
 };
 
 exports.createUser = async (req, res, next) => {
   try {
-    if (!validateEmail(req.body.email)) {
-      req.flash('info', 'please type valid email');
+    const { error, value } = validateSignUpInputs(req.body);
+
+    if (error) {
+      req.flash('info', error.details.map(err => err.message));
       return res.redirect('/auth/signup');
     }
 
-    if (await User.findOne({ email: req.body.email })) {
-      req.flash('info', 'email already exist');
-      return res.redirect('/auth/signup');
-    }
-
-    if (await User.findOne({ username: req.body.username })) {
-      req.flash('info', 'username already exist');
-      return res.redirect('/auth/signup');
-    }
-
-    const user = await User.create(req.body);
+    const user = await User.create(value);
 
     req.login(user, (err) => {
       if (err) {

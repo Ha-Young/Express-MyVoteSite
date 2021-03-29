@@ -10,17 +10,17 @@ const UserSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, 'Please provide a valid email']
   },
-  username: {
+  nickname: {
     type: String,
     unique: true,
-    required: [true, 'Please tell us your username!'],
+    required: [true, 'Please tell us your nickname!'],
     maxlength: 15,
     minlength: 2,
   },
   password: {
     type: String,
     required: [true, 'Please provide a password'],
-    maxlength: 50,
+    maxlength: 20,
     minlength: 8,
     select: false,
   },

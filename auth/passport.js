@@ -2,6 +2,7 @@ const createError = require('http-errors');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
+const { validateLoginInputs } = require('../utils/validateInputs');
 const User = require('../models/User');
 
 module.exports = function (app) {
@@ -27,6 +28,12 @@ module.exports = function (app) {
     },
     async function (email, password, done) {
       try {
+        const { error } = validateLoginInputs(req.body);
+
+        if (error) {
+          return done(null, false, error.message);
+        }
+
         const user = await User.findOne({ email }).select('+password').lean();
 
         if (!user || !await user.comparePassword(password)) {
