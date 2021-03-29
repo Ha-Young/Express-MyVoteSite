@@ -7,7 +7,6 @@ const path = require("path");
 const { format } = require("date-fns");
 const sassMiddleware = require('node-sass-middleware');
 
-
 const { logger } = require("./logger");
 
 module.exports = function ({ app, routerLoader }) {
@@ -17,14 +16,10 @@ module.exports = function ({ app, routerLoader }) {
   app.set('views', './views/pages');
   app.set("layout", "../layout");
 
-  console.log(path.resolve(__dirname, "../../scss"));
-  console.log(path.resolve(__dirname, "../../public/stylesheets"));
-
   app.use(sassMiddleware({
     src: path.resolve(__dirname, "../../scss"),
     dest: path.resolve(__dirname, "../../public/stylesheets"),
-    indentedSyntax: false, // true = .sass and false = .scss
-    debug: true,
+    indentedSyntax: false,
     outputStyle: 'compressed',
   }));
 
