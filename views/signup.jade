@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1 Sign Up
+  form(name="signup", action="/user", method="post")
+    input.email(type="text", name="email", placeholder="email")
+    input.password(type="password", name="password", placeholder="password")
+    input(type="submit" value="submit")
+  a(href="/auth") logIn
+  span #{message}

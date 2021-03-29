@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1 Log In
+  form(name="login", action="/auth" method="post")
+    input.userId(type="text", placeholder="id")
+    input.password(type="text", placeholder="password")
+    input.submit(type="submit", value="로그인")
+  a.signup(href="/user") signUp
