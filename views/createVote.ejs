@@ -6,24 +6,29 @@
 </head>
   <body>
     <div class="voteWrapper">
-      <div>
-        <label for="title">Title: </label>
-        <input type="text" id="title" name="title" required />
-      </div>
-      <div>
-        <label for="date">Date: </label>
-        <input type="date" id="date" name="date" required />
-      </div>
-      <div class="optionListWrapper">
-        <label for="option">Option: </label>
-        <span class="optionList">
-          <input type="text" id="option" name="option" />
-        </span>
+      <form action="/" method="POST">
+        <div>
+          <label for="title">Title: </label>
+          <input type="text" id="title" name="title" required/>
+        </div>
+        <div>
+          <label for="date">Date: </label>
+          <input type="date" id="date" name="date" required/>
+        </div>
+        <div class="optionListWrapper">
+          <label for="option">Option: </label>
+          <span class="optionList">
+            <input type="text" id="option" name="option" required/>
+            <input type="text" id="option" name="option" required/>
+          </span>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+      <div class="btnWrapper">
         <button class="addBtn">Add</button>
-      </div>
-      <div class="buttonWrapper">
-        <button>Submit</button>
-        <button>hom</button>
+        <a href="/">
+          <button>home</button>
+        </a>
       </div>
     </div>
     <Script src="/javascripts/createVote.js"></Script>

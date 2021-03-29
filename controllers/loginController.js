@@ -25,7 +25,7 @@ exports.loginUser = async (req, res, next) => {
     res
       .status(201)
       .cookie("access_token", token, {
-        expires: new Date(Date.now() + 10000)
+        expires: new Date(Date.now() + 100000)
       })
       .redirect(301, "/");
   }
