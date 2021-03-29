@@ -9,6 +9,7 @@ const mongooseConfig = require("./config/mongoose");
 
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth/index");
+const votingRouter = require("./routes/voting/index");
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(bodyParser.json());
 
 app.use("/", indexRouter);
 app.use("/auth", authRouter);
+app.use("/voting", votingRouter);
 
 app.use(function(req, res, next) {
   next(createError(404));

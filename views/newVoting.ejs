@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Voting Platform</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>새로 만들기</h1>
+    <form action="/voting/votings/new" method="POST">
+      <p>투표 제목</p>
+      <input type="text" name="title" required=true>
+      <p>투표 종료 시간</p>
+      <input type="datetime-local" name="end-date" required=true>
+      <p>투표 목록</p>
+      <input type="text" name="first-voting" required=true>
+      <input type="text" name="second-voting" required=true>
+      <input type="text" name="third-voting">
+      <input type="text" name="fourth-voting">
+      <input type="text" name="fifth-voting">
+      <button type="submit">양식 제출</button>
+    </form>
+    <form action="/">
+      <button type="submit">홈으로</button>
+    </form>
+  </body>
+</html>

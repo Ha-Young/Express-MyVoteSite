@@ -2,7 +2,7 @@ const passport = require("passport");
 
 const User = require("../../models/User");
 
-const AUTH_MESSAGE = require("../../constants/authConstants");
+const AUTH = require("../../constants/authConstants");
 
 const Controller = {};
 
@@ -23,20 +23,24 @@ Controller.postSignup = async (req, res, next) => {
     const checkedUser = await User.findOne({ email });
 
     if (checkedUser) {
-      return res.render("error", { message: AUTH_MESSAGE.EXISTING_USER });
+      return res.render("error", { message: AUTH.EXISTING_USER });
+    }
+
+    if (password.legnth < AUTH.PASSWORD_MIN_LENGTH) {
+      return res.render("error", { message: AUTH.PASSWORD_MIN_LENGTH_MESSAGE });
     }
 
     const user = await User({ email });
 
     if (password !== checkingPassword) {
-      return res.render("error", { message: AUTH_MESSAGE.DIFFERENT_PASSWORD });
+      return res.render("error", { message: AUTH.DIFFERENT_PASSWORD });
     }
 
     await User.register(user, password);
     next();
   } catch (error) {
     console.error(error.message);
-    res.render("error", { message: AUTH_MESSAGE.FAIL_REGISTER });
+    res.render("error", { message: AUTH.FAIL_REGISTER });
   }
 };
 
