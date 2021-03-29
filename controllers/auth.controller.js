@@ -5,37 +5,31 @@ const { validateSignUpInputs } = require('../utils/validateInputs');
 
 exports.getLoginForm = (req, res) => {
   const title = 'Log In';
+  const infoMessages = req.flash('info');
   const message = req.flash('error');
 
   res.render('login', {
     title,
-    message,
+    infoMessages,
+    message
   });
 };
 
 exports.getSignUpForm = (req, res) => {
   const title = 'Sign Up';
-  const messages = req.flash('info');
+  const infoMessages = req.flash('info');
 
   res.render('signup', {
     title,
-    messages
+    infoMessages
   });
 };
 
 exports.createUser = async (req, res, next) => {
   try {
-    const { error, value } = validateSignUpInputs(req.body);
+    const user = await User.create(req.body);
 
-    if (error) {
-      console.log(error);
-      req.flash('info', error.details.map(err => err.message));
-      return res.redirect('/auth/signup');
-    }
-
-    const user = await User.create(value);
-
-    req.login(user, (err) => {
+    req.login(user, err => {
       if (err) {
         return next(err);
       }

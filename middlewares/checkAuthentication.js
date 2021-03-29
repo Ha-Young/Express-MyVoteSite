@@ -10,7 +10,6 @@ const checkAuthentication = (req, res, next) => {
     return next();
   }
 
-  //redirect to sign up page?
   return res.redirect('/auth/login');
 }
 

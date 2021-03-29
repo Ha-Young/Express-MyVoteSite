@@ -17,7 +17,7 @@
           required class="form-control-material" />
         <label for="email">email</label>
         <p class="form-message">
-          <%= ...messages.filter(message=> message.includes('email')) %>
+          <%= ...infoMessages.filter(message=> message.includes('email')) %>
         </p>
       </div>
       <div class="form-input-material">
@@ -25,7 +25,7 @@
           minlength="8" required class="form-control-material" />
         <label for="nickname">nickname</label>
         <p class="form-message">
-          <%= ...messages.filter(message=> message.includes('nickname')) %>
+          <%= ...infoMessages.filter(message=> message.includes('nickname')) %>
         </p>
       </div>
       <div class="form-input-material">
@@ -33,7 +33,7 @@
           minlength="8" required class="form-control-material" />
         <label for="password">password</label>
         <p class="form-message">
-          <%= ...messages.filter(message=> !message.includes('confirm') && message.includes('password')) %>
+          <%= ...infoMessages.filter(message=> !message.includes('confirm') && message.includes('password')) %>
         </p>
       </div>
       <div class="form-input-material">
@@ -41,7 +41,7 @@
           autocomplete="off" maxlength="50" minlength="8" required class="form-control-material" />
         <label for="passwordconfirmation">confirm password</label>
         <p class="form-message">
-          <%= ...messages.filter(message=> message.includes('confirm')) %>
+          <%= ...infoMessages.filter(message=> message.includes('confirm')) %>
         </p>
       </div>
       <button type="submit" class="btn btn-ghost">Sign Up</button>

@@ -21,11 +21,17 @@
         <input type="email" name="email" id="email" placeholder=" " autocomplete="off" maxlength="50" minlength="5"
           required class="form-control-material" />
         <label for="email">email</label>
+        <p class="form-message">
+          <%= ...infoMessages.filter(message=> message.includes('email')) %>
+        </p>
       </div>
       <div class="form-input-material">
         <input type="password" name="password" id="password" placeholder=" " autocomplete="off" maxlength="50"
           minlength="8" required class="form-control-material" />
         <label for="password">Password</label>
+        <p class="form-message">
+          <%= ...infoMessages.filter(message=> message.includes('password')) %>
+        </p>
       </div>
       <button type="submit" class="btn btn-ghost">Login</button>
       <div class="link-container">

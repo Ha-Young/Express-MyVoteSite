@@ -28,12 +28,6 @@ module.exports = function (app) {
     },
     async function (email, password, done) {
       try {
-        const { error } = validateLoginInputs(req.body);
-
-        if (error) {
-          return done(null, false, error.message);
-        }
-
         const user = await User.findOne({ email }).select('+password').lean();
 
         if (!user || !await user.comparePassword(password)) {
