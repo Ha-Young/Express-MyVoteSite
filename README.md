@@ -1,3 +1,7 @@
+// TODO
+- sass 파일 git ignore해도 되나?
+
+
 # Voting Platform
 
 ## Development
