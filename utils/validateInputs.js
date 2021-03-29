@@ -17,7 +17,7 @@ exports.validateSignUpInputs = (data) => {
     password_confirmation: Joi.any().equal(Joi.ref('password'))
       .required()
       .label('confirm password')
-      .options({ messages: { 'any.only': '{{#label}} does not match' } })
+      .options({ messages: { 'any.only': '{{#label}} does not match to password' } })
   });
 
   return schema.validate(data, { abortEarly: false });

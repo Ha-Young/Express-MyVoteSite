@@ -3,46 +3,46 @@
 
 <head>
   <title>Voting Platform</title>
-
+  <link rel="stylesheet" href="/stylesheets/auth.css" />
 </head>
 
 <body>
   <main>
-    <form class="login-form" action="/auth/signup" method="post">
+    <form class="auth-form" action="/auth/signup" method="post">
       <h1>
         <%= title %>
       </h1>
       <div class="form-input-material">
-        <h3>
-          <%= ...messages.filter(message=> message.includes('email')) %>
-        </h3>
         <input type="email" name="email" id="email" placeholder=" " autocomplete="off" maxlength="50" minlength="5"
           required class="form-control-material" />
         <label for="email">email</label>
+        <p class="form-message">
+          <%= ...messages.filter(message=> message.includes('email')) %>
+        </p>
       </div>
       <div class="form-input-material">
-        <h3>
-          <%= ...messages.filter(message=> message.includes('nickname')) %>
-        </h3>
         <input type="nickname" name="nickname" id="nickname" placeholder=" " autocomplete="off" maxlength="50"
           minlength="8" required class="form-control-material" />
         <label for="nickname">nickname</label>
+        <p class="form-message">
+          <%= ...messages.filter(message=> message.includes('nickname')) %>
+        </p>
       </div>
       <div class="form-input-material">
-        <h3>
-          <%= ...messages.filter(message=> !message.includes('confirm') && message.includes('password')) %>
-        </h3>
         <input type="password" name="password" id="password" placeholder=" " autocomplete="off" maxlength="50"
           minlength="8" required class="form-control-material" />
         <label for="password">password</label>
+        <p class="form-message">
+          <%= ...messages.filter(message=> !message.includes('confirm') && message.includes('password')) %>
+        </p>
       </div>
       <div class="form-input-material">
-        <h3>
-          <%= ...messages.filter(message=> message.includes('confirm')) %>
-        </h3>
         <input type="password" name="password_confirmation" id="password-confirmation" placeholder=" "
           autocomplete="off" maxlength="50" minlength="8" required class="form-control-material" />
         <label for="passwordconfirmation">confirm password</label>
+        <p class="form-message">
+          <%= ...messages.filter(message=> message.includes('confirm')) %>
+        </p>
       </div>
       <button type="submit" class="btn btn-ghost">Sign Up</button>
     </form>

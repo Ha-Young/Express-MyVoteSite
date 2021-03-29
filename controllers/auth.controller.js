@@ -28,6 +28,7 @@ exports.createUser = async (req, res, next) => {
     const { error, value } = validateSignUpInputs(req.body);
 
     if (error) {
+      console.log(error);
       req.flash('info', error.details.map(err => err.message));
       return res.redirect('/auth/signup');
     }
