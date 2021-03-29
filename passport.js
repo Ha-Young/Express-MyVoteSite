@@ -1,7 +1,6 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const JwtStrategy = require("passport-jwt").Strategy;
-const bcrypt = require("bcrypt");
 const User = require("./model/User");
 
 const cookieExtractor = function(req) {
@@ -30,9 +29,11 @@ passport.use(new JwtStrategy({
 }, function(jwt_payload, done) {
   console.log('payload : ', jwt_payload);
   User.findOne({ id: jwt_payload.sub }, function(err, user) {
+    console.log(err, user);
     if (err) {
       return done(err, false);
     }
+
     if (user) {
       return done(null, user);
     } else {
