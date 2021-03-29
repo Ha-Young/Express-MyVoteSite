@@ -9,6 +9,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "비밀번호를 입력해주세요"],
   },
+  _salt: {
+    type: String,
+    required: [true, "salt is required"],
+  },
   user_name: {
     type: String,
     required: [true, "사용자 이름(별명)을 입력해주세요"],

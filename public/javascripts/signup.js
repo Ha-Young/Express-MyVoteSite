@@ -72,7 +72,7 @@ $submit.addEventListener("click", event => {
       return alert(`${TRANSLATIONS[key]}이/가 유효하지 않습니다. 😥`);
     }
   }
-
+  delete userData.passwordConfirm;
   const stringUserData = JSON.stringify(userData);
 
   const xhr = new XMLHttpRequest();
@@ -82,10 +82,10 @@ $submit.addEventListener("click", event => {
 
   xhr.onload = e => {
     debugger;
-    if (xhr.status === 200) {
-
+    if (xhr.status === 302) {
+      window.location.replace(window.location.origin + xhr.responseText);
     } else {
-
+      alert(xhr.responseText);
     }
   };
 });

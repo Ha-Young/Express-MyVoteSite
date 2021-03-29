@@ -1,10 +1,7 @@
 const router = require("express").Router();
+const validateUser = require("../middlewares/validateUser");
 
-const {
-  getSignup,
-  validateUser,
-  addUser,
-} = require("./controllers/singup.controller");
+const { getSignup, addUser } = require("./controllers/singup.controller");
 
 router.get("/", getSignup);
 router.post("/", validateUser, addUser);

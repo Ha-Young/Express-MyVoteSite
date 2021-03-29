@@ -5,26 +5,26 @@
     <link rel="stylesheet" href="/stylesheets/signup.css" />
   </head>
   <body>
-    <div class="signup-container">
-      <h1>회원가입</h1>
-          <label>
-            email :
-            <input type="text" id="email" name="email" />
-          </label>
-          <label>
-            별명 :
-            <input type="text" id="user-name" name="username" />
-          </label>
-          <label>
-            비밀번호 :
-            <input type="password" id="password" name="password" />
-          </label>
-          <label>
-            비밀번호 확인 :
-            <input type="password" id="password-confirm" name="password-confirm" />
-          </label>
-          <button id="submit">가입하기</button>
-    </div>
+    <h1>회원가입</h1>
+    <form method="post">
+      <label>
+        email :
+        <input type="text" id="email" name="email" autocomplete="username"/>
+      </label>
+      <label>
+        별명 :
+        <input type="text" id="user-name" name="username" />
+      </label>
+      <label>
+        비밀번호 :
+        <input type="password" id="password" name="password" autocomplete="new-password" />
+      </label>
+      <label>
+        비밀번호 확인 :
+        <input type="password" id="password-confirm" name="password-confirm" autocomplete="new-password" />
+      </label>
+    </form>
+      <button id="submit">가입하기</button>
     <script type="module" src="/javascripts/signup.js"></script>
   </body>
 </html>
