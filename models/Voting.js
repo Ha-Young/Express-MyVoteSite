@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const VoteSchema = new mongoose.Schema({
+const VotingSchema = new mongoose.Schema({
   title: { type: String, required: true },
   author: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   finish_date: { type: Date, required: true },
@@ -21,4 +21,4 @@ const VoteSchema = new mongoose.Schema({
   }]
 });
 
-module.exports = mongoose.model('Vote', VoteSchema);
+module.exports = mongoose.model('Voting', VotingSchema);

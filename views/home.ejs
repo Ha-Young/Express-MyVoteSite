@@ -13,22 +13,31 @@
     <% include ./partials/header %>
   </header>
   <div class="home-grid-wrapper">
-    <% for (const vote of votes) { %>
-      <div class="home-grid-item">
-        <div class=""><%= vote.title %></div>
-        <div class="">
+    <% for (const voting of votings) { %>
+      <a href="<%= `/votings/${voting._id}` %>" class="">
+        <div class="home-grid-item">
+          <div class=""><%= voting.title %></div>
           <div class="">
-            <%= vote.author.name %>
-          </div>
-          <div class="">
-            <%= vote.finish_date %>
-          </div>
-          <div class="">
-            <%= vote.status %>
+            <div class="">
+              <%= voting.author.name %>
+            </div>
+            <div class="">
+              <%= voting.finish_date %>
+            </div>
+            <div class="">
+              <%= voting.status %>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
     <% } %>
+  </div>
+  <div class="">
+    <div class="">
+      <a href="/votings/new" class="">
+        투표 만들기
+      </a>
+    </div>
   </div>
 </body>
 </html>

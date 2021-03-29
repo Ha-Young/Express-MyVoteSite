@@ -66,3 +66,8 @@ exports.login = async function (req, res) {
   ));
   res.status(301).redirect('/');
 }
+
+exports.logout = function (req, res, next) {
+  res.clearCookie('token');
+  res.status(301). render('/');
+}

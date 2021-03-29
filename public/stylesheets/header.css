@@ -11,4 +11,9 @@
 .header-right {
   display: flex;
   width: 70%;
+  justify-content: flex-end;
+}
+
+.header-item {
+  width: 150px;
 }

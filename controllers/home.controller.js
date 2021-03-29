@@ -1,7 +1,7 @@
-const Vote = require('../models/Vote');
+const Voting = require('../models/Voting');
 
-exports.getVotes = async function (res, res, next) {
-  const votes = await Vote.find();
+exports.getVotings = async function (res, res, next) {
+  const votings = await Voting.find();
 
-  res.render('home', { votes });
+  res.render('home', { votings });
 }
