@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 
 const createError = require("http-errors");
@@ -7,7 +6,11 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
+const signupRouter = require("./routes/signup");
+
+const connectMongoDB = require("./middlewares/connectMongoDB");
+
+connectMongoDB();
 
 const app = express();
 
@@ -25,7 +28,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/signup", signupRouter);
 
 app.use((req, res, next) => {
   next(createError(404));
