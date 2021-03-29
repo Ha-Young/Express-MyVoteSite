@@ -1,16 +1,14 @@
 const mongoose = require("mongoose");
 // const validator = require("validator");
 const { Schema } = mongoose;
-const { ObjectId, Mixed } = Schema;
+const {
+  Types: { ObjectId, Mixed },
+} = Schema;
 
 const OptionSchema = new Schema({
-  name: {
-    type: Mixed,
-    required: [true, "An option must have a name"],
-  },
-  votee: {
-    type: [ObjectId],
-  },
+  name: Mixed,
+  votee: [ObjectId],
+  ref: "User",
 });
 
 const VotingSchema = new Schema({
@@ -25,6 +23,7 @@ const VotingSchema = new Schema({
     ref: "User",
     required: [true, "A voting must have a creator"],
   },
+  startAt: {},
   createdAt: {
     type: Date,
     default: Date.now(),
@@ -32,6 +31,10 @@ const VotingSchema = new Schema({
   endedAt: {
     type: Date,
     required: [true, "A voting must have a end date"],
+    validate: {
+      validator: (date) => date,
+      message: "The end date must be lator than now",
+    },
   },
   status: {
     type: String,
