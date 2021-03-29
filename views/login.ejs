@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Voting Platform</title>
+
+</head>
+
+<body>
+  <main>
+    <form class="login-form" action="/auth/login" method="post">
+      <h1>
+        <%= title %>
+      </h1>
+      <div class="message-container">
+        <h3>
+          <%= message %>
+        </h3>
+      </div>
+      <div class="form-input-material">
+        <input type="email" name="email" id="email" placeholder=" " autocomplete="off" maxlength="50" minlength="5"
+          required class="form-control-material" />
+        <label for="email">email</label>
+      </div>
+      <div class="form-input-material">
+        <input type="password" name="password" id="password" placeholder=" " autocomplete="off" maxlength="50"
+          minlength="8" required class="form-control-material" />
+        <label for="password">Password</label>
+      </div>
+      <button type="submit" class="btn btn-ghost">Login</button>
+      <div class="link-container">
+        <a class="link" href="/auth/signup">Sign up</a> if you don't have an account yet.
+      </div>
+    </form>
+  </main>
+</body>
+
+</html>
