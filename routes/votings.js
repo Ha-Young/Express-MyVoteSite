@@ -4,5 +4,6 @@ const isLoggedIn = require('./middleware/isLoggedIn');
 const votingsController = require('./controllers/votings.controller');
 
 router.get('/new', isLoggedIn, votingsController.get);
+router.post('/new', isLoggedIn, votingsController.post);
 
 module.exports = router;
