@@ -1,0 +1,11 @@
+extends layouts/main
+
+block content
+  h1 #{pageTitle}
+  .login-container
+    form.login-form(action="./auth/login" method="POST")
+      input(type="email" placeholder="email" name="email" required=true)
+      input(type="password" placeholder="password" name="password" required=true)
+      button.login-button Login
+    a.signup-link(href="./signup")
+      button.signup-button Signup
