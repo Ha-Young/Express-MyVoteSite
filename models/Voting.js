@@ -23,8 +23,8 @@ const VotingSchema = new Schema({
     default: true,
   },
   votingList: {
-    type: Array,
-    default: [],
+    type: Object,
+    default: {},
   },
   votingUserList:
     [

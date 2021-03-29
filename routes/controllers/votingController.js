@@ -1,9 +1,7 @@
-const passport = require("passport");
 const createError = require("http-errors");
 
 const User = require("../../models/User");
-const Post = require("../../models/Voting");
-const { log } = require("debug");
+const Voting = require("../../models/Voting");
 
 const Controller = {};
 
@@ -12,7 +10,7 @@ const Controller = {};
 // @access  Public
 Controller.getNewVoting = async (req, res, next) => {
   try {
-    const votings = await Post.find();
+    const votings = await Voting.find();
 
     res.render("newVoting", { votings });
   } catch (error) {
@@ -29,30 +27,31 @@ Controller.postNewVoting = async (req, res, next) => {
     const userId = req.user._id;
     const { title } = req.body;
     const endDate = req.body["end-date"];
-    const votingList = [];
+    const votingList = {};
 
     for (const votingElement in req.body) {
-      if (votingElement.includes("voting") && 0 < req.body[votingElement].length) {
-        votingList.push(req.body[votingElement]);
+      const votingValue = req.body[votingElement];
+
+      if (votingElement.includes("voting") && 0 < votingValue.length) {
+        votingList[votingValue] = [];
       }
     }
 
-    const newVoting = new Post({
+    const newVoting = new Voting({
       title,
       endDate,
       votingList,
       user: userId,
     });
 
-    await newVoting.save();
+    newVoting.save().then(async (savedVoting) => {
+      const user = await User.findOne({ _id: userId });
 
-    const newVotingInfo = await Post.findOne({ user: userId });
-    const user = await User.findOne({ _id: userId });
+      user.votingList.push(savedVoting._id);
 
-    user.votingList.push(newVotingInfo._id);
-
-    await user.save();
-    res.redirect("/");
+      await user.save();
+      res.redirect("/");
+    });
   } catch (error) {
     console.error(error.message);
     next(createError(500, "Server Error"));
@@ -61,7 +60,7 @@ Controller.postNewVoting = async (req, res, next) => {
 
 // @route   GET voting/votings/my-votings
 // @desc    Render my Votings page
-// @access  Public
+// @access  Private
 Controller.getMyVotings = async (req, res, next) => {
   try {
   } catch (error) {
