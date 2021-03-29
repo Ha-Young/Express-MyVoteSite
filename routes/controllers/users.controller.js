@@ -10,7 +10,7 @@ exports.signUp = async(req, res, next) => {
 
   try {
     await user.save();
-    res.status(201).render("success", { message: "WELCOME TO VOTING FLATFORM"});
+    res.status(201).redirect("/users/login");
   } catch (err) {
     console.log(err);
     next(createError(500, "Internal Server Error"));
