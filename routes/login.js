@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express();
-const isloggedIn = require('./middleware/isLoggedIn');
 const loginController = require('./controllers/login.controller');
 
 router.get('/', loginController.get);

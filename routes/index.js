@@ -6,9 +6,27 @@ const isLoggedIn = require('./middleware/isLoggedIn');
 const User = require('../models/user');
 
 /* GET home page. */
-router.get('/', isLoggedIn, function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Vote Flatform' });
 });
+
+router.get('/logout', isLoggedIn, (req, res, next) => {
+  res.render('logout');
+});
+
+router.get('/logout/callback', isLoggedIn, (req, res, next)=> {
+  if (req.session) {
+    try {
+      req.logOut();
+      req.session.destroy();
+      res.redirect('/');
+    } catch (e) {
+      next(e);
+    }
+  } else {
+    res.redirect('/');
+  }
+})
 
 router.get('/signup', function(req, res, next) {
   res.render('signup');

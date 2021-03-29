@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const flash = require('express-flash');
+const MongoStore = require('connect-mongo');
 require('dotenv').config();
 
 const dbLoader = require('./loaders/db/connectDB');
@@ -11,6 +12,7 @@ const passportLoader = require('./loaders/passports');
 
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
+const votingsRouter = require('./routes/votings');
 
 const app = express();
 
@@ -39,6 +41,7 @@ passportLoader(app);
 
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
+app.use('/votings', votingsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include ('partials/head') %>
+    <!-- <link rel="stylesheet" href="/stylesheets/signPage.css"> -->
+  </head>
+  <body>
+    <%- include ('partials/header') %>
+
+    <h1 class="page-title">Sign Out</h1>
+    <form action="/logout/callback" method="GET">
+      <h2 class="page-ment">로그아웃 하시겠습니까?</h2>
+      <button class="page-button" type="submit">YES</button>
+    </form>
+
+    <%- include ('partials/footer') %>
+  </body>
+</html>

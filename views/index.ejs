@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <%- include ('partials/head') %>
   </head>
   <body>
     <h1><%= title %></h1>
     <h2>Welcome to <%= title %></h2>
-    <a href='/login'>login</a>
+    <a href="/login">Login</a>
+    <a href="/logout">Logout</a>
+    <a href="/votings/new">Add Vote</a>
   </body>
 </html>

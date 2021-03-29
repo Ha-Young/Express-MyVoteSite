@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include ('partials/head') %>
+    <!-- <link rel="stylesheet" href="/stylesheets/signPage.css"> -->
+  </head>
+  <body>
+    <%- include ('partials/header') %>
+
+    <h1 class="page-title">Create Vote</h1>
+    <form action="/votings/new" method="POST">
+      <input type="text" id="title" placeholder="vote title" required>
+      <div>
+        <label><input type="radio" name="value-type" value="text" checked>TEXT</label>
+        <label><input type="radio" name="value-type" value="date">DATE</label>
+      </div>
+      <input type="date" id="expired-date" required>
+      <div id="options">
+        <input type="option" class="option" placeholder="write option" required>
+        <input type="option" class="option" placeholder="write option" required>
+      </div>
+      <div id="create">
+        <span> + Add Option</span>
+      </div>
+      <div>
+        <button class="page-button" type="submit">Done</button>
+        <button id="reset" type="reset">Reset</button>
+      </div>
+    </form>
+    <a href="/">Home</a>
+
+    <%- include ('partials/footer') %>
+    <script src="/javascripts/votingCreate.js"></script>
+  </body>
+</html>

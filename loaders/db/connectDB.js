@@ -5,7 +5,7 @@ function dbLoader() {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
-  });
+  }).then(n => n.connection.getClient());
 
   mongoose.connection.on('error', () => {
     console.log("MongoDB Atlas database connected failure!!");
