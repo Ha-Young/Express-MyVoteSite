@@ -2,13 +2,19 @@ extends layout
 
 block content
   h1= votehere
-  p HELLO #{name}
   if (user)
+    p Hello #{user.name}
     img(src=`${user.avatar_url}`)
     p=`${user.email}`
-  if (isAuthenticated)
+  else
+    p HELLO GUEST
+  if (user)
     form(action='/auth/logout?_method=DELETE' method='POST')
       button(type='submit') LOGOUT
   else
     form(action='/auth/github' method='GET')
       button(type='submit') LOGIN WITH GITHUB
+  button(id="plusButton") ADD
+  ul(id="list")
+  
+  script(type='text/javascript' src='../javascripts/index.js')

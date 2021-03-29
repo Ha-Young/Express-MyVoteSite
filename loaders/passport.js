@@ -1,27 +1,37 @@
 const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
 
+const User = require('../models/User');
+
 function initialize() {
   passport.serializeUser((user, done) => {
-    // TODO: user => user.id
-    done(null, user);
+    // console.log(user);
+    done(null, user._id);
   });
   
-  passport.deserializeUser((user, done) => {
-    // TODO: find user by id
-    done(null, user);
-  });
-  
-  function authenticateUser(accessToken, refreshToken, profile, done) {
+  passport.deserializeUser(async (id, done) => {
     try {
-      // const user = await User.findOne({ email });
-  
-      // if (!user) {
-      //   return done(null, false, { message: "unknown email" });
-      // }
-  
-      return done(null, profile);
+      const user = await User.findById(id);
+      done(null, user);
     } catch (error) {
+      // TODO: flash or error page.
+      console.error(error);
+    }
+  });
+  
+  async function authenticateUser(accessToken, refreshToken, profile, done) {
+    const { email, login: name, avatar_url } = profile._json;
+
+    try {
+      const user = await User.findOrCreate({ 
+        email,
+        name,
+        avatar_url,
+      });
+
+      return done(null, user.doc);
+    } catch (error) {
+      // TODO: flash or error page.
       return done(error);
     }
   }

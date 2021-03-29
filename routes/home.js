@@ -3,16 +3,11 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  const isAuthenticated = !!req.user;
-  
-  if (isAuthenticated) {
-    res.locals.user = req.user._json;
+  if (req.user) {
+    res.locals.user = req.user;
   }
 
-  res.render('index', {
-    name: isAuthenticated ? req.user.username : 'Guest',
-    isAuthenticated,
-  });
+  res.render('index');
 });
 
 module.exports = router;
