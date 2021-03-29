@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const argon2 = require('argon2');
+const jwt = require('jsonwebtoken')
 const User = require('../models/User');
 
 const registerSchema = Joi.object({
@@ -37,4 +38,31 @@ exports.register = async function (req, res) {
 
     res.redirect('/login');
   }
+}
+
+exports.login = async function (req, res) {
+  const { email, password } = req.body;
+
+  const userRecord = await User.findOne({ email });
+
+  if (!userRecord) {
+    // TODO flash 설정해서 넘기기..!! login에서도 받을 수 있도록 설정해줘야함.
+    // email 틀린거임!!
+    return res.status(301).redirect('/login');
+  }
+
+  const correctPassword = await argon2.verify(userRecord.password, password);
+
+  if (!correctPassword) {
+    // TODO flash 설정해서 넘기기..!! login에서도 받을 수 있도록 설정해줘야함.
+    // 비밀번호 틀린거임!!
+    return res.status(301).redirect('/login');
+  }
+
+  res.cookie('token', jwt.sign(
+    { id: userRecord._id },
+    process.env.JWT_SECRET,
+    { expiresIn: '1H'}
+  ));
+  res.redirect('/');
 }
