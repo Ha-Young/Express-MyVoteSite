@@ -30,12 +30,12 @@
         body: JSON.stringify(user),
       });
 
-      const result = await response.json();
+      const signupResult = await response.json();
 
-      if (result.result) {
+      if (signupResult.result) {
         window.location.href = "./login";
       } else {
-        setMessage(result.message);
+        setMessage(signupResult.message);
       }
     } catch (err) {
       setMessage("error!");
