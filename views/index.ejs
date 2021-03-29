@@ -16,5 +16,19 @@
     <form action="/auth/login" method="GET">
       <button type="submit">로그인</button>
     </form>
+    <ul>
+      <% votings.forEach(voting => { %>
+        <li>
+          <p>제목</p>
+          <%= voting.title %>
+          <p>투표 시작 날짜</p>
+          <%= voting.startDate %>
+          <p>투표 종료 날짜</p>
+          <%= voting.endDate %>
+          <p>투표 진행 여부</p>
+          <%= voting.isProgress %>
+        </li>
+      <% }) %>
+    </ul>
   </body>
 </html>

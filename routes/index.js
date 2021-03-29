@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const Post = require("../models/Voting");
+const Voting = require("../models/Voting");
 
 router.get("/", async (req, res, next) => {
   try {
-    const votings = await Post.find();
+    const votings = await Voting.find();
 
     res.render("index", { votings });
   } catch (error) {

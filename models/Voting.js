@@ -22,7 +22,7 @@ const VotingSchema = new Schema({
     type: Boolean,
     default: true,
   },
-  votingList: {
+  votingElements: {
     type: Object,
     default: {},
   },
