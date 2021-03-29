@@ -1,0 +1,16 @@
+.voteWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  margin-top: 40vh;
+  width: 400px;
+  position: absolute;
+  left: 40%;
+}
+
+.optionList {
+  display: flex;
+  flex-direction: column;
+}

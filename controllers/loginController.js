@@ -4,6 +4,10 @@ const createError = require("http-errors");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
+exports.loginPage = (req, res) => {
+  res.render("login");
+};
+
 exports.loginUser = async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -16,7 +20,7 @@ exports.loginUser = async (req, res, next) => {
   if (!user) {
     res.redirect(301, "/login");
   } else {
-    const token = jwt.sign({ email }, process.env.JWT_SECRET);
+    const token = jwt.sign({ email }, process.env.JWT_SECRETKEY);
 
     res
       .status(201)
