@@ -13,3 +13,11 @@ exports.refreshAccessToken = (refreshToken) => {
     return this.generateAccessToken(user, process.env.ACCESS_TOKEN_SECRET, "15m");
   });
 };
+
+exports.getUserName = (cookies) => {
+  if (cookies.accessToken) {
+    return jwt.verify(cookies.accessToken, process.env.ACCESS_TOKEN_SECRET);
+  } else {
+    return false;
+  }
+};
