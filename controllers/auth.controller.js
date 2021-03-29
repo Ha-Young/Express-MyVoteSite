@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const argon2 = require('argon2');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const registerSchema = Joi.object({
@@ -19,24 +19,24 @@ exports.register = async function (req, res) {
     return res.redirect('/signup');
   }
 
-  const { email, name, password, passwordCheck } = req.body;
+  const { email, name, password } = req.body;
 
   const isEmailAlreadyUsed = await User.exists({ email });
 
   if (isEmailAlreadyUsed) {
     // TODO flash 설정해서 넘기기..!! signup에서도 받을 수 있도록 설정해줘야함.
     console.log('이메일 중복~')
-    return res.redirect('/signup');
+    return res.status(301).redirect('/signup');
   } else {
     const passwordHashed = await argon2.hash(password);
 
-    User.create({
+    await User.create({
       email,
       name,
       password: passwordHashed,
     });
 
-    res.redirect('/login');
+    res.status(301).redirect('/login');
   }
 }
 
@@ -47,7 +47,7 @@ exports.login = async function (req, res) {
 
   if (!userRecord) {
     // TODO flash 설정해서 넘기기..!! login에서도 받을 수 있도록 설정해줘야함.
-    // email 틀린거임!!
+    // email 없는거임!!
     return res.status(301).redirect('/login');
   }
 
@@ -64,5 +64,5 @@ exports.login = async function (req, res) {
     process.env.JWT_SECRET,
     { expiresIn: '1H'}
   ));
-  res.redirect('/');
+  res.status(301).redirect('/');
 }
