@@ -12,7 +12,8 @@ module.exports = function ({ app, routerLoader }) {
   app.set("view engine", "ejs");
   app.use(expressLayouts);
 
-  app.set("layout", "layout");
+  app.set('views', './views/pages');
+  app.set("layout", "../layout");
 
   app.use(cors());
   app.use(express.json());
@@ -26,7 +27,7 @@ module.exports = function ({ app, routerLoader }) {
 
   // catch 404 and forward to error handler
   app.use(function (req, res, next) {
-    res.render('pages/404', { user: req.user || {} });
+    res.render('404', { user: req.user || {} });
   });
 
   // error handler
@@ -40,6 +41,6 @@ module.exports = function ({ app, routerLoader }) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('pages/error', { user: req.user || {} });
+    res.render('error', { user: req.user || {} });
   });
 };
