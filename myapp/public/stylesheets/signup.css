@@ -1,0 +1,25 @@
+form {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 50vw;
+  height: 50vh;
+  background-color: goldenrod;
+}
+
+.input-text {
+  display: flex;
+  flex-flow: column;
+  text-align: center;
+  width: 70%;
+  height: 10%;
+}
+
+.input-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  height: 10%;
+}
