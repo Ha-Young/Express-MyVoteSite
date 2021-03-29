@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
   bcrypt.genSalt(saltRounds, function (err, salt) {
     bcrypt.hash(password, salt, function (err, hash) {
       if (err) {
-        throw new Error("비밀번호 해시 생성 실패");
+        throw new Error("오류 발생");
       }
 
       newUser.password = hash;
