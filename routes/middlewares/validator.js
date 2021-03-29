@@ -1,5 +1,5 @@
 const { check, validationResult } = require("express-validator");
-const User = require("../models/User");
+const User = require("../../models/User");
 
 exports.validateUser = [
   check("email")
@@ -13,8 +13,8 @@ exports.validateUser = [
       return true;
     }),
   check("name")
-    .isLength({ min: 3 })
-    .withMessage("Name should have minimum length of 3"),
+    .isLength({ min: 3, max: 10 })
+    .withMessage("Name should have minimum length of 2"),
   check("password")
     .isLength({ min: 8, max: 12 })
     .withMessage("Password should have min and max length between 8 - 12")

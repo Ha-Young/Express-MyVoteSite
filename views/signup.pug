@@ -14,6 +14,11 @@ block content
     .form-box
       label(for="confirmedPassword") PASSWORD CHECK
       input(id="confirmedPassword" type="password" name="confirmedPassword" required)
+  .guide
+    ul
+      li 이름은 최소 2글자 최대 10글자까지 가능합니다.
+      li 비밀번호는 최소 8글자 최대 12글자까지 가능합니다.
+      li 비밀번호는 최소 하나의 숫자와 하나의 특수문자를 포함해야 합니다.
   if (error)
     p.validation #{ error.msg }
   ul.button-list
