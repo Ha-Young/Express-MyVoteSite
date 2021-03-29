@@ -5,9 +5,9 @@ const logger = require("morgan");
 
 const CreateError = require("./utils/createError");
 const globalErrorHandler = require("./controllers/errorController");
-const indexRouter = require("./routes/index");
-const authRouter = require("./routes/auth");
-const votingsRouter = require("./routes/votings");
+const mainRouter = require("./routes/mainRoute");
+const authRouter = require("./routes/authRoute");
+const votingsRouter = require("./routes/votingRoute");
 
 const app = express();
 
@@ -25,7 +25,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", indexRouter);
+app.use("/", mainRouter);
 app.use("/signup", authRouter);
 app.use("/login", authRouter);
 app.use("/votings", votingsRouter);

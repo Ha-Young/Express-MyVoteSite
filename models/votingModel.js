@@ -7,8 +7,10 @@ const {
 
 const OptionSchema = new Schema({
   name: Mixed,
-  votee: [ObjectId],
-  ref: "User",
+  votee: {
+    type: [ObjectId],
+    ref: "User",
+  },
 });
 
 const VotingSchema = new Schema({
@@ -23,17 +25,24 @@ const VotingSchema = new Schema({
     ref: "User",
     required: [true, "A voting must have a creator"],
   },
-  startAt: {},
   createdAt: {
     type: Date,
     default: Date.now(),
   },
-  endedAt: {
+  startAt: {
+    type: Date,
+    required: [true, "A voting must have a start date"],
+    validate: {
+      validator: (date) => date,
+      message: "The start date must be lator than now",
+    },
+  },
+  endAt: {
     type: Date,
     required: [true, "A voting must have a end date"],
     validate: {
       validator: (date) => date,
-      message: "The end date must be lator than now",
+      message: "The end date must be lator than start date",
     },
   },
   status: {

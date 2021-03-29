@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const { Schema } = mongoose;
-const { ObjectId } = Schema;
+const {
+  Types: { ObjectId },
+} = Schema;
 
 const UserSchema = new Schema({
   name: {
