@@ -1,4 +1,5 @@
 const { check, validationResult } = require("express-validator");
+const bcrypt = require("bcrypt");
 const User = require("../../models/User");
 
 exports.validateUser = [
@@ -38,3 +39,33 @@ exports.validateUser = [
     next();
   }
 ];
+
+exports.validateLogin = [
+  check("email")
+    .isEmail()
+    .withMessage("Invalid email address")
+    .custom(async value => {
+      const user = await User.findOne({ email: value });
+      if (!user) {
+        throw new Error("Email is not existed.");
+      }
+      return true;
+    }),
+  check("password")
+    .custom(async (value, { req }) => {
+      const user = await User.findOne({ email: req.body.email });
+      const isMatched = await bcrypt.compare(value, user.password);
+      if (!isMatched) {
+        throw new Error("Password is incorrect.");
+      }
+      return true;
+    }),
+  (req, res, next) => {
+    const result = validationResult(req);
+
+    if (!result.isEmpty()) {
+      return res.status(422).render("login", { error: result.errors[0] });
+    }
+    next();
+  }
+]

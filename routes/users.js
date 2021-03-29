@@ -1,12 +1,17 @@
 const express = require("express");
 const usersController = require("./controllers/users.controller");
-const { validateUser } = require("./middlewares/validator");
+const authenticateToken = require("./middlewares/authorization");
+const { validateUser, validateLogin } = require("./middlewares/validator");
 const router = express.Router();
 
 /* GET users listing. */
 router.get("/login", (req, res, next) => {
   res.status(200).render("login");
 });
+
+router.post("/login", validateLogin, usersController.createToken);
+
+router.post("/logout", usersController.signOut);
 
 router.get("/signup", (req, res, next) => {
   res.status(200).render("signup", { error: null });

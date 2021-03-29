@@ -8,6 +8,8 @@ block content
     .form-box
       label(for="password") PASSWORD
       input(id="password" type="password" name="password")
+  if (error)
+    p.validation #{ error.msg }
   ul.button-list
     li
       button(type="submit" class="button" form="login-form") LOGIN
