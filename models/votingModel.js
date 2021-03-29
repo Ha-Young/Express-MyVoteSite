@@ -50,8 +50,7 @@ const VotingSchema = new Schema({
     required: [true, "A voting must have status"],
     enum: {
       values: ["upcoming", "in progress", "ended", "canceled"],
-      message:
-        "Status is either: 'upcoming', 'in progress', 'ended', 'canceled'",
+      message: "Status is either: upcoming, in progress, ended, canceled",
     },
   },
   options: {

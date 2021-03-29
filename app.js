@@ -5,9 +5,10 @@ const logger = require("morgan");
 
 const CreateError = require("./utils/createError");
 const globalErrorHandler = require("./controllers/errorController");
-const mainRouter = require("./routes/mainRoute");
-const authRouter = require("./routes/authRoute");
-const votingsRouter = require("./routes/votingRoute");
+const mainRouter = require("./routes/mainRouter");
+const userRouter = require("./routes/userRouter");
+const votingsRouter = require("./routes/votingRouter");
+const checkTokenAuth = require("./middlewares/checkTokenAuth");
 
 const app = express();
 
@@ -25,10 +26,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", mainRouter);
-app.use("/signup", authRouter);
-app.use("/login", authRouter);
-app.use("/votings", votingsRouter);
+app.use("/", checkTokenAuth, mainRouter);
+app.use("/users", userRouter);
+app.use("/votings", checkTokenAuth, votingsRouter);
 
 app.all("*", (req, res, next) => {
   next(new CreateError(`Can't find ${req.originalUrl} on this server!`, 404));

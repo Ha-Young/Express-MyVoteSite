@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const votingController = require("./../controllers/votingController");
+const votingController = require("../controllers/votingController");
 
 // 투표 생성창
 router
