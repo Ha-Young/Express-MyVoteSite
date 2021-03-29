@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-// const validator = require("validator");
 const { Schema } = mongoose;
 const {
   Types: { ObjectId, Mixed },
@@ -16,14 +15,14 @@ const OptionSchema = new Schema({
 const VotingSchema = new Schema({
   name: {
     type: String,
-    required: [true, "A voting must have a name"],
-    maxlength: [40, "A voting name must have less or equal than 40 characters"],
-    minlength: [5, "A voting name must have more or equal than 5 characters"],
+    required: [true, "투표 제목을 입력하세요."],
+    maxlength: [40, "투표 제목은 5글자에서 40글자 이내 여야 합니다."],
+    minlength: [5, "투표 제목은 5글자에서 40글자 이내 여야 합니다."],
   },
   creator: {
     type: ObjectId,
     ref: "User",
-    required: [true, "A voting must have a creator"],
+    required: [true, "투표 생성자가 필요합니다."],
   },
   createdAt: {
     type: Date,
@@ -31,33 +30,34 @@ const VotingSchema = new Schema({
   },
   startAt: {
     type: Date,
-    required: [true, "A voting must have a start date"],
+    required: [true, "시작일을 입력해주세요."],
     validate: {
       validator: (date) => date,
-      message: "The start date must be lator than now",
+      message: "시작일은 현재 시점보다 이후여야 합니다.",
     },
   },
   endAt: {
     type: Date,
-    required: [true, "A voting must have a end date"],
+    required: [true, "종료일을 입력해주세요."],
     validate: {
       validator: (date) => date,
-      message: "The end date must be lator than start date",
+      message: "종료일은 시작일보다 이후여야 합니다.",
     },
   },
   status: {
     type: String,
-    required: [true, "A voting must have status"],
+    required: [true, "투표 상태를 입력해주세요."],
     enum: {
-      values: ["upcoming", "in progress", "ended", "canceled"],
-      message: "Status is either: upcoming, in progress, ended, canceled",
+      values: ["예정", "진행중", "종료", "취소됨"],
+      message:
+        "투표 상태는 다음 중 하나여야 합니다. (예정, 진행중, 종료, 취소됨)",
     },
   },
   options: {
     type: [OptionSchema],
     validate: {
       validator: (value) => value.length > 1,
-      message: "A voting must have more or equal than 2 options",
+      message: "투표 항목은 2개 이상이어야 합니다.",
     },
   },
 });

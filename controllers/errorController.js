@@ -1,22 +1,33 @@
 const CreateError = require("./../utils/createError");
 
 const handleCastErrorDB = (err) => {
-  const message = `Invalid ${err.path}: ${err.value}.`;
+  const message = `유효성 실패 ${err.path}: ${err.value}.`;
   return new CreateError(message, 400);
 };
 
 const handleDuplicateFieldsDB = (err) => {
   const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
-  console.log(value);
 
-  const message = "Duplicate field value: x. Please use another value!";
+  const message = `중복된 값입니다.: ${value}`;
   return new CreateError(message, 400);
 };
 
 const handleValidationErrorDB = (err) => {
   const errors = Object.value(err.errors).map((el) => el.message);
 
-  const message = `Invalid input data. ${errors.join(". ")}`;
+  const message = `잘못된 입력입니다. ${errors.join(". ")}`;
+  return new CreateError(message, 400);
+};
+
+const handleJWTError = () => {
+  const message = "유효하지 않은 토큰입니다. 나중에 다시 시도해주세요.";
+
+  return new CreateError(message, 400);
+};
+
+const handleTokenExpiredError = () => {
+  const message = "토큰이 만료되었습니다. 로그인이 필요합니다.";
+
   return new CreateError(message, 400);
 };
 
@@ -40,7 +51,7 @@ const sendErrorProd = (err, res) => {
 
     res.status(500).json({
       status: "error",
-      message: "Something went very wrong!",
+      message: "알 수 없는 에러가 발생하였습니다.",
     });
   }
 };
@@ -58,6 +69,9 @@ module.exports = (err, req, res, next) => {
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
     if (error.name === "ValidationError")
       error = handleValidationErrorDB(error);
+    if (error.name === "JsonWebTokenError") error = handleJWTError(error);
+    if (error.name === "TokenExpiredError")
+      error = handleTokenExpiredError(error);
 
     sendErrorProd(error, res);
   }

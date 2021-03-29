@@ -11,8 +11,8 @@ const UserSchema = new Schema({
     type: String,
     required: [true, "이름을 입력하세요."],
     trim: true,
-    maxlength: [30, "이름은 1글자 ~ 30글자여야 합니다."],
-    minlength: [1, "이름은 1글자 ~ 30글자여야 합니다."],
+    maxlength: [30, "이름은 2글자에서 30글자 이내 여야 합니다."],
+    minlength: [2, "이름은 2글자에서 30글자 이내 여야 합니다."],
   },
   email: {
     type: String,
@@ -29,7 +29,7 @@ const UserSchema = new Schema({
   },
   passwordConfirm: {
     type: String,
-    required: [true, "비밀번호를 한 번 더 입력해주세요."],
+    required: [true, "비밀번호를 한번 더 입력해주세요."],
     validate: {
       validator: (val) => this.password === val,
       message: "비밀번호가 일치하지 않습니다.",
@@ -76,7 +76,6 @@ UserSchema.methods.changedPasswordAfter = (JWTTimestamp) => {
     return JWTTimestamp < changedTimestamp;
   }
 
-  // means not changed
   return false;
 };
 
