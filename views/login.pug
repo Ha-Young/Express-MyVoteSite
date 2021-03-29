@@ -1,0 +1,9 @@
+extends ./layout
+
+block content
+  .loginOuter
+    .loginInner
+      form.loginForm(action="login" method="POST")
+        input(type="email" name="email")
+        input(type="password" name="password")
+        button(type="submit") Sign In

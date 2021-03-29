@@ -4,7 +4,8 @@ const User = new mongoose.Schema({
   email: String,
   password: String,
   name: String,
-  myVotings: []
+  votes: [],
+  refreshToken: String
 });
 
 module.exports = mongoose.model("User", User);

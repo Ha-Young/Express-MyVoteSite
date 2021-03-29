@@ -1,7 +1,17 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const JwtStrategy = require("passport-jwt").Strategy;
 const bcrypt = require("bcrypt");
 const User = require("./model/User");
+
+const cookieExtractor = function(req) {
+  let token = null;
+  if (req && req.cookies) {
+      token = req.cookies["jwt"];
+  }
+
+  return token;
+};
 
 passport.use(new LocalStrategy(
   function(email, password, done) {
@@ -13,3 +23,23 @@ passport.use(new LocalStrategy(
     });
   }
 ));
+
+passport.use(new JwtStrategy({
+  jwtFromRequest: cookieExtractor,
+  secretOrKey: process.env.JWT_SECRET
+}, function(jwt_payload, done) {
+  console.log('payload : ', jwt_payload);
+  User.findOne({ id: jwt_payload.sub }, function(err, user) {
+    if (err) {
+      return done(err, false);
+    }
+    if (user) {
+      return done(null, user);
+    } else {
+      return done(null, false);
+    }
+  });
+}));
+
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((user, done) => done(null, user));
