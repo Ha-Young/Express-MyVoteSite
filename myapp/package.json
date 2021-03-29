@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "debug": "nodemon --inspect-brk ./bin/www"
+    "debug": "nodemon --inspect ./bin/www"
   },
   "dependencies": {
     "debug": "~2.6.9",
