@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 
 const indexRouter = require("./routes/index");
 const signupRouter = require("./routes/signup");
+const loginRouter = require("./routes/login");
 
 const connectMongoDB = require("./middlewares/connectMongoDB");
 
@@ -27,8 +28,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
 app.use("/signup", signupRouter);
+app.use("/login", loginRouter);
+app.use("/", indexRouter);
 
 app.use((req, res, next) => {
   next(createError(404));

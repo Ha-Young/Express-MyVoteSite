@@ -1,0 +1,31 @@
+extends layout
+
+block append head
+  link(rel="stylesheet" href="/stylesheets/login.css")
+block content
+  div(class="login-container")
+    form(class="login-form")
+      label(class="login-label") Email
+        input(
+          name="email"
+          class="input-email"
+          type="email"
+          required
+        )
+      label(class="login-label") Password
+        input(
+          name="password"
+          class="input-password"
+          type="password"
+          required
+        )
+      div(class="message-box")
+      button(
+        type="submit"
+        class="login-button"
+      ) Log in
+      button(
+        type="button"
+        class="signup-link-button"
+      ) Sign up
+  script(src="/javascripts/login.js")
