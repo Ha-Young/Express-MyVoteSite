@@ -11,12 +11,11 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12,
   },
-  allowNamedFunctions: true,
-  ignorePatterns: 'node_modules/',
+  ignorePatterns: ['node_modules/'],
   rules: {
-    indent: [
-      'error',
-      2,
-    ],
+    'arrow-parens': ['warn', 'as-needed'],
+    'no-unused-vars': ['off'],
+    'no-console': ['off'],
+    'no-underscore-dangle': ['off'],
   },
 };

@@ -1,0 +1,6 @@
+extends ../layout.pug
+
+block content
+  form(action="votings/new", method="post")
+    label Your email:
+    input(type="email" name="userEmail")
