@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+  <form action="/login" method="POST" >
+    <h1>LOGIN</h1>
+    <lable>
+      <input type="email" name="user-email" placeholder="Type your email" required>
+    </lable>
+    <lable>
+      <inpt type="password" name="user-password" password="Type your password" required>
+    </lable>
+  </form>
+  <input type="submit" name="submit-button" vlaue="Login">
+  <div><a href="/signup">Go to Signup</a></div>
+  <div><a href="/">Go to Home</a></div>
+</body>
+</html>
