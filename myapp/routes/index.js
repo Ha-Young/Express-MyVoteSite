@@ -17,14 +17,18 @@ passport.use(
       const user = await User.findOne({ email });
 
       if (!user) {
-        console.log("fail");
-
-        return done(null, false, { message: "Incorrect Password" });
+        console.log("eamil fail");
+        return done(null, false, { message: "Incorrect Email" });
       }
 
       if (user) {
-        console.log("success");
-        return done(null, user);
+        if (user.password === cryptoPassword) {
+          console.log("success");
+          return done(null, user);
+        } else {
+          console.log("password fail");
+          return done(null, false, { message: "Incorrect Password" });
+        }
       }
     },
   ),
