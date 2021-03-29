@@ -1,9 +1,9 @@
 const createError = require("http-errors");
 const express = require("express");
-const mongoose = require("mongoose");
+const session = require("express-session");
 const path = require("path");
+const mongoose = require("mongoose");
 const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
 
 const indexRouter = require("./routes/index");
 require("dotenv").config();
@@ -27,7 +27,15 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(express.session());
+app.use(
+  session({
+    secret: process.env.SESSION_KEY,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true, maxAge: 10 * 60 * 1000 },
+  }),
+);
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -42,7 +50,8 @@ app.use(function (err, req, res, next) {
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   res.status(err.status || 500);
-  res.render("error");
+  // res.render("error");
+  res.send(err.message);
 });
 
 module.exports = app;
