@@ -6,6 +6,18 @@ const path = require('path');
 const session = require('express-session');
 const logger = require('morgan');
 const pug = require('pug');
+const mongoose = require('mongoose');
+
+mongoose.connect(
+  process.env.MONGODB_URI,
+  { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true },
+);
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+  console.log('Connected..');
+});
 
 const homeRouter = require('./routes/home');
 const votingsRouter = require('./routes/votings');
@@ -15,7 +27,7 @@ const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-var a = 1;
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,14 +40,6 @@ app.use(session({
 }));
 
 // app.all
-app.all('/', (req, res, next) => {
-  const sess = req.session;
-  res.render('main', {
-    title: 'Voting Platform',
-    message: sess.username,
-  });
-  next();
-});
 app.use('/', homeRouter);
 app.use('/votings', votingsRouter);
 
@@ -52,7 +56,6 @@ app.use((err, req, res, next) => {
 
   // render the error page
   res.status(err.status || 500);
-  res.locals.cats = `https://http.cat/${err.status}`;
   res.render('error');
 });
 

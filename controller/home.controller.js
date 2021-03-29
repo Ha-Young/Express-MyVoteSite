@@ -1,16 +1,21 @@
 const createError = require('http-errors');
 
-exports.signup = (req, res, next) => {
-  res.render('partial/signup', {
-    title: 'Voting Platform',
-    message: req.session.username
+exports.getMain = (req, res, next) => {
+  const sess = req.session;
+  res.render('main', {
+    username: sess.username,
   });
 };
 
+exports.signup = (req, res, next) => {
+  res.render('partial/signup');
+};
+
 exports.result = (req, res, next) => {
-  res.redirect('login');
+  console.log(req.body);
+  // res.redirect('login');
 };
 
 exports.login = (req, res, next) => {
-  res.render('login');
+  res.render('partial/login');
 };

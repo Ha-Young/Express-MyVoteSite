@@ -1,14 +1,14 @@
 extends ../layout.pug
 
 block content
-  form(action="votings/new", method="post")
+  form(action="signup", method="post")
     div
       label Your email:
-        input(type="email" name="email")
+        input(type="email" name="email" value="uand2@naver.com")
     div
       label Password:
-        input(type="password" name="password")
+        input(type="password" name="password" value="1234")
     div
       label Confirm:
-        input(type="password" name="passwordConfirm")
+        input(type="password" name="passwordConfirm" value="1234")
     input(type="submit", value="SUBMIT")
