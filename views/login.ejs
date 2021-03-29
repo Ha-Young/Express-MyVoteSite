@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include ('partials/head') %>
+    <link rel="stylesheet" href="/stylesheets/login.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="log-in form">
+        <!-- <img class="app-logo" src="/assets/images/sudal.png" > -->
+        <h1>Vote Flatform</h1>
+        <a href="/login/github">
+          <div class="git-in">
+            <span>
+              Login with GitHub
+            </span>
+            <!-- <img class="git-logo" src="/assets/images/githubLogoWhite.png"> -->
+          </div>
+        </a>
+        <form action="/login" method="POST">
+          <div class="log-input">
+            <input type="email" id="email" name="email" placeholder="email" required>
+          </div>
+          <div class="log-input">
+            <input type="password" id="password" name="password" placeholder="password" required>
+          </div>
+          <button class="log-in-button" type="submit">Log In</button>
+        </form>
+        <a class="sign-up-button" href="/signup">Sign Up</a>
+        <h2><%= messages.error ? messages.error : ""  %></h2>
+      </div>
+    </div>
+  </body>
+</html>
