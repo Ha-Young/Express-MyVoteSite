@@ -1,16 +1,21 @@
 extends layout
 
 block content
-  form#signup-form(action="/users/login" method="post")
+  form#signup-form(action="/users/signup" method="post")
+    .form-box
+      label(for="name") NAME
+      input(id="name" type="text" name="name" required)
     .form-box
       label(for="email") E-MAIL
-      input(id="email" type="email" name="email")
+      input(id="email" type="email" name="email" required)
     .form-box
       label(for="password") PASSWORD
-      input(id="password" type="password" name="password")
+      input(id="password" type="password" name="password" required)
     .form-box
-      label(for="checkedPassword") PASSWORD CHECK
-      input(id="checkedPassword" type="password" name="checkedPassword")
+      label(for="confirmedPassword") PASSWORD CHECK
+      input(id="confirmedPassword" type="password" name="confirmedPassword" required)
+  if (error)
+    p.validation #{ error.msg }
   ul.button-list
     li
       button(type="submit" class="button" form="signup-form") SIGN UP
