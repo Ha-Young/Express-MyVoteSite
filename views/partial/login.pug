@@ -1,4 +1,11 @@
 extends ../layout.pug
 
 block content
-  div welcome, user
+  form(action="login", method="post")
+    div
+      label Your email:
+        input(type="email" name="email" required value="uand2@naver.com")
+    div
+      label Password:
+        input(type="password" name="password" required value="1234")
+    input(type="submit", value="SUBMIT")

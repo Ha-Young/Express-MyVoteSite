@@ -1,11 +1,13 @@
 const express = require('express');
+const { body } = require('express-validator');
 const homeController = require('../controller/home.controller');
 
 const router = express.Router();
 
 router.get('/', homeController.getMain);
 router.get('/signup', homeController.signup);
-router.post('/signup', homeController.result);
+router.post('/signup', homeController.post);
+router.get('/login', homeController.login);
 router.get('/login', homeController.login);
 
 module.exports = router;
