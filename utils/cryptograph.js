@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 
-const cryptograph = async (password, userSalt = null) => {
+const cryptograph = (password, userSalt = null) => {
   const {
     CRYPTO_BUFFER_BYTE,
     CRYPTO_ENCTYPE,

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <%- include("partials/head") %>
+  </head>
+  <link rel="stylesheet" href="/stylesheets/login.css" />
+  <body>
+    <h1>로그인</h1>
+    <form action="/login" method="post">
+      <label>
+        email:
+      <input
+        type="text"
+        name="email"
+        autocomplete="email"
+      />
+    </label>
+    <label>
+      password:
+      <input
+        type="password"
+        name="password"
+        autocomplete="current-password"
+      />
+    </label>
+    <div id="login-alert" class="display-none">
+      유효하지 않은 email 또는 password 입니다.
+    </div>
+    <input type="submit" value="로그인"/>
+    </form>
+    <script>
+      const $loginAlert = document.getElementById("login-alert");
+      const isInvalid = "<%- isInvalid %>";
+      const httpMethod = "<%- method %>";
+
+      if (httpMethod === "post" && isInvalid) {
+        $loginAlert.className = "display-block";
+        setTimeout(() => {
+          $loginAlert.className = "display-none";
+        }, 2000);
+      }
+    </script>
+  </body>
+</html>

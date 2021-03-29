@@ -16,11 +16,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(`${__dirname}/public`));
 
-const indexRouter = require("./routes/index");
 const signupRouter = require("./routes/signup");
+const loginRouter = require("./routes/login");
+const indexRouter = require("./routes/index");
 
-app.use("/", indexRouter);
 app.use("/signup", signupRouter);
+app.use("/login", loginRouter);
+app.use("/", indexRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
