@@ -2,29 +2,29 @@
 <html lang="ko">
   <head>
     <%- include("partials/head") %>
+    <link rel="stylesheet" href="/stylesheets/signup.css" />
   </head>
   <body>
     <div class="signup-container">
       <h1>회원가입</h1>
-      <form action="/signup" method="post">
           <label>
             email :
-            <input type="text" name="email"/>
+            <input type="text" id="email" name="email" />
           </label>
           <label>
             별명 :
-            <input type="text" name="username"/>
+            <input type="text" id="user-name" name="username" />
           </label>
           <label>
             비밀번호 :
-            <input type="password" name="password"/>
+            <input type="password" id="password" name="password" />
           </label>
           <label>
             비밀번호 확인 :
-            <input type="password" name="password_confirm"/>
+            <input type="password" id="password-confirm" name="password-confirm" />
           </label>
-          <input type="submit" />
-      </form>
+          <button id="submit">가입하기</button>
     </div>
+    <script type="module" src="/javascripts/signup.js"></script>
   </body>
 </html>
