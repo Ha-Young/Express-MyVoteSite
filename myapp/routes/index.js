@@ -9,8 +9,12 @@ router.get("/", function (req, res, next) {
   res.render("index");
 });
 
+router.get("/login", function (req, res, next) {
+  res.render("auth", { isSignUp: false });
+});
+
 router.get("/signup", function (req, res, next) {
-  res.render("signup");
+  res.render("auth", { isSignUp: true });
 });
 
 router.post("/signup", async function (req, res, next) {
@@ -26,7 +30,7 @@ router.post("/signup", async function (req, res, next) {
       .digest("base64");
 
     await User.create({ name, email, password: cryptoPassword });
-    res.send("signup");
+    res.status(302).redirect("/");
   }
 });
 
