@@ -15,7 +15,7 @@ Controller.getSignup = (req, res) => {
 // @desc    save UserInfo mongoDB
 // @access  Public
 Controller.postSignup = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, checkingPassword } = req.body;
 
   try {
     const checkedUser = await User.findOne({ email });
@@ -26,10 +26,14 @@ Controller.postSignup = async (req, res, next) => {
 
     const user = await User({ email });
 
+    if (password !== checkingPassword) {
+      return res.render("error", { message: "비밀번호가 서로 다릅니다. 다시 시도해주세요"});
+    }
+
     await User.register(user, password);
     next();
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
     res.render("error", { message: "회원가입에 실패했습니다. 다시 시도해주세요" });
   }
 };
