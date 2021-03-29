@@ -5,6 +5,8 @@ const expressLayouts = require('express-ejs-layouts');
 const methodOverride = require('method-override');
 const path = require("path");
 const { format } = require("date-fns");
+const sassMiddleware = require('node-sass-middleware');
+
 
 const { logger } = require("./logger");
 
@@ -15,11 +17,23 @@ module.exports = function ({ app, routerLoader }) {
   app.set('views', './views/pages');
   app.set("layout", "../layout");
 
+  console.log(path.resolve(__dirname, "../../scss"));
+  console.log(path.resolve(__dirname, "../../public/stylesheets"));
+
+  app.use(sassMiddleware({
+    src: path.resolve(__dirname, "../../scss"),
+    dest: path.resolve(__dirname, "../../public/stylesheets"),
+    indentedSyntax: false, // true = .sass and false = .scss
+    debug: true,
+    outputStyle: 'compressed',
+  }));
+
+  app.use(express.static(path.resolve(__dirname, "../../public")));
+
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(methodOverride());
-  app.use(express.static(path.resolve(__dirname, "../../public")));
   app.use(cookieParser());
 
   // router
