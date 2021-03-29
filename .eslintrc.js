@@ -35,5 +35,6 @@ module.exports = {
     "object-shorthand": ["error", "properties"],
     "no-param-reassign": ["error", { props: false }],
     "import/no-unresolved": "off",
+    "no-return-await": "off",
   },
 };
