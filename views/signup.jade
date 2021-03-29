@@ -2,9 +2,9 @@ extends layout
 
 block content
   h1 Sign Up
-  form(name="signup", action="/user", method="post")
+  form(name="signup", action="/signup", method="post")
     input.email(type="text", name="email", placeholder="email")
     input.password(type="password", name="password", placeholder="password")
     input(type="submit" value="submit")
-  a(href="/auth") logIn
+  a(href="/login") logIn
   span #{message}

@@ -2,12 +2,11 @@ require("dotenv").config();
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
-const cookieParser = require("cookie-parser");
+const passport = require("passport");
 
-const index = require("./routes/index");
 const login = require("./routes/api/login");
-const auth = require("./routes/api/auth");
-const user = require("./routes/api/user");
+const signup = require("./routes/api/signup");
+const secureRoute = require("./routes/secure-routes");
 
 const bodyParser = require("body-parser");
 
@@ -34,16 +33,16 @@ app.set("view engine", "jade");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/", index);
+require("./auth/auth");
+
 app.use("/login", login);
-app.use("/auth", auth);
-app.use("/user", user);
+app.use("/signup", signup);
+app.use("/user", passport.authenticate("jwt", { session: false }), secureRoute);
 
 app.use(function (req, res, next) {
   next(createError(404));
