@@ -5,6 +5,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 
 const index = require("./routes/index");
+const login = require("./routes/api/login");
 const auth = require("./routes/api/auth");
 const user = require("./routes/api/user");
 
@@ -40,6 +41,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use("/", index);
+app.use("/login", login);
 app.use("/auth", auth);
 app.use("/user", user);
 
