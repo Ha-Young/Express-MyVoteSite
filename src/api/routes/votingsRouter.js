@@ -7,13 +7,15 @@ const {
   getVoting,
   postVoting
 } = require("../../controllers/votingsController");
+const { isAuthenticated } = require("../middlewares/authenticator");
+const { validatePostNewVoting } = require("../middlewares/validator");
 
 const votingRouter = express.Router();
 
-votingRouter.get("/new", getNewVoting);
-votingRouter.post("/new", postNewVoting);
+votingRouter.get("/new",isAuthenticated, getNewVoting);
+votingRouter.post("/new",validatePostNewVoting, postNewVoting);
 
-votingRouter.get("/success", votingSuccess);
+votingRouter.get("/success",isAuthenticated, votingSuccess);
 votingRouter.get("/error", votingFail);
 
 votingRouter.get("/:id", getVoting);

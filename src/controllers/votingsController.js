@@ -8,6 +8,7 @@ exports.getNewVoting = (req, res) => {
   res.render("newVoting", { pageTitle: "New Voting" });
 };
 exports.postNewVoting = (req, res) => {
+  console.log(req.body, req.user);
 };
 
 exports.votingSuccess = (req, res) => {

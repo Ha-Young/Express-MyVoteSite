@@ -10,12 +10,12 @@ const sessionLoader = require("./loaders/session");
 const passportLoader = require("./loaders/passport");
 const loggerLoader = require("./loaders/logger");
 
-const authRouter = require("./api/routes/auth");
-const rootRouter = require("./api/routes/index");
-const votingRouter = require("./api/routes/votings");
+const rootRouter = require("./api/routes/rootRouter");
+const authRouter = require("./api/routes/authRouter");
+const votingRouter = require("./api/routes/votingsRouter");
 
 const { localMiddleware } = require("./api/middlewares/localMiddleware");
-const { authenticated, isAuthenticated } = require("./api/middlewares/authenticator");
+const { authenticated } = require("./api/middlewares/authenticator");
 
 const app = express();
 
@@ -34,9 +34,9 @@ loggerLoader(app);
 
 app.use(localMiddleware);
 
+app.use("/", rootRouter);
 app.use("/auth",authenticated, authRouter);
-app.use("/",isAuthenticated, rootRouter);
-app.use("/votings",isAuthenticated, votingRouter);
+app.use("/votings", votingRouter);
 
 app.use((req, res, next) => {
   next(createError(404));

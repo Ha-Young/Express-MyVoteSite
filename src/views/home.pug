@@ -1,5 +1,10 @@
 extends layouts/main
 
 block content
+  if currentUser
+    a.new-votings-link(href="/votings/new")
+      button.new-votings-button New Voting
+    a.my-votings-link(href="/my-votings")
+      button.my-votings-button My Votings
   h1 #{pageTitle}
   p Welcome to #{title}

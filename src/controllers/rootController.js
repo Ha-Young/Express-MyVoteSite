@@ -4,5 +4,9 @@ exports.home = (req, res) => {
 
 exports.logout = (req, res) => {
   req.logout();
-  res.redirect("/auth/login");
+  res.redirect("/");
+};
+
+exports.myVotings = (req, res) => {
+  res.render("myVoting", { pageTitle: "My Votings" });
 };

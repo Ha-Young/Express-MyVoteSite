@@ -4,7 +4,10 @@ block content
   h1 #{pageTitle}
   .newVoting-container
     form.voting-form(action="./new" method="POST")
-     input(type="text" required=true)
-     input(type="text" required=true)
-     button(type="button").add-input-button +
-     button.newVoting-button New Voting
+      input(type="text" placeholder="title" name="title" required)
+      input(type="date" name="expiration" required)
+      input(type="time" name="expiration" required)
+      input(type="text" placeholder="option" name="option" required)
+      input(type="text" placeholder="option" name="option" required)
+      button(type="button").add-input-button +
+      button.newVoting-button Create Voting

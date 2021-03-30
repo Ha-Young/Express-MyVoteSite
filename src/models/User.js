@@ -22,6 +22,9 @@ const userSchema = new Schema({
   },
   votings: [{
     type: mongoose.Schema.Types.ObjectId,
+    ref: "Voting",
+    index: true,
+    unique: true,
   }],
 });
 

@@ -1,3 +1,10 @@
 header.header
-  a(href="/logout")
-    button.logout-button Logout
+  a(href="/")
+    button.home-button Home
+  if (currentUser)
+    div.current-user Hello #{currentUser}
+    a(href="/logout")
+      button.logout-button Logout
+  else
+    a(href="/auth/login")
+      button.login-button Login

@@ -4,7 +4,7 @@ exports.isAuthenticated = (req, res, next) => {
     return;
   }
 
-  res.redirect("/auth/login");
+  res.redirect("/");
 };
 
 exports.authenticated = (req, res, next) => {
