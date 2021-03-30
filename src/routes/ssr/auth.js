@@ -1,6 +1,5 @@
 const createError = require("http-errors");
 const { celebrate, Joi } = require("celebrate");
-const { render } = require("ejs");
 const { Router } = require("express");
 
 // const middlewares = require('../middlewares');

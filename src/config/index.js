@@ -10,6 +10,7 @@ module.exports = {
   databaseURL: process.env.MONGODB_URI,
   jwtSecret: process.env.JWT_SECRET,
   jwtCookieKey: 'VC_wpAthtk',
+  jwtAlgorithms: ['sha1', 'RS256', 'HS256'],
   jwtExpires: 60 * 60 * 1000,
 };
 
