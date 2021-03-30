@@ -6,31 +6,27 @@ const optionSchema = new mongoose.Schema({
     unique: true,
     required: true
   },
-  voters: new mongoose.Schema([
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-    }
-  ]),
+  count: {
+    type: Number
+  },
   _id: false
 });
 
 const voteSchema = new mongoose.Schema({
-  expiration_date: {
-    type: Date,
-    required: true
-  },
   title: {
     type: String,
     required: true
   },
-  options: [optionSchema],
-  all_voters: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-    }
-  ]
+  expiration_date: {
+    type: Date,
+    required: true
+  },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+  options: [optionSchema]
 });
 
 module.exports = mongoose.model("Vote", voteSchema);

@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const createdVoteSchema = new mongoose.Schema({
-  type: mongoose.Schema.Types.ObjectId
-})
-
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -20,10 +16,13 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String
   },
-  created_votes: [createdVoteSchema]
+  submitted_votes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Vote"
+  }]
 });
 
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function(next) {
   const user = this;
 
   if (user.isModified("password")) {
