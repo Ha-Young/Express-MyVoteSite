@@ -1,10 +1,14 @@
-const createError = require('http-errors');
-
 const User = require('../models/User');
 const Vote = require('../models/Vote');
 const generateDateTimeString = require('../utils/generateDateTimeString');
 
 exports.getHome = async (req, res, next) => {
+  const redirectAddress = req.flash('redirect');
+
+  if (redirectAddress) {
+    return res.redirect(redirectAddress);
+  }
+
   try {
     const votes = await Vote.find().populate('author', 'nickname').lean();
     votes.forEach(vote => {
@@ -16,7 +20,7 @@ exports.getHome = async (req, res, next) => {
       votes,
     });
   } catch (err) {
-    next(createError(err));
+    next(err);
   }
 };
 

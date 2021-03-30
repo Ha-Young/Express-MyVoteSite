@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Voting Platform</title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+
+<body>
+  <%- include("partials/header", {user}) %>
+    <main>
+      <div>
+        <p class="title">
+          <%= vote.title %>
+        </p>
+        <ul>
+          <li class="author">
+            Created by <%= vote.author.nickname %>
+          </li>
+          <li class="expiration_date">
+            expired at <%= vote.expiration_date %>
+          </li>
+          <li class="status">
+            <%= vote.status %>
+          </li>
+        </ul>
+        <form method="POST" action="<%= `/votings/${vote._id}` %>">
+          <% vote.options.forEach(option=> { %>
+            <div>
+              <input type="radio" id="<%= option%>" name="drone" value="<%= option%>">
+              <label for="<%= option%>">
+                <%= option%>
+              </label>
+            </div>
+            <% }); %>
+              <button class="button" type="submit">SUBMIT</button>
+        </form>
+      </div>
+
+      <% if (isAuthor) { %>
+        <form method="DELETE" action="<%= `/votings/${vote._id}` %>">
+          <button class="button" type="submit">DELETE</button>
+        </form>
+        <% } %>
+    </main>
+</body>
+
+</html>

@@ -1,5 +1,3 @@
-const createError = require('http-errors');
-
 const { validateLoginInputs, validateSignUpInputs } = require('../utils/validateInputs');
 const User = require('../models/User');
 /**
@@ -25,7 +23,7 @@ exports.signup = async (req, res, next) => {
 
     return next();
   } catch (err) {
-    return next(createError(500));
+    return next(err);
   }
 };
 

@@ -1,5 +1,3 @@
-const createError = require('http-errors');
-
 const User = require('../models/User');
 
 exports.getLoginForm = (req, res) => {
@@ -39,7 +37,7 @@ exports.createUser = async (req, res, next) => {
       res.redirect('/');
     });
   } catch (err) {
-    next(createError(500));
+    next(err);
   }
 };
 

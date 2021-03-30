@@ -6,7 +6,8 @@ const validationHandler = require('../middlewares/validationHandler');
 
 router
   .route('/:id')
-  .get(votingsController.getVote)
+  .get(votingsController.getVotingPage)
+  .post(authenticationHandler.votes, votingsController.voting)
   .delete(votingsController.deleteVote);
 
 router

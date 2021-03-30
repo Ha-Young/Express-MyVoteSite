@@ -43,7 +43,7 @@ module.exports = function (app) {
         return done(null, user);
       } catch (err) {
         console.log(err);
-        return done(createError(500));
+        return done(err);
       }
     }
   ));
@@ -77,7 +77,7 @@ module.exports = function (app) {
         delete user.password;
         return done(null, user);
       } catch (err) {
-        return done(createError(500));
+        return done(err);
       }
     }
   ));

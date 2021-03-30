@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-const createError = require('http-errors');
 const bcrypt = require('bcrypt');
 const config = require('../config');
 
@@ -44,7 +43,7 @@ userSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, config.salt);
     next();
   } catch (err) {
-    next(createError(500));
+    next(err);
   }
 });
 

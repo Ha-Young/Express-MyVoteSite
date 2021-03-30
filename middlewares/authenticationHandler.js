@@ -11,6 +11,7 @@ exports.votes = (req, res, next) => {
   }
 
   req.flash('error', 'Please login to use services');
+  req.flash('redirect', `/votings/${req.params.id}`);
   return res.redirect('/auth/login');
 };
 
@@ -24,7 +25,7 @@ exports.auth = (req, res, next) => {
   }
 
   if (req.isAuthenticated()) {
-    return res.redirect('back')
+    return res.redirect('back');
   }
 
   return next();
