@@ -15,6 +15,8 @@ router.get('/logout', isLoggedIn, (req, res, next) => {
   res.render('logout');
 });
 
+router.get('/my-votings');
+
 router.get('/logout/callback', isLoggedIn, (req, res, next)=> {
   if (req.session) {
     try {

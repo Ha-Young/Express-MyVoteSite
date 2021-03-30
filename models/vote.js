@@ -10,19 +10,21 @@ const voteSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
-  expiredTime: {
+  expiredDate: {
     type: Date,
     required: true,
   },
   isProceeding: {
     type: Boolean,
     defualt: true,
+  },
+  optionType: {
+    type: String,
     required: true,
   },
   options: [{
     text: {
       type: String,
-      required: true,
     },
     count: {
       type: Number,
