@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1 signup
+  div
+    form(action="/auth/signup" method="POST")
+      label(for="name")="이름"
+        input(type="text" name="name")
+      label(for="email")="이메일"
+        input(type="text" name="email")
+      label(for="password")="비밀번호"
+        input(type="text" name="password")
+      button(type="submit") 제출
+  div=message

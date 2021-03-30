@@ -1,5 +1,18 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1 투표목록
+  ul(class="votes")
+    -votes.forEach((vote) => {
+      a(href="/votings/"+vote._id)
+        li(class="vote")
+          div=vote.title
+          div=vote.author
+          div=vote.expiredAt
+    -})
+  div
+    a(href="/auth/logout") logout
+  div
+    a(href="/votings/my-votings") 내 투표
+  div
+    a(href="/votings/new") 투표생성

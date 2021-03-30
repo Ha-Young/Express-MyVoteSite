@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1 투표하세요
+  div=vote.createdAt
+  div=vote.title 
+  div=vote.author 
+  div=vote.expiredAt
+  form(action="/votings/"+vote._id method="POST") 
+    -vote.options.forEach(option => {
+      input(type="checkbox" name="option" value=option.content)
+      span=option.content
+      span=option.count
+    -})
+    button 제출
+  div
+    a(href="/") 돌아가기
