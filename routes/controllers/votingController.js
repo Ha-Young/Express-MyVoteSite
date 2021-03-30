@@ -27,20 +27,23 @@ Controller.postNewVoting = async (req, res, next) => {
     const userId = req.user._id;
     const { title } = req.body;
     const endDate = req.body["end-date"];
-    const votingElements = {};
+    const options = [];
 
     for (const votingElement in req.body) {
-      const votingValue = req.body[votingElement];
+      const optionTitle = req.body[votingElement];
 
-      if (votingElement.includes("voting") && 0 < votingValue.length) {
-        votingElements[votingValue] = [];
+      if (votingElement.includes("option") && 0 < optionTitle.length) {
+        options.push({
+          optionTitle,
+          optionValue: 0,
+        });
       }
     }
 
     const newVoting = new Voting({
       title,
       endDate,
-      votingElements,
+      options,
       user: userId,
     });
 

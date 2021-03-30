@@ -16,15 +16,15 @@ const VotingSchema = new Schema({
   },
   endDate: {
     type: Date,
-    default: Date.now,
+    required: true,
   },
   isProgress: {
     type: Boolean,
     default: true,
   },
-  votingElements: {
-    type: Object,
-    default: {},
+  options: {
+    type: Array,
+    default: [],
   },
   votingUserList:
     [

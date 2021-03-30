@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <%- include("partial/header") %>
     <title>Voting Platform</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
@@ -12,11 +13,11 @@
       <p>투표 종료 시간</p>
       <input type="datetime-local" name="end-date" required=true>
       <p>투표 목록</p>
-      <input type="text" name="first-voting" required=true>
-      <input type="text" name="second-voting" required=true>
-      <input type="text" name="third-voting">
-      <input type="text" name="fourth-voting">
-      <input type="text" name="fifth-voting">
+      <input type="text" name="option1" required=true>
+      <input type="text" name="option2" required=true>
+      <input type="text" name="option3">
+      <input type="text" name="option4">
+      <input type="text" name="option5">
       <button type="submit">양식 제출</button>
     </form>
     <form action="/">

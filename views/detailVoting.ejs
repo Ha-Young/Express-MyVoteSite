@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <%- include("partial/header") %>
     <title>Voting Platform</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/javascripts/clickCheckBox.js"></script>
   </head>
   <body>
     <h1>디테일 화면</h1>
@@ -12,8 +14,19 @@
     <%= voting.startDate %>
     <p>투표 종료 시간</p>
     <%= voting.endDate %>
-    <!-- <%= for (const votingElement in voting.votingElements) { %>
-
-    <%= } %> -->
+    <ul>
+      <p>투표 목록</p>
+      <% voting.options.forEach(option => { %>
+        <li>
+          <input
+            type="checkbox"
+            name="option"
+            value="<%= option.optionTitle %>"
+            onclick="clickCheckBox(this)"
+          >
+          <%= option.optionTitle %>
+        </li>
+      <% }) %>
+    </ul>
   </body>
 </html>

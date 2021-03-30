@@ -60,4 +60,9 @@ Controller.postLogin = passport.authenticate("local", {
   successRedirect: "/",
 });
 
+Controller.getLogout = (req, res) => {
+  req.logOut();
+  res.redirect("/");
+};
+
 module.exports = Controller;

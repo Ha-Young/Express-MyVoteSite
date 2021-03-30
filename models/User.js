@@ -6,15 +6,11 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
   },
-  votingList:
-    [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Voting",
-      },
-    ],
+  votingList: {
+    type: Array,
+    default: [],
+  },
 });
 
 UserSchema.plugin(passportLocalMongoose, { usernameField: "email" });
