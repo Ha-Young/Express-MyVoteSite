@@ -3,24 +3,27 @@ const githubPassport = require('./github');
 const localPassport = require('./local');
 const User = require('../../models/user');
 
+
 function passportLoader(app) {
   githubPassport(
     passport,
-    async (email) => await User.findOne({ email }),
-    async (user) => await User.create({
-      email: user.id,
-      password: 1234567890,
+    async (id) => await User.findOne({ id }),
+    async (user, temporaryPassword) => await User.create({
+      id: user.id,
+      password: temporaryPassword,
       nickname: user.displayName,
-      type: 'google',
+      root: 'github',
     })
   );
   localPassport(
     passport,
-    async (email) => await User.findOne({ email }),
+    async (id) => await User.findOne({ id }),
   );
 
   app.use(passport.initialize());
   app.use(passport.session());
 }
+
+
 
 module.exports = passportLoader;

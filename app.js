@@ -8,6 +8,7 @@ const MongoStore = require('connect-mongo');
 require('dotenv').config();
 
 const dbLoader = require('./loaders/db/connectDB');
+const clientPromise = dbLoader.clientPromise;
 const passportLoader = require('./loaders/passports');
 
 const indexRouter = require('./routes/index');
@@ -28,6 +29,9 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: process.env.SESSION_SECRET,
+  store: MongoStore.create({
+    clientPromise,
+  }),
   cookie: {
     httpOnly: true,
     secure: false,
@@ -36,7 +40,7 @@ app.use(session({
 app.use(flash());
 app.use(express.static('public'));
 
-dbLoader();
+dbLoader.checkDB();
 passportLoader(app);
 
 app.use('/', indexRouter);

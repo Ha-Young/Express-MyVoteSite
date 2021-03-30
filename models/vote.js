@@ -20,11 +20,18 @@ const voteSchema = new mongoose.Schema({
     required: true,
   },
   options: [{
-    text: String,
+    text: {
+      type: String,
+      required: true,
+    },
     count: {
       type: Number,
       default: 0,
     },
+  }],
+  participants: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }],
 });
 

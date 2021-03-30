@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 
-function dbLoader() {
-  mongoose.connect(process.env.MONGODB_ATLAS, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-  }).then(n => n.connection.getClient());
+const clientPromise = mongoose.connect(process.env.MONGODB_ATLAS, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+}).then(result => result.connection.getClient());
+
+function checkDB() {
 
   mongoose.connection.on('error', () => {
     console.log("MongoDB Atlas database connected failure!!");
@@ -16,4 +17,7 @@ function dbLoader() {
   });
 }
 
-module.exports = dbLoader;
+module.exports = dbLoader = {
+  checkDB,
+  clientPromise,
+};

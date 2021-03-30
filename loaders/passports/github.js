@@ -1,28 +1,43 @@
 const GitHubStrategy = require('passport-github2').Strategy;
+const bcrypt = require('bcrypt');
 
-const initialize = (passport, getUserByEmail, createUser) => {
+const SALT = 6;
+const RANDOMIZATION = {
+  BASE_NUMBER: 16,
+};
+
+const initialize = (passport, getUserById, createUser) => {
   passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRETS,
     callbackURL: process.env.GITHUB_CALLBACK_URL
   },
   async function(accessToken, refreshToken, profile, done) {
-    const user = await getUserByEmail(profile.id);
+    const user = await getUserById(profile.id);
 
     try {
       if (user) return done(null, profile);
 
-      await createUser(profile);
+      const temporaryPassword = await makeTemporaryPassword();
+
+      await createUser(profile, temporaryPassword);
       return done(null, profile);
     } catch (e) {
-      next(e);
+      done(e, null);
     }
   }));
 
   passport.serializeUser((user, done) => done(null, user));
   passport.deserializeUser(async (user, done) => {
-    done(null, await getUserByEmail(user.id));
+    done(null, await getUserById(user.id));
   });
 };
+
+async function makeTemporaryPassword() {
+  const randomString = Math.random().toString(RANDOMIZATION.BASE_NUMBER).substr(2,11);
+  const hash = await bcrypt.hash(randomString, SALT);
+
+  return hash;
+}
 
 module.exports = initialize;
