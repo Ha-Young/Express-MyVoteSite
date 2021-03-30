@@ -27,4 +27,11 @@ VotingSchema.methods.addVoteCount = function(option) {
   return this.save();
 };
 
+VotingSchema.statics.updateExpiredVotingStatus = function() {
+  this.updateMany(
+    { expiration_date: { $lte: new Date() } },
+    { status: 'finished' }
+  );
+};
+
 module.exports = mongoose.model('Voting', VotingSchema);
