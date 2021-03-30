@@ -1,11 +1,8 @@
 const express = require("express");
-const { getUserName } = require("../util/jwtHelper");
+const votingController = require("./controllers/voting.cotroller");
 const router = express.Router();
 
 /* GET home page. */
-router.get("/", (req, res, next) => {
-  const user = getUserName(req.cookies);
-  res.render('index', { title: "Express", user });
-});
+router.get("/", votingController.getAllVotes);
 
 module.exports = router;

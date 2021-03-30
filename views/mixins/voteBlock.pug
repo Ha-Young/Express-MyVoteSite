@@ -1,0 +1,10 @@
+mixin voteBlock(vote = {})
+  .voteBlock
+    ul
+      li #{vote.title}
+      li #{vote.expiration_date}
+      li #{vote.author}
+    if (vote.expiration_date < new Date())
+      p.status ENDED
+    else
+      p.status PROCESSING

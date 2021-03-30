@@ -1,4 +1,5 @@
 const { check, validationResult } = require("express-validator");
+const format = require("date-fns/format");
 const bcrypt = require("bcrypt");
 const User = require("../../models/User");
 
@@ -68,4 +69,36 @@ exports.validateLogin = [
     }
     next();
   }
-]
+];
+
+exports.validateVote = [
+  check("title")
+    .isLength({ min: 1})
+    .withMessage("Title must be required."),
+  check("expiration_date")
+    .custom(value => {
+      const today = format(new Date(), "yyyy-MM-dd'T'HH:mm");
+      if (value < today) {
+        throw new Error("Date and time must be later than today");
+      }
+      return true;
+    }),
+  check("option_title")
+    .isLength({ min: 1 })
+    .withMessage("Option title must be required")
+    .custom(value => {
+      if (!Array.isArray(value) || value.length < 2) {
+        throw new Error("Add more options (at least 2)");
+      }
+      return true;
+    }),
+  (req, res, next) => {
+    const result = validationResult(req);
+
+    if (!result.isEmpty()) {
+      return res.status(422).render("votings-new", { error: result.errors[0] });
+    }
+
+    next();
+  }
+];

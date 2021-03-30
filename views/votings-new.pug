@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  section
+    h2 CREATE VOTE
+    .create-vote-wrapper
+      form#create-vote(action="/votings/new" method="post")
+        .form-box
+          label.hidden(for="title") TITLE
+          input(id="title" type="title" name="title" required)
+        .form-box
+          label(for="expiration_date") EXPIRATION DATE
+          input(id="expiration_date" name="expiration_date" type="datetime-local" required)
+        .form-box
+          ul.option-list
+          button#optionButton.button(type="button") ADD OPTION
+      if (error)
+        p.validation #{error.msg}
+      button.button(type="submit" form="create-vote") CREATE
+
+  script(src="/javascripts/createVote.js")
