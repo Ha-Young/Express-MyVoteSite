@@ -36,15 +36,16 @@ exports.addVote = async function (req, res, next) {
   const voting = await Voting.findById(votingId);
   const currentUser = await User.findById(req.user);
 
-  // REVIEW voted가 맞지 않냐?
-  if (currentUser.isAlreadyVote(votingId)) {
+  // FIXME 그래프 테스트용으로 중복체크 해제해둠!!
+  // REVIEW method name 뒤에 voted가 맞지 않냐?
+  // if (currentUser.isAlreadyVote(votingId)) {
     // TODO 유저가 이미 투표함!!
     // flash 아니면 에러페이지??
-    console.log('너 이미 투표함!')
-  } else {
+    // console.log('너 이미 투표함!')
+  // } else {
     await voting.addVoteCount(selectedOption);
     await currentUser.addVotingList(votingId);
-  }
+  // }
 
   res.status(301).redirect(`/votings/${votingId}`);
 };
