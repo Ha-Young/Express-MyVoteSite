@@ -22,5 +22,5 @@ exports.postSignup = async (req, res) => {
     ...generatePassword(password),
   });
 
-  res.redirect("/login");
+  res.redirect("/auth/login");
 };

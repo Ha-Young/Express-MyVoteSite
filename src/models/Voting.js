@@ -4,10 +4,7 @@ const { Schema } = mongoose;
 const votingSchema = new Schema({
   title: {
     type: String,
-    lowercase: true,
     require: true,
-    unique: true,
-    index: true,
   },
   postedBy: {
     type: mongoose.Schema.Types.ObjectId,
@@ -18,7 +15,7 @@ const votingSchema = new Schema({
     type: Date,
     require: true,
   },
-  progressing: {
+  progress: {
     type: Boolean,
     default: true,
     require: true,
@@ -26,7 +23,6 @@ const votingSchema = new Schema({
   options: [{
     title: {
       type: String,
-      unique: true,
       require: true,
     },
     count: {

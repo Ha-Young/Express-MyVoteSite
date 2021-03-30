@@ -22,11 +22,11 @@ exports.validatePostSignUp = async (req, res, next) => {
 };
 
 exports.validatePostNewVoting = async (req, res, next) => {
-  const { title } = req.body;
-  const isExistVoting = await Voting.exists({ title });
+  const { expiration } = req.body;
+  const timeStamp = new Date(expiration.join(" "));
 
-  if (isExistVoting) {
-    console.log("exist voting!");
+  if (timeStamp.getTime() - Date.now() < 0) {
+    console.log("The expiration date cannot be older than the present!");
     res.redirect("/votings/new");
     return;
   }

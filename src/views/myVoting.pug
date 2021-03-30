@@ -1,4 +1,19 @@
 extends layouts/main
 
 block content
+  if currentUser
+    a.new-votings-link(href="/votings/new")
+      button.new-votings-button New Voting
+    a.my-votings-link(href="/my-votings")
+      button.my-votings-button My Votings
   h1 #{pageTitle}
+  ul.voting-list
+    each voting in userVoting
+      li.voting
+        a.voting-detail-link(href=`/votings/${voting.id}`)
+          h2.voting-title= voting.title
+        .expiration 만료일: #{new Date(voting.expiration).toLocaleString()}
+        if voting.progress
+          .progress 상태: 진행 중
+        else
+          .progress 상태: 종료
