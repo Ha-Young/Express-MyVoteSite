@@ -9,6 +9,9 @@
 <body>
   <form action="/login" method="POST" >
     <h1>LOGIN</h1>
+
+    <%= error %>
+
     <lable for="email">Email</lable>
       <input type="email" name="email" placeholder="Type your email" required>
     <lable for="password">Password</lable>

@@ -9,6 +9,9 @@
     <div class="main-content">
       <h1><%= title %></h1>
       <p><%= title %> here is main</p>
+      <% if (displayName) { %>
+        <div><a href="/votings/new">Add Voting!</a></div>
+       <% } %>
       <%- include("./partials/footer.ejs") %>
     </div>
   </body>

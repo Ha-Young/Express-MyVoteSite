@@ -5,13 +5,12 @@ const login = require("./auth/login");
 const logout = require("./auth/logout");
 const signup = require("./auth/signUp");
 
-router.get('/', function(req, res, next) {
-  res.render("index", { title: "Home" });
-});
+const homeController = require("../controllers/homeController");
+
+router.get('/', homeController.getHomePage);
 
 router.use("/signup", signup);
 router.use("/login", login);
 router.use("/logout", logout);
-
 
 module.exports = router;
