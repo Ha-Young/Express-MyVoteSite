@@ -3,6 +3,7 @@ const { HOME } = require("../../config/routes");
 const isLogin = require("../middlewares/isLogin");
 
 const authRoute = require("./auth");
+const voteRoute = require("./vote");
 
 module.exports = function () {
   const app = express.Router();
@@ -12,6 +13,7 @@ module.exports = function () {
   });
 
   authRoute(app);
+  voteRoute(app);
 
   return app;
 };
