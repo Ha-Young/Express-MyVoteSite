@@ -14,26 +14,8 @@ const route = Router();
 module.exports = app => {
   app.use(PREFIX, route);
 
-  route.get(SIGNUP, (req, res) => {
-    res.render("signup");
-  });
-
   route.get(LOGIN, (req, res) => {
-    res.render("login");
-  });
-
-  route.get(LOGIN_GOOGLE, passport.authenticate('google', { scope: ['profile','email'], session: false }));
-
-  route.get(LOGIN_GOOGLE_REDIRECT, passport.authenticate('google', { session: false }), async (req, res)=>{
-    const userInputDTO = {
-      name: req.user.displayName,
-      email: req.user._json.email,
-      provider: req.user.provider,
-    };
-
-    const { user, token } = await authService.SocialLogin(userInputDTO);
-
-    authSuccess({ res, user, token });
+    res.render("login", { error: {} });
   });
 
   route.post(
@@ -47,7 +29,11 @@ module.exports = app => {
     async (req, res, next) => {
       try {
         const { email, password } = req.body;
-        const { user, token } = await authService.SignIn(email, password);
+        const { user, token, error } = await authService.SignIn(email, password);
+
+        if (error) {
+          return res.render("login", { error });
+        }
 
         authSuccess({ res, user, token });
       } catch (e) {
@@ -67,7 +53,11 @@ module.exports = app => {
     }),
     async (req, res, next) => {
       try {
-        const { user, token } = await authService.SignUp(req.body);
+        const { user, token, error } = await authService.SignUp(req.body);
+
+        if (error) {
+          return res.render("login", { error });
+        }
 
         authSuccess({ res, user, token });
         return res.render("index", { user });
@@ -76,6 +66,24 @@ module.exports = app => {
       }
     }
   );
+
+  route.get(LOGIN_GOOGLE, passport.authenticate('google', { scope: ['profile','email'], session: false }));
+
+  route.get(LOGIN_GOOGLE_REDIRECT, passport.authenticate('google', { session: false }), async (req, res)=>{
+    const userInputDTO = {
+      name: req.user.displayName,
+      email: req.user._json.email,
+      provider: req.user.provider,
+    };
+
+    const { user, token, error } = await authService.SocialLogin(userInputDTO);
+
+    if (error) {
+      return res.render("login", { error });
+    }
+
+    authSuccess({ res, user, token });
+  });
 
   route.post(LOGOUT, isLogin, (req, res, next) => {
     try {
