@@ -9,7 +9,7 @@ const ROUTE = {
     LOGIN_GOOGLE_REDIRECT: "/login-google/redirect",
   },
 
-  VOTINGS: {
+  VOTE: {
     PREFIX: "/votings",
     DETAIL: "/:id",
     NEW: "/new",
