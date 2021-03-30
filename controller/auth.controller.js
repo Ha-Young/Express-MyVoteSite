@@ -3,7 +3,6 @@ const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 
 exports.signup = (req, res, next) => {
-  console.log(req.session.passport.user);
   res.render('partial/signup');
 };
 
@@ -41,4 +40,9 @@ exports.post = async (req, res, next) => {
 
 exports.login = (req, res, next) => {
   res.render('partial/login');
+};
+
+exports.logout = (req, res) => {
+  req.logout();
+  res.redirect('/');
 };

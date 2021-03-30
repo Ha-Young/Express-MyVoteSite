@@ -14,5 +14,6 @@ router.post(
     failureRedirect: '/auth/login',
   }),
 );
+router.get('/logout', authController.logout);
 
 module.exports = router;
