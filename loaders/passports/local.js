@@ -2,8 +2,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
 const initialize = (passport, getUserByEmail) => {
-  const authenticate = async (id, password, done) => {
-    const user = await getUserById(id);
+  const authenticate = async (email, password, done) => {
+    const user = await getUserByEmail(email);
 
     if (user === null) {
       return done(null, false, { message: '등록되지 않은 Email 입니다.' });
@@ -21,7 +21,7 @@ const initialize = (passport, getUserByEmail) => {
   };
 
   passport.use(new LocalStrategy({
-    usernameField: 'id',
+    usernameField: 'email',
     passwordField: 'password',
     session: true,
     passReqToCallback: false,
@@ -29,7 +29,7 @@ const initialize = (passport, getUserByEmail) => {
 
   passport.serializeUser((user, done) => done(null, user));
   passport.deserializeUser(async (user, done) => {
-    done(null, await getUserById(user.id));
+    done(null, await getUserByEmail(user.email));
   });
 };
 

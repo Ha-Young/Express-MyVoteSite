@@ -11,11 +11,11 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Vote Flatform' });
 });
 
+router.get('/my-votings');
+
 router.get('/logout', isLoggedIn, (req, res, next) => {
   res.render('logout');
 });
-
-router.get('/my-votings');
 
 router.get('/logout/callback', isLoggedIn, (req, res, next)=> {
   if (req.session) {
@@ -36,7 +36,7 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.post('/signup', async (req, res, next) => {
-  const email = await User.findOne({ id: req.body.email });
+  const email = await User.findOne({ localEmail: req.body.email });
 
   if (email) {
     req.flash("usedEmail", "등록된 이메일입니다.");
@@ -49,7 +49,7 @@ router.post('/signup', async (req, res, next) => {
     const hash = await bcrypt.hash(req.body.password, SALT);
 
     await User.create({
-      id: req.body.email,
+      localEmail: req.body.email,
       password: hash,
       nickname: req.body.name,
     });

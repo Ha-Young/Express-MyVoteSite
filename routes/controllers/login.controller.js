@@ -1,20 +1,16 @@
 const passport = require('passport');
 
-exports.get = (req, res, next) => {
-  res.render('login');
-};
-
-exports.postLocal = passport.authenticate('local', {
+exports.localPost = passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true,
 });
 
-exports.getGithub = passport.authenticate('github', {
+exports.githubGet = passport.authenticate('github', {
   scope: ['user:email']
 });
 
-exports.callbackGithub = passport.authenticate('github', {
+exports.githubCallback = passport.authenticate('github', {
   successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true,

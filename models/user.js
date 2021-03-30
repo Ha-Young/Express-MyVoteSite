@@ -1,15 +1,16 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  id: {
+  githubId: {
+    type: String,
+  },
+  localEmail: {
     type: String,
     minlength: 2,
     maxlength: 16,
-    required: true,
   },
   password: {
     type: String,
-    required: true,
   },
   nickname: {
     type: String,

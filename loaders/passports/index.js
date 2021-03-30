@@ -8,16 +8,15 @@ function passportLoader(app) {
   githubPassport(
     passport,
     async (id) => await User.findOne({ id }),
-    async (user, temporaryPassword) => await User.create({
-      id: user.id,
-      password: temporaryPassword,
+    async (user) => await User.create({
+      githubId: user.id,
       nickname: user.displayName,
       root: 'github',
     })
   );
   localPassport(
     passport,
-    async (id) => await User.findOne({ id }),
+    async (email) => await User.findOne({ email }),
   );
 
   app.use(passport.initialize());

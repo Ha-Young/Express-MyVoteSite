@@ -1,10 +1,6 @@
 const Vote = require('../../models/vote');
 
-exports.get = (req, res, next) => {
-  res.render('votingCreate');
-};
-
-exports.post = async (req, res, next) => {
+exports.voteCreatePost = async (req, res, next) => {
   const {
     title,
     option_type: optionType,
@@ -38,4 +34,19 @@ exports.post = async (req, res, next) => {
 
     return filteredOptions.map(option => ({ text: option }));
   }
+};
+
+exports.voteDetail = async (req, res, next) => {
+};
+
+exports.voteCheck = async (req, res, next) => {
+};
+
+exports.voteDelete = async (req, res, next) => {
+};
+
+exports.saveSuccess = (req, res, next) => {
+};
+
+exports.saveFailure = (req, res, next) => {
 };
