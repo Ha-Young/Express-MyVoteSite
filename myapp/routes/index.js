@@ -17,16 +17,13 @@ passport.use(
       const user = await User.findOne({ email });
 
       if (!user) {
-        console.log("eamil fail");
         return done(null, false, { message: "Incorrect Email" });
       }
 
       if (user) {
         if (user.password === cryptoPassword) {
-          console.log("success");
-          return done(null, user);
+          return done(null, user, { message: "Login Success" });
         } else {
-          console.log("password fail");
           return done(null, false, { message: "Incorrect Password" });
         }
       }
@@ -48,6 +45,10 @@ router.get("/", function (req, res, next) {
 });
 
 router.get("/login", function (req, res, next) {
+  const msg = req.flash();
+  if (req.flash()) {
+    console.log(msg);
+  }
   res.render("auth", { isSignUp: false });
 });
 
@@ -56,6 +57,8 @@ router.post(
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",
+    successFlash: true,
+    failureFlash: true,
   }),
 );
 

@@ -2,6 +2,7 @@ const createError = require("http-errors");
 const express = require("express");
 const session = require("express-session");
 const path = require("path");
+const flash = require("connect-flash");
 const mongoose = require("mongoose");
 const passport = require("passport");
 
@@ -32,12 +33,13 @@ app.use(
     secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true, maxAge: 10 * 60 * 1000 },
+    cookie: { secure: false, maxAge: 10 * 60 * 1000 },
   }),
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 app.use("/", indexRouter);
 
