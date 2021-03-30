@@ -20,7 +20,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 50px 40px;
+  padding: 50px 20px;
   width: 350px;
   color: #fafafa;
   font-family: "Microsoft YaHei", serif;
@@ -44,7 +44,7 @@ body {
 }
 
 .auth-form .btn {
-  width: 100%;
+  width: 80%;
   margin: 18px 0 9px 0;
   padding: 8px 20px;
   position: relative;
@@ -52,7 +52,7 @@ body {
 }
 
 .auth-form input {
-  color: white;
+  color: #fafafa;
 }
 .auth-form button,
 .auth-form input {
@@ -156,4 +156,61 @@ body {
 
 .link:hover {
   color: #7ca4e3;
+}
+
+.login-box {
+  width: 80%;
+  margin-top: 10px;
+  text-align: center;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+.social-button {
+  background-position: 25px 0px;
+  box-sizing: border-box;
+  color: #fafafa;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  line-height: 23px;
+  text-align: left;
+  text-decoration: none;
+  text-transform: uppercase;
+  vertical-align: middle;
+  width: 100%;
+  border-radius: 3px;
+  margin: 10px auto;
+  outline: #fafafa none 0px;
+  transition: all 0.2s cubic-bezier(0.72, 0.01, 0.56, 1) 0s;
+  transition: all .3s ease;
+}
+
+#github-connect {
+  background: #fafafa;
+  border: 1px solid #282828;
+}
+
+#github-connect:hover {
+  border-color: #fafafa;
+  background: #282828;
+  transition: all .3s ease-out;
+}
+
+#github-connect span {
+  box-sizing: border-box;
+  color: #282828;
+  cursor: pointer;
+  text-align: center;
+  text-transform: uppercase;
+  border: 0px none #282828;
+  outline: #fafafa none 0px;
+  transition: all .3s ease;
+}
+
+#github-connect:hover span {
+  color: #fafafa;
+  transition: all .3s ease;
 }
