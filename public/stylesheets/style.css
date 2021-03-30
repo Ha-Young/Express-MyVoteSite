@@ -3,13 +3,22 @@
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-body {
+h1 {
+  font-size: initial;
+}
+
+input {
+  border: 0;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+html,body {
   position: relative;
-  margin: 0;
+  margin: 0 auto;
+  height: 100%;
 }
 
 header {
-  position: fixed;
   display: flex;
   flex-direction: row-reverse;
   width: 100%;
@@ -25,12 +34,11 @@ header {
 main {
   display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 100px);
   padding: 20px;
-  margin: 50px auto;
-  overflow: scroll;
+  background-color: white;
 }
 
 footer {
@@ -50,6 +58,8 @@ footer {
   padding: 10px;
   border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 5px;
+  background-color: white;
+  overflow: auto;
 }
 
 .alert-msg {
@@ -57,19 +67,34 @@ footer {
   color: red;
 }
 
+.input-container {
+  position: relative;
+}
+
+.input-container > label {
+  position: absolute;
+  transform: translateX(-100%);
+}
+
+.option {
+  display: inline;
+}
+
 .form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   height: 100%;
 }
 
-.login {
+.small-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 80%;
-  height: 200px;
+  max-width: 600px;
+  height: 400px;
 }
 
 .votes-container {
@@ -124,10 +149,6 @@ a {
 
 a + a {
   margin-left: 5px;
-}
-
-button {
-  width: 100%;
 }
 
 .hidden {

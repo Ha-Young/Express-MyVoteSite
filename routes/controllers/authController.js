@@ -4,16 +4,30 @@ const User = require("../../models/User");
 const catchAsync = require("../../utils/catchAsync");
 
 exports.renderSignupPage = (req, res, next) => {
+  res.locals.message = req.flash("message")[0] || null;
   res.locals.user = req.user;
   res.render("signup");
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  const {
+    name,
+    email,
+    password,
+    passwordConfirm,
+  } = req.body;
+
+  if (!name || !email || !password || !passwordConfirm) {
+    req.flash("message", "Provide all informations.");
+    res.redirect("/auth/signup");
+    return;
+  }
+
   await User.create({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm,
+    name,
+    email,
+    password,
+    passwordConfirm,
   });
 
   res.redirect("/auth/login");

@@ -1,8 +1,10 @@
 const moment = require("moment");
+const mongoose = require("mongoose");
 
 const Vote = require("../../models/Vote");
 const catchAsync = require("../../utils/catchAsync");
 const { addFormattedDueDate } = require("../../utils/index");
+const AppError = require("../../utils/AppError");
 
 exports.renderVotingsPage = (req, res, next) => {
   res.locals.message = req.flash("message")[0] || null;
@@ -36,7 +38,19 @@ exports.createVote = catchAsync(async (req, res, next) => {
 });
 
 exports.renderVoteDetailPage = catchAsync(async (req, res, next) => {
-  const vote = await Vote.findById(req.params.id).populate("creator").lean();
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    next(new AppError("Not Found Page", 404));
+    return;
+  }
+
+  const vote = await Vote.findById(id).populate("creator").lean();
+
+  if (!vote) {
+    res.redirect("/");
+    return;
+  }
 
   res.locals.vote = addFormattedDueDate(vote);
   res.locals.user = req.user;
@@ -51,5 +65,5 @@ exports.deleteVote = async (req, res, next) => {
 };
 
 exports.voting = async (req, res, next) => {
-  
+
 };

@@ -1,19 +1,22 @@
-<div class="body-container login">
+<div class="body-container small-container">
   <h1>Sign Up</h1>
   <form class="form" action="/auth/signup" method="POST">
-    <div>
+    <div class="alert-msg">
+      <%= message %>
+    </div>
+    <div class="input-container">
       <label for="userName">name : </label>
       <input name="userName" />
     </div>
-    <div>
+    <div class="input-container">
       <label for="email">email : </label>
       <input name="email" />
     </div>
-    <div>
+    <div class="input-container">
       <label for="password">password : </label>
       <input name="password" />
     </div>
-    <div>
+    <div class="input-container">
       <label for="passwordConfirm">passwordConfirm : </label>
       <input name="passwordConfirm" />
     </div>

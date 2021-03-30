@@ -1,17 +1,29 @@
-<div class="body-container">
+<div class="body-container small-container">
   <h1>투표 생성</h1>
   <form class="form" action="/votings/new" method="POST">
     <div class="alert-msg">
       <%= message %>
     </div>
-    <div>
+    <div class="input-container">
       <label for="title">title : </label>
       <input name="title" />
     </div>
-    <div>
+    <div class="input-container">
       <label for="expiration">expiration : </label>
       <input name="expiration" type="datetime-local" />
     </div>
+    <button class="add-option-button" type="button">➕</button>
+    <ul class="options">
+      <li id="option1">
+        <input class="option" type="text" name="option1" placeholder="option1" />
+        <button class="delete-option-button" type="button">❌</button>
+      </li>
+      <li id="optoion2">
+        <input class="option" type="text" name="option2" placeholder="option2" />
+        <button class="delete-option-button" type="button">❌</button>
+      </li>
+    </ul>
     <button type="submit">확인</button>
   </form>
 </div>
+<script src="/javascripts/createVoting.js"></script>
