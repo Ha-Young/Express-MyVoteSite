@@ -4,6 +4,7 @@ const { randomBytes } = require("crypto");
 
 const User = require("../models/User");
 const { jwtSecret } = require("../config").jwt;
+const ERR_MSG = require("../config/errMsg");
 
 exports.SignUp = async userInputDTO => {
   try {
@@ -19,7 +20,7 @@ exports.SignUp = async userInputDTO => {
     const token = generateToken(userRecord);
 
     if (!userRecord) {
-      throw new Error('User cannot be created');
+      throw new Error('user was not created');
     }
 
     const user = userRecord.toObject();
@@ -29,7 +30,7 @@ exports.SignUp = async userInputDTO => {
 
     return { user, token };
   } catch (err) {
-    throw new Error(err);
+    return { error: { global: ERR_MSG.AUTH.LOCAL_SIGNUP_GLOBAL } };
   }
 };
 
@@ -37,7 +38,7 @@ exports.SignIn = async (email, password) => {
   try {
     const userRecord = await User.findOne({ email });
     if (!userRecord) {
-      throw new Error('User not registered');
+      return { error: { email: ERR_MSG.AUTH.LOCAL_LOGIN_EMAIL } };
     }
 
     const validPassword = await argon2.verify(userRecord.password, password);
@@ -51,10 +52,10 @@ exports.SignIn = async (email, password) => {
 
       return { user, token };
     } else {
-      throw new Error('Invalid Password');
+      return { error: { password: ERR_MSG.AUTH.LOCAL_LOGIN_PASSWORD } };
     }
   } catch (err) {
-    throw new Error(err);
+    return { error: { global: ERR_MSG.AUTH.LOCAL_LOGIN_GLOBAL } };
   }
 };
 
@@ -69,7 +70,7 @@ exports.SocialLogin = async userInputDTO => {
     const token = generateToken(userRecord);
 
     if (!userRecord) {
-      throw new Error('User can not be created');
+      throw new Error("user was not created");
     }
 
     const user = userRecord.toObject();
@@ -79,7 +80,7 @@ exports.SocialLogin = async userInputDTO => {
 
     return { user, token };
   } catch (e) {
-    throw new Error(e);
+    return { error: { global: ERR_MSG.AUTH.SOCIAL_LOGIN_GLOBAL } };
   }
 };
 

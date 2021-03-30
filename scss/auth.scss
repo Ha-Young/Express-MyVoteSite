@@ -22,6 +22,10 @@ $diffRatio: ($contW - $imgW) / $contW;
   width: 100%;
   height: 100vh;
 
+  .err-msg {
+    color: red;
+  }
+
   button {
     display: block;
     margin: 0 auto;
@@ -39,10 +43,11 @@ $diffRatio: ($contW - $imgW) / $contW;
     text-align: center;
   }
 
-  label {
+  fieldset {
     display: block;
     width: $inputW;
     margin: 25px auto 0;
+    border: none;
     text-align: center;
 
     span {

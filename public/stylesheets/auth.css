@@ -4,6 +4,8 @@
   align-items: center;
   width: 100%;
   height: 100vh; }
+  .sign-in-wrapper .err-msg {
+    color: red; }
   .sign-in-wrapper button {
     display: block;
     margin: 0 auto;
@@ -17,12 +19,13 @@
     width: 100%;
     font-size: 26px;
     text-align: center; }
-  .sign-in-wrapper label {
+  .sign-in-wrapper fieldset {
     display: block;
     width: 260px;
     margin: 25px auto 0;
+    border: none;
     text-align: center; }
-    .sign-in-wrapper label span {
+    .sign-in-wrapper fieldset span {
       font-size: 12px;
       color: #cfcfcf;
       text-transform: uppercase; }
