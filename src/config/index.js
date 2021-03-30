@@ -7,12 +7,10 @@ dotenv.config();
 
 module.exports = {
   port: normalizePort(process.env.PORT || '3000'),
-
   databaseURL: process.env.MONGODB_URI,
-
-  logs: {
-    level: process.env.LOG_LEVEL || 'silly',
-  },
+  jwtSecret: process.env.JWT_SECRET,
+  jwtCookieKey: 'VC_wpAthtk',
+  jwtExpires: 60 * 60 * 1000,
 };
 
 function normalizePort(val) {

@@ -8,6 +8,7 @@ module.exports = {
     "plugin:security/recommended",
     "plugin:mocha/recommended"
   ],
+  parser: "babel-eslint",
   parserOptions: {
     ecmaVersion: 12,
   },

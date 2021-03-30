@@ -1,27 +1,10 @@
-*, *:before, *:after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-  background: #ededed;
-}
-
-input, button {
-  border: none;
-  outline: none;
-  background: none;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-}
-
 $contW: 900px;
 $imgW: 260px;
 $formW: $contW - $imgW;
 $switchAT: 1.2s;
 
 $inputW: 260px;
+$inputH: 130px;
 $btnH: 36px;
 
 $diffRatio: ($contW - $imgW) / $contW;
@@ -72,8 +55,8 @@ $diffRatio: ($contW - $imgW) / $contW;
   input {
     display: block;
     width: 100%;
+    height: 2rem;
     margin-top: 5px;
-    padding-bottom: 5px;
     font-size: 16px;
     border-bottom: 1px solid rgba(0,0,0,0.4);
     text-align: center;
