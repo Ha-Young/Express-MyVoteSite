@@ -6,8 +6,8 @@ const votingSchema = new mongoose.Schema({
   description: { type: String },
   votingItem: [{ item: { type: String }, count: { type: Number } }],
   voters: [mongoose.Schema.Types.ObjectId],
-  // postTime: { type: String, default: Date.now },
-  // dueTime: { type: String, default: Date.now },
+  startTime: { type: Date, default: new Date().toISOString() },
+  endTime: { type: Date, default: new Date().toISOString() },
 });
 
 module.exports = mongoose.model("Voting", votingSchema);
