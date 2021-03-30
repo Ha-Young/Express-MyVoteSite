@@ -5,24 +5,37 @@ const Voting = require('../models/Voting');
 // expiration_date 현시간 이후인지랑 options 2개 이상인지
 
 exports.getNewVotingPage = async function (req, res, next) {
-  res.render('newVoting')
+  res.render('newVoting');
 }
 
-exports.createNewVoting = async function (req, res, next) {
+exports.createVoting = async function (req, res, next) {
   const { title, options, expiration_date } = req.body;
-
-
   const votes = options.map((option) => {
     return { option, count: 0 };
   });
 
   await Voting.create({
     title,
-    author: mongoose.Types.ObjectId(req.user),
+    author: req.user,
     expiration_date,
     options,
     votes
   });
 
   res.redirect('/votings/new');
+}
+
+exports.getVotingDetailPage = async function (req, res, next) {
+  const votingId = req.params['voting_id'];
+
+  const voting = await Voting.findById(votingId).populate('author');
+  console.log(voting)
+  res.render('votingDetail', { voting })
+}
+
+exports.updateVotes = async function (req, res, next) {
+  const votingId = parseInt(req.params['voting_id']);
+  const voting = await Voting.findById(votingId);
+
+  res.render('votingDetail', { voting })
 }

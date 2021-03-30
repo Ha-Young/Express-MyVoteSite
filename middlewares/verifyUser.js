@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 
 exports.verifyUser = async function (req, res, next) {
   // REVIEW token이 다른곳에 담겨서 넘어올수도 있나??
@@ -7,7 +8,7 @@ exports.verifyUser = async function (req, res, next) {
       return res.status(301).redirect('/login');
     }
 
-    req.user = decoded.id;
+    req.user = mongoose.Types.ObjectId(decoded.id);
 
     next();
   });
