@@ -17,26 +17,26 @@ passport.use(
         if (!user) return done(null, false, { message: "Incorrect Email" });
 
         if (user.password === cryptoPassword) {
-          return done(null, user, { message: "Login Success" });
+          done(null, user, { message: "Login Success" });
         } else {
-          return done(null, false, { message: "Incorrect Password" });
+          done(null, false, { message: "Incorrect Password" });
         }
       } catch {
-        return done(null, false, { message: "Internal Server Error" });
+        done(null, false, { message: "Internal Server Error" });
       }
     },
   ),
 );
 
 passport.serializeUser((user, done) => {
-  return done(null, user._id);
+  done(null, user._id);
 });
 
 passport.deserializeUser(async (userId, done) => {
   try {
     const user = await User.findOne({ _id: userId });
-    return done(null, user);
+    done(null, user);
   } catch {
-    return done(null, false, { message: "Internal Server Error" });
+    done(null, false, { message: "Internal Server Error" });
   }
 });

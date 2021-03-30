@@ -6,9 +6,12 @@ block stylesheet
 block content
   h2 투표목록
   section.voting-list
-    - for (let i = 0; i < 5; i++)
-      a.voting-item(href="/votings/") item
+    - console.log(voting.length)
+    - for (let i = 0; i < voting.length; i++)
+      - const { title, _id } = voting[i]
+      - const path = `/votings/${_id}`
+      a.voting-item(href=path) #{title}
 
   div.btn-container
-    button.create-voting-btn Create Voting
-    button.view-myvoting-btn My Voting
+    a.create-voting-btn(href="/votings/new") Create Voting
+    a.view-myvoting-btn(href="my-votings") My Voting

@@ -11,9 +11,9 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   const voting = await Voting.find();
-  console.log(voting);
+  // console.log(voting);
   console.log(req.flash());
-  res.render("index");
+  res.render("index", { voting });
 });
 
 router.get("/login", (req, res, next) => {
