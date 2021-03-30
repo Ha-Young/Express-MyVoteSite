@@ -13,9 +13,13 @@ router
   .post(authController.postLogIn);
 
 router.post("/forgotPassword", authController.forgotPassword);
-router.patch("/resetPassword", authController.resetPassword);
-router.delete("/deleteUser", authController.deleteUser);
 
-router.post("logout", authController.getLogOut);
+router
+  .route("/resetPassword")
+  .get(authController.getResetPassword)
+  .patch(authController.resetPassword);
+
+router.delete("/deleteUser", authController.deleteUser);
+router.post("/logout", authController.getLogOut);
 
 module.exports = router;

@@ -13,7 +13,7 @@ router.get("/error", votingController.getFail);
 router
   .route("/:id")
   .get(votingController.getSelectedVoting)
-  .post(votingController.participateVoting)
+  .post(votingController.voteVoting)
   .delete(votingController.deleteVoting);
 
 module.exports = router;

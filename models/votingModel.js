@@ -32,7 +32,9 @@ const VotingSchema = new Schema({
     type: Date,
     required: [true, "시작일을 입력해주세요."],
     validate: {
-      validator: (date) => date,
+      validator: function(date) {
+        return date < Date.now();
+      },
       message: "시작일은 현재 시점보다 이후여야 합니다.",
     },
   },
@@ -40,7 +42,9 @@ const VotingSchema = new Schema({
     type: Date,
     required: [true, "종료일을 입력해주세요."],
     validate: {
-      validator: (date) => date,
+      validator: function(date) {
+        return date < this.startDate;
+      },
       message: "종료일은 시작일보다 이후여야 합니다.",
     },
   },
@@ -56,7 +60,9 @@ const VotingSchema = new Schema({
   options: {
     type: [OptionSchema],
     validate: {
-      validator: (value) => value.length > 1,
+      validator: function(value) {
+        return value.length > 1;
+      },
       message: "투표 항목은 2개 이상이어야 합니다.",
     },
   },

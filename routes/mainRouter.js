@@ -3,10 +3,11 @@ const router = express.Router();
 const votingController = require("../controllers/votingController");
 
 router.get("/", votingController.getAllVotings);
-router.get("/upcoming");
-router.get("/ongoing");
-router.get("/end");
-router.get("/canceled");
-router.get("/my-votings", votingController.getMyVotings);
+router.get("/upcoming", votingController.upcomingVotings);
+router.get("/ongoing", votingController.ongoingVotings);
+router.get("/ended", votingController.endedVotings);
+router.get("/canceled", votingController.canceledVotings);
+router.get("/my-votings", votingController.myVotings);
+router.get("/my-voted", votingController.votedVotings);
 
 module.exports = router;

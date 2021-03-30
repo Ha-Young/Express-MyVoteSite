@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
+
 const { Schema } = mongoose;
 const {
   Types: { ObjectId },
@@ -31,8 +33,8 @@ const UserSchema = new Schema({
     type: String,
     required: [true, "비밀번호를 한번 더 입력해주세요."],
     validate: {
-      validator: function(val) {
-        return this.password === val;
+      validator: function(confirmPassword) {
+        return this.password === confirmPassword;
       },
       message: "비밀번호가 일치하지 않습니다.",
     },
@@ -40,12 +42,12 @@ const UserSchema = new Schema({
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
-  createVotings: {
+  createdVotings: {
     type: [ObjectId],
     ref: "Voting",
     default: [],
   },
-  participateVotings: {
+  votedVotings: {
     type: [ObjectId],
     ref: "Voting",
     default: [],
@@ -79,6 +81,19 @@ UserSchema.methods.changedPasswordAfter = (JWTTimestamp) => {
   }
 
   return false;
+};
+
+UserSchema.methods.createPasswordResetToken = () => {
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  this.passwordResetToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
 };
 
 const User = mongoose.model("User", UserSchema);
