@@ -3,6 +3,9 @@
     <%= vote.title %>
   </p>
   <ul>
+    <li class="author">
+      Created by <%= vote.author.nickname %>
+    </li>
     <li class="expiration_date">
       expired at <%= vote.expiration_date %>
     </li>
@@ -10,7 +13,4 @@
       <%= vote.status %>
     </li>
   </ul>
-  <p class="author">
-    <%= vote.author %>
-  </p>
 </a>

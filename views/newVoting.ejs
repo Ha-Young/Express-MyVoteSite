@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Voting Platform</title>
+  <link rel="stylesheet" href="/stylesheets/auth.css" />
+</head>
+
+<body>
+  <main>
+    <form class="auth-form" action="/votings/new" method="post">
+      <h1>
+        <%= title %>
+      </h1>
+      <div class="message-container">
+        <h3>
+          <%= message %>
+        </h3>
+      </div>
+      <div class="title-container">
+        <input type="text" name="title" id="title" placeholder=" " required class="form-control-material" />
+        <p class="form-message">
+          <%= ...infoMessages.filter(message=> message.includes('email')) %>
+        </p>
+      </div>
+      <div class="date-container">
+        <input type="datetime-local" name="expiration-date" id="expiration-date" required
+          class="form-control-material" />
+        <p class="form-message">
+          <%= ...infoMessages.filter(message=> message.includes('email')) %>
+        </p>
+      </div>
+      <div class=""><button type="submit" class="btn btn-ghost">Sign Up</button></div>
+    </form>
+  </main>
+</body>
+
+</html>

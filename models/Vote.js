@@ -21,6 +21,10 @@ const voteSchema = new mongoose.Schema({
     enum: ['in progress', 'terminated'],
     default: 'in progress'
   },
+  options: {
+    type: [mongoose.Schema.Types.Mixed],
+    required: [true, 'Please provide vote options']
+  },
   voters: [
     {
       type: mongoose.Schema.Types.ObjectId,

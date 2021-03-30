@@ -11,13 +11,18 @@
         <li class="nickname">
           <span>Hello, <%= user.nickname %></span>
         </li>
+        <li class="create">
+          <form method="GET" action="/votings/new">
+            <button class="button yellow" type="submit">CREATE VOTE</button>
+          </form>
+        </li>
         <li class="my-votings">
           <form method="GET" action="/my-votings">
             <button class="button yellow" type="submit">MY VOTINGS</button>
           </form>
         </li>
         <li class="auth">
-          <form method="GET" action="/users/logout">
+          <form method="GET" action="/auth/logout">
             <button class="button yellow" type="submit">LOG OUT</button>
           </form>
         </li>
