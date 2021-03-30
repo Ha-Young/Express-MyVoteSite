@@ -3,11 +3,11 @@ const { celebrate, Joi } = require("celebrate");
 const { Router } = require("express");
 const passport = require("passport");
 
-// const middlewares = require('../middlewares');
-const { PREFIX, SIGNUP, LOGIN, LOGOUT, LOGIN_GOOGLE, LOGIN_GOOGLE_REDIRECT } = require("../../config/routes").AUTH;
 const authService = require("../../services/authService");
 const { jwtCookieKey, jwtExpires } = require("../../config").jwt;
 const isLogin = require("../middlewares/isLogin");
+const { PREFIX, SIGNUP, LOGIN, LOGOUT,
+  LOGIN_GOOGLE, LOGIN_GOOGLE_REDIRECT } = require("../../config/routes").AUTH;
 
 const route = Router();
 
@@ -29,15 +29,15 @@ module.exports = app => {
     async (req, res, next) => {
       try {
         const { email, password } = req.body;
-        const { user, token, error } = await authService.SignIn(email, password);
+        const { token, error } = await authService.SignIn(email, password);
 
         if (error) {
           return res.render("login", { error });
         }
 
-        authSuccess({ res, user, token });
-      } catch (e) {
-        return next(createError(e));
+        authSuccess({ res, token });
+      } catch (err) {
+        return next(createError(err));
       }
     }
   );
@@ -59,10 +59,10 @@ module.exports = app => {
           return res.render("login", { error });
         }
 
-        authSuccess({ res, user, token });
+        authSuccess({ res, token });
         return res.render("index", { user });
-      } catch (e) {
-        return next(e);
+      } catch (err) {
+        return next(err);
       }
     }
   );
@@ -76,26 +76,26 @@ module.exports = app => {
       provider: req.user.provider,
     };
 
-    const { user, token, error } = await authService.SocialLogin(userInputDTO);
+    const { token, error } = await authService.SocialLogin(userInputDTO);
 
     if (error) {
       return res.render("login", { error });
     }
 
-    authSuccess({ res, user, token });
+    authSuccess({ res, token });
   });
 
   route.post(LOGOUT, isLogin, (req, res, next) => {
     try {
       res.clearCookie(jwtCookieKey);
       return res.redirect("/login");
-    } catch (e) {
-      return next(e);
+    } catch (err) {
+      return next(err);
     }
   });
 };
 
-function authSuccess({ res, user, token }) {
+function authSuccess({ res, token }) {
   res.cookie(jwtCookieKey, token, {
     maxAge: jwtExpires,
     httpOnly: true,
