@@ -16,7 +16,7 @@ const voteSchema = new mongoose.Schema({
   },
   isProceeding: {
     type: Boolean,
-    defualt: true,
+    default: true,
   },
   optionType: {
     type: String,

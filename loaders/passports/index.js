@@ -7,7 +7,7 @@ const User = require('../../models/user');
 function passportLoader(app) {
   githubPassport(
     passport,
-    async (id) => await User.findOne({ id }),
+    async (id) => await User.findOne({ githubId: id }),
     async (user) => await User.create({
       githubId: user.id,
       nickname: user.displayName,
@@ -16,7 +16,7 @@ function passportLoader(app) {
   );
   localPassport(
     passport,
-    async (email) => await User.findOne({ email }),
+    async (email) => await User.findOne({ localEmail: email }),
   );
 
   app.use(passport.initialize());

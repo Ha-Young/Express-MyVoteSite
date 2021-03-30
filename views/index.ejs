@@ -8,5 +8,10 @@
 
     <h1><%= title %></h1>
 
+    <% for (let i = 0; i < votes.length; i++) { %>
+      <div>
+        <span><%= votes[i].title %></span>
+      </div>
+    <% } %>
   </body>
 </html>

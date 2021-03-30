@@ -3,12 +3,14 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const isLoggedIn = require('./middleware/isLoggedIn');
 const User = require('../models/user');
+const Vote = require('../models/vote');
 
 const SALT = 6;
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Vote Flatform' });
+router.get('/', async (req, res, next) => {
+  const votes = await Vote.find();
+  res.render('index', { title: 'Vote Flatform', votes });
 });
 
 router.get('/my-votings');
