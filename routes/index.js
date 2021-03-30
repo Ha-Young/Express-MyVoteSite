@@ -1,17 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const Voting = require("../models/Voting");
+const votingController = require("../routes/controllers/votingController");
 
-router.get("/", async (req, res, next) => {
-  try {
-    const votings = await Voting.find();
-
-    res.render("index", { votings });
-  } catch (error) {
-    console.error(error.message);
-    next(createError(500, "Server Error"));
-  }
-});
+router.get("/", votingController.getAllVotings);
 
 module.exports = router;

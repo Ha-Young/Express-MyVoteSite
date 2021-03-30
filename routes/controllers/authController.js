@@ -56,8 +56,9 @@ Controller.getLogin = (req, res) => {
 // @desc    authenticate user
 // @access  Public
 Controller.postLogin = passport.authenticate("local", {
-  failureRedirect: "/auth/login",
   successRedirect: "/",
+  failureRedirect: "/auth/login",
+  failureFlash: true,
 });
 
 Controller.getLogout = (req, res) => {

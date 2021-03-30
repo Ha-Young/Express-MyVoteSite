@@ -9,6 +9,7 @@ function passportConfig(app) {
       secret: process.env.SECCSION_SECRET_KEY,
       resave: true,
       saveUninitialized: false,
+      cookie: { secure: false },
     },
   ));
 

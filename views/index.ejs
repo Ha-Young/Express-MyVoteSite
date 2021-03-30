@@ -22,12 +22,13 @@
         <li>
           <p>제목</p>
           <%= voting.title %>
-          <p>투표 시작 날짜</p>
-          <%= voting.startDate %>
           <p>투표 종료 날짜</p>
           <%= voting.endDate %>
-          <p>투표 진행 여부</p>
-          <%= voting.isProgress %>
+          <% if (voting.isProgress) { %>
+            <p>투표 진행 중</p>
+          <% } else { %>
+            <p>투표 종료</p>
+          <% } %>
           <form action="/voting/votings/<%= voting._id %>" method="GET">
             <button type="submit">투표하러 가기</button>
           </form>

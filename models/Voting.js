@@ -10,22 +10,18 @@ const VotingSchema = new Schema({
     type: String,
     required: true,
   },
-  startDate: {
-    type: Date,
-    default: Date.now,
-  },
   endDate: {
-    type: Date,
+    type: String,
     required: true,
   },
   isProgress: {
     type: Boolean,
     default: true,
   },
-  options: {
-    type: Array,
-    default: [],
-  },
+  options: [{
+    optionTitle: { type: String },
+    optionValue: { type: Number, default: 0 },
+  }],
   votingUserList:
     [
       {
