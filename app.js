@@ -8,6 +8,7 @@ const logger = require('morgan');
 const pug = require('pug');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const flash = require('connect-flash');
 const passportSetup = require('./config/passport-setup');
 
 mongoose.connect(
@@ -24,6 +25,7 @@ db.once('open', () => {
 const mainRouter = require('./routes/main');
 const authRouter = require('./routes/auth');
 const votingsRouter = require('./routes/votings');
+const myPageRouter = require('./routes/myPage');
 
 const app = express();
 
@@ -36,6 +38,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: { maxAge: 1000 * 60 * 10 * 24 },
 }));
+app.use(flash());
 app.use(logger('dev'));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -48,11 +51,12 @@ app.use('/', mainRouter);
 app.use('/auth', authRouter);
 // app.use('/', (req, res, next) => {
 //   if (!req.isAuthenticated()) {
-//     next(createError(401, '로그인이 필요합니다.'));
+//     next(createError(401, '로그인이 필요합니다.')); <- redirect?!
 //   }
 //   next();
 // });
 app.use('/votings', votingsRouter);
+app.use('/my-votings', myPageRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

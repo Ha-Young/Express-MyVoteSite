@@ -27,7 +27,7 @@ exports.post = async (req, res, next) => {
     const userData = await User.findOne({ email });
     if (userData) {
       res.render('partial/message', {
-        message: '이미 가입된 계정입니다',
+        message: '이미 가입된 계정입니다.',
       });
     } else {
       await User.create({ username, email, password });
@@ -38,8 +38,14 @@ exports.post = async (req, res, next) => {
   }
 };
 
-exports.login = (req, res, next) => {
-  res.render('partial/login');
+exports.login = async (req, res, next) => {
+  const fmsg = req.flash();
+  if (fmsg.error) {
+    return res.render('partial/message', {
+      message: '가입되지 않은 계정입니다.',
+    });
+  }
+  return res.render('partial/login');
 };
 
 exports.logout = (req, res) => {

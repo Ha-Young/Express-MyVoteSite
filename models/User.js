@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  myVotings: [{
+    type: mongoose.Schema.Types.ObjectId,
+    unique: true,
+  }],
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

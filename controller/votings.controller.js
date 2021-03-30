@@ -1,15 +1,6 @@
 const createError = require('http-errors');
 const Voting = require('../models/Voting');
 
-// exports.getAll = async (req, res, next) => {
-//   try {
-//     const allVotingList = await Voting.find({}).exec();
-//     res.render('partial/votingList', { list: allVotingList });
-//   } catch (err) {
-//     next(createError(err.status));
-//   }
-// };
-
 exports.showForm = (req, res) => {
   res.render('partial/votingForm', { user: req.user });
 };

@@ -21,14 +21,26 @@ passport.use(new Strategy(
     usernameField: 'email',
     passwordField: 'password',
   },
-  (email, password, done) => {
-    User.findOne({ email }, (err, user) => {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false);
-      }
-      if (user.password !== password) { return done(null, false); }
-      return done(null, user);
-    });
+  async (email, password, done) => {
+    try {
+      await User.findOne({ email }, (err, user) => {
+        if (err) { return done(err); }
+        if (!user) {
+          return done(null, false, {
+            message: 'Incorrect username',
+          });
+        }
+        if (user.password !== password) {
+          return done(null, false, {
+            message: 'Incorrect password',
+          });
+        }
+        return done(null, user);
+      });
+    } catch (err) {
+      return done(null, false, {
+        message: 'Incorrect username',
+      });
+    }
   },
 ));

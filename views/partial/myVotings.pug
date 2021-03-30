@@ -1,0 +1,7 @@
+extends ../layout.pug
+
+block content
+  .votingContainer
+    each data in list
+      div.votingBox
+        a(href=`/votings/${data.id}`) #{data.title}
