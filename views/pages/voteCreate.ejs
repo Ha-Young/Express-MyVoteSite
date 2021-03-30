@@ -1,0 +1,44 @@
+<div class="form-wrapper">
+  <div class="vote-create-cont">
+    <form class="vote-create-form" method="POST" action="/login">
+      <h2>Create Vote</h2>
+      <fieldset>
+        <span>Title</span>
+        <input type="text" name="title" />
+      </fieldset>
+      <fieldset>
+        <span>ExpireDate</span>
+        <input type="date" name="date" />
+      </fieldset>
+      <fieldset>
+        <span>ExpireTime</span>
+        <input type="time" name="time" />
+      </fieldset>
+      <fieldset class="vote-option-list-wrapper">
+        <div class="vote-option-input-wrapper">
+          <span class="vote-option-list-title">Options</span>
+          <button class="vote-option-add-btn" type="button">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+        <ul class="vote-option-list">
+          <li class="vote-option-item">
+            <input type="text" value="👍"/>
+          </li>
+          <li class="vote-option-item">
+            <input type="text" value="👎"/>
+          </li>
+        </ul>
+      </fieldset>
+      <div class="vote-option-btn-group">
+        <button type="submit" class="vote-add-btn">생성</button>
+        <a href="/">
+          <button type="button" class="vote-add-cancel-btn">취소</button>
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/javascripts/templates/voteOptionItemTemplate.js"></script>
+<script src="/javascripts/voteCreatePage.js"></script>
