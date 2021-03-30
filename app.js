@@ -1,17 +1,22 @@
 const dotenv = require("dotenv");
 dotenv.config({ path: "./.env"});
+require("./config/mongoDB");
+require("./config/passport");
 
 const createError = require("http-errors");
+const passport = require("passport");
 const express = require("express");
 const path = require("path");
+const mongoSession = require("./config/mongoDB/session");
 const bodyParser = require("body-parser");
 // const cookieParser = require('cookie-parser');
 const logger = require("morgan");
+const mongoose = require("mongoose");
+const flash = require("connect-flash");
 
 const indexRouter = require("./routes/index");
 const votingsRouter = require("./routes/votings/index");
-const myVotingsRouter = require("./routes/my-votings");
-
+const myVotingsRouter = require("./routes/myVotings");
 
 const app = express();
 
@@ -21,18 +26,20 @@ if (process.env.NODE_ENV === "development") {
   app.use(logger("combined"));
 }
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(mongoSession);
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.static("public"));
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(flash());
+
 // app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use("/votings", votingsRouter);

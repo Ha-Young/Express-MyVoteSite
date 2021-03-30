@@ -7,23 +7,26 @@
     <title><%= title %></title>
 </head>
 <body>
-  <form action="/signup" method="POST" >
+  <form action="/signup" method="post" >
     <h1>SIGN UP</h1>
-    <lable>
-      <input type="email" name="user-email" placeholder="Type your email" required>
-    </lable>
-    <lable>
-      <input type="text" name="user-displayname" placeholder="Type your displayname" required>
-    </lable>
-    <lable>
-      <inpt type="password" name="user-password" password="Type your password" required>
-    </lable>
-    <label>
-      <input type="password" name="user-password-confirmation" password="Confirm your password" required>
-    </label>
-  </form>
-  <input type="submit" name="submit-button" vlaue="Login">
-  <div><a href="/login">Go to Login</div>
+
+   <div>
+    <% if(messages.length > 0) {%>
+      <% messages.forEach(function(errMessage) { %>
+        <div> <strong> <%= errMessage.message %> </strong></div>
+      <% }) %>
+      </div>
+    <% } %>
+    <lable for="email">Email</lable>
+      <input type="email" name="email" value="<%= typeof email !== 'undefined' ? email : '' %>" placeholder="Type your email" >
+    <lable for="username">Username</lable>
+      <input type="text" name="username" value="<%= typeof username !== 'undefined' ? username : '' %>" placeholder="Type your username" >
+    <lable for="user-password">Password</lable>
+      <input type="password" name="password" value="<%= typeof password !== 'undefined' ? password : '' %>" placeholder="Type your password" >
+    <label for="user-password-confirm">Password Confirm</label>
+      <input type="password" name="confirmedPassword" value="<%= typeof password !== 'undefined' ? password : '' %>" placeholder="Confirm your password" >
+      <button type="submit">Submit</button>
+    </form>
   <div><a href="/">Go to Home</div>
 </body>
 </html>
