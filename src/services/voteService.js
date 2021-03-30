@@ -2,6 +2,16 @@ const { format } = require("date-fns");
 
 const Vote = require("../models/Vote");
 
+exports.GetAllVotes = async () => {
+  try {
+    const votes = await Vote.find().lean();
+
+    return { votes };
+  } catch (error) {
+    return { error };
+  }
+};
+
 exports.CreateVote = async ({ voteInputDTO, user }) => {
   try {
     let voteOptions = voteInputDTO["vote_options"];
@@ -12,8 +22,6 @@ exports.CreateVote = async ({ voteInputDTO, user }) => {
         count: 0,
       }));
     }
-
-    console.log('CreateVote', voteOptions, typeof voteOptions);
 
     const voteRecord = await Vote.create({
       ...voteInputDTO,
