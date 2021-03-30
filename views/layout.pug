@@ -16,8 +16,12 @@ html
         h1.header___title Vote!
       .header__search
       .header__buttons
-        a.btn.btn-primary(href="/signin") sign In
-        a.btn.btn-primary(href="/signup") sign Up
+        if (user)
+          a.btn.btn-primary(href="/vote/:_id") my Votes
+          a.btn.btn-primary(href="/signOut") sign Out
+        else
+          a.btn.btn-primary(href="/signin") sign In
+          a.btn.btn-primary(href="/signup") sign Up
     block content
     footer.footer footer
     script(src="javascripts/less/less.js" type="text/javascript")

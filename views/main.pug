@@ -4,5 +4,5 @@ block content
   link(rel="stylesheet/less" type="text/css" href="/stylesheets/main.less")
   .main__outer
     .main__container
-      h1= title
-      p Welcome to #{title}
+      each vote in votes
+        div=vote.title

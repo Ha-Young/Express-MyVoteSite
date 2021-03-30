@@ -7,7 +7,7 @@ module.exports.getSignIn = function getSignIn(req, res, next) {
   res.render("signIn", { messages: req.flash("info") });
 }
 
-module.exports.postSignIn = async function(req, res, next) {
+module.exports.postSignIn = async function postSignIn(req, res, next) {
   const {
     body: { email, password }
   } = req;
@@ -21,7 +21,7 @@ module.exports.postSignIn = async function(req, res, next) {
   }
 
   if (!bcrypt.compareSync(password, user.password)) {
-    console.log("signIn : password fail");
+    console.log("signIn : Password fail");
     req.flash("info", "pls check your Password!");
     return res.redirect("/signIn");
   }
@@ -29,18 +29,16 @@ module.exports.postSignIn = async function(req, res, next) {
   res.cookie("access", jwt.sign({
       email,
     },
-    process.env.JWT_SECRET,
-    {
+    process.env.JWT_SECRET, {
       expiresIn: "30m",
     })
   );
 
   res.cookie("refresh", jwt.sign({
-      _id: savedUser._id,
+      _id: user._id,
       email,
     },
-    process.env.JWT_SECRET,
-    {
+    process.env.JWT_SECRET, {
       expiresIn: "1d",
     })
   );
@@ -63,34 +61,37 @@ module.exports.postSignUp = async function postSignUp(req, res, next) {
     return res.redirect("/signUp");
   }
 
-  const hashedPassword = bcrypt.hashSync(password, 10);
   const newUser = {
     email,
-    password: hashedPassword,
+    password: bcrypt.hashSync(password, 10),
     name,
   };
 
   res.cookie("access", jwt.sign({
       email,
     },
-    process.env.JWT_SECRET,
-    {
+    process.env.JWT_SECRET, {
       expiresIn: "30m",
     })
   );
 
   await User.create(newUser);
-
-  const savedUser = User.findOne({ email });
+  const savedUser = await User.findOne({ email }).lean();
   res.cookie("refresh", jwt.sign({
       _id: savedUser._id,
       email,
     },
-    process.env.JWT_SECRET,
-    {
+    process.env.JWT_SECRET, {
       expiresIn: "1d",
     })
   );
 
   res.redirect("/signin");
+}
+
+module.exports.getSignOut = function getSignOut(req, res, next) {
+  req.logout();
+  res.clearCookie("access");
+  res.clearCookie("refresh");
+  res.redirect("/");
 }
