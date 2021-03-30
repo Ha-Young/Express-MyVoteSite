@@ -4,10 +4,12 @@ const findOrCreate = require('mongoose-findorcreate');
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  avatar_url: { type: String },
+  avatarUrl: { type: String },
+  githubId: { type: String },
   password: { type: String },
+  completedVotes: [{ type: mongoose.Schema.Types.ObjectID, ref: "Vote" }],
 }, {
-  timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
+  timestamps: { currentTime: () => Date.now() / 1000 },
 });
 
 userSchema.plugin(findOrCreate);

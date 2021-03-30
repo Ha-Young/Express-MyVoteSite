@@ -5,7 +5,6 @@ const User = require('../models/User');
 
 function initialize() {
   passport.serializeUser((user, done) => {
-    // console.log(user);
     done(null, user._id);
   });
   
@@ -20,13 +19,14 @@ function initialize() {
   });
   
   async function authenticateUser(accessToken, refreshToken, profile, done) {
-    const { email, login: name, avatar_url } = profile._json;
+    const { email, login: name, avatar_url: avatarUrl, id } = profile._json;
 
-    try {
+    try { 
       const user = await User.findOrCreate({ 
         email,
         name,
-        avatar_url,
+        avatarUrl,
+        githubId: id,
       });
 
       return done(null, user.doc);

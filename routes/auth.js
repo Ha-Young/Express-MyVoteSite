@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 router.get('/github', passport.authenticate('github', { scope: [ 'user:email' ] }));
 
 router.get(
-  '/github/callback', 
+  '/github/callback',
   passport.authenticate('github', { failureRedirect: '/' }),
   function(req, res) {
     res.redirect('/home');

@@ -4,8 +4,8 @@ block content
   h1= votehere
   if (user)
     p Hello #{user.name}
-    img(src=`${user.avatar_url}`)
-    p=`${user.email}`
+    img(src=`${user.avatarUrl}`)
+    p #{user.email}
   else
     p HELLO GUEST
   if (user)
@@ -14,7 +14,14 @@ block content
   else
     form(action='/auth/github' method='GET')
       button(type='submit') LOGIN WITH GITHUB
-  button(id="plusButton") ADD
-  ul(id="list")
-  
-  script(type='text/javascript' src='../javascripts/index.js')
+  button(id='plusButton')
+    a(href='/votings/new') MAKE NEW VOTE
+  ul.all-votes
+    each vote in allVotes
+      li
+        a(href=`/votings/${vote._id}`)
+        .eachVote
+          h4 #{vote.title}
+          h5 #{vote.creator}
+    else 
+      li no votes 

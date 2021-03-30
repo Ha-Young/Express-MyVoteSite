@@ -7,7 +7,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.use('/home', require('./home'));
-
 router.use('/auth', require('./auth'));
+router.use('/votings', require('./votings'));
 
 module.exports = router;
