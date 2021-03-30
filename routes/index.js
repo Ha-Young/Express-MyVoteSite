@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 
     vote.save();
   });
-  console.log(votes);
+  console.log(votes[0].endDate.getDate());
   res.render("index", { votes });
 });
 

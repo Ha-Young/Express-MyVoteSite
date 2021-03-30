@@ -2,3 +2,47 @@ header {
   display: flex;
   justify-content: space-evenly;
 }
+
+.votes-wrapper {
+  position: absolute;
+  left: 37%;
+  top: 30%;
+}
+
+.vote-wrapper {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  justify-content: center;
+  align-items: center;
+  left: 40%;
+  margin: 10px;
+}
+
+.title {
+  padding: 5px;
+}
+
+.creator {
+  padding: 5px;
+}
+
+.expire-date {
+  padding: 5px;
+}
+
+.vote-status {
+  padding: 5px;
+}
+
+.btn-wrapper {
+  display: flex;
+  margin-bottom: 0px;
+  justify-content: space-evenly;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
