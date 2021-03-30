@@ -33,8 +33,6 @@ async function validateRequest(req, next, schema) {
 
     next();
   } catch (err) {
-    console.log('in inputvalidator')
-    console.log(err.details)
     next(createError(400, `Validation error: ${err.details[0].message}`));
   }
 }

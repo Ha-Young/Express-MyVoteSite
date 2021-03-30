@@ -1,4 +1,3 @@
-const Joi = require('joi');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
@@ -55,6 +54,6 @@ exports.login = async function (req, res) {
 }
 
 exports.logout = function (req, res, next) {
-  res.clearCookie('token');
-  res.status(301). render('/');
+  res.clearCookie('access_token');
+  res.status(301).redirect('/');
 }
