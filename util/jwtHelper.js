@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 exports.generateAccessToken = (user, key, expiredDate) => {
-  return jwt.sign({ name: user.name }, key, { expiresIn: expiredDate });
+  return jwt.sign({ name: user.name, email: user.email }, key, { expiresIn: expiredDate });
 };
 
 exports.refreshAccessToken = (refreshToken) => {
@@ -14,14 +14,13 @@ exports.refreshAccessToken = (refreshToken) => {
   });
 };
 
-exports.getUserName = (cookies) => {
+exports.getUserInfo = (cookies) => {
   if (cookies.accessToken) {
     return jwt.verify(cookies.accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
       if (err) return null;
       return user;
     });
-    return user;
   } else {
-    return false;
+    return null;
   }
 };

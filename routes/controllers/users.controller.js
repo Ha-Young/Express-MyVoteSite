@@ -22,7 +22,7 @@ exports.createToken = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
 
-    const accessToken = generateAccessToken(user, process.env.ACCESS_TOKEN_SECRET, "15m");
+    const accessToken = generateAccessToken(user, process.env.ACCESS_TOKEN_SECRET, "30m");
     const refreshToken = generateAccessToken(user, process.env.REFRESH_TOKEN_SECRET, "14d");
 
     res.cookie("accessToken", accessToken, { httpOnly: true });
