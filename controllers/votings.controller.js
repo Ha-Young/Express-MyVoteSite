@@ -1,5 +1,3 @@
-const Joi = require('joi');
-const mongoose = require('mongoose');
 const Voting = require('../models/Voting');
 const User = require('../models/User');
 // TODO Joi 가져와서 create할때 validation하기.
@@ -50,3 +48,12 @@ exports.addVote = async function (req, res, next) {
 
   res.status(301).redirect(`/votings/${votingId}`);
 };
+
+exports.deleteVoting = async function (req, res, next) {
+  const votingId = req.params.voting_id;
+
+  await Voting.findByIdAndDelete(votingId);
+
+  //TODO 삭제 성공 페이지 찍고 가는게 나을듯?
+  res.status(301).redirect(`/`);
+}

@@ -6,7 +6,7 @@ const VotingSchema = new mongoose.Schema({
   expiration_date: { type: Date, required: true },
   status: {
     type: String,
-    enum: ['inprogress', 'finished'],
+    enum: ['inprogress', 'expired'],
     default: 'inprogress',
     required: true
   },
@@ -30,7 +30,7 @@ VotingSchema.methods.addVoteCount = function(option) {
 VotingSchema.statics.updateExpiredVotingStatus = function() {
   this.updateMany(
     { expiration_date: { $lte: new Date() } },
-    { status: 'finished' }
+    { status: 'expired' }
   );
 };
 

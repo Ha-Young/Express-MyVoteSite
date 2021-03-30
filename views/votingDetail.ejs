@@ -31,6 +31,16 @@
         </label>
       </form>
     </div>
+    <% if (locals.user && locals.user._id.toString() === voting.author._id.toString()) { %>
+      <a href="<%= `/votings/delete/${voting._id}` %>">
+        삭제하기
+      </a>
+    <% } %>
+    <div class="">
+      <a href="/" class="">
+        목록으로 돌아가기
+      </a>
+    </div>
   </div>
 </body>
 </html>

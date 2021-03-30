@@ -48,7 +48,7 @@ exports.login = async function (req, res) {
   res.cookie('access_token', jwt.sign(
     { id: currentUser._id },
     process.env.JWT_SECRET,
-    { expiresIn: '30M'}
+    { expiresIn: '2H'}
   ));
   res.status(301).redirect('/');
 };
