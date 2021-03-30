@@ -7,6 +7,7 @@ const path = require("path");
 const { format } = require("date-fns");
 const sassMiddleware = require('node-sass-middleware');
 
+const passportLoader = require("./passport");
 const { logger } = require("./logger");
 
 module.exports = function ({ app, routerLoader }) {
@@ -31,6 +32,9 @@ module.exports = function ({ app, routerLoader }) {
   app.use(express.urlencoded({ extended: true }));
   app.use(methodOverride());
   app.use(cookieParser());
+
+  //passport
+  passportLoader({ app });
 
   // router
   routerLoader({ app });

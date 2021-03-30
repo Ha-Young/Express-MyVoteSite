@@ -1,17 +1,18 @@
 const createError = require("http-errors");
 const { celebrate, Joi } = require("celebrate");
 const { Router } = require("express");
+const passport = require("passport");
 
 // const middlewares = require('../middlewares');
-const { HOME, SIGNUP, LOGIN, LOGOUT } = require("../../config/routes");
+const { PREFIX, SIGNUP, LOGIN, LOGOUT, LOGIN_GOOGLE, LOGIN_GOOGLE_REDIRECT } = require("../../config/routes").AUTH;
 const authService = require("../../services/authService");
-const { jwtCookieKey, jwtExpires } = require("../../config");
+const { jwtCookieKey, jwtExpires } = require("../../config").jwt;
 const isLogin = require("../middlewares/isLogin");
 
 const route = Router();
 
 module.exports = app => {
-  app.use(HOME, route);
+  app.use(PREFIX, route);
 
   route.get(SIGNUP, (req, res) => {
     res.render("signup");
@@ -19,6 +20,20 @@ module.exports = app => {
 
   route.get(LOGIN, (req, res) => {
     res.render("login");
+  });
+
+  route.get(LOGIN_GOOGLE, passport.authenticate('google', { scope: ['profile','email'], session: false }));
+
+  route.get(LOGIN_GOOGLE_REDIRECT, passport.authenticate('google', { session: false }), async (req, res)=>{
+    const userInputDTO = {
+      name: req.user.displayName,
+      email: req.user._json.email,
+      provider: req.user.provider,
+    };
+
+    const { user, token } = await authService.SocialLogin(userInputDTO);
+
+    authSuccess({ res, user, token });
   });
 
   route.post(
@@ -78,5 +93,5 @@ function authSuccess({ res, user, token }) {
     httpOnly: true,
   });
 
-  res.render("index", { user });
+  res.redirect("/");
 }
