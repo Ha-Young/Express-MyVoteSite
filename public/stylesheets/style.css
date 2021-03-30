@@ -3,6 +3,7 @@
 @import "login.css";
 @import "votings.css";
 @import "newVote.css";
+@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Song+Myung&display=swap");
 
 html,
 body {

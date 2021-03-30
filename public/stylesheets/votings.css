@@ -6,29 +6,61 @@
   height: 90%;
 }
 
+.voting-marign-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: #0074ff;
+}
+
 .votings-info-board {
   height: 10%;
   width: 100%;
-  background-color: blue;
+  background-color: #0074ff;
 }
 
 .votings-grid-board {
   display: grid;
   grid-template-columns: repeat(3, minmax(100px, auto));
 
-  background-color: burlywood;
-  width: 100%;
-  column-gap: 10px;
-  padding: 10px;
+  background-color: #0074ff;
+  width: 80%;
+
+  row-gap: 1em;
+  padding: 1em;
 }
 
 .voting-grid-card {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 
   height: 38em;
+  width: 535px;
 
-  font-size: 16px;
-
-  background-color: white;
+  background-color: #edc791;
   border-radius: 0.1em;
+}
+
+.voting-grid-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.voting-name-font {
+  font-family: "Black Han Sans", sans-serif;
+  font-size: 100px;
+  margin: 0;
+  padding-left: 10px;
+  color: aliceblue;
+}
+
+.voting-creator-font {
+  font-family: "Song Myung", serif;
+  font-size: 40px;
+  color: grey;
+  padding-left: 10px;
 }
