@@ -1,0 +1,14 @@
+<% if (votings.length) { %>
+  <% votings.forEach((voting) => { %>
+    <div>
+      <a href="/votings/<%= voting._id %>">
+        <%= voting.title %>
+        <%= voting.createdAt %>
+        <%= voting.expired_at %>
+        <% voting.options.forEach((option) => { %>
+          <%= option.content %>
+        <% }) %>
+      </a>
+    </div>
+  <% }) %>
+<% } %>

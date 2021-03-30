@@ -25,10 +25,6 @@ const votingSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  is_voting: {
-    type: Boolean,
-    default: true,
-  },
   options: {
     type: [optionSchema],
     required: true,
@@ -39,5 +35,9 @@ const votingSchema = new mongoose.Schema({
     default: [],
   }
 }, { timestamps: true });
+
+votingSchema.virtual("is_current").get(function() {
+  return new Date(this.expired_at) > new Date();
+});
 
 module.exports = mongoose.model("Voting", votingSchema);

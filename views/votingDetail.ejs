@@ -1,0 +1,46 @@
+<div class="voting-field">
+  <div class="voting-content">
+      <% if (typeof voting !== "undefined") { %> 
+        <%= voting.title %>
+
+        <% if (!voting.is_current || voting.proponent.toString() === user._id) { %>
+          <% voting.options.forEach((content) => { %>
+            <div class="voting-count" id="<%= content.option %>">
+              <%= content.count %>
+            </div>
+          <% }) %>
+        <% } %>
+        <div>
+          <%= voting.expired_at %>
+        </div>
+        
+        <form class="voting-form">
+          <div>
+            <% voting.options.forEach((content) => { %>
+              <div>
+                <input type="radio" name="voting-option" value="<%= content.option %>">
+                <lavel><%= content.option %></lavel>
+              </div>
+            <% }) %>
+          </div>
+          <input 
+            class="vote-form-button" 
+            type="submit" 
+            value="Vote"  
+          />
+        </form>
+      <% } %>
+
+    </form>
+    <% if (voting.proponent.toString() === user._id) { %>
+      <form class="voting-delete-form">
+        <input class="voting-delete-button" type="submit" value="Delete" />
+      </form>
+    <% } %>
+  </div>
+</div>
+
+<a href="/">Return</a>
+
+<script src="/javascripts/delete.js"></script>
+<script src="/javascripts/put.js"></script>

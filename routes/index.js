@@ -20,9 +20,7 @@ router.post("/login", userController.postLogIn);
 router.get("/login/github", userController.getGitHubLogIn);
 router.get("/login/github/callback", userController.getGitHubCallback);
 
-router.get("/my-votings", (req, res, next) => {
-
-});
+router.get("/my-votings", votingController.getMyVotingPage);
 
 router.get("/votings/new", (req, res, next) => {
   res.status(200).render("newVoting");
