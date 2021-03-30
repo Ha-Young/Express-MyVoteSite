@@ -1,19 +1,19 @@
 <div class="sign-in-wrapper">
   <div class="sign-cont">
-    <div class="sign-form sign-in">
+    <form class="sign-form sign-in" method="POST" action="/login">
       <h2>Welcome back,</h2>
       <label>
         <span>Email</span>
-        <input type="email" />
+        <input type="email" name="email"/>
       </label>
       <label>
         <span>Password</span>
-        <input type="password" />
+        <input type="password" name="password"/>
       </label>
       <p class="forgot-pass">Forgot password?</p>
-      <button type="button" class="submit">Sign In</button>
+      <button class="submit">Sign In</button>
       <button type="button" class="fb-btn">Connect with <span>facebook</span></button>
-    </div>
+    </form>
     <div class="sign-sub-cont">
       <div class="sign-img">
         <div class="sign-img__text m--up">
@@ -29,23 +29,23 @@
           <span class="m--in">Sign In</span>
         </div>
       </div>
-      <div class="sign-form sign-up">
+      <form class="sign-form sign-up" method="POST" action="/signup">
         <h2>Time to feel like home,</h2>
         <label>
           <span>Name</span>
-          <input type="text" />
+          <input type="text" name="name"/>
         </label>
         <label>
           <span>Email</span>
-          <input type="email" />
+          <input type="email" name="email"/>
         </label>
         <label>
           <span>Password</span>
-          <input type="password" />
+          <input type="password" name="password"/>
         </label>
-        <button type="button" class="submit">Sign Up</button>
+        <button class="submit">Sign Up</button>
         <button type="button" class="fb-btn">Join with <span>facebook</span></button>
-      </div>
+      </form>
     </div>
   </div>
 </div>

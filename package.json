@@ -10,9 +10,11 @@
     "node": "14.15.4"
   },
   "dependencies": {
+    "argon2": "^0.27.1",
     "celebrate": "^14.0.0",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "date-fns": "^2.19.0",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
@@ -29,6 +31,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.22.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",

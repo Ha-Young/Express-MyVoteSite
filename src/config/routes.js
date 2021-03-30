@@ -2,6 +2,7 @@ const ROUTE = {
   HOME: "/",
   SIGNUP: "/signup",
   LOGIN: "/login",
+  LOGOUT: "/logout",
   VOTINGS: {
     PREFIX: "/votings",
     DETAIL: "/:id",
