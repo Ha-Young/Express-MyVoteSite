@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh; }
+  height: calc(100vh - 115px); }
   .sign-in-wrapper .err-msg {
     color: red; }
   .sign-in-wrapper button {

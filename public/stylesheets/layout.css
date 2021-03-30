@@ -12,3 +12,7 @@ input, button {
   outline: none;
   background: none;
   font-family: 'Open Sans', Helvetica, Arial, sans-serif; }
+
+.container {
+  min-height: calc(100vh - 115px);
+  width: 100%; }
