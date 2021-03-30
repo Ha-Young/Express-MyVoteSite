@@ -1,11 +1,11 @@
-const User = require("./../models/votingModel");
+const User = require("./../models/userModel");
 const createToken = require("./../utils/createToken");
 const CreateError = require("./../utils/createError");
 const catchAsync = require("./../utils/catchAsync");
 
 exports.getSignUp = (req, res, next) => {};
 
-exports.postSignUp = catchAsync(async (req, res, next) => {
+exports.createUser = catchAsync(async (req, res, next) => {
   const {
     name,
     email,

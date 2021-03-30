@@ -26,12 +26,17 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", checkTokenAuth, mainRouter);
+app.use("/", /* checkTokenAuth, */ mainRouter);
 app.use("/users", userRouter);
-app.use("/votings", checkTokenAuth, votingsRouter);
+app.use("/votings", /* checkTokenAuth, */ votingsRouter);
 
 app.all("*", (req, res, next) => {
-  next(new CreateError(`Can't find ${req.originalUrl} on this server!`, 404));
+  next(
+    new CreateError(
+      `현재 서버에서 다음 주소를 찾을 수 없습니다. : ${req.originalUrl}`,
+      404
+    )
+  );
 });
 
 app.use(globalErrorHandler);

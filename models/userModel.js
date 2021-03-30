@@ -31,7 +31,9 @@ const UserSchema = new Schema({
     type: String,
     required: [true, "비밀번호를 한번 더 입력해주세요."],
     validate: {
-      validator: (val) => this.password === val,
+      validator: function(val) {
+        return this.password === val;
+      },
       message: "비밀번호가 일치하지 않습니다.",
     },
   },
@@ -50,12 +52,12 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.pre("save", async (next) => {
+UserSchema.pre("save", async function(next) {
   if (!this.isModified("password")) {
     return next();
   }
 
-  const salt = await bcrypt.genSalt(process.env.BCRYPT_SALT);
+  const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT, 10));
   this.password = await bcrypt.hash(this.password, salt);
   this.passwordConfirm = undefined;
 

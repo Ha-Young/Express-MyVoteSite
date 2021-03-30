@@ -19,7 +19,7 @@ const VotingSchema = new Schema({
     maxlength: [40, "투표 제목은 5글자에서 40글자 이내 여야 합니다."],
     minlength: [5, "투표 제목은 5글자에서 40글자 이내 여야 합니다."],
   },
-  creator: {
+  createdBy: {
     type: ObjectId,
     ref: "User",
     required: [true, "투표 생성자가 필요합니다."],
@@ -28,7 +28,7 @@ const VotingSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
-  startAt: {
+  startDate: {
     type: Date,
     required: [true, "시작일을 입력해주세요."],
     validate: {
@@ -36,7 +36,7 @@ const VotingSchema = new Schema({
       message: "시작일은 현재 시점보다 이후여야 합니다.",
     },
   },
-  endAt: {
+  endDate: {
     type: Date,
     required: [true, "종료일을 입력해주세요."],
     validate: {
