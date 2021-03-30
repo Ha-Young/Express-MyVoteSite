@@ -5,10 +5,6 @@ block content
   div.buttons
     a(href="/votings/new") 새로운 투표 등록하기
   .votingContainer
-    div
     each data in list
-      -const { title, description, dueDate, inProgress, founder } = data;
-      div #{title}
-      div #{description}
-      div #{dueDate}
-      div #{inProgress}
+      div.votingBox
+        a(href=`/votings/${data.id}`) #{data.title}

@@ -68,3 +68,12 @@ form {
   display: flex;
   flex-direction: column;
 }
+
+.votingContainer {
+  background-color: var(--graish-green);
+}
+
+.votingBox {
+  margin: 1vh 0;
+  background-color: var(--graish-green);
+}
