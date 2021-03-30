@@ -16,17 +16,23 @@
     <%= voting.endDate %>
     <ul>
       <p>투표 목록</p>
-      <% voting.options.forEach(option => { %>
-        <li>
-          <input
-            type="checkbox"
-            name="option"
-            value="<%= option.optionTitle %>"
-            onclick="clickCheckBox(this)"
-          >
-          <%= option.optionTitle %>
-        </li>
-      <% }) %>
+      <form action="/voting/votings/<%= voting._id %>" method="POST">
+        <% voting.options.forEach(option => { %>
+          <li>
+            <input
+              type="checkbox"
+              name="option"
+              value="<%= option.optionTitle %>"
+              onclick="clickCheckBox(this)"
+            >
+            <%= option.optionTitle %>
+          </li>
+        <% }) %>
+        <button type="submit">투표 제출</button>
+      </form>
     </ul>
+    <form action="/" method="GET">
+      <button type="submit">투표 목록</button>
+    </form>
   </body>
 </html>

@@ -7,7 +7,11 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  votingList: {
+  myVotingList: {
+    type: Array,
+    default: [],
+  },
+  votedList: {
     type: Array,
     default: [],
   },

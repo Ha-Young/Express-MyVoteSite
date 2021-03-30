@@ -87,4 +87,21 @@ Controller.getDetailVoting = async (req, res, next) => {
   }
 };
 
+// @route   POST voting/votings/:id
+// @desc    Save select option in User, Voting
+// @access  Private
+Controller.postDetailVoting = async (req, res, next) => {
+  try {
+    const { option } = req.body;
+    const votingId = req.params.id;
+    const currentUserId = req.user._id;
+
+    const currentUser = await User.findOne({ _id: currentUserId });
+
+  } catch (error) {
+    console.error(error.message);
+    next(createError(500, "Server Error"));
+  }
+};
+
 module.exports = Controller;
