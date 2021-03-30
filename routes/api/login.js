@@ -30,7 +30,7 @@ passport.use("local-login", new LocalStrategy(
       }
 
       if (!user) {
-        return done(err, { message: "아이디가 존재하지 않습니다." });
+        return done(null, false, { message: "아이디가 존재하지 않습니다." });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
