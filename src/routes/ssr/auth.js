@@ -15,7 +15,7 @@ module.exports = app => {
   app.use(PREFIX, route);
 
   route.get(LOGIN, (req, res) => {
-    res.render("login", { error: {} });
+    res.render("login", { user: req.user || {}, error: {} });
   });
 
   route.post(
