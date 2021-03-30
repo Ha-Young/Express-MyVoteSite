@@ -14,6 +14,7 @@ block content
         .form-box
           ul.option-list
           button#optionButton.button(type="button") ADD OPTION
+          button#clearAllOptionsButton.button(type="button") CLEAR ALL OPTIONS
       if (error)
         p.validation #{error.msg}
       button.button(type="submit" form="create-vote") CREATE
