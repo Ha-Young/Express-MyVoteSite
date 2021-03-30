@@ -1,0 +1,29 @@
+.voting-list {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 50vw;
+  height: 50vh;
+  background-color: blue;
+  overflow: hidden;
+}
+
+.voting-item {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 15%;
+  background-color: tomato;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 20vw;
+    height: 10vh;
+    background-color: gray;
+  }

@@ -5,8 +5,9 @@ const path = require("path");
 const flash = require("connect-flash");
 const mongoose = require("mongoose");
 const passport = require("passport");
-
 const indexRouter = require("./routes/index");
+const { makeSampleMongoDB } = require("./utils/makeSampleMongoDB");
+
 require("dotenv").config();
 
 const app = express();
@@ -19,6 +20,10 @@ mongoose.connect(process.env.MONGODB_URI, {
 const db = mongoose.connection;
 db.on("error", () => console.log("MongoDB Connection Error : ("));
 db.once("open", () => console.log("MongoDB Connection Success! : )"));
+
+if (process.env.MAKE_SAMPLE_MONGODB === "true") {
+  makeSampleMongoDB();
+}
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");

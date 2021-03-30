@@ -3,6 +3,8 @@ const createError = require("http-errors");
 const crypto = require("crypto");
 const passport = require("passport");
 const User = require("../models/User");
+// const Voting = require("../models/Voting");
+const Voting = require("../utils/makeSampleMongoDB").Sample;
 const LocalStrategy = require("passport-local").Strategy;
 
 const router = express.Router();
@@ -45,16 +47,13 @@ passport.deserializeUser(async (userId, done) => {
   }
 });
 
-router.get("/", function (req, res, next) {
-  if (req.flash()) console.log(msg);
-
+router.get("/", async (req, res, next) => {
+  const voting = await Voting.find();
+  console.log(voting);
   res.render("index");
 });
 
-router.get("/login", function (req, res, next) {
-  const msg = req.flash();
-  if (req.flash()) console.log(msg);
-
+router.get("/login", (req, res, next) => {
   res.render("auth", { isSignUp: false });
 });
 
@@ -68,7 +67,7 @@ router.post(
   }),
 );
 
-router.get("/signup", function (req, res, next) {
+router.get("/signup", (req, res, next) => {
   res.render("auth", { isSignUp: true });
 });
 

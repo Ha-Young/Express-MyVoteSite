@@ -4,4 +4,11 @@ block stylesheet
   link(rel='stylesheet', href='/stylesheets/index.css')
 
 block content
-  h1 Home
+  h2 투표목록
+  section.voting-list
+    - for (let i = 0; i < 5; i++)
+      a.voting-item(href="/votings/") item
+
+  div.btn-container
+    button.create-voting-btn Create Voting
+    button.view-myvoting-btn My Voting
