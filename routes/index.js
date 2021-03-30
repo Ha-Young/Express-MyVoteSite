@@ -1,8 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+const { requireAuth } = require("./middleware/requireAuth");
+
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', requireAuth, function (req, res, next) {
+  console.log(req.session);
   res.render('index', { title: 'Express' });
 });
 

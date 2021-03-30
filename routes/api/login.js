@@ -1,41 +1,59 @@
 const express = require("express");
 const router = express.Router();
+
 const passport = require("passport");
-const jwt = require("jsonwebtoken");
-const { JWT_SECRET_KEY } = require("../../config/index");
+const LocalStrategy = require("passport-local").Strategy;
+
+const User = require("../../models/User");
+
+const bcrypt = require("bcrypt");
+
+passport.serializeUser(function (user, done) {
+  done(null, user.email);
+});
+
+passport.deserializeUser(function (id, done) {
+  const user = User.findOne({ email: id });
+
+  done(null, user);
+});
+
+passport.use("local-login", new LocalStrategy(
+  {
+    usernameField: "email",
+    passwordField: "password"
+  },
+  function (email, password, done) {
+    User.findOne({ email: email }, async function (err, user) {
+      if (err) {
+        return done(err);
+      }
+
+      if (!user) {
+        return done(err, { message: "아이디가 존재하지 않습니다." });
+      }
+
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (isMatch) {
+        return done(null, user);
+      } else {
+        return done(null, false, { message: "비밀번호가 틀렸습니다" });
+      }
+    })
+  }
+));
 
 router.get("/", (req, res) => {
   res.render("login");
 });
 
-router.post("/", async (req, res, next) => {
-  console.log(req);
-  passport.authenticate("login", async (err, user, info) => {
-    try {
-      if (err || !user) {
-        const error = new Error("error occured");
-
-        return next(error);
-      }
-
-      req.login(user, { session: false }, async (error) => {
-        if (error) {
-          return next(error);
-        }
-
-        const body = { _id: user._id, email: user.email };
-        const token = jwt.sign({ user: body }, JWT_SECRET_KEY);
-
-        return res.json({ token });
-      });
-    } catch (error) {
-      return next(error);
-    }
-  })(req, res, next);
-});
-
-router.get("/callback", (req, res, next) => {
-  res.redirect("/");
-});
+router.post("/",
+  passport.authenticate("local-login",
+    {
+      successRedirect: "/",
+      failureRedirect: "/login"
+    })
+);
 
 module.exports = router;
