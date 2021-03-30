@@ -1,0 +1,229 @@
+.votes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vote-item {
+  display: block;
+  margin-top: 10px;
+  padding: 20px;
+  border-radius: 2px;
+  background: white;
+  box-shadow: 0 2px 1px rgba(170, 170, 170, 0.25);
+}
+
+.vote-name {
+  font-weight: 400;
+}
+
+.list .vote-item {
+  position: relative;
+  padding: 0;
+  font-size: 14px;
+  line-height: 40px;
+}
+.list .vote-item .pull-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+@media screen and (max-width: 800px) {
+  .list .vote-item .stage:not(.active) {
+    display: none;
+  }
+}
+@media screen and (max-width: 700px) {
+  .list .vote-item .vote-progress-bg {
+    display: none;
+  }
+}
+@media screen and (max-width: 600px) {
+  .list .vote-item .pull-right {
+    position: static;
+    line-height: 20px;
+    padding-bottom: 10px;
+  }
+}
+.list .vote-country,
+.list .vote-progress,
+.list .vote-completes,
+.list .vote-end-date {
+  color: #A1A1A4;
+}
+.list .vote-country,
+.list .vote-completes,
+.list .vote-end-date,
+.list .vote-name,
+.list .vote-stage {
+  margin: 0 10px;
+}
+.list .vote-country {
+  margin-right: 0;
+}
+.list .vote-end-date,
+.list .vote-completes,
+.list .vote-country,
+.list .vote-name {
+  vertical-align: middle;
+}
+.list .vote-end-date {
+  display: inline-block;
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.vote-stage .stage {
+  display: inline-block;
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+  border-radius: 50%;
+  padding: 0;
+  margin: 0 2px;
+  background: #f2f2f2;
+  text-indent: -9999px;
+  color: transparent;
+  line-height: 16px;
+}
+.vote-stage .stage.active {
+  background: #A1A1A4;
+}
+
+.list .list-only {
+  display: auto;
+}
+.list .grid-only {
+  display: none !important;
+}
+
+.grid .grid-only {
+  display: auto;
+}
+.grid .list-only {
+  display: none !important;
+}
+
+.grid .vote-item {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  height: 200px;
+  width: 250px;
+  margin: 10px;
+}
+@media screen and (max-width: 600px) {
+  .grid .vote-item {
+    display: block;
+    width: auto;
+    height: 150px;
+    margin: 10px auto;
+  }
+}
+.grid .vote-name {
+  display: block;
+  max-width: 80%;
+  font-size: 16px;
+  line-height: 20px;
+}
+.grid .vote-country {
+  font-size: 11px;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+.grid .vote-country,
+.grid .vote-end-date {
+  color: #A1A1A4;
+}
+.grid .vote-end-date:before {
+  content: 'Ends\00a0';
+}
+.grid .vote-end-date.ended:before {
+  content: 'Ended\00a0';
+}
+.grid .vote-progress {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 20px;
+  border-top: 1px solid #eee;
+  font-size: 13px;
+}
+.grid .vote-progress-bg {
+  width: 40%;
+  display: block;
+}
+@media screen and (max-width: 200px) {
+  .grid .vote-progress-bg {
+    display: none;
+  }
+}
+.grid .vote-progress-labels {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  line-height: 40px;
+}
+@media screen and (max-width: 200px) {
+  .grid .vote-progress-labels {
+    right: auto;
+    left: 10px;
+  }
+}
+.grid .vote-progress-label {
+  line-height: 21px;
+  font-size: 13px;
+  font-weight: 400;
+}
+.grid .vote-completes {
+  line-height: 21px;
+  font-size: 13px;
+  vertical-align: middle;
+}
+.grid .vote-stage {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.grid .vote-stage .stage {
+  display: none;
+}
+.grid .vote-stage .active {
+  display: block;
+}
+.grid .vote-end-date {
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.vote-progress-label {
+  vertical-align: middle;
+  margin: 0 10px;
+  color: #8DC63F;
+}
+
+.vote-progress-bg {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  width: 100px;
+  height: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: #eee;
+}
+
+.vote-progress-fg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  margin: 0;
+  background: #8DC63F;
+}
