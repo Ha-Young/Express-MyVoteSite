@@ -22,13 +22,11 @@ voteSchema.plugin(findOrCreate);
 voteSchema.statics.updateIsVotable = async function(currentDate) {
   const filter = {
     'isVotable': true, 
-    'expiredAt': { '$lte': currentDate } ,
+    'expiredAt': { '$lte': currentDate },
   };
 
   const update = {
-    '$set': {
-      'isVotable': false,
-    },
+    '$set': { 'isVotable': false },
   };
 
   await this.updateMany(filter, update);

@@ -35,6 +35,15 @@ async function postNewVote(req, res, next) {
   }
 }
 
+async function getVoteById(req, res, next) {
+  const { id } = req.params;
+
+  const vote = await Vote.findById(id);
+
+  res.status(200).render('eachVote', { vote });
+}
+
 exports.renderVote = renderVote;
 exports.renderNewVote = renderNewVote;
 exports.postNewVote = postNewVote;
+exports.getVoteById = getVoteById;
