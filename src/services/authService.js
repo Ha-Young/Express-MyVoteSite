@@ -35,8 +35,28 @@ exports.SignUp = async userInputDTO => {
 
     return { user, token };
   } catch (e) {
-    this.logger.error(e);
-    throw e;
+    throw new Error(e);
+  }
+};
+
+exports.SignIn = async (email, password) => {
+  const userRecord = await User.findOne({ email });
+  if (!userRecord) {
+    throw new Error('User not registered');
+  }
+
+  const validPassword = await argon2.verify(userRecord.password, password);
+  if (validPassword) {
+    const token = generateToken(userRecord);
+
+    const user = userRecord.toObject();
+
+    Reflect.deleteProperty(user, 'password');
+    Reflect.deleteProperty(user, 'salt');
+
+    return { user, token };
+  } else {
+    throw new Error('Invalid Password');
   }
 };
 

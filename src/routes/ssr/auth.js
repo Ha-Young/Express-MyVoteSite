@@ -1,3 +1,4 @@
+const createError = require("http-errors");
 const { celebrate, Joi } = require("celebrate");
 const { render } = require("ejs");
 const { Router } = require("express");
@@ -20,24 +21,25 @@ module.exports = app => {
     res.render("login");
   });
 
-  // route.post(
-  //   LOGIN,
-  //   celebrate({
-  //     body: Joi.object({
-  //       email: Joi.string().required(),
-  //       password: Joi.string().required(),
-  //     }),
-  //   }),
-  //   async (req, res, next) => {
-  //     try {
-  //       const { email, password } = req.body;
-  //       const { user, token } = await authServiceInstance.SignIn(email, password);
-  //       return res.json({ user, token }).status(200);
-  //     } catch (e) {
-  //       return next(e);
-  //     }
-  //   }
-  // );
+  route.post(
+    LOGIN,
+    celebrate({
+      body: Joi.object({
+        email: Joi.string().required(),
+        password: Joi.string().required(),
+      }),
+    }),
+    async (req, res, next) => {
+      try {
+        const { email, password } = req.body;
+        const { user, token } = await authService.SignIn(email, password);
+
+        authSuccess({ res, user, token });
+      } catch (e) {
+        return next(createError(e));
+      }
+    }
+  );
 
   route.post(
     SIGNUP,
@@ -50,16 +52,9 @@ module.exports = app => {
     }),
     async (req, res, next) => {
       try {
-        console.log('here');
         const { user, token } = await authService.SignUp(req.body);
 
-        console.log(user, token);
-
-        res.cookie(jwtCookieKey, token, {
-          maxAge: jwtExpires,
-          httpOnly: true,
-        });
-
+        authSuccess({ res, user, token });
         return res.render("index", { user });
       } catch (e) {
         return next(e);
@@ -75,3 +70,12 @@ module.exports = app => {
   //   }
   // });
 };
+
+function authSuccess({ res, user, token }) {
+  res.cookie(jwtCookieKey, token, {
+    maxAge: jwtExpires,
+    httpOnly: true,
+  });
+
+  res.render("index", { user });
+}
