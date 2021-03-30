@@ -19,6 +19,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.renderLoginPage = (req, res, next) => {
+  res.locals.message = req.flash("message")[0] ?? null;
   res.render("login");
 };
 
@@ -26,7 +27,7 @@ exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    res.locals.message = "Provide email and password.";
+    req.flash("message", "Provide email and password.");
     res.redirect("/auth/login");
     return;
   }
@@ -35,7 +36,7 @@ exports.login = catchAsync(async (req, res, next) => {
   const correct = await user?.correctPassword(req.body.password, user.password);
 
   if (!user || !correct) {
-    res.locals.message = "Incorrect email or password.";
+    req.flash("message", "Incorrect email or password.");
     res.redirect("/auth/login");
     return;
   }

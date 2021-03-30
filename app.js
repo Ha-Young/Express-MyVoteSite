@@ -4,6 +4,9 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const expressLayouts = require("express-ejs-layouts");
+const session = require("express-session");
+const flash = require("connect-flash");
 
 const index = require("./routes/index");
 const auth = require("./routes/auth");
@@ -18,10 +21,17 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use(expressLayouts);
+app.set("layout", path.join(__dirname, "views/layout"));
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded());
-app.use(cookieParser());
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(session({
+  secret: process.env.COOKIE_SECRET,
+}));
+app.use(flash());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", index);
