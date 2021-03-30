@@ -8,7 +8,7 @@ router.get('/new', verifyUser, controller.getNewVotingPage);
 router.post('/new', verifyUser, createVotingSchema, controller.createVoting);
 router.get('/success', verifyUser);
 router.get('/error', verifyUser);
-router.get('/:voting_id', controller.getVotingDetailPage);
-router.post('/:voting_id', controller.updateVotes);
+router.get('/:voting_id', verifyUser, controller.getVotingDetailPage);
+router.post('/:voting_id', verifyUser, controller.addVote);
 
 module.exports = router;

@@ -24,12 +24,12 @@ exports.register = async function (req, res) {
 
     res.status(301).redirect('/login');
   }
-}
+};
 
 exports.login = async function (req, res) {
   const { email, password } = req.body;
 
-  const currentUser = await User.findOne({ email });
+  const currentUser = await User.findOne({ email }).lean();
 
   if (!currentUser) {
     // TODO flash 설정해서 넘기기..!! login에서도 받을 수 있도록 설정해줘야함.
@@ -51,9 +51,9 @@ exports.login = async function (req, res) {
     { expiresIn: '30M'}
   ));
   res.status(301).redirect('/');
-}
+};
 
 exports.logout = function (req, res, next) {
   res.clearCookie('access_token');
   res.status(301).redirect('/');
-}
+};

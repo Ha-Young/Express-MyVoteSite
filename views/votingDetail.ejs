@@ -22,9 +22,9 @@
       </div>
     </div>
     <div class="">
-      <form action="`/voting/${voting._id}`" class="" method="POST">
+      <form action="<%= `/votings/${voting._id}` %>" class="" method="POST">
         <% for (const option of voting.options) { %>
-          <input type="radio" class="" name="options"><%= option %></input>
+          <input type="radio" class="" name="option" value="<%= option %>"><%= option %></input>
         <% } %>
         <label>투표하기
           <input type="submit" class="">

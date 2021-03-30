@@ -15,9 +15,19 @@ const VotingSchema = new mongoose.Schema({
     required: true
   }],
   votes: [{
-    option: { type: String },
-    count: { type: Number }
+    option: { type: String, required: true },
+    count: { type: Number, default: 0, required: true }
   }]
 });
+
+VotingSchema.methods.addVoteCount = function(option) {
+  this.votes.forEach(vote => {
+    if (vote.option === option) {
+      vote.count++;
+    }
+  });
+
+  return this.save();
+};
 
 module.exports = mongoose.model('Voting', VotingSchema);
