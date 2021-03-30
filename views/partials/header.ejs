@@ -13,29 +13,29 @@
         </li>
         <li class="create">
           <form method="GET" action="/votings/new">
-            <button class="button yellow" type="submit">CREATE VOTE</button>
+            <button class="button" type="submit">CREATE VOTE</button>
           </form>
         </li>
         <li class="my-votings">
           <form method="GET" action="/my-votings">
-            <button class="button yellow" type="submit">MY VOTINGS</button>
+            <button class="button" type="submit">MY VOTINGS</button>
           </form>
         </li>
         <li class="auth">
           <form method="GET" action="/auth/logout">
-            <button class="button yellow" type="submit">LOG OUT</button>
+            <button class="button" type="submit">LOG OUT</button>
           </form>
         </li>
 
         <% } else { %>
           <li class="auth">
             <form method="GET" action="/auth/signup">
-              <button class="button yellow" type="submit">SIGN UP</button>
+              <button class="button" type="submit">SIGN UP</button>
             </form>
           </li>
           <li class="auth">
             <form method="GET" action="/auth/login">
-              <button class="button yellow" type="submit">LOG IN</button>
+              <button class="button" type="submit">LOG IN</button>
             </form>
           </li>
           <% } %>

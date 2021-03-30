@@ -5,8 +5,8 @@ const generateDateTimeString = require('../utils/generateDateTimeString');
 exports.getHome = async (req, res, next) => {
   const redirectAddress = req.flash('redirect');
 
-  if (redirectAddress) {
-    return res.redirect(redirectAddress);
+  if (redirectAddress.length) {
+    return res.redirect(redirectAddress[0]);
   }
 
   try {

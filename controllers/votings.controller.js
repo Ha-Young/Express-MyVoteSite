@@ -14,7 +14,7 @@ exports.getVotingPage = async (req, res, next) => {
       return next(createError(400));
     }
 
-    const isAuthor = req.user.email === vote.author.email;
+    const isAuthor = req.user?.email === vote.author.email;
     const isExpired = new Date() >= new Date(vote.expiration_date);
 
     res.render('voting', {
