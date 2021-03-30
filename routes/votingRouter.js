@@ -13,7 +13,9 @@ router.get("/error", votingController.getFail);
 router
   .route("/:id")
   .get(votingController.getSelectedVoting)
-  .post(votingController.voteVoting)
+  .patch(votingController.voteVoting)
   .delete(votingController.deleteVoting);
+
+router.patch("/:id/cancel", votingController.cancelVoting);
 
 module.exports = router;

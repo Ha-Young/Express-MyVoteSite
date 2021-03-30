@@ -26,9 +26,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", /* checkTokenAuth, */ mainRouter);
+app.use("/", checkTokenAuth, mainRouter);
 app.use("/users", userRouter);
-app.use("/votings", /* checkTokenAuth, */ votingsRouter);
+app.use("/votings", checkTokenAuth, votingsRouter);
 
 app.all("*", (req, res, next) => {
   next(

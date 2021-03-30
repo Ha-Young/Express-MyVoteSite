@@ -5,7 +5,7 @@ const crypto = require("crypto");
 
 const { Schema } = mongoose;
 const {
-  Types: { ObjectId },
+  Types: { ObjectId, Mixed },
 } = Schema;
 
 const UserSchema = new Schema({
@@ -42,16 +42,20 @@ const UserSchema = new Schema({
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
-  createdVotings: {
+  createHistory: {
     type: [ObjectId],
     ref: "Voting",
     default: [],
   },
-  votedVotings: {
-    type: [ObjectId],
-    ref: "Voting",
-    default: [],
-  },
+  voteHistory: [
+    {
+      voting: {
+        type: [ObjectId],
+        ref: "Voting",
+      },
+      answer: Mixed,
+    },
+  ],
 });
 
 UserSchema.pre("save", async function(next) {

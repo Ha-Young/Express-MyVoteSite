@@ -1,17 +1,23 @@
 const User = require("./../models/userModel");
 const Voting = require("./../models/votingModel");
-const APIFeatures = require("./../utils/apiFeatures");
 const CreateError = require("./../utils/createError");
 const catchAsync = require("./../utils/catchAsync");
 const getVotingStatus = require("./../utils/getVotingStatus");
 
-exports.getAllVotings = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(Voting.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
-  const votings = await features.query;
+exports.getVotings = catchAsync(async (req, res, next) => {
+  const findArgs = {};
+
+  if (req.params === "upcoming") {
+    findArgs.status = "예정";
+  } else if (req.params === "ongoing") {
+    findArgs.status = "진행중";
+  } else if (req.params === "ended") {
+    findArgs.status = "종료";
+  } else if (req.params === "canceled") {
+    findArgs.status = "취소됨";
+  }
+
+  const votings = await Voting.find(findArgs);
 
   votings.forEach(async (voting) => {
     const currentStatus = getVotingStatus(voting.startDate, voting.endDate);
@@ -26,42 +32,51 @@ exports.getAllVotings = catchAsync(async (req, res, next) => {
     status: "success",
     results: votings.length,
     data: {
+      status: findArgs.status,
       votings,
     },
   });
 });
 
-exports.searchedVotings = catchAsync(async (req, res, next) => {});
+exports.getSearchedVotings = catchAsync(async (req, res, next) => {
+  const searchKeyword = req.params.serch_keyword;
+  const searchedVotings = await Voting.find({
+    name: { $search: searchKeyword },
+  });
 
-exports.upcomingVotings = catchAsync(async (req, res, next) => {});
+  if (!searchedVotings) {
+    return next(new CreateError("검색 중 문제가 발생했습니다.", 400));
+  }
 
-exports.ongoingVotings = catchAsync(async (req, res, next) => {});
-
-exports.endedVotings = catchAsync(async (req, res, next) => {});
-
-exports.canceledVotings = catchAsync(async (req, res, next) => {});
+  res.status(200).json({
+    status: "success",
+    data: {
+      votings: searchedVotings,
+    },
+  });
+});
 
 exports.myVotings = catchAsync(async (req, res, next) => {
-  // 내가 만든 투표 보기
-  // 내가 만든 투표 id들 펼쳐서
-  // populate한 뒤에
-  // 상태별로 sorting
+  const userId = req.user._id;
+  const myVotings = await User.findById(userId).populate("createHistory");
+
   res.status(200).json({
     state: "success",
+    votings: myVotings,
   });
 });
 
 exports.votedVotings = catchAsync(async (req, res, next) => {
-  // 내가 참여한 투표 보기
-  // 내가 참여한 투표 id들 펼쳐서
-  // populate한 뒤에
-  // 넘겨주기
+  const userId = req.user._id;
+  const votedData = await User.findById(userId).populate("voteHistory");
+  const votedVotings = votedData.map((data) => data.voting);
+
   res.status(200).json({
     state: "success",
+    votings: votedVotings,
   });
 });
 
-// 새 투표 생성창 입장
 exports.getNewVoting = (req, res, next) => {
   res.status(200).render("createVoting", {
     data: {
@@ -115,20 +130,25 @@ exports.getFail = (req, res, next) => {
 // 상세 투표 보기
 exports.getSelectedVoting = catchAsync(async (req, res, next) => {
   const votingId = req.params.id;
-  const voting = await Voting.findById(votingId);
+  const voting = await Voting.findById(votingId).lean();
+  let results = [];
 
   if (!voting) {
     return next(new CreateError("해당하는 투표가 없습니다.", 404));
   }
 
-  // 사용자가 참여한 투표의 경우, 투표한 상태를 보여주기
   const userId = req.user._id;
-  const userChoice = await User.findById(userId).aggregate([{ $match: {} }]);
+  const userChoice = await User.find(
+    { _id: userId },
+    { "voteHistory.voting": votingId }
+  ).select("voteHistory.answer");
 
-  // status에 따라 결과 출력 여부 결정
-
-  if (userChoice) {
-    console.log("testing");
+  if (voting.createdBy === userId || voting.status === "종료") {
+    const { options } = voting;
+    options.forEach((option) => {
+      const { votee } = option;
+      results.push(votee.length);
+    });
   }
 
   res.status(200).json({
@@ -136,19 +156,22 @@ exports.getSelectedVoting = catchAsync(async (req, res, next) => {
     data: {
       voting,
       userChoice,
+      results,
     },
   });
 });
 
 // 투표 하기
 exports.voteVoting = catchAsync(async (req, res, next) => {
+  const userId = req.user._id;
+  const userChoice = req.body.selected;
   const votingId = req.params.id;
   const voting = await Voting.findById(votingId);
-  const userChoice = req.body.selected;
 
   // Voting의 옵션 업데이트하기
 
   // User의 votedVotings 업데이트하기
+  // const updatedUser = await User.findByIdAndUpdate(userId, {})
 
   res.status(200).json({
     status: "success",
@@ -161,6 +184,19 @@ exports.voteVoting = catchAsync(async (req, res, next) => {
 
 // 투표 삭제
 exports.deleteVoting = catchAsync(async (req, res, next) => {
+  const voting = await Voting.findByIdAndDelete(req.params.id);
+
+  if (!voting) {
+    return next(new CreateError("해당하는 투표가 없습니다.", 404));
+  }
+
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});
+
+exports.cancelVoting = catchAsync(async (req, res, next) => {
   const voting = await Voting.findByIdAndDelete(req.params.id);
 
   if (!voting) {
