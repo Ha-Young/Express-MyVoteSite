@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const passport = require('passport');
+
 const authController = require('../controllers/auth.controller');
 const authenticationHandler = require('../middlewares/authenticationHandler');
 const validationHandler = require('../middlewares/validationHandler');

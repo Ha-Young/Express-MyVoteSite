@@ -14,7 +14,7 @@ const config = require('./config');
 
 const index = require('./routes/index');
 const auth = require('./routes/auth');
-const voting = require('./routes/voting');
+const votings = require('./routes/votings');
 const handleGlobalError = require('./middlewares/handleGlobalError');
 
 const databaseURL = config.databaseURI.replace(
@@ -58,7 +58,7 @@ require('./auth/passport')(app);
 
 app.use('/', index);
 app.use('/auth', auth);
-app.use('/voting', voting);
+app.use('/votings', votings);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
