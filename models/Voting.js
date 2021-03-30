@@ -11,10 +11,17 @@ const votingSchema = new mongoose.Schema({
     default: false,
   },
   expireDate: {
-    type: Date.now,
-    default: Date.now,
+    type: String,
+    required: true,
   },
-  createdBy: [{ type: Schema.Types.ObjectId, ref: "user" }],
+  createdBy: {
+    refid: { type: Schema.Types.ObjectId, ref: "user" },
+    name: {
+      type: String,
+      required: true,
+    },
+  },
+  voters: [{ type: Schema.Types.ObjectId, ref: "user" }],
   options: [
     {
       name: {
@@ -23,9 +30,8 @@ const votingSchema = new mongoose.Schema({
       },
       voteCount: {
         type: Number,
-        required: true,
+        default: 0,
       },
-      selectedBy: [{ type: Schema.Types.ObjectId, ref: "user" }],
     },
   ],
 });

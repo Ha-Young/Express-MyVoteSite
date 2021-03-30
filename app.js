@@ -34,15 +34,20 @@ app.use(
 const indexRouter = require("./routes/index");
 const signUpRouter = require("./routes/signUp");
 const logInRouter = require("./routes/logIn");
+const votingsRouter = require("./routes/votings");
+const newVoteRouter = require("./routes/newVote");
 app.use("/", indexRouter);
 app.use("/signup", signUpRouter);
 app.use("/login", logInRouter);
+app.use("/votings", votingsRouter);
+app.use("/votings/new", newVoteRouter);
 
 app.use(function (req, res, next) {
   next(createError(404, "404 error"));
 });
 
 app.use(function (err, req, res, next) {
+  console.log("err message", err);
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 

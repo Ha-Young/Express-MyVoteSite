@@ -5,20 +5,15 @@ const logIncotroller = require("./controller/logInController");
 const validationHandler = require("./middleware/validationHandler");
 const authHandler = require("./middleware/authHandler");
 const jwtHandler = require("./middleware/jwtHandler");
+const socialSignUpHandler = require("./middleware/socialSignUpHandler");
 
 router.get("/", logIncotroller.renderLogInPage);
-router.get("/auth/google", authHandler.checkGoogleAuth, jwtHandler.signToken);
-
+router.get("/auth/google", authHandler.checkGoogleAuth);
 router.get(
   "/auth/google/callback",
-  passport.authenticate("google", {
-    session: false,
-    successRedirect: "/",
-    failureRedirect: "/auth/login",
-  })
-  // (req, res) => {
-  //   res.redirect("/");
-  // }
+  authHandler.checkGoogleAuth,
+  socialSignUpHandler.createUser,
+  jwtHandler.signToken
 );
 
 router.post(

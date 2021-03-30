@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="/stylesheets/style.css" />
+
+<h1>newVote!</h1>
+
+<form class="vote-form" action="/votings/new" method="POST">
+  <div class="form-item name">
+    <label for="vote-name"></label>
+    <span class="form-error-message"><%= messages.filter((message) => message.includes('voteName') ? true : false )%></span>
+    <input name="voteName" placeholder="name"></input>
+  </div>  
+  <div class="form-item creator">
+    <label for="creator"></label>
+    <span class="form-error-message"><%= messages.filter((message) => message.includes('creator') ? true : false )%></span>
+    <input name="creator" placeholder="creator"></input>
+  </div>
+
+  <div class="form-item date">
+    <label for="vote-date"></label>
+    <span class="form-error-message"><%= messages.filter((message) => message.includes('expireDate') ? true : false )%></span>
+    <input type="date" name="expireDate" type="date">
+  </div>
+
+  <div class="form-item options">
+    <label for="options"></label>
+    <span class="form-error-message"><%= messages.filter((message) => message.includes('options') ? true : false )%></span>
+    <input id="options" name="options" placeholder="options" type="text"></input>
+  </div>
+
+  <label for="option-select">Vote option</label>
+  <select multiple name="options" class="vote-options">
+  </select>
+
+  <div class="form-button-board">
+    <button type="button" class="button add-vote-option">선택지 추가</button>
+    <button type="submit" class="button start-vote">투표 제출!</button>
+  </div>
+
+</form>
+
+
+
+<script defer type="text/javascript" src="/javascripts/newVote.js"></script>

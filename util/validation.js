@@ -25,5 +25,17 @@ const validateLoginForm = (requestedBody) => {
   return schema.validate(requestedBody, { abortEarly: false });
 };
 
+const validateVoteForm = (requestedBody) => {
+  const schema = Joi.object({
+    voteName: Joi.string().required().min(1),
+    creator: Joi.string().required(),
+    expireDate: Joi.date().greater("now"),
+    options: Joi.array().min(3),
+  });
+
+  return schema.validate(requestedBody, { abortEarly: false });
+};
+
 module.exports.validateRegisterForm = validateRegisterForm;
 module.exports.validateLoginForm = validateLoginForm;
+module.exports.validateVoteForm = validateVoteForm;

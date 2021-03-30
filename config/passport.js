@@ -14,8 +14,6 @@ const extractCookie = (req) => {
   return req.cookies ? req.cookies["jwt"] : null;
 };
 
-console.log(process.env.GOOGLE_CLIENT_ID);
-
 module.exports = () => {
   passport.use(
     "local",
@@ -55,8 +53,11 @@ module.exports = () => {
         callbackURL: "http://localhost:3000/login/auth/google/callback",
       },
       function (accessToken, refreshToken, profile, done) {
-        console.log("inside google strategy");
-        return done(null, profile);
+        console.log(profile);
+        console.log(profile._json);
+        console.log("type?", typeof profile._json);
+        // const googleProfile = { id: profile.id, name: profile.displayName };
+        return done(null, profile._json);
       }
     )
   );

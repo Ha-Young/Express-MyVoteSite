@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const passport = require("passport");
 const dotenv = require("dotenv");
 const createError = require("http-errors");
 const errorMessage = require("../../constants/errorMessage");
@@ -7,8 +6,6 @@ const errorMessage = require("../../constants/errorMessage");
 dotenv.config();
 
 exports.signToken = function (req, res, next) {
-  console.log("innnnnnnn!");
-  console.log("login user is", req.user);
   const loggedUser = req.user;
   jwt.sign(
     loggedUser.toJSON(),
@@ -16,6 +13,7 @@ exports.signToken = function (req, res, next) {
     { expiresIn: "1d" },
     (err, token) => {
       if (err) {
+        console.log(err.message);
         const createdError = createError(500, errorMessage.SERVER_ERROR);
         return next(createdError);
       }
@@ -24,7 +22,7 @@ exports.signToken = function (req, res, next) {
           httpOnly: true,
         })
         .status(200)
-        .redirect("/");
+        .redirect("/votings");
     }
   );
 };

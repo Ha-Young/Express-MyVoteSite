@@ -1,6 +1,8 @@
 @import "index.css";
 @import "signup.css";
 @import "login.css";
+@import "votings.css";
+@import "newVote.css";
 
 html,
 body {
