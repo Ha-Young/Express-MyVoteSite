@@ -2,7 +2,8 @@ extends layout
 
 block content
   .signUpOutter
-    form.joinForm(action="signup" method="POST")
+    div Sign Up!
+    form.joinForm(action="/signUp" method="POST")
     input.email(type="email" name="email")
     input.password(type="password" name="password")
     input.passwordChecker(type="password" name="password2")

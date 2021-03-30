@@ -6,41 +6,62 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 const User = require("../model/User");
 
-/* GET home page. */
 router.get("/", function(req, res, next) {
   res.render("index", { title: "Express" });
 });
 
 router.get("/signIn", function(req, res, next) {
-  const warningMessage = req.cookies["warningMessage"];
-  res.clearCookie("warningMessage", { httpOnly: true });
-  res.render("signIn", { title: "Express" });
+  console.log(req.flash("info"));
+  res.render("signIn", { messages: req.flash("info") });
 });
 
-router.post("/signIn", passport.authenticate("jwt", { session: false }),
- function(req, res, next) {
+// 저장되어있는 토큰을 꺼내다가 확인하고 재발급까지 해준다. 만약 없다면 signin페이지로 리다이렉트
+passport.authenticate("jwt", { session: false });
+
+router.post("/signIn", async function(req, res, next) {
   const {
-    body: { password },
-    user
+    body: { email, password }
   } = req;
 
+  const user = await User.findOne({ email }).lean();
+  console.log("user", user);
   if (!user) {
-    res.cookie("warningMessage", "pls check your Email", { httpOnly: true });
+    console.log("signIn : Email fail");
+    req.flash("info", "pls check your Email!");
     return res.redirect("/signIn");
   }
 
   if (!bcrypt.compareSync(password, user.password)) {
-    res.cookie("warningMessage", "pls check your Password", { httpOnly: true });
+    console.log("signIn : password fail");
+    req.flash("info", "pls check your Password!");
     return res.redirect("/signIn");
   }
 
-  res.render("signIn", { title: "express" });
+  res.cookie("access", jwt.sign({
+      email,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "30m",
+    })
+  );
+
+  res.cookie("refresh", jwt.sign({
+      _id: savedUser._id,
+      email,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "1d",
+    })
+  );
+
+  res.redirect("/");
 });
 
 router.get("/signUp", async function(req, res, next) {
-  const warningMessage = req.cookies["warningMessage"];
-  res.clearCookie("warningMessage", { httpOnly: true });
-  res.render("index", { message: warningMessage });
+  console.log(req.flash("info"));
+  res.render("signUp", { messages: req.flash("info") });
 });
 
 router.post("/signUp", async function(req, res, next) {
@@ -49,7 +70,7 @@ router.post("/signUp", async function(req, res, next) {
   } = req;
 
   if (password !== password2) {
-    res.cookie("warningMessage", "both Password is not same", { httpOnly: true });
+    req.flash("info", "Passwords is not same");
     return res.redirect("/signUp");
   }
 
@@ -57,17 +78,31 @@ router.post("/signUp", async function(req, res, next) {
   const newUser = {
     email,
     password: hashedPassword,
-    name
+    name,
   };
 
-  res.cookie("jwt", jwt.sign({
+  res.cookie("access", jwt.sign({
       email,
-      exp: Math.floor(Date.now() / 1000) + (60 * 60),
     },
-    process.env.JWT_SECRET
-  ));
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "30m",
+    })
+  );
 
   await User.create(newUser);
+
+  // 가입할땐 refresh token이 반드시 없다.
+  const savedUser = User.findOne({ email });
+  res.cookie("refresh", jwt.sign({
+      _id: savedUser._id,
+      email,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "1d",
+    })
+  );
 
   res.redirect("/signin");
 });
