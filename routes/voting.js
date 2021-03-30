@@ -1,6 +1,7 @@
 const express = require("express");
 const { authenticateToken } = require("./middlewares/authorization");
-const { validateVote } = require("./middlewares/validator");
+const { validateCreatingVote, validateCastingVote } = require("./middlewares/validator");
+const { getUserInfo } = require("../util/jwtHelper");
 const votingController = require("./controllers/voting.cotroller");
 const router = express.Router();
 
@@ -10,8 +11,12 @@ router.get("/new", authenticateToken, (req, res, next) => {
   res.render("votings-new", { user });
 });
 
-router.post("/new", authenticateToken, validateVote, votingController.saveVote);
+router.post("/new", authenticateToken, validateCreatingVote, votingController.createVote);
 
 router.get("/my-votings", authenticateToken, votingController.getCreatedVotes);
+
+router.get("/:id", votingController.getVote);
+
+router.post("/:id", validateCastingVote, votingController.castVote);
 
 module.exports = router;

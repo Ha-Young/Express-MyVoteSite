@@ -17,7 +17,55 @@ exports.getCreatedVotes = async (req, res, next) => {
   res.render("my-votings", { votes, user });
 };
 
-exports.saveVote = async (req, res, next) => {
+exports.getVote = async (req, res, next) => {
+  const user = getUserInfo(req.cookies);
+  const { id } = req.params;
+  const vote = await Vote.findById(id).populate("author", "name");
+
+  res.render("vote-page", { vote, user })
+};
+
+exports.castVote = async (req, res, next) => {
+  const user = getUserInfo(req.cookies);
+  const { id } = req.params;
+  let options;
+
+  if (Array.isArray(req.body.options)) {
+    options = req.body.options;
+  } else {
+    options = [req.body.options];
+  }
+
+  try {
+    const userInfo = await User.findOne({ email: user.email });
+
+    await User.findOneAndUpdate(
+      {email: user.email},
+      {
+        $push: {
+          casted_votes: id
+        }
+      }
+    );
+
+    for (const option of options) {
+      await Vote.findOneAndUpdate({
+        _id: id,
+        "options.title": option
+      }, {
+        $inc: {
+          "options.$.count": 1
+        }
+      });
+    }
+
+    res.status(201).redirect("/")
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.createVote = async (req, res, next) => {
   try {
     const user = getUserInfo(req.cookies);
     const userInfo = await User.findOne({ email: user.email });

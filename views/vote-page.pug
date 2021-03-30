@@ -1,0 +1,28 @@
+extends layout
+include mixins/voteBlock
+
+block content
+  section
+    h2 VOTE PAGE
+    if (user)
+      p user check
+    else
+      p unauthorized
+    .vote-wrapper
+      form#casting-vote(action=`/votings/${vote._id}` method="post")
+        .form-box
+          p.title #{vote.title}
+        .form-box
+          ul.vote-info
+            li #{vote.expiration_date}
+            li #{vote.author.name}
+        .form-box
+          ul.option-list
+            each option in vote.options
+              li
+                label(for=`${option.title}`) #{option.title}
+                input(type="checkbox" id=`${option.title}` name="options" value=`${option.title}`)
+      if (error)
+        p.validation #{ error.msg }
+      button.button(type="submit" form="casting-vote") SUBMIT
+
