@@ -7,4 +7,13 @@ const UserSchema = new mongoose.Schema({
   voting_list: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Voting' }]
 });
 
+UserSchema.methods.isAlreadyVote = function(id) {
+  return this.voting_list.includes(id);
+};
+
+UserSchema.methods.addVotingList = function(id) {
+  this.voting_list.push(id);
+  return this.save();
+};
+
 module.exports = mongoose.model('User', UserSchema);

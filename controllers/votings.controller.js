@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 const Voting = require('../models/Voting');
+const User = require('../models/User');
 // TODO Joi 가져와서 create할때 validation하기.
 // expiration_date 현시간 이후인지랑 options 2개 이상인지
 
@@ -36,8 +37,16 @@ exports.addVote = async function (req, res, next) {
   const votingId = req.params.voting_id;
   const selectedOption = req.body.option;
   const voting = await Voting.findById(votingId);
+  const currentUser = await User.findById(req.user);
 
-  await voting.addVoteCount(selectedOption);
+  if (currentUser.isAlreadyVote(votingId)) {
+    // TODO 유저가 이미 투표함!!
+    // flash 아니면 에러페이지??
+    console.log('너 이미 투표함!')
+  } else {
+    await voting.addVoteCount(selectedOption);
+    await currentUser.addVotingList(votingId);
+  }
 
   res.status(301).redirect(`/votings/${votingId}`);
 };

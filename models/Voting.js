@@ -21,11 +21,8 @@ const VotingSchema = new mongoose.Schema({
 });
 
 VotingSchema.methods.addVoteCount = function(option) {
-  this.votes.forEach(vote => {
-    if (vote.option === option) {
-      vote.count++;
-    }
-  });
+  const targetVote = this.votes.find(vote => vote.option === option);
+  targetVote.count += 1;
 
   return this.save();
 };

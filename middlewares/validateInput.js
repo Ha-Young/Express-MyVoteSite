@@ -16,7 +16,7 @@ exports.createVotingSchema = function (req, res, next) {
   const schema = Joi.object({
     title: Joi.string().required(),
     options: Joi.array().required(),
-    expiration_date: Joi.string().required()
+    expiration_date: Joi.date().greater('now').required()
   });
 
   validateRequest(req, next, schema);
@@ -25,7 +25,7 @@ exports.createVotingSchema = function (req, res, next) {
 async function validateRequest(req, next, schema) {
   const options = {
       abortEarly: true,
-      allowUnknown: true,
+      allowUnknown: true
   };
 
   try {
