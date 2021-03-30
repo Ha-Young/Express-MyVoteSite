@@ -18,26 +18,25 @@ exports.post = async (req, res, next) => {
   try {
     await check('email').isEmail().run(req);
     await check('password')
+      .isLength({ min: 4 })
       .custom(value => value === req.body.confirm).run(req);
 
-    console.log(1);
     const validateError = validationResult(req);
     if (!validateError.isEmpty()) {
-      console.log(2);
-      next(createError(validateError.status));
+      const { msg, param } = validateError.errors[0];
+      res.render('partial/message', {
+        message: `${msg}: ${param}`,
+      });
       return;
     }
 
-    console.log(3);
     const { username, email, password } = req.body;
-    const result = await new User({ username, email, password }).save();
-    console.log(4);
-    console.log(result);
+    await new User({ username, email, password }).save();
     res.redirect('/login');
   } catch (err) {
-    // res.render('partial/message', {
-    //   message: '이미 가입된 계정입니다',
-    // });
+    res.render('partial/message', {
+      message: '이미 가입된 계정입니다',
+    });
   }
 };
 
