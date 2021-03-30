@@ -11,25 +11,21 @@ const VotingSchema = new mongoose.Schema({
     required: true
   },
   options: [{
-    type: String,
-    required: true
-  }],
-  votes: [{
-    option: { type: String, required: true },
-    count: { type: Number, default: 0, required: true }
+    optionTitle: { type: String, required: true },
+    count: { type: Number, default: 0 }
   }]
 });
 
-VotingSchema.methods.addVoteCount = function(option) {
-  const targetVote = this.votes.find(vote => vote.option === option);
-  targetVote.count += 1;
+VotingSchema.methods.addVoteCount = function(target) {
+  const targetOption = this.options.find(option => option.optionTitle === target);
+  targetOption.count += 1;
 
   return this.save();
 };
 
-VotingSchema.statics.updateExpiredVotingStatus = function() {
-  this.updateMany(
-    { expiration_date: { $lte: new Date() } },
+VotingSchema.statics.updateExpiredVotingStatus = function(now) {
+  return this.updateMany(
+    { expiration_date: { $lte: now } },
     { status: 'expired' }
   );
 };

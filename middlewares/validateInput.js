@@ -15,7 +15,7 @@ exports.signupSchema = function (req, res, next) {
 exports.createVotingSchema = function (req, res, next) {
   const schema = Joi.object({
     title: Joi.string().required(),
-    options: Joi.array().required(),
+    userOptions: Joi.array().required(),
     expiration_date: Joi.date().greater('now').required()
   });
 

@@ -8,9 +8,9 @@ exports.getNewVotingPage = async function (req, res, next) {
 };
 
 exports.createVoting = async function (req, res, next) {
-  const { title, options, expiration_date } = req.body;
-  const votes = options.map((option) => {
-    return { option, count: 0 };
+  const { title, userOptions, expiration_date } = req.body;
+  const options = userOptions.map((option) => {
+    return { optionTitle: option };
   });
 
   await Voting.create({
@@ -18,7 +18,6 @@ exports.createVoting = async function (req, res, next) {
     author: req.user,
     expiration_date,
     options,
-    votes
   });
 
   res.redirect('/votings/new');
@@ -37,6 +36,7 @@ exports.addVote = async function (req, res, next) {
   const voting = await Voting.findById(votingId);
   const currentUser = await User.findById(req.user);
 
+  // REVIEW voted가 맞지 않냐?
   if (currentUser.isAlreadyVote(votingId)) {
     // TODO 유저가 이미 투표함!!
     // flash 아니면 에러페이지??

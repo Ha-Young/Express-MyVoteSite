@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/stylesheets/style.css">
   <link rel="stylesheet" href="/stylesheets/votingDetail.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <title>Document</title>
 </head>
 <body>
@@ -23,14 +24,21 @@
     </div>
     <div class="">
       <form action="<%= `/votings/${voting._id}` %>" class="" method="POST">
-        <% for (const option of voting.options) { %>
-          <input type="radio" class="" name="option" value="<%= option %>"><%= option %></input>
+        <% for (let i = 0; i < voting.options.length; i++) { %>
+          <input type="radio" class="" name="option" value="<%= voting.options[i].optionTitle %>">
+            <%= voting.options[i].optionTitle %>
+          </input>
         <% } %>
         <label>투표하기
           <input type="submit" class="">
         </label>
       </form>
     </div>
+    <% if (voting.status === "expired") { %>
+      <div class="">
+        <canvas id="myChart"></canvas>
+      </div>
+    <% } %>
     <% if (locals.user && locals.user._id.toString() === voting.author._id.toString()) { %>
       <a href="<%= `/votings/delete/${voting._id}` %>">
         삭제하기
@@ -43,4 +51,5 @@
     </div>
   </div>
 </body>
+<script src="/javascripts/chart.js" type="text/javascript"></script>
 </html>
