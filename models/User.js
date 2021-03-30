@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String
   },
-  submitted_votes: [{
+  casted_votes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Vote"
   }]
