@@ -1,5 +1,9 @@
 const Joi = require('joi');
-
+/**
+ * validate inputs by joi schema
+ * @param {object} data - object
+ * @returns {[object|object]} [error, value] if data doesn't match to schem error has value
+ */
 exports.validateLoginInputs = (data) => {
   const schema = Joi.object().keys({
     email: Joi.string().email().required(),
