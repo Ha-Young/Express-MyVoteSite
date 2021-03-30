@@ -16,16 +16,17 @@ exports.loginUser = async (req, res, next) => {
   }
 
   const user = await User.findOne({ email });
+  const id = user._id;
 
   if (!user) {
     res.redirect(301, "/login");
   } else {
-    const token = jwt.sign({ email }, process.env.JWT_SECRETKEY);
+    const token = jwt.sign({ id }, process.env.JWT_SECRETKEY);
 
     res
       .status(201)
       .cookie("access_token", token, {
-        expires: new Date(Date.now() + 100000)
+        expires: new Date(Date.now() + 1 * 3600000)
       })
       .redirect(301, "/");
   }

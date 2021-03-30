@@ -5,9 +5,10 @@
   align-items: center;
   border: 1px solid black;
   margin-top: 40vh;
-  width: 400px;
+  width: 300px;
   position: absolute;
   left: 40%;
+  padding: 20px;
 }
 
 .optionList {

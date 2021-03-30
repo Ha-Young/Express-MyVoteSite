@@ -1,18 +1,26 @@
 require("dotenv").config();
 
 const jwt = require("jsonwebtoken");
-const createError = require("http-errors");
+const User = require("../../models/User");
 
-const verifyToken = (req, res, next) => {
-  const token = req.headers["access_token"];
+const verifyToken = async (req, res, next) => {
+  const token = req.cookies["access_token"];
 
-  try {
-    jwt.verify(token, process.env.JWT_SECRETKEY);
-
-    next();
-  } catch {
-    next(createError(401, "unauthorized user"));
+  if (!token) {
+    res.redirect("/login");
+    return;
   }
+
+  const decoded = jwt.verify(token, process.env.JWT_SECRETKEY);
+  const user = await User.findById(decoded.id);
+
+  if (!user) {
+    res.redirect("/login");
+    return;
+  }
+
+  req.user = user;
+  next();
 };
 
 module.exports = verifyToken;
