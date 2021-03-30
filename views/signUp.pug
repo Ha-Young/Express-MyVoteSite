@@ -1,11 +1,18 @@
-extends layout
+extends ./layout
 
 block content
-  .signUpOutter
-    div Sign Up!
-    form.joinForm(action="/signUp" method="POST")
-    input.email(type="email" name="email")
-    input.password(type="password" name="password")
-    input.passwordChecker(type="password" name="password2")
-    input.name(type="text" name="name")
-    button.joinSubmit(type="submit") submit
+  link(rel="stylesheet/less" type="text/css" href="/stylesheets/signFrom.less")
+  .signin__outer
+    .signin__inner
+      form.signup__form(action="signin" method="POST")
+        .form__input
+          label.form-label Email Address
+          input.input__email.form-control(type="email" name="email" placeholder="123@example.com")
+        .form__input
+          label.form-label Password
+          input.input__password.form-control(type="password" name="password" placeholder="****")
+        .form__input
+          label.form-label Password-check
+          input.input__password.form-control(type="password" name="password2" placeholder="****")
+        h3.signin__info #{message}
+        button.input__submitButton.btn.btn-success(type="submit") Sign Up!

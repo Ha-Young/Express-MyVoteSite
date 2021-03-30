@@ -7,7 +7,7 @@ const passport = require("passport");
 const User = require("../model/User");
 
 router.get("/", function(req, res, next) {
-  res.render("index", { title: "Express" });
+  res.render("main", { title: "Express" });
 });
 
 router.get("/signIn", function(req, res, next) {

@@ -1,9 +1,16 @@
 extends ./layout
 
 block content
-  .loginOuter
-    .loginInner
-      form.loginForm(action="signin" method="POST")
-        input(type="email" name="email")
-        input(type="password" name="password")
-        button(type="submit") Sign In
+  link(rel="stylesheet/less" type="text/css" href="/stylesheets/signForm.less")
+  .signin__outer
+    .signin__inner
+      h1.signin__title Sign In!
+      h3.signin__info #{message}
+      form.signin__form(action="signin" method="POST")
+        .form__input
+          label.form-label Email Address
+          input.input__email.form-control(type="email" name="email" placeholder="123@example.com")
+        .form__input
+          label.form-label Password
+          input.input__password.form-control(type="password" name="password" placeholder="****")
+        button.input__submitButton.btn.btn-primary(type="submit") Sign In

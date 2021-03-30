@@ -1,0 +1,49 @@
+.flex-center (@direction: row) {
+  display: flex;
+  flex-direction: @direction;
+  justify-content: center;
+  align-items: center;
+}
+
+.signin__outer {
+  .flex-center();
+  width: 100vw;
+  height: 80vh;
+}
+
+.signin__inner {
+  .flex-center(column);
+  border: 3px solid black;
+  width: 40%;
+  height: 70%;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0);
+
+  .signin__info {
+    color: red;
+    font-weight: bold;
+  }
+
+  .signin__title {
+    .flex-center(column);
+    height: 30%;
+    margin: 0px;
+  }
+
+  .signin__form {
+    .flex-center(column);
+    justify-content: space-around;
+    width: 60%;
+    height: 60%;
+  }
+
+  .signup__form {
+    .flex-center(column);
+    justify-content: space-around;
+    width: 60%;
+    height: 80%;
+  }
+}
+
+.form__input {
+  width: 100%;
+}

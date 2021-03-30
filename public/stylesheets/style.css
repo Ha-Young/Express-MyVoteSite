@@ -1,8 +1,6 @@
 body {
-  padding: 50px;
+  width: 100vw;
+  height: 100vh;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
+  overflow-x: hidden;
 }
