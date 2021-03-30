@@ -5,11 +5,26 @@ const catchAsync = require("../../utils/catchAsync");
 const { addFormattedDueDate } = require("../../utils/index");
 
 exports.renderVotingsPage = (req, res, next) => {
+  res.locals.message = req.flash("message")[0] || null;
   res.locals.user = req.user;
   res.render("createVoting");
 };
 
 exports.createVote = catchAsync(async (req, res, next) => {
+  const { title, expiration } = req.body;
+
+  if (!title || !expiration) {
+    req.flash("message", "Provide title and expiration.");
+    res.redirect("/votings/new");
+    return;
+  }
+
+  if (expiration < moment().format()) {
+    req.flash("message", "A expiration date must be after now.");
+    res.redirect("/votings/new");
+    return;
+  }
+
   await Vote.create({
     title: req.body.title,
     creator: req.user._id,

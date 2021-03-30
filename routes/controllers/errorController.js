@@ -1,30 +1,5 @@
 const AppError = require("../../utils/AppError");
 
-const sendErrorDev = (err, res) => {
-  res.locals.status = err.status;
-  res.locals.message = err.message;
-  res.locals.error = err;
-
-  res.status(err.statusCode).render("error", { layout: false });
-};
-
-const sendErrorProd = (err, res) => {
-  if (err.isOperational) {
-    res.locals.status = err.status;
-    res.locals.message = err.message;
-    res.locals.error = {};
-
-    res.status(err.statusCode).render("error", { layout: false });
-  } else {
-    console.log("ERROR ❗️", err);
-
-    res.locals.status = "error";
-    res.locals.message = "Internal Server Error.";
-    res.locals.error = {};
-    res.status(500).render("error", { layout: false });
-  }
-};
-
 const handleValidationErrorDB = (err) => {
   const errors = Object.values(err.errors).map((el) => el.message);
   const message = `Invalid input data. ${errors.join(". ")}`;
@@ -37,19 +12,29 @@ const handleDuplicateErrorDB = (err) => {
 };
 
 module.exports = (err, req, res, next) => {
-  err.statusCode = err.statusCode || 500;
+  let error = { ...err };
 
-  if (process.env.NODE_ENV === "development") {
-    sendErrorDev(err, res);
-  } else if (process.env.NODE_ENV === "production") {
-    let error = { ...err };
+  error.statusCode = error.statusCode || 500;
+  error.status = `${error.statusCode}`.startsWith("4") ? "fail" : "error";
 
-    if (err.name === "ValidationError") {
-      error = handleValidationErrorDB(error);
-    } else if (err.code === 11000) {
-      error = handleDuplicateErrorDB(error);
-    }
+  if (err.name === "ValidationError") {
+    error = handleValidationErrorDB(error);
+  } else if (err.code === 11000) {
+    error = handleDuplicateErrorDB(error);
+  }
 
-    sendErrorProd(error, res);
+  res.locals.error = process.env.NODE_ENV === "development" ? error : {};
+
+  if (error.isOperational) {
+    res.locals.status = error.status;
+    res.locals.message = error.message;
+
+    res.status(error.statusCode).render("error", { layout: false });
+  } else {
+    console.log("ERROR ❗️", error);
+
+    res.locals.status = "error";
+    res.locals.message = "Internal Server Error.";
+    res.status(500).render("error", { layout: false });
   }
 };

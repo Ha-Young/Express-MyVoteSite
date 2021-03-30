@@ -1,6 +1,9 @@
 <div class="body-container">
   <h1>투표 생성</h1>
   <form class="form" action="/votings/new" method="POST">
+    <div class="alert-msg">
+      <%= message %>
+    </div>
     <div>
       <label for="title">title : </label>
       <input name="title" />
