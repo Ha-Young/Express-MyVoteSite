@@ -10,8 +10,18 @@
 
     <% for (let i = 0; i < votes.length; i++) { %>
       <div>
-        <span><%= votes[i].title %></span>
+        <span>투표 주제:  <%= votes[i].title %></span>
       </div>
+      <div>
+        <span>생성자:  <%= votes[i].creater.nickname %></span>
+      </div>
+      <div>
+        <span>종료 날짜:  <%= votes[i].expiredDate %></span>
+      </div>
+      <div>
+        <span>진행 여부:  <%= votes[i].isProceeding %></span>
+      </div>
+      <br/>
     <% } %>
   </body>
 </html>

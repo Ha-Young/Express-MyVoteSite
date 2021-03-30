@@ -10,6 +10,7 @@ const SALT = 6;
 /* GET home page. */
 router.get('/', async (req, res, next) => {
   const votes = await Vote.find();
+
   res.render('index', { title: 'Vote Flatform', votes });
 });
 

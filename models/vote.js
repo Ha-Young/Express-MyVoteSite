@@ -1,3 +1,4 @@
+const { text } = require('body-parser');
 const mongoose = require('mongoose');
 
 const voteSchema = new mongoose.Schema({
@@ -6,9 +7,16 @@ const voteSchema = new mongoose.Schema({
     required: true,
   },
   creater: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    nickname: {
+      type: String,
+      ref: 'User',
+      required: true,
+    },
   },
   expiredDate: {
     type: Date,

@@ -14,7 +14,10 @@ exports.voteCreatePost = async (req, res, next) => {
 
   await Vote.create({
     title,
-    creater: req.user._id,
+    creater: {
+      _id: req.user._id,
+      nickname: req.user.nickname,
+    },
     expiredDate,
     optionType,
     options: filterOption(),
