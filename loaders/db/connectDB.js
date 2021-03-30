@@ -4,6 +4,7 @@ const clientPromise = mongoose.connect(process.env.MONGODB_ATLAS, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 }).then(result => result.connection.getClient());
 
 function checkDB() {

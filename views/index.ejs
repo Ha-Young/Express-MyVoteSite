@@ -9,18 +9,22 @@
     <h1><%= title %></h1>
 
     <% for (let i = 0; i < votes.length; i++) { %>
-      <div>
-        <span>투표 주제:  <%= votes[i].title %></span>
-      </div>
-      <div>
-        <span>생성자:  <%= votes[i].creater.nickname %></span>
-      </div>
-      <div>
-        <span>종료 날짜:  <%= votes[i].expiredDate %></span>
-      </div>
-      <div>
-        <span>진행 여부:  <%= votes[i].isProceeding %></span>
-      </div>
+      <form action="/votings/<%= votes[i]._id %>" method="GET">
+        <button type="submit">
+          <div>
+            <span>투표 주제:  <%= votes[i].title %></span>
+          </div>
+          <div>
+            <span>생성자:  <%= votes[i].creater.nickname %></span>
+          </div>
+          <div>
+            <span>종료 날짜:  <%= votes[i].expiredDate %></span>
+          </div>
+          <div>
+            <span>진행 여부:  <%= votes[i].isProceeding %></span>
+          </div>
+        </button>
+      </form>
       <br/>
     <% } %>
   </body>

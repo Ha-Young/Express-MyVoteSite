@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include ('partials/head') %>
+  </head>
+  <body>
+    <%- include ('partials/header') %>
+
+    <h1><%= title %></h1>
+
+    <div>
+      <div>
+        <span>생성자:  <%= creater.nickname %></span>
+      </div>
+      <div>
+        <span>진행 여부:  <%= isProceeding %></span>
+      </div>
+      <div>
+        <span>종료 날짜:  <%= expiredDate %></span>
+      </div>
+      <div>
+        <span>선택 사항:  <%= isProceeding %></span>
+        <form name="<%= id %>" id="patch-form">
+          <% for (let i = 0; i < options.length; i++) { %>
+            <div>
+              <label><input type="radio" name="voted" value="<%= options[i].text %>">
+                <%= options[i].text %>
+              </label>
+              <span>count: <%= options[i].count %></span>
+            </div>
+          <% } %>
+        </form>
+      </div>
+      <button id="patch-button">투표</button>
+    </div>
+
+    <script src="/javascripts/votingPatch.js"></script>
+  </body>
+</html>
