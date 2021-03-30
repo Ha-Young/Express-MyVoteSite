@@ -1,0 +1,11 @@
+extends layouts/auth
+
+block content
+  h1 #{pageTitle}
+  .signup-container
+    form.signup-form(action="./signup" method="POST")
+      input(type="text" placeholder="userName" name="username" required=true)
+      input(type="email" placeholder="email" name="email" required=true)
+      input(type="password" placeholder="password1" name="password1" required=true)
+      input.password(type="password" placeholder="password2" name="password2" required=true)
+      button.signup-button Signup

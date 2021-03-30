@@ -6,7 +6,7 @@ const {
   votingFail,
   getVoting,
   postVoting
-} = require("../controllers/votingsController");
+} = require("../../controllers/votingsController");
 
 const votingRouter = express.Router();
 

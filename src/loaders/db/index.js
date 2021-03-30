@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const clientPromise = mongoose.connect(process.env.MONGO_ATLAS, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 }).then(result => result.connection.getClient());
 
 const db = mongoose.connection;

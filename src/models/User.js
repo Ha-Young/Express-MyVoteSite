@@ -2,21 +2,12 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  id: {
+  email: {
     type: String,
+    lowercase: true,
+    unique: true,
     require: true,
   },
-  password: {
-    type: String,
-    require: true,
-  },
-  username: {
-    type: String,
-    require: true,
-  },
-  votings: [{
-    type: mongoose.Schema.Types.ObjectId
-  }],
   hash: {
     type: String,
     require: true,
@@ -25,6 +16,13 @@ const userSchema = new Schema({
     type: String,
     require: true,
   },
+  username: {
+    type: String,
+    require: true,
+  },
+  votings: [{
+    type: mongoose.Schema.Types.ObjectId,
+  }],
 });
 
-mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema);
