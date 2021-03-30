@@ -51,9 +51,17 @@ module.exports.isAuthenticated = async (req, res, next) => {
       }
     }
 
-    res.status(302).redirect("/login");
+    next();
   }
 };
+
+module.exports.redirectIfNotLoggedIn = async (req, res, next) => {
+  if (!res.locals.userEmail) {
+    res.status(302).redirect("/login");
+  } else {
+    next();
+  }
+}
 
 module.exports.isNotAuthenticated = async (req, res, next) => {
   try {
