@@ -2,13 +2,6 @@ const createError = require('http-errors');
 const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 
-exports.getMain = (req, res, next) => {
-  const sess = req.session;
-  res.render('main', {
-    username: sess.username,
-  });
-};
-
 exports.signup = (req, res, next) => {
   res.render('partial/signup');
 };
@@ -31,12 +24,17 @@ exports.post = async (req, res, next) => {
     }
 
     const { username, email, password } = req.body;
-    await new User({ username, email, password }).save();
-    res.redirect('/login');
+    const userData = await User.findOne({ email });
+    if (userData) {
+      res.render('partial/message', {
+        message: '이미 가입된 계정입니다',
+      });
+    } else {
+      await User.create({ username, email, password });
+      res.redirect('/auth/login');
+    }
   } catch (err) {
-    res.render('partial/message', {
-      message: '이미 가입된 계정입니다',
-    });
+    next(createError(err.message));
   }
 };
 

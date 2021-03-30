@@ -3,9 +3,9 @@
     a(href="/") Voting Platform
   if (username)
     div #{username}
-    a(href="myVotings") MY VOUTINGS
+    a(href="votings/myVotings") MY VOUTINGS
   else
     div
-      a(href="signup") SIGNUP
+      a(href="/auth/signup") SIGNUP
     div
-      a(href="login") LOGIN
+      a(href="/auth/login") LOGIN

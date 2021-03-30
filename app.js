@@ -21,7 +21,8 @@ db.once('open', () => {
   console.log('Connected..');
 });
 
-const homeRouter = require('./routes/home');
+const mainRouter = require('./routes/main');
+const authRouter = require('./routes/auth');
 const votingsRouter = require('./routes/votings');
 
 const app = express();
@@ -43,7 +44,8 @@ app.use(session({
 }));
 
 // app.all
-app.use('/', homeRouter);
+app.use('/', mainRouter);
+app.use('/auth', authRouter);
 app.use('/votings', votingsRouter);
 
 // catch 404 and forward to error handler
@@ -53,7 +55,6 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-  console.log(err.message, err.status, '-------');
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

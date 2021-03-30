@@ -13,11 +13,6 @@ const votingSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  userIds: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    unique: true,
-  }],
 }, { timestamps: true });
 
 module.exports = mongoose.model('Voting', votingSchema);
