@@ -4,6 +4,7 @@ const User = require("../../models/User");
 const catchAsync = require("../../utils/catchAsync");
 
 exports.renderSignupPage = (req, res, next) => {
+  res.locals.user = req.user;
   res.render("signup");
 };
 
@@ -20,6 +21,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.renderLoginPage = (req, res, next) => {
   res.locals.message = req.flash("message")[0] ?? null;
+  res.locals.user = req.user;
   res.render("login");
 };
 
@@ -50,3 +52,8 @@ exports.login = catchAsync(async (req, res, next) => {
 
   res.redirect("/");
 });
+
+exports.logout = (req, res, next) => {
+  res.clearCookie("voting_platform");
+  res.redirect("/");
+};

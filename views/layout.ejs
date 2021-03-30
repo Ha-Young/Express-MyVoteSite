@@ -6,11 +6,18 @@
   </head>
   <body>
     <header class="header">
-      <nav>
-        <a href="/">Home</a>
-        <a href="/auth/login">Log in</a>
-        <a href="/auth/signup">Sign up</a>
-      </nav>
+      <% if (user) { %>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/auth/logout">Log out</a>
+        </nav>
+      <% } else { %>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/auth/login">Log in</a>
+          <a href="/auth/signup">Sign up</a>
+        </nav>
+      <% } %>
     </header>
     <main class="main">
       <%- body %>

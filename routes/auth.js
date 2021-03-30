@@ -12,4 +12,8 @@ router
   .get(authController.renderLoginPage)
   .post(authController.login);
 
+router
+  .route("/logout")
+  .get(authController.logout);
+
 module.exports = router;

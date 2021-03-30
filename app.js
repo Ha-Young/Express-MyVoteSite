@@ -10,10 +10,10 @@ const flash = require("connect-flash");
 
 const index = require("./routes/index");
 const auth = require("./routes/auth");
-
 const errorController = require("./routes/controllers/errorController");
 
 const AppError = require("./utils/AppError");
+const deserializeUser = require("./utils/deserializeUser");
 
 const app = express();
 
@@ -34,6 +34,7 @@ app.use(session({
 app.use(flash());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use(deserializeUser);
 app.use("/", index);
 app.use("/auth", auth);
 
