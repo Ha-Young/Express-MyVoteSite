@@ -28,6 +28,10 @@ const VoteSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
+  participated_users: {
+    type: [String],
+    default: []
+  },
   options: [OptionSchema]
 });
 
