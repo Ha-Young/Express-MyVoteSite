@@ -14,7 +14,7 @@ const joiVoteSchema = Joi.object({
   creator: Joi.objectId().required(),
   expire_datetime: Joi.date().required(),
   is_process: Joi.boolean(),
-  voting_option: Joi.array().items(joiVoteOptionSchema).required(),
+  vote_options: Joi.array().items(joiVoteOptionSchema).required(),
   entire_count: Joi.number().required(),
 });
 
