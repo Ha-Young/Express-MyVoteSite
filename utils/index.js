@@ -6,6 +6,13 @@ const moment = require("moment");
  * @returns mongoose document
  */
 exports.addFormattedDueDate = (votes) => {
+  if (!Array.isArray(votes)) {
+    return {
+      ...votes,
+      dueDate: moment(votes.expiration).format("YYYY-MM-DD HH:mm"),
+    };
+  }
+
   return votes.map((vote) => {
     return {
       ...vote,

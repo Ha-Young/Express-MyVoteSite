@@ -9,6 +9,7 @@ router
 
 router
   .route("/:id")
-  .get(votingsController.renderVoteDetailPage);
+  .get(votingsController.renderVoteDetailPage)
+  .delete(votingsController.deleteVote);
 
 module.exports = router;
