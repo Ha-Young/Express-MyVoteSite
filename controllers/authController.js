@@ -1,3 +1,5 @@
+const crypto = require("crypto");
+
 const User = require("./../models/userModel");
 const createToken = require("./../utils/createToken");
 const CreateError = require("./../utils/createError");
@@ -73,13 +75,13 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const resetURL = `${req.protocol}://${req.get(
     "host"
   )}/users/resetPassword/${resetToken}`;
-  const mailContents = `If you Forgot your password, change your password at the link below \n\n ${resetURL}.\n\n If you didn't forget your password, please ignore this email!`;
+  const mailContents = `비밀번호를 잊어버리셨다면 아래 링크로 가서 비밀번호를 재설정 해주시기 바랍니다. \n\n ${resetURL}.\n\n 본인이 요청한 메일이 아닐 경우 무시해주시기 바랍니다.`;
   await user.save({ validateBeforeSave: false });
 
   try {
     await sendEmail({
       email: user.email,
-      subject: "Your password reset token (valid for 10 minutes)",
+      subject: "비밀번호 재설정 확인 메일입니다. (valid for 10 minutes)",
       message: mailContents,
     });
 
@@ -94,16 +96,48 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
     return next(
       new CreateError(
-        "There was an error sending the email. Try again later!",
+        "비밀번호 재설정 메일 발송 중 문제가 생겼습니다. 나중에 다시 시도해주세요.",
         500
       )
     );
   }
 });
 
-exports.getResetPassword = (req, res, next) => {};
+exports.getResetPassword = (req, res, next) => {
+  res.status(200).json({
+    status: "success",
+  });
+};
 
-exports.resetPassword = (req, res, next) => {};
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
+
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return next(new CreateError("Invalid token or token has expired", 400));
+  }
+
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
+
+  await user.save();
+
+  const token = await createToken(user._id);
+
+  res.status(200).json({
+    status: "success",
+    token,
+  });
+});
 
 exports.deleteUser = (req, res, next) => {};
 

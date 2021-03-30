@@ -17,7 +17,7 @@ router.post("/forgotPassword", authController.forgotPassword);
 router
   .route("/resetPassword")
   .get(authController.getResetPassword)
-  .patch(authController.resetPassword);
+  .post(authController.resetPassword);
 
 router.delete("/deleteUser", authController.deleteUser);
 router.post("/logout", authController.getLogOut);

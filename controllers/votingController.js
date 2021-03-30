@@ -31,9 +31,14 @@ exports.getAllVotings = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.searchedVotings = catchAsync(async (req, res, next) => {});
+
 exports.upcomingVotings = catchAsync(async (req, res, next) => {});
+
 exports.ongoingVotings = catchAsync(async (req, res, next) => {});
+
 exports.endedVotings = catchAsync(async (req, res, next) => {});
+
 exports.canceledVotings = catchAsync(async (req, res, next) => {});
 
 exports.myVotings = catchAsync(async (req, res, next) => {
