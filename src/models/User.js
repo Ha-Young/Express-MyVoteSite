@@ -4,8 +4,10 @@ const joigoose = require("joigoose")(mongoose);
 
 const joiUserSchema = Joi.object({
   email: Joi.string().email().required(),
-  password: Joi.string().required(),
+  password: Joi.string(),
+  salt: Joi.string(),
   name: Joi.string().required(),
+  provider: Joi.string(),
   isAdmin: Joi.boolean(),
 });
 

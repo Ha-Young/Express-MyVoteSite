@@ -1,8 +1,14 @@
 const ROUTE = {
   HOME: "/",
-  SIGNUP: "/signup",
-  LOGIN: "/login",
-  LOGOUT: "/logout",
+  AUTH: {
+    PREFIX: "/",
+    SIGNUP: "/signup",
+    LOGIN: "/login",
+    LOGOUT: "/logout",
+    LOGIN_GOOGLE: "/login-google",
+    LOGIN_GOOGLE_REDIRECT: "/login-google/redirect",
+  },
+
   VOTINGS: {
     PREFIX: "/votings",
     DETAIL: "/:id",
