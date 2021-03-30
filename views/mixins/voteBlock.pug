@@ -1,5 +1,5 @@
 mixin voteBlock(vote = {})
-  .voteBlock
+  a.voteBlock(href=`/votings/${vote.id}`)
     ul
       li #{vote.title}
       li #{vote.expiration_date}

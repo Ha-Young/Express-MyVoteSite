@@ -6,9 +6,12 @@ const router = express.Router();
 
 /* GET home page. */
 router.get("/new", authenticateToken, (req, res, next) => {
-  res.render("votings-new");
+  const user = getUserInfo(req.cookies);
+  res.render("votings-new", { user });
 });
 
-router.post("/new", validateVote, votingController.saveVote);
+router.post("/new", authenticateToken, validateVote, votingController.saveVote);
+
+router.get("/my-votings", authenticateToken, votingController.getCreatedVotes);
 
 module.exports = router;

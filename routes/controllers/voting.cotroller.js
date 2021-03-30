@@ -9,10 +9,18 @@ exports.getAllVotes = async (req, res, next) => {
   res.render("index", { votes, user });
 };
 
+exports.getCreatedVotes = async (req, res, next) => {
+  const user = getUserInfo(req.cookies);
+  const userInfo = await User.findOne({ email: user.email });
+  const votes = await Vote.find({ author: userInfo._id }).populate("author", "name");
+
+  res.render("my-votings", { votes, user });
+};
+
 exports.saveVote = async (req, res, next) => {
   try {
-    const userInfo = getUserInfo(req.cookies);
-    const user = await User.findOne({ email: userInfo.email });
+    const user = getUserInfo(req.cookies);
+    const userInfo = await User.findOne({ email: user.email });
 
     const options = req.body.option_title;
     const optionList = options.map(option => {
@@ -25,13 +33,13 @@ exports.saveVote = async (req, res, next) => {
     const vote = new Vote({
       title: req.body.title,
       expiration_date: req.body.expiration_date,
-      author: user._id,
+      author: userInfo._id,
       options: optionList
     });
 
     await vote.save();
-    res.status(201).render("success", { message: "success!!!!!" });
+    res.status(201).render("success", { message: "success!!!!!", user });
   } catch (err) {
     next(err);
   }
-}
+};
