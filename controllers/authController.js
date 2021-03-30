@@ -58,6 +58,15 @@ exports.postLogIn = catchAsync(async (req, res, next) => {
 
   const token = createToken(user._id);
 
+  const cookieOptions = {
+    expires: new Date(
+      Date.now + process.env.JWT_COOKIE_EXPIRES_IN * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+  };
+
+  res.cookie("jwt", token, cookieOptions);
+
   res.status(200).json({
     status: "success",
     token,
@@ -133,6 +142,15 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   const token = await createToken(user._id);
 
+  const cookieOptions = {
+    expires: new Date(
+      Date.now + process.env.JWT_COOKIE_EXPIRES_IN * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+  };
+
+  res.cookie("jwt", token, cookieOptions);
+
   res.status(200).json({
     status: "success",
     token,
@@ -141,4 +159,13 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
 exports.deleteUser = (req, res, next) => {};
 
-exports.getLogOut = catchAsync(async (req, res, next) => {});
+exports.getLogOut = (req, res, next) => {
+  res.cookie("jwt", "loggedout", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    status: "success",
+  });
+};
