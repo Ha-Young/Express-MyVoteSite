@@ -6,6 +6,7 @@ const { Router } = require("express");
 const { HOME, SIGNUP, LOGIN, LOGOUT } = require("../../config/routes");
 const authService = require("../../services/authService");
 const { jwtCookieKey, jwtExpires } = require("../../config");
+const isLogin = require("../middlewares/isLogin");
 
 const route = Router();
 
@@ -61,13 +62,14 @@ module.exports = app => {
     }
   );
 
-  // route.post(LOGOUT, middlewares.isAuth, (req, res, next) => {
-  //   try {
-  //     return res.status(200).end();
-  //   } catch (e) {
-  //     return next(e);
-  //   }
-  // });
+  route.post(LOGOUT, isLogin, (req, res, next) => {
+    try {
+      res.clearCookie(jwtCookieKey);
+      return res.redirect("/login");
+    } catch (e) {
+      return next(e);
+    }
+  });
 };
 
 function authSuccess({ res, user, token }) {
