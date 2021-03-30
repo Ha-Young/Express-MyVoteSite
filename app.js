@@ -49,6 +49,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
+  // TODO if err가 createError로 생성된거면 그대로 로그 찍으면 안되고 메시지 바꿔서 찍어줘야함. joi에서 넘어오는 메시지 그대로 노출되면 안됨!
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
