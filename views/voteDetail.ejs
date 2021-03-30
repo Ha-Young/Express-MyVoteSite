@@ -14,18 +14,17 @@
   <h1 class="vote-title"><%= vote.title %></h1>
   <div>
     <form class="vote-form" action="/votings/<%= vote._id %>" method="POST">
-      <div class="vote-button">
-        <input class="hidden" type="radio" id="agree" name="voted" value="agree" />
-        <label for="agree">
-          <button type="button"><%= vote.status.agreeCount %> 👍</button>
-        </label>
+      <div>
+        <div class="vote-button">
+          <input type="radio" id="agree" name="voted" value="agree" />
+          <label for="agree"><%= vote.status.agreeCount %> 👍</label>
+        </div>
+        <div class="vote-button">
+          <input type="radio" id="disAgree" name="voted" value="disAgree" />
+          <label for="disAgree"><%= vote.status.disAgreeCount %> 👎</label>
+        </div>
       </div>
-      <div class="vote-button">
-        <input class="hidden" type="radio" id="disAgree" name="voted" value="disAgree" />
-        <label for="disAgree">
-          <button type="button"><%= vote.status.disAgreeCount %> 👎</button>
-        </label>
-      </div>
+      <button type="submit">확인</button>
     </form>
   </div>
 </div>

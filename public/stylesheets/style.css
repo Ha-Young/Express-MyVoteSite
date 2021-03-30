@@ -4,16 +4,19 @@
 }
 
 body {
-  margin: 0 auto;
+  position: relative;
+  margin: 0;
 }
 
 header {
-  position: sticky;
+  position: fixed;
   display: flex;
   flex-direction: row-reverse;
   width: 100%;
   height: 50px;
+  top: 0;
   padding: 10px;
+  background-color: white;
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   justify-content: space-between;
   align-items: center;
@@ -26,12 +29,27 @@ main {
   width: 100%;
   height: 100%;
   padding: 20px;
+  margin: 50px auto;
+  overflow: scroll;
+}
+
+footer {
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  left: 0;
+  bottom: 0;
+  background-color: white;
+  border-top: 2px solid rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .body-container {
   width: 100%;
   height: 100%;
   padding: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
 }
 
 .alert-msg {
@@ -52,8 +70,6 @@ main {
   justify-content: space-between;
   width: 80%;
   height: 200px;
-  border: 2px solid rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
 }
 
 .votes-container {
@@ -90,24 +106,11 @@ main {
 
 .vote-form {
   display: flex;
+  flex-direction: column;
 }
 
 .vote-button {
   width: 100%;
-}
-
-.vote-button + .vote-button {
-  margin-left: 5px;
-}
-
-footer {
-  position: absolute;
-  width: 100%;
-  height: 50px;
-  left: 0;
-  bottom: 0;
-  border-top: 2px solid rgba(0, 0, 0, 0.1);
-  text-align: center;
 }
 
 nav {

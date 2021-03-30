@@ -44,7 +44,7 @@ app.use(methodOverride("_method"));
 app.use(deserializeUser);
 app.use("/", index);
 app.use("/auth", auth);
-app.use("/votings", authenticateUser, votings);
+app.use("/votings", votings);
 app.use("/my-votings", authenticateUser, myVotings);
 
 // catch 404 and forward to error handler

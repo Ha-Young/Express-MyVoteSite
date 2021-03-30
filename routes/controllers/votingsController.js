@@ -40,7 +40,7 @@ exports.renderVoteDetailPage = catchAsync(async (req, res, next) => {
 
   res.locals.vote = addFormattedDueDate(vote);
   res.locals.user = req.user;
-  res.locals.isCreator = req.user._id.equals(vote.creator._id);
+  res.locals.isCreator = req.user?._id.equals(vote.creator._id);
   res.render("voteDetail");
 });
 
@@ -48,4 +48,8 @@ exports.deleteVote = async (req, res, next) => {
   await Vote.deleteOne({ _id: req.params.id });
 
   res.redirect("/");
+};
+
+exports.voting = async (req, res, next) => {
+  
 };
