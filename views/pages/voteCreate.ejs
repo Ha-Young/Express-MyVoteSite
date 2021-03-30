@@ -1,14 +1,14 @@
 <div class="form-wrapper">
   <div class="vote-create-cont">
-    <form class="vote-create-form" method="POST" action="/login">
+    <form class="vote-create-form" method="POST" action="/votings/new">
       <h2>Create Vote</h2>
       <fieldset>
         <span>Title</span>
-        <input type="text" name="title" />
+        <input type="text" name="title" required/>
       </fieldset>
       <fieldset>
         <span>ExpireDate</span>
-        <input type="datetime-local" name="datetime" />
+        <input type="datetime-local" name="datetime" required/>
       </fieldset>
       <fieldset class="vote-option-list-wrapper">
         <div class="vote-option-input-wrapper">
@@ -19,10 +19,10 @@
         </div>
         <ul class="vote-option-list">
           <li class="vote-option-item">
-            <input type="text" value="👍"/>
+            <input type="text" value="👍" required/>
           </li>
           <li class="vote-option-item">
-            <input type="text" value="👎"/>
+            <input type="text" value="👎" required/>
           </li>
         </ul>
       </fieldset>
