@@ -41,8 +41,9 @@
         </label>
       </form>
     </div>
-    <% if (voting.status === "expired") { %>
-      <div class="">
+    <% if (voting.status === "expired" || (locals.user && locals.user._id.toString() === voting.author._id.toString())) { %>
+      <div class="chart-empty-alert"></div>
+      <div class="chart-wrapper">
         <canvas id="myChart"></canvas>
       </div>
     <% } %>

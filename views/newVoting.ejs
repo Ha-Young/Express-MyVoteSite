@@ -20,11 +20,14 @@
             <input type="text" class="" name="title">
           </label>
         </div>
-        <div class="" id="options">
+        <div class="options-wrapper">
           <label>선택지
             <input type="text" class="" name="userOptions">
           </label>
         </div>
+        <button class="option-add-button" type="button">
+          한개 더 만들기.
+        </button>
         <div class="">
           <label>투표 종료일
             <input type="datetime-local" class="" name="expiration_date">
@@ -43,18 +46,6 @@
       </div>
     </form>
   </div>
-  <button onclick="handleClick();">
-    한개 더 만들기.
-  </button>
 </body>
-<script>
-  function handleClick () {
-    const createContent = document.querySelector('#options');
-    const newInput = document.createElement("input");
-    newInput.type = "text";
-    newInput.name = "userOptions"
-
-    createContent.appendChild(newInput);
-  }
-</script>
+<script src="/javascripts/addOption.js"></script>
 </html>

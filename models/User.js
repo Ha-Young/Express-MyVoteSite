@@ -12,7 +12,7 @@ UserSchema.methods.isAlreadyVote = function(id) {
 };
 
 UserSchema.methods.addVotingList = function(id) {
-  this.vote_list.push(id);
+  this.voting_list.push(id);
   return this.save();
 };
 
