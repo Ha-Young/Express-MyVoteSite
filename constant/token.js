@@ -21,3 +21,6 @@ module.exports.REFRESH_TOKEN_EXPIRATION_TIME_MILISECOND =
   * getMilisecondByUnit(
       getOnlyCharsFromString(REFRESH_TOKEN_EXPIRATION_TIME)
     );
+
+module.exports.ACCESS_TOKEN = "accessToken";
+module.exports.REFRESH_TOKEN = "refreshToken";
