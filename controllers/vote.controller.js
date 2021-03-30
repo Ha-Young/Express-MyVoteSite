@@ -1,20 +1,15 @@
-const express = require('express');
-const router = express.Router();
-
 const Vote = require('../models/Vote');
 
-/* GET auth page. */
-router.get('/', function(req, res, next) {
-  res.render('voting', { title: 'login success' });
-});
+function renderVote(req, res) {
+  res.status(200).render('voting', { title: 'login success' });
+}
 
-router.get('/new', function(req, res, next) {
+function renderNewVote(req, res) {
   res.render('newVote');
-});
+}
 
-router.post('/new', async function(req, res, next) {
+async function postNewVote(req, res, next) {
   const { title, expiredAt, options, description } = req.body;
-  const { user: creator } = req;
   
   const formattedOptions = options.map(each => {
     return { 
@@ -25,9 +20,10 @@ router.post('/new', async function(req, res, next) {
 
   const vote = new Vote({
     title,
-    creator,
     expiredAt,
     description,
+    creatorId: req.user._id,
+    creatorName: req.user.name,
     options: [...formattedOptions],
   });
 
@@ -37,6 +33,8 @@ router.post('/new', async function(req, res, next) {
   } catch (error) {
     console.error(error);
   }
-});
+}
 
-module.exports = router;
+exports.renderVote = renderVote;
+exports.renderNewVote = renderNewVote;
+exports.postNewVote = postNewVote;

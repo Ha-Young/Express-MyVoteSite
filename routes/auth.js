@@ -2,25 +2,22 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 
-/* GET auth page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'login success' });
-});
+const authController = require('../controllers/auth.controller');
 
-router.get('/github', passport.authenticate('github', { scope: [ 'user:email' ] }));
+router.get('/', authController.renderLogin);
+
+router.get(
+  '/github',
+  passport.authenticate('github', { scope: [ 'user:email' ] }),
+  authController.getGithubAuth,
+);
 
 router.get(
   '/github/callback',
   passport.authenticate('github', { failureRedirect: '/' }),
-  function(req, res) {
-    res.redirect('/home');
-  },
+  authController.getGithubAuthCallback,
 );
 
-router.delete('/logout', (req, res) => {
-  req.logOut();
-  req.session.destroy();
-  res.redirect('/');
-});
+router.delete('/logout', authController.logout);
 
 module.exports = router;

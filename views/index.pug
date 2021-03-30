@@ -15,13 +15,14 @@ block content
     form(action='/auth/github' method='GET')
       button(type='submit') LOGIN WITH GITHUB
   button(id='plusButton')
-    a(href='/votings/new') MAKE NEW VOTE
+    a(href='/vote/new') MAKE NEW VOTE
   ul.all-votes
-    each vote in allVotes
-      li
-        a(href=`/votings/${vote._id}`)
-        .eachVote
-          h4 #{vote.title}
-          h5 #{vote.creator}
-    else 
-      li no votes 
+    if (allVotes)
+      each vote in allVotes
+        li
+          a(href=`/vote/${vote._id}`)
+            .eachVote
+              h4 #{vote.title}
+              p avilable - #{vote.isVotable}
+              p expired At - #{vote.expiredAt}
+              p by #{vote.creatorName}

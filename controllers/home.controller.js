@@ -1,8 +1,6 @@
-const passport = require("passport");
-
 const Vote = require("../models/Vote");
 
-async function renderHome(req, res, next) {
+async function renderHome(req, res) {
 
   //TODO: to middleware
   if (req.user) {
@@ -10,8 +8,9 @@ async function renderHome(req, res, next) {
   }
 
   try {
+    await Vote.updateIsVotable(new Date());
     const allVotes = await Vote.find({});
-    console.log(allVotes);
+
     res.status(200).render('index', { allVotes });
   } catch (error) {
     console.error(error);

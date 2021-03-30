@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 /* GET home page. */
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   res.render('index');
 });
 
 router.use('/home', require('./home'));
 router.use('/auth', require('./auth'));
-router.use('/votings', require('./votings'));
+router.use('/vote', require('./vote'));
 
 module.exports = router;
