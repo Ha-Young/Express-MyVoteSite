@@ -1,6 +1,9 @@
 const jwt = require("jsonwebtoken");
 
-const { ACCESS_TOKEN_EXPIRATION_TIME } = require("../constant/tokenExpiresIn");
+const {
+  ACCESS_TOKEN,
+  ACCESS_TOKEN_EXPIRATION_TIME,
+} = require("../constant/token");
 
 module.exports.isAuthenticated = async (req, res, next) => {
   try {
@@ -8,6 +11,8 @@ module.exports.isAuthenticated = async (req, res, next) => {
     const decodedAccessToken = jwt.verify(accessToken, process.env.JWT_ACCESS_KEY);
     console.log("checkAccessToken", decodedAccessToken);
     console.log("currentTime", new Date().getTime());
+
+    res.locals.userEmail = decodedAccessToken.email;
 
     next();
     return;
@@ -29,16 +34,19 @@ module.exports.isAuthenticated = async (req, res, next) => {
         );
 
         res.cookie(
-          "accessToken", newAccessToken,
-          { maxAge: Number(JWT_ACCESS_KEY.replace(/[^0-9]/g, "")) * 1000 * 60 }
+          ACCESS_TOKEN, newAccessToken,
         );
         console.log("create new access token with refreshToken");
+
+        res.locals.userEmail = email;
 
         next();
         return;
       } catch (err) {
         if (err.message === "jwt expired") {
           console.log("refreshToken jwt expired")
+        } else {
+          console.log(err);
         }
       }
     }

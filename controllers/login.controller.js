@@ -4,11 +4,11 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
 const {
+  ACCESS_TOKEN,
   ACCESS_TOKEN_EXPIRATION_TIME,
-  ACCESS_TOKEN_EXPIRATION_TIME_MILISECOND,
+  REFRESH_TOKEN,
   REFRESH_TOKEN_EXPIRATION_TIME,
-  REFRESH_TOKEN_EXPIRATION_TIME_MILISECOND,
-} = require("../constant/tokenExpiresIn");
+} = require("../constant/token");
 
 module.exports.get = async (req, res, next) => {
   res.status(200).render("login");
@@ -51,14 +51,12 @@ module.exports.post = async (req, res, next) => {
     );
 
     res.cookie(
-      "accessToken",
+      ACCESS_TOKEN,
       accessToken,
-      { maxAge: ACCESS_TOKEN_EXPIRATION_TIME_MILISECOND }
     );
     res.cookie(
-      "refreshToken",
+      REFRESH_TOKEN,
       refreshToken,
-      { maxAge: REFRESH_TOKEN_EXPIRATION_TIME_MILISECOND }
     );
     res.status(201).json({
       result: true,
@@ -68,3 +66,11 @@ module.exports.post = async (req, res, next) => {
     next(createError(500, err.message));
   }
 }
+
+module.exports.delete = async (req, res, next) => {
+  console.log("logout");
+
+  res.clearCookie(ACCESS_TOKEN);
+  res.clearCookie(REFRESH_TOKEN);
+  res.status(200).json({ result: true });
+};
