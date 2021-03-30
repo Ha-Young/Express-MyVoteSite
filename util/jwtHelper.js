@@ -16,7 +16,11 @@ exports.refreshAccessToken = (refreshToken) => {
 
 exports.getUserName = (cookies) => {
   if (cookies.accessToken) {
-    return jwt.verify(cookies.accessToken, process.env.ACCESS_TOKEN_SECRET);
+    return jwt.verify(cookies.accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+      if (err) return null;
+      return user;
+    });
+    return user;
   } else {
     return false;
   }

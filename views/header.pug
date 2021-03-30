@@ -1,5 +1,15 @@
 header
-  h1 Hi
+  h1 VOTE LOGO
   p I'm Header
   if (user)
-    p #{user.name}
+    p Hello, #{user.name}
+    ul
+      li
+        a(href="/votings/new" class="button") CREATE NEW VOTE
+      li
+        a(href="/votings/my-votings" class="button") MY VOTINGS
+      li
+        form#logout-form(action="users/logout" method="post")
+          button(type="submit" class="button") LOGOUT
+  else
+    a(href="/users/login" class="button") LOGIN
