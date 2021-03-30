@@ -4,12 +4,18 @@ block stylesheet
   link(rel='stylesheet', href='/stylesheets/voting-detail.css')
 
 block content
-  //- - const { title, description, voting-item, voters } = voting
-  - console.log(voting)
+  - const { author, title, description, votingItem } = voting
   section.voting-detail
-    h2 title
+    h2.voting-detail-heading2 #{title}
     div.voting-detail-status
       div.voting-detail-progress progress
       div.voting-detail-posttime post time
       div.voting-detail-endtime end time
-    div.voting-detail-item voting item
+    div.voting-detail-author 작성자 #{author}
+    div.voting-detail-item-container
+      - for (let i = 0; i < votingItem.length; i++)
+        - const {item, count} = votingItem[i]
+        div.voting-detail-item #{item} #{count}
+    div.voting-detail-button
+      a(href="/") 돌아가기
+      div 삭제

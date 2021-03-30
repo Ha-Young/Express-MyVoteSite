@@ -3,23 +3,28 @@ form {
   flex-flow: column;
   justify-content: space-around;
   align-items: center;
-  width: 50vw;
-  height: 50vh;
-  background-color: goldenrod;
+  box-sizing: border-box;
+  width: 50vmin;
+  height: 50vmin;
+  border: 1px solid;
 }
 
 .input-text {
   display: flex;
   flex-flow: column;
   text-align: center;
+  box-sizing: border-box;
   width: 70%;
   height: 10%;
+  border: 1px solid;
 }
 
 .input-btn {
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
   width: 70%;
   height: 10%;
+  border: 1px solid;
 }
