@@ -81,7 +81,6 @@ $submit.addEventListener("click", event => {
   xhr.send(stringUserData);
 
   xhr.onload = e => {
-    debugger;
     if (xhr.status === 302) {
       window.location.replace(window.location.origin + xhr.responseText);
     } else {

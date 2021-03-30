@@ -1,0 +1,3 @@
+<% const result = options.sort((a, b) => a.selectUsers.length > b.selectUsers.length)[0] %>
+<h1 id="top-voted-title"><%- result.title %></h1>
+<h2 id="top-voted-number"><%- result.selectUsers.length %></h2>

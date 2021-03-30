@@ -13,6 +13,7 @@ const app = express();
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "ejs");
 
+// require("./model/Vote").insertMany(require("./mock.json"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -32,10 +33,12 @@ app.use(session({
 const signupRouter = require("./routes/signup");
 const loginRouter = require("./routes/login");
 const indexRouter = require("./routes/index");
+const votingsRouter = require("./routes/votings");
 
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
 app.use("/", indexRouter);
+app.use("/votings", votingsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

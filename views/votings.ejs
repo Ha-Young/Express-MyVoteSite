@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <%- include("partials/head") %>
+  </head>
+  <body>
+    <a href="/">투표 목록</a>
+    <h1 id="vote-title" data-vote-id="<%- vote.id %>">
+      <%- vote.title %>
+    </h1>
+    <h2 id="vote-creator" data-creator-id="<%- creator.id %>">
+      <%- creator.name %>
+    </h2>
+    <% if (vote.isExpired) { %>
+      <%- include("partials/voteResult") %>
+    <% } else { %>
+      <%- include("partials/voteProgress") %>
+    <% } %>
+  </body>
+</html>

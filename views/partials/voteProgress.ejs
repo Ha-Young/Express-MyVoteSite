@@ -1,0 +1,25 @@
+<form id="vote-form" action="/votings/<%- vote.id %>" method="post">
+  <fieldset>
+    <legend><%- vote.title %></legend>
+    <% options.map(option => { %>
+      <label>
+        <%- option.title %>
+        <input
+          type="checkbox"
+          class="vote-box"
+          name="<%- option.id %>"
+        />
+      </label>
+      <% if (isCreator) { %>
+        <span>투표 수: <%- option.selectUsers.length %></span>
+      <% } %>
+    <% }) %>
+  </fieldset>
+  <input id="vote-submit" type="submit" value="투표하기"/>
+</form>
+<span>진행 중</span>
+<span>총 투표 수: <%- vote.allVotingNum %></span>
+<span id="expire-date" data-expire="<%- vote.expireAt %>">
+  <%= vote.expireAt %> 까지
+</span>
+<script src="/javascripts/votings.js"></script>

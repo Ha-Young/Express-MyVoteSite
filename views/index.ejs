@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <%- include("partials/head") %>
+    <link rel="stylesheet" href="stylesheets/index.css" />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <ul>
+      <% if (isLogin) { %>
+        <a href="/votings/new">투표 생성</a>
+        <a href="/my-votings">내 투표 보기</a>
+      <% } %>
+      <% votes.map(vote => { %>
+        <a href="/votings/<%- vote.id %>">
+        <li class="vote">
+          <h1><%- vote.title %></h1>
+          <h2><%- vote.userName %></h2>
+          <span><%- vote.state %></span>
+          <span><%- vote.expire %></span>
+
+        </li>
+        </a>
+      <% }) %>
+    </ul>
   </body>
 </html>
