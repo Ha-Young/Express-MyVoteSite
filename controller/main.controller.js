@@ -1,6 +1,4 @@
 exports.getMain = (req, res, next) => {
-  const sess = req.session;
-  res.render('main', {
-    username: sess.username,
-  });
+  console.log('main!!!');
+  res.render('main', { username: req.user.username });
 };

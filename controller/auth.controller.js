@@ -3,6 +3,7 @@ const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 
 exports.signup = (req, res, next) => {
+  console.log(req.session.passport.user);
   res.render('partial/signup');
 };
 

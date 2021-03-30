@@ -1,12 +1,8 @@
 const express = require('express');
+const mainController = require('../controller/main.controller');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  const sess = req.session;
-  res.render('main', {
-    username: sess.username,
-  });
-});
+router.get('/', mainController.getMain);
 
 module.exports = router;
