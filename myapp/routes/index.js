@@ -4,20 +4,17 @@ const crypto = require("crypto");
 const passport = require("passport");
 const User = require("../models/User");
 require("../utils/localAuthentication");
-// const Voting = require("../models/Voting");
-const Voting = require("../utils/makeSampleMongoDB").Sample;
+
+// const Voting = require("../utils/makeSampleMongoDB").Sample;
 
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   const voting = await Voting.find();
-  // console.log(voting);
-  console.log(req.flash());
   res.render("index", { voting });
 });
 
 router.get("/login", (req, res, next) => {
-  console.log(req.flash());
   res.render("auth", { isSignUp: false });
 });
 

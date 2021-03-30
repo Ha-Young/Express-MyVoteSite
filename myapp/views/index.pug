@@ -1,4 +1,4 @@
-extends layout
+extends ./layout.pug
 
 block stylesheet
   link(rel='stylesheet', href='/stylesheets/index.css')
@@ -6,7 +6,6 @@ block stylesheet
 block content
   h2 투표목록
   section.voting-list
-    - console.log(voting.length)
     - for (let i = 0; i < voting.length; i++)
       - const { title, _id } = voting[i]
       - const path = `/votings/${_id}`
@@ -14,4 +13,4 @@ block content
 
   div.btn-container
     a.create-voting-btn(href="/votings/new") Create Voting
-    a.view-myvoting-btn(href="my-votings") My Voting
+    a.view-myvoting-btn(href="/my-votings") My Voting

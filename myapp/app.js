@@ -6,7 +6,10 @@ const flash = require("connect-flash");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const indexRouter = require("./routes/index");
-const { makeSampleMongoDB } = require("./utils/makeSampleMongoDB");
+const votingsRouter = require("./routes/votings");
+const Voting = require("./models/Voting");
+const initializeMongoDB = require("./utils/initializeMongoDB");
+const mockupData = require("./models/voting_mockup.json");
 
 require("dotenv").config();
 
@@ -22,7 +25,7 @@ db.on("error", () => console.log("MongoDB Connection Error : ("));
 db.once("open", () => console.log("MongoDB Connection Success! : )"));
 
 if (process.env.MAKE_SAMPLE_MONGODB === "true") {
-  makeSampleMongoDB();
+  initializeMongoDB(Voting, mockupData);
 }
 
 app.set("views", path.join(__dirname, "views"));
@@ -47,6 +50,7 @@ app.use(passport.session());
 app.use(flash());
 
 app.use("/", indexRouter);
+app.use("/votings", votingsRouter);
 
 app.use(function (req, res, next) {
   next(createError(404));
