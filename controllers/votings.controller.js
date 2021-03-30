@@ -20,7 +20,7 @@ exports.createVoting = async function (req, res, next) {
     options,
   });
 
-  res.redirect('/votings/new');
+  res.redirect('/');
 };
 
 exports.getVotingDetailPage = async function (req, res, next) {

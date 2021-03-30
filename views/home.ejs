@@ -27,6 +27,11 @@
             <div class="">
               <%= voting.status %>
             </div>
+            <% if (voting.status === 'expired') { %>
+              <div class="">
+                <%= voting.selected_option %>
+              </div>
+            <% } %>
           </div>
         </div>
       </a>
