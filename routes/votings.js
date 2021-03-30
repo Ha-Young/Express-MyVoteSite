@@ -41,7 +41,8 @@ router.post("/:id", verifyToken, async (req, res) => {
   const isUserVoted = votedUsersId.includes(userId);
 
   if (isUserVoted) {
-    res.redirect("/");
+    res.redirect(301, "/");
+
     return;
   }
 
@@ -51,6 +52,8 @@ router.post("/:id", verifyToken, async (req, res) => {
   votedUsersId.push(userId);
 
   vote.save();
+
+  res.redirect(301, "/")
 });
 
 module.exports = router;

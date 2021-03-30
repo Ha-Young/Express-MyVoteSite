@@ -26,10 +26,18 @@
             <div>
               <label for="option"><%= option[i].optionTitle %></label>
               <input type="radio" id="option" name="option" value="<%= option[i].optionTitle %>"/>
+              <% if (isValidateUser) { %>
+                <span>
+                  <%= option[i].votedUsers.length %>
+                </span>
+              <% } %>
             </div>
           <% } %>
         </div>
         <button type="submit">투표하기</button>
+        <a href="/">
+          <button>투표목록</button>
+        </a>
       </form>
     </div>
   <% } else { %>
