@@ -5,3 +5,11 @@ exports.checkPassword = (password1, password2) => {
 
   return;
 };
+
+exports.checkExpiration = (timeStamp) => {
+  if (timeStamp.getTime() - Date.now() < 0) {
+    return false;
+  }
+
+  return true;
+};

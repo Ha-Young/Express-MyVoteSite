@@ -5,7 +5,7 @@ exports.home = async (req, res, next) => {
   try {
     const votings = await Voting.find();
 
-    res.render("home", { pageTitle: "Votings", votings });
+    res.render("home", { pageTitle: "Voting List", votings });
   } catch (err) {
     console.log("Failed find votings!");
     next(createError(500));
@@ -30,7 +30,6 @@ exports.myVotings = async (req, res, next) => {
       next(createError(500));
     }
   }
-  console.log(userVoting)
 
   res.render("myVoting", { pageTitle: "My Votings", userVoting });
 };

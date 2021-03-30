@@ -12,7 +12,7 @@ block content
       li.voting
         a.voting-detail-link(href=`/votings/${voting.id}`)
           h2.voting-title= voting.title
-        .postedBy 생성자: #{voting.postedBy}
+        .posted-by 생성자: #{voting.postedBy}
         .expiration 만료일: #{new Date(voting.expiration).toLocaleString()}
         if voting.progress
           .progress 상태: 진행 중

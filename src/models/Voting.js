@@ -31,7 +31,7 @@ const votingSchema = new Schema({
       require: true,
     }
   }],
-  paticipant: [{
+  paticipants: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     index: true,

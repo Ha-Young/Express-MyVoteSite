@@ -2,7 +2,7 @@ header.header
   a(href="/")
     button.home-button Home
   if (currentUser)
-    div.current-user Hello #{currentUser}
+    div.current-user Hello #{currentUser.name}
     a(href="/logout")
       button.logout-button Logout
   else

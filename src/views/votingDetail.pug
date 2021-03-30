@@ -2,3 +2,19 @@ extends layouts/main
 
 block content
   h1 #{pageTitle}
+  .posted-by 생성자: #{voting.postedBy}
+  .expiration 만료일: #{new Date(voting.expiration).toLocaleString()}
+  if voting.progress
+    .progress 상태: 진행 중
+  else
+    .progress 상태: 종료
+
+  form.voting-form(action=`/votings/${voting.id}` method="POST")
+    each option in voting.options
+      input(type="checkbox" name=`${option.id}` id=`${option.id}`)
+      label(for=`${option.id}`) #{option.title}
+    button.submit-voting-button Vote
+  if currentUser
+    if (voting.postedBy.toString() === currentUser.id.toString())
+      a.delete-voting-link(href=`/votings/${voting.id}/delete`)
+        button.delete-voting-button Delete Voting

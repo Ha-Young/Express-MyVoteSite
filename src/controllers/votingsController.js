@@ -1,10 +1,12 @@
 const createError = require("http-errors");
-const { NotExtended } = require("http-errors");
 const User = require("../models/User");
 const Voting = require("../models/Voting");
 
-exports.getVoting = (req, res) => {
-  res.render("votingDetail", { pageTitle: "Voting" });
+exports.getVoting = async (req, res, next) => {
+  const { id } = req.params;
+  const voting = await Voting.findById(id);
+
+  res.render("votingDetail", { pageTitle: voting.title, voting });
 };
 exports.postVoting = (req, res) => {
 };
@@ -13,9 +15,8 @@ exports.getNewVoting = (req, res) => {
   res.render("newVoting", { pageTitle: "New Voting" });
 };
 exports.postNewVoting = async (req, res, next) => {
-  console.log(req.body, req.user.id);
   const { title, expiration, option } = req.body;
-  const { votings, id } = req.user;
+  const { id } = req.user;
 
   const timeStamp = new Date(expiration.join(" "));
   const options = option.map(item => ({
@@ -48,4 +49,17 @@ exports.votingSuccess = (req, res) => {
 };
 exports.votingFail = (req, res) => {
   res.render("votingError", { pageTitle: "Voting Error" });
+};
+
+exports.deleteVoting = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    await Voting.findByIdAndDelete(id);
+
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+    next(createError(500));
+  }
 };
