@@ -11,3 +11,12 @@ body {
 a {
   color: #00B7FF;
 }
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-info-box > * {
+  margin-right: 10px;
+}

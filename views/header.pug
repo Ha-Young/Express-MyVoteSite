@@ -1,0 +1,8 @@
+header
+  div.header-container
+    h1 Voting
+    div.user-info-box
+      if user.email
+        p.email= user.email
+      a.my-votings(href="#") My votings
+      a.logout(href="#") Log out
