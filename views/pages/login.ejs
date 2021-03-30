@@ -5,17 +5,21 @@
       <h3 class="err-msg"><%= error.global %></h3>
       <fieldset>
         <span>Email</span>
-        <input type="email" name="email"/>
+        <input type="email" name="email" />
         <span class="err-msg"><%= error.email %></span>
       </fieldset>
       <fieldset>
         <span>Password</span>
-        <input type="password" name="password"/>
+        <input type="password" name="password" />
         <span class="err-msg"><%= error.password %></span>
       </fieldset>
       <p class="forgot-pass">Forgot password?</p>
       <button class="submit">Sign In</button>
-      <a href="/login-google"><button type="button" class="fb-btn">Connect with <span>facebook</span></button></a>
+      <a href="/login-google"
+        ><button type="button" class="fb-btn">
+          Connect with <span>Google</span>
+        </button></a
+      >
     </form>
     <div class="sign-sub-cont">
       <div class="sign-img">
@@ -37,15 +41,15 @@
         <h3 class="err-msg"><%= error.global %></h3>
         <fieldset>
           <span>Name</span>
-          <input type="text" name="name"/>
+          <input type="text" name="name" />
         </fieldset>
         <fieldset>
           <span>Email</span>
-          <input type="email" name="email"/>
+          <input type="email" name="email" />
         </fieldset>
         <fieldset>
           <span>Password</span>
-          <input type="password" name="password"/>
+          <input type="password" name="password" />
         </fieldset>
         <button class="submit">Sign Up</button>
       </form>
