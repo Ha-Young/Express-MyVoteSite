@@ -9,6 +9,7 @@ const indexRouter = require("./routes/index");
 const signupRouter = require("./routes/signup");
 const loginRouter = require("./routes/login");
 
+const checkIsAuth = require("./middlewares/checkIsAuthenticated");
 const connectMongoDB = require("./middlewares/connectMongoDB");
 
 connectMongoDB();
@@ -28,9 +29,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/signup", signupRouter);
+app.use("/signup", checkIsAuth.isNotAuthenticated, signupRouter);
 app.use("/login", loginRouter);
-app.use("/", indexRouter);
+app.use("/", checkIsAuth.isAuthenticated, indexRouter);
 
 app.use((req, res, next) => {
   next(createError(404));
