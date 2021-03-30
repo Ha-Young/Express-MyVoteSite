@@ -2,7 +2,11 @@ header
   div.header-container
     h1 Voting
     div.user-info-box
-      if user.email
-        p.email= user.email
+      p.email= user.email
       a.my-votings(href="#") My votings
-      a.logout(href="#") Log out
+
+      if user.email === "Guest"
+        a.login-button(href="/login") Log in
+      else
+        a.logout-button(href="#") Log out
+script(src="/javascripts/header.js")
