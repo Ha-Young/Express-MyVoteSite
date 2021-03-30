@@ -1,10 +1,11 @@
 const express = require("express");
-const router = express.Router();
-const LocalStrategy = require("passport-local").Strategy;
-const mongoose = require("mongoose");
+const createError = require("http-errors");
 const crypto = require("crypto");
 const passport = require("passport");
 const User = require("../models/User");
+const LocalStrategy = require("passport-local").Strategy;
+
+const router = express.Router();
 
 passport.use(
   new LocalStrategy(
@@ -14,18 +15,18 @@ passport.use(
         .createHash("sha512")
         .update(password)
         .digest("base64");
-      const user = await User.findOne({ email });
 
-      if (!user) {
-        return done(null, false, { message: "Incorrect Email" });
-      }
+      try {
+        const user = await User.findOne({ email });
+        if (!user) return done(null, false, { message: "Incorrect Email" });
 
-      if (user) {
         if (user.password === cryptoPassword) {
           return done(null, user, { message: "Login Success" });
         } else {
           return done(null, false, { message: "Incorrect Password" });
         }
+      } catch {
+        return done(null, false, { message: "Internal Server Error" });
       }
     },
   ),
@@ -36,19 +37,24 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (userId, done) => {
-  const user = await User.findOne({ _id: userId });
-  return done(null, user);
+  try {
+    const user = await User.findOne({ _id: userId });
+    return done(null, user);
+  } catch {
+    return done(null, false, { message: "Internal Server Error" });
+  }
 });
 
 router.get("/", function (req, res, next) {
+  if (req.flash()) console.log(msg);
+
   res.render("index");
 });
 
 router.get("/login", function (req, res, next) {
   const msg = req.flash();
-  if (req.flash()) {
-    console.log(msg);
-  }
+  if (req.flash()) console.log(msg);
+
   res.render("auth", { isSignUp: false });
 });
 
@@ -67,19 +73,23 @@ router.get("/signup", function (req, res, next) {
 });
 
 router.post("/signup", async function (req, res, next) {
-  const { name, email, password } = req.body;
-  const doc = await User.findOne({ email: email });
+  try {
+    const { name, email, password } = req.body;
+    const doc = await User.findOne({ email: email });
 
-  if (doc) {
-    res.send("존재하는 이메일입니다.");
-  } else {
-    const cryptoPassword = crypto
-      .createHash("sha512")
-      .update(password)
-      .digest("base64");
+    if (doc) {
+      res.send("중복되는 이메일입니다.");
+    } else {
+      const cryptoPassword = crypto
+        .createHash("sha512")
+        .update(password)
+        .digest("base64");
 
-    await User.create({ name, email, password: cryptoPassword });
-    res.status(302).redirect("/");
+      await User.create({ name, email, password: cryptoPassword });
+      res.status(302).redirect("/login");
+    }
+  } catch {
+    next(createError(500, "Internal Server Error"));
   }
 });
 

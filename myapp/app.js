@@ -53,6 +53,11 @@ app.use(function (err, req, res, next) {
 
   res.status(err.status || 500);
   // res.render("error");
+
+  if (err.status === 500) {
+    return res.send(err.message);
+  }
+
   res.send(err.message);
 });
 
