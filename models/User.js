@@ -4,7 +4,7 @@ const createError = require('http-errors');
 const bcrypt = require('bcrypt');
 const config = require('../config');
 
-const UserSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
@@ -21,19 +21,21 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Please provide a password'],
     maxlength: 20,
     minlength: 8,
     select: false,
   },
 });
 
-UserSchema.methods.comparePassword = function (password) {
+userSchema.methods.comparePassword = function (password) {
   return bcrypt.compare(password, this.password);
 };
 
+userSchema.methods.isSocial = function () {
+  return !this.password;
+}
 
-UserSchema.pre('save', async function (next) {
+userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     next();
   }
@@ -46,6 +48,6 @@ UserSchema.pre('save', async function (next) {
   }
 });
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

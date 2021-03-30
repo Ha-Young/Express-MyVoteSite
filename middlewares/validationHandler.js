@@ -1,4 +1,7 @@
+const createError = require('http-errors');
+
 const { validateLoginInputs, validateSignUpInputs } = require('../utils/validateInputs');
+const User = require('../models/User');
 /**
  * validate inputs from form
  * @param {incomingMessage} request - request from client
@@ -6,16 +9,25 @@ const { validateLoginInputs, validateSignUpInputs } = require('../utils/validate
  * @param {function} next - function to move next middleware
  * @returns {undefined} does not have any return value
  */
-exports.signup = (req, res, next) => {
-  const { error } = validateSignUpInputs(req.body);
+exports.signup = async (req, res, next) => {
+  const { error, value } = validateSignUpInputs(req.body);
 
   if (error) {
     req.flash('info', error.details.map(err => err.message));
     return res.redirect('/auth/signup');
   }
 
-  return next();
-}
+  try {
+    if (await User.findOne({ email: value.email })) {
+      req.flash('error', 'email already exist');
+      return res.redirect('/auth/signup');
+    }
+
+    return next();
+  } catch (err) {
+    return next(createError(500));
+  }
+};
 
 exports.login = (req, res, next) => {
   const { error } = validateLoginInputs(req.body);
@@ -26,4 +38,4 @@ exports.login = (req, res, next) => {
   }
 
   return next();
-}
+};

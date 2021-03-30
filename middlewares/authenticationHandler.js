@@ -5,12 +5,27 @@
  * @param {function} next - function to move next middleware
  * @returns {undefined} does not have any return value
  */
-const checkAuthentication = (req, res, next) => {
+exports.votes = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
 
+  req.flash('error', 'Please login to use services');
   return res.redirect('/auth/login');
-}
+};
 
-module.exports = checkAuthentication;
+exports.auth = (req, res, next) => {
+  if (req.path.includes('logout')) {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+
+    return res.redirect('back');
+  }
+
+  if (req.isAuthenticated()) {
+    return res.redirect('back')
+  }
+
+  return next();
+};

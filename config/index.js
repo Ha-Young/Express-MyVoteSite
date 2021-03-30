@@ -9,7 +9,10 @@ module.exports = {
   databaseURI: process.env.DATABASE_URI,
   databasePassword: process.env.DATABASE_PASSWORD,
   sessionSecret: process.env.SESSION_SECRET,
-  salt: Number(process.env.SALT)
+  salt: Number(process.env.SALT),
+  githubClientID: process.env.GITHUB_CLIENT_ID,
+  githubClientSecret: process.env.GITHUB_CLIENT_SECRET,
+  githubCallbackURL: process.env.GITHUB_CALLBACK_URL,
 };
 
 /**
