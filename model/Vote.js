@@ -1,16 +1,28 @@
 const mongoose = require("mongoose");
 
 const Choice = new mongoose.Schema({
-  choiceTitle: String,
+  choiceTitle: {
+    type: String,
+    required: true,
+  },
   selectUser: [mongoose.Types.ObjectId],
   description: String,
   pictureURL: String
 });
 
 const Vote = new mongoose.Schema({
-  title: String,
-  createAt: Date,
-  dueDate: Date,
+  title: {
+    type: String,
+    required: true,
+  },
+  createAt: {
+    type: Date,
+    required: true,
+  },
+  dueDate: {
+    type: Date,
+    required: true,
+  },
   isEnable: Boolean,
   choices: [Choice],
   tags: [String]

@@ -24,6 +24,7 @@ passport.use(new LocalStrategy(
   }
 ));
 
+// 저장되어있는 토큰을 꺼내다가 확인하고 재발급까지 해준다. 만약 없다면 signin페이지로 리다이렉트
 passport.use(new JwtStrategy({
   jwtFromRequest: cookieExtractor,
   secretOrKey: process.env.JWT_SECRET
