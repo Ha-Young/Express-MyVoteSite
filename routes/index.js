@@ -8,7 +8,6 @@ router.get("/", async (req, res) => {
   const currentDate = new Date();
 
   votes.forEach(vote => {
-    console.log(vote.constructor);
     if (vote.endDate <= currentDate) {
       vote.isOnVote = false;
     }
@@ -32,6 +31,7 @@ router.post("/", verifyToken, async (req, res) => {
 
   if (!isStartDateFaster) {
     res.redirect("/");
+
     return;
   }
 

@@ -7,7 +7,7 @@
 <body>
   <% if (isOnVote === "true") { %>
     <div class="onVote-wrapper">
-      <form>
+      <form action="/votings/<%= votingId %>" method="POST">
         <div class="title">
           제목: <%= title %>
         </div>
@@ -25,10 +25,11 @@
           <% for (let i = 0; i < option.length; i++) { %>
             <div>
               <label for="option"><%= option[i].optionTitle %></label>
-              <input type="checkbox" id="option" name="option" />
+              <input type="radio" id="option" name="option" value="<%= option[i].optionTitle %>"/>
             </div>
           <% } %>
         </div>
+        <button type="submit">투표하기</button>
       </form>
     </div>
   <% } else { %>

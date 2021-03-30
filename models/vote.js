@@ -20,8 +20,9 @@ const voteSchema = new mongoose.Schema({
   },
   option: [{
     optionTitle: { type: String, required: [true, "vote must have an options"] },
-    votedUsers: { type:Array, default: [] }
-  }]
+    votedUsers: { type: Array, default: [] }
+  }],
+  votedUsersId: { type: Array, default: [] }
 });
 
 module.exports = mongoose.model("Vote", voteSchema);

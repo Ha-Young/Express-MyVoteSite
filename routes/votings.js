@@ -3,11 +3,13 @@ const router = express.Router();
 const { createVotePage } = require("../controllers/votingsController");
 const verifyToken = require("./middlewares/authorization");
 const Vote = require("../models/Vote");
+const User = require("../models/User");
 
 router.get("/new", verifyToken, createVotePage);
 
 router.get("/:id", verifyToken, async (req, res) => {
-  const vote = await Vote.findById(req.params.id);
+  const votingId = req.params.id;
+  const vote = await Vote.findById(votingId);
   const {
     isOnVote,
     title,
@@ -24,12 +26,31 @@ router.get("/:id", verifyToken, async (req, res) => {
     creator,
     endDate,
     option,
-    isValidateUser
+    isValidateUser,
+    votingId
   });
 });
 
-router.post("/:id", (req, res) => {
+router.post("/:id", verifyToken, async (req, res) => {
+  const userId = req.user._id;
+  const voteId = req.params.id;
+  const selectedOption = req.body.option;
 
+  const vote = await Vote.findById(voteId);
+  const { votedUsersId, option } = vote;
+  const isUserVoted = votedUsersId.includes(userId);
+
+  if (isUserVoted) {
+    res.redirect("/");
+    return;
+  }
+
+  const targetOption = option.find(optionObj => optionObj.optionTitle === selectedOption);
+
+  targetOption.votedUsers.push(userId);
+  votedUsersId.push(userId);
+
+  vote.save();
 });
 
 module.exports = router;
