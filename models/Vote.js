@@ -7,7 +7,7 @@ const voteSchema = new mongoose.Schema({
     required: [true, 'Please provide the title'],
   },
   author: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: [true, 'Please provide the author']
   },
@@ -17,13 +17,13 @@ const voteSchema = new mongoose.Schema({
     validate: [validator.isDate, 'Please provide a valid expiration date']
   },
   status: {
-    type: Boolean,
-    required: [true, 'Please provide the status'],
-    validate: [validator.isBoolean, 'Please provide a valid status']
+    type: String,
+    enum: ['in progress', 'terminated'],
+    default: 'in progress'
   },
   voters: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     }
   ]

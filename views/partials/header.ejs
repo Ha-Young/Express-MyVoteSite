@@ -1,0 +1,40 @@
+<header>
+  <h1 class="title">
+    <a href="/">
+      VOTING PLATFORM
+    </a>
+  </h1>
+
+  <div class="right">
+    <ul class="profile-list">
+      <% if (user) { %>
+        <li class="nickname">
+          <span>Hello, <%= user.nickname %></span>
+        </li>
+        <li class="my-votings">
+          <form method="GET" action="/my-votings">
+            <button class="button yellow" type="submit">MY VOTINGS</button>
+          </form>
+        </li>
+        <li class="auth">
+          <form method="GET" action="/users/logout">
+            <button class="button yellow" type="submit">LOG OUT</button>
+          </form>
+        </li>
+
+        <% } else { %>
+          <li class="auth">
+            <form method="GET" action="/auth/signup">
+              <button class="button yellow" type="submit">SIGN UP</button>
+            </form>
+          </li>
+          <li class="auth">
+            <form method="GET" action="/auth/login">
+              <button class="button yellow" type="submit">LOG IN</button>
+            </form>
+          </li>
+          <% } %>
+    </ul>
+  </div>
+
+</header>

@@ -1,8 +1,78 @@
+:root {
+  --red-color: #f23d4c;
+  --yellow-color: #e3c001;
+  --white-color: #ffffff;
+  --blue-color: #00b7ff;
+  --gray-color: gray;
+  --black-color: black;
+  --background-gray-color: #71717a;
+  --main-font-color: #fafafa;
+  --header-background-color: #282828;
+}
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  width: 100vw;
+  height: auto;
+  min-height: 100vh;
+  overflow-x: hidden;
+  margin: 0;
+  font: normal 18px 'Open Sans', sans-serif;
+  color: #fafafa;
+  background-color: #71717a;
 }
 
 a {
-  color: #00B7FF;
+  text-decoration: none;
+  color: inherit;
+}
+
+
+header {
+  position: relative;
+  width: 100%;
+  height: 70px;
+  background-color: var(--header-background-color);
+}
+
+header > div {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  height: 100%;
+  padding: 0 1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  margin: 0;
+  padding-top: 20px;
+  padding-left: 20px;
+}
+
+.profile-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.profile-list li {
+  margin: 0 1em 0 0;
+}
+
+.profile-list li:last-child {
+  margin: 0;
+}
+
+.profile-list .nickname span {
+  color: var(--main-font-color);
+  font-size: 1.2em;
+}
+
+.button {
+  color: inherit;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }

@@ -7,10 +7,14 @@
 </head>
 
 <body>
-
-  <main>
-    index
-  </main>
+  <%- include("partials/header", {user}) %>
+    <main>
+      <div class="vote-list">
+        <% votes.forEach(vote=> { %>
+          <%- include("partials/voteBlock", {vote}) %>
+            <% }) %>
+      </div>
+    </main>
 </body>
 
 </html>

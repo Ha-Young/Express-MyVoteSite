@@ -18,6 +18,6 @@ exports.createVote = async (req, res, next) => {
   }
 };
 
-exports.deleteVote(req, res, next) => {
+exports.deleteVote = async (req, res, next) => {
 
 };

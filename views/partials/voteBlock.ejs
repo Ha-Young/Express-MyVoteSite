@@ -1,0 +1,16 @@
+<a class="vote-box" href="<%= `/votings/${vote._id}` %>">
+  <p class="title">
+    <%= vote.title %>
+  </p>
+  <ul>
+    <li class="expiration_date">
+      expired at <%= vote.expiration_date %>
+    </li>
+    <li class="status">
+      <%= vote.status %>
+    </li>
+  </ul>
+  <p class="author">
+    <%= vote.author %>
+  </p>
+</a>

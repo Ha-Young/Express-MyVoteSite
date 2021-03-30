@@ -4,8 +4,6 @@ const votingsController = require('../controllers/votings.controller');
 const authenticationHandler = require('../middlewares/authenticationHandler');
 const validationHandler = require('../middlewares/validationHandler');
 
-router.use(checkAuthentication);
-
 router
   .route('/:id')
   .get(votingsController.getVote)
