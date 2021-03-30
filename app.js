@@ -46,11 +46,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.all
 app.use('/', mainRouter);
 app.use('/auth', authRouter);
-app.use('/', (req, res, next) => {
-  if (!req.isAuthenticated()) {
-    next(createError(401, '로그인이 필요합니다.'));
-  }
-});
+// app.use('/', (req, res, next) => {
+//   if (!req.isAuthenticated()) {
+//     next(createError(401, '로그인이 필요합니다.'));
+//   }
+//   next();
+// });
 app.use('/votings', votingsRouter);
 
 // catch 404 and forward to error handler

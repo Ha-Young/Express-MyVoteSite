@@ -6,6 +6,6 @@ const router = express.Router();
 router.get('/', votingController.getAll);
 router.get('/new', votingController.showForm);
 router.post('/new', votingController.create);
-router.get('/:id');
+router.get('/:id', votingController.getOne);
 
 module.exports = router;

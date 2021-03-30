@@ -4,22 +4,19 @@ block content
   form(action="/votings/new", method="post")
     div
       label 등록자 이름:
-        input(type="text" name="founder" readOnly)
+        input(type="text" name="founder" readOnly value=user.id)
     div
-      label 제목
-        input(type="text" name="title")
+      label 제목:
+        input(type="text" name="title" value="제목이다")
     div
       label 투표 설명:
-        input(type="text" name="description")
-    div
-      label.optionsContainer 항목:
-        div.addOptionBtn +
-        input(type="text" name="options")
+        input(type="text" name="description" value="설명이다")
     div
       label 공개여부:
         select#votingSelect(name="inProgress")
-          option(value="false") 비공개
+          option(value="false" selected) 비공개
           option(value="true") 공개
     div
       label 투표기간:
+        input(type="date" name="dueDate" value="2018-07-22")
     button(type="submit") SUBMIT
