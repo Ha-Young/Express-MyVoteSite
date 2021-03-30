@@ -1,0 +1,22 @@
+<header class="header">
+  <div class="header-column">
+    <a href="/">
+      <img class="logo" src="/images/logo.ico" alt="logo" />
+    </a>
+    <h1>Voting</h1>
+  </div>
+  <div class="title_wrapper">
+
+  </div>
+  <div class="user-info header-column align-right">
+    <% if (user.isAdmin) {%>
+      <a href="/problems/create"><button class="problem-create-btn">Add Problem</button></a>
+    <% } %>
+    <form class="user-info-form " action="/logout" method="POST">
+      <% if (user.name) {%>
+        <h3>Hello, <span class="user-name"><%= user.name %></span></h3>
+        <button class="logout-btn" type="submit">logout</button>
+      <% } %>
+    </form>
+  </div>
+</header>

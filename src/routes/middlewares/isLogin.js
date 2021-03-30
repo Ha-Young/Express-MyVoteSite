@@ -32,6 +32,7 @@ const isLogin = (req, res, next) => {
     }
 
     req.user = user;
+    res.locals.user = user;
 
     next();
   });
