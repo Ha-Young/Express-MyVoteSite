@@ -6,8 +6,7 @@
       <div>마감일: <%= vote.dueDate %></div>
     </div>
     <% if (isCreator) { %>
-      <form action="/votings/<%= vote._id %>" method="POST">
-        <input type="hidden" name="_method" value="DELETE" />
+      <form action="/votings/<%= vote._id %>?_method=DELETE" method="POST">
         <button type="submit">삭제</button>
       </form>
     <% } %>

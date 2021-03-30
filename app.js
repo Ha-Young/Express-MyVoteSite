@@ -7,6 +7,7 @@ const logger = require("morgan");
 const expressLayouts = require("express-ejs-layouts");
 const session = require("express-session");
 const flash = require("connect-flash");
+const methodOverride = require("method-override");
 
 const index = require("./routes/index");
 const auth = require("./routes/auth");
@@ -38,6 +39,7 @@ app.use(session({
 }));
 app.use(flash());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(methodOverride("_method"));
 
 app.use(deserializeUser);
 app.use("/", index);
