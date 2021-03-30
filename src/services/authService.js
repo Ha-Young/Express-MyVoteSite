@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { randomBytes } = require("crypto");
 
 const User = require("../models/User");
-const { jwtSecret } = require("../config");
+const { jwtSecret } = require("../config").jwt;
 
 exports.SignUp = async userInputDTO => {
   try {
@@ -22,12 +22,56 @@ exports.SignUp = async userInputDTO => {
       throw new Error('User cannot be created');
     }
 
-    /**
-     * @TODO This is not the best way to deal with this
-     * There should exist a 'Mapper' layer
-     * that transforms data from layer to layer
-     * but that's too over-engineering for now
-     */
+    const user = userRecord.toObject();
+
+    Reflect.deleteProperty(user, 'password');
+    Reflect.deleteProperty(user, 'salt');
+
+    return { user, token };
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+exports.SignIn = async (email, password) => {
+  try {
+    const userRecord = await User.findOne({ email });
+    if (!userRecord) {
+      throw new Error('User not registered');
+    }
+
+    const validPassword = await argon2.verify(userRecord.password, password);
+    if (validPassword) {
+      const token = generateToken(userRecord);
+
+      const user = userRecord.toObject();
+
+      Reflect.deleteProperty(user, 'password');
+      Reflect.deleteProperty(user, 'salt');
+
+      return { user, token };
+    } else {
+      throw new Error('Invalid Password');
+    }
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+exports.SocialLogin = async userInputDTO => {
+  try {
+    let userRecord = await User.findOne({ email: userInputDTO.email });
+
+    if (!userRecord) {
+      userRecord = await User.create({ ...userInputDTO });
+    }
+
+    const token = generateToken(userRecord);
+
+    if (!userRecord) {
+      throw new Error('User can not be created');
+    }
+
     const user = userRecord.toObject();
 
     Reflect.deleteProperty(user, 'password');
@@ -39,27 +83,6 @@ exports.SignUp = async userInputDTO => {
   }
 };
 
-exports.SignIn = async (email, password) => {
-  const userRecord = await User.findOne({ email });
-  if (!userRecord) {
-    throw new Error('User not registered');
-  }
-
-  const validPassword = await argon2.verify(userRecord.password, password);
-  if (validPassword) {
-    const token = generateToken(userRecord);
-
-    const user = userRecord.toObject();
-
-    Reflect.deleteProperty(user, 'password');
-    Reflect.deleteProperty(user, 'salt');
-
-    return { user, token };
-  } else {
-    throw new Error('Invalid Password');
-  }
-};
-
 function generateToken(user) {
   const today = new Date();
   const exp = new Date(today);
@@ -68,7 +91,6 @@ function generateToken(user) {
   return jwt.sign(
     {
       _id: user._id,
-      role: user.role,
       name: user.name,
       exp: exp.getTime() / 1000,
     },

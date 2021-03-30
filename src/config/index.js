@@ -6,12 +6,20 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 dotenv.config();
 
 module.exports = {
+  rootURL: "http://localhost:3000",
   port: normalizePort(process.env.PORT || '3000'),
   databaseURL: process.env.MONGODB_URI,
-  jwtSecret: process.env.JWT_SECRET,
-  jwtCookieKey: 'VC_wpAthtk',
-  jwtAlgorithms: ['sha1', 'RS256', 'HS256'],
-  jwtExpires: 60 * 60 * 1000,
+
+  jwt: {
+    jwtSecret: process.env.JWT_SECRET,
+    jwtCookieKey: 'VC_wpAthtk',
+    jwtExpires: 60 * 60 * 1000,
+  },
+
+  google: {
+    googleClientId: process.env.GOOGLE_CLIENT_ID,
+    googleSecret: process.env.GOOGLE_SECRET,
+  },
 };
 
 function normalizePort(val) {
