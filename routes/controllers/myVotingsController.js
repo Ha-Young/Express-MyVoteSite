@@ -1,17 +1,17 @@
-const moment = require("moment");
-
 const Vote = require("../../models/Vote");
 const catchAsync = require("../../utils/catchAsync");
+const { addFormattedDueDate } = require("../../utils/index");
 
 exports.renderMyVotingsPage = catchAsync(async (req, res, next) => {
   const votes = await Vote.find({ creator: req.user._id }).lean();
 
-  res.locals.votes = votes.map((vote) => {
-    return {
-      title: vote.title,
-      dueDate: moment(vote.expiration).format("YYYY-MM-DD HH:mm"),
-    };
-  });
+  res.locals.votes = addFormattedDueDate(votes);
   res.locals.user = req.user;
   res.render("myVotings");
 });
+
+exports.deleteVote = async (req, res, next) => {
+  await Vote.deleteOne({ _id: req.params.id });
+
+  res.redirect("/my-votings");
+};

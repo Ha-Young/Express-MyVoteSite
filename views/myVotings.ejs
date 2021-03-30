@@ -3,13 +3,12 @@
   <div class="votes-container">
     <% if (votes.length > 0) { %>
       <% votes.map((vote) => { %>
-        <div class="vote">
-          <h1><%= vote.title %></h1>
-          <div>
-            <span>마감일 : </span>
-            <span><%= vote.dueDate %></span>
+        <a href="/votings/<%= vote._id %>">
+          <div class="vote">
+            <h1><%= vote.title %></h1>
+            <div>마감일 : <%= vote.dueDate %></div>
           </div>
-        </div>
+        </a>
       <% }) %>
     <% } else { %>
       <div>No votes..😥</div>

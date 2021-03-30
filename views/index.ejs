@@ -12,7 +12,8 @@
         <a href="/votings/<%= vote._id %>">
           <div class="vote">
             <h1><%= vote.title %></h1>
-            <p><%= vote.creator?.name %></p>
+            <p>생성자 : <%= vote.creator?.name %></p>
+            <p>마감일 : <%= vote.dueDate %></p>
           </div>
         </a>
       <% }) %>
