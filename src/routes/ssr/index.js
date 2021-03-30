@@ -1,15 +1,25 @@
 const express = require("express");
-const { HOME } = require("../../config/routes");
-const isLogin = require("../middlewares/isLogin");
+const createError = require("http-errors");
 
+const { HOME } = require("../../config/routes");
+const { GetAllVotes } = require("../../services/voteService");
+const isLogin = require("../middlewares/isLogin");
 const authRoute = require("./auth");
 const voteRoute = require("./vote");
 
 module.exports = function () {
   const app = express.Router();
 
-  app.get(HOME, isLogin, (req, res) => {
-    res.render("index");
+  app.get(HOME, isLogin, async (req, res, next) => {
+    try {
+      const { votes } = await GetAllVotes();
+
+      console.log('home votes', votes, typeof votes);
+
+      res.render("index", { votes: votes || {} });
+    } catch (err) {
+      return next(createError(err));
+    }
   });
 
   authRoute(app);
