@@ -5,7 +5,7 @@ const sendErrorDev = (err, res) => {
   res.locals.message = err.message;
   res.locals.error = err;
 
-  res.status(err.statusCode).render("error");
+  res.status(err.statusCode).render("error", { layout: false });
 };
 
 const sendErrorProd = (err, res) => {
@@ -14,14 +14,14 @@ const sendErrorProd = (err, res) => {
     res.locals.message = err.message;
     res.locals.error = {};
 
-    res.status(err.statusCode).render("error");
+    res.status(err.statusCode).render("error", { layout: false });
   } else {
     console.log("ERROR ❗️", err);
 
     res.locals.status = "error";
     res.locals.message = "Internal Server Error.";
     res.locals.error = {};
-    res.status(500).render("error");
+    res.status(500).render("error", { layout: false });
   }
 };
 
@@ -30,6 +30,10 @@ const handleValidationErrorDB = (err) => {
   const message = `Invalid input data. ${errors.join(". ")}`;
 
   return new AppError(message, 400);
+};
+
+const handleDuplicateErrorDB = (err) => {
+  return new AppError("A email must be unique.", 400);
 };
 
 module.exports = (err, req, res, next) => {
@@ -42,6 +46,8 @@ module.exports = (err, req, res, next) => {
 
     if (err.name === "ValidationError") {
       error = handleValidationErrorDB(error);
+    } else if (err.code === 11000) {
+      error = handleDuplicateErrorDB(error);
     }
 
     sendErrorProd(error, res);

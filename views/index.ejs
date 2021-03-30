@@ -1,13 +1,23 @@
-<h1>Home</h1>
-<div class="vote-container">
-  <% if (votes.length > 0) { %>
-    <% votes.map((vote) => { %>
-      <div class="vote">
-        <h1><%= vote.title %></h1>
-        <p><%= vote.creator %></p>
-      </div>
-    <% }) %>
-  <% } else { %>
-    <div>No votes..😥</div>
-  <% }%>
+<div class="body-container">
+  <h1>Home</h1>
+  <nav>
+    <a href="/votings/new">
+      <div>투표 생성하기</div>
+    </a>
+    <a href="/my-votings">내 투표 보기</a>
+  </nav>
+  <div class="votes-container">
+    <% if (votes.length > 0) { %>
+      <% votes.map((vote) => { %>
+        <a href="/votings/<%= vote._id %>">
+          <div class="vote">
+            <h1><%= vote.title %></h1>
+            <p><%= vote.creator?.name %></p>
+          </div>
+        </a>
+      <% }) %>
+    <% } else { %>
+      <div>No votes..😥</div>
+    <% }%>
+  </div>
 </div>

@@ -10,20 +10,90 @@ body {
 header {
   position: sticky;
   display: flex;
+  flex-direction: row-reverse;
   width: 100%;
   height: 50px;
+  padding: 10px;
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
 main {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+  height: 100%;
   padding: 20px;
+}
+
+.body-container {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
 }
 
 .alert-msg {
   height: 20px;
   color: red;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 80%;
+  height: 200px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.votes-container {
+  padding: 10px;
+}
+
+.vote {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.vote + .vote {
+  margin-top: 10px;
+}
+
+.vote-title {
+  height: 40px;
+}
+
+.vote-detail {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.vote-form {
+  display: flex;
+}
+
+.vote-button {
+  width: 100%;
+}
+
+.vote-button + .vote-button {
+  margin-left: 5px;
 }
 
 footer {
@@ -36,6 +106,23 @@ footer {
   text-align: center;
 }
 
+nav {
+  display: flex;
+}
+
 a {
-  color: #00B7FF;
+  color: inherit;
+  text-decoration: none;
+}
+
+a + a {
+  margin-left: 5px;
+}
+
+button {
+  width: 100%;
+}
+
+.hidden {
+  display: none;
 }

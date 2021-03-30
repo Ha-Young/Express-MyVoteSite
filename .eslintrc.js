@@ -36,5 +36,6 @@ module.exports = {
     "no-param-reassign": ["error", { props: false }],
     "import/no-unresolved": "off",
     "no-return-await": "off",
+    "arrow-body-style": "off",
   },
 };

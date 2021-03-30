@@ -10,10 +10,13 @@ const flash = require("connect-flash");
 
 const index = require("./routes/index");
 const auth = require("./routes/auth");
+const votings = require("./routes/votings");
+const myVotings = require("./routes/myVotings");
 const errorController = require("./routes/controllers/errorController");
 
 const AppError = require("./utils/AppError");
 const deserializeUser = require("./utils/deserializeUser");
+const authenticateUser = require("./utils/authenticateUser");
 
 const app = express();
 
@@ -26,10 +29,12 @@ app.set("layout", path.join(__dirname, "views/layout"));
 
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(session({
   secret: process.env.COOKIE_SECRET,
+  resave: false,
+  saveUninitialized: true,
 }));
 app.use(flash());
 app.use(express.static(path.join(__dirname, "public")));
@@ -37,6 +42,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(deserializeUser);
 app.use("/", index);
 app.use("/auth", auth);
+app.use("/votings", authenticateUser, votings);
+app.use("/my-votings", authenticateUser, myVotings);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

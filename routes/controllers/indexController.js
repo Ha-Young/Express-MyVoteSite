@@ -2,7 +2,7 @@ const Vote = require("../../models/Vote");
 const catchAsync = require("../../utils/catchAsync");
 
 exports.renderIndexPage = catchAsync(async (req, res, next) => {
-  const votes = await Vote.find().lean();
+  const votes = await Vote.find().populate("creator").lean();
 
   res.locals.user = req.user;
   res.locals.votes = votes;
