@@ -4,17 +4,18 @@ const Vote = require("../models/Vote");
 const verifyToken = require("./middlewares/authorization");
 
 router.get("/", async (req, res) => {
-  const votes = await Vote.find();
+  const votes = await Vote.find()
   const currentDate = new Date();
 
   votes.forEach(vote => {
+    console.log(vote.constructor);
     if (vote.endDate <= currentDate) {
       vote.isOnVote = false;
     }
 
     vote.save();
   });
-  console.log(votes[0].endDate.getDate());
+
   res.render("index", { votes });
 });
 

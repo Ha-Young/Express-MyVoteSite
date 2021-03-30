@@ -8,6 +8,7 @@ const verifyToken = async (req, res, next) => {
 
   if (!token) {
     res.redirect("/login");
+
     return;
   }
 
@@ -16,6 +17,7 @@ const verifyToken = async (req, res, next) => {
 
   if (!user) {
     res.redirect("/login");
+
     return;
   }
 

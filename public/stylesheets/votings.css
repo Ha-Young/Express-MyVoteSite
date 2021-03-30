@@ -1,0 +1,35 @@
+.body {
+  margin: 0px;
+}
+
+.onVote-wrapper {
+  position: relative;
+  left: 35%;
+  top: 300px;
+  border: 1px solid black;
+  width: 500px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 300px;
+}
+
+.title {
+  padding: 5px;
+}
+
+.creator {
+  padding: 5px;
+}
+
+.endDate {
+  padding: 5px;
+}
+
+.vote-status {
+  padding: 5px;
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="/stylesheets/votings.css" />
+  <title>votings</title>
+</head>
+<body>
+  <% if (isOnVote === "true") { %>
+    <div class="onVote-wrapper">
+      <form>
+        <div class="title">
+          제목: <%= title %>
+        </div>
+        <div class="creator">
+          생성자: <%= creator %>
+        </div>
+        <div class="endDate">
+          만료날짜: <%= endDate %>
+        </div>
+        <div class="vote-status">
+          투표 진행중 ⭕️
+        </div>
+        <div class="checkBox-wrapper">
+          투표목록
+          <% for (let i = 0; i < option.length; i++) { %>
+            <div>
+              <label for="option"><%= option[i].optionTitle %></label>
+              <input type="checkbox" id="option" name="option" />
+            </div>
+          <% } %>
+        </div>
+      </form>
+    </div>
+  <% } else { %>
+    <div class="endVote-wrapper">
+      <div>end</div>
+    </div>
+  <% } %>
+</body>
+</html>
