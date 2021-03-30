@@ -20,24 +20,25 @@ module.exports = app => {
     celebrate({
       body: Joi.object({
         title: Joi.string().required(),
-        datetime: Joi.string().required(),
+        expire_datetime: Joi.string().required(),
         vote_options: Joi.string().required(),
       }),
     }),
     async (req, res, next) => {
-      console.log(req.body);
-
       try {
-        const newVote = req.body;
-        newVote.vote_options = JSON.parse(vote.vote_options).map(option => ({
-          ...option,
-          count: 0,
-        }));
+        const { vote, error } = await voteService.CreateVote({
+          voteInputDTO: req.body,
+          user: req.user,
+        });
 
-        const { vote, error } = await voteService.createVote(newVote);
+        if (error) {
+          return next(createError(error));
+        }
 
-      } catch (err) {
-        return next(createError(err));
+        res.redirect("/");
+
+      } catch (error) {
+        return next(createError(error));
       }
     }
   );
