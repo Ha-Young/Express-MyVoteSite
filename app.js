@@ -34,7 +34,7 @@ app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 1000 * 60 * 10 },
+  cookie: { maxAge: 1000 * 60 * 10 * 24 },
 }));
 app.use(logger('dev'));
 app.use(passport.initialize());
@@ -46,6 +46,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.all
 app.use('/', mainRouter);
 app.use('/auth', authRouter);
+app.use('/', (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    next(createError(401, '로그인이 필요합니다.'));
+  }
+});
 app.use('/votings', votingsRouter);
 
 // catch 404 and forward to error handler
