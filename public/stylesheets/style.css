@@ -13,11 +13,15 @@ body {
   height: 100vh;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 a {
   all: unset;
+  width: 100%;
+  height: 100%;
   color: var(--graish-blue);
+  cursor: pointer;
 }
 
 #header {
@@ -47,4 +51,20 @@ form {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+}
+
+.buttons {
+  display: inline-block;
+  padding: 2vw;
+  background-color: var(--navy-deep);
+}
+
+.addOptionBtn {
+  color: var(--graish-blue);
+  background-color: var(--redish);
+}
+
+.optionsContainer {
+  display: flex;
+  flex-direction: column;
 }

@@ -1,0 +1,25 @@
+extends ../layout.pug
+
+block content
+  form(action="/votings/new", method="post")
+    div
+      label 등록자 이름:
+        input(type="text" name="founder" readOnly)
+    div
+      label 제목
+        input(type="text" name="title")
+    div
+      label 투표 설명:
+        input(type="text" name="description")
+    div
+      label.optionsContainer 항목:
+        div.addOptionBtn +
+        input(type="text" name="options")
+    div
+      label 공개여부:
+        select#votingSelect(name="inProgress")
+          option(value="false") 비공개
+          option(value="true") 공개
+    div
+      label 투표기간:
+    button(type="submit") SUBMIT
