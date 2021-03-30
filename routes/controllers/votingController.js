@@ -69,4 +69,19 @@ Controller.getMyVotings = async (req, res, next) => {
   }
 };
 
+// @route   GET voting/votings/:id
+// @desc    Render detail voting
+// @access  Public
+Controller.getDetailVoting = async (req, res, next) => {
+  try {
+    const currentVotingId = req.params.id;
+    const targetVoting = await Voting.findOne({ _id: currentVotingId });
+
+    res.render("detailVoting", { voting: targetVoting });
+  } catch (error) {
+    console.error(error.message);
+    next(createError(500, "Server Error"));
+  }
+};
+
 module.exports = Controller;

@@ -17,7 +17,8 @@ Controller.getSignup = (req, res) => {
 // @desc    save UserInfo mongoDB
 // @access  Public
 Controller.postSignup = async (req, res, next) => {
-  const { email, password, checkingPassword } = req.body;
+  const { email, password } = req.body;
+  const checkingPassword = req.body["check-password"];
 
   try {
     const checkedUser = await User.findOne({ email });

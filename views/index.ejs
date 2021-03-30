@@ -27,6 +27,9 @@
           <%= voting.endDate %>
           <p>투표 진행 여부</p>
           <%= voting.isProgress %>
+          <form action="/voting/votings/<%= voting._id %>" method="GET">
+            <button type="submit">투표하러 가기</button>
+          </form>
         </li>
       <% }) %>
     </ul>
