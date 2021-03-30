@@ -3,9 +3,8 @@ const createError = require("http-errors");
 const crypto = require("crypto");
 const passport = require("passport");
 const User = require("../models/User");
+const Voting = require("../models/Voting");
 require("../utils/localAuthentication");
-
-// const Voting = require("../utils/makeSampleMongoDB").Sample;
 
 const router = express.Router();
 

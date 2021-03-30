@@ -3,21 +3,21 @@
     "author": "임진주",
     "title": "오늘 저녁",
     "description": "저녁 먹을꺼임???",
-    "voting-item": [{"item": "찬성", "count": 3}, {"item": "반대", "count": 2} ],
+    "votingItem": [{"item": "찬성", "count": 3}, {"item": "반대", "count": 2} ],
     "voters": ["6061b68a076c4013b266d988", "6061b6a3076c4013b266d989"]
   },
   {
     "author": "손범수",
     "title": "이번주 축구",
     "description": "축구 할꺼임???",
-    "voting-item": [{"item": "찬성", "count": 2}, {"item": "반대", "count": 3} ],
+    "votingItem": [{"item": "찬성", "count": 2}, {"item": "반대", "count": 3} ],
     "voters": ["6061b91e3c485213f8e36d55", "6061b6a3076c4013b266d989"]
   },
   {
     "author": "황한주",
     "title": "집에 가자",
     "description": "집에 갈꺼임???",
-    "voting-item": [{"item": "찬성", "count": 1}, {"item": "반대", "count": 0} ],
+    "votingItem": [{"item": "찬성", "count": 1}, {"item": "반대", "count": 0} ],
     "voters": ["6061b68a076c4013b266d988", "6061b91e3c485213f8e36d55"]
   }
 ]

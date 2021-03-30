@@ -1,0 +1,29 @@
+.voting-detail {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 50vw;
+  height: 50vh;
+  background-color: gold;
+}
+
+.voting-detail-status {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 80%;
+  height: 10%;
+  background-color: tomato;
+}
+
+.voting-detail-item {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 80%;
+  height: 70%;
+  background-color: gray;
+}
