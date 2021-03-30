@@ -93,6 +93,7 @@ Controller.postNewVoting = async (req, res, next) => {
 // @access  Private
 Controller.getMyVotings = async (req, res, next) => {
   try {
+    console.log("내 페이지입니다");
   } catch (error) {
     console.error(error.message);
     next(createError(500, "Server Error"));
@@ -106,12 +107,22 @@ Controller.getDetailVoting = async (req, res, next) => {
   try {
     const currentVotingId = req.params.id;
     const voting = await Voting.findById({ _id: currentVotingId });
+    const currentUser = req.user;
+    let isAuthor;
 
     Voting.findById({ _id: currentVotingId })
       .populate("user")
       .exec((err, data) => {
         if (err) return res.render("error", { message: err.message });
-        res.render("detailVoting", { voting, author: data.user.email });
+        if (currentUser) {
+          isAuthor = (currentUser._id.toString() === data.user._id.toString());
+        }
+
+        res.render("detailVoting", {
+          voting,
+          author: data.user.email,
+          isAuthor,
+        });
       });
   } catch (error) {
     console.error(error.message);
@@ -148,6 +159,18 @@ Controller.postDetailVoting = async (req, res, next) => {
 
     await voting.save();
     res.redirect("/");
+  } catch (error) {
+    console.error(error.message);
+    next(createError(500, "Server Error"));
+  }
+};
+
+// @route   Delete voting/votings/:id
+// @desc    Modify User's voting, voted list of deleted voting
+// @access  Private
+Controller.deleteVoting = async (req, res, next) => {
+  try {
+    console.log("오니?");
   } catch (error) {
     console.error(error.message);
     next(createError(500, "Server Error"));

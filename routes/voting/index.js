@@ -16,6 +16,8 @@ router.get("/votings/error");
 
 router.get("/votings/:id", votingController.getDetailVoting);
 
+router.delete("/votings/:id", votingController.deleteVoting);
+
 router.post("/votings/:id", votingController.postDetailVoting);
 
 module.exports = router;

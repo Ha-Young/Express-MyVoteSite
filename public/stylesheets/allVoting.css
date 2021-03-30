@@ -1,0 +1,19 @@
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.votings {
+  display: flex;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.voting {
+  display: block;
+  width: 400px;
+  height: 300px;
+  margin: 10px;
+  text-align: center;
+  border: 1px solid white;
+}

@@ -1,0 +1,29 @@
+.voting-information {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.voting-description {
+  display: block;
+  width: 50%;
+  height: 100vh;
+  text-align: center;
+  border: 1px solid white;
+}
+
+.voting-list {
+  display: block;
+  width: 50%;
+  height: 100vh;
+  text-align: center;
+  border: 1px solid white;
+}
+
+.voting-option {
+  display: block;
+  width: 300px;
+  height: 200px;
+  border: 1px solid white;
+  list-style: none;
+}
