@@ -68,14 +68,16 @@ exports.checkGoogleAuth = function (req, res, next) {
         return next(createdError);
       }
 
-      req.login(user, { session: false }, (err) => {
-        if (err) {
-          const createdError = createError(500, errorMessage.SERVER_ERROR);
-          return next(createdError);
-        }
+      // req.login(user, { session: false }, (err) => {
+      //   if (err) {
+      //     const createdError = createError(500, errorMessage.SERVER_ERROR);
+      //     return next(createdError);
+      //   }
 
-        next();
-      });
+      //   next();
+      // });
+
+      next();
     }
   );
 };

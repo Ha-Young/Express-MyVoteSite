@@ -56,9 +56,7 @@ module.exports = () => {
       },
       function (accessToken, refreshToken, profile, done) {
         console.log("inside google strategy");
-        User.findOrCreate({ googleId: profile.id }, function (err, user) {
-          return done(err, user);
-        });
+        return done(null, profile);
       }
     )
   );
