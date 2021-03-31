@@ -3,6 +3,7 @@ const passport = require("passport");
 const User = require("../../models/User");
 
 const AUTH = require("../../constants/authConstants");
+const { authenticate } = require("passport");
 
 const Controller = {};
 
@@ -43,11 +44,17 @@ Controller.getLogin = (req, res) => {
   res.render("login");
 };
 
-Controller.postLogin = passport.authenticate("local", {
-  successRedirect: "/",
-  failureRedirect: "/auth/login",
-  failureFlash: true,
-});
+Controller.postLogin = (req, res) => {
+  const votingUrl = req.cookies.votingUrl;
+
+  const successUrl =`/voting/votings/${votingUrl}` || "/";
+
+  res.clearCookie("votingUrl");
+  passport.authenticate("local", {
+    successRedirect: successUrl,
+    failureRedirect: "/auth/login",
+  })(req, res);
+};
 
 Controller.getLogout = (req, res) => {
   req.logOut();

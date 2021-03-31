@@ -30,6 +30,10 @@ const patchVotedResult = async (votingId, checkedOption) => {
           alertMessageBox.textContent = data.message;
           break;
 
+        case 403:
+          window.location.href = "/auth/login";
+          break;
+
         default:
           break;
       }

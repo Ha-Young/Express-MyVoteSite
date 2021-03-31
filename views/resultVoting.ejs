@@ -10,11 +10,13 @@
     <p id="message" class="message-box"></p>
     <section class="voting-information">
       <article class="voting-list">
-        <div class="result">해당 페이지는 만료시 데이터</div>
+        <div class="result">
+          <p>최종 결과</p>
+          <p>투표 제목: <%= highestOption.title %></p>
+          <p>투표수: <%= highestOption.value %></p>
+        </div>
         <ul>
-          <h1>디테일 화면</h1>
           <p>투표 생성자: <%= author %></p>
-          <p>투표 제목: <%= voting.title %></p>
           <p>투표 종료 시간: <%= voting.endDate %></p>
           <p>투표 목록</p>
           <article class="voting-options">

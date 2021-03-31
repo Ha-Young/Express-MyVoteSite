@@ -127,10 +127,19 @@ Controller.getDetailVoting = async (req, res, next) => {
             isAuthor,
           });
         } else {
-          res.render("expiredVoting", {
+          let highestOption = { value: 0 };
+
+          voting.options.forEach(option => {
+            if (highestOption.value < option.value) {
+              highestOption = option;
+            }
+          });
+
+          res.render("resultVoting", {
             voting,
             author: data.user.email,
             isAuthor,
+            highestOption,
           });
         }
       });
