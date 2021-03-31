@@ -2,6 +2,7 @@ extends layout
 
 block append head
   link(rel="stylesheet" href="/stylesheets/voting.css")
+  script(src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0")
 block content
   include header
   h2.voting-title= voting.title
@@ -9,20 +10,27 @@ block content
   p.voting-state= currentState
   p.voting-publisher Published by #{voting.publisher.name}
   div.option-box
-    form.voting-form
-      if voting.isAbleSelectMultipleOptions
-        each count, option in options
-          label.option-label
-            input.option-checkbox(type="checkbox" name=option)
-            = option
-      else
-        each count, option in options
-          label.option-label
-            input.option-radio(type="radio" name="option")
-            = option
-      button.submit-button(type="submit") VOTE
+    if !isAlreadyVoted
+      form.voting-form(action="/votings/" + voting._id method="post")
+        if voting.isAbleSelectMultipleOptions
+          each count, option in options
+            label.option-label
+              input.option-checkbox(type="checkbox" name="option" value=option)
+              = option
+        else
+          each count, option in options
+            label.option-label
+              input.option-radio(type="radio" name="option" value=option)
+              = option
+        button.submit-button(type="submit") VOTE
+    else
+      p.already-voted-voting You voted already.
   p.expirationTime Expiration Time #{expirationTime}
   button.index-link-button(type="button") < Voting List
   if isPublisher
     button.delete-voting-button(type="button") Delete
+    div.chart-box
+      canvas.chart(width="700" height="400")
+
+  script var options = !{JSON.stringify(options)}
   script(src="/javascripts/voting.js")
