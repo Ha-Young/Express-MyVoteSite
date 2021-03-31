@@ -21,12 +21,13 @@ app.use(cookieParser());
 app.use(express.static(`${__dirname}/public`));
 app.use(session({
   secret: process.env.SESSION_SECRET,
-  resave: false,
+  resave: true,
   saveUninitialized: true,
-  maxAge: 2 * 60 * 60 * 1000,
+  rolling: true,
+  cookie: { maxAge: 2 * 60 * 60 * 1000 },
   store: new MongoDBStore({
     uri: process.env.MONGODB_ATLAS_URI,
-    collection: "_sessions",
+    collection: process.env.SESSION_COLLECTION_PATH,
   }),
 }));
 
@@ -49,7 +50,10 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+
+  if (req.app.get("env") !== "development") delete err.stack;
+
+  res.locals.error = err;
 
   // render the error page
   res.status(err.status || 500);

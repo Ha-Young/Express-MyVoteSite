@@ -9,10 +9,11 @@ const VoteSchema = new mongoose.Schema({
     type: mongoose.ObjectId,
     ref: "User",
     required: [true, "creator is required"],
+    index: true,
   },
   options: [{
     title: String,
-    select_users: [{
+    voters: [{
       type: mongoose.ObjectId,
       ref: "User",
     }],

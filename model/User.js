@@ -18,8 +18,14 @@ const UserSchema = new mongoose.Schema({
     required: [true, "사용자 이름(별명)을 입력해주세요"],
   },
   votings: [{
-    type: mongoose.ObjectId,
-    ref: "Vote",
+    voteId: {
+      type: mongoose.ObjectId,
+      ref: "Vote",
+    },
+    optionId: {
+      type: mongoose.ObjectId,
+      ref: "Vote",
+    },
   }],
 }, { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } });
 

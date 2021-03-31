@@ -1,4 +1,9 @@
-<form id="vote-form" action="/votings/<%- vote.id %>" method="post">
+<div id="vote-box-container">
+  <% if (voterName) { %>
+    <h5 id="query-voter"><%- voterName %>님의 선택은? 🥴</h5>
+  <% } else { %>
+    <h5>로그인 후 투표가 가능해요. :)</h5>
+  <% } %>
   <fieldset>
     <legend><%- vote.title %></legend>
     <% options.map(option => { %>
@@ -11,12 +16,12 @@
         />
       </label>
       <% if (isCreator) { %>
-        <span>투표 수: <%- option.selectUsers.length %></span>
+        <span>투표 수: <%- option.voters.length %></span>
       <% } %>
     <% }) %>
   </fieldset>
   <input id="vote-submit" type="submit" value="투표하기"/>
-</form>
+</div>
 <span>진행 중</span>
 <span>총 투표 수: <%- vote.allVotingNum %></span>
 <span id="expire-date" data-expire="<%- vote.expireAt %>">
