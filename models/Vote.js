@@ -10,16 +10,20 @@ const VoteSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "User",
   },
-  status: {
-    agreeCount: {
-      type: Number,
-      default: 0,
+  options: [{
+    name: {
+      type: String,
+      required: [true, "A option of Vote must have name."],
     },
-    disAgreeCount: {
-      type: Number,
-      default: 0,
-    },
-  },
+    voters: [{
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+    }],
+  }],
+  voters: [{
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+  }],
   isInProgress: {
     type: Boolean,
     default: true,
@@ -36,4 +40,13 @@ const VoteSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-module.exports = mongoose.model("Vote", VoteSchema);
+// eslint-disable-next-line
+VoteSchema.pre(/^find/, async function (next) {
+  // eslint-disable-next-line
+  await Vote.updateMany({ expiration: { $lte: new Date() }}, { isInProgress: false });
+  next();
+});
+
+const Vote = mongoose.model("Vote", VoteSchema);
+
+module.exports = Vote;

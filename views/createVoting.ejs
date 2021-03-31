@@ -4,25 +4,31 @@
     <div class="alert-msg">
       <%= message %>
     </div>
-    <div class="input-container">
-      <label for="title">title : </label>
-      <input name="title" />
+    <div class="flex-container">
+      <div>
+        <div class="input-container">
+          <label for="title">투표 제목</label>
+          <input name="title" />
+        </div>
+        <div class="input-container">
+          <label for="expiration">마감일</label>
+          <input name="expiration" type="datetime-local" />
+        </div>
+      </div>
+      <div>
+        <ul class="options">
+          <li id="option1">
+            <input class="option" type="text" name="option1" placeholder="option1" />
+            <button class="delete-option-button" type="button">❌</button>
+          </li>
+          <li id="option2">
+            <input class="option" type="text" name="option2" placeholder="option2" />
+            <button class="delete-option-button" type="button">❌</button>
+          </li>
+        </ul>
+        <button class="add-option-button" type="button">➕</button>
+      </div>
     </div>
-    <div class="input-container">
-      <label for="expiration">expiration : </label>
-      <input name="expiration" type="datetime-local" />
-    </div>
-    <button class="add-option-button" type="button">➕</button>
-    <ul class="options">
-      <li id="option1">
-        <input class="option" type="text" name="option1" placeholder="option1" />
-        <button class="delete-option-button" type="button">❌</button>
-      </li>
-      <li id="optoion2">
-        <input class="option" type="text" name="option2" placeholder="option2" />
-        <button class="delete-option-button" type="button">❌</button>
-      </li>
-    </ul>
     <button type="submit">확인</button>
   </form>
 </div>

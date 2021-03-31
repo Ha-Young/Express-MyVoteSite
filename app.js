@@ -16,8 +16,15 @@ const myVotings = require("./routes/myVotings");
 const errorController = require("./routes/controllers/errorController");
 
 const AppError = require("./utils/AppError");
-const deserializeUser = require("./utils/deserializeUser");
-const authenticateUser = require("./utils/authenticateUser");
+const deserializeUser = require("./routes/middlewares/deserializeUser");
+const authenticateUser = require("./routes/middlewares/authenticateUser");
+
+const {
+  ROOT_ROUTE,
+  AUTH_ROUTE,
+  VOTINGS_ROUTE,
+  MY_VOTINGS_ROUTE,
+} = require("./constants");
 
 const app = express();
 
@@ -42,10 +49,10 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 
 app.use(deserializeUser);
-app.use("/", index);
-app.use("/auth", auth);
-app.use("/votings", votings);
-app.use("/my-votings", authenticateUser, myVotings);
+app.use(ROOT_ROUTE, index);
+app.use(AUTH_ROUTE, auth);
+app.use(VOTINGS_ROUTE, votings);
+app.use(MY_VOTINGS_ROUTE, authenticateUser, myVotings);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

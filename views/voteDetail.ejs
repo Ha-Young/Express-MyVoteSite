@@ -1,4 +1,4 @@
-<div class="body-container">
+<div class="body-container small-container">
   <div class="vote-detail-creator-info">
     <div>
       <div>이름: <%= vote.creator.name %></div>
@@ -14,17 +14,27 @@
   <h1 class="vote-title"><%= vote.title %></h1>
   <div>
     <form class="vote-form" action="/votings/<%= vote._id %>" method="POST">
-      <div>
-        <div class="vote-button">
-          <input type="radio" id="agree" name="voted" value="agree" />
-          <label for="agree"><%= vote.status.agreeCount %> 👍</label>
-        </div>
-        <div class="vote-button">
-          <input type="radio" id="disAgree" name="voted" value="disAgree" />
-          <label for="disAgree"><%= vote.status.disAgreeCount %> 👎</label>
-        </div>
+      <div class="vote-button-container">
+        <% vote.options.map((option, index) => { %>
+          <div class="vote-button">
+            <input
+              class="<%- (isCreator || isVoted) ? 'hidden' : '' %>"
+              type="radio"
+              id="<%= index%>"
+              name="voted"
+              value="<%= option._id %>"
+            />
+            <label for="<%= index %>"><%= option.name %></label>
+            <% if (isCreator) { %>
+              <span><%= option.voters.length %></span>
+            <% } %>
+          </div>
+        <% }) %>
       </div>
-      <button type="submit">확인</button>
+      <button
+        class="<%- (isCreator || isVoted) ? 'hidden' : '' %>"
+        type="submit">확인
+      </button>
     </form>
   </div>
 </div>

@@ -4,9 +4,20 @@
     <% if (votes.length > 0) { %>
       <% votes.map((vote) => { %>
         <a href="/votings/<%= vote._id %>">
-          <div class="vote">
-            <h1><%= vote.title %></h1>
-            <div>마감일 : <%= vote.dueDate %></div>
+          <div class="vote <%- vote.isInProgress ? 'in-progress' : 'closed' %>">
+            <div>
+              <h1><%= vote.title %></h1>
+              <div>마감일 : <%= vote.dueDate %></div>
+            </div>
+            <div>
+              <% if (vote.isInProgress) { %>
+                <% vote.options.map((option) => { %>
+                  <div class="my-votings-option"><%= option.name %> : <%= option.voters.length %></div>
+                <% }) %>
+              <% } else { %>
+                <p>마감</p>
+              <% } %>
+            </div>
           </div>
         </a>
       <% }) %>

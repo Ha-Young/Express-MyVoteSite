@@ -1,19 +1,20 @@
 const router = require("express").Router();
 
+const { SIGNUP, LOGIN, LOGOUT } = require("../constants");
 const authController = require("./controllers/authController");
 
 router
-  .route("/signup")
+  .route(SIGNUP)
   .get(authController.renderSignupPage)
   .post(authController.signup);
 
 router
-  .route("/login")
+  .route(LOGIN)
   .get(authController.renderLoginPage)
   .post(authController.login);
 
 router
-  .route("/logout")
+  .route(LOGOUT)
   .get(authController.logout);
 
 module.exports = router;

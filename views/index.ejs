@@ -4,10 +4,19 @@
     <% if (votes.length > 0) { %>
       <% votes.map((vote) => { %>
         <a href="/votings/<%= vote._id %>">
-          <div class="vote">
-            <h1><%= vote.title %></h1>
-            <p>생성자 : <%= vote.creator?.name %></p>
-            <p>마감일 : <%= vote.dueDate %></p>
+          <div class="vote <%- vote.isInProgress ? 'in-progress' : 'closed' %>">
+            <div>
+              <h1><%= vote.title %></h1>
+              <p>생성자 : <%= vote.creator?.name %></p>
+              <p>마감일 : <%= vote.dueDate %></p>
+            </div>
+            <div>
+              <% if (vote.isInProgress) { %>
+                <p>진행중</p>
+              <% } else { %>
+                <p>마감</p>
+              <% } %>
+            </div>
           </div>
         </a>
       <% }) %>

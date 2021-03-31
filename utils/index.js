@@ -20,3 +20,21 @@ exports.addFormattedDueDate = (votes) => {
     };
   });
 };
+
+exports.extractOptions = (req) => {
+  const options = [];
+
+  Object
+    .keys(req.body)
+    .forEach((key) => {
+      if (key.match(/^option/)
+      && (req.body[key] !== "")
+      ) {
+        options.push({
+          name: req.body[key],
+        });
+      }
+    });
+
+  return options;
+};

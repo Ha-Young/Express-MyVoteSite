@@ -4,10 +4,12 @@
 }
 
 h1 {
+  text-align: center;
   font-size: initial;
 }
 
 input {
+  padding: 5px;
   border: 0;
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
@@ -62,22 +64,32 @@ footer {
   overflow: auto;
 }
 
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-container div {
+  text-align: center;
+}
+
 .alert-msg {
   height: 20px;
   color: red;
 }
 
-.input-container {
-  position: relative;
+.input-container + .input-container {
+  margin-top: 20px;
 }
 
 .input-container > label {
-  position: absolute;
-  transform: translateX(-100%);
+  display: block;
+  margin-bottom: 5px;
+  text-align: center;
 }
 
-.option {
-  display: inline;
+.options li {
 }
 
 .form {
@@ -97,14 +109,23 @@ footer {
   height: 400px;
 }
 
+.in-progress {
+  border: 2px solid #94BFA7;
+}
+
+.closed {
+  border: 2px solid #F7A1C4;
+}
+
 .votes-container {
   padding: 10px;
 }
 
 .vote {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
   padding: 10px;
-  border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 }
 
@@ -134,8 +155,14 @@ footer {
   flex-direction: column;
 }
 
+.vote-button-container {
+  min-height: 100px;
+  padding: 5px;
+}
+
 .vote-button {
   width: 100%;
+  text-align: center;
 }
 
 nav {

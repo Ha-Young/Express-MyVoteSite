@@ -37,5 +37,6 @@ module.exports = {
     "import/no-unresolved": "off",
     "no-return-await": "off",
     "arrow-body-style": "off",
+    "wrap-iife": ["error", "inside"],
   },
 };
