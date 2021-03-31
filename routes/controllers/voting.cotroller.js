@@ -73,9 +73,9 @@ exports.castVote = async (req, res, next) => {
       });
     }
 
-    res.status(201).redirect("/")
+    res.status(201).json({ result: "투표를 성공하였습니다." });
   } catch (err) {
-    next(err);
+    res.status(500).json({ result: "투표를 실패하였습니다." })
   }
 };
 
@@ -116,8 +116,9 @@ exports.createVote = async (req, res, next) => {
     });
 
     await vote.save();
+
     res.status(201).render("success", { message: "success!!!!!", user });
   } catch (err) {
-    next(err);
+    res.status(500).render("error", { message: "error", user });
   }
 };

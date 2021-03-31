@@ -8,21 +8,19 @@ block content
     else
       p unauthorized
     .vote-wrapper
-      form#casting-vote(action=`/votings/${vote._id}` method="post")
-        .form-box
-          p.title #{vote.title}
-        .form-box
-          ul.vote-info
-            li #{vote.expiration_date}
-            li #{vote.author.name}
-        .form-box
-          ul.option-list
-            each option in vote.options
-              li
-                label(for=`${option.title}`) #{option.title}
-                input(type="checkbox" id=`${option.title}` name="options" value=`${option.title}`)
-      if (error)
-        p.validation #{ error.msg }
+      .form-box
+        p.title #{vote.title}
+      .form-box
+        ul.vote-info
+          li #{vote.expiration_date}
+          li #{vote.author.name}
+      .form-box
+        ul.option-list
+          each option in vote.options
+            li
+              label(for=`${option.title}`) #{option.title}
+              input(type="checkbox" id=`${option.title}` name="options" value=`${option.title}`)
+        p.validation.hidden
       ul.button-list
         if (user)
           li
@@ -30,5 +28,5 @@ block content
           li
             a.button(href="/votings/result") RESULT
         li
-          button.button(type="submit" form="casting-vote") SUBMIT
-  script(type="module" src="/javascripts/deleteVote.js")
+          button#submitButton.button(type="submit") SUBMIT
+  script(type="module" src="/javascripts/manageVote.js")

@@ -116,7 +116,7 @@ exports.validateCastingVote = [
       const userInfo = await User.findOne({ email: user.email });
       const isCasted = userInfo.casted_votes.find(vote => vote.toString() === id);
 
-      if (value === undefined) {
+      if (value.length === 0) {
         throw new Error("You should choice at least one option");
       }
 
@@ -133,7 +133,7 @@ exports.validateCastingVote = [
     const vote = await Vote.findById(id).populate("author", "name");
 
     if (!result.isEmpty()) {
-      return res.status(422).render("vote-page", { error: result.errors[0], user, vote });
+      return res.json({ error: result.errors[0] });
     }
 
     next();
