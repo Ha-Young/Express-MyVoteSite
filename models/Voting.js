@@ -18,20 +18,14 @@ const votingSchema = new mongoose.Schema({
     ref: "User",
   },
   voter: {
-    type: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    }],
+    type: Object,
   },
   expirationTime: {
     type: Date,
     require: true,
   },
   options: {
-    type: [{
-      name: { type: String, require: true },
-      count: { type: Number, },
-    }],
+    type: Map,
     validate: [validateOptionsField, "{PATH} options must be at least two."],
   },
   isAbleSelectMultipleOptions: {
