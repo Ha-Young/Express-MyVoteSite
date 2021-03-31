@@ -13,7 +13,7 @@ const votingSchema = new mongoose.Schema({
     require: true,
     ref: "User",
   },
-  voter: {
+  voters: {
     type: Object,
   },
   expirationTime: {
@@ -27,6 +27,6 @@ const votingSchema = new mongoose.Schema({
     type: Boolean,
     require: true,
   },
-});
+}, { minimize: false });
 
 module.exports = mongoose.model("Voting", votingSchema);
