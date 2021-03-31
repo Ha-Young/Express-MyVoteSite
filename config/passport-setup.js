@@ -21,6 +21,7 @@ passport.use(new Strategy(
     usernameField: 'email',
     passwordField: 'password',
   },
+  // eslint-disable-next-line consistent-return
   async (email, password, done) => {
     try {
       await User.findOne({ email }, (err, user) => {

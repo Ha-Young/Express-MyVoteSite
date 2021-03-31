@@ -25,6 +25,7 @@ exports.post = async (req, res, next) => {
 
     const { username, email, password } = req.body;
     const userData = await User.findOne({ email });
+
     if (userData) {
       res.render('partial/message', {
         message: '이미 가입된 계정입니다.',

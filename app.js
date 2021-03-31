@@ -46,15 +46,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.all
 app.use('/', mainRouter);
 app.use('/auth', authRouter);
-// app.use('/', (req, res, next) => {
-//   if (!req.isAuthenticated()) {
-//     next(createError(401, '로그인이 필요합니다.')); <- redirect?!
-//   }
-//   next();
-// });
+app.use('/', (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    next(createError(401, '로그인이 필요합니다.'));
+  }
+  next();
+});
 app.use('/votings', votingsRouter);
 app.use('/my-votings', myPageRouter);
 
