@@ -1,8 +1,8 @@
-const config = require("../config");
+const { API } = require("../config/routes");
 const apiRoute = require("./api");
 const ssrRoute = require("./ssr");
 
 module.exports = app => {
   app.use("/", ssrRoute());
-  // app.use(config.api.prefix, apiRoute());
+  app.use(API.PREFIX, apiRoute());
 };
