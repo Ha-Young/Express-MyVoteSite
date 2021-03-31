@@ -21,13 +21,14 @@ module.exports.postNew = async (req, res, next) => {
         title: toBeCreatedVoting.title,
         description: toBeCreatedVoting.description,
         publisher: publisher._id,
-        voter: [],
+        voter: {},
         expirationTime:
           toBeCreatedVoting.expirationTime,
         options:
-          toBeCreatedVoting.options.map(
-            (option) => ({ name: option, count: 0 })
-          ),
+          toBeCreatedVoting.options.reduce((acc, option) => {
+            acc.set(option, 0);
+            return acc;
+          }, new Map()),
         isAbleSelectMultipleOptions:
           toBeCreatedVoting.isAbleSelectMultipleOptions,
       });
@@ -56,7 +57,8 @@ module.exports.getVoting = async (req, res, next) => {
     }
 
     let isPublisher = false;
-    if (currentVoting.publisher.email === res.locals.userEmail) {
+    const userEmail = res.locals.userEmail
+    if (currentVoting.publisher.email === userEmail) {
       isPublisher = true;
     }
 
@@ -70,13 +72,23 @@ module.exports.getVoting = async (req, res, next) => {
       currentState = "expired";
     }
 
+    const options = Object.fromEntries(currentVoting.options);
+
+    const isVoted = !!currentVoting.voter[userEmail];
+
     res.status(200).render("voting", {
       voting: currentVoting,
+      options,
       expirationTime,
       currentState,
       isPublisher,
+      user: userEmail,
     });
   } catch (err) {
     next(createError(500, err.message));
   }
+};
+
+module.exports.postVoting = async (req, res, next) => {
+  console.log(req.body);
 };
