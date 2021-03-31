@@ -22,7 +22,7 @@ block content
     div.detail-item-container
       - for (let i = 0; i < votingItems.length; i++)
         - const {item, count} = votingItems[i]
-        div.detail-item(data-id=_id) #{item} #{count}
+          div.detail-item(data-voting-id=_id, data-option-id=votingItems[i]._id) #{item} #{count}
     div.detail-button
       a(href="/") 돌아가기
       div 삭제
