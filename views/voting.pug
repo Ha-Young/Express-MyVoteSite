@@ -3,6 +3,7 @@ extends layout
 block append head
   link(rel="stylesheet" href="/stylesheets/voting.css")
 block content
+  include header
   h2.voting-title= voting.title
   p.voting-description= voting.description
   p.voting-state= currentState
@@ -10,16 +11,18 @@ block content
   div.option-box
     form.voting-form
       if voting.isAbleSelectMultipleOptions
-        each option in voting.options
+        each count, option in options
           label.option-label
-            input.option-checkbox(type="checkbox" name=option.name)
-            = option.name
+            input.option-checkbox(type="checkbox" name=option)
+            = option
       else
-        each option in voting.options
+        each count, option in options
           label.option-label
             input.option-radio(type="radio" name="option")
-            = option.name
+            = option
       button.submit-button(type="submit") VOTE
   p.expirationTime Expiration Time #{expirationTime}
   button.index-link-button(type="button") < Voting List
+  if isPublisher
+    button.delete-voting-button(type="button") Delete
   script(src="/javascripts/voting.js")
