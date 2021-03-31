@@ -54,7 +54,7 @@ exports.login = async (req, res, next) => {
   const fmsg = req.flash();
   if (fmsg.error) {
     return res.render('partial/message', {
-      message: 'hi',
+      message: '가입되지 않은 계정입니다.',
     });
   }
   return res.render('partial/login');
