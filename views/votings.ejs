@@ -49,11 +49,14 @@
         <% } %>
       </form>
     </div>
+    <Script src="/javascripts/votings.js"></Script>
+    <% if (isValidateUser) { %>
+      <Script src="/javascripts/deleteVote.js"></Script>
+    <% } %>
   <% } else { %>
-    <div class="endVote-wrapper">
-      <div>end</div>
-    </div>
+    <canvas id="myChart" value="123213"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="/javascripts/result.js"></script>
   <% } %>
-  <Script src="/javascripts/votings.js"></Script>
 </body>
 </html>

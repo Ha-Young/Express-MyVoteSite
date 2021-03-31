@@ -1,5 +1,4 @@
 const form = document.querySelector(".outer-form");
-const deleteBtn = document.querySelector(".delete-btn");
 const submitBtn = document.querySelector(".submit-btn");
 const homeBtn = document.querySelector(".home-btn");
 
@@ -25,34 +24,17 @@ const updateVoting = async (option, targetIndex) => {
   }
 };
 
-const deleteVoting = async () => {
-  try {
-    await fetch(`http://localhost:3000/votings/${form.name}`, {
-      method: "DELETE",
-    });
-  } catch(e) {
-    console.error(e);
-  }
-
-  window.location.href = "/";
-};
-
 homeBtn.addEventListener("click", () => {
   event.preventDefault();
 
   window.location.href = "/";
 });
 
-deleteBtn.addEventListener("click", async () => {
-  event.preventDefault();
-
-  deleteVoting();
-});
-
 submitBtn.addEventListener("click", async () => {
   event.preventDefault();
 
   const radios = document.querySelectorAll(".radio");
+
   let checkedValue = null;
   let targetIndex = null;
 
@@ -65,3 +47,4 @@ submitBtn.addEventListener("click", async () => {
 
   await updateVoting(checkedValue, targetIndex);
 });
+
