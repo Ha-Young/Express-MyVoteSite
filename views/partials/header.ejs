@@ -20,6 +20,11 @@
     </div>
   </a>
   <% if (isUserLogedIn) { %>
+    <form action="/my-votings" method="GET">
+      <div class="my-voting-wrapper">
+        <button class="my-voting-btn">내 투표목록</button>
+      </div>
+    </form>
     <div class="logout-wrapper">
       <button class="logout-btn">로그아웃</button>
     </div>

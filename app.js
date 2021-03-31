@@ -23,8 +23,8 @@ mongoose.connect(db, {
 const indexRouter = require("./routes/index");
 const signupRouter = require("./routes/signup");
 const loginRouter = require("./routes/login");
-const logoutRouter = require("./routes/logout");
 const votingsRouter = require("./routes/votings");
+const myVotingsRouter = require("./routes/myVotings");
 
 const app = express();
 
@@ -41,8 +41,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
-app.use("/logout", logoutRouter);
+// app.use("/logout", logoutRouter);
 app.use("/votings", votingsRouter);
+app.use("/my-votings", myVotingsRouter);
 
 app.use(function(req, res, next) {
   next(createError(404));

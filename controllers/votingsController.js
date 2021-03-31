@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const Vote = require("../models/Vote");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
