@@ -8,7 +8,7 @@ const voteOptionItemTemplate = (function () {
       </button>
     `;
   });
-});
+})();
 
 window.templates = {
   ...window.templates,
