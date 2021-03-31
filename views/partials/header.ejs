@@ -4,6 +4,11 @@
       회원가입
     </div>
   </a>
+  <a href="/login">
+    <div>
+      로그인
+    </div>
+  </a>
   <a href="/">
     <div>
       투표목록
@@ -15,6 +20,8 @@
     </div>
   </a>
   <% if (isUserLogedIn) { %>
-    <button>로그아웃</button>
+    <div class="logout-wrapper">
+      <button class="logout-btn">로그아웃</button>
+    </div>
   <% } %>
 </header>

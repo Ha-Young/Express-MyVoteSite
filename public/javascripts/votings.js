@@ -6,6 +6,7 @@ const homeBtn = document.querySelector(".home-btn");
 const updateVoting = async (option, targetIndex) => {
   if (!document.cookie.includes("access_token")) {
     window.location.href = "/";
+
     return;
   }
 
