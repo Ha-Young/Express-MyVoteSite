@@ -21,7 +21,7 @@ const handleSubmit = async (e) => {
   try {
     const response = await fetch("/login", {
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       method: "post",
       body: JSON.stringify(user),

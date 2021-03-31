@@ -24,7 +24,7 @@
     try {
       const response = await fetch("/signup", {
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         },
         method: "post",
         body: JSON.stringify(user),
