@@ -5,7 +5,10 @@ function renderVote(req, res) {
 }
 
 function renderNewVote(req, res) {
-  res.render('newVote');
+  //TODO: to util
+  const minDateTime = new Date(Date.now() + 9 * 3600000).toISOString().substr(0, 16);
+  
+  res.render('newVote', {minDateTime});
 }
 
 async function postNewVote(req, res) {

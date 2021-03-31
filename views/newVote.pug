@@ -8,7 +8,7 @@ block content
       input.form-control(type='text' name='title' placeholder='Enter title' required)
     .form-group
       label(for='title') Expired At
-      input(type='datetime-local' name='expiredAt' required)
+      input(type='datetime-local' name='expiredAt' min=`${minDateTime}` required)
     .form-group
       p Add Options
       input.add-option-text(type='text')

@@ -8,17 +8,16 @@ const logger = require('morgan');
 const passport = require('passport');
 const methodOverride = require('method-override');
 
-const initializeDB = require('./configs/db');
-// TODO naming --- github / local
-const initializePassport = require('./loaders/passportGithub');
-const initializePassportLocal = require('./loaders/passportLocal');
+const initDB = require('./configs/db');
+const initGithubPassport = require('./loaders/githubPassport');
+const initLocalPassport = require('./loaders/localPassport');
 
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(logger('dev'));
+app.use(logger('dev')); // TODO ????
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
@@ -29,9 +28,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'));
 
-initializeDB();
-initializePassport();
-initializePassportLocal();
+initDB();
+initGithubPassport();
+initLocalPassport();
 
 app.use('/', require('./routes'));
 
