@@ -12,6 +12,37 @@ exports.GetAllVotes = async () => {
   }
 };
 
+exports.GetVotes = async ({ page, limit, sort }) => {
+  console.log('GetVotes');
+  try {
+    const voteRecords = await Vote.paginate(
+      {},
+      {
+        sort,
+        limit,
+        page,
+        populate: {
+          path: 'creator',
+          model: 'User',
+          select: {
+            name: 1,
+          },
+        },
+      }
+    );
+
+    if (!voteRecords) {
+      throw new Error('votes was not get');
+    }
+
+    console.log(voteRecords);
+
+    return { votesWithPage: voteRecords };
+  } catch (error) {
+    return { error };
+  }
+};
+
 exports.CreateVote = async ({ voteInputDTO, user }) => {
   try {
     let voteOptions = voteInputDTO["vote_options"];

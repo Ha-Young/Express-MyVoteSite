@@ -30,13 +30,12 @@ const ROUTE = {
       SIGNIN: "/signin",
       LOGOUT: "/logout",
     },
+    USER: {
+      VOTES: "/:id/votes",
+    },
     VOTES: {
       PREFIX: "/votes",
       VOTES: "/",
-      MY_VOTES: "/:user_id",
-    },
-    VOTE: {
-      PREFIX: "/vote",
       VOTE: "/:id",
     },
   },

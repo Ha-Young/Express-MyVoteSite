@@ -11,13 +11,13 @@ module.exports = app => {
 
   route.get(VOTES.VOTES, async (req, res, next) => {
     try {
-      const { votes, error } = await voteService.GetAllVotes();
+      const { votesWithPage, error } = await voteService.GetVotes({ page: 0, limit: 1 });
 
       if (error) {
         return next(createError(error));
       }
 
-      res.json(votes);
+      res.json(votesWithPage);
     } catch (err) {
       next(createError(err));
     }
