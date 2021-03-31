@@ -27,7 +27,6 @@ exports.register = async function (req, res) {
 
 exports.login = async function (req, res) {
   const { email, password } = req.body;
-
   const currentUser = await User.findOne({ email }).lean();
 
   if (!currentUser) {
@@ -49,6 +48,11 @@ exports.login = async function (req, res) {
     process.env.JWT_SECRET,
     { expiresIn: '2H'}
   ));
+
+  if (req.cookies.prev_page) {
+    return res.status(301).redirect(req.cookies.prev_page);
+  }
+
   res.status(301).redirect('/');
 };
 

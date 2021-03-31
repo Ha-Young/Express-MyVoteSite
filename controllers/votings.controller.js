@@ -46,7 +46,7 @@ exports.addVote = async function (req, res, next) {
     await voting.addVoteCount(selectedOption);
     await currentUser.addVotingList(votingId);
   // }
-  res.end();
+  res.json({ success: "성공" });
 };
 
 exports.deleteVoting = async function (req, res, next) {

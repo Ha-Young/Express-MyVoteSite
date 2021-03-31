@@ -1,8 +1,7 @@
 const Voting = require('../models/Voting');
 
 exports.getMyVotings = async function (req, res, next) {
-  const now = new Date();
-  await Voting.updateExpiredVotingStatus(now);
+  await Voting.updateExpiredVotingStatus(new Date());
 
   const votings = await Voting.find({ author: req.user });
 

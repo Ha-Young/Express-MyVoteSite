@@ -9,7 +9,7 @@ exports.signupSchema = function (req, res, next) {
     passwordCheck: Joi.string().valid(Joi.ref('password')).required(),
   });
 
-  validateRequest(req, next, schema);
+  validateRequest(req, res, next, schema);
 }
 
 exports.createVotingSchema = function (req, res, next) {
@@ -19,10 +19,10 @@ exports.createVotingSchema = function (req, res, next) {
     expiration_date: Joi.date().greater('now').required()
   });
 
-  validateRequest(req, next, schema);
+  validateRequest(req, res, next, schema);
 }
 
-async function validateRequest(req, next, schema) {
+async function validateRequest(req, res, next, schema) {
   const options = {
       abortEarly: true,
       allowUnknown: true
@@ -33,6 +33,7 @@ async function validateRequest(req, next, schema) {
 
     next();
   } catch (err) {
+    // TODO 여기서 원래 path로 redirect하는데 데이터도 갖고 있어야함. 어? 이러면 flash써야할거같은데...
     next(createError(400, `Validation error: ${err.details[0].message}`));
   }
 }
