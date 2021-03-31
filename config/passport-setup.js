@@ -1,5 +1,6 @@
 const passport = require('passport');
 const { Strategy } = require('passport-local');
+const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 passport.serializeUser((user, done) => {
@@ -24,24 +25,23 @@ passport.use(new Strategy(
   // eslint-disable-next-line consistent-return
   async (email, password, done) => {
     try {
-      await User.findOne({ email }, (err, user) => {
-        if (err) { return done(err); }
-        if (!user) {
+      const userInfo = await User.findOne({ email });
+      if (!userInfo) {
+        return done(null, false, {
+          message: '가입되지 않은 계정입니다.',
+        });
+      }
+      bcrypt.compare(password, userInfo.password, (err, res) => {
+        if (err) return done(err);
+        if (!res) {
           return done(null, false, {
-            message: 'Incorrect username',
+            message: '비밀번호를 확인하세요',
           });
         }
-        if (user.password !== password) {
-          return done(null, false, {
-            message: 'Incorrect password',
-          });
-        }
-        return done(null, user);
+        return done(null, userInfo);
       });
     } catch (err) {
-      return done(null, false, {
-        message: 'Incorrect username',
-      });
+      return done(err);
     }
   },
 ));

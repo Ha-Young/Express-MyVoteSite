@@ -21,9 +21,7 @@ const votingSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
-  participants: [{
-    type: mongoose.Schema.Types.ObjectId,
-  }],
+  participants: [mongoose.Schema.Types.ObjectId],
   voteOptions: {
     likes: {
       type: Number,
