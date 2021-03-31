@@ -8,11 +8,13 @@ block content
     if (user.avatarUrl)
       img(src=`${user.avatarUrl}`)
     else 
-      img(src='https://i.pravatar.cc/100')
+      img(src='https://cdn5.vectorstock.com/i/thumb-large/45/79/male-avatar-profile-picture-silhouette-light-vector-4684579.jpg')
     p #{user.email}
   else
     p HELLO GUEST
   if (user)
+    form(action='/myvote')
+      button(type='submit') MY-VOTES
     form(action='/auth/logout?_method=DELETE' method='POST')
       button(type='submit') LOGOUT
   else

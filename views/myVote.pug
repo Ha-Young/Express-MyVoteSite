@@ -1,0 +1,14 @@
+extends layout
+block append head
+  link(rel='stylesheet' href='/css/main.min.css')
+block content
+  ul.all-votes
+    if (allVotes)
+      each vote in allVotes
+        li
+          a(href=`/vote/${vote._id}`)
+            .eachVote
+              h4 #{vote.title}
+              p avilable - #{vote.isVotable}
+              p expired At - #{vote.expiredAt}
+              p by #{vote.creatorName}

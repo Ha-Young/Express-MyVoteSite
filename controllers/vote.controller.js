@@ -62,7 +62,7 @@ async function updateVoteById(req, res) {
   const { id } = req.params;
 
   const optionKey = `options.${option}`;
-
+  
   try {
     const vote = await Vote.findByIdAndUpdate(id, { 
       $inc: {
@@ -88,9 +88,20 @@ async function deleteVote(req, res) {
   }
 }
 
+async function renderMyVote(req, res) {
+  try {
+    const myVotes = await Vote.find({ creatorId: req.user.id }).lean();
+
+    res.status(200).render('myVote', { allVotes: myVotes });
+  } catch (error) {
+
+  }
+}
+
 exports.renderVote = renderVote;
 exports.renderNewVote = renderNewVote;
 exports.postNewVote = postNewVote;
 exports.getVoteById = getVoteById;
 exports.updateVoteById = updateVoteById;
 exports.deleteVote = deleteVote;
+exports.renderMyVote = renderMyVote;
