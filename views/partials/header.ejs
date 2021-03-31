@@ -1,4 +1,11 @@
-<a href="/">Home</a>
-<a href="/login">Login</a>
-<a href="/logout">Logout</a>
-<a href="/votings/new">Add Vote</a>
+<h1>Vote Flatform</h1>
+<% if (user) { %>
+  <h2>Welcome <%= user %>.</h2>
+<% } %>
+
+<div>
+  <a href="/">Home</a>
+  <a href="/login">Login</a>
+  <a href="/logout">Logout</a>
+  <a href="/votings/new">Add Vote</a>
+</div>

@@ -11,6 +11,8 @@ const dbLoader = require('./loaders/db/connectDB');
 const clientPromise = dbLoader.clientPromise;
 const passportLoader = require('./loaders/passports');
 
+const setUserNickname = require('./routes/middleware/setUserNickname');
+
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const votingsRouter = require('./routes/votings');
@@ -42,6 +44,8 @@ app.use(express.static('public'));
 
 dbLoader.checkDB();
 passportLoader(app);
+
+setUserNickname(app);
 
 app.use('/', indexRouter);
 app.use('/login', loginRouter);

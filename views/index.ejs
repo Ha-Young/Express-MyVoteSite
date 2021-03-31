@@ -6,8 +6,7 @@
   <body>
     <%- include ('partials/header') %>
 
-    <h1><%= title %></h1>
-
+    <h1>Vote List</h1>
     <% for (let i = 0; i < votes.length; i++) { %>
       <form action="/votings/<%= votes[i]._id %>" method="GET">
         <div>

@@ -5,7 +5,7 @@ const filterOption = require('../../utils/filterOption');
 exports.voteGetAll = async (req, res, next) => {
   const votes = await Vote.find();
 
-  res.status(200).render('index', { title: 'Vote Flatform', votes });
+  res.status(200).render('index', { votes });
 };
 
 exports.voteCreate = async (req, res, next) => {
