@@ -2,11 +2,11 @@ const Voting = require("../models/Voting");
 const User = require("../models/User");
 const validateVotingData = require("../utils/validateVotingData");
 
-module.exports.newGet = async (req, res, next) => {
+module.exports.getNew = async (req, res, next) => {
   res.status(200).render("createVoting");
 };
 
-module.exports.newPost = async (req, res, next) => {
+module.exports.postNew = async (req, res, next) => {
   try {
     const writer = await User.findOne({ email: res.locals.userEmail }).lean();
     const toBeCreatedVoting = req.body;
@@ -42,3 +42,4 @@ module.exports.newPost = async (req, res, next) => {
     next(createError(500, err.message));
   }
 };
+
