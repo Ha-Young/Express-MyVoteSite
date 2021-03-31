@@ -42,10 +42,12 @@ router.post("/new", async (req, res, next) => {
 });
 
 router.get("/:votingId", async (req, res, next) => {
+  console.log(req.query);
   try {
     const { votingId } = req.params;
     const voting = await Voting.findOne({ _id: votingId });
     const {
+      _id,
       author,
       title,
       description,
@@ -60,6 +62,7 @@ router.get("/:votingId", async (req, res, next) => {
     const isClosed = getProgress(endTime);
 
     res.status(200).render("votingDetail", {
+      _id,
       author,
       title,
       description,

@@ -9,8 +9,13 @@ require("../utils/localAuthentication");
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
-  const voting = await Voting.find();
-  res.render("index", { voting });
+  try {
+    const voting = await Voting.find();
+    res.render("index", { voting });
+  } catch (err) {
+    console.error(`get / ${err.message}`);
+    next(createError(500, "Internal Server Error"));
+  }
 });
 
 router.get("/login", (req, res, next) => {
@@ -48,7 +53,7 @@ router.post("/signup", async (req, res, next) => {
       res.status(302).redirect("/login");
     }
   } catch (err) {
-    console.error(err.message);
+    console.error(`get /signup ${err.message}`);
     next(createError(500, "Internal Server Error"));
   }
 });

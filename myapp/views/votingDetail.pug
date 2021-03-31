@@ -5,11 +5,11 @@ block stylesheet
 
 block content
   - const progress = isClosed ? "투표 종료" : "투표 중"
-  section.voting-detail
-    h2.voting-detail-heading2 #{title}
-    div.voting-detail-status
-      div.voting-detail-progress #{progress}
-      div.voting-detail-time
+  section.detail
+    h2 #{title}
+    div.detail-status
+      div.detail-progress #{progress}
+      div.detail-time
         div
           | 시작 시간
           |  #{startLocalTime.month}월 #{startLocalTime.date}일
@@ -18,11 +18,12 @@ block content
           | 종료 시간
           |  #{endLocalTime.month}월 #{endLocalTime.date}일
           |  #{endLocalTime.hour}시 #{endLocalTime.minute}분
-    div.voting-detail-author 작성자 #{author}
-    div.voting-detail-item-container
+    div.detail-author 작성자 #{author}
+    div.detail-item-container
       - for (let i = 0; i < votingItems.length; i++)
         - const {item, count} = votingItems[i]
-        div.voting-detail-item #{item} #{count}
-    div.voting-detail-button
+        div.detail-item(data-id=_id) #{item} #{count}
+    div.detail-button
       a(href="/") 돌아가기
       div 삭제
+  script(src="/javascripts/votingDetail.js")

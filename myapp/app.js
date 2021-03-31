@@ -1,15 +1,18 @@
-const createError = require("http-errors");
 const express = require("express");
 const session = require("express-session");
 const path = require("path");
 const flash = require("connect-flash");
+const createError = require("http-errors");
 const mongoose = require("mongoose");
 const passport = require("passport");
+
 const indexRouter = require("./routes/index");
 const votingsRouter = require("./routes/votings");
+const ajaxRouter = require("./routes/ajax");
+
 const Voting = require("./models/Voting");
-const initializeMongoDB = require("./utils/initializeMongoDB");
 const mockupData = require("./models/voting_mockup.json");
+const initializeMongoDB = require("./utils/initializeMongoDB");
 
 require("dotenv").config();
 
@@ -51,6 +54,7 @@ app.use(flash());
 
 app.use("/", indexRouter);
 app.use("/votings", votingsRouter);
+app.use("/ajax", ajaxRouter);
 
 app.use(function (req, res, next) {
   next(createError(404));
@@ -61,7 +65,6 @@ app.use(function (err, req, res, next) {
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   res.status(err.status || 500);
-  // res.render("error");
 
   if (err.status === 500) {
     return res.send(err.message);
