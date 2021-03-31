@@ -57,14 +57,10 @@ function getOptionObjectList() {
 function checkIsDateTimePast() {
   const dateTimeElement = document.querySelector("input[type='datetime-local']");
 
-  console.log('checking time...', dateTimeElement.value);
   const limitDate = new Date();
   limitDate.setHours(limitDate.getHours() + LIMIT_HOUR);
 
-  console.log(limitDate);
-
   const dateDiff = new Date(dateTimeElement.value) - limitDate;
-  console.log('dateDiff', dateDiff);
 
   return dateDiff < 0;
 }
