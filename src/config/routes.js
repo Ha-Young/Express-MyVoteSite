@@ -1,5 +1,6 @@
 const ROUTE = {
   HOME: "/",
+
   AUTH: {
     PREFIX: "/",
     SIGNUP: "/signup",
@@ -28,6 +29,15 @@ const ROUTE = {
       SIGNUP: "/signup",
       SIGNIN: "/signin",
       LOGOUT: "/logout",
+    },
+    VOTES: {
+      PREFIX: "/votes",
+      VOTES: "/",
+      MY_VOTES: "/:user_id",
+    },
+    VOTE: {
+      PREFIX: "/vote",
+      VOTE: "/:id",
     },
   },
 };
