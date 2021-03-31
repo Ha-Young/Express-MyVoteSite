@@ -47,7 +47,6 @@ exports.addVote = async function (req, res, next) {
     await currentUser.addVotingList(votingId);
   // }
   res.end();
-  // res.status(301).redirect(`/votings/${votingId}`);
 };
 
 exports.deleteVoting = async function (req, res, next) {
@@ -56,6 +55,5 @@ exports.deleteVoting = async function (req, res, next) {
   await Voting.findByIdAndDelete(votingId);
 
   //TODO 삭제 성공 페이지 찍고 가는게 나을듯?
-  // res.status(301).redirect(`/`);
   res.end();
 }

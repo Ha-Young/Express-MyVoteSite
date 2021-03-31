@@ -54,5 +54,5 @@ exports.login = async function (req, res) {
 
 exports.logout = function (req, res, next) {
   res.clearCookie('access_token');
-  res.status(301).redirect('/');
+  res.status(301).redirect('/login');
 };
