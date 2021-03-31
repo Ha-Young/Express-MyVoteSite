@@ -1,0 +1,21 @@
+extends ./layout.pug
+
+block stylesheet
+  link(rel='stylesheet', href='/stylesheets/voting-new.css')
+
+block content
+  - const progress = isClosed ? "투표 종료" : "투표 중"
+  section.voting-new
+    h2 투표만들기
+    form.voting-new-form(action="/votings/new", method="post")
+      div.voting-new-time-input
+        input(type="date" name="date")
+        input(type="time" name="time")
+      div.voting-new-item
+      div.voting-new-item-btn
+        div
+          button(type="button") 항목 추가
+          button(type="button") 항목 삭제
+        div
+          a(href="/") 돌아가기
+          input(type="submit", value="만들기")

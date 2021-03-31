@@ -1,0 +1,71 @@
+.voting-new {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  width: 60vmin;
+  height: 60vmin;
+  border: 1px solid;
+}
+
+.voting-new > h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 80%;
+  height: 10%;
+  border: 1px solid;
+}
+
+.voting-new-form {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  width: 80%;
+  height: 85%;
+  border: 1px solid;
+}
+
+.voting-new-time-input {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  width: 90%;
+  height: 10%;
+  border: 1px solid;
+}
+
+.voting-new-item {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  width: 90%;
+  height: 70%;
+  border: 1px solid;
+}
+
+.voting-new-item-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  width: 90%;
+  height: 10%;
+  border: 1px solid;
+}
+
+.voting-new-item-btn > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  width: 40%;
+  height: 80%;
+  border: 1px solid;
+}

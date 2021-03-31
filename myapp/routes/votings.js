@@ -1,6 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const Voting = require("../models/Voting");
+const getLocalTime = require("../utils/getLocalTime");
+const getProgress = require("../utils/getProgress");
+
+router.get("/new", (req, res, next) => {
+  // res.send("s");
+  res.render("votingNew");
+});
+
+router.post("/new", (req, res, next) => {
+  // res.send("s");
+  res.send("new");
+});
 
 router.get("/:votingId", async (req, res, next) => {
   const { votingId } = req.params;
@@ -14,32 +26,6 @@ router.get("/:votingId", async (req, res, next) => {
     startTime,
     endTime,
   } = voting;
-
-  const getLocalTime = (ISOTime) => {
-    const year = ISOTime.getFullYear();
-    const month = ISOTime.getMonth() + 1;
-    const date = ISOTime.getDate();
-    const hour = ISOTime.getHours();
-    const minute = ISOTime.getMinutes();
-
-    const localTime = {
-      year,
-      month,
-      date,
-      hour,
-      minute,
-    };
-
-    return localTime;
-  };
-
-  const getProgress = (ISOTime) => {
-    if (ISOTime.getTime() > new Date().getTime()) {
-      return false;
-    }
-
-    return true;
-  };
 
   const startLocalTime = getLocalTime(startTime);
   const endLocalTime = getLocalTime(endTime);
