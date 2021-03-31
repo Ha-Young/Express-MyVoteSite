@@ -16,8 +16,8 @@ block content
     button.submit-voting-button Vote
   if currentUser.id
     if (voting.postedBy.toString() === currentUser.id.toString())
-      .result Result: #{result}
+      .result Result: #{votingResult.join(", ")}
       a.delete-voting-link(href=`/votings/${voting.id}/delete`)
         button.delete-voting-button Delete Voting
   else if (!voting.progress)
-    .result Result: #{result}
+    .result Result: #{votingResult.join(", ")}

@@ -1,26 +1,48 @@
 const createError = require("http-errors");
-const User = require("../models/User");
 const Voting = require("../models/Voting");
+const { getVotingResult } = require("../utils/getVotingResult");
 
 exports.getVoting = async (req, res, next) => {
-  const { id } = req.params;
-  const voting = await Voting.findById(id);
+  try {
+    const { id } = req.params;
 
-  res.render("votingDetail", { pageTitle: voting.title, voting });
+    const voting = await Voting.findById(id);
+
+    if (!voting) {
+      console.log(`Can't find voting by ${id}!`);
+      next(createError(404));
+    }
+
+    const votingResult = getVotingResult(voting.options);
+
+    res.render("votingDetail", {
+      pageTitle: voting.title,
+      voting,
+      votingResult,
+    });
+  } catch (err) {
+    console.log(err);
+    next(createError(500));
+  }
 };
-exports.postVoting = async (req, res) => {
+exports.postVoting = async (req, res, next) => {
   const userId = req.user.id;
   const votingId = req.params.id;
   const selection = Object.keys(req.body)[0];
 
-  await Voting.findOneAndUpdate(
-    { _id: votingId, "options._id": selection },
-    { $push:
-      { participants: [userId], "options.$.selector": [userId] }
-    }
-  );
+  try {
+    await Voting.findOneAndUpdate(
+      { _id: votingId, "options._id": selection },
+      { $push:
+        { participants: [userId], "options.$.selector": [userId] }
+      }
+    );
 
-  res.redirect("/");
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+    next(createError(500));
+  }
 };
 
 exports.getNewVoting = (req, res) => {

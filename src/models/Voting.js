@@ -9,6 +9,7 @@ const votingSchema = new Schema({
   postedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    index: true,
     require: true,
   },
   expiration: {
