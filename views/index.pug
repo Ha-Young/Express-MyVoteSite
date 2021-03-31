@@ -1,10 +1,14 @@
 extends layout
-
+block append head
+  link(rel='stylesheet' href='/css/main.min.css')
 block content
   h1= votehere
   if (user)
     p Hello #{user.name}
-    img(src=`${user.avatarUrl}`)
+    if (user.avatarUrl)
+      img(src=`${user.avatarUrl}`)
+    else 
+      img(src='https://i.pravatar.cc/100')
     p #{user.email}
   else
     p HELLO GUEST
@@ -14,6 +18,10 @@ block content
   else
     form(action='/auth/github' method='GET')
       button(type='submit') LOGIN WITH GITHUB
+    form(action='/auth/signup' method='GET')
+      button(type='submit') SIGN UP
+    form(action='/auth/login' method='GET')
+      button(type='submit') LOG IN
       
   button(id='plusButton')
     a(href='/vote/new') MAKE NEW VOTE

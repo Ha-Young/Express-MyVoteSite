@@ -18,6 +18,11 @@ router.get(
   authController.getGithubAuthCallback,
 );
 
+router.get('/signup', authController.getRegister);
+router.post('/signup', authController.postRegister);
+
+router.get('/login', authController.renderLogin);
+router.post('/login', authController.postLogin);
 router.delete('/logout', authController.logout);
 
 module.exports = router;

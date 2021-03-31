@@ -9,7 +9,9 @@ const passport = require('passport');
 const methodOverride = require('method-override');
 
 const initializeDB = require('./configs/db');
-const initializePassport = require('./loaders/passport');
+// TODO naming --- github / local
+const initializePassport = require('./loaders/passportGithub');
+const initializePassportLocal = require('./loaders/passportLocal');
 
 const app = express();
 
@@ -29,6 +31,7 @@ app.use(methodOverride('_method'));
 
 initializeDB();
 initializePassport();
+initializePassportLocal();
 
 app.use('/', require('./routes'));
 
