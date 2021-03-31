@@ -1,24 +1,37 @@
+const mongoose = require('mongoose');
 const Vote = require('../../models/vote');
 const convertDate = require('../../utils/combineDateAndTime');
 const filterOption = require('../../utils/filterOption');
+const classifyAccordingToIsproceeding = require('../../utils/classifyAccordingToIsproceeding');
 
 exports.voteGetAll = async (req, res, next) => {
   const votes = await Vote.find();
-  const expiredVote = [];
-  const validatedVote = [];
-
-  votes.forEach(async (vote) => {
-    if (vote.expiredAt < new Date) {
-      expiredVote.push(vote);
-      await Vote.findByIdAndUpdate(vote._id, { isProceeding: false }, { new: true });
-
-      return;
-    }
-
-    validatedVote.push(vote);
-  });
+  const { expiredVote, validatedVote } = await classifyAccordingToIsproceeding(votes);
 
   res.status(200).render('index', { expiredVote, validatedVote });
+};
+
+exports.getMyVoteList = async (req, res, next) => {
+  const { id } = req.params;
+  const { ObjectId } = mongoose.Types;
+
+  const votes = await Vote.aggregate([
+    {
+      $match: { "creater._id": ObjectId(id) }
+    }
+  ]);
+
+  const { expiredVote, validatedVote } = await classifyAccordingToIsproceeding(votes);
+
+  res.status(200).render('myVotes', { expiredVote, validatedVote });
+};
+
+exports.voteDetail = async (req, res, next) => {
+  const { id } = req.params;
+  const vote = await Vote.findById(id);
+  const { title, creater, expiredAt, convertedExpiredAt, isProceeding, options } = vote;
+
+  res.status(200).render('vote', { title, creater, expiredAt, convertedExpiredAt, isProceeding, options, id });
 };
 
 exports.voteCreate = async (req, res, next) => {
@@ -53,12 +66,10 @@ exports.voteCreate = async (req, res, next) => {
   res.status(200).redirect('/');
 };
 
-exports.voteDetail = async (req, res, next) => {
-  const { id } = req.params;
-  const vote = await Vote.findById(id);
-  const { title, creater, expiredAt, convertedExpiredAt, isProceeding, options } = vote;
+exports.createSuccess = (req, res, next) => {
+};
 
-  res.status(200).render('vote', { title, creater, expiredAt, convertedExpiredAt, isProceeding, options, id });
+exports.createFailure = (req, res, next) => {
 };
 
 exports.voteUpdate = async (req, res, next) => {
@@ -94,10 +105,4 @@ exports.voteDelete = async (req, res, next) => {
   await Vote.remove({ _id: id });
 
   res.status(200).json({ response: "delete" });
-};
-
-exports.saveSuccess = (req, res, next) => {
-};
-
-exports.saveFailure = (req, res, next) => {
 };

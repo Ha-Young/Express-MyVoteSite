@@ -17,6 +17,11 @@ router.get('/signup', function(req, res, next) {
 });
 router.post('/signup', userController.signup);
 
-router.get('/my-votings', isLoggedIn, userController.myVotingList);
+router.get('/signout', isLoggedIn, (req, res, next) => {
+  res.render('signout');
+});
+router.get('/signout/callback', isLoggedIn, userController.signout);
+
+router.get('/my-votings/:id', isLoggedIn, votingsController.getMyVoteList);
 
 module.exports = router;

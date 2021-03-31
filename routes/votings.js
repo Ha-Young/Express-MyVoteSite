@@ -12,7 +12,7 @@ router.get('/:id', votingsController.voteDetail);
 router.patch('/:id', isLoggedIn, votingsController.voteUpdate);
 router.delete('/:id', isLoggedIn, votingsController.voteDelete);
 
-router.get('/success', isLoggedIn, votingsController.saveSuccess);
-router.get('/error', isLoggedIn, votingsController.saveFailure);
+router.get('/success', isLoggedIn, votingsController.createSuccess);
+router.get('/error', isLoggedIn, votingsController.createFailure);
 
 module.exports = router;

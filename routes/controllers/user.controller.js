@@ -59,6 +59,5 @@ exports.signup = async (req, res, next) => {
   }
 };
 
-exports.myVotingList = async (req, res, next) => {
-
+exports.signout = async (req, res, next) => {
 };

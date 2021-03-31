@@ -7,7 +7,13 @@
 
 <div>
   <a href="/">Home</a>
-  <a href="/login">Login</a>
-  <a href="/logout">Logout</a>
-  <a href="/votings/new">Add Vote</a>
+  <% if (!user.nickname) { %>
+    <a href="/login">Login</a>
+    <a href="/signup">Signup</a>
+  <% } else { %>
+    <a href="/votings/new">Add Vote</a>
+    <a href="/my-votings/<%= user._id %>">My Votings</a>
+    <a href="/logout">Logout</a>
+    <a href="/signout">Signout</a>
+  <% } %>
 </div>
