@@ -22,8 +22,8 @@
       <span>Expired date : <%= voting.expireDate%></span>
 
       <% for(let i = 0; i < options.length; i++) { %>
-        <span>count <%= options[i].voteCount %></span>
-        <span> <%= options[i].name %></span>
+        <span class="detail-voting-option" data-voteCount=<%= options[i].voteCount %>>count <%= options[i].voteCount %></span>
+        <span class="detail-voting-option" data-optionName=<%= options[i].name %>> <%= options[i].name %></span>
       <% } %>
     </div>
   </div>
