@@ -1,0 +1,50 @@
+header {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 30px;
+}
+
+.myVoteList-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.voteList-wrapper {
+  width: 400px;
+  padding: 20px;
+  border: 1px solid black;
+}
+
+.vote {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  margin: 10px;
+}
+
+.title {
+  padding: 5px;
+}
+
+.creator {
+  padding: 5px;
+}
+
+.expire-date {
+  padding: 5px;
+}
+
+.vote-status {
+  padding: 5px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}

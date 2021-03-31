@@ -1,9 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="/stylesheets/myVotes.css" />
   <title>myVoteList</title>
 </head>
 <body>
-  
+  <header>
+    <a href="/signup">
+      <div>
+        회원가입
+      </div>
+    </a>
+    <a href="/login">
+      <div>
+        로그인
+      </div>
+    </a>
+    <a href="/">
+      <div>
+        투표목록
+      </div>
+    </a>
+    <% if (isUserLogedIn) { %>
+      <div class="logout-wrapper">
+        <button class="logout-btn">로그아웃</button>
+      </div>
+    <% } %>
+  </header>
+  <main class="myVoteList-wrapper">
+    <div class="voteList-wrapper">
+      <% for (let i = 0; i < myVoteList.length; i++) { %>
+        <a href="/votings/<%= myVoteList[i]._id %>">
+          <div class="vote">
+            <div class="title">
+              제목: <%= myVoteList[i].title %>
+            </div>
+            <div class="creator">
+              작성자: <%= myVoteList[i].creator %>
+            </div>
+            <div class="expire-date">
+              만료일:
+              <%=
+                myVoteList[i].endDate.getFullYear() + "년 " +
+                (myVoteList[i].endDate.getMonth() + 1) + "월" +
+                myVoteList[i].endDate.getDate() + "일"
+              %>
+            </div>
+            <div class="vote-status">
+              <% if (myVoteList[i].isOnVote === "true") { %>
+                <div>⭕️ 투표 진행중 ⭕️</div>
+              <% } else { %>
+                <div>❌ 투표 마감 ❌</div>
+              <% } %>
+            </div>
+          </div>
+        </a>
+      <% } %>
+    </div>
+  </main>
 </body>
 </html>
