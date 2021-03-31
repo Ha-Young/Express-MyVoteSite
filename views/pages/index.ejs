@@ -1,37 +1,5 @@
 <div class="index">
   <ul class="votes grid">
-    <% for(const vote of votes) { %>
-      <a href="votings/<%= vote._id %>">
-        <li class="vote-item">
-          <span class="vote-name"> <%= vote.title %> </span>
-
-          <span class="vote-country grid-only"> <%= vote.is_process %> </span>
-
-          <div class="pull-right">
-            <span class="vote-progress">
-              <span class="vote-progress-bg">
-                <span class="vote-progress-fg" style="width: 88%"></span>
-              </span>
-
-              <span class="vote-progress-labels">
-                <span class="vote-progress-label"> 88% </span>
-
-                <span class="vote-completes"> <%= vote.entire_count %> </span>
-              </span>
-            </span>
-
-            <span class="vote-end-date ended"> <%= vote.expire_datetime %> </span>
-            <span class="vote-stage">
-              <span class="stage draft">Draft</span>
-              <span class="stage awarded">Awarded</span>
-              <span class="stage live">Live</span>
-              <span class="stage ended active">Ended</span>
-            </span>
-          </div>
-        </li>
-      </a>
-    <% } %>
-
     <!--
       <li class="vote-item">
       <span class="vote-country list-only"> COX </span>
@@ -110,3 +78,8 @@
     </li> -->
   </ul>
 </div>
+
+<script src="/javascripts/api/vote.js"></script>
+<script src="/javascripts/utils/infiniteScroll.js"></script>
+<script src="/javascripts/templates/voteItemListTemplate.js"></script>
+<script src="/javascripts/indexPage.js"></script>
