@@ -1,10 +1,17 @@
-const { Router } = require('express');
-const auth = require('./auth');
+const express = require("express");
+const vote = require('./votes');
 
 // guaranteed to get dependencies
 module.exports = () => {
-  const app = Router();
-  auth(app);
+  const app = express.Router();
+
+  app.get("/", (req, res) => {
+    res.json({
+      api_page: true,
+    });
+  });
+
+  vote(app);
 
   return app;
 };
