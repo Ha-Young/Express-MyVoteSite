@@ -3,6 +3,8 @@ const createError = require('http-errors');
 const User = require('../models/User');
 const Vote = require('../models/Vote');
 const APIFeatures = require('../utils/APIFeatures');
+const generatePageNumbers = require('../utils/generatePageNumbers');
+const config = require('../config');
 
 exports.getHome = async (req, res, next) => {
   const redirectAddress = req.flash('redirect');
@@ -12,6 +14,8 @@ exports.getHome = async (req, res, next) => {
   }
 
   try {
+    const currentPage = req.query.page ?? 1;
+    const pageNumbers = generatePageNumbers(Number(currentPage), config.pageNumbersLength);
     const features = new APIFeatures(Vote.find(), req.query)
       .sort()
       .limitFields()
@@ -25,6 +29,8 @@ exports.getHome = async (req, res, next) => {
 
     res.render('index', {
       user: req.user,
+      currentPage,
+      pageNumbers,
       votes,
     });
   } catch (err) {

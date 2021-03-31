@@ -15,6 +15,10 @@ body {
   background-color: #71717a;
 }
 
+main {
+  min-height: 86vh;
+}
+
 a {
   text-decoration: none;
   color: inherit;

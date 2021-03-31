@@ -5,6 +5,7 @@
   <title>Voting Platform</title>
   <link rel="stylesheet" href="/stylesheets/style.css" />
   <link rel="stylesheet" href="/stylesheets/index.css" />
+  <link rel="stylesheet" href="/stylesheets/pagination.css" />
 </head>
 
 <body>
@@ -13,9 +14,12 @@
       <div class="vote-list">
         <% votes.forEach(vote=> { %>
           <%- include("partials/voteBlock", {vote}) %>
-            <% }) %>
+            <% }); %>
       </div>
     </main>
+
+    <%- include("partials/pagination", {currentPage, pageNumbers}) %>
+      <script src="/javascripts/pagination.js"></script>
 </body>
 
 </html>

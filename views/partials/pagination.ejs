@@ -1,0 +1,11 @@
+<div class="pagination-container">
+  <div class="pagination">
+    <button class="prev-button">&laquo;</button>
+    <% pageNumbers.forEach(pageNumber=> { %>
+      <a href="/?page=<%= pageNumber%>" class="pageNumber<%=Number(currentPage)===pageNumber ? " active" : "" %>">
+        <%= pageNumber%>
+      </a>
+      <% }); %>
+        <button class="next-button">&raquo;</button>
+  </div>
+</div>

@@ -23,7 +23,7 @@ class APIFeatures {
   }
 
   sort() {
-    let sortBy = 'expiration_date';
+    let sortBy = 'expirationDate';
 
     if (this.queryString.sort) {
       sortBy = this.queryString.sort.split(',').join(' ');
