@@ -1,7 +1,9 @@
 const Voting = require("../../models/Voting");
+const User = require("../../models/User");
 
 exports.getAllVotings = async (req, res, next) => {
   const { user } = req;
+	
   try {
     const votings = await Voting.find().populate("proponent", "name");
     
@@ -13,9 +15,8 @@ exports.getAllVotings = async (req, res, next) => {
 
 exports.postNewVoting = async (req, res, next) => {
   const { body: { options, expired_at, title }, user } = req;
-
   try {
-    const voting = Voting({
+    const newVoting = await Voting.create({
       title,
       expired_at,
       proponent: user.id,
@@ -23,8 +24,12 @@ exports.postNewVoting = async (req, res, next) => {
         return { option };
       }),
     });
-    
-    await voting.save();
+		
+    const updateUser = await User.findByIdAndUpdate(user._id, {
+			$push: { voting: newVoting._id }
+		});
+		
+		await updateUser.save();
 
     res.status(302).redirect("/");
   } catch (error) {
@@ -62,19 +67,27 @@ exports.deleteVoting = async (req, res, next) => {
 };
 
 exports.updateVoting = async (req, res, next) => {
+	console.log(req.originalUrl);
   try {
     const {
       params: { id },
       user,
+			originalUrl,
       body: { option },
     } = req;
+
+		if (!user) {
+			res
+				.cookie("redirect", `${originalUrl}`, { httpOnly: true })
+				.json({ user });
+		}
+		
     const voting = await Voting.findById(id);
     const isVoted = voting.voters.some((voter) => user.id === voter.toString());
     let isSuccessVoting = false;
-
+		
     if (!isVoted) {
       const targetKey = voting.options.findIndex((content) => content.option === option);
-
       voting.voters.push(user.id);
       const votted = ++voting.options[targetKey].count;
 
@@ -97,9 +110,9 @@ exports.getMyVotingPage = async (req, res, next) => {
   const { user: { _id } } = req;
   
   try {
-    const votings = await Voting.find({ proponent: _id }).lean(); // populate로 수정..
-
-    res.status(200).render("myVoting", { votings });
+    const [user] = await User.find({ _id }).populate("voting");
+		
+    res.status(200).render("myVoting", { votings: user.voting });
   } catch (error) {
     next(error);
   }

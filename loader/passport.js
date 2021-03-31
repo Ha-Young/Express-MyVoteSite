@@ -99,25 +99,25 @@ passport.use(
   )
 );
 
-function cookieExtractor(req) {
-  return req && req.cookies ? req.cookies["jwt"] : null;
-}
+// function cookieExtractor(req) {
+//   return req && req.cookies ? req.cookies["jwt"] : null;
+// }
 
-passport.use(
-  new JwtStrategy(
-    {
-      secretOrKey: process.env.JWT_SECRET_KEY,
-      jwtFromRequest: cookieExtractor,
-    },
-    async (payload, cb) => {
-      try {
-        const { email } = payload;
-        const user = await User.findOne({ email });
-        // password 지워서 줘야함..
-        cb(null, user || null);
-      } catch (error) {
-        cb(error, false);
-      }
-    }
-  )
-);
+// passport.use(
+//   new JwtStrategy(
+//     {
+//       secretOrKey: process.env.JWT_SECRET_KEY,
+//       jwtFromRequest: cookieExtractor,
+//     },
+//     async (payload, cb) => {
+//       try {
+//         const { email } = payload;
+//         const user = await User.findOne({ email });
+//         // password 지워서 줘야함..
+//         cb(null, user || null);
+//       } catch (error) {
+//         cb(error, false);
+//       }
+//     }
+//   )
+// );

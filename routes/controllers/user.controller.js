@@ -7,34 +7,33 @@ exports.getSignUp = (req, res, next) => {
 };
 
 exports.getLogIn = (req, res, next) => {
-  console.log(req);
   res.status(200).render("login");
 };
 
 exports.getToken = async (req, res, next) => {
-  const { user } = req;
+  const { user, cookies } = req;
   const userData = user instanceof mongoose.Model ? user.toObject() : user; // tojson
   
   try {
     const token = await jwt.sign(
-      user.toJson(),
+      userData,
       process.env.JWT_SECRET_KEY,
-      { expiresIn: "6h" }
+      { expiresIn: "1h" }
     );
     
+		const redirectUrl = cookies["redirect"] ? cookies["redirect"] : "/";
+
     res
       .cookie("jwt", token, { httpOnly: true })
       .status(200)
-      .redirect("/");
+      .redirect(redirectUrl);
   } catch (error) {
     next(error);
   }
 };
 
 exports.logout = (req, res) => {
-  req.logout();
-  
-  res.status(302).redirect("/login"); // 쿠키 못지워..?
+  res.clearCookie("jwt").redirect("/");
 };
 
 exports.postSignUp = passport.authenticate(

@@ -12,13 +12,15 @@ async function requestUpdateData(ev) {
         "Accept": "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ option: value }), 
+      body: JSON.stringify({
+				option: value,
+			}), 
     });
 
     const { user, votted, isSuccessVoting } = await response.json();
-
+		console.log(24);
     if (!user) {
-      window.location.href("/login");
+      window.location.replace("/login");
     }
 
     if (isSuccessVoting) {
