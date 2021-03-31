@@ -8,7 +8,7 @@ router.get('/new', isLoggedIn, (req, res, next) => {
 });
 router.post('/new', isLoggedIn, votingsController.voteCreate);
 
-router.get('/:id', isLoggedIn, votingsController.voteDetail);
+router.get('/:id', votingsController.voteDetail);
 router.patch('/:id', isLoggedIn, votingsController.voteUpdate);
 router.delete('/:id', isLoggedIn, votingsController.voteDelete);
 

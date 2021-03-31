@@ -10,7 +10,7 @@ exports.voteGetAll = async (req, res, next) => {
   votes.forEach(async (vote) => {
     if (vote.expiredAt < new Date) {
       expiredVote.push(vote);
-      await Vote.findByIdAndUpdate(id, { isProceeding: false }, { new: true });
+      await Vote.findByIdAndUpdate(vote._id, { isProceeding: false }, { new: true });
 
       return;
     }

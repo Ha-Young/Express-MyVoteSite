@@ -46,8 +46,13 @@ function deleteVote() {
 }
 
 function init() {
-  patchButton.addEventListener('click', patchVote);
-  deleteButton.addEventListener('click', deleteVote);
+  if (patchButton) {
+    patchButton.addEventListener('click', patchVote);
+  }
+
+  if(deleteButton) {
+    deleteButton.addEventListener('click', deleteVote);
+  }
 }
 
 init();

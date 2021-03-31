@@ -19,20 +19,26 @@
         <span>종료 시간:  <%= convertedExpiredAt %></span>
       </div>
       <div>
-        <span>선택 사항:  <%= isProceeding %></span>
+        <span>- 선택 사항 -</span>
         <form name="<%= id %>" id="patch-form">
           <% for (let i = 0; i < options.length; i++) { %>
             <div>
               <label><input type="radio" name="voted" value="<%= options[i].text %>">
                 <%= options[i].text %>
               </label>
-              <span>count: <%= options[i].count %></span>
             </div>
           <% } %>
         </form>
       </div>
-      <button id="patch-button">투표</button>
-      <button id="delete-button">삭제</button>
+      <% if (isProceeding && user.nickname) { %>
+        <button id="patch-button" name="<%= user.nickname %>">투표</button>
+      <% } else if (isProceeding) { %>
+        <a href="/login">투표</a>
+      <% } %>
+
+      <% if (creater._id.toString() === user._id.toString()) { %>
+        <button id="delete-button">삭제</button>
+      <% } %>
     </div>
 
     <%- include ('partials/footer') %>

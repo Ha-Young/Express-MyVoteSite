@@ -23,11 +23,15 @@
               <span>종료 시간:  <%= validatedVote[i].convertedExpiredAt %></span>
             </div>
             <div>
-              <span>진행 여부:  <%= validatedVote[i].isProceeding %></span>
+              <span>진행중:  <%= validatedVote[i].isProceeding %></span>
             </div>
           </div>
-          <button type="submit">투표 하기</button>
-          <button type="submit">결과 보기</button>
+          <% if (validatedVote[i].isProceeding) { %>
+            <button type="submit">투표 하기</button>
+          <% } %>
+          <% if (validatedVote[i].creater._id.toString() === user._id.toString()) { %>
+            <button type="submit">결과 보기</button>
+          <% } %>
         </form>
         <br/>
       <% } %>
@@ -48,10 +52,9 @@
               <span>종료 시간:  <%= expiredVote[i].convertedExpiredAt %></span>
             </div>
             <div>
-              <span>진행 여부:  <%= expiredVote[i].isProceeding %></span>
+              <span>진행중:  <%= expiredVote[i].isProceeding %></span>
             </div>
           </div>
-          <button type="submit">투표 하기</button>
           <button type="submit">결과 보기</button>
         </form>
         <br/>

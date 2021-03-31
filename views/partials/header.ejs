@@ -1,6 +1,8 @@
 <h1>Vote Flatform</h1>
-<% if (user) { %>
-  <h2>Welcome <%= user %>.</h2>
+<% if (user.nickname) { %>
+  <h2>Welcome <%= user.nickname %>.</h2>
+<% } else { %>
+  <h2>Welcome Visitor.</h2>
 <% } %>
 
 <div>
