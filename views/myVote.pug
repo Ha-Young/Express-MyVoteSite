@@ -1,14 +1,46 @@
-extends layout
-block append head
-  link(rel='stylesheet' href='/css/main.min.css')
-block content
-  ul.all-votes
-    if (allVotes)
-      each vote in allVotes
-        li
-          a(href=`/vote/${vote._id}`)
-            .eachVote
-              h4 #{vote.title}
-              p avilable - #{vote.isVotable}
-              p expired At - #{vote.expiredAt}
-              p by #{vote.creatorName}
+include mixins/voteList
+include mixins/header
+head
+ link(rel="stylesheet", href="/css/skate.min.css")
+.container
+  .sidebar
+    span.logo V
+    a.logo-expand(href='/') Vote Here
+    include partials/sidebar.pug
+  .wrapper
+    +header(user)
+    .main-container
+      .main-votes
+        .main-vote.anim(style='--delay: .1s')
+          .main-vote__title Vote your favorite outdoor sports
+          .main-vote__author
+            .author-img__wrapper
+              svg.feather.feather-check(viewbox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round')
+                path(d='M20 6L9 17l-5-5')
+              img.author-img(src='https://images.unsplash.com/photo-1560941001-d4b52ad00ecc?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80')
+            .author-detail
+              .author-name Thomas Hope
+              .author-info
+                | 53K votes 
+                span.seperate
+                | 2 weeks ago
+          .main-vote__time Finished
+        .main-vote.anim(style='--delay: .2s')
+          .main-vote__title What is your preference
+          .main-vote__author
+            .main-vote__time Vote now
+            .author-img__wrapper
+              svg.feather.feather-check(viewbox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round')
+                path(d='M20 6L9 17l-5-5')
+              img.author-img(src='https://images.unsplash.com/photo-1496345875659-11f7dd282d1d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mzl8fG1lbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')
+            .author-detail
+              .author-name Tony Andrew
+              .author-info
+                | 53K views 
+                span
+                | 2 weeks ago
+      .small-header.anim(style='--delay: .3s') My Votes
+      .votes
+        each vote of allVotes
+          +voteList(vote)
+

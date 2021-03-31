@@ -1,18 +1,30 @@
-doctype html
-.container.login-container.jumbotron
-  h1.display-3 Register
-  form(action='/auth/signup' method='POST')
-    .form-group
-      label(for='name') Name
-      input#name.form-control(type='text' name='name' required)
-    .form-group
-      label(for='email') Email
-      input#email.form-control(type='email' name='email' required)
-    .form-group
-      label(for='password') Password
-      input#password.form-control(type='password' name='password' required)
-    button.btn.btn-primary(type='submit') Register
-  br
-  .alert.alert-dismissible.alert-info
-    strong Already have an account?
-    a(href='/') Login Here
+include mixins/voteList
+include mixins/header
+head
+ link(rel="stylesheet", href="/css/skate.min.css")
+.container
+  .sidebar
+    span.logo V
+    a.logo-expand(href='/') Vote Here
+    include partials/sidebar.pug
+  .wrapper
+    +header(user)
+    .main-container
+      .main-vote.anim(style='--delay: .1s')
+        .container.login-container.jumbotron
+          h1.display-3 Register
+          form(action='/auth/signup' method='POST')
+            .form-group
+              label(for='name') Name
+              input#name.form-control(type='text' name='name' required)
+            .form-group
+              label(for='email') Email
+              input#email.form-control(type='email' name='email' required)
+            .form-group
+              label(for='password') Password
+              input#password.form-control(type='password' name='password' required)
+            button.btn.btn-primary(type='submit') Register
+          br
+          .alert.alert-dismissible.alert-info
+            strong Already have an account?
+            a(href='/') Login Here

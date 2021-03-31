@@ -1,25 +1,34 @@
-extends layout
-block append head
+include mixins/voteList
+include mixins/header
+head
   link(rel='stylesheet' href='/css/newForm.min.css')
-block content
-  if (vote)
-    h4 #{vote.title}
-    p avilable - #{vote.isVotable}
-    p expired At - #{vote.expiredAt}
-    p by #{vote.creatorName}
-    | vote whatever you want
-    if (vote.isVotable)
-      form(action=`/vote/${vote._id}?_method=PUT` method='POST')
-        each count, option in vote.options
-          .form-group
-            label
-              input.input-radio(name='option' value=`${option}` type='radio')
-              | #{option}
-              if (isCreator)
-                | -- 현재 현황: #{count}
-        button(type='submit') Submit
-    else
-      h2 winner is ...#{vote.winner}
-  if (isCreator)
-    form(action=`/vote/${vote._id}?_method=DELETE` method='POST')
-      button(type='submit') DELETE
+  link(rel="stylesheet", href="/css/skate.min.css")
+.container
+  .sidebar
+    span.logo V
+    a.logo-expand(href='/') Vote Here
+    include partials/sidebar.pug
+  .wrapper
+    +header(user)
+    .main-container
+      if (vote)
+        h4 #{vote.title}
+        p avilable - #{vote.isVotable}
+        p expired At - #{vote.expiredAt}
+        p by #{vote.creatorName}
+        | vote whatever you want
+        if (vote.isVotable)
+          form(action=`/vote/${vote._id}?_method=PUT` method='POST')
+            each count, option in vote.options
+              .form-group
+                label
+                  input.input-radio(name='option' value=`${option}` type='radio')
+                  | #{option}
+                  if (isCreator)
+                    | -- 현재 현황: #{count}
+            button(type='submit') Submit
+        else
+          h2 winner is ...#{vote.winner}
+      if (isCreator)
+        form(action=`/vote/${vote._id}?_method=DELETE` method='POST')
+          button(type='submit') DELETE
