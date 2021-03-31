@@ -55,12 +55,19 @@
     <% } %>
   <% } else { %>
     <main name="<%= votingId %>">
-      <canvas id="myChart"></canvas>
-      <% if (isValidateUser) { %>
-        <div>
-          <button class="delete-btn">삭제</button>
-        </div>
-      <% } %>
+      <canvas id="myChart" optionTitle="<%= JSON.stringify(option) %>"></canvas>
+      <div class="button-wrapper">
+        <a href="/">
+          <div>
+            <button>투표목록</button>
+          </div>
+        </a>
+        <% if (isValidateUser) { %>
+          <div>
+            <button class="delete-btn">삭제</button>
+          </div>
+        <% } %>
+      </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="/javascripts/result.js"></script>

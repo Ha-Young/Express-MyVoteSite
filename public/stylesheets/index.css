@@ -15,7 +15,7 @@ header {
 .vote-wrapper {
   height: auto;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   min-height: 80vh;
@@ -28,7 +28,7 @@ header {
   border: 1px solid black;
   display: flex;
   flex-direction: column;
-  width: 600px;
+  width: 300px;
   justify-content: center;
   align-items: center;
   left: 40%;

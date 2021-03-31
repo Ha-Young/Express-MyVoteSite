@@ -1,14 +1,21 @@
 const ctx = document.getElementById("myChart");
 const main = document.querySelector("main");
 const deleteBtn = document.querySelector(".delete-btn");
-const path = main.getAttribute("name");
+const voteId = main.getAttribute("name");
+const options = JSON.parse(ctx.getAttribute("optionTitle"));
+const optionTitle = options.map(option => {
+  return option.optionTitle;
+});
+const optionVotedResults = options.map(option => {
+  return option.votedUsers.length;
+});
 
 const myChart = new Chart(ctx, { type: 'bar',
   data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: optionTitle,
     datasets: [{
       label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
+      data: optionVotedResults,
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -42,7 +49,7 @@ const myChart = new Chart(ctx, { type: 'bar',
 if (deleteBtn !== null) {
   deleteBtn.addEventListener("click", async () => {
     try {
-      await fetch(`http://localhost:3000/votings/${path}`, {
+      await fetch(`http://localhost:3000/votings/${voteId}`, {
         method: "DELETE",
       });
     } catch(e) {
