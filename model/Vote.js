@@ -36,6 +36,7 @@ const Vote = new mongoose.Schema({
   creator: {
     type: mongoose.Types.ObjectId,
     required: true,
+    ref: User,
   },
   thumbnailURL: {
     type: String,

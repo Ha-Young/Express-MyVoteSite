@@ -1,3 +1,4 @@
+const datefns = require("date-fns");
 const Vote = require("../model/Vote");
 
 module.exports.getNewVote = function getNewVote(req, res, next) {
@@ -32,7 +33,7 @@ module.exports.postNewVote = async function postNewVote(req, res, next) {
     const choices = Array(selectionTitle.length).fill("").map((_, i) => ({
       choiceTitle: selectionTitle[i],
       selectUser: [],
-      pictureURL: selectionImage[i],
+      pictureURL: selectionImage[i] || undefined,
     }));
 
     const tags = voteTags && voteTags.split(",").map(el => el.trim());
@@ -43,7 +44,7 @@ module.exports.postNewVote = async function postNewVote(req, res, next) {
       dueDate: inputDueDate,
       isEnable: true,
       creator: user._id,
-      thumbnailURL: voteImageUrl,
+      thumbnailURL: voteImageUrl || undefined,
       choices,
       tags,
     });
@@ -52,5 +53,18 @@ module.exports.postNewVote = async function postNewVote(req, res, next) {
     res.redirect("/votings/new");
   }
 
-  
+  res.redirect("/");
+}
+
+module.exports.getVoteDetail = async function getVoteDetail(req, res, next) {
+  const {
+    params: { vote_id }
+  } = req;
+
+  const vote = await Vote.findById(vote_id).populate("creator").lean();
+  console.log(vote.dueDate);
+  vote.dueDate = datefns.format(vote.dueDate, "yyyy/M/d h:m:s");
+  console.log(vote.dueDate);
+
+  res.render("voteDetail", { vote });
 }

@@ -1,7 +1,18 @@
 extends layouts/layout
 
-block contents
+block content
+  link(rel="stylesheet/less" type="text/css" href="/stylesheets/voteDetail.less")
   .voteDetail__outter
-    .voteDetail__header
-    .voteDetail__selects
-  script(src="/javascripts/voteDetail" type="text/javascript")
+    .voteDetail__inner
+      img.voteDetail__titleImg(src="/images/vote.png" alt="img")
+      h1.voteDetail__title #{vote.title}
+      .voteDetail__info
+        .voteDetail__dueDate #{vote.dueDate}
+        .voteDetail__creator #{vote.creator.name}
+      .voteDetail__vote
+        .voteDetail__enable 진행중
+        each choice in vote.choices
+          .voteDetail__choice(id=choice._id)
+            img.voteDetail__choiceImage(src=choice.pictureURL alt="pic")
+            .voteDetail__choiceTitle #{choice.choiceTitle}
+
