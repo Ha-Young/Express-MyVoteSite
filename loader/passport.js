@@ -1,63 +1,123 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GitHubStrategy = require("passport-github").Strategy;
+const JwtStrategy = require("passport-jwt").Strategy;
 
 const User = require("../models/User");
 
-passport.use(new LocalStrategy({
-  usernameField: "email",
-  passwordField: "password",
-}, async (email, password, cb) => {
-  try {
-    if (!email || !password) {
-      throw new Error("Bad Request"); // 400번
-    }
-    
-    const user = await User.findOne({ email });
-    
-    user.comparePassword(password, cb);
-  } catch (error) {
-    cb(error);
-  }
-}));
+passport.use(
+  "local-signup",
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+      passReqToCallback: true,
+    },
+    async (req, email, password, cb) => {
+      try {
+        const user = await User.findOne({ email });
 
-passport.use(new GitHubStrategy({
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  },
-  async (accessToken, refreshToken, profile, cb) => {
-    const {
-      username: name,
-      photos: [{ value: avatar }],
-      emails: [{ value: email }],
-    } = profile;
+        if (user) {
+          throw new Error("user exists");
+        }
 
-    try {
-      const user = await User.findOne({ email });
+        const newUser = User(req.body);
 
-      if (!user) { // undefined인 경우에도 호출..? 왜..?
-        const newUser = User({
-          email,
-          avatar,
-          name,
-          avatar,
-        });
-
+        await newUser.validate();
         await newUser.save();
+
+        cb(null, true);
+      } catch (error) {
+        cb(error);
       }
-      
-      cb(null, user);
-    } catch (error) {
-      cb(error);
     }
-  },
-));
+  )
+);
 
-passport.serializeUser((user, cb) => {
-  cb(null, user)
-});
+passport.use(
+  "local-login",
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+      session: false,
+    },
+    async (email, password, cb) => {
+      try {
+        if (!email || !password) {
+          throw new Error("Bad Request"); // 400번 // validate로 가라..
+        }
 
-passport.deserializeUser(async (user, cb) => {
-  cb(null, user);
-});
+        const user = await User.findOne({ email });
 
+        if (user) {
+          user.comparePassword(password, cb);
+          return;
+        }
+
+        cb("wrong email", false); // 메시지 빼주고 throw로 바꾸기....
+      } catch (error) {
+        cb(error);
+      }
+    }
+  )
+);
+
+passport.use(
+  new GitHubStrategy(
+    {
+      clientID: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      session: false,
+    },
+    async (accessToken, refreshToken, profile, cb) => {
+      const {
+        username: name,
+        photos: [{ value: avatar }],
+        emails: [{ value: email }],
+      } = profile;
+
+      try {
+        const user = await User.findOne({ email });
+
+        if (!user) {
+          // undefined인 경우에도 호출..? 왜..?
+          const newUser = User({
+            email,
+            name,
+            avatar,
+          });
+
+          await newUser.save();
+        }
+
+        cb(null, user);
+      } catch (error) {
+        cb(error);
+      }
+    }
+  )
+);
+
+function cookieExtractor(req) {
+  return req && req.cookies ? req.cookies["jwt"] : null;
+}
+
+passport.use(
+  new JwtStrategy(
+    {
+      secretOrKey: process.env.JWT_SECRET_KEY,
+      jwtFromRequest: cookieExtractor,
+    },
+    async (payload, cb) => {
+      try {
+        const { email } = payload;
+        const user = await User.findOne({ email });
+        // password 지워서 줘야함..
+        cb(null, user || null);
+      } catch (error) {
+        cb(error, false);
+      }
+    }
+  )
+);

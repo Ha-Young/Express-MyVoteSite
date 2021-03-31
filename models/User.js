@@ -24,7 +24,6 @@ const userSchema = new mongoose.Schema({
   voting: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Voting",
-    unique: true,
   }],
 });
 
@@ -41,12 +40,18 @@ userSchema.pre("save", async function(next) {
   }
 });
 
+userSchema.virtual("id").get(function() {
+  return this._id.toString();
+});
+
 userSchema.methods.comparePassword = async function(pw ,cb) {
   try {
     const comparedPasswordResult = await bcrypt.compare(pw, this.password);
     
     if (comparedPasswordResult) {
-      cb(null, this.email);
+      const user = { email: this.email, name: this.name };
+
+      cb(null, user);
     } else {
       cb(null, false); // 이유 고시해주기... 너 어디로 가니..?
     }

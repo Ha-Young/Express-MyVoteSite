@@ -21,4 +21,4 @@ async function requestDeleteVoting(ev) {
   }
 }
 
-deleteForm.addEventListener("submit", requestDeleteVoting);
+deleteForm?.addEventListener("submit", requestDeleteVoting);

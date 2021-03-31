@@ -1,10 +1,11 @@
 const Voting = require("../../models/Voting");
 
 exports.getAllVotings = async (req, res, next) => {
+  const { user } = req;
   try {
-    const votings = await Voting.find().lean();
-
-    res.status(200).render("index", { votings });
+    const votings = await Voting.find().populate("proponent", "name");
+    
+    res.status(200).render("index", { votings, user });
   } catch (error) {
     next(error);
   }
@@ -17,7 +18,7 @@ exports.postNewVoting = async (req, res, next) => {
     const voting = Voting({
       title,
       expired_at,
-      proponent: user._id,
+      proponent: user.id,
       options: options.map((option) => {
         return { option };
       }),
@@ -37,7 +38,6 @@ exports.getVotingDetail = async (req, res, next) => {
       params: { id },
       user,
     } = req;
-
     const voting = await Voting.findById(id);
     
     res.status(200).render("votingDetail", { voting, user }); //가공해서 주기..?
@@ -68,18 +68,19 @@ exports.updateVoting = async (req, res, next) => {
       user,
       body: { option },
     } = req;
-    
     const voting = await Voting.findById(id);
-    const isVoted = voting.voters.some((voter) => user._id === voter.toString());
+    const isVoted = voting.voters.some((voter) => user.id === voter.toString());
     let isSuccessVoting = false;
 
     if (!isVoted) {
       const targetKey = voting.options.findIndex((content) => content.option === option);
 
-      voting.voters.push(user._id);
+      voting.voters.push(user.id);
       const votted = ++voting.options[targetKey].count;
 
       await voting.save(); 
+
+      isSuccessVoting = true;
 
       res.status(200).json({ user: user.name, isSuccessVoting, votted });
 
@@ -96,10 +97,14 @@ exports.getMyVotingPage = async (req, res, next) => {
   const { user: { _id } } = req;
   
   try {
-    const votings = await Voting.find({ proponent: _id }).lean();
-    console.log(votings);
+    const votings = await Voting.find({ proponent: _id }).lean(); // populate로 수정..
+
     res.status(200).render("myVoting", { votings });
   } catch (error) {
     next(error);
   }
+};
+
+exports.getMyPage = (req, res, next) => {
+  res.status(200).render("newVoting");
 };

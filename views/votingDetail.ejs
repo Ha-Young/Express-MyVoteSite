@@ -3,7 +3,7 @@
       <% if (typeof voting !== "undefined") { %> 
         <%= voting.title %>
 
-        <% if (!voting.is_current || voting.proponent.toString() === user._id) { %>
+        <% if (!voting.is_current || voting.proponent.toString() === user?.id) { %>
           <% voting.options.forEach((content) => { %>
             <div class="voting-count" id="<%= content.option %>">
               <%= content.count %>
@@ -32,7 +32,7 @@
       <% } %>
 
     </form>
-    <% if (voting.proponent.toString() === user._id) { %>
+    <% if (voting.proponent.toString() === user?.id) { %>
       <form class="voting-delete-form">
         <input class="voting-delete-button" type="submit" value="Delete" />
       </form>

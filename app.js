@@ -13,7 +13,6 @@ const MongoStore = require("connect-mongo");
 const passport = require("passport");
 
 const index = require("./routes/index");
-const users = require("./routes/users");
 const voting = require("./routes/voting");
 
 const app = express();
@@ -47,7 +46,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", index);
-app.use("/users", users);
 app.use("/votings", voting);
 
 app.use((req, res, next) => {
@@ -57,7 +55,6 @@ app.use((req, res, next) => {
 app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
-  console.log(err);
   // render the error page
   res.status(err.status || 500);
   res.render("error");

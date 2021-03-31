@@ -17,9 +17,12 @@ async function requestUpdateData(ev) {
 
     const { user, votted, isSuccessVoting } = await response.json();
 
+    if (!user) {
+      window.location.href("/login");
+    }
+
     if (isSuccessVoting) {
       const votingCount = document.getElementById(`${value}`);
-
       votingCount.textContent = votted;
     }
   } catch (error) {

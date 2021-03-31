@@ -1,9 +1,3 @@
-function isAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.redirect("/login");
-  }
-}
+const passport = require("passport");
 
-exports.isAuthenticated = isAuthenticated;
+exports.verifyToken = passport.authenticate("jwt", { session: false });

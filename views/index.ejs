@@ -2,7 +2,7 @@
 <% votings.forEach((voting) => { %>
   <a href="/votings/<%= voting._id %>">
     <div><%= voting.title %></div>
-    <div><%= voting.proponent %></div>
+    <div><%= voting.proponent?.name %></div>
     <div><%= voting.expired_at %></div>
   </a>
 <% }) %>
