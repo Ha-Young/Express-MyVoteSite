@@ -17,7 +17,7 @@ router.get("/my-votings", authenticateToken, votingController.getCreatedVotes);
 
 router.get("/:id", votingController.getVote);
 
-router.post("/:id", validateCastingVote, votingController.castVote);
+router.post("/:id", authenticateToken, validateCastingVote, votingController.castVote);
 
 router.delete("/:id", authenticateToken, votingController.deleteVote);
 
