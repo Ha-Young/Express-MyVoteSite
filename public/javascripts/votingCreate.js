@@ -15,6 +15,7 @@ function createOption() {
   }
 
   const option = makeOption(leng);
+
   optionBox.appendChild(option);
   messageBox.textContent = '';
 }
@@ -35,8 +36,8 @@ function deleteOption() {
 function resetOption() {
   optionBox.textContent = '';
 
-  createOption(0);
-  createOption(1);
+  createOption();
+  createOption();
 }
 
 function makeOption(n) {

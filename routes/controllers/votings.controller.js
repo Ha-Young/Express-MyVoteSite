@@ -1,10 +1,18 @@
 const Vote = require('../../models/vote');
+const combineDateAndTime = require('../../utils/combineDateAndTime');
 
-exports.voteCreatePost = async (req, res, next) => {
+exports.voteGetAll = async (req, res, next) => {
+  const votes = await Vote.find();
+
+  res.status(200).render('index', { title: 'Vote Flatform', votes });
+};
+
+exports.voteCreate = async (req, res, next) => {
   const {
     title,
     option_type: optionType,
     expired_date: expiredDate,
+    expired_time: expiredTime,
     option0,
     option1,
     option2,
@@ -18,7 +26,7 @@ exports.voteCreatePost = async (req, res, next) => {
       _id: req.user._id,
       nickname: req.user.nickname,
     },
-    expiredDate,
+    expiredAt: combineDateAndTime(expiredDate, expiredTime),
     optionType,
     options: filterOption(),
   });
@@ -42,11 +50,11 @@ exports.voteCreatePost = async (req, res, next) => {
 exports.voteDetail = async (req, res, next) => {
   const { id } = req.params;
   const vote = await Vote.findById(id);
-  const { title, creater, expiredDate, isProceeding, options } = vote;
-  res.status(200).render('vote', { title, creater, expiredDate, isProceeding, options, id });
+  const { title, creater, expiredAt, isProceeding, options } = vote;
+  res.status(200).render('vote', { title, creater, expiredAt, isProceeding, options, id });
 };
 
-exports.voteCheck = async (req, res, next) => {
+exports.voteUpdate = async (req, res, next) => {
   const { _id: user } = req.user;
   const { id } = req.params;
   const { selected } = req.body;

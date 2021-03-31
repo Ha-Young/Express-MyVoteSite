@@ -1,4 +1,3 @@
-const { text } = require('body-parser');
 const mongoose = require('mongoose');
 
 const voteSchema = new mongoose.Schema({
@@ -18,13 +17,14 @@ const voteSchema = new mongoose.Schema({
       required: true,
     },
   },
-  expiredDate: {
-    type: Date,
+  expiredAt: {
+    type: String,
     required: true,
   },
   isProceeding: {
     type: Boolean,
     default: true,
+    required: true,
   },
   optionType: {
     type: String,
