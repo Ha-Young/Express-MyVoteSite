@@ -2,6 +2,7 @@ import showModal from "./modal.js";
 
 const deleteButton = document.querySelector("#deleteButton");
 const submitButton = document.querySelector("#submitButton");
+const options = document.querySelectorAll(".option-list li input");
 const id = window.location.pathname.substring(9);
 
 if (deleteButton) {
@@ -14,6 +15,17 @@ if (deleteButton) {
       showModal(result);
     } catch (err) {
       console.log(err);
+    }
+  });
+}
+
+for (let i = 0; i < options.length; i++) {
+  options[i].addEventListener("click", (event) => {
+    const li = event.target.parentNode;
+    if (li.classList.contains("checked")) {
+      li.classList.remove("checked");
+    } else {
+      li.classList.add("checked");
     }
   });
 }
