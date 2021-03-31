@@ -1,4 +1,7 @@
 const ctx = document.getElementById("myChart");
+const main = document.querySelector("main");
+const deleteBtn = document.querySelector(".delete-btn");
+const path = main.getAttribute("name");
 
 const myChart = new Chart(ctx, { type: 'bar',
   data: {
@@ -35,3 +38,17 @@ const myChart = new Chart(ctx, { type: 'bar',
     }
   }
 });
+
+if (deleteBtn !== null) {
+  deleteBtn.addEventListener("click", async () => {
+    try {
+      await fetch(`http://localhost:3000/votings/${path}`, {
+        method: "DELETE",
+      });
+    } catch(e) {
+      console.error(e);
+    }
+
+    window.location.href = "/";
+  });
+}

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <link rel="stylesheet" href="/stylesheets/index.css" />
-    <title>Document</title>
+    <title>votingPage</title>
   </head>
   <body>
     <%- include("partials/header") %>
@@ -35,7 +35,7 @@
             </div>
           </a>
         <% } %>
-    </div>
+      </div>
       <footer>
         <div class="btn-wrapper">
           <a href="/votings/new">
@@ -45,9 +45,9 @@
           </a>
         </div>
       </footer>
-  </div>
-  <% if (isUserLogedIn) { %>
-    <Script src="/javascripts/index.js"></Script>
-  <% } %>
+    </div>
+    <% if (isUserLogedIn) { %>
+      <Script src="/javascripts/index.js"></Script>
+    <% } %>
   </body>
 </html>

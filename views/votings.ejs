@@ -51,10 +51,17 @@
     </div>
     <Script src="/javascripts/votings.js"></Script>
     <% if (isValidateUser) { %>
-      <Script src="/javascripts/deleteVote.js"></Script>
+      <Script src="javascripts/deleteVote.js"></Script>
     <% } %>
   <% } else { %>
-    <canvas id="myChart" value="123213"></canvas>
+    <main name="<%= votingId %>">
+      <canvas id="myChart"></canvas>
+      <% if (isValidateUser) { %>
+        <div>
+          <button class="delete-btn">삭제</button>
+        </div>
+      <% } %>
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="/javascripts/result.js"></script>
   <% } %>
