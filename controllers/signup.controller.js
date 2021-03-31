@@ -30,6 +30,6 @@ module.exports.post = async (req, res, next) => {
     }
     res.status(201).json(validationResult);
   } else {
-    res.status(400).json(validationResult);
+    res.status(422).json(validationResult);
   }
 };
