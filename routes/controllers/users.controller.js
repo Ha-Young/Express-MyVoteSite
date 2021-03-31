@@ -25,9 +25,9 @@ exports.signIn = async (req, res, next) => {
     const accessToken = generateAccessToken(user, process.env.ACCESS_TOKEN_SECRET, "30m");
     const refreshToken = generateAccessToken(user, process.env.REFRESH_TOKEN_SECRET, "14d");
 
-    res.cookie("accessToken", accessToken, { httpOnly: true });
-    res.cookie("refreshToken", refreshToken, { httpOnly: true });
-    res.status(201).redirect("/");
+    res.cookie("accessToken", accessToken);
+    res.cookie("refreshToken", refreshToken);
+    res.status(200).end();
   } catch (err) {
     next(err);
   }

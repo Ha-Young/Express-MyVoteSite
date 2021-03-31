@@ -1,19 +1,19 @@
 extends layout
 
 block content
-  form#login-form(action="/users/login" method="post")
+  form#login-form
     .form-box
       label(for="email") E-MAIL
-      input(id="email" type="email" name="email")
+      input(id="email" type="email" name="email" autocomplete required)
     .form-box
       label(for="password") PASSWORD
-      input(id="password" type="password" name="password")
-  if (error)
-    p.validation #{error.msg}
+      input(id="password" type="password" name="password" autocomplete required)
+  p.validation.hidden
   ul.button-list
     li
-      button(type="submit" class="button" form="login-form") LOGIN
+      button#loginButton(type="submit" class="button" form="login-form") LOGIN
     li
       button(type="button" class="button") LOGIN WITH GOOGLE
     li
       a(href="/users/signup" class="button") CREATE ACCOUNT
+  script(src="/javascripts/login.js")

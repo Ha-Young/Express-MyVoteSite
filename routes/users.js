@@ -6,6 +6,8 @@ const router = express.Router();
 
 /* GET users listing. */
 router.get("/login", (req, res, next) => {
+  const url = req.originUrl;
+    console.log(url);
   res.status(200).render("login");
 });
 
