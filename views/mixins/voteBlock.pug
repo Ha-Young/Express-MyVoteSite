@@ -1,10 +1,10 @@
 mixin voteBlock(vote = {})
   a.voteBlock(href=`/votings/${vote.id}`)
     ul
-      li #{vote.title}
-      li #{vote.expiration_date}
-      li #{vote.author}
-    if (vote.expiration_date < new Date())
-      p.status ENDED
+      li.title #{vote.title}
+      li.date 📅 #{vote.expiration_date.formatted_date}
+      li.author 🖌 #{vote.author}
+    if (vote.expiration_date.date < new Date())
+      p.status.ended ENDED
     else
-      p.status PROCESSING
+      p.status.progress IN PROGRESS

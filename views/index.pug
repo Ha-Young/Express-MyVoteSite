@@ -4,14 +4,10 @@ include mixins/voteBlock
 block content
   section
     h2 VOTE LIST
-    if (user)
-      p user check
-    else
-      p unauthorized
     .vote-list
       each vote in votes
         +voteBlock({
-          id: vote._id
+          id: vote._id,
           title: vote.title,
           expiration_date: vote.expiration_date,
           author: vote.author.name

@@ -4,10 +4,6 @@ include mixins/voteBlock
 block content
   section
     h2 MY VOTINGS
-    if (user)
-      p user check
-    else
-      p unauthorized
     .vote-list
       each vote in votes
         +voteBlock({
