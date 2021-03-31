@@ -1,10 +1,18 @@
 const Vote = require("../../models/Vote");
 const User = require("../../models/User");
+const format = require("date-fns/format");
 const { getUserInfo } = require("../../util/jwtHelper");
 
 exports.getAllVotes = async (req, res, next) => {
   const user = getUserInfo(req.cookies);
-  const votes = await Vote.find().populate("author", "name");
+  const votes = await Vote.find().populate("author", "name").lean();
+
+  for (const vote of votes) {
+    vote.expiration_date = {
+      date: vote.expiration_date,
+      formatted_date: format(vote.expiration_date, "yyyy-MM-dd HH:mm")
+    };
+  }
 
   res.render("index", { votes, user });
 };
@@ -14,7 +22,14 @@ exports.getCreatedVotes = async (req, res, next) => {
 
   try {
     const userInfo = await User.findOne({ email: user.email });
-    const votes = await Vote.find({ author: userInfo._id }).populate("author", "name");
+    const votes = await Vote.find({ author: userInfo._id }).populate("author", "name").lean();
+
+    for (const vote of votes) {
+      vote.expiration_date = {
+        date: vote.expiration_date,
+        formatted_date: format(vote.expiration_date, "yyyy-MM-dd HH:mm")
+      };
+    }
 
     res.render("my-votings", { votes, user });
   } catch (err) {
@@ -25,13 +40,19 @@ exports.getCreatedVotes = async (req, res, next) => {
 exports.getVote = async (req, res, next) => {
   const user = getUserInfo(req.cookies);
   const { id } = req.params;
+
   try {
-    const vote = await Vote.findById(id).populate("author", "name");
+    const vote = await Vote.findById(id).populate("author", "name").lean();
 
     if (!vote) {
       res.redirect("/");
       return;
     }
+
+    vote.expiration_date = {
+      date: vote.expiration_date,
+      formatted_date: format(vote.expiration_date, "yyyy-MM-dd HH:mm")
+    };
 
     res.render("vote-page", { vote, user });
   } catch (err) {
