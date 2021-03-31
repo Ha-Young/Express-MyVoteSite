@@ -1,17 +1,38 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
 .voteWrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   border: 1px solid black;
-  margin-top: 40vh;
-  width: 300px;
-  position: absolute;
-  left: 40%;
   padding: 20px;
+}
+
+.title-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
 }
 
 .optionList {
   display: flex;
   flex-direction: column;
+}
+
+.submit-btn {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.vote-list-btn {
+  margin: 10px;
 }

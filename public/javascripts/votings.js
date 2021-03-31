@@ -3,9 +3,14 @@ const deleteBtn = document.querySelector(".delete-btn");
 const submitBtn = document.querySelector(".submit-btn");
 const homeBtn = document.querySelector(".home-btn");
 
-const updateVoting = async (option) => {
+const updateVoting = async (option, targetIndex) => {
+  if (!document.cookie.includes("access_token")) {
+    window.location.href = "/";
+    return;
+  }
+
   try {
-    const res = await fetch(`http://localhost:3000/votings/${form.name}`, {
+    await fetch(`http://localhost:3000/votings/${form.name}`, {
       method: "PATCH",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
@@ -48,12 +53,14 @@ submitBtn.addEventListener("click", async () => {
 
   const radios = document.querySelectorAll(".radio");
   let checkedValue = null;
+  let targetIndex = null;
 
-  radios.forEach(radio => {
+  radios.forEach((radio, index) => {
     if (radio.checked === true) {
       checkedValue = radio.value;
+      targetIndex = index;
     }
   });
 
-  await updateVoting(checkedValue);
+  await updateVoting(checkedValue, targetIndex);
 });

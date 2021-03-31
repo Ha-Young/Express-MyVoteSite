@@ -77,8 +77,11 @@ exports.createNewVote = async (req, res) => {
 };
 
 exports.patchVoteResult = async (req, res) => {
-  console.log(req.headers.cookie);
-  const userId = req.user._id;
+  const token = req.cookies["access_token"];
+  const decoded = jwt.verify(token, process.env.JWT_SECRETKEY);
+  const user = await User.findById(decoded.id);
+
+  const userId = user._id;
   const voteId = req.params.id;
   const selectedOption = req.body.option;
 
@@ -87,7 +90,7 @@ exports.patchVoteResult = async (req, res) => {
   const isUserVoted = votedUsersId.includes(userId);
 
   if (isUserVoted) {
-    res.end();
+    res.send(400);
 
     return;
   }
@@ -99,7 +102,7 @@ exports.patchVoteResult = async (req, res) => {
 
   vote.save();
 
-  res.end();
+  res.json({ vote });
 };
 
 exports.deleteVote =  async (req, res) => {

@@ -15,7 +15,7 @@ router.get("/:id", getVote);
 
 router.post("/", verifyToken, createNewVote);
 
-router.patch("/:id", verifyToken, patchVoteResult);
+router.patch("/:id", patchVoteResult);
 
 router.delete("/:id", deleteVote);
 
