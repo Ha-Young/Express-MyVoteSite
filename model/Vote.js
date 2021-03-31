@@ -6,21 +6,20 @@ const Choice = new mongoose.Schema({
     required: true,
   },
   selectUser: [mongoose.Types.ObjectId],
-  description: String,
   pictureURL: String
 });
 
 const Vote = new mongoose.Schema({
   title: {
     type: String,
-    required: true,
+    required: [true, "Title이 반드시 필요합니다"],
   },
   createAt: {
-    type: Object,
+    type: Date,
     required: true,
   },
   dueDate: {
-    type: Object,
+    type: Date,
     required: true,
   },
   isEnable: Boolean,

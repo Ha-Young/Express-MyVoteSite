@@ -4,7 +4,7 @@ const User = require("../model/User");
 
 module.exports.authToken = passport.authenticate("jwt", { session: false });
 
-module.exports.isSignIn = (req, res, next) => {
+module.exports.isSignIn = function isSignIn(req, res, next) {
   const now = Date.now().valueOf() / 1000;
   const accessToken = req.cookies["access"];
   const refreshToken = req.cookies["refresh"];
@@ -46,5 +46,13 @@ module.exports.isSignIn = (req, res, next) => {
   const user = User.findOne({ email }).lean();
 
   req.user = user;
+  next();
+}
+
+module.exports.redirectIfUserNone = function redirectIfUserNone(req, res, next) {
+  if (!req.user) {
+    return res.redirect("/signin");
+  }
+
   next();
 }
