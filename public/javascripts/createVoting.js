@@ -2,6 +2,7 @@ const options = document.querySelector(".options");
 const optionAddButton = document.querySelector(".option-add-button");
 const form = document.querySelector(".create-voting-form");
 const messageBox = document.querySelector(".message-box");
+const indexLinkButton = document.querySelector(".index-link-button");
 
 const optionTemplate =
   `<li>
@@ -19,8 +20,6 @@ const optionTemplate =
     </button>
   </li>`;
 
-
-
 const handleOptionAddButtonClick = (e) => {
   options.insertAdjacentHTML(
     "beforeend",
@@ -30,7 +29,7 @@ const handleOptionAddButtonClick = (e) => {
 
 const setMessage = (message) => {
   messageBox.textContent = message;
-}
+};
 
 const handleOptionRemoveButtonClick = (e) => {
   const isClickedExactly = e.target.className === "option-remove-button";
@@ -75,6 +74,11 @@ const handleSubmit = async (e) => {
   }
 };
 
+const handleIndexLinkButton = (e) => {
+  window.location.href = "/";
+};
+
 optionAddButton.addEventListener("click", handleOptionAddButtonClick);
 options.addEventListener("click", handleOptionRemoveButtonClick);
 form.addEventListener("submit", handleSubmit);
+indexLinkButton.addEventListener("click", handleIndexLinkButton);
