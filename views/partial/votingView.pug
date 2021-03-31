@@ -1,8 +1,12 @@
 extends ../layout.pug
 
 block content
-  -const { title, description, dueDate, inProgress, founder } = data;
-  div #{title}
-  div #{description}
-  div #{dueDate}
-  div #{inProgress}
+  -const { title, description, dueDate, inProgress, founder, createdAt } = data;
+  div.votingItem
+    span #{inProgress}
+    div.votingItemTitle #{title}
+    span #{createdAt}
+    span #{dueDate}
+    div.votingItemBottom
+      div.description #{description}
+      div.options options

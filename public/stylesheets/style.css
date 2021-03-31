@@ -69,11 +69,24 @@ form {
   flex-direction: column;
 }
 
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .votingContainer {
   background-color: var(--graish-green);
 }
 
-.votingBox {
-  margin: 1vh 0;
-  background-color: var(--graish-green);
+.votingItem {
+  border: var(--purple-deep) 1px solid;
 }

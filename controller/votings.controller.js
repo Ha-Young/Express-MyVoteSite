@@ -17,10 +17,11 @@ exports.create = async (req, res, next) => {
     });
 
     if (votingData) {
-      await User.where({ _id: founder })
-        .update({ $push: { myVotings: votingData.id } });
+      await User.updateOne(
+        { _id: founder },
+        { $push: { myVotings: votingData.id } },
+      );
 
-      res.locals.votingId = votingData.id;
       res.redirect('/votings/success');
     } else {
       next(createError('투표 추가에 실패했습니다'));
@@ -46,6 +47,10 @@ exports.getOne = async (req, res, next) => {
   }
 };
 
-exports.viewSuccess = async (req, res, next) => {
-  setTimeout(res.redirect(`/votings/${res.locals.id}`), 3000);
+exports.viewSuccess = (req, res, next) => {
+  console.log(req.user);
+  res.render('partial/message', {
+    user: req.user,
+    message: '투표 등록 성공!',
+  });
 };

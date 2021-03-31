@@ -1,7 +1,7 @@
 extends ../layout.pug
 
 block content
-  div.votingContainer
+  div.flexColumn
     each data in list
-      div.votingBox
+      div.votingContainer
         a(href=`/votings/${data}`) #{data}
