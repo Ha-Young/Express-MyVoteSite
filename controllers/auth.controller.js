@@ -50,13 +50,9 @@ exports.login = async function (req, res) {
   ));
 
   if (req.cookies.prev_page) {
+    res.clearCookie('prev_page');
     return res.status(301).redirect(req.cookies.prev_page);
   }
 
   res.status(301).redirect('/');
-};
-
-exports.logout = function (req, res, next) {
-  res.clearCookie('access_token');
-  res.status(301).redirect('/login');
 };

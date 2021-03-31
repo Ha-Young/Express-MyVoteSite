@@ -19,11 +19,19 @@
           Home
         </a>
       </div>
-      <div class="header-item">
-        <a href="/auth/logout" class="">
-          Logout
-        </a>
-      </div>
+      <% if (locals.user) { %>
+        <div class="header-item">
+          <a href="/auth/logout" class="logout">
+            Logout
+          </a>
+        </div>
+      <% } else { %>
+        <div class="header-item">
+          <a href="/login">
+            Login
+          </a>
+        </div>
+      <% } %>
     </div>
   </div>
 </body>
