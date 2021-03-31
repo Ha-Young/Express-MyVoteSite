@@ -7,6 +7,7 @@ const passport = require("passport");
 const index = require("./routes/index");
 const login = require("./routes/api/login");
 const signup = require("./routes/api/signup");
+const votings = require("./routes/votings");
 
 const bodyParser = require("body-parser");
 
@@ -30,8 +31,8 @@ db.once("open", function () {
   console.log("Connected to mongod server");
 });
 
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
+app.use(express.static("public"));
+app.set("view engine", "ejs");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -52,6 +53,7 @@ app.use(session({
 app.use("/", index);
 app.use("/login", login);
 app.use("/signup", signup);
+app.use("/votings", votings);
 
 app.use(function (req, res, next) {
   next(createError(404));

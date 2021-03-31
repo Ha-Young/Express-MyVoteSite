@@ -9,11 +9,11 @@ const User = require("../../models/User");
 const bcrypt = require("bcrypt");
 
 passport.serializeUser(function (user, done) {
-  done(null, user.email);
+  done(null, user._id);
 });
 
 passport.deserializeUser(function (id, done) {
-  const user = User.findOne({ email: id });
+  const user = User.findById(id);
 
   done(null, user);
 });

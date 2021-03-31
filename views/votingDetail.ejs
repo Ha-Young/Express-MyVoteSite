@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+
+<body>
+  <h1><%=title%></h1>
+  <h2><%=due_date%></h2>
+  <form class="vote-options" id=<%=id%>>
+    <% for (let i = 0; i < candidates.length; i++) { %>
+    <input type="radio" name="option" value=<%=candidates[i].name%> />
+    <label><%=candidates[i].name%></label>
+    <% } %>
+    <input type="submit" value="Submit" />
+  </form>
+  <a href="/">Back</a>
+</body>
+<script src="/javascripts/updateVote.js"></script>
+
+</html>

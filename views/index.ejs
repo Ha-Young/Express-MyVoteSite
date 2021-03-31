@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+
+<body>
+  <a href="/votings/new">Create Vote</a>
+  <a href="/my-votings">My Votings</a>
+  <ul class="vote-list">
+    <% for (let i = 0; i < allVotings.length; i++) { %>
+    <% const address = `/votings/${allVotings[i]._id}` %>
+    <a class="vote-button" href=<%=address%> <li>
+      <h2><%= allVotings[i].title%></h2>
+      <% for (let j = 0; j < allVotings[i].candidates.length; j++) { %>
+      <span><%=allVotings[i].candidates[j].name%></span>
+      <% } %>
+      </li>
+    </a>
+    <% } %>
+  </ul>
+
+</body>
+<script src="/javascripts/showVote.js"></script>
+
+</html>
