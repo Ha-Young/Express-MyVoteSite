@@ -8,8 +8,8 @@ router.get('/new', verifyUser, controller.getNewVotingPage);
 router.post('/new', verifyUser, createVotingSchema, controller.createVoting);
 router.get('/success', verifyUser);
 router.get('/error', verifyUser);
-router.get('/delete/:voting_id', verifyUser, controller.deleteVoting);
+router.delete('/delete/:voting_id', verifyUser, controller.deleteVoting);
 router.get('/:voting_id', controller.getVotingDetailPage);
-router.post('/:voting_id', verifyUser, controller.addVote);
+router.patch('/:voting_id', verifyUser, controller.addVote);
 
 module.exports = router;

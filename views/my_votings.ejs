@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link rel="stylesheet" href="/stylesheets/my_votings.css">
+  <title>Document</title>
+</head>
+<body>
+  <header>
+    <% include ./partials/header %>
+  </header>
+  <div class="home-grid-wrapper">
+    <% for (const voting of votings) { %>
+      <a href="<%= `/votings/${voting._id}` %>" class="">
+        <div class="home-grid-item">
+          <div class=""><%= voting.title %></div>
+          <div class="">
+            <div class="">
+              <%= voting.author.name %>
+            </div>
+            <div class="">
+              <%= voting.expiration_date %>
+            </div>
+            <div class="">
+              <%= voting.status %>
+            </div>
+            <% if (voting.status === 'expired') { %>
+              <div class="">
+                <%= voting.selected_option %>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </a>
+    <% } %>
+  </div>
+  <div class="">
+    <div class="">
+      <a href="/votings/new" class="">
+        투표 만들기
+      </a>
+    </div>
+  </div>
+</body>
+</html>
