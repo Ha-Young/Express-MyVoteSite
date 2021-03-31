@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express();
-const loginController = require('./controllers/login.controller');
+const userController = require('./controllers/user.controller');
 
 router.get('/', (req, res, next) => {
   res.render('login');
 });
-router.post('/', loginController.localPost);
+router.get('/callback', userController.loginLocal);
 
-router.get('/github', loginController.githubGet);
-router.get('/github/callback', loginController.githubCallback);
+router.get('/github', userController.loginGithub);
+router.get('/github/callback', userController.loginGithubCallback);
 
 module.exports = router;

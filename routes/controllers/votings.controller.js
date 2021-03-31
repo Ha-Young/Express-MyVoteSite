@@ -1,5 +1,6 @@
 const Vote = require('../../models/vote');
-const combineDateAndTime = require('../../utils/combineDateAndTime');
+const convertDate = require('../../utils/combineDateAndTime');
+const filterOption = require('../../utils/filterOption');
 
 exports.voteGetAll = async (req, res, next) => {
   const votes = await Vote.find();
@@ -19,6 +20,16 @@ exports.voteCreate = async (req, res, next) => {
     option3,
     option4
   } = req.body;
+  const options = [option0, option1, option2, option3, option4];
+  const expiredAt = expiredDate + "T" + expiredTime;
+  const convertedExpiredAt = convertDate(expiredDate, expiredTime);
+
+  if (new Date(expiredAt) < new Date()) {
+    console.log("현재 시간보다 앞서야 합니다.");
+    res.status(200).render('voteCreate');
+
+    return;
+  }
 
   await Vote.create({
     title,
@@ -26,32 +37,21 @@ exports.voteCreate = async (req, res, next) => {
       _id: req.user._id,
       nickname: req.user.nickname,
     },
-    expiredAt: combineDateAndTime(expiredDate, expiredTime),
+    expiredAt,
+    convertedExpiredAt,
     optionType,
-    options: filterOption(),
+    options: filterOption(options),
   });
 
-  res.redirect('/');
-
-  function filterOption() {
-    const options = [option0, option1, option2, option3, option4];
-    const filteredOptions = [];
-    let count = 0;
-
-    while (options[count]) {
-      filteredOptions.push(options[count]);
-      count++;
-    }
-
-    return filteredOptions.map(option => ({ text: option }));
-  }
+  res.status(200).redirect('/');
 };
 
 exports.voteDetail = async (req, res, next) => {
   const { id } = req.params;
   const vote = await Vote.findById(id);
-  const { title, creater, expiredAt, isProceeding, options } = vote;
-  res.status(200).render('vote', { title, creater, expiredAt, isProceeding, options, id });
+  const { title, creater, expiredAt, convertedExpiredAt, isProceeding, options } = vote;
+
+  res.status(200).render('vote', { title, creater, expiredAt, convertedExpiredAt, isProceeding, options, id });
 };
 
 exports.voteUpdate = async (req, res, next) => {
@@ -77,6 +77,7 @@ exports.voteUpdate = async (req, res, next) => {
 
   participants.push(user);
   await Vote.findByIdAndUpdate(id, { options: updatedOptions, participants }, { new: true });
+
   res.status(200).json();
 };
 
@@ -84,6 +85,7 @@ exports.voteDelete = async (req, res, next) => {
   const { id } = req.params;
 
   await Vote.remove({ _id: id });
+
   res.status(200).json({ response: "delete" });
 };
 

@@ -18,6 +18,10 @@ const voteSchema = new mongoose.Schema({
     },
   },
   expiredAt: {
+    type: Date,
+    required: true,
+  },
+  convertedExpiredAt: {
     type: String,
     required: true,
   },
