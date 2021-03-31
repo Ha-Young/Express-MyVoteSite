@@ -4,8 +4,21 @@ const filterOption = require('../../utils/filterOption');
 
 exports.voteGetAll = async (req, res, next) => {
   const votes = await Vote.find();
+  const expiredVote = [];
+  const validatedVote = [];
 
-  res.status(200).render('index', { votes });
+  votes.forEach(async (vote) => {
+    if (vote.expiredAt < new Date) {
+      expiredVote.push(vote);
+      await Vote.findByIdAndUpdate(id, { isProceeding: false }, { new: true });
+
+      return;
+    }
+
+    validatedVote.push(vote);
+  });
+
+  res.status(200).render('index', { expiredVote, validatedVote });
 };
 
 exports.voteCreate = async (req, res, next) => {

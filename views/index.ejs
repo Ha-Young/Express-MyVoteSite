@@ -7,26 +7,57 @@
     <%- include ('partials/header') %>
 
     <h1>Vote List</h1>
-    <% for (let i = 0; i < votes.length; i++) { %>
-      <form action="/votings/<%= votes[i]._id %>" method="GET">
-        <div>
+    <br/>
+    <h2>진행중</h2>
+    <div>
+      <% for (let i = 0; i < validatedVote.length; i++) { %>
+        <form action="/votings/<%= validatedVote[i]._id %>" method="GET">
           <div>
-            <span>투표 주제:  <%= votes[i].title %></span>
+            <div>
+              <span>투표 주제:  <%= validatedVote[i].title %></span>
+            </div>
+            <div>
+              <span>생성자:  <%= validatedVote[i].creater.nickname %></span>
+            </div>
+            <div>
+              <span>종료 시간:  <%= validatedVote[i].convertedExpiredAt %></span>
+            </div>
+            <div>
+              <span>진행 여부:  <%= validatedVote[i].isProceeding %></span>
+            </div>
           </div>
+          <button type="submit">투표 하기</button>
+          <button type="submit">결과 보기</button>
+        </form>
+        <br/>
+      <% } %>
+    </div>
+    <br/>
+    <h2>완료됨</h2>
+    <div>
+      <% for (let i = 0; i < expiredVote.length; i++) { %>
+        <form action="/votings/<%= expiredVote[i]._id %>" method="GET">
           <div>
-            <span>생성자:  <%= votes[i].creater.nickname %></span>
+            <div>
+              <span>투표 주제:  <%= expiredVote[i].title %></span>
+            </div>
+            <div>
+              <span>생성자:  <%= expiredVote[i].creater.nickname %></span>
+            </div>
+            <div>
+              <span>종료 시간:  <%= expiredVote[i].convertedExpiredAt %></span>
+            </div>
+            <div>
+              <span>진행 여부:  <%= expiredVote[i].isProceeding %></span>
+            </div>
           </div>
-          <div>
-            <span>종료 시간:  <%= votes[i].convertedExpiredAt %></span>
-          </div>
-          <div>
-            <span>진행 여부:  <%= votes[i].isProceeding %></span>
-          </div>
-        </div>
-        <button type="submit">투표 하기</button>
-        <button type="submit">결과 보기</button>
-      </form>
-      <br/>
-    <% } %>
+          <button type="submit">투표 하기</button>
+          <button type="submit">결과 보기</button>
+        </form>
+        <br/>
+      <% } %>
+    </div>
+
+    <%- include ('partials/footer') %>
   </body>
 </html>
