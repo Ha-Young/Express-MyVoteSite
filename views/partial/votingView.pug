@@ -3,10 +3,14 @@ extends ../layout.pug
 block content
   -const { title, description, dueDate, inProgress, founder, createdAt } = data;
   div.votingItem
-    span #{inProgress}
+    -if (inProgress)
+      span [투표진행중]
+    -else
+      span [투표종료]
     div.votingItemTitle #{title}
     span #{createdAt}
     span #{dueDate}
     div.votingItemBottom
       div.description #{description}
       div.options options
+  script(src="/javascripts/votingView.js")

@@ -9,11 +9,11 @@ exports.showForm = (req, res) => {
 exports.create = async (req, res, next) => {
   try {
     const {
-      title, description, dueDate, inProgress, founder,
+      title, description, dueDate, inProgress, founder, options,
     } = req.body;
 
     const votingData = await Voting.create({
-      title, description, dueDate, inProgress, founder,
+      title, description, dueDate, inProgress, founder, options,
     });
 
     if (votingData) {
