@@ -21,7 +21,7 @@ module.exports.postNew = async (req, res, next) => {
         title: toBeCreatedVoting.title,
         description: toBeCreatedVoting.description,
         publisher: publisher._id,
-        voter: {},
+        voters: {},
         expirationTime:
           toBeCreatedVoting.expirationTime,
         options:
@@ -47,8 +47,9 @@ module.exports.postNew = async (req, res, next) => {
 
 module.exports.getVoting = async (req, res, next) => {
   try {
+    const votingId = req.params.voting_id;
     const currentVoting =
-      await Voting.findById(req.params.voting_id)
+      await Voting.findById(votingId)
         .populate("publisher", "name email")
 
     if (!currentVoting) {
@@ -62,7 +63,6 @@ module.exports.getVoting = async (req, res, next) => {
       isPublisher = true;
     }
 
-    console.log(currentVoting);
     console.log("isPublisher", isPublisher);
 
     const expirationTime = format(currentVoting.expirationTime, "yyyy-MM-dd HH:mm");
@@ -74,7 +74,8 @@ module.exports.getVoting = async (req, res, next) => {
 
     const options = Object.fromEntries(currentVoting.options);
 
-    const isVoted = !!currentVoting.voter[userEmail];
+    const isAlreadyVoted = !!currentVoting.voters[userEmail];
+    console.log("isAlreadyVoted", isAlreadyVoted);
 
     res.status(200).render("voting", {
       voting: currentVoting,
@@ -83,6 +84,7 @@ module.exports.getVoting = async (req, res, next) => {
       currentState,
       isPublisher,
       user: userEmail,
+      isAlreadyVoted,
     });
   } catch (err) {
     next(createError(500, err.message));
@@ -90,5 +92,48 @@ module.exports.getVoting = async (req, res, next) => {
 };
 
 module.exports.postVoting = async (req, res, next) => {
-  console.log(req.body);
+  try {
+    const votingId = req.params.voting_id;
+    const currentVoting =
+      await Voting.findById(votingId);
+
+    if (!currentVoting) {
+      next(createError(400, err.message));
+      return;
+    }
+
+    const selectedOptions = req.body;
+    const userEmail = res.locals.userEmail;
+    console.log("selectedOptions" ,selectedOptions);
+    console.log("user", userEmail);
+
+    const isAlreadyVoted = !!currentVoting.voters[userEmail];
+    if (isAlreadyVoted) {
+      next(createError(400, err.message));
+      return;
+    }
+
+    currentVoting.voters = { ...currentVoting.voters, [userEmail]: true };
+
+    if (currentVoting.isAbleSelectMultipleOptions) {
+      for (const option of selectedOptions.option) {
+        currentVoting.options.set(
+          option,
+          currentVoting.options.get(option) + 1
+        );
+      }
+    } else {
+      const option = selectedOptions.option;
+      currentVoting.options.set(
+        option,
+        currentVoting.options.get(option) + 1
+      );
+    }
+
+    await currentVoting.save()
+
+    res.status(301).redirect(`/votings/${votingId}`);
+  } catch (err) {
+    next(createError(500, err.message));
+  }
 };
