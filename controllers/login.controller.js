@@ -72,5 +72,5 @@ module.exports.delete = async (req, res, next) => {
 
   res.clearCookie(ACCESS_TOKEN);
   res.clearCookie(REFRESH_TOKEN);
-  res.status(200).json({ result: true });
+  res.status(200).end();
 };
