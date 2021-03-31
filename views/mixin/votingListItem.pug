@@ -1,0 +1,7 @@
+mixin votingListItem(voting={})
+  a(href="/votings/" + voting._id)
+    li.voting
+      div.voting-container
+        h3= voting.title
+        p.description= voting.description
+        p.expiration-time= voting.expirationTime
