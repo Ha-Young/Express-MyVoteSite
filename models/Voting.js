@@ -1,9 +1,5 @@
 const mongoose = require("mongoose");
 
-const validateOptionsField = (options) => {
-  return options.length >= 2;
-};
-
 const votingSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -26,7 +22,6 @@ const votingSchema = new mongoose.Schema({
   },
   options: {
     type: Map,
-    validate: [validateOptionsField, "{PATH} options must be at least two."],
   },
   isAbleSelectMultipleOptions: {
     type: Boolean,
