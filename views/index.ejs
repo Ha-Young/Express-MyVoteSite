@@ -3,48 +3,53 @@
   <head>
     <title>Voting Platform</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/allVoting.css' />
+    <link rel='stylesheet' href='/stylesheets/votingCard.css' />
   </head>
   <body>
     <%- include("partial/header") %>
-    <article class="buttons">
-      <form action="/voting/votings/new" method="GET">
-        <button type="submit">투표 생성</button>
-      </form>
-      <form action="/voting/votings/my-votings" method="GET">
-        <button type="submit">내 투표보기</button>
-      </form>
-      <% if (!user) { %>
-      <form action="/auth/login" method="GET">
-        <button type="submit">로그인</button>
-      </form>
-      <% } else { %>
-        <form action="/auth/logout" method="GET">
-          <button type="submit">로그아웃</button>
+    <section class="container">
+      <article class="buttons">
+        <form action="/voting/votings/new" method="GET">
+          <button type="submit">투표 생성</button>
         </form>
-      <% } %>
-    </article>
-    <ul class="votings">
-      <% votings.forEach(voting => { %>
-        <li class="voting">
-          <p>제목</p>
-          <%= voting.title %>
-          <p>투표 종료 날짜</p>
-          <%= voting.endDate %>
-          <% if (voting.isProgress) { %>
-            <p>투표 진행 중</p>
-          <% } else { %>
-            <p>투표 종료</p>
-          <% } %>
-          <form action="/voting/votings/<%= voting._id %>" method="GET">
-            <% if (voting.isProgress) { %>
-              <button type="submit">투표하러 가기</button>
-            <% } else { %>
-              <button type="submit">투표 결과</button>
-            <% } %>
+        <form action="/voting/votings/my-votings" method="GET">
+          <button type="submit">내 투표보기</button>
+        </form>
+        <% if (!user) { %>
+        <form action="/auth/login" method="GET">
+          <button type="submit">로그인</button>
+        </form>
+        <% } else { %>
+          <form action="/auth/logout" method="GET">
+            <button type="submit">로그아웃</button>
           </form>
-        </li>
-      <% }) %>
-    </ul>
+        <% } %>
+      </article>
+      <ul class="votings">
+        <% votings.forEach(voting => { %>
+          <li class="voting card">
+            <div class="card-header card">
+              <h4><%= voting.title %></h4>
+            </div>
+            <div class="card-info card">
+              <p>투표 종료 날짜</p>
+              <%= voting.endDate %>
+              <% if (voting.isProgress) { %>
+                <p>투표 진행 중</p>
+              <% } else { %>
+                <p>투표 종료</p>
+                <% } %>
+                <form action="/voting/votings/<%= voting._id %>" method="GET">
+                  <% if (voting.isProgress) { %>
+                    <button type="submit">투표하러 가기</button>
+                  <% } else { %>
+                    <button type="submit">투표 결과</button>
+                  <% } %>
+                </form>
+            </div>
+          </li>
+        <% }) %>
+      </ul>
+    </section>
   </body>
 </html>

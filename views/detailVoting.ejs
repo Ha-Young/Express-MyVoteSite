@@ -7,8 +7,8 @@
     <link rel='stylesheet' href='/stylesheets/detailVoting.css' />
   </head>
   <body>
-    <p id="message" class="message-box"></p>
-    <section class="voting-information">
+    <section class="voting-information container">
+      <p id="message" class="message-box"></p>
       <article class="voting-list">
         <ul>
           <p>투표 생성자: <%= author %></p>
@@ -35,8 +35,9 @@
           </form>
           <% if (isAuthor) { %>
             <button id="deleteButton" name="<%= voting._id %>">삭제</button>
-          <% } %>
-          <script src="/javascripts/fetchVoting.js"></script>
+            <script src="/javascripts/deleteVoting.js"></script>
+            <% } %>
+          <script src="/javascripts/patchVoting.js"></script>
         </ul>
         <form action="/" method="GET">
           <button type="submit">투표 목록</button>

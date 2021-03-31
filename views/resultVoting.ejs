@@ -5,10 +5,15 @@
     <title>Voting Platform</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/detailVoting.css' />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   </head>
   <body>
-    <p id="message" class="message-box"></p>
-    <section class="voting-information">
+    <section class="voting-information container">
+      <div class="chart">
+        <canvas id="myChart" name="<%= voting.options %>"></canvas>
+      </div>
+      <script src="/javascripts/votingChart.js"></script>
+      <p id="message" class="message-box"></p>
       <article class="voting-list">
         <div class="result">
           <p>최종 결과</p>
@@ -36,8 +41,8 @@
           </article>
           <% if (isAuthor) { %>
             <button id="deleteButton" name="<%= voting._id %>">삭제</button>
+            <script src="/javascripts/deleteVoting.js"></script>
           <% } %>
-          <script src="/javascripts/fetchVoting.js"></script>
         </ul>
         <form action="/" method="GET">
           <button type="submit">투표 목록</button>

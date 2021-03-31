@@ -1,14 +1,5 @@
-const deleteButton = document.getElementById("deleteButton");
 const submitButton = document.getElementById("submitButton");
 const alertMessageBox = document.getElementById("message");
-
-const deleteVoting = async (votingId) => {
-  await fetch(`http://localhost:3000/voting/votings/${votingId}`, {
-    method: "DELETE",
-  });
-
-  location.replace("/");
-};
 
 const patchVotedResult = async (votingId, checkedOption) => {
   fetch(`http://localhost:3000/voting/votings/${votingId}`, {
@@ -46,11 +37,4 @@ submitButton.addEventListener("click", (event) => {
 
   event.preventDefault();
   patchVotedResult(votingId, checkedOption);
-});
-
-deleteButton.addEventListener("click", (event) => {
-  const votingId = event.target.name;
-
-  event.preventDefault();
-  deleteVoting(votingId);
 });

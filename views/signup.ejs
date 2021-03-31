@@ -4,14 +4,19 @@
     <%- include("partial/header") %>
     <title>Voting Platform</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/auth.css' />
   </head>
   <body>
-    <h1>회원가입</h1>
-    <form action="/auth/signup" method="POST">
-      <input type="email" name="email" placeholder="Email" required=true>
-      <input type="password" name="password" placeholder="password" required=true>
-      <input type="password" name="check-password" placeholder="password" required=true>
-      <button type="submit">회원가입</button>
-    </form>
+    <section class="auth-box">
+      <form action="/auth/signup" method="POST">
+        <p>이메일</p>
+        <input type="email" name="email" placeholder="Email" required=true>
+        <p>비밀번호</p>
+        <input type="password" name="password" placeholder="password" required=true>
+        <p>비밀번호 확인</p>
+        <input type="password" name="check-password" placeholder="password" required=true>
+        <button type="submit">회원가입</button>
+      </form>
+    </section>
   </body>
 </html>

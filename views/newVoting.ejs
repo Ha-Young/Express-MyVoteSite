@@ -4,24 +4,30 @@
     <%- include("partial/header") %>
     <title>Voting Platform</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/votingCard.css' />
   </head>
   <body>
-    <h1>새로 만들기</h1>
-    <form action="/voting/votings/new" method="POST">
-      <p>투표 제목</p>
-      <input type="text" name="title" required=true>
-      <p>투표 종료 시간</p>
-      <input type="datetime-local" name="end-date" required=true>
-      <p>투표 목록</p>
-      <input type="text" name="option1" required=true>
-      <input type="text" name="option2" required=true>
-      <input type="text" name="option3">
-      <input type="text" name="option4">
-      <input type="text" name="option5">
-      <button type="submit">양식 제출</button>
-    </form>
-    <form action="/">
-      <button type="submit">홈으로</button>
-    </form>
+    <section class="container">
+      <article class="voting card">
+        <form action="/voting/votings/new" method="POST">
+          <h4>투표 제목</h4>
+          <input type="text" name="title" required=true>
+          <p>투표 종료 시간</p>
+          <input type="datetime-local" name="end-date" required=true>
+          <p>투표 목록</p>
+          <div class="options">
+            <input type="text" name="option1" required=true>
+            <input type="text" name="option2" required=true>
+            <input type="text" name="option3">
+            <input type="text" name="option4">
+            <input type="text" name="option5">
+          </div>
+          <button type="submit">양식 제출</button>
+        </form>
+      </article>
+      <form action="/">
+        <button type="submit">홈으로</button>
+      </form>
+    </section>
   </body>
 </html>

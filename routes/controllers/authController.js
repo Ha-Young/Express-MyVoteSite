@@ -47,7 +47,7 @@ Controller.getLogin = (req, res) => {
 Controller.postLogin = (req, res) => {
   const votingUrl = req.cookies.votingUrl;
 
-  const successUrl =`/voting/votings/${votingUrl}` || "/";
+  const successUrl = votingUrl ? `/voting/votings/${votingUrl}` : "/";
 
   res.clearCookie("votingUrl");
   passport.authenticate("local", {
