@@ -3,7 +3,15 @@ const User = require("../models/User");
 const { generatePassword } = require("../utils/passwordHelper");
 
 exports.getLogin = (req, res) => {
-  res.render("login", { pageTitle: "Login" });
+  const queryKey = Object.keys(req.query);
+console.log(queryKey)
+  res.render("login", {
+    pageTitle: "Login",
+    nextPage: {
+      key: queryKey,
+      value: req.query[queryKey],
+    },
+  });
 };
 exports.postLogin = passport.authenticate("local", {
   successRedirect: "/",

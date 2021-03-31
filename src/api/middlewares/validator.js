@@ -41,11 +41,22 @@ exports.validatePostNewVoting = (req, res, next) => {
 };
 
 exports.validatePostVoting = async (req, res, next) => {
-  try {
-    const votingId = req.params.id;
-    const userId = req.user.id;
-    const selection = Object.keys(req.body);
+  const votingId = req.params.id;
+  const selection = Object.keys(req.body);
 
+  if (!req.user) {
+    res.redirect(`/auth/login?votings=${votingId}`);
+    return;
+  }
+
+  if (selection.length !== 1) {
+    console.log("Choose one option!");
+    res.redirect(`/votings/${votingId}`);
+    return;
+  }
+
+  try {
+    const userId = req.user.id;
     const voting = await Voting.findById(votingId);
 
     if (!voting) {
@@ -62,12 +73,6 @@ exports.validatePostVoting = async (req, res, next) => {
 
     if (voting.participants.indexOf(userId) !== -1) {
       console.log("Can't vote the same twice!");
-      res.redirect(`/votings/${votingId}`);
-      return;
-    }
-
-    if (selection.length !== 1) {
-      console.log("Choose one option!");
       res.redirect(`/votings/${votingId}`);
       return;
     }
