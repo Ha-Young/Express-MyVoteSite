@@ -74,14 +74,8 @@ Controller.postNewVoting = async (req, res, next) => {
       user: userId,
     });
 
-    newVoting.save().then(async (savedVoting) => {
-      const user = await User.findById({ _id: userId });
-
-      user.myVotingList.push(savedVoting._id);
-
-      await user.save();
-      res.redirect("/");
-    });
+    await newVoting.save();
+    res.status(301).redirect("/");
   } catch (error) {
     console.error(error.message);
     next(createError(500, "Server Error"));
@@ -93,7 +87,14 @@ Controller.postNewVoting = async (req, res, next) => {
 // @access  Private
 Controller.getMyVotings = async (req, res, next) => {
   try {
-    console.log("내 페이지입니다");
+    const currentUserId = req.user._id;
+
+    const myVotings = await Voting.find()
+      .where("user")
+      .in(currentUserId)
+      .exec();
+
+    res.render("myVotings", { myVotings });
   } catch (error) {
     console.error(error.message);
     next(createError(500, "Server Error"));
@@ -108,7 +109,7 @@ Controller.getDetailVoting = async (req, res, next) => {
     const currentVotingId = req.params.id;
     const voting = await Voting.findById({ _id: currentVotingId });
     const currentUser = req.user;
-    let isAuthor;
+    let isAuthor = false;
 
     Voting.findById({ _id: currentVotingId })
       .populate("user")
@@ -141,24 +142,29 @@ Controller.postDetailVoting = async (req, res, next) => {
 
     const user = await User.findById({ _id: userId });
 
-    if (user.votedList.includes(votingId)) {
+    const isVotedUser = user.votedList.some(userVotedId =>
+      userVotedId.toString() === votingId.toString()
+    );
+
+    if (!isVotedUser) {
+      user.votedList.push(votingId);
+      await user.save();
+
+      const voting = await Voting.findById({ _id: votingId });
+
+      voting.options.forEach(option => {
+        if (option.optionTitle === selectOption) {
+          option.optionValue += 1;
+        }
+      });
+
+      voting.votingUserList.push(userId);
+
+      await voting.save();
+      res.status(301).redirect("/");
+    } else {
       return res.render("error", { message: "이미 투표하셨습니다." });
     }
-
-    user.votedList.push(votingId);
-    await user.save();
-
-    const voting = await Voting.findById({ _id: votingId });
-
-    for (let i = 0; i < voting.options.length; i++) {
-      if (voting.options[i].optionTitle === selectOption) {
-        voting.options[i].optionValue += 1;
-        break;
-      }
-    }
-
-    await voting.save();
-    res.redirect("/");
   } catch (error) {
     console.error(error.message);
     next(createError(500, "Server Error"));
@@ -170,7 +176,9 @@ Controller.postDetailVoting = async (req, res, next) => {
 // @access  Private
 Controller.deleteVoting = async (req, res, next) => {
   try {
-    console.log("오니?");
+    const votingId = req.params.id;
+
+    await Voting.findByIdAndDelete({ _id: votingId });
   } catch (error) {
     console.error(error.message);
     next(createError(500, "Server Error"));

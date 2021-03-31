@@ -5,43 +5,42 @@
     <title>Voting Platform</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/detailVoting.css' />
-    <script src="/javascripts/clickCheckBox.js"></script>
   </head>
   <body>
     <section class="voting-information">
-      <article class="voting-description">
-        <h1>디테일 화면</h1>
-        <p>투표 생성자</p>
-        <%= author %>
-        <p>투표 제목</p>
-        <%= voting.title %>
-        <p>투표 시작 시간</p>
-        <%= voting.startDate %>
-        <p>투표 종료 시간</p>
-        <%= voting.endDate %>
-      </article>
       <article class="voting-list">
         <ul>
+          <h1>디테일 화면</h1>
+          <p>투표 생성자</p>
+          <%= author %>
+          <p>투표 제목</p>
+          <%= voting.title %>
+          <p>투표 시작 시간</p>
+          <%= voting.startDate %>
+          <p>투표 종료 시간</p>
+          <%= voting.endDate %>
           <p>투표 목록</p>
           <form action="/voting/votings/<%= voting._id %>" method="POST">
-            <% voting.options.forEach(option => { %>
-              <li class="voting-option">
-                <input
-                  type="checkbox"
-                  name="option"
-                  value="<%= option.optionTitle %>"
-                  onclick="clickCheckBox(this)"
-                >
-                <%= option.optionTitle %>
-              </li>
-            <% }) %>
+            <article class="voting-options">
+              <% voting.options.forEach(option => { %>
+                <li class="voting-option">
+                  <input
+                    type="radio"
+                    name="option"
+                    value="<%= option.optionTitle %>"
+                  >
+                  <%= option.optionTitle %>
+                  <% if (isAuthor) { %>
+                    <%= option.optionValue %>
+                  <% } %>
+                </li>
+              <% }) %>
+            </article>
             <button type="submit">투표 제출</button>
           </form>
           <% if (isAuthor) { %>
-            <form action="/voting/votings/<%= voting._id %>" method="POST">
-              <input type="hidden" name="_method" value="DELETE">
-              <button type="submit">삭제</button>
-            </form>
+            <button  id="deleteButton" name="<%= voting._id %>">삭제</button>
+            <script src="/javascripts/deleteVoting.js"></script>
           <% } %>
         </ul>
         <form action="/" method="GET">

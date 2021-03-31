@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  min-height: 100%;
 }
 
 .voting-description {
@@ -20,10 +21,17 @@
   border: 1px solid white;
 }
 
+.voting-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .voting-option {
   display: block;
-  width: 300px;
-  height: 200px;
+  min-width: 300px;
+  height: 100px;
+  margin: 10px;
   border: 1px solid white;
   list-style: none;
 }

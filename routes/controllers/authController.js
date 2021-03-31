@@ -27,7 +27,7 @@ Controller.postSignup = async (req, res, next) => {
       return res.render("error", { message: AUTH.EXISTING_USER });
     }
 
-    if (password.legnth < AUTH.PASSWORD_MIN_LENGTH) {
+    if (password.length < AUTH.PASSWORD_MIN_LENGTH) {
       return res.render("error", { message: AUTH.PASSWORD_MIN_LENGTH_MESSAGE });
     }
 
@@ -63,7 +63,7 @@ Controller.postLogin = passport.authenticate("local", {
 
 Controller.getLogout = (req, res) => {
   req.logOut();
-  res.redirect("/");
+  res.status(301).redirect("/");
 };
 
 module.exports = Controller;
