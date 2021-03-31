@@ -53,10 +53,6 @@ module.exports = () => {
         callbackURL: "http://localhost:3000/login/auth/google/callback",
       },
       function (accessToken, refreshToken, profile, done) {
-        console.log(profile);
-        console.log(profile._json);
-        console.log("type?", typeof profile._json);
-        // const googleProfile = { id: profile.id, name: profile.displayName };
         return done(null, profile._json);
       }
     )

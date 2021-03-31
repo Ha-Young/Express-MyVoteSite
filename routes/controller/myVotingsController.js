@@ -2,6 +2,7 @@ const Voting = require("../../models/Voting");
 const User = require("../../models/User");
 const createError = require("http-errors");
 const errorMessage = require("../../constants/errorMessage");
+const { checkExpiredDate } = require("../../util/validation");
 
 exports.renderMyVotingsPage = async function (req, res, next) {
   try {
@@ -9,9 +10,10 @@ exports.renderMyVotingsPage = async function (req, res, next) {
     const userName = req.user.name;
     const userVotings = await User.findById(req.user._id).populate("votings");
     const votings = userVotings.votings;
-    console.log("myVotings is", userVotings.votings);
-    console.log(Array.isArray(userVotings.votings));
-    console.log([1, 2, 3]);
+
+    votings.forEach((voting) => {
+      checkExpiredDate(voting);
+    });
 
     res.status(200).render("myVotings", { votings, userName, userId });
   } catch (error) {

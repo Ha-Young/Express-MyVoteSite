@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="/stylesheets/style.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+
+
+<div class="votings-info-wrapper">
+  <div class="voting-info-board">
+    <span class="voting-info-font"><%= userName %></span>
+    <a class="voting-info-font" href="/votings">ALL</a>
+    <a class="voting-info-font" href="/votings/my-votings/<%= userId%>">My votes</a>
+    <a class="voting-info-font" href="/votings">Log out</a>
+  </div>  
+</div>
+<div class="votings-wrapper">
+  <div class="detail-voting-wrapper">
+    <div class="detail-voting-chart">
+      <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
+    <div class="detail-voting-info">
+      <span>name : <%= voting.name %></span>
+      <span>nickname : <%= voting.nickname %></span>
+      <span>isExpired : <%= voting.isExpired %></span>
+      <span>Expired date : <%= voting.expireDate%></span>
+
+      <% for(let i = 0; i < options.length; i++) { %>
+        <span>count <%= options[i].voteCount %></span>
+        <span> <%= options[i].name %></span>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<script defer type="text/javascript" src="/javascripts/detailVoting.js"></script>

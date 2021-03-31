@@ -1,0 +1,25 @@
+.detail-voting-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 95%;
+  background-color: blueviolet;
+}
+
+.detail-voting-chart {
+  width: 50%;
+  height: 100%;
+  background-color: brown;
+}
+
+.detail-voting-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 50%;
+  height: 100%;
+  background-color: burlywood;
+}

@@ -10,4 +10,10 @@ router.get(
   votingsController.renderVotingsPage
 );
 
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  votingsController.renderDetailPage
+);
+
 module.exports = router;

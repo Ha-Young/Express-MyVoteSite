@@ -16,14 +16,18 @@
         <% if(votings[i] === 'img'){ %>
           <img class="voting-grid-img" src='/images/smileface.jpg'>
         <% } else{ %>
-            <p class="voting-name-font"><%= votings[i].name %></p>
-            <span class="voting-creator-font"><%= votings[i].nickname %></span>
-            <span class="voting-creator-font"><%= votings[i].expireDate %> 에 마감</span>
+          <% if(votings[i].isExpired){ %>
+            <a href="/votings/<%= votings[i]._id%>"><p class="voting-name-font expired"><%= votings[i].name %></p></a>
+            <span class="voting-creator-font">이미 마감됨!</span>
+            <% } else{ %>
+              <a href="/votings/<%= votings[i]._id%>"><p class="voting-name-font"><%= votings[i].name %></p></a>
+              <span class="voting-creator-font"><%= votings[i].expireDate %> 에 마감</span>
+            <% } %>
         <% } %>
         </div>
     <% } %>
-    <div class="voting-grid-card ">
-      <a href="/votings/new">New vote</a>
+    <div class="voting-grid-card">
+      <span class="add-button"><a href="/votings/new">+</a></span>
     </div>
   </div>
   </div>

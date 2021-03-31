@@ -83,3 +83,15 @@
   color: grey;
   padding-left: 10px;
 }
+
+.expired {
+  text-decoration: red line-through;
+  text-decoration-thickness: 30%;
+}
+
+.add-button {
+  color: black;
+  font-size: 300px;
+  font-weight: 900;
+  margin-left: 150px;
+}

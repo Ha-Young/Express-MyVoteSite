@@ -10,7 +10,7 @@ const votingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  isCanceled: {
+  isExpired: {
     type: Boolean,
     default: false,
   },

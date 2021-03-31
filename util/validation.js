@@ -29,13 +29,47 @@ const validateVoteForm = (requestedBody) => {
   const schema = Joi.object({
     voteName: Joi.string().required().min(1),
     creator: Joi.string().required(),
-    expireDate: Joi.date().greater("now"),
+    expireDate: Joi.date(),
+    // expireDate: Joi.date().greater("now"),
     options: Joi.array().min(3),
   });
 
   return schema.validate(requestedBody, { abortEarly: false });
 };
 
+/**
+ * validate voting expire date
+ * @param {Array} votings - array fetched from db.
+ */
+const validateVotingDate = (votings) => {
+  votings.forEach((voting) => {
+    if (voting.expireDate < getToday()) {
+      return (voting.isCanceled = true);
+    }
+    voting.isExpired = false;
+  });
+
+  return votings;
+};
+
+const checkExpiredDate = (voting) => {
+  if (voting.expireDate < getToday()) {
+    return (voting.isExpired = true);
+  }
+  return (voting.isExpired = false);
+};
+
+const getToday = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = ("0" + (1 + date.getMonth())).slice(-2);
+  const day = ("0" + date.getDate()).slice(-2);
+  return `${year}-${month}-${day}`;
+};
+
 module.exports.validateRegisterForm = validateRegisterForm;
 module.exports.validateLoginForm = validateLoginForm;
 module.exports.validateVoteForm = validateVoteForm;
+
+module.exports.validateVotingDate = validateVotingDate;
+module.exports.checkExpiredDate = checkExpiredDate;
