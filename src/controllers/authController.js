@@ -1,10 +1,9 @@
-const passport = require("passport");
 const User = require("../models/User");
 const { generatePassword } = require("../utils/passwordHelper");
 
 exports.getLogin = (req, res) => {
   const queryKey = Object.keys(req.query);
-console.log(queryKey)
+
   res.render("login", {
     pageTitle: "Login",
     nextPage: {
@@ -13,10 +12,16 @@ console.log(queryKey)
     },
   });
 };
-exports.postLogin = passport.authenticate("local", {
-  successRedirect: "/",
-  failureRedirect: "/auth/login",
-});
+exports.postLogin = (req, res) => {
+  const queryKey = Object.keys(req.query);
+
+  if (queryKey.length) {
+    res.redirect(`/${queryKey}/${req.query[queryKey]}`);
+    return;
+  }
+
+  res.redirect("/");
+};
 
 exports.getSignup = (req, res) => {
   res.render("signup", { pageTitle: "Signup" });

@@ -1,3 +1,7 @@
+const passport = require("passport");
+
+exports.authenticate = passport.authenticate('local', { failureRedirect: '/login' });
+
 exports.isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
