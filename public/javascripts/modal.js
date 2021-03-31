@@ -7,5 +7,6 @@ export default function showModal(message) {
 
   closeButton.addEventListener("click", () => {
     modal.classList.add("hidden");
+    window.location.reload();
   });
 }
