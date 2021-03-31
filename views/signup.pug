@@ -1,20 +1,28 @@
-extends layouts/main
+doctype html
+html
+	head
+		meta(charset="UTF-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1.0")
+		//- link(rel="stylesheet" href="stylesheets/style.css")
+		//- link(rel="shortcut icon" type="image/png" href="img/favicon.png")
+		link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Open+Sans:wght@300;400;600;700&display=swap")
+		title Vanivote | Easy Voting Platform
 
-block content
-	.form-container.signup-form-container
-		form(action="/users/signUp", method="post")
-			.form__input.signup-form__input
-				label.form__label(for="name") Name
-				input(type="text", name="name", placeholder="Username", required=true)
-			.form__input.signup-form__input
-				label.form__label(for="email") Email
-				input(type="email", name="email", placeholder="you@example.com", required=true)
-			.form__input.signup-form__input
-				label.form__label(for="password") Password
-				input(type="password", name="password", placeholder="••••••••", required=true, minlength="8")
-			.form__input.signup-form__input
-				label.form__label(for="passwordConfirm") Password Confirm
-				input(type="password", name="passwordConfirm", placeholder="••••••••", required=true, minlength="8")
-			.form__input.signup-form__input
-				button(type="submit", value="Sign Up")
+	body
+		.form-container.signup-form-container
+			form(action="/users/signUp", method="post")
+				.form__input.signup-form__input
+					label.form__label(for="name") Name
+					input(type="text", name="name", placeholder="Username", required=true)
+				.form__input.signup-form__input
+					label.form__label(for="email") Email
+					input(type="email", name="email", placeholder="you@example.com", required=true)
+				.form__input.signup-form__input
+					label.form__label(for="password") Password
+					input(type="password", name="password", placeholder="••••••••", required=true, minlength="8")
+				.form__input.signup-form__input
+					label.form__label(for="passwordConfirm") Password Confirm
+					input(type="password", name="passwordConfirm", placeholder="••••••••", required=true, minlength="8")
+				.form__input.signup-form__input
+					button(type="submit", value="Sign Up") Sign Up
 		include partials/_socialLogin

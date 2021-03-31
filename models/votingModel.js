@@ -24,11 +24,11 @@ const VotingSchema = new Schema({
     maxlength: [40, "투표 제목은 2글자에서 40글자 이내 여야 합니다."],
     minlength: [2, "투표 제목은 2글자에서 40글자 이내 여야 합니다."],
   },
-  // createdBy: {
-  //   type: ObjectId,
-  //   ref: "User",
-  // required: [true, "투표 생성자가 필요합니다."],
-  // },
+  createdBy: {
+    type: ObjectId,
+    ref: "User",
+    required: [true, "투표 생성자가 필요합니다."],
+  },
   createdAt: {
     type: Date,
     default: Date.now(),
@@ -36,12 +36,6 @@ const VotingSchema = new Schema({
   startDate: {
     type: Date,
     required: [true, "시작시점을 입력해주세요."],
-    // validate: {
-    //   validator: function(date) {
-    //     return date > Date.now();
-    //   },
-    //   message: "시작시점은 현재 시점보다 이후여야 합니다.",
-    // },
   },
   endDate: {
     type: Date,
@@ -55,7 +49,6 @@ const VotingSchema = new Schema({
   },
   status: {
     type: String,
-    required: [true, "투표 상태를 입력해주세요."],
     enum: {
       values: ["예정", "진행중", "종료", "취소됨"],
       message:

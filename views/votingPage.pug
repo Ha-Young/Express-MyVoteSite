@@ -1,13 +1,11 @@
 extends layouts/main
 
 block content
-	- const { _id, name, status, createdBy, createdAt, startDate, endDate, options } = data.voting;
+	-const { _id, name, status, createdBy, createdAt, startDate, endDate, options } = data.voting;
 	.voting-name-container
-		h1=name
+		h1(id=_id).voting-name=name
 	.voting-status-container
 		.voting-status=status
-	.voting-createdBy-container
-		.voting-createdBy=createdBy
 	.voting-createdAt-container
 		.voting-createdAt=createdAt
 	.voting-startDate-container
@@ -17,12 +15,27 @@ block content
 		span 종료일
 		span.voting-endDate=endDate
 	.voting-vote-options-container
-	each option in options
-		.voting-option-container
-			input(type="radio", name="choice", value=option.option, id=option.option).voting-option
-			label(for=option.option)=option.option
-	.voting-vote-button-container
-		button.voting-vote-button(id=_id) 투표하기
+	if status === "취소됨"
+		each option in options
+			.voting-option-container
+				.voting-result=option.option
+	else if status !== "종료"
+		each option in options
+			.voting-option-container
+				input(type="radio", name="choice", value=option.option, id=option.option).voting-option
+				label(for=option.option)=option.option
+		.voting-vote-button-container
+			button.voting-vote-button(id=_id) 투표하기
+	else
+		each result in data.results
+			.voting-result-container
+				.voting-result=result.option
+				.voting-result=result.count
+	if data.isCreator
+		.votin-admin-buttons-container
+		if status !== "취소됨"
+			button.voting-cancel(id=_id) 취소하기
+		button.voting-delete(id=_id) 삭제하기
 
-	script(src="/javascripts/submitVoting.js")
+	script(src="/javascripts/votingPage.js")
 

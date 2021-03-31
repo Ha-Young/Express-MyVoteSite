@@ -2,18 +2,14 @@ const $voteButton = document.querySelector(".voting-vote-button");
 const $voteOptions = document.querySelectorAll(".voting-option");
 const votingId = $voteButton.id;
 
-const submitVoting = async (data) => {
-  try {
-    await fetch(`/votings/${votingId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-  } catch (err) {
-    console.log(err);
-  }
+const submitVoting = (data) => {
+  fetch(`/votings/${votingId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 };
 
 $voteButton.addEventListener("click", () => {

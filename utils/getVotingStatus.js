@@ -1,6 +1,10 @@
 const moment = require("moment");
 
-module.exports = (startDate, endDate) => {
+module.exports = (startDate, endDate, currentStatus) => {
+  if (currentStatus === "종료" || currentStatus === "취소됨") {
+    return currentStatus;
+  }
+
   const now = parseInt(moment().format("x"), 10);
   const start = parseInt(moment(startDate).format("x"), 10);
   const end = parseInt(moment(endDate).format("x"), 10);

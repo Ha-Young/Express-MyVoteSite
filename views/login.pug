@@ -1,7 +1,15 @@
-extends layouts/main
+doctype html
+html
+	head
+		meta(charset="UTF-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1.0")
+		//- link(rel="stylesheet" href="stylesheets/style.css")
+		//- link(rel="shortcut icon" type="image/png" href="img/favicon.png")
+		link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Open+Sans:wght@300;400;600;700&display=swap")
+		title Vanivote | Easy Voting Platform
 
-block content
-	.form-container.login-form-container
+	body
+		.form-container.login-form-container
 		form.login-form(action="/users/login", method="post")
 			.form__input.login-form__input
 				label.form__label(for="email") Email
@@ -12,3 +20,5 @@ block content
 			.form__input.login-form__input
 				button.btn.btn--yellow(type="submit") Login
 		include partials/_socialLogin
+
+

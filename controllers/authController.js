@@ -29,13 +29,16 @@ exports.createUser = catchAsync(async (req, res, next) => {
 
   const token = createToken(newUser._id);
 
-  res.status(201).json({
-    status: "success",
-    token,
-    data: {
-      user: newUser,
-    },
-  });
+  const cookieOptions = {
+    expires: new Date(
+      Date.now + process.env.JWT_COOKIE_EXPIRES_IN * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+  };
+
+  res.cookie("jwt", token, cookieOptions);
+
+  res.status(201).redirect("/");
 });
 
 exports.getLogIn = (req, res, next) => {

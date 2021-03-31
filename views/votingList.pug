@@ -2,18 +2,30 @@ extends layouts/main
 include mixins/_votingCard
 
 block content
+	.votings-options-container
+		.votings-options-filter
+			a(href="/upcoming").votings-filter.upcoming 예정
+			br
+			a(href="/ongoing").votings-filter.ongoing 진행중
+			br
+			a(href="/ended").votings-filter.ended 종료
+			br
+			a(href="/canceled").votings-filter.canceled 취소
+
 	.votings
-		if data.votings
-		each voting in data.votings
-			+votingCard({
-				id:voting._id,
-				name: voting.name,
-				status: voting.status,
-				createdBy: voting.createdBy,
-				createdAt: voting.createdAt,
-				startDate: voting.startDate,
-				endDate: voting.endDate,
-				options: voting.options
-			})
+		if data.votings.length > 0
+			each voting in data.votings
+				+votingCard({
+					id:voting._id,
+					name: voting.name,
+					status: voting.status,
+					createdBy: voting.createdBy,
+					createdAt: voting.createdAt,
+					startDate: voting.startDate,
+					endDate: voting.endDate,
+					options: voting.options
+				})
 		else
 			h1 투표가 없습니다.
+
+	//- script(src="/javascripts/votingList.js")
