@@ -33,7 +33,10 @@ exports.post = async (req, res, next) => {
         message: '이미 가입된 계정입니다.',
       });
     } else {
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedPassword = await bcrypt.hash(
+        password,
+        parseInt(process.env.SECRET_KEY, 10),
+      );
       const newUser = await User.create({ username, email, password: hashedPassword });
       if (newUser) {
         // success 보여주기

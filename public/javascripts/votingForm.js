@@ -14,11 +14,6 @@ if (addOptionBtn) {
   });
 }
 
-const dueDate = document.querySelector('input[name="dueDate"]');
-if (dueDate) {
-  dueDate.value = '2020-02-01';
-}
-
 // function sendAjax(url, data) {
 //   // 입력값을 변수에 담고 문자열 형태로 변환
 //   const parsedData = JSON.stringify(data);

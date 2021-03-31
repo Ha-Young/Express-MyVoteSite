@@ -2,6 +2,7 @@ extends ../layout.pug
 
 block content
   form(action="/votings/new", method="post")
+    - const today = moment().format('yyyy-MM-DDTHH:mm:ss')
     div
       label 등록자 이름:
         input(type="text" name="founder" readOnly value=user.id)
@@ -22,6 +23,6 @@ block content
           option(value="true") 공개
     div
       label 투표기간:
-        input(type="date" name="dueDate")
+        input(type="datetime-local" name="dueDate" value=today)
     button.submitBtn SUBMIT
   script(src="/javascripts/votingForm.js")
