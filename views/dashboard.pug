@@ -1,0 +1,125 @@
+mixin list-item(percent)
+  a(href='#')
+    if (percent.endsWith('%'))
+      span.progress(style={width: percent})
+    span: block
+    span=percent
+
+head
+  link(rel='stylesheet' href='/css/dashboard.min.css')
+.container
+  .col#sidebar
+    nav
+      .header
+        a.brand(href='#'): i.fa.fa-rocket
+        button#menu: i.fa.fa-bars
+      ul
+        li.search
+          input.form-control#search(placeholder='Search...')
+          button.btn-search: i.fa.fa-lg.fa-search
+        li.nav-text Dashboards
+        li: a.active(href='#') Overview
+        li: a(href='#') Order history
+        li: a(href='#') Fluid layout
+        li: a(href='#') Icon nav
+        li.nav-text More
+        li: a(href='#') Toolkit docs
+        li: a(href='#') Bootstrap docs
+        li: a(href='#') Light UI
+        li: a(href='#') Example modal
+        li: .divider
+  .col
+    .row.fluid.header
+      .label
+        span Dashboards
+        h2 Overview
+      #date-range
+        input.form-control
+        div -
+        input.form-control
+    .divider
+    .row.fluid
+      .doughnut
+        .chart: canvas#test1
+        strong Traffic
+        h4 New vs Returning
+      .doughnut
+        .chart: canvas#test2
+        strong Revenue
+        h4 New vs Recurring
+      .doughnut
+        .chart: canvas#test3
+        strong Traffic
+        h4 Direct vs Referrals
+    .divider
+      h3 Quick Stats
+    .row.sparklines
+      .col.sparkline
+        .chart
+          .label
+            span Page Views
+            h2 1,293
+          .chart-container: canvas#test4
+      .col.sparkline
+        .chart
+          .label
+            span Downloads
+            h2 758
+          .chart-container: canvas#test5
+      .col.sparkline
+        .chart
+          .label
+            span Sign-ups
+            h2 1,293
+          .chart-container: canvas#test6
+      .col.sparkline
+        .chart
+          .label
+            span Downloads
+            h2 758
+          .chart-container: canvas#test7
+    .divider
+    .row.top
+      .col
+        .list
+          h6 Countries
+          +list-item('62.4%') United States
+          +list-item('15.0%') India
+          +list-item('5.0%') United Kingdom
+          +list-item('5.0%') Canada
+          +list-item('4.5%') Russia
+          +list-item('2.3%') Mexico
+          +list-item('1.7%') Spain
+          +list-item('1.5%') France
+          +list-item('1.4%') South Africa
+          +list-item('1.2%') Japan
+        a.btn.primary(href='#') All countries
+      .col.flex-start
+        .list
+          h6 Most visited pages
+          +list-item('3,929,481') / (Logged out)
+          +list-item('1,143,393') / (Logged in)
+          +list-item('938,287') /tour
+          +list-item('749,393') /features/something
+          +list-item('695,912') /features/another-thing
+          +list-item('501,938') /users/username
+          +list-item('392,842') /page-title
+          +list-item('298,183') /some/page-slug
+          +list-item('193,129') /another/directory/and/page-title
+          +list-item('93,382') /one-more/page/directory/file-name
+        a.btn.primary(href='#') View all pages
+    .row
+      .col.list-container
+        .list
+          h6 Devices and resolutions
+          +list-item('3,929,481') Desktop (1920x1080)
+          +list-item('1,143,393') Desktop (1366x768)
+          +list-item('938,287') Desktop (1440x900)
+          +list-item('749,393') Desktop (1280x800)
+          +list-item('695,912') Tablet (1024x768)
+          +list-item('501,938') Tablet (768x1024)
+          +list-item('392,842') Phone (320x480)
+          +list-item('298,183') Phone (720x450)
+          +list-item('193,129') Desktop (2560x1080)
+          +list-item('193,129') Desktop (2560x1080)
+        a.btn.primary(href='#') View all devices
