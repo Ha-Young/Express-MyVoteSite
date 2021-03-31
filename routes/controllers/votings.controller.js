@@ -43,7 +43,7 @@ exports.voteDetail = async (req, res, next) => {
   const { id } = req.params;
   const vote = await Vote.findById(id);
   const { title, creater, expiredDate, isProceeding, options } = vote;
-  res.render('vote', { title, creater, expiredDate, isProceeding, options, id });
+  res.status(200).render('vote', { title, creater, expiredDate, isProceeding, options, id });
 };
 
 exports.voteCheck = async (req, res, next) => {
@@ -54,7 +54,7 @@ exports.voteCheck = async (req, res, next) => {
 
   for (let i = 0; i < participants.length; i++) {
     if (JSON.stringify(participants[i]) === JSON.stringify(user)) {
-      res.json();
+      res.status(200).json();
       return;
     }
   }
@@ -69,10 +69,14 @@ exports.voteCheck = async (req, res, next) => {
 
   participants.push(user);
   await Vote.findByIdAndUpdate(id, { options: updatedOptions, participants }, { new: true });
-  res.json();
+  res.status(200).json();
 };
 
 exports.voteDelete = async (req, res, next) => {
+  const { id } = req.params;
+
+  await Vote.remove({ _id: id });
+  res.status(200).json({ response: "delete" });
 };
 
 exports.saveSuccess = (req, res, next) => {
