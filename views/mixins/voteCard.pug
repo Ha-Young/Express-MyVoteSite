@@ -1,0 +1,15 @@
+mixin voteCard(vote = {})
+  .voteCard
+    .voteCard__container
+      .voteCard__title=(vote.title)
+      .voteCard__createAt=(vote.createAt)
+      .voteCard__dueDate=(vote.dueDate)
+      div=(vote.isEnable)
+      .voteCard__choices
+        each choice in vote.choices
+          .choice__title=(choice.choiceTitle)
+          .choice__description=(choice.description)
+          if (choice.selectedUser)
+            .choice__selectedUsers=(choice.selectedUser)
+          else
+            .choice__selectedUsers 0

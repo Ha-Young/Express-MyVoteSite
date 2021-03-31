@@ -1,8 +1,10 @@
-extends layout
+extends layouts/layout
+include mixins/voteCard
 
 block content
   link(rel="stylesheet/less" type="text/css" href="/stylesheets/main.less")
+  link(rel="stylesheet/less" type="text/css" href="/stylesheets/voteCard.less")
   .main__outer
     .main__container
       each vote in votes
-        div=vote.title
+        +voteCard(vote)

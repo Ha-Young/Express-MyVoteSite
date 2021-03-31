@@ -38,7 +38,8 @@ app.use(flash());
 app.use(passport.initialize());
 
 app.use("/", indexRouter);
-app.use("/vote", voteRouter);
+app.use("/votings", voteRouter);
+app.use("/my-votings", voteRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
