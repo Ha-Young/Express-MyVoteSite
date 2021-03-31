@@ -1,11 +1,19 @@
+require("dotenv").config();
+
 const Vote = require("../models/Vote");
+const User = require("../models/User");
+const jwt = require("jsonwebtoken");
 
 exports.createVotePage = (req, res) => {
-
   res.render("createVote");
 };
 
 exports.getVote = async (req, res) => {
+  const token = req.cookies["access_token"];
+  let decoded = null;
+  let user = null;
+  let isValidateUser = false;
+
   const votingId = req.params.id;
   const vote = await Vote.findById(votingId);
   const {
@@ -16,7 +24,11 @@ exports.getVote = async (req, res) => {
     option
   } = vote;
 
-  const isValidateUser = String(req.user._id) === creator;
+  if (token) {
+    decoded = jwt.verify(token, process.env.JWT_SECRETKEY);
+    user = await User.findById(decoded.id);
+    isValidateUser = String(user._id) === creator;
+  }
 
   res.render("votings", {
     isOnVote,
@@ -65,6 +77,7 @@ exports.createNewVote = async (req, res) => {
 };
 
 exports.patchVoteResult = async (req, res) => {
+  console.log(req.headers.cookie);
   const userId = req.user._id;
   const voteId = req.params.id;
   const selectedOption = req.body.option;

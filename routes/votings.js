@@ -11,7 +11,7 @@ const verifyToken = require("./middlewares/authorization");
 
 router.get("/new", verifyToken, createVotePage);
 
-router.get("/:id", verifyToken, getVote);
+router.get("/:id", getVote);
 
 router.post("/", verifyToken, createNewVote);
 

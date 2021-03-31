@@ -4,6 +4,8 @@ exports.getMainPage = async (req, res) => {
   const votes = await Vote.find()
   const currentDate = new Date();
 
+  const isUserLogedIn = !!req.headers.cookie;
+
   votes.forEach(vote => {
     if (vote.endDate <= currentDate) {
       vote.isOnVote = false;
@@ -12,5 +14,5 @@ exports.getMainPage = async (req, res) => {
     vote.save();
   });
 
-  res.render("index", { votes });
+  res.render("index", { votes, isUserLogedIn });
 };
