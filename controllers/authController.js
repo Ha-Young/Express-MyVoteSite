@@ -6,7 +6,9 @@ const CreateError = require("./../utils/createError");
 const catchAsync = require("./../utils/catchAsync");
 const sendEmail = require("./../utils/sendEmail");
 
-exports.getSignUp = (req, res, next) => {};
+exports.getSignUp = (req, res, next) => {
+  res.status(200).render("signup");
+};
 
 exports.createUser = catchAsync(async (req, res, next) => {
   const {
@@ -37,9 +39,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
 });
 
 exports.getLogIn = (req, res, next) => {
-  res.status(200).json({
-    status: "success",
-  });
+  res.status(200).render("login");
 };
 
 exports.postLogIn = catchAsync(async (req, res, next) => {

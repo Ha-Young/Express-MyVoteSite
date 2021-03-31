@@ -1,0 +1,19 @@
+extends layouts/main
+include mixins/_votingCard
+
+block content
+	.votings
+		if data.votings
+		each voting in data.votings
+			+votingCard({
+				id:voting._id,
+				name: voting.name,
+				status: voting.status,
+				createdBy: voting.createdBy,
+				createdAt: voting.createdAt,
+				startDate: voting.startDate,
+				endDate: voting.endDate,
+				options: voting.options
+			})
+		else
+			h1 투표가 없습니다.

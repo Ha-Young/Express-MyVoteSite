@@ -1,0 +1,14 @@
+extends layouts/main
+
+block content
+	.form-container.login-form-container
+		form.login-form(action="/users/login", method="post")
+			.form__input.login-form__input
+				label.form__label(for="email") Email
+				input(type="email", name="email", placeholder="you@example.com")
+			.form__input.login-form__input
+				label.form__label(for="password") Password
+				input(type="password", name="password", placeholder="••••••••", minlength="8")            
+			.form__input.login-form__input
+				button.btn.btn--yellow(type="submit") Login
+		include partials/_socialLogin

@@ -70,7 +70,7 @@ UserSchema.pre("save", async function(next) {
   next();
 });
 
-UserSchema.pre("save", (next) => {
+UserSchema.pre("save", function(next) {
   if (!this.isModified("password") || this.isNew) {
     return next();
   }

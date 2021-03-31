@@ -1,0 +1,28 @@
+extends layouts/main
+
+block content
+	- const { _id, name, status, createdBy, createdAt, startDate, endDate, options } = data.voting;
+	.voting-name-container
+		h1=name
+	.voting-status-container
+		.voting-status=status
+	.voting-createdBy-container
+		.voting-createdBy=createdBy
+	.voting-createdAt-container
+		.voting-createdAt=createdAt
+	.voting-startDate-container
+		span 시작일
+		span.voting-startDate=startDate
+	.voting-endDate-container
+		span 종료일
+		span.voting-endDate=endDate
+	.voting-vote-options-container
+	each option in options
+		.voting-option-container
+			input(type="radio", name="choice", value=option.option, id=option.option).voting-option
+			label(for=option.option)=option.option
+	.voting-vote-button-container
+		button.voting-vote-button(id=_id) 투표하기
+
+	script(src="/javascripts/submitVoting.js")
+

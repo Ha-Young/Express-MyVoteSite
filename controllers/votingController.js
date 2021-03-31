@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 const User = require("./../models/userModel");
 const Voting = require("./../models/votingModel");
 const CreateError = require("./../utils/createError");
@@ -28,11 +30,10 @@ exports.getVotings = catchAsync(async (req, res, next) => {
     }
   });
 
-  res.status(200).json({
+  res.status(200).render("votingList", {
     status: "success",
     results: votings.length,
     data: {
-      status: findArgs.status,
       votings,
     },
   });
@@ -57,7 +58,7 @@ exports.getSearchedVotings = catchAsync(async (req, res, next) => {
 });
 
 exports.myVotings = catchAsync(async (req, res, next) => {
-  const userId = req.user._id;
+  const userId = req.user.id;
   const myVotings = await User.findById(userId).populate("createHistory");
 
   res.status(200).json({
@@ -67,7 +68,7 @@ exports.myVotings = catchAsync(async (req, res, next) => {
 });
 
 exports.votedVotings = catchAsync(async (req, res, next) => {
-  const userId = req.user._id;
+  const userId = req.user.id;
   const votedData = await User.findById(userId).populate("voteHistory");
   const votedVotings = votedData.map((data) => data.voting);
 
@@ -78,95 +79,102 @@ exports.votedVotings = catchAsync(async (req, res, next) => {
 });
 
 exports.getNewVoting = (req, res, next) => {
+  const startDate = moment().format("YYYY-MM-DDTHH:mm");
+  const endDate = moment()
+    .add(3, "days")
+    .format("YYYY-MM-DDTHH:mm");
+
   res.status(200).render("createVoting", {
     data: {
-      timeNow: Date.now(),
+      startDate,
+      endDate,
     },
   });
 };
 
-// 새 투표 생성
-exports.createNewVoting = catchAsync(async (req, res, next) => {
-  // options를 form에서 어떻게 처리하지?
-  const { name, startDate, endDate, options } = req.body;
-  const status = getVotingStatus(startDate, endDate);
-  const createdBy = req.user._id;
-  const createdAt = Date.now();
+exports.createNewVoting = async (req, res, next) => {
+  try {
+    const { name, startDate, endDate, options } = req.body;
+    const status = getVotingStatus(startDate, endDate);
 
-  const newVoting = await Voting.create({
-    name,
-    createdBy,
-    createdAt,
-    startDate,
-    endDate,
-    status,
-    options,
-  });
+    // const createdBy = req.user.id;
+    const createdAt = moment().format("YYYY-MM-DDTHH:mm");
+    const convertedStartDate = moment(startDate).format("YYYY-MM-DDTHH:mm");
+    const convertedEndDate = moment(endDate).format("YYYY-MM-DDTHH:mm");
+    const convertedOptions = options
+      .filter((option) => option.length > 0)
+      .map((option) => {
+        console.log(option);
+        return { option, votee: [] };
+      });
 
-  res.status(200).json({
-    status: "success",
-    data: {
-      voting: newVoting,
-    },
-  });
-});
+    const newVoting = await Voting.create({
+      name,
+      // createdBy,
+      createdAt,
+      startDate: convertedStartDate,
+      endDate: convertedEndDate,
+      status,
+      options: convertedOptions,
+    });
 
-// 새 투표 생성 (성공)
-exports.getSuccess = (req, res, next) => {
-  // 목록으로 돌아가기 & 투표 보러가기
-  res.status(200).json({
-    status: "success",
-  });
+    res.status(200).render("success", {
+      status: "success",
+      data: {
+        voting: newVoting,
+      },
+    });
+  } catch (err) {
+    res.status(404).render("failure", {
+      status: "fail",
+    });
+  }
 };
 
-// 새 투표 생성 (실패)
-exports.getFail = (req, res, next) => {
-  // 목록으로 돌아가기
-  res.status(200).json({
-    status: "success",
-  });
-};
-
-// 상세 투표 보기
 exports.getSelectedVoting = catchAsync(async (req, res, next) => {
   const votingId = req.params.id;
   const voting = await Voting.findById(votingId).lean();
-  let results = [];
+  // const results = [];
 
   if (!voting) {
     return next(new CreateError("해당하는 투표가 없습니다.", 404));
   }
 
-  const userId = req.user._id;
-  const userChoice = await User.find(
-    { _id: userId },
-    { "voteHistory.voting": votingId }
-  ).select("voteHistory.answer");
+  // 내가 투표 주인인지 확인 => cancel버튼, result 보이기
 
-  if (voting.createdBy === userId || voting.status === "종료") {
-    const { options } = voting;
-    options.forEach((option) => {
-      const { votee } = option;
-      results.push(votee.length);
-    });
-  }
+  // const userId = req.user.id;
+  // const userChoice = await User.find(
+  //   { _id: userId },
+  //   { "voteHistory.voting": votingId }
+  // ).select("voteHistory.answer");
 
-  res.status(200).json({
+  // if (voting.createdBy === userId || voting.status === "종료") {
+  //   const { options } = voting;
+  //   options.forEach((option) => {
+  //     const { votee } = option;
+  //     results.push(votee.length);
+  //   });
+  // }
+
+  res.status(200).render("votingPage", {
     status: "success",
     data: {
       voting,
-      userChoice,
-      results,
+      // userChoice,
+      // results,
     },
   });
 });
 
 // 투표 하기
 exports.voteVoting = catchAsync(async (req, res, next) => {
-  const userId = req.user._id;
-  const userChoice = req.body.selected;
+  // const userId = req.user._id;
+  const userChoice = req.body.choice;
+  const choiceNumber = req.body.number;
   const votingId = req.params.id;
   const voting = await Voting.findById(votingId);
+
+  console.log(req.body);
 
   // Voting의 옵션 업데이트하기
 
@@ -197,14 +205,7 @@ exports.deleteVoting = catchAsync(async (req, res, next) => {
 });
 
 exports.cancelVoting = catchAsync(async (req, res, next) => {
-  const voting = await Voting.findByIdAndDelete(req.params.id);
-
-  if (!voting) {
-    return next(new CreateError("해당하는 투표가 없습니다.", 404));
-  }
-
   res.status(204).json({
     status: "success",
-    data: null,
   });
 });

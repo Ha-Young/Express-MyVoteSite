@@ -1,0 +1,18 @@
+mixin votingCard(voting={})
+	form.votingCard(action="votings/" + voting.id, method="get")
+		.voting-name-container
+			h1=voting.name
+		.voting-status-container
+			.voting-status=voting.status
+		.voting-createdBy-container
+			.voting-createdBy=voting.createdBy
+		.voting-createdAt-container
+			.voting-createdAt=voting.createdAt
+		.voting-startDate-container
+			span 시작일
+			span.voting-startDate=voting.startDate
+		.voting-endDate-container
+			span 종료일
+			span.voting-endDate=voting.endDate
+		.voting-vote-container
+			button.voting-vote 투표하기

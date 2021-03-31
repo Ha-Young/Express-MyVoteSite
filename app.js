@@ -2,6 +2,8 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 const logger = require("morgan");
+const helmet = require("helmet");
+const cors = require("cors");
 
 const CreateError = require("./utils/createError");
 const globalErrorHandler = require("./controllers/errorController");
@@ -15,27 +17,21 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
+app.use(cors());
+app.use(helmet());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use((req, res, next) => {
-  req.requestTime = new Date().toISOString();
-  next();
-});
-
-app.use("/", checkTokenAuth, mainRouter);
+app.use("/", /* checkTokenAuth , */ mainRouter);
 app.use("/users", userRouter);
-app.use("/votings", checkTokenAuth, votingsRouter);
+app.use("/votings", /* checkTokenAuth, */ votingsRouter);
 
 app.all("*", (req, res, next) => {
   next(
-    new CreateError(
-      `현재 서버에서 다음 주소를 찾을 수 없습니다. : ${req.originalUrl}`,
-      404
-    )
+    new CreateError(`다음 페이지를 찾을 수 없습니다. : ${req.originalUrl}`, 404)
   );
 });
 
