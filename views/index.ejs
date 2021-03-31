@@ -7,15 +7,14 @@
   <body>
     <%- include ('partials/header') %>
 
-    <h1>Vote List</h1>
-    <br/>
+    <h1>Home</h1>
     <div class="vote-container">
-      <div class="home-top">
-        <h2>진행중</h2>
-        <div class="validated-container">
+      <div class="home-left">
+        <h2 class="vote-state">진행중</h2>
+        <div class="grid-container">
           <% for (let i = 0; i < validatedVote.length; i++) { %>
-            <form action="/votings/<%= validatedVote[i]._id %>" method="GET">
-              <div>
+            <div class="grid-box">
+              <form action="/votings/<%= validatedVote[i]._id %>" method="GET">
                 <div>
                   <span>투표 주제:  <%= validatedVote[i].title %></span>
                 </div>
@@ -25,25 +24,23 @@
                 <div>
                   <span>종료 시간:  <%= validatedVote[i].convertedExpiredAt %></span>
                 </div>
-              </div>
-              <button type="submit">투표 하기</button>
-              <% if (validatedVote[i].creater._id.toString() === user._id.toString()) { %>
-                <button type="submit">중간 결과</button>
-              <% } %>
-            </form>
-            <br/>
+                <div class="gird-buttons">
+                  <button class="grid-button" type="submit">투표 하기</button>
+                  <% if (validatedVote[i].creater._id.toString() === user._id.toString()) { %>
+                    <button class="grid-button" type="submit">중간 결과</button>
+                  <% } %>
+                </div>
+              </form>
+            </div>
           <% } %>
         </div>
       </div>
-  
-      <br/>
-  
-      <div class="home-bottom">
-        <h2>완료됨</h2>
-        <div class="expired-container">
+      <div class="home-right">
+        <h2 class="vote-state">완료</h2>
+        <div class="grid-container">
           <% for (let i = 0; i < expiredVote.length; i++) { %>
-            <form action="/votings/<%= expiredVote[i]._id %>" method="GET">
-              <div>
+            <div class="grid-box">
+              <form action="/votings/<%= expiredVote[i]._id %>" method="GET">
                 <div>
                   <span>투표 주제:  <%= expiredVote[i].title %></span>
                 </div>
@@ -53,10 +50,9 @@
                 <div>
                   <span>종료 시간:  <%= expiredVote[i].convertedExpiredAt %></span>
                 </div>
-              </div>
-              <button type="submit">결과 보기</button>
-            </form>
-            <br/>
+                <button type="submit">결과 보기</button>
+              </form>
+            </div>
           <% } %>
         </div>
       </div>

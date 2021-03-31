@@ -1,25 +1,56 @@
+.vote-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.home-left, .home-right {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.home-left .grid-box {
+  border-right: 1px solid black;
+}
+
+.vote-state {
+  text-align: center;
+}
+
 .grid-container {
   display: grid;
-  grid-template-rows: repeat(2, 17rem);
-  grid-template-columns: repeat(2, 2fr);
+  grid-template-rows: repeat(1, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   width: auto;
 }
 
 .grid-box {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 2rem;
-  border: 1px solid #ffffff;
-  border-radius: 0.2rem;
+  width: 100%;
+  height: 20rem;
 }
 
 .grid-box form {
-  width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 80%;
+  border: 1px solid black;
+  border-radius: 0.2rem;
+}
+
+.grid-buttons {
+
 }
 
 .grid-box button {
-  width: 100%;
-  height: 100%;
+  width: 5rem;
+  height: 3rem;
+  border: 1px solid black;
+  border-radius: 0.2rem;
 }
