@@ -19,4 +19,6 @@ router.get("/:id", votingController.getVote);
 
 router.post("/:id", validateCastingVote, votingController.castVote);
 
+router.delete("/:id", authenticateToken, votingController.deleteVote);
+
 module.exports = router;
