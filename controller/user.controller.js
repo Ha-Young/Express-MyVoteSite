@@ -13,7 +13,6 @@ module.exports.postSignIn = async function postSignIn(req, res, next) {
   } = req;
 
   const user = await User.findOne({ email }).lean();
-  console.log("user", user);
   if (!user) {
     console.log("signIn : Email fail");
     req.flash("info", "pls check your Email!");

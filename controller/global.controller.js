@@ -15,7 +15,6 @@ module.exports.main = async function main(req, res, next) {
     vote.createAt = datefns.format(vote.createAt, "yyyy/M/d h:m:s");
     vote.dueDate = datefns.format(vote.dueDate, "yyyy/M/d h:m:s");
   });
-  console.log(votes);
 
   res.render("main", { user, votes });
 }

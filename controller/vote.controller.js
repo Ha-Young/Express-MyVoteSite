@@ -1,35 +1,56 @@
 const Vote = require("../model/Vote");
 
 module.exports.getNewVote = function getNewVote(req, res, next) {
-  res.render("voteNew");
+  const {
+    user
+  } = req;
+
+  const aa = req.flash("info")[0];
+  res.render("voteNew", { messages: aa, user });
 }
 
 module.exports.postNewVote = async function postNewVote(req, res, next) {
   const {
-    body: { voteImageUrl, voteTitle, voteDueDate, voteDueDateTime, selectionTitle, selectionImage },
+    body: { voteTags, voteImageUrl, voteTitle, voteDueDate, voteDueDateTime, selectionTitle, selectionImage },
     user
   } = req;
 
-  // 검증해야 할 것들...
-  // title이 있을 것 => mongoose
-  // due date가 있을 것 => mongoose
-  // selection이 최소 2개 이상 있을 것 => mongoose?
-
-  const inputDueDate = new Date(voteDueDate + "T" + voteDueDateTime + "Z");
-
-  if (inputDueDate > new Date()) {
-    // Due date가 현재보다 미래일 것
-    
-  }
+  console.log(user.email);
 
   try {
+    const inputDueDate = new Date(voteDueDate + "T" + voteDueDateTime + "Z");
+
+    console.log(inputDueDate < new Date());
+    if (inputDueDate < new Date()) {
+      throw new Error("Due date or time MUST be future than current time");
+    }
+
+    if (selectionTitle.length < 2) {
+      throw new Error("need Selections at least 2 more");
+    }
+
+    const choices = Array(selectionTitle.length).fill("").map((_, i) => ({
+      choiceTitle: selectionTitle[i],
+      selectUser: [],
+      pictureURL: selectionImage[i],
+    }));
+
+    const tags = voteTags && voteTags.split(",").map(el => el.trim());
+
     await Vote.create({
       title: voteTitle,
-
       createAt: new Date(Date.now()),
-      dueDate: new Date(voteDueDate + voteDueDateTime),
+      dueDate: inputDueDate,
+      isEnable: true,
+      creator: user._id,
+      thumbnailURL: voteImageUrl,
+      choices,
+      tags,
     });
   } catch (err) {
-    console.log("catched Error!!!! : ", err.errors.title.message);
+    req.flash("info", err.message);
+    res.redirect("/votings/new");
   }
+
+  
 }

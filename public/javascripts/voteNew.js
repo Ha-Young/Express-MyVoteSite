@@ -15,7 +15,7 @@ const addSelections = (event) => {
 
   const imgInput = document.createElement("input");
   imgInput.className = "selection__image";
-  imgInput.placeholder = "selection image URL here";
+  imgInput.placeholder = "https://...";
   imgInput.type = "text";
   imgInput.name = "selectionImage";
 
@@ -29,3 +29,7 @@ addSelections();
 addSelections();
 
 document.getElementById("selectionPlus").addEventListener("click", addSelections);
+
+document.getElementById("voteSubmitButton").addEventListener("click", (event) => {
+  
+});

@@ -1,18 +1,25 @@
 const mongoose = require("mongoose");
+const User = require("./User");
 
 const Choice = new mongoose.Schema({
   choiceTitle: {
     type: String,
-    required: true,
+    required: [true, "Choice Title is needed"],
   },
-  selectUser: [mongoose.Types.ObjectId],
-  pictureURL: String
+  selectUser: {
+    type: [mongoose.Types.ObjectId],
+    ref: User,
+  },
+  pictureURL: {
+    type: String,
+    default: "/images/skyPastelBlueWallpaper.jpg",
+  }
 });
 
 const Vote = new mongoose.Schema({
   title: {
     type: String,
-    required: [true, "Title이 반드시 필요합니다"],
+    required: [true, "Vote Title is needed"],
   },
   createAt: {
     type: Date,
@@ -20,12 +27,19 @@ const Vote = new mongoose.Schema({
   },
   dueDate: {
     type: Date,
-    required: true,
+    required: [true, "Due Date is needed"],
   },
-  isEnable: Boolean,
+  isEnable: {
+    type: Boolean,
+    default: true,
+  },
   creator: {
     type: mongoose.Types.ObjectId,
     required: true,
+  },
+  thumbnailURL: {
+    type: String,
+    default: "/images/skyPastelBlueWallpaper.jpg",
   },
   choices: [Choice],
   tags: [String]

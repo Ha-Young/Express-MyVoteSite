@@ -4,19 +4,22 @@ block content
   link(rel="stylesheet/less" type="text/css" href="/stylesheets/voteNew.less")
   .voteNew__outter
     .voteNew__inner
-      img.voteNew__titleImg(src="https://sempad.com/wp-content/uploads/2019/10/wide-banner-social-media.jpg" alt="img")
+      img.voteNew__titleImg(src="/images/vote.png" alt="img")
       .voteNew__contents
         form.voteNew__form(action="/votings/new" method="POST")
-          label.form-label(for="formFile") Vote banner image URL
-          input.voteNew__imageAdr.form-control(type="text" placeholder="https://name.com/example" name="voteImageUrl")
           label.form-label(for="formFile") Vote Title
           input.voteNew__title.form-control(type="text" placeholder="Title here" name="voteTitle")
           label.form-label(for="formFile") Due Date
           .voteNew__date
             input.form-control(type="date" name="voteDueDate")
             input.form-control(type="time" name="voteDueDateTime")
+          label.form-label(for="formFile") Tags
+          input.voteNew__tags.form-control(type="text" placeholder="Eats, Travel, Policies" name="voteTags")
+          label.form-label(for="formFile") Vote banner image URL
+          input.voteNew__imageAdr.form-control(type="text" placeholder="https://name.com/example" name="voteImageUrl")
           label.form-label(for="formFile") Selections
           .voteNew__selections
           i.fas.fa-plus-circle#selectionPlus
+          .voteNew__notice #{messages}
           button.btn.btn-info(type="submit") Done!
   script(src="/javascripts/voteNew.js")
