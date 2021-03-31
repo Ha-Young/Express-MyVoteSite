@@ -2,7 +2,7 @@ function validateDate(firstDate, secondDate) {
   const newFirstDate = new Date(firstDate);
   const newSecondDate = new Date(secondDate);
 
-  return newSecondDate < newFirstDate;
+  return newFirstDate < newSecondDate;
 }
 
 module.exports = validateDate;

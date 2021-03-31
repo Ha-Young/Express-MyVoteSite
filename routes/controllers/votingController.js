@@ -8,9 +8,6 @@ const validateDate = require("../../utils/validateDate");
 
 const Controller = {};
 
-// @route   GET /
-// @desc    Render allVotings page
-// @access  Public
 Controller.getAllVotings = async (req, res, next) => {
   try {
     const votings = await Voting.find();
@@ -19,7 +16,7 @@ Controller.getAllVotings = async (req, res, next) => {
       const votingEndDate = voting.endDate;
       const isExpiration = validateDate(votingEndDate, Date.now());
 
-      if (!isExpiration && voting.isProgress) {
+      if (isExpiration && voting.isProgress) {
         voting.isProgress = isExpiration;
         await voting.save();
       }
@@ -32,9 +29,6 @@ Controller.getAllVotings = async (req, res, next) => {
   }
 };
 
-// @route   GET voting/votings/new
-// @desc    Render newVoting Page
-// @access  Public
 Controller.getNewVoting = async (req, res, next) => {
   try {
     const votings = await Voting.find();
@@ -46,23 +40,25 @@ Controller.getNewVoting = async (req, res, next) => {
   }
 };
 
-// @route   POST voting/votings/new
-// @desc    Create New voting
-// @access  Private
 Controller.postNewVoting = async (req, res, next) => {
   try {
-    const userId = req.user._id;
+    const currentUserId = req.user._id;
     const { title } = req.body;
-    const options = [];
     const endDate = getDateFormat(req.body["end-date"]);
+    const isExpiration = validateDate(endDate, Date.now());
+    const options = [];
+
+    if (isExpiration) {
+      return res.render("error", { message: "현재 시간 이후를 입력하십시오" });
+    }
 
     for (const votingElement in req.body) {
       const optionTitle = req.body[votingElement];
 
       if (votingElement.includes("option") && 0 < optionTitle.length) {
         options.push({
-          optionTitle,
-          optionValue: 0,
+          title: optionTitle,
+          value: 0,
         });
       }
     }
@@ -71,10 +67,16 @@ Controller.postNewVoting = async (req, res, next) => {
       title,
       endDate,
       options,
-      user: userId,
+      user: currentUserId,
     });
 
     await newVoting.save();
+
+    const user = await User.findById({ _id: currentUserId });
+
+    user.votingList.push(newVoting._id);
+
+    await user.save();
     res.status(301).redirect("/");
   } catch (error) {
     console.error(error.message);
@@ -82,28 +84,26 @@ Controller.postNewVoting = async (req, res, next) => {
   }
 };
 
-// @route   GET voting/votings/my-votings
-// @desc    Render my Votings page
-// @access  Private
 Controller.getMyVotings = async (req, res, next) => {
   try {
     const currentUserId = req.user._id;
 
-    const myVotings = await Voting.find()
-      .where("user")
-      .in(currentUserId)
-      .exec();
+    User.findById({ _id: currentUserId })
+      .populate("votingList")
+      .exec((error, voting) => {
+        if (error) {
+          console.error(error.message);
+          return next(createError(500, "Server Error"));
+        }
 
-    res.render("myVotings", { myVotings });
+        res.render("myVotings", { myVotings: voting.votingList });
+      });
   } catch (error) {
     console.error(error.message);
     next(createError(500, "Server Error"));
   }
 };
 
-// @route   GET voting/votings/:id
-// @desc    Render detail voting
-// @access  Public
 Controller.getDetailVoting = async (req, res, next) => {
   try {
     const currentVotingId = req.params.id;
@@ -131,39 +131,31 @@ Controller.getDetailVoting = async (req, res, next) => {
   }
 };
 
-// @route   POST voting/votings/:id
-// @desc    Save select option in User, Voting
-// @access  Private
-Controller.postDetailVoting = async (req, res, next) => {
+Controller.patchDetailVoting = async (req, res, next) => {
   try {
-    const selectOption = req.body.option;
+    const { checkedOption } = req.body;
     const votingId = req.params.id;
     const userId = req.user._id;
 
-    const user = await User.findById({ _id: userId });
+    const voting = await Voting.findById({ _id: votingId });
 
-    const isVotedUser = user.votedList.some(userVotedId =>
-      userVotedId.toString() === votingId.toString()
+    const isVotedUser = voting.votingUserList.some(userVotedId =>
+      userVotedId.toString() === userId.toString()
     );
 
     if (!isVotedUser) {
-      user.votedList.push(votingId);
-      await user.save();
-
-      const voting = await Voting.findById({ _id: votingId });
-
       voting.options.forEach(option => {
-        if (option.optionTitle === selectOption) {
-          option.optionValue += 1;
+        if (option.title === checkedOption) {
+          option.value += 1;
         }
       });
 
       voting.votingUserList.push(userId);
 
       await voting.save();
-      res.status(301).redirect("/");
+      res.end();
     } else {
-      return res.render("error", { message: "이미 투표하셨습니다." });
+      res.status(400).send({ message: "이미 투표하셨습니다." });
     }
   } catch (error) {
     console.error(error.message);
@@ -171,14 +163,24 @@ Controller.postDetailVoting = async (req, res, next) => {
   }
 };
 
-// @route   Delete voting/votings/:id
-// @desc    Modify User's voting, voted list of deleted voting
-// @access  Private
 Controller.deleteVoting = async (req, res, next) => {
   try {
     const votingId = req.params.id;
+    const currentUserId = req.user._id;
 
     await Voting.findByIdAndDelete({ _id: votingId });
+
+    const user = await User.findById({ _id: currentUserId });
+
+    user.votingList.forEach((voting, index) => {
+      if (voting.toString() === votingId) {
+        user.votingList.splice(index, 1);
+      }
+    });
+
+    await user.save();
+
+    res.status(201).end();
   } catch (error) {
     console.error(error.message);
     next(createError(500, "Server Error"));

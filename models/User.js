@@ -7,7 +7,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  votedList: [{
+  votingList: [{
     type: Schema.Types.ObjectId,
     ref: "Voting",
   }],

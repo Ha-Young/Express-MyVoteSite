@@ -12,10 +12,8 @@
         <article class="voting-list">
           <ul>
             <h1>나의 투표 페이지</h1>
-            <p>투표 제목</p>
-            <%= myVoting.title %>
-            <p>투표 종료 시간</p>
-            <%= myVoting.endDate %>
+            <p>투표 제목: <%= myVoting.title %></p>
+            <p>투표 종료 시간: <%= myVoting.endDate %></p>
             <p>투표 목록</p>
             <form
               name="<%= myVoting._id %>"
@@ -24,8 +22,8 @@
             >
               <% myVoting.options.forEach(option => { %>
                 <li class="voting-option">
-                  <%= option.optionTitle %>
-                  <%= option.optionValue %>
+                  <%= option.title %>
+                  <%= option.value %>
                 </li>
               <% }) %>
               <button type="submit">투표 페이지로</button>

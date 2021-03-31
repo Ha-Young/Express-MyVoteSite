@@ -18,8 +18,6 @@ router.get("/votings/:id", votingController.getDetailVoting);
 
 router.delete("/votings/:id", votingController.deleteVoting);
 
-router.post("/votings/:id", authenticateUser, votingController.postDetailVoting);
-
-router.put("/votings/id");
+router.patch("/votings/:id", authenticateUser, votingController.patchDetailVoting);
 
 module.exports = router;

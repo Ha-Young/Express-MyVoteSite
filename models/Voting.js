@@ -19,16 +19,13 @@ const VotingSchema = new Schema({
     default: true,
   },
   options: [{
-    optionTitle: { type: String },
-    optionValue: { type: Number, default: 0 },
+    title: { type: String },
+    value: { type: Number, default: 0 },
   }],
-  votingUserList:
-    [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
+  votingUserList: [{
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  }],
 });
 
 module.exports = mongoose.model("Voting", VotingSchema);

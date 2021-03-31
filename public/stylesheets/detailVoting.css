@@ -1,3 +1,7 @@
+ul {
+  padding: 0;
+}
+
 .voting-information {
   display: flex;
   justify-content: center;
@@ -29,7 +33,7 @@
 
 .voting-option {
   display: block;
-  min-width: 300px;
+  min-width: 100px;
   height: 100px;
   margin: 10px;
   border: 1px solid white;
