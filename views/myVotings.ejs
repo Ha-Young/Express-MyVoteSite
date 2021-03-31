@@ -11,14 +11,14 @@
 <div class="votings-wrapper">
   <div class="voting-marign-wrapper">
   <div class="votings-grid-board">
-    <% for(let i = 0; i < votingWithImg.length; i++) { %>
+    <% for(let i = 0; i < votings.length; i++) { %>
       <div class="voting-grid-card">
-        <% if(votingWithImg[i] === 'img'){ %>
+        <% if(votings[i] === 'img'){ %>
           <img class="voting-grid-img" src='/images/smileface.jpg'>
         <% } else{ %>
-            <p class="voting-name-font"><%= votingWithImg[i].name %></p>
-            <span class="voting-creator-font"><%= votingWithImg[i].createdBy.name %></span>
-            <span class="voting-creator-font"><%= votingWithImg[i].expireDate %> 에 마감</span>
+            <p class="voting-name-font"><%= votings[i].name %></p>
+            <span class="voting-creator-font"><%= votings[i].nickname %></span>
+            <span class="voting-creator-font"><%= votings[i].expireDate %> 에 마감</span>
         <% } %>
         </div>
     <% } %>

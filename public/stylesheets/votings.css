@@ -4,6 +4,7 @@
   align-items: center;
   width: 100%;
   height: 90%;
+  background-color: #0074ff;
 }
 
 .voting-marign-wrapper {
@@ -14,10 +15,28 @@
   background-color: #0074ff;
 }
 
-.votings-info-board {
+.votings-info-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
   height: 10%;
   width: 100%;
   background-color: #0074ff;
+}
+
+.voting-info-board {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 800px;
+  margin-left: 200px;
+}
+
+.voting-info-font {
+  color: white;
+  font-size: 40px;
+  font-weight: 900;
 }
 
 .votings-grid-board {
@@ -38,7 +57,7 @@
   align-items: flex-start;
 
   height: 38em;
-  width: 535px;
+  width: 490px;
 
   background-color: #edc791;
   border-radius: 0.1em;

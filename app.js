@@ -36,11 +36,13 @@ const signUpRouter = require("./routes/signUp");
 const logInRouter = require("./routes/logIn");
 const votingsRouter = require("./routes/votings");
 const newVoteRouter = require("./routes/newVote");
+const myVotingRouter = require("./routes/myVotings");
 app.use("/", indexRouter);
 app.use("/signup", signUpRouter);
 app.use("/login", logInRouter);
 app.use("/votings", votingsRouter);
 app.use("/votings/new", newVoteRouter);
+app.use("/votings/my-votings", myVotingRouter);
 
 app.use(function (req, res, next) {
   next(createError(404, "404 error"));

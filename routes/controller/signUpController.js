@@ -18,6 +18,7 @@ exports.createUser = async function (req, res, next) {
     }
 
     const password = await encryptUserPassword(10, req.body.password);
+    console.log(password);
 
     const user = new User({
       name: req.body.name,

@@ -5,13 +5,12 @@ const errorMessage = require("../../constants/errorMessage");
 exports.renderVotingsPage = async function (req, res, next) {
   try {
     const votings = await Voting.find();
-    console.log("-----------------------------------------");
-    // console.log(votings);
+    const userId = req.user._id;
+    const userName = req.user.name;
 
     const votingWithImg = insertRandomImage(votings);
-    console.log(votingWithImg);
 
-    res.status(200).render("votings", { votingWithImg });
+    res.status(200).render("votings", { votingWithImg, userId, userName });
   } catch (error) {
     console.log(error);
     next(createError(500, errorMessage.SERVER_ERROR));

@@ -6,7 +6,11 @@ const votingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  isFinished: {
+  nickname: {
+    type: String,
+    required: true,
+  },
+  isCanceled: {
     type: Boolean,
     default: false,
   },
@@ -14,13 +18,7 @@ const votingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  createdBy: {
-    refid: { type: Schema.Types.ObjectId, ref: "user" },
-    name: {
-      type: String,
-      required: true,
-    },
-  },
+  createdBy: { type: Schema.Types.ObjectId, ref: "user" },
   voters: [{ type: Schema.Types.ObjectId, ref: "user" }],
   options: [
     {

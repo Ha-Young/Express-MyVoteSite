@@ -4,36 +4,37 @@ const createError = require("http-errors");
 const errorMessage = require("../../constants/errorMessage");
 
 exports.renderNewVotePage = function (req, res, next) {
+  console.log("looking for", req.user);
+  console.log("cookie", req.cookies["jwt"]);
+
   res.status(200).render("newVote", { messages: req.flash("createVoteError") });
 };
 
 exports.createVote = async function (req, res, next) {
-  console.log("is that logged user?", req.user);
-  console.log("is that voting want?", req.body);
-  const user = await User.findOne({ email: req.user.email });
+  const userId = req.user._id;
+  const user = await User.findById(userId);
   const { voteName, expireDate, creator, options } = req.body;
 
   const voteOptions = options.filter(Boolean).map((option) => {
     return { name: option, voteCount: 0 };
   });
 
-  console.log("user is", user);
-
-  console.log("voteOption is...", voteOptions);
-
   try {
     const voting = new Voting({
       name: voteName,
+      nickname: creator,
       expireDate: expireDate,
-      createdBy: {
-        refid: user._id,
-        name: creator,
-      },
+      createdBy: userId,
       voters: [],
       options: voteOptions,
     });
 
-    await voting.save();
+    //수정 필요...
+    await voting.save(async (err, voting) => {
+      await user.votings.push(voting._id);
+      await user.save();
+    });
+
     return res.status(200).redirect("/votings/new");
   } catch (error) {
     console.log(error);
