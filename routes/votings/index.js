@@ -7,13 +7,15 @@ const votingController = require("../../controllers/votingController");
 router.get('/new', verifyAuth, function(req, res, next) {
   const displayName = req.user ? req.user.userName : null;
 
-  res.render('newVoting', { title: 'New Voting', displayName, messages: req.flash("messages") }); // 여기 플래시 안먹음.
+  res.render('newVoting', { title: 'New Voting', displayName, messages: req.flash("messages") });
 });
 
 router.post('/new', verifyAuth, voteInputValidation, votingController.postNewVoting);
 
-
 router.get('/:id', verifyAuth, function(req, res, next) {
+  console.log(req.body)
+  console.log(req.user)
+
   res.render('votings', { title: 'Voting' , messages: req.flash("messages")});
 });
 

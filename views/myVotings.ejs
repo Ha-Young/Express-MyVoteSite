@@ -7,7 +7,17 @@
   <body>
     <%- include("./partials/header.ejs") %>
     <h1><%= title %></h1>
-    <p><%= title %> page</p>
+    <% if(myVotingFormats.length > 0) {%>
+      <% myVotingFormats.forEach(function(myVotingFormat) { %>
+        <div>
+            <div>
+              <h2><a href="/votings/<%= myVotingFormat._id %>">Vote for <%= myVotingFormat.title %></a></h2>
+              <h3>Expire Date: <%= myVotingFormat.expireDate %></h3>
+              <h3><%= myVotingFormat.isProceeding ? "Proceeding" : "Finished" %></h3>
+            </div>
+        </div>
+      <% }) %>
+    <% } %>
     <%- include("./partials/footer.ejs") %>
   </body>
 </html>
