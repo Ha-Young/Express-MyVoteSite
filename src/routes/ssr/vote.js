@@ -3,7 +3,13 @@ const { celebrate, Joi } = require("celebrate");
 const { Router } = require("express");
 
 const voteService = require("../../services/voteService");
-const { PREFIX, DETAIL, ERROR, NEW, SUCCESS } = require("../../config/routes").VOTE;
+const {
+  PREFIX,
+  DETAIL,
+  ERROR,
+  NEW,
+  SUCCESS,
+} = require("../../config/routes").VOTE;
 const isLogin = require("../middlewares/isLogin");
 
 const route = Router();
@@ -14,6 +20,33 @@ module.exports = app => {
   route.get(NEW, (req, res) => {
     res.render("voteCreate");
   });
+
+  route.get(
+    DETAIL,
+    celebrate({
+      params: {
+        vote_id: Joi.string().required(),
+      },
+    }),
+    async (req, res, next) => {
+      try {
+        const { vote_id: voteId } = req.params;
+        const { vote, error } = await voteService.GetVote(voteId);
+
+        if (error) {
+          throw new Error("can't get vote detail");
+        }
+
+        if (vote.is_process) {
+          return res.json("진행 중");
+        }
+
+        return res.json("결과");
+      } catch (err) {
+        return next(createError(err));
+      }
+    }
+  );
 
   route.post(
     NEW,
@@ -26,7 +59,7 @@ module.exports = app => {
     }),
     async (req, res, next) => {
       try {
-        const { vote, error } = await voteService.CreateVote({
+        const { error } = await voteService.CreateVote({
           voteInputDTO: req.body,
           user: req.user,
         });
@@ -36,7 +69,6 @@ module.exports = app => {
         }
 
         res.redirect("/");
-
       } catch (error) {
         return next(createError(error));
       }

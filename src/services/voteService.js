@@ -65,6 +65,20 @@ exports.GetVotes = async ({ condition, page, limit, sort_field, sort_order }) =>
   }
 };
 
+exports.GetVote = async voteId => {
+  try {
+    const vote = await Vote.findById(voteId);
+
+    if (!vote) {
+      throw new Error("can't get vote");
+    }
+
+    return { vote };
+  } catch (error) {
+    return { error };
+  }
+};
+
 exports.CreateVote = async ({ voteInputDTO, user }) => {
   try {
     let voteOptions = voteInputDTO.vote_options;

@@ -12,7 +12,7 @@ const ROUTE = {
 
   VOTE: {
     PREFIX: "/votings",
-    DETAIL: "/:id",
+    DETAIL: "/:vote_id",
     NEW: "/new",
     SUCCESS: "/success",
     ERROR: "/error",
@@ -31,12 +31,12 @@ const ROUTE = {
       LOGOUT: "/logout",
     },
     USER: {
-      VOTES: "/:id/votes",
+      VOTES: "/:user_id/votes",
     },
     VOTES: {
       PREFIX: "/votes",
       VOTES: "/",
-      VOTE: "/:id",
+      VOTE: "/:vote_id",
     },
   },
 };
