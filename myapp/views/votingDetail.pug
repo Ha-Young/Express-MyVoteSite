@@ -4,13 +4,20 @@ block stylesheet
   link(rel='stylesheet', href='/stylesheets/voting-detail.css')
 
 block content
-  - const { author, title, description, votingItem } = voting
+  - const progress = isClosed ? "투표 종료" : "투표 중"
   section.voting-detail
     h2.voting-detail-heading2 #{title}
     div.voting-detail-status
-      div.voting-detail-progress progress
-      div.voting-detail-posttime post time
-      div.voting-detail-endtime end time
+      div.voting-detail-progress #{progress}
+      div.voting-detail-time
+        div
+          | 시작 시간
+          |  #{startLocalTime.month}월 #{startLocalTime.date}일
+          |  #{startLocalTime.hour}시 #{startLocalTime.minute}분
+        div
+          | 종료 시간
+          |  #{endLocalTime.month}월 #{endLocalTime.date}일
+          |  #{endLocalTime.hour}시 #{endLocalTime.minute}분
     div.voting-detail-author 작성자 #{author}
     div.voting-detail-item-container
       - for (let i = 0; i < votingItem.length; i++)

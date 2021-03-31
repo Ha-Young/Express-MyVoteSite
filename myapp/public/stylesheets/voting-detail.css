@@ -21,12 +21,24 @@
 
 .voting-detail-status {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
   width: 80%;
   height: 10%;
   border: 1px solid;
+}
+
+.voting-detail-time {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  width: 40%;
+  height: 80%;
+  border: 1px solid;
+  font-size: 80%;
 }
 
 .voting-detail-author {
