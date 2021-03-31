@@ -2,22 +2,19 @@ extends layout
 block append head
   link(rel='stylesheet' href='/css/newForm.min.css')
 block content
-  .all-votes
-    if (vote)
-      .eachVote
-        h4 #{vote.title}
-        p avilable - #{vote.isVotable}
-        p expired At - #{vote.expiredAt}
-        p by #{vote.creatorName}
-        | vote whatever you want
-        
-        if (vote.isVotable)
-          ul
-            each option in vote.options
-              li
-                .form-group
-                  label
-                    input.input-radio(name='option' value=`${option.name}` type='radio')
-                    | #{option.name}
-        else
-          p 결과가 여기로
+  if (vote)
+    h4 #{vote.title}
+    p avilable - #{vote.isVotable}
+    p expired At - #{vote.expiredAt}
+    p by #{vote.creatorName}
+    | vote whatever you want
+    if (vote.isVotable)
+      form(action=`/vote/${vote._id}?_method=PUT` method='POST')
+        each count, option in vote.options
+          .form-group
+            label
+              input.input-radio(name='option' value=`${option}` type='radio')
+              | #{option}
+        button(type='submit') Submit
+    else
+      p 결과가 여기로

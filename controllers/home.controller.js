@@ -8,7 +8,7 @@ async function renderHome(req, res) {
   }
 
   try {
-    await Vote.updateIsVotable(new Date());
+    await Vote.updateIsVotable();
     const allVotes = await Vote.find({});
 
     res.status(200).render('index', { allVotes });

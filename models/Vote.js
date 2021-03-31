@@ -8,18 +8,21 @@ const voteSchema = new mongoose.Schema({
   expiredAt: { type: Date, required: true },
   isVotable: { type: Boolean, default: true },
   // TODO: minimum options length is 2
-  options: [{
-    name: { type: String },
-    count: { type: Number },
-  }],
+  // options: [{
+  //   name: { type: String },
+  //   count: { type: Number },
+  // }],
+  options: { type: Object, required: true },
   completedVotes: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Vote' }],
 }, {
-  timestamps: { currentTime: () => Date.now() / 1000 },
+  timestamps: true,
 });
 
 voteSchema.plugin(findOrCreate);
 
-voteSchema.statics.updateIsVotable = async function(currentDate) {
+voteSchema.statics.updateIsVotable = async function() {
+  const currentDate = new Date();
+
   const filter = {
     'isVotable': true, 
     'expiredAt': { '$lte': currentDate },
@@ -29,7 +32,11 @@ voteSchema.statics.updateIsVotable = async function(currentDate) {
     '$set': { 'isVotable': false },
   };
 
-  await this.updateMany(filter, update);
+  try {
+    await this.updateMany(filter, update);
+  } catch (error) {
+    
+  }
 }
 
 module.exports = mongoose.model('Vote', voteSchema);

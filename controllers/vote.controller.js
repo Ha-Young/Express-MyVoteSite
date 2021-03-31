@@ -8,15 +8,13 @@ function renderNewVote(req, res) {
   res.render('newVote');
 }
 
-async function postNewVote(req, res, next) {
+async function postNewVote(req, res) {
   const { title, expiredAt, options, description } = req.body;
-  
-  const formattedOptions = options.map(each => {
-    return { 
-      name: each,
-      count: 0,
-    };
-  });
+
+  let formattedOptions = options.reduce((acc, cur) => {
+    acc[cur] = 0;
+    return acc;
+  }, {});
 
   const vote = new Vote({
     title,
@@ -24,7 +22,7 @@ async function postNewVote(req, res, next) {
     description,
     creatorId: req.user._id,
     creatorName: req.user.name,
-    options: [...formattedOptions],
+    options: formattedOptions,
   });
 
   try {
@@ -35,7 +33,7 @@ async function postNewVote(req, res, next) {
   }
 }
 
-async function getVoteById(req, res, next) {
+async function getVoteById(req, res) {
   const { id } = req.params;
 
   const vote = await Vote.findById(id);
@@ -43,7 +41,24 @@ async function getVoteById(req, res, next) {
   res.status(200).render('eachVote', { vote });
 }
 
+async function updateVoteById(req, res) {
+  const { option } = req.body;
+  const { id } = req.params;
+
+  const optionKey = `options.${option}`;
+
+  const vote = await Vote.findByIdAndUpdate(id, { 
+    $inc: {
+      [optionKey]: 1,
+    },
+  });
+
+  await vote.save();
+  res.status(301).redirect('/');
+}
+
 exports.renderVote = renderVote;
 exports.renderNewVote = renderNewVote;
 exports.postNewVote = postNewVote;
 exports.getVoteById = getVoteById;
+exports.updateVoteById = updateVoteById;

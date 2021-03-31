@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String },
   completedVotes: [{ type: mongoose.Schema.Types.ObjectID, ref: "Vote" }],
 }, {
-  timestamps: { currentTime: () => Date.now() / 1000 },
+  timestamps: true,
 });
 
 userSchema.plugin(findOrCreate);
