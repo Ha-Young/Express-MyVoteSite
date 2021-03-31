@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const { checkExpiration } = require("../utils/validates");
 
 const votingSchema = new Schema({
   title: {
@@ -31,12 +32,28 @@ const votingSchema = new Schema({
       require: true,
     }
   }],
-  paticipants: [{
+  participants: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     index: true,
     unique: true,
   }],
+});
+
+votingSchema.post(/^find/, (docs, next) => {
+  if (Array.isArray(docs)) {
+    docs.forEach(doc => {
+      if (!checkExpiration(new Date(doc.expiration))) {
+        doc.progress = false;
+      }
+    });
+  } else {
+    if (!checkExpiration(new Date(docs.expiration))) {
+      docs.progress = false;
+    }
+  }
+
+  next();
 });
 
 module.exports = mongoose.model("Voting", votingSchema);
