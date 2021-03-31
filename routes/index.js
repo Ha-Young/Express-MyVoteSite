@@ -13,7 +13,7 @@ router.get("/", async (req, res, next) => {
     }
 
     res.render("index", {
-      user: { email: res.locals.userEmail || "Guest" },
+      user: res.locals.userEmail,
       votingList,
     });
   } catch (err) {
