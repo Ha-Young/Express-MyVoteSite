@@ -13,6 +13,7 @@ const voteSchema = new mongoose.Schema({
   //   count: { type: Number },
   // }],
   options: { type: Object, required: true },
+  winner: { type: String },
   completedVotes: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Vote' }],
 }, {
   timestamps: true,
@@ -29,13 +30,30 @@ voteSchema.statics.updateIsVotable = async function() {
   };
 
   const update = {
-    '$set': { 'isVotable': false },
+    '$set': {
+      'isVotable': false,
+    },
   };
 
   try {
     await this.updateMany(filter, update);
   } catch (error) {
     
+  }
+}
+
+voteSchema.methods.makeResult = async function() {
+  const options = this.options;
+
+  const biggestOption = Object.keys(options).reduce((acc, cur) => options[acc] > options[cur] ? acc : cur);
+
+  this.winner = biggestOption;
+
+  try {
+    await this.save();
+    return this;
+  } catch (error) {
+
   }
 }
 

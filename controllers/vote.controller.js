@@ -12,6 +12,7 @@ async function postNewVote(req, res) {
   const { title, expiredAt, options, description } = req.body;
 
   let formattedOptions = options.reduce((acc, cur) => {
+    // TODO: ZERO - constant
     acc[cur] = 0;
     return acc;
   }, {});
@@ -36,9 +37,24 @@ async function postNewVote(req, res) {
 async function getVoteById(req, res) {
   const { id } = req.params;
 
-  const vote = await Vote.findById(id);
+  if (req.user) {
+    res.locals.user = req.user;
+  }
 
-  res.status(200).render('eachVote', { vote });
+  try {
+    let vote = await Vote.findById(id);
+    
+    if (!vote.isVotable) {
+      vote = await vote.makeResult();
+    }
+    
+    const isCreator = req.user?._id.toString() === vote.creatorId.toString();
+
+    res.status(200).render('eachVote', { vote, isCreator });
+  } catch (error) {
+
+  }
+
 }
 
 async function updateVoteById(req, res) {
@@ -47,14 +63,29 @@ async function updateVoteById(req, res) {
 
   const optionKey = `options.${option}`;
 
-  const vote = await Vote.findByIdAndUpdate(id, { 
-    $inc: {
-      [optionKey]: 1,
-    },
-  });
+  try {
+    const vote = await Vote.findByIdAndUpdate(id, { 
+      $inc: {
+        [optionKey]: 1,
+      },
+    });
+  
+    await vote.save();
+    res.status(301).redirect('/');
+  } catch (error) {
 
-  await vote.save();
-  res.status(301).redirect('/');
+  }
+}
+
+async function deleteVote(req, res) {
+  const { id } = req.params;
+
+  try {
+    await Vote.findOneAndDelete(id);
+    res.status(200).redirect('/home');
+  } catch (error) {
+
+  }
 }
 
 exports.renderVote = renderVote;
@@ -62,3 +93,4 @@ exports.renderNewVote = renderNewVote;
 exports.postNewVote = postNewVote;
 exports.getVoteById = getVoteById;
 exports.updateVoteById = updateVoteById;
+exports.deleteVote = deleteVote;

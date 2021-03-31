@@ -9,5 +9,6 @@ router.post('/new', voteController.postNewVote);
 
 router.get('/:id', voteController.getVoteById);
 router.put('/:id', voteController.updateVoteById);
+router.delete('/:id', voteController.deleteVote);
 
 module.exports = router;
