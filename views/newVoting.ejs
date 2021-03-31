@@ -7,7 +7,47 @@
   <body>
     <%- include("./partials/header.ejs") %>
     <h1><%= title %></h1>
-    <p><%= title %> page</p>
-    <%- include("./partials/footer.ejs") %>
-  </body>
+
+  <div class="voting-form-wrap">
+    <h1>Add new voting!</h1>
+
+    <form class="voting-form" action="/votings/new" method="post" >
+      <div>
+        <div class="title">
+          <lable class="title-lable" for="title">Title</lable>
+          <input class="title-input" type="text" name="title" placeholder="Voting title">
+        </div>
+
+        <div class="expire-date">
+          <lable class="expire-date-lable" for="expireDate">Expire Date</lable>
+            <input class="expire-date-input" type="datetime-local" name="expireDate" >
+        </div>
+
+        <label class="option-lable" for="votingOptions">Option</label>
+        <div class="options">
+            <div class="option-container">
+              <input class="option" type="text" name="votingOptions" placeholder="New Option" >
+              <button class="option-delete-btn">X</button>
+            </div>
+            <div class="option-container">
+              <input class="option" type="text" name="votingOptions" placeholder="New Option" >
+              <button class="option-delete-btn">X</button>
+            </div>
+        </div>
+          <button class="option-adding-btn">More Options</button>
+          <button class="form-subbmit-btn" type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <% if(messages.length > 0) {%>
+    <% messages.forEach(function(errMessage) { %>
+      <div> <strong> <%= errMessage.message %> </strong></div>
+    <% }) %>
+  <% } %>
+
+  <div><a href="/">Go Back to Home</div>
+  <%- include("./partials/footer.ejs") %>
+  <script src="/javascripts/addOption.js"></script>
+</body>
 </html>

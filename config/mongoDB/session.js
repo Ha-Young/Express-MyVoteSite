@@ -6,7 +6,6 @@ const mongoSession = session({
   secret: process.env.EXPRESS_SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 60000 },
   store: MongoStore.create({ mongoUrl: DB_APP_URL })
 });
 

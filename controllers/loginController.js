@@ -20,7 +20,6 @@ const passport = require("passport");
 
 // exports.authenticateUserThroughPassport = passport.authenticate("local", { scope: ["profile"] });
 exports.directUserToRelevantPage = async function(req, res, next) {
-
   passport.authenticate(
     "local", {
         successRedirect: "/",

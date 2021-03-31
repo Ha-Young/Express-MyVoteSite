@@ -1,14 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const verifyAuth = require("../middlewares/verifyAuth");
-
+const voteInputValidation = require("../middlewares/voteInputValidation");
 
 router.get('/new', verifyAuth, function(req, res, next) {
   const displayName = req.user ? req.user.userName : null;
 
-  res.render('newVoting', { title: 'New Voting', displayName });
+  res.render('newVoting', { title: 'New Voting', displayName, messages: req.flash("messages") }); // 여기 플래시 안먹음.
 });
 
+router.post('/new', verifyAuth, voteInputValidation, function(req, res, next) {
+  const displayName = req.user ? req.user.userName : null;
+
+  res.render('newVoting', { title: 'New Voting', displayName });
+});
 
 router.get('/:id', verifyAuth, function(req, res, next) {
   res.render('voting', { title: 'Voting' });

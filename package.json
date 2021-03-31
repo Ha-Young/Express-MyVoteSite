@@ -13,6 +13,7 @@
     "connect-mongo": "^4.4.1",
     "cookie-parser": "~1.4.4",
     "cross-env": "^7.0.3",
+    "date-fns": "^2.19.0",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "ejs": "~2.6.1",

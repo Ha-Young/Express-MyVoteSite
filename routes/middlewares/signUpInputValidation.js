@@ -26,7 +26,6 @@ async function signUpInputValidation (req, res, next) {
       errorMessages.push({ message: "Password should contain at least one number, letter, special character, minimum length 8"});
     }
 
-
     const user = await User.findOne({ email });
 
     if (user) {
