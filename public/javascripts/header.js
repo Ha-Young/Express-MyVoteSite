@@ -7,16 +7,18 @@ const handleLogoutButtonClick = async (e) => {
   try {
     fetch("/login", {
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       method: "delete",
     });
   } catch (err) {
-    document.cookie = ACCESS_TOKEN + '=; Max-Age=0';
-    document.cookie = REFRESH_TOKEN + '=; Max-Age=0';
+    document.cookie = ACCESS_TOKEN + "=; Max-Age=0";
+    document.cookie = REFRESH_TOKEN + "=; Max-Age=0";
   } finally {
-    window.location.href = "/";
+    window.location.reload();
   }
 };
 
-logoutButton.addEventListener("click", handleLogoutButtonClick);
+if (logoutButton) {
+  logoutButton.addEventListener("click", handleLogoutButtonClick);
+}
