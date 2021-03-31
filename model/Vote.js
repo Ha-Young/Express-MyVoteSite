@@ -16,14 +16,18 @@ const Vote = new mongoose.Schema({
     required: true,
   },
   createAt: {
-    type: Date,
+    type: Object,
     required: true,
   },
   dueDate: {
-    type: Date,
+    type: Object,
     required: true,
   },
   isEnable: Boolean,
+  creator: {
+    type: mongoose.Types.ObjectId,
+    required: true,
+  },
   choices: [Choice],
   tags: [String]
 });

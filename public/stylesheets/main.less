@@ -1,10 +1,15 @@
 .main__outer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100vw;
   height: 80vh;
 }
 
 .main__container {
   display: grid;
-  grid-template-rows: minmax(300px, 1fr);
+  grid-template-rows: minmax(300px, 30%);
   grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: 5%;
+  width: 80%;
 }
