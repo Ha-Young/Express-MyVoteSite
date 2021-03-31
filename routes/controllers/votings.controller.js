@@ -11,36 +11,30 @@ exports.voteGetAll = async (req, res, next) => {
 exports.voteCreate = async (req, res, next) => {
   const {
     title,
+    option,
     option_type: optionType,
     expired_date: expiredDate,
     expired_time: expiredTime,
-    option0,
-    option1,
-    option2,
-    option3,
-    option4
   } = req.body;
-  const options = [option0, option1, option2, option3, option4];
+  const { _id, nickname } = req.user;
   const expiredAt = expiredDate + "T" + expiredTime;
   const convertedExpiredAt = convertDate(expiredDate, expiredTime);
 
   if (new Date(expiredAt) < new Date()) {
-    console.log("현재 시간보다 앞서야 합니다.");
     res.status(200).render('voteCreate');
-
     return;
   }
 
   await Vote.create({
     title,
     creater: {
-      _id: req.user._id,
-      nickname: req.user.nickname,
+      _id,
+      nickname,
     },
     expiredAt,
     convertedExpiredAt,
     optionType,
-    options: filterOption(options),
+    options: filterOption(option),
   });
 
   res.status(200).redirect('/');

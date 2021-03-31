@@ -3,8 +3,7 @@ const forwardAuthenticated = (req, res, next) => {
     //res.locals.user = DB의 유저 이름 정보
     return next();
   }
-  next();
-  //res.redirect('/login');
+  res.redirect('/login');
 };
 
 module.exports = forwardAuthenticated;

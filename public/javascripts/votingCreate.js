@@ -14,7 +14,7 @@ function createOption() {
     return;
   }
 
-  const option = makeOption(leng);
+  const option = makeOption();
 
   optionBox.appendChild(option);
   messageBox.textContent = '';
@@ -40,11 +40,11 @@ function resetOption() {
   createOption();
 }
 
-function makeOption(n) {
+function makeOption() {
   const input = document.createElement('input');
 
   input.type = 'option';
-  input.name = `option${n}`
+  input.name = 'option';
   input.className = 'option';
   input.placeholder = 'write option';
   input.required = true;

@@ -4,6 +4,7 @@ const form = document.getElementById('patch-form');
 
 const xhr = new XMLHttpRequest();
 const url = "http://localhost:8080/votings/" + form.name;
+
 const METHOD = {
   PATCH: "PATCH",
   DELETE: "DELETE",
@@ -36,7 +37,6 @@ function patchVote() {
 function deleteVote() {
   xhr.open(METHOD.DELETE, url);
   xhr.setRequestHeader("Content-Type", "application/json");
-
   xhr.send();
 
   xhr.onload = () => {
@@ -45,9 +45,9 @@ function deleteVote() {
   };
 }
 
-function addEvent() {
+function init() {
   patchButton.addEventListener('click', patchVote);
   deleteButton.addEventListener('click', deleteVote);
 }
 
-addEvent();
+init();
