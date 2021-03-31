@@ -1,6 +1,9 @@
+import showModal from "./modal.js";
+
 const addOptionButton = document.querySelector("#optionButton");
 const optionList = document.querySelector(".option-list");
 const clearAllOptionButton = document.querySelector("#clearAllOptionsButton");
+const createVoteButton = document.querySelector("#createVoteButton");
 let index = 0;
 
 addOptionButton.addEventListener("click", () => {
@@ -11,10 +14,11 @@ addOptionButton.addEventListener("click", () => {
   input.setAttribute("name", "option_title");
   input.setAttribute("type", "text");
   input.setAttribute("data-index", index);
+  input.setAttribute("required", true);
 
   deleteButton.textContent = "DELETE";
   deleteButton.setAttribute("type", "button");
-  deleteButton.classList.add("button", "deleteButton");
+  deleteButton.classList.add("button", "deleteButton", "red");
 
   li.append(input, deleteButton);
   optionList.appendChild(li);
