@@ -2,5 +2,10 @@ extends layout
 
 block content
   h1 Voting Platform
-  p #{ message }
-  a(href="/auth/login") 로그인
+  p=message 
+  -if (state === "signup") {
+    a(href="/auth/login") 로그인
+  -}
+  -if (state === "vote") {
+    a(href="/") 돌아가기
+  -}

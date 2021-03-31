@@ -4,10 +4,12 @@ block content
   h1="Voting Platform"
   div
     form(action="/auth/login" method="POST")
-      label(for="email")="email"
-        input(type="text" name="email")
-      label(for="password")="password"
-        input(type="password" name="password")
+      div
+        label(for="email")="email"
+          input(type="text" name="email")
+      div
+        label(for="password")="password"
+          input(type="password" name="password")
       button login
     form(action="/auth/signup")
       button signup

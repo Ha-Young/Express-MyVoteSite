@@ -2,16 +2,27 @@ extends layout
 
 block content
   h1 투표하세요
-  div=vote.createdAt
-  div=vote.title 
-  div=vote.author 
-  div=vote.expiredAt
-  form(action="/votings/"+vote._id method="POST") 
+  div(class="votes")
+    div
+      div=vote.title
+      div=vote.author
+      div(class="expired_at")=vote.expiredAt
+      div(class="vote_state")
+  form(action="/votings/"+vote._id method="POST")
     -vote.options.forEach(option => {
-      input(type="checkbox" name="option" value=option.content)
-      span=option.content
-      span=option.count
+      div
+        span(class="content")=option.content
+        span=option.count
+        input(type="radio" name="option" value=option.content)
     -})
     button 제출
+    -if (vote.author === name) {
+      button 삭제
+      button 투표진행상황보기
+    -}
   div
     a(href="/") 돌아가기
+  canvas(id="myChart" width="200" height="200")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js")
+  script(src="/javascripts/chart.js")
+

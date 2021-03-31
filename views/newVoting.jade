@@ -2,8 +2,31 @@ extends layout
 
 block content
   h1 투표를 생성해보세요
-    form(action="")
-      input(type="text" placeholder="title")
-      input(type="text")
-      input(type="date")
-      button(type="submit")
+    form(action="/votings/new" method="POST")
+      div
+        input(type="text" placeholder="제목" name="title" required)
+      div
+        select(name="day" class="expired-at" required)
+          option 일
+          -for (let i = 1; i < 8; i++) {
+            option(value=i)=i
+          -}
+        select(name="hour" class="expired-at" required)
+          option(selected) 시간
+          -for (let i = 1; i < 24; i++) {
+            option(value=i)=i
+          -}
+        select(name="minute" class="expired-at" required)
+          option(selected) 분
+          -for (let i = 1; i < 60; i++) {
+            option(value=i)=i
+          -}
+      div(class="input-container")
+        input(type="text" placeholder="선택사항1" name="option" required)
+        input(type="text" placeholder="선택사항2" name="option" required)
+      button(type="button" class="button-add-option") +
+      div
+        button(type="submit" class="button-create-vote") 생성하기
+    a(href="/") 돌아가기
+    p=message
+  script(src="/javascripts/index.js")

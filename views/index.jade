@@ -5,10 +5,10 @@ block content
   ul(class="votes")
     -votes.forEach((vote) => {
       a(href="/votings/"+vote._id)
-        li(class="vote")
-          div=vote.title
-          div=vote.author
-          div=vote.expiredAt
+        div=vote.title
+        div=vote.author
+        div(class="expired_at")=vote.expiredAt
+        div(class="vote_state")
     -})
   div
     a(href="/auth/logout") logout
@@ -16,3 +16,4 @@ block content
     a(href="/votings/my-votings") 내 투표
   div
     a(href="/votings/new") 투표생성
+  script(src="/javascripts/votingState.js")
