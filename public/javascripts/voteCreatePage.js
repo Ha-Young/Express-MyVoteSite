@@ -3,6 +3,7 @@ const optionAddBtnElement = document.querySelector(".vote-option-add-btn");
 const optionListElement = document.querySelector(".vote-option-list");
 const voteCreateFormElement = document.querySelector(".vote-create-form");
 
+const TEMPLATES = window.templates;
 const LIMIT_HOUR = 1;
 
 function handleOptionRemoveBtnClick(e) {
@@ -15,7 +16,7 @@ function handleOptionRemoveBtnClick(e) {
 function handleOptionAddBtnClick() {
   const newOptionItemElement = document.createElement("li");
   newOptionItemElement.className = "vote-option-item";
-  newOptionItemElement.innerHTML = voteOptionItemTemplate();
+  newOptionItemElement.innerHTML = TEMPLATES.voteOptionItemTemplate();
 
   const removeBtn = newOptionItemElement.querySelector("button");
   removeBtn.addEventListener("click", handleOptionRemoveBtnClick);
@@ -68,9 +69,9 @@ function checkIsDateTimePast() {
   return dateDiff < 0;
 }
 
-function voteCreateInit() {
+function voteCreatePageInit() {
   optionAddBtnElement.addEventListener("click", handleOptionAddBtnClick);
   voteCreateFormElement.addEventListener("submit", handleVoteCreateSubmit);
 }
 
-voteCreateInit();
+voteCreatePageInit();

@@ -1,0 +1,5 @@
+function indexPageInit() {
+
+}
+
+indexPageInit();
