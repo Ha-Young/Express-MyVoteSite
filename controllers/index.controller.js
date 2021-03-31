@@ -1,6 +1,8 @@
+const createError = require('http-errors');
+
 const User = require('../models/User');
 const Vote = require('../models/Vote');
-const generateDateTimeString = require('../utils/generateDateTimeString');
+const APIFeatures = require('../utils/APIFeatures');
 
 exports.getHome = async (req, res, next) => {
   const redirectAddress = req.flash('redirect');
@@ -10,10 +12,16 @@ exports.getHome = async (req, res, next) => {
   }
 
   try {
-    const votes = await Vote.find().populate('author', 'nickname').lean();
-    votes.forEach(vote => {
-      vote.expiration_date = generateDateTimeString(vote.expiration_date);
-    });
+    const features = new APIFeatures(Vote.find(), req.query)
+      .sort()
+      .limitFields()
+      .populate()
+      .paginate();
+    const votes = await features.query.lean();
+
+    if (votes.length === 0) {
+      return next(createError(404));
+    }
 
     res.render('index', {
       user: req.user,

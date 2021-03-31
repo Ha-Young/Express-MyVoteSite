@@ -15,7 +15,8 @@ exports.getVotingPage = async (req, res, next) => {
     }
 
     const isAuthor = req.user?.email === vote.author.email;
-    const isExpired = new Date() >= new Date(vote.expiration_date);
+    //status로 구분됨
+    const isExpired = new Date() >= new Date(vote.expirationDate);
 
     res.render('voting', {
       user: req.user,
@@ -37,7 +38,7 @@ exports.voting = async (req, res, next) => {
 };
 
 exports.getVotingForm = (req, res) => {
-
+  res.json();
 };
 
 exports.createVote = async (req, res, next) => {
