@@ -1,0 +1,10 @@
+extends layout 
+
+block content
+  h1 Voting Platform
+  p #{ message }
+  -if(state === "login") {
+    a(href="/auth/login") 로그인
+  -} else {
+    a(href="/") 돌아가기
+  -}
