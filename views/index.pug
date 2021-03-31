@@ -4,5 +4,6 @@ block append head
   link(rel="stylesheet" href="/stylesheets/index.css")
 block content
   include header
-  h1= title
-  p Welcome to #{title}
+  h1 VotingList
+  button.create-voting-button(type="button") Create Voting
+  script(src="/javascripts/index.js")
