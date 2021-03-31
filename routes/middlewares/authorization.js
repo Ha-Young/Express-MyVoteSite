@@ -29,6 +29,6 @@ exports.authenticateToken = (req, res, next) => {
       });
       return;
     }
-    return next(createError(403, err.message))
+    next(createError(403, err.message));
   }
 };

@@ -9,7 +9,7 @@ header
       li
         a(href="/votings/my-votings" class="button") MY VOTINGS
       li
-        form#logout-form(action="users/logout" method="post")
-          button(type="submit" class="button") LOGOUT
+        button(type="button" id="logoutButton" class="button") LOGOUT
   else
     a(href="/users/login" class="button") LOGIN
+script(src="/javascripts/signOut.js")

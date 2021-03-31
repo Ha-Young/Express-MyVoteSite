@@ -9,9 +9,9 @@ router.get("/login", (req, res, next) => {
   res.status(200).render("login");
 });
 
-router.post("/login", validateLogin, usersController.createToken);
+router.post("/login", validateLogin, usersController.signIn);
 
-router.post("/logout", usersController.signOut);
+router.get("/logout", usersController.signOut);
 
 router.get("/signup", (req, res, next) => {
   res.status(200).render("signup", { error: null });

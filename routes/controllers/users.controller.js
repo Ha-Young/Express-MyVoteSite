@@ -18,7 +18,7 @@ exports.signUp = async (req, res, next) => {
   }
 };
 
-exports.createToken = async (req, res, next) => {
+exports.signIn = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
 
@@ -36,5 +36,5 @@ exports.createToken = async (req, res, next) => {
 exports.signOut = (req, res, next) => {
   res.clearCookie("accessToken");
   res.clearCookie("refreshToken");
-  res.status(201).redirect("/");
+  res.status(200).end();
 };
