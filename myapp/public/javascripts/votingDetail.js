@@ -1,4 +1,5 @@
 const $detailItems = document.querySelectorAll(".detail-item");
+const $detaiDeleteBtn = document.querySelector(".detail-delete-btn");
 
 const onClickVotingOption = (ev) => {
   const xhr = new XMLHttpRequest();
@@ -33,3 +34,7 @@ const onClickVotingOption = (ev) => {
 $detailItems.forEach((dom) => {
   dom.addEventListener("click", onClickVotingOption);
 });
+
+// $detaiDeleteBtn.addEventListener((ev) => {
+//   ev.target.dataset.id
+// })

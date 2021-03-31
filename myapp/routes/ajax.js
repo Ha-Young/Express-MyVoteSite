@@ -8,20 +8,19 @@ const Voting = require("../models/Voting");
 const router = express.Router();
 
 router.post("/changeVotingCount", async (req, res, next) => {
-  // Voting.
-  const { votingId, optionId } = req.body;
-  console.log(votingId);
-  // // const votingOption = await Voting.findOne({ _id: dbId });
-  // votingOption = Voting.console.log(votingOption);
-  const voting = await Voting.findOne({ _id: votingId });
-  const option = voting.votingItems.id(optionId);
-  console.log(voting);
-  console.log(option);
-  option.count += 1;
+  try {
+    const { votingId, optionId } = req.body;
+    const voting = await Voting.findOne({ _id: votingId });
+    const option = voting.votingItems.id(optionId);
+    option.count += 1;
 
-  await voting.save();
+    await voting.save();
 
-  res.status(200).json({ count: option.count });
+    res.status(200).json({ count: option.count });
+  } catch (err) {
+    console.log(`post /changeVotingCount ${err.message}`);
+    next(createError(500, "Internal Server Error"));
+  }
 });
 
 module.exports = router;

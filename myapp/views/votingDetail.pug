@@ -25,5 +25,5 @@ block content
           div.detail-item(data-voting-id=_id, data-option-id=votingItems[i]._id) #{item} #{count}
     div.detail-button
       a(href="/") 돌아가기
-      div 삭제
+      button.detail-delete-btn(data-voting-id=_id) 삭제
   script(src="/javascripts/votingDetail.js")

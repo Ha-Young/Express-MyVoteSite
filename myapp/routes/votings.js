@@ -41,6 +41,15 @@ router.post("/new", async (req, res, next) => {
   }
 });
 
+router.post("/delete", async (req, res, next) => {
+  try {
+    await Voting.deleteOne({});
+  } catch (err) {
+    console.error(`get /new in votings.js ${err.message}`);
+    next(createError(500, "Internal Server Error"));
+  }
+});
+
 router.get("/:votingId", async (req, res, next) => {
   console.log(req.query);
   try {
