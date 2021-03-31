@@ -7,6 +7,6 @@ const { redirectIfNotLoggedIn } = require("../middlewares/checkIsAuthenticated")
 
 router.get("/new", redirectIfNotLoggedIn, votingController.getNew);
 router.post("/new", redirectIfNotLoggedIn, votingController.postNew);
-router.get("/:voting_id", )
+router.get("/:voting_id", votingController.getVoting);
 
 module.exports = router;

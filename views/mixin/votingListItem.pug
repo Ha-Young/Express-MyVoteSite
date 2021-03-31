@@ -1,7 +1,17 @@
 mixin votingListItem(voting={})
+  - const isExpired = voting.expirationTime - new Date() < 0;
+  - let expiredVotingClassName = "not-expired"
+  - if (isExpired) {
+  -   expiredVotingClassName = "expired";
+  - }
   a(href="/votings/" + voting._id)
-    li.voting
+    li(class="voting " + expiredVotingClassName)
       div.voting-container
-        h3= voting.title
+        h2.voting-title= voting.title
         p.description= voting.description
         p.expiration-time= voting.expirationTime
+        if isExpired
+          p.isExpired Expired
+        else
+          p.isExpired Activated
+

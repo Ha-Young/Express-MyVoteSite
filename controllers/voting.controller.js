@@ -1,3 +1,6 @@
+const createError = require("http-errors");
+const { format } = require("date-fns");
+
 const Voting = require("../models/Voting");
 const User = require("../models/User");
 const validateVotingData = require("../utils/validateVotingData");
@@ -8,18 +11,16 @@ module.exports.getNew = async (req, res, next) => {
 
 module.exports.postNew = async (req, res, next) => {
   try {
-    const writer = await User.findOne({ email: res.locals.userEmail }).lean();
+    const publisher = await User.findOne({ email: res.locals.userEmail }).lean();
     const toBeCreatedVoting = req.body;
-    console.log(toBeCreatedVoting);
-    console.log(writer);
-    console.log("date",(toBeCreatedVoting.expirationTime));
+    console.log("new voting\n", toBeCreatedVoting);
 
     const validationResult = validateVotingData(toBeCreatedVoting);
     if (validationResult.result) {
       const newVoting = new Voting({
         title: toBeCreatedVoting.title,
         description: toBeCreatedVoting.description,
-        writer: writer._id,
+        publisher: publisher._id,
         voter: [],
         expirationTime:
           toBeCreatedVoting.expirationTime,
@@ -43,3 +44,39 @@ module.exports.postNew = async (req, res, next) => {
   }
 };
 
+module.exports.getVoting = async (req, res, next) => {
+  try {
+    const currentVoting =
+      await Voting.findById(req.params.voting_id)
+        .populate("publisher", "name email")
+
+    if (!currentVoting) {
+      next(createError(404, "Can't find the voting"));
+      return;
+    }
+
+    let isPublisher = false;
+    if (currentVoting.publisher.email === res.locals.userEmail) {
+      isPublisher = true;
+    }
+
+    console.log(currentVoting);
+    console.log("isPublisher", isPublisher);
+
+    const expirationTime = format(currentVoting.expirationTime, "yyyy-MM-dd HH:mm");
+    const isExpired = currentVoting.expirationTime - new Date() < 0;
+    let currentState = "activated";
+    if (isExpired) {
+      currentState = "expired";
+    }
+
+    res.status(200).render("voting", {
+      voting: currentVoting,
+      expirationTime,
+      currentState,
+      isPublisher,
+    });
+  } catch (err) {
+    next(createError(500, err.message));
+  }
+};
