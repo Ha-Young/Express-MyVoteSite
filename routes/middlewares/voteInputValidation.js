@@ -1,6 +1,5 @@
 const { format } = require('date-fns');
 
-
 async function voteInputValidation (req, res, next) {
   try {
     const { title, expireDate, votingOptions } = req.body;

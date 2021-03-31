@@ -41,8 +41,8 @@
   </div>
 
   <% if(messages.length > 0) {%>
-    <% messages.forEach(function(errMessage) { %>
-      <div> <strong> <%= errMessage.message %> </strong></div>
+    <% messages.forEach(function(message) { %>
+      <div> <strong> <%= message.message %> </strong></div>
     <% }) %>
   <% } %>
 

@@ -8,19 +8,14 @@ const voterSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   }
-})
+});
 
 const votingOptionSchema = new mongoose.Schema({
-    votingId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Voting",
-      required: true,
-    },
-    option: {
-      type: String,
-      required: true,
-    },
-    voters: [voterSchema],
+  optionTitle: {
+    type: String,
+    required: true,
+  },
+  voters: [voterSchema],
 }, { timestamps: true });
 
 const VotingSchema = new mongoose.Schema({
