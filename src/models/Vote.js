@@ -1,5 +1,6 @@
 const { Joi } = require("celebrate");
 const mongoose = require("mongoose");
+const mongoosePaginate = require('mongoose-paginate-v2');
 const joigoose = require("joigoose")(mongoose);
 
 Joi.objectId = require('joi-objectid')(Joi);
@@ -19,6 +20,7 @@ const joiVoteSchema = Joi.object({
 });
 
 const VoteSchema = new mongoose.Schema(joigoose.convert(joiVoteSchema));
+VoteSchema.plugin(mongoosePaginate);
 
 VoteSchema.pre("save", function (next) {
   const vote = this;
