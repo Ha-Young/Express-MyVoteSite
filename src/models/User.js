@@ -20,12 +20,6 @@ const userSchema = new Schema({
     type: String,
     require: true,
   },
-  votings: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Voting",
-    index: true,
-    unique: true,
-  }],
 });
 
 module.exports = mongoose.model("User", userSchema);

@@ -8,7 +8,19 @@ exports.getVoting = async (req, res, next) => {
 
   res.render("votingDetail", { pageTitle: voting.title, voting });
 };
-exports.postVoting = (req, res) => {
+exports.postVoting = async (req, res) => {
+  const userId = req.user.id;
+  const votingId = req.params.id;
+  const selection = Object.keys(req.body)[0];
+
+  await Voting.findOneAndUpdate(
+    { _id: votingId, "options._id": selection },
+    { $push:
+      { participants: [userId], "options.$.selector": [userId] }
+    }
+  );
+
+  res.redirect("/");
 };
 
 exports.getNewVoting = (req, res) => {
@@ -25,17 +37,12 @@ exports.postNewVoting = async (req, res, next) => {
   }));
 
   try {
-    const newVoting = await Voting.create({
+    await Voting.create({
       title,
       expiration: timeStamp,
       options,
       postedBy: id,
     });
-
-    const postedUser = await User.findById(id);
-
-    postedUser.votings.push(newVoting.id);
-    postedUser.save();
 
     res.redirect("/");
   } catch (err) {

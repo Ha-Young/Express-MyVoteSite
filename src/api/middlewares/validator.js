@@ -54,13 +54,13 @@ exports.validatePostVoting = async (req, res, next) => {
       return;
     }
 
-    if (!voting.process) {
+    if (!voting.progress) {
       console.log("Voting end!");
       res.redirect(`/votings/${votingId}`);
       return;
     }
 
-    if (voting.paticipants.indexOf(userId) !== -1) {
+    if (voting.participants.indexOf(userId) !== -1) {
       console.log("Can't vote the same twice!");
       res.redirect(`/votings/${votingId}`);
       return;
