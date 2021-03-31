@@ -22,14 +22,17 @@ const VoteSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    required: true,
-  },
-  expiredAt: {
-    type: Date,
     required: true
   },
+  expiredAt: {
+    type: String,
+    required: true
+  },
+  voting_period: {
+    type: String,
+  },
   participated_users: {
-    type: [String],
+    type: [mongoose.Schema.Types.ObjectId],
     default: []
   },
   options: [OptionSchema]
