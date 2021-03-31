@@ -7,7 +7,7 @@
 <body>
   <% if (isOnVote === "true") { %>
     <div class="onVote-wrapper">
-      <form action="/votings/<%= votingId %>" method="POST">
+      <form name="<%= votingId %>" class="outer-form">
         <div class="title">
           제목: <%= title %>
         </div>
@@ -23,21 +23,32 @@
         <div class="checkBox-wrapper">
           투표목록
           <% for (let i = 0; i < option.length; i++) { %>
-            <div>
+            <div class="radio-box">
               <label for="option"><%= option[i].optionTitle %></label>
-              <input type="radio" id="option" name="option" value="<%= option[i].optionTitle %>"/>
+              <input
+                type="radio"
+                id="option"
+                name="option"
+                value="<%= option[i].optionTitle %>"
+                class="radio"
+              />
               <% if (isValidateUser) { %>
                 <span>
                   <%= option[i].votedUsers.length %>
                 </span>
               <% } %>
-            </div>
+            </div class="radio-box">
           <% } %>
         </div>
-        <button type="submit">투표하기</button>
+        <button type="submit" class="submit-btn">투표하기</button>
         <a href="/">
           <button>투표목록</button>
         </a>
+        <% if (isValidateUser) { %>
+          <div>
+            <button class="delete-btn">삭제</button>
+          </div>
+        <% } %>
       </form>
     </div>
   <% } else { %>
@@ -45,5 +56,6 @@
       <div>end</div>
     </div>
   <% } %>
+  <Script src="/javascripts/votings.js"></Script>
 </body>
 </html>

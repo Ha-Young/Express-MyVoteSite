@@ -1,4 +1,4 @@
-const addBtn = document.querySelector(".addBtn");
+const addBtn = document.querySelector(".add-btn");
 const optionList = document.querySelector(".optionList");
 
 addBtn.addEventListener("click", () => {

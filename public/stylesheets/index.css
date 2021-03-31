@@ -4,12 +4,27 @@ header {
 }
 
 .votes-wrapper {
-  position: absolute;
-  left: 37%;
-  top: 30%;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .vote-wrapper {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.vote {
   border: 1px solid black;
   display: flex;
   flex-direction: column;
@@ -40,6 +55,15 @@ header {
   display: flex;
   margin-bottom: 0px;
   justify-content: space-evenly;
+  width: 300px;
+}
+
+.create-vote {
+  padding: 5px;
+}
+
+.my-vote {
+  padding: 5px;
 }
 
 a {

@@ -31,7 +31,7 @@ router.get("/:id", verifyToken, async (req, res) => {
   });
 });
 
-router.post("/:id", verifyToken, async (req, res) => {
+router.patch("/:id", verifyToken, async (req, res) => {
   const userId = req.user._id;
   const voteId = req.params.id;
   const selectedOption = req.body.option;
@@ -39,9 +39,9 @@ router.post("/:id", verifyToken, async (req, res) => {
   const vote = await Vote.findById(voteId);
   const { votedUsersId, option } = vote;
   const isUserVoted = votedUsersId.includes(userId);
-
+  console.log(res.redirectd)
   if (isUserVoted) {
-    res.redirect(301, "/");
+    res.end();
 
     return;
   }
@@ -53,7 +53,15 @@ router.post("/:id", verifyToken, async (req, res) => {
 
   vote.save();
 
-  res.redirect(301, "/")
+  res.end();
+});
+
+router.delete("/:id", async (req, res) => {
+  const postId = req.params.id;
+
+  await Vote.findByIdAndDelete(postId);
+
+  res.end();
 });
 
 module.exports = router;
