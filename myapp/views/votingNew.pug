@@ -8,14 +8,17 @@ block content
   section.voting-new
     h2 투표만들기
     form.voting-new-form(action="/votings/new", method="post")
-      div.voting-new-time-input
-        input(type="date" name="date")
-        input(type="time" name="time")
-      div.voting-new-item
-      div.voting-new-item-btn
+      div.voting-new-time
+        input(type="date", name="date")
+        input(type="time", name="time")
+      input.voting-new-title(type="text", name="title", autocomplete="off", placeholder="투표제목을 입력하세요 : )")
+      input.voting-new-desc(type="text", name="desc", autocomplete="off", placeholder="투표내용을 입력하세요 : )")
+      div.voting-new-item(name="voting-items")
+      div.voting-new-btn
         div
-          button(type="button") 항목 추가
-          button(type="button") 항목 삭제
+          button.add-btn(type="button") 항목 추가
+          button.delete-btn(type="button") 항목 삭제
         div
           a(href="/") 돌아가기
           input(type="submit", value="만들기")
+  script(src="/javascripts/votingNew.js")

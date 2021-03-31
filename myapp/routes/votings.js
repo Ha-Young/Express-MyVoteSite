@@ -11,6 +11,10 @@ router.get("/new", (req, res, next) => {
 
 router.post("/new", (req, res, next) => {
   // res.send("s");
+  // Voting.create({
+
+  // })
+
   res.send("new");
 });
 

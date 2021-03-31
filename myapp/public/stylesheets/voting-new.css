@@ -5,7 +5,7 @@
   align-items: center;
   box-sizing: border-box;
   width: 60vmin;
-  height: 60vmin;
+  height: 70vmin;
   border: 1px solid;
 }
 
@@ -15,7 +15,7 @@
   align-items: center;
   box-sizing: border-box;
   width: 80%;
-  height: 10%;
+  height: 5%;
   border: 1px solid;
 }
 
@@ -26,11 +26,33 @@
   align-items: center;
   box-sizing: border-box;
   width: 80%;
-  height: 85%;
+  height: 90%;
   border: 1px solid;
 }
 
-.voting-new-time-input {
+.voting-new-title {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  width: 90%;
+  height: 5%;
+  border: 1px solid;
+  text-align: center;
+}
+
+.voting-new-desc {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  width: 90%;
+  height: 20%;
+  border: 1px solid;
+  text-align: center;
+}
+
+.voting-new-time {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -42,15 +64,24 @@
 
 .voting-new-item {
   display: flex;
-  justify-content: space-around;
+  flex-flow: column;
+  justify-content: flex-start;
   align-items: center;
   box-sizing: border-box;
   width: 90%;
-  height: 70%;
+  height: 40%;
   border: 1px solid;
 }
 
-.voting-new-item-btn {
+.voting-new-item > input {
+  box-sizing: border-box;
+  width: 90%;
+  height: 15%;
+  border: 1px solid;
+  text-align: center;
+}
+
+.voting-new-btn {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -60,7 +91,7 @@
   border: 1px solid;
 }
 
-.voting-new-item-btn > div {
+.voting-new-btn > div {
   display: flex;
   justify-content: space-between;
   align-items: center;
