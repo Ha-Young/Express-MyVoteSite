@@ -47,7 +47,8 @@ router.post("/signup", async (req, res, next) => {
       await User.create({ name, email, password: cryptoPassword });
       res.status(302).redirect("/login");
     }
-  } catch {
+  } catch (err) {
+    console.error(err.message);
     next(createError(500, "Internal Server Error"));
   }
 });

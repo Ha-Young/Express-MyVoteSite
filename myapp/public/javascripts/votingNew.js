@@ -1,5 +1,3 @@
-console.log("hello");
-
 const $votingNewItem = document.querySelector(".voting-new-item");
 const $addBtn = document.querySelector(".add-btn");
 const $deleteBtn = document.querySelector(".delete-btn");
@@ -10,7 +8,7 @@ $addBtn.addEventListener("click", () => {
   itemNum++;
 
   $input.type = "text";
-  $input.name = `item-${itemNum}`;
+  $input.name = "item";
   $input.autocomplete = "off";
   $input.placeholder = "투표항목을 입력하세요 : )";
 

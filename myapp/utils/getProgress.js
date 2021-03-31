@@ -1,5 +1,5 @@
-const getProgress = (ISOTime) => {
-  if (ISOTime.getTime() > new Date().getTime()) {
+const getProgress = (isoTime) => {
+  if (isoTime.getTime() > new Date().getTime()) {
     return false;
   }
 

@@ -1,9 +1,9 @@
-const getLocalTime = (ISOTime) => {
-  const year = ISOTime.getFullYear();
-  const month = ISOTime.getMonth() + 1;
-  const date = ISOTime.getDate();
-  const hour = ISOTime.getHours();
-  const minute = ISOTime.getMinutes();
+const getLocalTime = (isoTime) => {
+  const year = isoTime.getFullYear();
+  const month = isoTime.getMonth() + 1;
+  const date = isoTime.getDate();
+  const hour = isoTime.getHours();
+  const minute = isoTime.getMinutes();
 
   const localTime = {
     year,

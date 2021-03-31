@@ -20,8 +20,8 @@ block content
           |  #{endLocalTime.hour}시 #{endLocalTime.minute}분
     div.voting-detail-author 작성자 #{author}
     div.voting-detail-item-container
-      - for (let i = 0; i < votingItem.length; i++)
-        - const {item, count} = votingItem[i]
+      - for (let i = 0; i < votingItems.length; i++)
+        - const {item, count} = votingItems[i]
         div.voting-detail-item #{item} #{count}
     div.voting-detail-button
       a(href="/") 돌아가기
