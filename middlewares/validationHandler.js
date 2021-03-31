@@ -1,4 +1,8 @@
-const { validateLoginInputs, validateSignUpInputs } = require('../utils/validateInputs');
+const {
+  validateLoginInputs,
+  validateSignUpInputs,
+  validateQueries
+} = require('../utils/validateInputs');
 const User = require('../models/User');
 /**
  * validate inputs from form
@@ -33,6 +37,16 @@ exports.login = (req, res, next) => {
   if (error) {
     req.flash('info', error.details.map(err => err.message));
     return res.redirect('/auth/login');
+  }
+
+  return next();
+};
+
+exports.query = (req, res, next) => {
+  const { error } = validateQueries(req.query);
+
+  if (error) {
+    return res.redirect('back');
   }
 
   return next();

@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const createError = require('http-errors');
 
+const generateDateTimeString = require('../utils/generateDateTimeString');
+
 const voteSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -47,11 +49,19 @@ voteSchema.pre(/^find/, async function (next) {
 });
 
 voteSchema.post(/^find/, function (docs, next) {
+  if (!docs) {
+    return next();
+  }
+
+  if (!Array.isArray(docs)) {
+    docs.expirationDate = generateDateTimeString(docs.expirationDate);
+    return next();
+  }
+
   docs.forEach(doc => {
-    const [date, time] = doc.expirationDate.toISOString().split('T');
-    doc.expirationDate = `${date} ${time.substring(0, 5)}`;
+    doc.expirationDate = generateDateTimeString(doc.expirationDate);
   });
-  next();
+  return next();
 });
 
 const Vote = mongoose.model('Vote', voteSchema);

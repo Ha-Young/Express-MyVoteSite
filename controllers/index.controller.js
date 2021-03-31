@@ -23,13 +23,14 @@ exports.getHome = async (req, res, next) => {
       .paginate();
     const votes = await features.query.lean();
 
-    if (votes.length === 0) {
-      return next(createError(404));
+    if (!votes) {
+      return next(createError(400));
     }
 
     res.render('index', {
       user: req.user,
       currentPage,
+      myVotings: false,
       pageNumbers,
       votes,
     });
@@ -38,15 +39,30 @@ exports.getHome = async (req, res, next) => {
   }
 };
 
-exports.getMyVotes = (req, res) => {
-  const title = 'Sign Up';
-  const infoMessages = req.flash('info');
-  const message = req.flash('error');
+exports.getMyVotes = async (req, res, next) => {
+  try {
+    const currentPage = req.query.page ?? 1;
+    const pageNumbers = generatePageNumbers(Number(currentPage), config.pageNumbersLength);
+    const features = new APIFeatures(Vote.find({ author: req.user._id }), req.query)
+      .sort()
+      .limitFields()
+      .populate()
+      .paginate();
+    const votes = await features.query.lean();
 
-  res.render('myVotings', {
-    title,
-    infoMessages,
-    message
-  });
+    if (!votes) {
+      return next(createError(404));
+    }
+
+    res.render('myVotings', {
+      user: req.user,
+      currentPage,
+      myVotings: true,
+      pageNumbers,
+      votes,
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 

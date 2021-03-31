@@ -2,17 +2,16 @@ const router = require('express').Router();
 
 const votingsController = require('../controllers/votings.controller');
 const authenticationHandler = require('../middlewares/authenticationHandler');
-const validationHandler = require('../middlewares/validationHandler');
 
 router
   .route('/new')
-  .get(votingsController.getVotingForm)
-  .post(votingsController.createVote);
+  .get(authenticationHandler.votes, votingsController.getVotingForm)
+  .post(authenticationHandler.votes, votingsController.createVote);
 
 router
   .route('/:id')
   .get(votingsController.getVotingPage)
   .post(authenticationHandler.votes, votingsController.voting)
-  .delete(votingsController.deleteVote);
+  .delete(authenticationHandler.votes, votingsController.deleteVote);
 
 module.exports = router;

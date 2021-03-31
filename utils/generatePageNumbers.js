@@ -1,5 +1,5 @@
 /**
- * validate inputs by joi schema
+ * generate page numbers based on pagenumber and length
  * @param {number} pageNumber - standard to fill pageNumbers array
  * @param {number} pageNumbersLnegth - pageNumers length
  * @returns {[number]} [pageNumber] pageNumber array with length pageNumberslength

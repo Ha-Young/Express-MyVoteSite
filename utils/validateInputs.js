@@ -26,3 +26,16 @@ exports.validateSignUpInputs = (data) => {
 
   return schema.validate(data, { abortEarly: false });
 };
+
+exports.validateQueries = (query) => {
+  const schema = Joi.object().keys({
+    sort: Joi.string(),
+    fields: Joi.string(),
+    page: Joi.string(),
+    limit: Joi.string(),
+    docs: Joi.string(),
+    options: Joi.string()
+  });
+
+  return schema.validate(query);
+};

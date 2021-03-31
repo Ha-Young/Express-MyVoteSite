@@ -10,8 +10,11 @@ exports.votes = (req, res, next) => {
     return next();
   }
 
-  req.flash('error', 'Please login to use services');
-  req.flash('redirect', `/votings/${req.params.id}`);
+  if (req.method === 'POST' && req.baseUrl.includes('votings') && req.params.id) {
+    req.flash('error', 'Please login to use services');
+    req.flash('redirect', `/votings/${req.params.id}`);
+  }
+
   return res.redirect('/auth/login');
 };
 
@@ -29,4 +32,12 @@ exports.auth = (req, res, next) => {
   }
 
   return next();
+};
+
+exports.index = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+
+  return res.redirect('/auth/login');
 };

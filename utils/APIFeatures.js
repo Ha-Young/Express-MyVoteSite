@@ -23,6 +23,10 @@ class APIFeatures {
   }
 
   sort() {
+    if (!this.query) {
+      return this;
+    }
+
     let sortBy = 'expirationDate';
 
     if (this.queryString.sort) {
@@ -34,6 +38,10 @@ class APIFeatures {
   }
 
   limitFields() {
+    if (!this.query) {
+      return this;
+    }
+
     let fields = '-__v';
 
     if (this.queryString.fields) {
@@ -45,6 +53,10 @@ class APIFeatures {
   }
 
   paginate() {
+    if (!this.query) {
+      return this;
+    }
+
     const page = this.queryString.page * 1 || 1;
     const limit = this.queryString.limit * 1 || 10;
     const skip = (page - 1) * limit;
@@ -54,6 +66,10 @@ class APIFeatures {
   }
 
   populate() {
+    if (!this.query) {
+      return this;
+    }
+
     let docs = 'author';
     let options = 'nickname';
 
