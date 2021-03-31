@@ -7,8 +7,6 @@
   </head>
   <body>
     <%- include("partial/header") %>
-    <h1>홈화면</h1>
-    <p>홈화면입니다.</p>
     <article class="buttons">
       <form action="/voting/votings/new" method="GET">
         <button type="submit">투표 생성</button>
@@ -16,9 +14,15 @@
       <form action="/voting/votings/my-votings" method="GET">
         <button type="submit">내 투표보기</button>
       </form>
+      <% if (!user) { %>
       <form action="/auth/login" method="GET">
         <button type="submit">로그인</button>
       </form>
+      <% } else { %>
+        <form action="/auth/logout" method="GET">
+          <button type="submit">로그아웃</button>
+        </form>
+      <% } %>
     </article>
     <ul class="votings">
       <% votings.forEach(voting => { %>

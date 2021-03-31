@@ -1,5 +1,6 @@
 const deleteButton = document.getElementById("deleteButton");
 const submitButton = document.getElementById("submitButton");
+const alertMessageBox = document.getElementById("message");
 
 const deleteVoting = async (votingId) => {
   await fetch(`http://localhost:3000/voting/votings/${votingId}`, {
@@ -18,9 +19,21 @@ const patchVotedResult = async (votingId, checkedOption) => {
     headers: {
       "Content-type": "application/json; charset=UTF-8"
     },
-  }).then((res) => {
-    location.replace("/");
-  });
+  }).then(res => res.json())
+    .then(data => {
+      switch (data.status) {
+        case 200:
+          alertMessageBox.textContent = data.message;
+          break;
+
+        case 400:
+          alertMessageBox.textContent = data.message;
+          break;
+
+        default:
+          break;
+      }
+    });
 };
 
 submitButton.addEventListener("click", (event) => {

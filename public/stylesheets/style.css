@@ -22,6 +22,11 @@ button:hover {
   background: #7BA4E3;
 }
 
+.message-box {
+  display: flex;
+  justify-content: center;
+}
+
 .header {
   display: flex;
   justify-content: space-between;

@@ -11,18 +11,19 @@ const Controller = {};
 Controller.getAllVotings = async (req, res, next) => {
   try {
     const votings = await Voting.find();
+    const currentUser = req.user;
 
     votings.forEach(async (voting) => {
       const votingEndDate = voting.endDate;
-      const isExpiration = validateDate(votingEndDate, Date.now());
+      const isProgress = validateDate(votingEndDate, Date.now());
 
-      if (isExpiration && voting.isProgress) {
-        voting.isProgress = isExpiration;
+      if (!isProgress && voting.isProgress) {
+        voting.isProgress = isProgress;
         await voting.save();
       }
     });
 
-    res.render("index", { votings });
+    res.render("index", { votings, user: currentUser });
   } catch (error) {
     console.error(error.message);
     next(createError(500, "Server Error"));
@@ -45,10 +46,10 @@ Controller.postNewVoting = async (req, res, next) => {
     const currentUserId = req.user._id;
     const { title } = req.body;
     const endDate = getDateFormat(req.body["end-date"]);
-    const isExpiration = validateDate(endDate, Date.now());
+    const isProgress = validateDate(endDate, Date.now());
     const options = [];
 
-    if (isExpiration) {
+    if (!isProgress) {
       return res.render("error", { message: "현재 시간 이후를 입력하십시오" });
     }
 
@@ -119,11 +120,19 @@ Controller.getDetailVoting = async (req, res, next) => {
           isAuthor = (currentUser._id.toString() === data.user._id.toString());
         }
 
-        res.render("detailVoting", {
-          voting,
-          author: data.user.email,
-          isAuthor,
-        });
+        if (voting.isProgress) {
+          res.render("detailVoting", {
+            voting,
+            author: data.user.email,
+            isAuthor,
+          });
+        } else {
+          res.render("expiredVoting", {
+            voting,
+            author: data.user.email,
+            isAuthor,
+          });
+        }
       });
   } catch (error) {
     console.error(error.message);
@@ -153,9 +162,10 @@ Controller.patchDetailVoting = async (req, res, next) => {
       voting.votingUserList.push(userId);
 
       await voting.save();
-      res.end();
+
+      res.json({ status: 200, message: "투표 성공" });
     } else {
-      res.status(400).send({ message: "이미 투표하셨습니다." });
+      return res.json({ status: 400, message: "이미 투표하셨습니다." });
     }
   } catch (error) {
     console.error(error.message);

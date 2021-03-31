@@ -6,16 +6,10 @@ const AUTH = require("../../constants/authConstants");
 
 const Controller = {};
 
-// @route   GET auth/signup
-// @desc    Render singup page
-// @access  Public
 Controller.getSignup = (req, res) => {
   res.render("signup");
 };
 
-// @route   POST auth/signup
-// @desc    save UserInfo mongoDB
-// @access  Public
 Controller.postSignup = async (req, res, next) => {
   const { email, password } = req.body;
   const checkingPassword = req.body["check-password"];
@@ -45,16 +39,10 @@ Controller.postSignup = async (req, res, next) => {
   }
 };
 
-// @route   GET auth/login
-// @desc    Render login page
-// @access  Public
 Controller.getLogin = (req, res) => {
   res.render("login");
 };
 
-// @route   POST auth/login
-// @desc    authenticate user
-// @access  Public
 Controller.postLogin = passport.authenticate("local", {
   successRedirect: "/",
   failureRedirect: "/auth/login",

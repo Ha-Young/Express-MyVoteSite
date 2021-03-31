@@ -10,29 +10,28 @@
     <p id="message" class="message-box"></p>
     <section class="voting-information">
       <article class="voting-list">
+        <div class="result">해당 페이지는 만료시 데이터</div>
         <ul>
+          <h1>디테일 화면</h1>
           <p>투표 생성자: <%= author %></p>
           <p>투표 제목: <%= voting.title %></p>
           <p>투표 종료 시간: <%= voting.endDate %></p>
           <p>투표 목록</p>
-          <form>
-            <article class="voting-options">
-              <% voting.options.forEach(option => { %>
-                <li class="voting-option">
-                  <input
-                    type="radio"
-                    name="option"
-                    value="<%= option.title %>"
-                  >
-                  <%= option.title %>
-                  <% if (isAuthor) { %>
-                    <%= option.value %>
-                  <% } %>
-                </li>
-              <% }) %>
-            </article>
-            <button id="submitButton" name="<%= voting._id %>">투표 제출</button>
-          </form>
+          <article class="voting-options">
+            <% voting.options.forEach(option => { %>
+              <li class="voting-option">
+                <input
+                  type="radio"
+                  name="option"
+                  value="<%= option.title %>"
+                >
+                <%= option.title %>
+                <% if (isAuthor) { %>
+                  <%= option.value %>
+                <% } %>
+              </li>
+            <% }) %>
+          </article>
           <% if (isAuthor) { %>
             <button id="deleteButton" name="<%= voting._id %>">삭제</button>
           <% } %>
