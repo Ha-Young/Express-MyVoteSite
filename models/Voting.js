@@ -12,7 +12,7 @@ const votingSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  writer: {
+  publisher: {
     type: mongoose.Schema.Types.ObjectId,
     require: true,
     ref: "User",
@@ -20,6 +20,7 @@ const votingSchema = new mongoose.Schema({
   voter: {
     type: [{
       type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     }],
   },
   expirationTime: {
