@@ -5,7 +5,6 @@ const router = express.Router();
 router.get('/', (req, res) => {
   res.render('index');
 });
-
 router.use('/home', require('./home'));
 router.use('/auth', require('./auth'));
 router.use('/vote', require('./vote'));

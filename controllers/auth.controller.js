@@ -42,11 +42,15 @@ async function postRegister(req, res, next) {
   }
 }
 
-const postLogin = passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true,
-});
+function postLogin(req, res, next) {
+  const referrer = req.session.referrer ?? '/';
+
+  return passport.authenticate('local', {
+    successRedirect: `${referrer}`,
+    failureRedirect: '/login',
+    failureFlash: true,
+  })(req, res, next);
+}
 
 exports.renderLogin = renderLogin;
 exports.logout = logout;

@@ -44,7 +44,7 @@ async function getVoteById(req, res) {
   try {
     let vote = await Vote.findById(id);
     
-    if (!vote.isVotable) {
+    if (!vote.isVotable && !vote.winner) {
       vote = await vote.makeResult();
     }
     
