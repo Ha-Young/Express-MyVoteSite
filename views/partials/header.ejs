@@ -1,19 +1,28 @@
-<h1>Vote Flatform</h1>
-<% if (user.nickname) { %>
-  <h2>Welcome <%= user.nickname %>.</h2>
-<% } else { %>
-  <h2>Welcome Visitor.</h2>
-<% } %>
+<head>
+  <link rel="stylesheet" href="/stylesheets/header.css">
+</head>
 
-<div>
-  <a href="/">Home</a>
-  <% if (!user.nickname) { %>
-    <a href="/login">Login</a>
-    <a href="/signup">Signup</a>
-  <% } else { %>
-    <a href="/votings/new">Add Vote</a>
-    <a href="/my-votings/<%= user._id %>">My Votings</a>
-    <a href="/logout">Logout</a>
-    <a href="/signout">Signout</a>
-  <% } %>
+<div class="header-container">
+  <div class="header-left">
+    <div class="main-logo-box">
+      <img class="main-logo" src="/images/mainLogo.jpg" alr="main-logo">
+    </div>
+    <% if (user.nickname) { %>
+      <h2 class="welcome-ment">Welcome <%= user.nickname %>.</h2>
+    <% } else { %>
+      <h2 class="welcome-ment">Welcome Visitor.</h2>
+    <% } %>
+  </div>
+  <div class="header-right">
+    <a href="/" class="header-button">Home</a>
+    <% if (!user.nickname) { %>
+      <a href="/login" class="header-button">Login</a>
+      <a href="/signup" class="header-button">Signup</a>
+    <% } else { %>
+      <a href="/my-votings/<%= user._id %>" class="header-button">My Votings</a>
+      <a href="/votings/new" class="header-button">Add Vote</a>
+      <a href="/logout" class="header-button">Logout</a>
+      <a href="/signout" class="header-button">Signout</a>
+    <% } %>
+  </div>
 </div>

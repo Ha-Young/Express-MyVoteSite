@@ -25,12 +25,12 @@ exports.logout = (req, res, next)=> {
     try {
       req.logOut();
       req.session.destroy();
-      res.redirect('/');
+      res.status(200).redirect('/');
     } catch (e) {
       next(e);
     }
   } else {
-    res.redirect('/');
+    res.status(200).redirect('/');
   }
 };
 
@@ -39,7 +39,7 @@ exports.signup = async (req, res, next) => {
 
   if (email) {
     req.flash("usedEmail", "등록된 이메일입니다.");
-    res.redirect('/login');
+    res.status(200).redirect('/login');
 
     return;
   }
@@ -53,7 +53,7 @@ exports.signup = async (req, res, next) => {
       nickname: req.body.name,
     });
 
-    res.redirect('/');
+    res.status(200).redirect('/');
   } catch (e) {
     next(e);
   }

@@ -1,32 +1,25 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.grid-container {
+  display: grid;
+  grid-template-rows: repeat(2, 17rem);
+  grid-template-columns: repeat(2, 2fr);
+  width: auto;
 }
 
-h1 {
-  margin: 0;
+.grid-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem;
+  border: 1px solid #ffffff;
+  border-radius: 0.2rem;
 }
 
-a {
-  text-decoration: none;
-  color: #00B7FF;
+.grid-box form {
+  width: 100%;
+  height: 100%;
 }
 
-ul {
-  padding: 0;
-  list-style: none;
-}
-
-button {
-  padding: 0;
-  background: none;
-  border: none;
-}
-
-button:hover {
-  cursor: pointer;
-}
-
-input {
-  outline: none;
+.grid-box button {
+  width: 100%;
+  height: 100%;
 }
