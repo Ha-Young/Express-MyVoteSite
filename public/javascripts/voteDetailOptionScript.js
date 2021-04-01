@@ -2,6 +2,9 @@
 const voteOptionElementList = document.querySelectorAll(".vote-option-checkbox");
 const voteBtnElement = document.querySelector(".vote-submit-btn");
 
+const LOGIN_UTIL = window.myLoginController;
+const PATH_UTIL = window.myPathController;
+
 function selectOnlyThis(e) {
   const optionLength = voteOptionElementList.length;
   const targetOptionElement = e.target;
@@ -26,8 +29,20 @@ function setVoteOptionsClickEvent() {
   }
 }
 
+function handleVoteBtnElementClick() {
+  if (!LOGIN_UTIL.checkLogin()) {
+    const loginPageURL = PATH_UTIL.getRootPath() + "/login";
+    console.log(loginPageURL);
+    window.location.href(loginPageURL);
+    return;
+  }
+
+  console.log('login confirm!');
+}
+
 function voteDetailOptionInit() {
   setVoteOptionsClickEvent();
+  voteBtnElement.addEventListener("click", handleVoteBtnElementClick);
 }
 
 voteDetailOptionInit();
