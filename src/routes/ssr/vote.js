@@ -37,11 +37,7 @@ module.exports = app => {
 
         res.locals.vote = vote;
 
-        if (vote.is_process) {
-          return res.render("voteDetail");
-        }
-
-        return res.render("voteResult");
+        return res.render("voteDetail");
       } catch (err) {
         return next(createError(err));
       }
