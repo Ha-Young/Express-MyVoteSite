@@ -1,23 +1,9 @@
 import showModal from "./modal.js";
 
-const deleteButton = document.querySelector("#deleteButton");
 const submitButton = document.querySelector("#submitButton");
 const options = document.querySelectorAll(".option-list li input");
 const id = window.location.pathname.substring(9);
-
-if (deleteButton) {
-  deleteButton.addEventListener("click", async () => {
-    try {
-      const response = await fetch(`/votings/${id}`, {
-        method: "DELETE"
-      });
-      const { result } = await response.json();
-      showModal(result);
-    } catch (err) {
-      console.log(err);
-    }
-  });
-}
+const cookie = document.cookie;
 
 for (let i = 0; i < options.length; i++) {
   options[i].addEventListener("click", (event) => {
@@ -34,6 +20,11 @@ submitButton.addEventListener("click", async () => {
   const optionInputs = document.querySelectorAll("input:checked");
   const options = Array.prototype.slice.call(optionInputs).map(input => input.value);
 
+  if (!cookie.includes("accessToken")) {
+    window.location = "/users/login";
+    return;
+  }
+
   try {
     const response = await fetch(`/votings/${id}`, {
       method: "PATCH",
@@ -49,7 +40,7 @@ submitButton.addEventListener("click", async () => {
       validationText.classList.remove("hidden");
       validationText.textContent = result.error.msg;
     } else {
-      showModal(result.result)
+      showModal(result.result);
     }
   } catch (err) {
     console.error(err);
