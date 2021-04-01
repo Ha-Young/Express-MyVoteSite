@@ -2,7 +2,7 @@
 <html>
   <head>
     <%- include ('partials/head') %>
-    <link rel="stylesheet" href="/stylesheets/login.css" />
+    <!-- <link rel="stylesheet" href="/stylesheets/login.css" /> -->
   </head>
   <body>
     <%- include ('partials/header') %>
@@ -18,7 +18,7 @@
             <!-- <img class="git-logo" src="/assets/images/githubLogoWhite.png"> -->
           </div>
         </a>
-        <form action="/login/callback" method="GET">
+        <form action="/login" method="POST">
           <div class="log-input">
             <input type="email" id="email" name="email" placeholder="email" required>
           </div>
@@ -27,10 +27,8 @@
           </div>
           <button class="log-in-button" type="submit">Log In</button>
         </form>
-        <a class="sign-up-button" href="/signup">Sign Up</a>
         <h2><%= messages.error ? messages.error : ""  %></h2>
       </div>
-      <a href="/">Home</a>
     </div>
 
     <%- include ('partials/footer') %>

@@ -4,11 +4,19 @@ const User = require('../models/user');
 
 const SALT = 6;
 
-exports.loginLocal = passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true,
-});
+exports.loginLocal = (req, res, next) => {
+  let successUrl = '/';
+
+  if (req.session.voteId) {
+    successUrl = '/votings/' + req.session.voteId;
+  }
+
+  return (passport.authenticate('local', {
+    successRedirect: successUrl,
+    failureRedirect: '/login',
+    failureFlash: true,
+  }))(req, res);
+};
 
 exports.loginGithub = passport.authenticate('github', {
   scope: ['user:email']

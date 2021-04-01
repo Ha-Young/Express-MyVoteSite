@@ -31,6 +31,7 @@ exports.voteDetail = async (req, res, next) => {
   const vote = await Vote.findById(id);
   const { title, creater, expiredAt, convertedExpiredAt, isProceeding, options } = vote;
 
+  req.session.voteId = id;
   res.status(200).render('vote', { title, creater, expiredAt, convertedExpiredAt, isProceeding, options, id });
 };
 
