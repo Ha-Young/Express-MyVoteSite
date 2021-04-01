@@ -5,7 +5,12 @@
     <link rel="stylesheet" href="stylesheets/index.css" />
   </head>
   <body>
-    <%- include("partials/bodyHeader") %>
+    <header>
+    <a href="/">전체</a>
+    <a href="/progress">진행 중</a>
+    <a href="/close">종료</a>
+    <%- include("partials/signContents") %>
+    </header>
     <ul>
       <% if (isLogin) { %>
         <a href="/votings/new">투표 생성</a>
@@ -17,8 +22,14 @@
           <h1><%- vote.title %></h1>
           <h2><%- vote.userName %></h2>
           <span><%- vote.state %></span>
-          <span><%- vote.expire %></span>
-
+          <span>
+            <%- vote.dates.year %>년
+            <%- vote.dates.month %>월
+            <%- vote.dates.date %>일
+            <%- vote.dates.hours %>시
+            <%- vote.dates.minutes %>분
+            까지
+          </span>
         </li>
         </a>
       <% }) %>
