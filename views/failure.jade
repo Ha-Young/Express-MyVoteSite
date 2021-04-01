@@ -2,7 +2,7 @@ extends layout
 
 block content
   h1 Voting Platform
-  p #{ message }
+  p= message
   -if(state === "login") {
     a(href="/auth/login") 로그인
   -} else {
