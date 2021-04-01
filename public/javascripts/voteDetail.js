@@ -25,6 +25,5 @@ $voteButton.addEventListener("click" , async (event) => {
   });
 });
 
-// TODO: (선택사항...) 남은시간을 표시해주는 것을 보여준다. (setInterval)
-
 // TODO: 여기에 이것을 만든 사용자가 왔을 경우 몇가지 특별한 동작을 추가한다.
+// TODO: (선택사항...) 남은시간을 표시해주는 것을 보여준다. (setInterval)
