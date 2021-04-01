@@ -94,7 +94,7 @@ async function deleteVoteById(req, res) {
   const { id } = req.params;
 
   try {
-    await Vote.findOneAndDelete(id);
+    await Vote.findByIdAndDelete(id);
     await User.deleteCompletedVotes(id);
 
     res.status(200).redirect('/home');
