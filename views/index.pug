@@ -3,12 +3,15 @@ include mixin/votingListItem
 
 block append head
   link(rel="stylesheet" href="/stylesheets/index.css")
+  link(rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous")
+
 block content
   include header
-  h1 VotingList
-  ul.voting-list
-    each voting in votingList
-      +votingListItem(voting)
+  div.votings-container
+    h1 Votings
+    ul.votings
+      each voting in votingList
+        +votingListItem(voting)
 
-  button.create-voting-button(type="button") Create Voting
+    button.create-voting-button(type="button") Create Voting
   script(src="/javascripts/index.js")

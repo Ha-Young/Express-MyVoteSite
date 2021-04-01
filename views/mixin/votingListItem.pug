@@ -7,11 +7,11 @@ mixin votingListItem(voting={})
   a(href="/votings/" + voting._id)
     li(class="voting " + expiredVotingClassName)
       div.voting-container
+        if isExpired
+          div(class="isExpired expired-mark") Expired
+        else
+          div(class="isExpired in-progress-mark") in Progress
         h2.voting-title= voting.title
         p.description= voting.description
         p.expiration-time= voting.formattedExpirationTime
-        if isExpired
-          p.isExpired Expired
-        else
-          p.isExpired Activated
 

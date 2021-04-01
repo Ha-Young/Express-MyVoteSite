@@ -1,16 +1,24 @@
 header
   div.header-container
     a(href="/")
-      h1 Voting Platform
+      h1.header-title Voting Platform
+    div.nav
+      div.nav-link-box
+        a(href="/") Votings
+        a(href="/my-votings") My votings
+        a(href="/votings/new") Crate voting
     div.user-info-box
       if user
-        p.user= user
+        div.header-user
+          <i class="fas fa-user-circle"></i>
+          p.header-email=user
       else
-        p.user Guest
-      a.my-votings(href="/my-votings") My votings
-
+        div.header-user
+          <i class="fas fa-user-circle"></i>
+          p.header-email Guest
       if user
         a.logout-button(href="#") Log out
       else
         a.login-button(href="/login") Log in
+        a.login-button(href="/signup") Sign up
 script(src="/javascripts/header.js")
