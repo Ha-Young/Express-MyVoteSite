@@ -19,7 +19,7 @@ ul {
 .voting-description {
   display: block;
   width: 50%;
-  height: 100vh;
+  height: 100%;
   text-align: center;
   border: 1px solid white;
 }
@@ -42,8 +42,8 @@ ul {
 .voting-option {
   display: block;
   min-width: 600px;
-  height: 100px;
-  line-height: 100px;
+  height: 70px;
+  line-height: 70px;
   margin: 10px;
   padding: 10px;
   border: 1px solid white;

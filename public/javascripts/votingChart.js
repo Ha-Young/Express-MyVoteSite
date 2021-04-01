@@ -31,7 +31,7 @@ const myChart = new Chart(ctx, {
         "rgba(153, 102, 255, 1)",
       ],
       borderWidth: 1
-    }]
+    }],
   },
   options: {
     scales: {
@@ -39,7 +39,7 @@ const myChart = new Chart(ctx, {
         ticks: {
           beginAtZero: true
         }
-      }]
-    }
-  }
+      }],
+    },
+  },
 });

@@ -4,9 +4,12 @@
     <%- include("partial/header") %>
     <title>Voting Platform</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
-    <link rel="stylesheet" href="/stylesheets/votingCard.css" />
+    <link rel="stylesheet" href="/stylesheets/newVoting.css" />
   </head>
   <body>
+    <form action="/">
+      <button type="submit">홈으로</button>
+    </form>
     <section class="container">
       <article class="voting card">
         <form action="/voting/votings/new" method="POST">
@@ -25,9 +28,6 @@
           <button type="submit">양식 제출</button>
         </form>
       </article>
-      <form action="/">
-        <button type="submit">홈으로</button>
-      </form>
     </section>
   </body>
 </html>

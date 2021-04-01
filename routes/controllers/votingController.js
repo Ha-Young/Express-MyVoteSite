@@ -24,8 +24,6 @@ Controller.getAllVotings = async (req, res, next) => {
       }
     });
 
-
-
     res.render("index", { votings, user: currentUser });
   } catch (error) {
     console.error(error.message);
@@ -52,10 +50,11 @@ Controller.postNewVoting = async (req, res, next) => {
     const isProgress = validateDate(endDate, Date.now());
 
     if (!isProgress) {
-      return res.render("failure", { message: VOTING.TIME_OUT_MESSAGE });
+      return res.redirect("/voting/votings/error");
     }
 
     const filteredOptions = req.body.option.filter(option => option.length > 0);
+
     const options = filteredOptions.map(option => {
       return { title: option, value: 0 };
     });
@@ -74,10 +73,34 @@ Controller.postNewVoting = async (req, res, next) => {
     user.votingList.push(newVoting._id);
 
     await user.save();
+
+
+    res.redirect(`/voting/votings/success/${newVoting._id}`);
+  } catch (error) {
+    console.error(error.message);
+    next(handleError(500, error));
+  }
+}
+
+Controller.getSuccessVoting = async (req, res, next) => {
+  try {
+    const newVotingId = req.params.id;
+
+    const newVoting = await Voting.findById({ _id: newVotingId });
+
     res.render("success", {
       message: VOTING.SUCCESS_PRODUCE_MESSAGE,
       newVoting,
     });
+  } catch (error) {
+    console.error(error.message);
+    next(handleError(500, error));
+  }
+};
+
+Controller.getFailureVoting = async (req, res, next) => {
+  try {
+    res.render("failure");
   } catch (error) {
     console.error(error.message);
     next(handleError(500, error));

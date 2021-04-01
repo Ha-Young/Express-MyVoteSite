@@ -11,6 +11,7 @@ const patchVotedResult = async (votingId, checkedOption) => {
       "Content-type": "application/json; charset=UTF-8"
     },
   });
+
   const parseData = await data.json();
 
   switch (data.status) {
@@ -29,6 +30,7 @@ const patchVotedResult = async (votingId, checkedOption) => {
       break;
 
     default:
+      window.location.href = "/votings/error";
       break;
   }
 };

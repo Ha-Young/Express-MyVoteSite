@@ -7,8 +7,13 @@
   <body>
     <%- include("partial/header") %>
     <h2><%= message %></h2>
-    <form action="/" method="GET">
-      <button type="submit">투표 목록</button>
-    </form>
+    <div class="error-buttons">
+      <form action="/" method="GET">
+        <button type="submit">투표 목록</button>
+      </form>
+      <form action="/auth/signup" method="GET">
+        <button type="submit">회원 가입</button>
+      </form>
+    </div>
   </body>
 </html>

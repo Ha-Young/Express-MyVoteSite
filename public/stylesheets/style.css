@@ -84,3 +84,8 @@ button {
   margin: 10px auto;
   background-color: orangered;
 }
+
+.error-buttons {
+  display: flex;
+  justify-content: center;
+}
