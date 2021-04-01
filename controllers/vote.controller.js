@@ -3,6 +3,7 @@ const createError = require('http-errors');
 const Vote = require('../models/Vote');
 const User = require('../models/User');
 const { getFormattedCurrentDateTime } = require('../util/time');
+const { getRandomImage } = require('../util/getRandomImage');
 
 const INITIAL_COUNT = 0;
 
@@ -11,13 +12,13 @@ function renderVote(req, res) {
 }
 
 function renderNewVote(req, res) {
-  const minDateTime = getFormattedCurrentDateTime();
+  const currentDateTime = getFormattedCurrentDateTime();
 
-  res.status(200).render('newVote', { minDateTime });
+  res.status(200).render('newVote', { currentDateTime });
 }
 
 async function postNewVote(req, res, next) {
-  const { title, expiredAt, options, description } = req.body;
+  const { title, expiredAt, options, description, imgUrl } = req.body;
 
   const formattedOptions = options.reduce((acc, cur) => {
     acc[cur] = INITIAL_COUNT;
@@ -29,6 +30,7 @@ async function postNewVote(req, res, next) {
     title,
     expiredAt,
     description,
+    imgUrl: imgUrl || getRandomImage(),
     creatorId: req.user._id,
     creatorName: req.user.name,
     options: formattedOptions,
@@ -60,7 +62,7 @@ async function getVoteById(req, res) {
 
     res.status(200).render('eachVote', { vote, isCreator });
   } catch (error) {
-
+    next(createError(500));
   }
 
 }
@@ -97,7 +99,7 @@ async function deleteVoteById(req, res) {
 
     res.status(200).redirect('/home');
   } catch (error) {
-
+    next(createError(500));
   }
 }
 
@@ -107,15 +109,15 @@ async function renderMyVote(req, res) {
 
     res.status(200).render('myVote', { allVotes: myVotes });
   } catch (error) {
-
+    next(createError(500));
   }
 }
 
 exports.renderVote = renderVote;
 exports.renderNewVote = renderNewVote;
+exports.renderMyVote = renderMyVote;
 
 exports.postNewVote = postNewVote;
 exports.getVoteById = getVoteById;
 exports.updateVoteById = updateVoteById;
 exports.deleteVoteById = deleteVoteById;
-exports.renderMyVote = renderMyVote;

@@ -41,7 +41,7 @@ userSchema.statics.deleteCompletedVotes = async function(voteId) {
   try {
     await this.updateMany(filter, update);
   } catch (error) {
-
+    throw new Error(error);
   }
 }
 

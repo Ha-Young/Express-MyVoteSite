@@ -4,7 +4,7 @@ mixin voteList(vote, delay)
     .vote-wrapper
       //TODO: vote tag css to img
       a(href=`/vote/${vote._id}`)
-        img(src='https://images.unsplash.com/photo-1536532184021-da5392b55da1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8Ymx1ZSUyMHNreXxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80')
+        img(src=`${vote.imgUrl}`)
       .creator-img__wrapper.vote-creator
         svg.feather.feather-check(viewbox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round')
           path(d='M20 6L9 17l-5-5')

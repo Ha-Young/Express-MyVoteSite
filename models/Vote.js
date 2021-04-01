@@ -6,9 +6,10 @@ const voteSchema = new mongoose.Schema({
   creatorId: { type: mongoose.Schema.Types.ObjectId, required: true },
   creatorName: { type: String, required: true },
   expiredAt: { type: Date, required: true },
-  isVotable: { type: Boolean, default: true },
   options: { type: Object, required: true },
   winner: { type: String },
+  imgUrl: { type: String },
+  isVotable: { type: Boolean, default: true },
   completedVotes: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Vote' }],
 }, {
   timestamps: true,
@@ -33,7 +34,8 @@ voteSchema.statics.updateIsVotable = async function() {
   try {
     await this.updateMany(filter, update);
   } catch (error) {
-    
+    console.error(error);
+    throw new Error(error);
   }
 }
 
@@ -48,7 +50,8 @@ voteSchema.methods.makeResult = async function() {
     await this.save();
     return this;
   } catch (error) {
-
+    console.error(error);
+    throw new Error(error);
   }
 }
 

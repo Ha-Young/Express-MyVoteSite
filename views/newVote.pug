@@ -18,12 +18,15 @@ head
             input.form-control(type='text' name='title' placeholder='Enter title' required)
           .form-group
             label(for='title') Expired At
-            input(type='datetime-local' name='expiredAt' min=`${minDateTime}` required)
+            input(type='datetime-local' name='expiredAt' min=`${currentDateTime}` required)
           .form-group
             p Add Options
             input.add-option-text(type='text')
             button.add-option-btn(type='button') ADD
             ul.options
+          .form-group
+            p Image Url
+            input.form-control(type='text' name='imgUrl' placeholder='Enter title')
           .form-group
             p Description
             textarea.input-textarea(name='description' placeholder='Say something...')
