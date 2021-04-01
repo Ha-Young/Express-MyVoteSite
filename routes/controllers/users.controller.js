@@ -1,6 +1,5 @@
 const User = require("../../models/User");
-const jwt = require("jsonwebtoken");
-const { generateAccessToken } = require("../../util/jwtHelper");
+const { generateToken } = require("../../util/jwtHelper");
 const createError = require("http-errors")
 
 exports.signUp = async (req, res, next) => {
@@ -12,9 +11,9 @@ exports.signUp = async (req, res, next) => {
 
   try {
     await user.save();
-    res.status(201).redirect("/users/login");
+    res.status(201).end();
   } catch (err) {
-    next(createError(500, "Internal Server Error"));
+    next(createError(500, "이런.. 문제가 발생했습니다."));
   }
 };
 
@@ -22,14 +21,14 @@ exports.signIn = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
 
-    const accessToken = generateAccessToken(user, process.env.ACCESS_TOKEN_SECRET, "30m");
-    const refreshToken = generateAccessToken(user, process.env.REFRESH_TOKEN_SECRET, "14d");
+    const accessToken = generateToken(user, process.env.ACCESS_TOKEN_SECRET, "2h");
+    const refreshToken = generateToken(user, process.env.REFRESH_TOKEN_SECRET, "14d");
 
     res.cookie("accessToken", accessToken);
     res.cookie("refreshToken", refreshToken);
     res.status(200).end();
   } catch (err) {
-    next(err);
+    next(createError(500, "이런.. 문제가 발생했습니다."));
   }
 };
 

@@ -1,12 +1,12 @@
 const jwt = require("jsonwebtoken");
 const createError = require("http-errors");
-const { refreshAccessToken, generateAccessToken } = require("../../util/jwtHelper");
+const { generateToken } = require("../../util/jwtHelper");
 
 exports.authenticateToken = (req, res, next) => {
   const cookies = req.cookies;
 
   if (!cookies.accessToken) {
-    next(createError(401, "Unauthorization !!!!!"));
+    res.status(301).redirect(`/users/login`);
     return;
   }
 
@@ -19,16 +19,16 @@ exports.authenticateToken = (req, res, next) => {
     if (err.name === "TokenExpiredError") {
       jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) {
-          next(createError(403, "Refresh / Access all of them expired"));
+          next(createError(403, "접근 권한이 없는 페이지입니다."));
           return;
         }
 
-        const newAccessToken = generateAccessToken(user, process.env.ACCESS_TOKEN_SECRET, "30m")
+        const newAccessToken = generateToken(user, process.env.ACCESS_TOKEN_SECRET, "2h");
         req.cookies.accessToken = newAccessToken;
         next();
       });
       return;
     }
-    next(createError(403, err.message));
+    next(createError(403, "접근 권한이 없는 페이지입니다."));
   }
 };
