@@ -10,11 +10,11 @@ header
     div.user-info-box
       if user
         div.header-user
-          <i class="fas fa-user-circle"></i>
+          i(class="fas fa-user-circle")
           p.header-email=user
       else
         div.header-user
-          <i class="fas fa-user-circle"></i>
+          i(class="fas fa-user-circle")
           p.header-email Guest
       if user
         a.logout-button(href="#") Log out
