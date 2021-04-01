@@ -7,6 +7,7 @@ exports.getMyVotings = async (req, res, next) => {
   const userDoc = await User
     .findById(userId, ["user_name", "votings"])
     .populate("votings.voteId", ["title"])
+    .populate("votings.optionId", ["title"])
     .lean();
 
   const renderProps = {
@@ -24,7 +25,9 @@ exports.getMyVotings = async (req, res, next) => {
     }
 
     if (vote.optionId) {
-      const voteDoc = await Vote.findById(vote.voteId._id, ["options"]).lean();
+      const voteDoc = await Vote
+        .findById(vote.voteId._id, ["options"])
+        .lean();
       const option = voteDoc.options.find(
         option => option._id.toString() === vote.optionId.toString()
       );

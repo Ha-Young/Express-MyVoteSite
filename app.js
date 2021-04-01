@@ -30,18 +30,24 @@ app.use(session({
     collection: process.env.SESSION_COLLECTION_PATH,
   }),
 }));
+app.use((req, res, next) => {
+  res.locals.isLogin = req.session.userId ? true : false;
+  next();
+});
 
 const signupRouter = require("./routes/signup");
 const loginRouter = require("./routes/login");
 const indexRouter = require("./routes/index");
 const votingsRouter = require("./routes/votings");
 const myVotingsRouter = require("./routes/myVotings");
+const logoutRouter = require("./routes/logout");
 
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
 app.use("/", indexRouter);
 app.use("/votings", votingsRouter);
 app.use("/my-votings", myVotingsRouter);
+app.use("/logout", logoutRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

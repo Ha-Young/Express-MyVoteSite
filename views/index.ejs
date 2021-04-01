@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="stylesheets/index.css" />
   </head>
   <body>
+    <%- include("partials/bodyHeader") %>
     <ul>
       <% if (isLogin) { %>
         <a href="/votings/new">투표 생성</a>

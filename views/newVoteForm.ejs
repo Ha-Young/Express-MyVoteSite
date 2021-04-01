@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="/stylesheets/newVoteForm.css">
 </head>
 <body>
+  <%- include("partials/bodyHeader") %>
   <form id="new-vote-form">
     <label>
       투표 주제
@@ -23,6 +24,7 @@
         type="number"
         min="2"
         value="2"
+        step="1"
       />개
     </label>
     <div id="options-container">
