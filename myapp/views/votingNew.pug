@@ -4,20 +4,21 @@ block stylesheet
   link(rel='stylesheet', href='/stylesheets/voting-new.css')
 
 block content
-  - const progress = isClosed ? "투표 종료" : "투표 중"
   section.voting-new
     h2 투표만들기
-    form.voting-new-form(action="/votings/new", method="post")
-      div.voting-new-time
+    form(action="/votings/new", method="post")
+      div.time
         input(type="date", name="date")
         input(type="time", name="time")
-      input.voting-new-title(type="text", name="title", autocomplete="off", placeholder="투표제목을 입력하세요 : )")
-      input.voting-new-desc(type="text", name="desc", autocomplete="off", placeholder="투표내용을 입력하세요 : )")
-      div.voting-new-item(name="voting-items")
-      div.voting-new-btn
+      input.title(type="text", name="title", autocomplete="off", placeholder="투표제목을 입력하세요 : )")
+      input.desc(type="text", name="desc", autocomplete="off", placeholder="투표내용을 입력하세요 : )")
+      div.item(name="voting-items")
+        input(type="text", name="items", autocomplete="off", placeholder = "투표항목을 입력하세요 : )")
+        input(type="text", name="items", autocomplete="off", placeholder = "투표항목을 입력하세요 : )")
+      div.btn-container
         div
-          button.add-btn(type="button") 항목 추가
-          button.delete-btn(type="button") 항목 삭제
+          div.add-btn 추가
+          div.delete-btn 삭제
         div
           a(href="/") 돌아가기
           input(type="submit", value="만들기")

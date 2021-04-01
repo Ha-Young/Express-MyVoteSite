@@ -5,21 +5,24 @@
   align-items: center;
   box-sizing: border-box;
   width: 60vmin;
-  height: 70vmin;
-  border: 1px solid;
+  height: 80vmin;
 }
 
-.voting-new > h2 {
+h2 {
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
   width: 80%;
   height: 5%;
-  border: 1px solid;
+  border-radius: 10px;
+  background-color: #F78764;
+  font-size: 3vmin;
+  color: white;
+  letter-spacing: 3vmin;
 }
 
-.voting-new-form {
+form {
   display: flex;
   flex-flow: column;
   justify-content: space-around;
@@ -27,42 +30,44 @@
   box-sizing: border-box;
   width: 80%;
   height: 90%;
-  border: 1px solid;
+  border: 2px solid #A8DADC;
+  border-radius: 10px;
 }
 
-.voting-new-title {
+.title {
   display: flex;
   justify-content: space-around;
   align-items: center;
   box-sizing: border-box;
   width: 90%;
   height: 5%;
-  border: 1px solid;
+  border: 1px solid #247BA0;
+  border-radius: 5px;
   text-align: center;
 }
 
-.voting-new-desc {
+.desc {
   display: flex;
   justify-content: space-around;
   align-items: center;
   box-sizing: border-box;
   width: 90%;
   height: 20%;
-  border: 1px solid;
+  border: 1px solid #247BA0;
+  border-radius: 5px;
   text-align: center;
 }
 
-.voting-new-time {
+.time {
   display: flex;
   justify-content: space-around;
   align-items: center;
   box-sizing: border-box;
   width: 90%;
   height: 10%;
-  border: 1px solid;
 }
 
-.voting-new-item {
+.item {
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
@@ -70,33 +75,90 @@
   box-sizing: border-box;
   width: 90%;
   height: 40%;
-  border: 1px solid;
+  border: 1px solid #247BA0;
+  border-radius: 5px;
 }
 
-.voting-new-item > input {
+.item > input {
   box-sizing: border-box;
   width: 90%;
   height: 15%;
-  border: 1px solid;
+  margin: 2%;
+  border: 1px solid #247BA0;
+  border-radius: 5px;
   text-align: center;
 }
 
-.voting-new-btn {
+.btn-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
   width: 90%;
   height: 10%;
-  border: 1px solid;
 }
 
-.voting-new-btn > div {
+.btn-container > div {
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
   width: 40%;
   height: 80%;
-  border: 1px solid;
+}
+
+.btn-container > div > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 45%;
+  height: 80%;
+  border: 2px solid #F78764;
+  border-radius: 5px;
+  color: #F78764;
+}
+
+.btn-container > div > div:hover {
+  border-radius: 5px;
+  background-color: #F78764;
+  color: white;
+}
+
+.btn-container > div > a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 45%;
+  height: 80%;
+  border: 2px solid #F78764;
+  border-radius: 5px;
+  color: #F78764;
+  text-decoration: none;
+}
+
+.btn-container > div > input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 45%;
+  height: 80%;
+  border: 2px solid #F78764;
+  background-color: white;
+  border-radius: 5px;
+  color: #F78764;
+}
+
+.btn-container > div > a:hover {
+  border-radius: 5px;
+  background-color: #F78764;
+  color: white;
+}
+
+.btn-container > div > input:hover {
+  border-radius: 5px;
+  background-color: #F78764;
+  color: white;
 }
