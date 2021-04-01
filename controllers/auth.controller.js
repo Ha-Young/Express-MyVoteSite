@@ -1,16 +1,19 @@
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-// TODO 여기랑 라우터 이름 signup으로 바꿔야할듯?
-exports.register = async function (req, res) {
+const { mongodbErrorMessage } = require('../constants/mongodbErrorMessage');
+const { getErrorType } = require('../utils');
+
+exports.signup = async function (req, res) {
   const { email, name, password } = req.body;
 
   // TODO error handling
   const isEmailAlreadyUsed = await User.exists({ email });
 
   if (isEmailAlreadyUsed) {
-    // TODO flash 설정해서 넘기기..!! signup에서도 받을 수 있도록 설정해줘야함.
-    console.log('이메일 중복~')
+    req.flash('userInput', req.body);
+    req.flash('errors', getErrorType(new Error(mongodbErrorMessage.EMAIL_ALREADY_EXIST)));
+
     return res.status(301).redirect('/signup');
   } else {
     const hashedPassword = await argon2.hash(password);
@@ -30,16 +33,18 @@ exports.login = async function (req, res) {
   const currentUser = await User.findOne({ email }).lean();
 
   if (!currentUser) {
-    // TODO flash 설정해서 넘기기..!! login에서도 받을 수 있도록 설정해줘야함.
-    // email 없는거임!!
+    req.flash('userInput', req.body);
+    req.flash('errors', getErrorType(new Error(mongodbErrorMessage.EMAIL_DOESNT_EXIST)));
+
     return res.status(301).redirect('/login');
   }
 
   const correctPassword = await argon2.verify(currentUser.password, password);
 
   if (!correctPassword) {
-    // TODO flash 설정해서 넘기기..!! login에서도 받을 수 있도록 설정해줘야함.
-    // 비밀번호 틀린거임!!
+    req.flash('userInput', req.body);
+    req.flash('errors', getErrorType(new Error(mongodbErrorMessage.WRONG_PASSWORD)));
+
     return res.status(301).redirect('/login');
   }
 

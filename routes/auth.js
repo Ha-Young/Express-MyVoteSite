@@ -4,6 +4,6 @@ const controller = require('../controllers/auth.controller');
 const { signupSchema, loginSchema } = require('../middlewares/validateInput');
 
 router.post('/login', loginSchema, controller.login);
-router.post('/register', signupSchema, controller.register);
+router.post('/signup', signupSchema, controller.signup);
 
 module.exports = router;

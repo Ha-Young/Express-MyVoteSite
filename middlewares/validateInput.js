@@ -1,10 +1,13 @@
 const Joi = require('joi');
-const createError = require('http-errors');
 const {
   signupErrorMessage,
   loginErrorMessage,
   createVotingErrorMessage
 } = require('../constants/joiErrorMessage');
+const { getErrorType } = require('../utils');
+
+// TODO error 종류에 따라서 다른 에러메시지를 던지는것도 괜찮을듯??
+//+ 지금은 옵션에서 얼리abort시켜놔서 에러 한개만 잡히는데 여러개 잡아도 좋을듯
 
 exports.signupSchema = function (req, res, next) {
   const schema = Joi.object({
@@ -82,46 +85,5 @@ async function validateRequest(req, res, next, schema, redirectPath) {
     req.flash('errors', getErrorType(err));
 
     res.redirect(redirectPath);
-  }
-}
-
-function getErrorType (err) {
-  switch (err.message) {
-    case signupErrorMessage.INVALID_EMAIL:
-      return { email: {
-        message: err.message
-      }};
-    case signupErrorMessage.INVALID_NAME:
-        return { name: {
-          message: err.message
-        }};
-    case signupErrorMessage.INVALID_PASSWORD:
-      return { password: {
-        message: err.message
-      }};
-    case signupErrorMessage.INVALID_PASSWORDCONFIRM:
-      return { passwordConfirm: {
-        message: err.message
-      }};
-    case loginErrorMessage.INVALID_EMAIL:
-      return { email: {
-        message: err.message
-      }};
-    case loginErrorMessage.INVALID_PASSWORD:
-      return { password: {
-        message: err.message
-      }};
-    case createVotingErrorMessage.INVALID_TITLE:
-      return { title: {
-        message: err.message
-      }};
-    case createVotingErrorMessage.INVALID_OPTION:
-      return { option: {
-        message: err.message
-      }};
-    case createVotingErrorMessage.INVALID_EXPIRATION_DATE:
-      return { expiration_date: {
-        message: err.message
-      }};
   }
 }
