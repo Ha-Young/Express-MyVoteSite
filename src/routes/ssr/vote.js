@@ -37,11 +37,13 @@ module.exports = app => {
           throw new Error("can't get vote detail");
         }
 
+        res.locals.vote = vote;
+
         if (vote.is_process) {
-          return res.json("진행 중");
+          return res.render("voteDetail");
         }
 
-        return res.json("결과");
+        return res.render("voteResult");
       } catch (err) {
         return next(createError(err));
       }
