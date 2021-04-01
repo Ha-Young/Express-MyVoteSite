@@ -7,6 +7,22 @@
   font-size: 1.4rem;
 	font-weight: 500;
   overflow-y: hidden;
+
+  .vote-submit-btn {
+    display: none;
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    width: 60px;
+    height: 30px;
+    background-color: mediumpurple;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .visible {
+    display: block;
+  }
 }
 
 .vote-detail-option-content {
@@ -96,15 +112,4 @@
 
 .vote-detail-option-list input[type="checkbox"]:checked ~ svg path {
 	stroke-dashoffset: 0;
-}
-
-.vote-submit-btn {
-  position: absolute;
-  right: 30px;
-  bottom: 30px;
-  width: 60px;
-  height: 30px;
-  background-color: mediumpurple;
-  border-radius: 2px;
-  cursor: pointer;
 }
