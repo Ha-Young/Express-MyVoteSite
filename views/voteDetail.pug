@@ -14,5 +14,7 @@ block content
           .voteDetail__choice(choiceId=choice._id onclick="toggleDivs(this)")
             img.voteDetail__choiceImage(src=choice.pictureURL alt="pic")
             .voteDetail__choiceTitle #{choice.choiceTitle}
-        button.voteButton.btn.btn-success(voteId=vote._id) 투표
+        .voteDetail__buttons
+          button.voteButton.btn.btn-success(voteId=vote._id) Vote!
+          button#deleteButton.btn.btn-danger(voteId=vote._id) Delete
   script(src="/javascripts/voteDetail.js")

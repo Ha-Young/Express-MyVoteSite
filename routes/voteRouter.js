@@ -3,7 +3,7 @@ var router = express.Router();
 
 const { isSignIn, redirectIfUserNone } = require("../middleware/authentification");
 
-const { getNewVote, postNewVote, getVoteDetail, putVoteDetail } = require("../controller/vote.controller");
+const { getNewVote, postNewVote, getVoteDetail, putVoteDetail, deleteVote } = require("../controller/vote.controller");
 
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -22,5 +22,6 @@ router.get('/error', function(req, res, next) {
 
 router.get('/:vote_id', isSignIn, getVoteDetail);
 router.put('/:vote_id', isSignIn, redirectIfUserNone, putVoteDetail);
+router.delete('/:vote_id', deleteVote);
 
 module.exports = router;

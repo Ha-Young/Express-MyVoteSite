@@ -1,5 +1,6 @@
 const $choiceDivs = document.getElementsByClassName("voteDetail__choice");
 const $voteButton = document.querySelector(".voteButton");
+const $deleteButton = document.getElementById("deleteButton");
 
 function toggleDivs(element) {
   const $choiceDivs = document.getElementsByClassName("voteDetail__choice");
@@ -11,7 +12,7 @@ function toggleDivs(element) {
   $voteButton.setAttribute("choiceId", element.getAttribute("choiceId"));
 }
 
-$voteButton.addEventListener("click" , async (event) => {
+$voteButton.addEventListener("click" , (event) => {
   const voteId = $voteButton.getAttribute("voteId");
   const chosenId = $voteButton.getAttribute("choiceId");
   fetch(`/votings/${voteId}`, {
@@ -20,9 +21,23 @@ $voteButton.addEventListener("click" , async (event) => {
     headers: {
       "Content-Type": "application/json"
     }
-  }).then(result => {
-    console.log(result);
+  }).then(() => {
     window.location.href = `/votings/${voteId}`;
+  }).catch(err => {
+    console.error(err);
+    window.location.href = `/votings/${voteId}`;
+  });
+});
+
+$deleteButton.addEventListener("click", (event) => {
+  const voteId = $deleteButton.getAttribute("voteId");
+  fetch(`/votings/${voteId}`, {
+    method: "DELETE"
+  }).then((result) => {
+    window.location.href = "/";
+  }).catch(err => {
+    console.error(err);
+    window.location.href = "/";
   });
 });
 

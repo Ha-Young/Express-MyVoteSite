@@ -77,12 +77,30 @@ module.exports.putVoteDetail = async function putVoteDetail(req, res, next) {
     user
   } = req;
 
-  const targetVote = await Vote.findById(vote_id).lean();
+  try {
+    const targetVote = await Vote.findById(vote_id).lean();
 
-  const targetChoice = targetVote.choices.find(choice => String(choice._id) === chosenId);
-  targetChoice.selectUser.push(user._id);
+    const targetChoice = targetVote.choices.find(choice => String(choice._id) === chosenId);
+    targetChoice.selectUser.push(user._id);
 
-  await Vote.findOneAndUpdate({ _id: vote_id }, { $set: { choices: targetVote.choices }});
+    await Vote.findOneAndUpdate({ _id: vote_id }, { $set: { choices: targetVote.choices }});
 
-  res.send("success");
+    res.send("success");
+  } catch (err) {
+    res.send("fail");
+  }
+}
+
+module.exports.deleteVote = async function deleteVote(req, res, next) {
+  const {
+    params: { vote_id },
+  } = req;
+
+  try {
+    await Vote.findByIdAndRemove(vote_id);
+
+    res.send("success");
+  } catch (err) {
+    res.send("fail");
+  }
 }

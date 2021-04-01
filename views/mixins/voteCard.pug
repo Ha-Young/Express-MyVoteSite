@@ -2,6 +2,8 @@ mixin voteCard(vote = {})
   .voteCard.card(id=vote._id)
     .voteCard__header.card-header
       img.voteCard__headImage(src=vote.thumbnailURL alt="image")
+      .voteCard__deleteButton
+        i.fas.fa-times-circle.deleteButton(voteId=vote._id)
     .voteCard__body.card-body
       .voteCard__title.card-title=(vote.title)
       .voteCard__dates
