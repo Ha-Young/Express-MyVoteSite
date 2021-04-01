@@ -66,10 +66,9 @@ exports.validateLogin = [
     }),
   (req, res, next) => {
     const result = validationResult(req);
-    const user = getUserInfo(req.cookies);
 
     if (!result.isEmpty()) {
-      return res.status(422).render("login", { error: result.errors[0], user });
+      return res.status(422).json({ error: result.errors[0] });
     }
     next();
   }
@@ -91,17 +90,23 @@ exports.validateCreatingVote = [
     .isLength({ min: 1 })
     .withMessage("Option title must be required")
     .custom(value => {
+      console.log(value);
       if (!Array.isArray(value) || value.length < 2) {
         throw new Error("Add more options (at least 2)");
+      }
+      if (value.length > 8) {
+        throw new Error("Max options can be 8");
       }
       return true;
     }),
   (req, res, next) => {
     const result = validationResult(req);
     const user = getUserInfo(req.cookies);
+    console.log(req.body);
 
     if (!result.isEmpty()) {
-      return res.status(422).render("votings-new", { error: result.errors[0], user });
+      // return res.status(422).render("votings-new", { error: result.errors[0], user });
+      return res.status(422).json({ error: result.errors[0] });
     }
 
     next();
@@ -128,12 +133,9 @@ exports.validateCastingVote = [
     }),
   async (req, res, next) => {
     const result = validationResult(req);
-    const user = getUserInfo(req.cookies);
-    const { id } = req.params;
-    const vote = await Vote.findById(id).populate("author", "name");
 
     if (!result.isEmpty()) {
-      return res.json({ error: result.errors[0] });
+      return res.status(422).json({ error: result.errors[0] });
     }
 
     next();
