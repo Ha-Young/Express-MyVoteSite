@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/:user_id', function(req, res, next) {
-  res.send('respond with a resource');
-});
+const { isSignIn, redirectIfUserNone } = require("../middleware/authentification");
+const { getMyVotes } = require("../controller/user.controller");
+
+router.get('/', isSignIn, redirectIfUserNone, getMyVotes);
 
 module.exports = router;

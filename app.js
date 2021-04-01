@@ -11,6 +11,7 @@ const logger = require("morgan");
 
 const indexRouter = require("./routes/globalRouter");
 const voteRouter = require("./routes/voteRouter");
+const myVoteRouter = require("./routes/myVotingRouter");
 const passport = require("passport");
 
 const app = express();
@@ -39,7 +40,7 @@ app.use(passport.initialize());
 
 app.use("/", indexRouter);
 app.use("/votings", voteRouter);
-app.use("/my-votings", voteRouter);
+app.use("/my-votings", myVoteRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,5 +1,4 @@
 const Vote = require("../model/Vote");
-const User = require("../model/User");
 
 const datefns = require("date-fns");
 

@@ -17,11 +17,12 @@ html
       .header__search
       .header__buttons
         if (user)
-          a.btn.btn-primary(href="/votings/new") create Vote!
-          a.btn.btn-primary(href="/votings/:_id") my Votes
+          if (isMyPage)
+            a.btn.btn-primary(href="/votings/new") create Vote!
+          else
+            a.btn.btn-primary(href="/my-votings") my Votes
           a.btn.btn-primary(href="/signOut") sign Out
         else
-          a.btn.btn-primary(href="/votings/new") create Vote!
           a.btn.btn-primary(href="/signin") sign In
           a.btn.btn-primary(href="/signup") sign Up
     block content

@@ -1,6 +1,9 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const datefns = require("date-fns");
+
 const User = require("../model/User");
+const Vote = require("../model/Vote");
 
 module.exports.getSignIn = function getSignIn(req, res, next) {
   console.log(req.flash("info"));
@@ -93,4 +96,20 @@ module.exports.getSignOut = function getSignOut(req, res, next) {
   res.clearCookie("access");
   res.clearCookie("refresh");
   res.redirect("/");
+}
+
+module.exports.getMyVotes = async function getMyVotes(req, res, next) {
+  const {
+    user
+  } = req;
+
+  const myVotes = await Vote.find({ creator: user._id }).lean();
+
+  myVotes.forEach(vote => {
+    vote.createAt = datefns.format(vote.createAt, "yyyy/M/d h:m:s");
+    vote.dueDate = datefns.format(vote.dueDate, "yyyy/M/d h:m:s");
+    vote.isCreator = user && String(vote.creator) === String(user._id);
+  });
+
+  res.render("main", { votes: myVotes, user, isMyPage: true });
 }
