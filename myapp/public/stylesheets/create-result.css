@@ -1,0 +1,44 @@
+.create-result {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+  width: 60vmin;
+  height: 70vmin;
+  border: 1px solid;
+}
+
+.create-result > h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 80%;
+  height: 20%;
+  border: 1px solid;
+}
+
+.create-result > p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 80%;
+  height: 20%;
+  border: 1px solid;
+}
+
+.countTime {
+  font-size: 300%
+}
+
+.create-result > a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 80%;
+  height: 20%;
+  border: 1px solid;
+}

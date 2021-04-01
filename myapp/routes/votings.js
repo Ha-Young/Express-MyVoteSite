@@ -41,11 +41,21 @@ router.post("/new", async (req, res, next) => {
       endTime: isoString,
     });
 
-    res.status(202).redirect("new");
+    res.status(202).redirect("/votings/success");
   } catch (err) {
     console.error(`post /new in voting.js ${err.message}`);
     next(createError(500, "Internal Server Error"));
   }
+});
+
+router.get("/success", (req, res, next) => {
+  const isLogin = getLoginStatus(req);
+  res.render("createResult", { isLogin, isCreate: true });
+});
+
+router.get("/error", (req, res, next) => {
+  const isLogin = getLoginStatus(req);
+  res.render("createResult", { isLogin, isCreate: false });
 });
 
 router.post("/delete", async (req, res, next) => {
