@@ -9,7 +9,9 @@ function sendAjax(url, data) {
   xhr.send(data);
 
   xhr.addEventListener("load", function () {
+
     console.log(xhr.responseText);
+    debugger;
   });
 
 }

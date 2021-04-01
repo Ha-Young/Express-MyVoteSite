@@ -1,10 +1,11 @@
 
 function requireAuth(req, res, next) {
-    if (req.session.passport) {
-        next();
-    } else {
-        res.redirect("/login");
-    }
+  if (req.session.passport) {
+    return next();
+  }
+
+  req.session.returnTo = req.originalUrl;
+  res.redirect("/login");
 }
 
 exports.requireAuth = requireAuth;

@@ -12,6 +12,10 @@ const Voting = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
   },
+  creator_username: {
+    type: String,
+    required: true,
+  },
   due_date: {
     type: String,
     default: moment().format("YYYY-MM-DD hh:mm:ss"),

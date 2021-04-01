@@ -16,10 +16,13 @@ passport.use(
   "local-signup",
   new LocalStrategy(
     {
-      usernameField: "email",
+      usernameField: "username",
       passwordField: "password",
+      passReqToCallback: true
     },
-    function (email, password, done) {
+    function (req, username, password, done) {
+      const email = req.body.email;
+      console.log(username, password, email);
       User.findOne({ email }, async function (err, user) {
         if (err) {
           return done(error);
@@ -29,7 +32,7 @@ passport.use(
           return done(null, false, { message: "이미 존재하는 아이디 입니다." });
         }
 
-        const savedUser = await new User({ "email": email, "password": password }).save();
+        const savedUser = await new User({ "username": username, "email": email, "password": password }).save();
         return done(null, savedUser);
       })
     }

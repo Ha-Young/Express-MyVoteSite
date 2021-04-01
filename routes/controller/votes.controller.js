@@ -2,9 +2,28 @@ const Voting = require("../../models/Voting");
 const User = require("../../models/User");
 
 exports.getAllVotings = async function (req, res, next) {
-  const allVotings = await Voting.find();
+  let myVotings = [];
+  let creatorId;
 
-  res.render("index", { allVotings: allVotings });
+  if (req.session.passport) {
+    creatorId = req.session.passport.user;
+    const myVotingIdList = await User.findById(creatorId);
+
+    myVotings = await Voting.find({
+      creator: { $in: myVotingIdList }
+    });
+  }
+
+  const notMyVotings = await Voting.find(
+    { creator: { $ne: creatorId } }
+  );
+
+  res.render("index",
+    {
+      myVotings: myVotings,
+      notMyVotings: notMyVotings
+    }
+  );
 }
 
 exports.showMyVotings = async function (req, res, next) {
@@ -39,6 +58,16 @@ exports.addOneToSelectedOption = async function (req, res, next) {
   const votingId = req.params.vote_id;
   const selectedOptionName = req.body.name;
 
+  const hasParticipated = await User.find(
+    { _id: userId },
+    { participated_votings: votingId }
+  );
+
+  if (hasParticipated) {
+    res.render("index");
+    return;
+  }
+
   const options = await Voting.findById(votingId).select("candidates");
   const candidates = options.candidates;
 
@@ -63,9 +92,5 @@ exports.deleteVoting = async function (req, res, next) {
   const userId = req.session.passport.user;
   const votingId = req.params.vote_id;
 
-  // await User.deleteOne({ _id: userId },
-  //   { $pull: { created_votings: votingId } }
-  // );
-
-  const result = await Voting.deleteOne({ _id: votingId, creator: userId });
+  await Voting.deleteOne({ _id: votingId, creator: userId });
 }

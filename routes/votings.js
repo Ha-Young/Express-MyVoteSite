@@ -16,8 +16,7 @@ router.post("/new", requireAuth, async function (req, res) {
   const title = req.body.title;
   const date = req.body.date;
   const options = req.body.options;
-  const creator = req.session.passport.user;
-
+  const creatorId = req.session.passport.user;
   const candidates = [];
 
   if (!title || !options[0] || !options[1]) {
@@ -29,10 +28,13 @@ router.post("/new", requireAuth, async function (req, res) {
     candidates.push({ name: options[i] });
   }
 
-  const creatorId = req.session.passport.user;
+  const creator = await User.findById(creatorId);
+  const creatorUsername = creator.username;
+
   const newVoting = {
     title: title,
     creator: creatorId,
+    creator_username: creatorUsername,
     due_date: date,
     candidates: candidates,
   }
@@ -45,8 +47,8 @@ router.post("/new", requireAuth, async function (req, res) {
   res.redirect("/");
 });
 
-router.get("/:vote_id", voteController.showVoteDetails);
-router.put("/:vote_id", requireAuth, voteController.addOneToSelectedOption);
+router.get("/:vote_id", requireAuth, voteController.showVoteDetails);
+router.put("/:vote_id", voteController.addOneToSelectedOption);
 router.delete("/:vote_id", requireAuth, voteController.deleteVoting);
 
 module.exports = router;

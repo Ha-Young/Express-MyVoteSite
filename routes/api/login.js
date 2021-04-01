@@ -49,11 +49,14 @@ router.get("/", (req, res) => {
 });
 
 router.post("/",
-  passport.authenticate("local-login",
-    {
-      successRedirect: "/",
-      failureRedirect: "/login"
-    })
+  passport.authenticate("local-login"),
+  function (req, res) {
+    if (req.session.returnTo) {
+      res.redirect(req.session.returnTo);
+    } else {
+      res.redirect("/");
+    }
+  }
 );
 
 module.exports = router;
