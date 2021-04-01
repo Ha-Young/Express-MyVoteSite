@@ -16,5 +16,6 @@ block content
             .voteDetail__choiceTitle #{choice.choiceTitle}
         .voteDetail__buttons
           button.voteButton.btn.btn-success(voteId=vote._id) Vote!
-          button#deleteButton.btn.btn-danger(voteId=vote._id) Delete
+          if (vote.isCreator)
+            button#deleteButton.btn.btn-danger(voteId=vote._id) Delete
   script(src="/javascripts/voteDetail.js")

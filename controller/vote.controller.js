@@ -6,8 +6,8 @@ module.exports.getNewVote = function getNewVote(req, res, next) {
     user
   } = req;
 
-  const aa = req.flash("info")[0];
-  res.render("voteNew", { messages: aa, user });
+  const messages = req.flash("info")[0];
+  res.render("voteNew", { messages, user });
 }
 
 module.exports.postNewVote = async function postNewVote(req, res, next) {
@@ -16,12 +16,9 @@ module.exports.postNewVote = async function postNewVote(req, res, next) {
     user
   } = req;
 
-  console.log(user.email);
-
   try {
     const inputDueDate = new Date(voteDueDate + "T" + voteDueDateTime + "Z");
 
-    console.log(inputDueDate < new Date());
     if (inputDueDate < new Date()) {
       throw new Error("Due date or time MUST be future than current time");
     }
@@ -63,9 +60,8 @@ module.exports.getVoteDetail = async function getVoteDetail(req, res, next) {
   } = req;
 
   const vote = await Vote.findById(vote_id).populate("creator").lean();
-  console.log(vote.dueDate);
   vote.dueDate = datefns.format(vote.dueDate, "yyyy/M/d h:m:s");
-  console.log(vote.dueDate);
+  vote.isCreator = String(vote.creator._id) === String(user._id);
 
   res.render("voteDetail", { vote, user });
 }

@@ -8,12 +8,11 @@ module.exports.main = async function main(req, res, next) {
     user
   } = req;
 
-  console.log("current User : ", req.user);
-
   const votes = await Vote.find({}).lean();
   votes.forEach(vote => {
     vote.createAt = datefns.format(vote.createAt, "yyyy/M/d h:m:s");
     vote.dueDate = datefns.format(vote.dueDate, "yyyy/M/d h:m:s");
+    vote.isCreator = user && String(vote.creator) === String(user._id);
   });
 
   res.render("main", { user, votes });
