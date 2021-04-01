@@ -5,13 +5,18 @@ const votingsController = require('../controllers/votings.controller');
 const wrapAsync = require('../utils/wrapAsync');
 
 router.get('/new', isLoggedIn, (req, res, next) => {
-  res.status(200).render('voteCreate');
+  try {
+    res.status(200).render('voteCreate');
+  } catch (e) {
+    next(e);
+  }
 });
 router.post('/new', isLoggedIn, wrapAsync(votingsController.voteCreate));
 router.get('/success', isLoggedIn, wrapAsync(votingsController.createSuccess));
 
 router.get('/:id', wrapAsync(votingsController.voteDetail));
-router.patch('/:id', isLoggedIn, votingsController.voteUpdate);
+router.get('/:id/result', isLoggedIn, wrapAsync(votingsController.voteResult));
+router.patch('/:id', isLoggedIn, wrapAsync(votingsController.voteUpdate));
 router.delete('/:id', isLoggedIn, wrapAsync(votingsController.voteDelete));
 
 module.exports = router;

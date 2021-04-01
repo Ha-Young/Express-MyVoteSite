@@ -25,10 +25,6 @@ function patchVote() {
   }
 
   xhr.onload = () => {
-    if (xhr.status !== 200) {
-      return;
-    }
-
     window.location.reload();
     return false;
   };

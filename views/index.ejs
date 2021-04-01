@@ -38,7 +38,7 @@
         <div class="grid-container">
           <% for (let i = 0; i < expiredVote.length; i++) { %>
             <div class="grid-box">
-              <form action="/votings/<%= expiredVote[i]._id %>" method="GET">
+              <form action="/votings/<%= expiredVote[i]._id %>/result" method="GET">
                 <div class="title-box">
                   <span><%= expiredVote[i].title %></span>
                 </div>

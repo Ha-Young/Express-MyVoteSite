@@ -5,7 +5,6 @@ const votingsController = require('../controllers/votings.controller');
 const userController = require('../controllers/user.controller');
 const wrapAsync = require('../utils/wrapAsync');
 
-/* GET home page. */
 router.get('/', wrapAsync(votingsController.voteGetAll));
 
 router.get('/logout', isLoggedIn, (req, res, next) => {

@@ -30,9 +30,18 @@ exports.voteDetail = async (req, res, next) => {
   const { id } = req.params;
   const vote = await Vote.findById(id);
   const { title, creater, expiredAt, convertedExpiredAt, isProceeding, options } = vote;
+  const option = {
+    title,
+    creater,
+    expiredAt,
+    convertedExpiredAt,
+    isProceeding,
+    options,
+    id,
+  };
 
   req.session.voteId = id;
-  res.status(200).render('vote', { title, creater, expiredAt, convertedExpiredAt, isProceeding, options, id });
+  res.status(200).render('vote', option);
 };
 
 exports.voteCreate = async (req, res, next) => {
@@ -97,6 +106,24 @@ exports.voteUpdate = async (req, res, next) => {
   await Vote.findByIdAndUpdate(id, { options: updatedOptions, participants }, { new: true });
 
   res.status(200).json();
+};
+
+exports.voteResult = async (req, res, next) => {
+  const { id } = req.params;
+  const vote = await Vote.findById(id);
+  const { title, creater, expiredAt, convertedExpiredAt, isProceeding, options } = vote;
+  const option = {
+    title,
+    creater,
+    expiredAt,
+    convertedExpiredAt,
+    isProceeding,
+    options,
+    id,
+  };
+
+  req.session.voteId = id;
+  res.status(200).render('result', option);
 };
 
 exports.voteDelete = async (req, res, next) => {
