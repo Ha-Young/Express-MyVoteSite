@@ -53,11 +53,11 @@ async function getVoteById(req, res) {
 
   try {
     let vote = await Vote.findById(id);
-    
+
     if (!vote.isVotable && !vote.winner) {
       vote = await vote.makeResult();
     }
-    
+
     const isCreator = req.user?._id.toString() === vote.creatorId.toString();
 
     res.status(200).render('eachVote', { vote, isCreator });
@@ -73,14 +73,14 @@ async function updateVoteById(req, res, next) {
   const { id: voteId } = req.params;
 
   const optionKey = `options.${option}`;
-  
+
   try {
     const vote = await Vote.findByIdAndUpdate(voteId, { 
       $inc: {
         [optionKey]: 1,
       },
     });
-  
+
     await User.addCompletedVotesById(userId, voteId);
 
     await vote.save();

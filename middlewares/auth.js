@@ -2,6 +2,7 @@ function checkAuthenticated(req, res, next) {
   const { headers: { referer } } = req;
 
   if (req.isAuthenticated()) {
+    res.locals.user = req.user;
     return next();
   }
 
@@ -18,5 +19,14 @@ function checkNotAuthenticated(req, res, next) {
   next();
 }
 
+function addUserInfo(req, res, next) {
+  if (req.isAuthenticated()) {
+    res.locals.user = req.user;
+  }
+
+  return next();
+}
+
 exports.checkAuthenticated = checkAuthenticated;
 exports.checkNotAuthenticated = checkNotAuthenticated;
+exports.addUserInfo = addUserInfo;

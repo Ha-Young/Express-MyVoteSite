@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', voteController.renderVote);
 
-router.get('/new', voteController.renderNewVote);
+router.get('/new', checkAuthenticated, voteController.renderNewVote);
 router.post('/new', checkAuthenticated, voteController.postNewVote);
 
 router.get('/:id', voteController.getVoteById);
