@@ -7,6 +7,7 @@ const cryptograph = require("../../utils/cryptograph");
 exports.getLogin = (req, res, next) => res.render("login");
 
 exports.validateUser = async (req, res, next) => {
+
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email }).lean();

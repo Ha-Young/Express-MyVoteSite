@@ -109,7 +109,11 @@ exports.patchVote = async (req, res, next) => {
 
   const voterDoc = await User.findById(voterId);
   const hasVoted = voterDoc.votings
-    .some(voting => voting.voteId === voteId);
+    .some(voting => {
+      if (voting.voteId.toString() === voteId && voting.optionId) {
+        return true;
+      }
+    });
 
   if (hasVoted) {
     return res.json({ result: "fail", message: "이미 투표하셨어요 😰" });
@@ -118,19 +122,30 @@ exports.patchVote = async (req, res, next) => {
   const voteDoc = await Vote.findById(voteId);
 
   if (!voteDoc) {
-    return res.json({ result: "cancel", message: "투표가 취소됐어요 😓"});
+    return res.json({ result: "cancel", message: "투표가 취소됐어요 😓" });
   }
 
-  voterOptions.map(async voterOptId => {
-    voteDoc.options.some((option, index) => {
+  voterOptions.forEach(async voterOptId => {
+    const isSaved = voteDoc.options.some((option, index) => {
       if (option._id.toString() === voterOptId) {
         voteDoc.options[index].voters.push(voterId);
         voteDoc.save();
-        voterDoc.votings.push({ voteId, optionId: option._id });
-        voterDoc.save();
-        return true;
+        for (let i = 0; i < voterDoc.votings.length; i++) {
+          const votedId = voterDoc.votings[i].voteId.toString();
+          if ( votedId === voteId) {
+            debugger;
+            voterDoc.votings[i] =  { ...voterDoc.votings[i], optionId: option._id };
+            voterDoc.save();
+            return true;
+          }
+        }
       }
     });
+
+    if (!isSaved) {
+      voterDoc.votings.push({ voteId, optionId: option._id });
+      voterDoc.save();
+    }
   });
 
   return res.json({ result: "success", message: "투표 성공! 🥳"});

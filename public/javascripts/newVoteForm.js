@@ -6,7 +6,6 @@ const $month = document.getElementById("month");
 const $date = document.getElementById("date");
 const $hours = document.getElementById("hours");
 const $minutes = document.getElementById("minutes");
-const $dates = document.getElementsByClassName("dates");
 
 const now = new Date();
 $year.value = now.getFullYear();
@@ -14,26 +13,6 @@ $month.value = now.getMonth() + 1;
 $date.value = now.getDate();
 $hours.value = now.getHours();
 $minutes.value = now.getMinutes();
-
-(function () {
-  let columnsNum = Number($optionsNumber.value);
-
-  $optionsNumber.addEventListener("change", (event) => {
-    const changedColumnsNum = Number(event.target.value);
-
-    if (changedColumnsNum > columnsNum) {
-      const newColumns = document.createElement("input");
-      newColumns.name = "option";
-      newColumns.className = "invalid option";
-      newColumns.placeholder = "후보를 정해주세요";
-      $optionsContainer.appendChild(newColumns);
-    } else {
-      $optionsContainer.removeChild($optionsContainer.lastChild);
-    }
-
-    columnsNum = changedColumnsNum;
-  });
-})();
 
 const validations = {
   title: {
@@ -50,6 +29,46 @@ const validations = {
   },
 };
 
+(function () {
+  let columnsNum = Number($optionsNumber.value);
+
+  $optionsNumber.addEventListener("input", (event) => {
+    const value = Number(event.target.value);
+    const isInvalid
+      = columnsNum + 1 !== value
+      && columnsNum - 1 !== value
+      && value < 2;
+
+    if (isInvalid) {
+      event.target.value = columnsNum;
+      return;
+    }
+
+    const changedColumnsNum = Number(event.target.value);
+
+    if (changedColumnsNum > columnsNum) {
+      const newColumns = document.createElement("input");
+      newColumns.className = "option";
+      newColumns.name = "option";
+      newColumns.placeholder = "후보를 정해주세요";
+      $optionsContainer.appendChild(newColumns);
+      validations.option.isValid = false;
+    } else {
+      $optionsContainer.removeChild($optionsContainer.lastChild);
+      [...$optionsContainer.children].some((optionEl => {
+        if (optionEl.value.trim() === "") {
+          validations.option.isValid = false;
+          return true;
+        }
+        validations.option.isValid = true;
+      }));
+    }
+    columnsNum = changedColumnsNum;
+  });
+})();
+
+
+
 const voteExpiration = {
   year: Number($year.value),
   month: Number($month.value),
@@ -58,20 +77,17 @@ const voteExpiration = {
   minutes: Number($minutes.value),
 };
 
-$newVoteForm.addEventListener("keyup", (event) => {
+$newVoteForm.addEventListener("input", (event) => {
   const eventName = event.target.name;
   const value = event.target.value.trimStart();
-  const numberVal = Number(value);
   const now = new Date();
 
   switch (eventName) {
     case "title":
       if (!value) {
         event.target.value = value;
-        event.target.className = " invalid";
         validations.title.isValid = false;
       } else {
-        event.target.className = "";
         validations.title.isValid = true;
       }
 
@@ -79,14 +95,14 @@ $newVoteForm.addEventListener("keyup", (event) => {
     case "option":
       if (!value) {
         event.target.value = value;
-        event.target.className = event.target.className + " invalid";
         validations.option.isValid = false;
       } else {
         event.target.className = "option";
         const options = document.getElementsByClassName("option");
         let isValid = true;
+
         for (const option of options) {
-          if (option.className.includes("invalid")) {
+          if (option.value.trim() === "") {
             isValid = false;
             break;
           }
@@ -96,7 +112,7 @@ $newVoteForm.addEventListener("keyup", (event) => {
 
       break;
     case "year": case "month": case "date": case "hours": case "minutes":
-      voteExpiration[eventName] = numberVal;
+      voteExpiration[eventName] = Number(value);
 
       const expireDate = new Date(
         voteExpiration.year,
@@ -110,23 +126,29 @@ $newVoteForm.addEventListener("keyup", (event) => {
         = expireDate.toString() === "Invalid Date"
         || expireDate.getTime() < now.getTime();
 
-        if (isInvalidExpireDate) {
-          [...$dates].forEach(date => date.className = "dates invalid");
-        } else {
-          [...$dates].forEach(date => date.className = "dates");
-          validations.date.isValid = true;
-        }
+      validations.date.isValid = isInvalidExpireDate ? false : true;
+
       break;
   }
 });
 
 $newVoteForm.addEventListener("submit", async (event) => {
   event.preventDefault();
+
   for (const key in validations) {
     if (!validations[key].isValid) {
-      return alert(validations[key].message);
+      const $warningBox = document.createElement("div");
+      $warningBox.className = "warning-box";
+      $warningBox.innerText = `${validations[key].message}🙄`;
+      document.body.appendChild($warningBox);
+
+      setTimeout(() => {
+        document.body.removeChild($warningBox);
+      }, 2000);
+      return;
     }
   }
+
   const urlData = new URLSearchParams();
 
   for (const [key, value] of new FormData($newVoteForm)) {
@@ -140,5 +162,5 @@ $newVoteForm.addEventListener("submit", async (event) => {
 
   const result = await response.text();
 
-  if (result === "success") return location.replace("/votings/success");
+  if (result === "success") return location.assign("/votings/success");
 });

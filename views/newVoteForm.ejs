@@ -11,7 +11,6 @@
       투표 주제
       <input
         id="vote-title"
-        class="invalid"
         name="title"
         type="text"
         placeholder="투표 주제를 정해주세요"
@@ -24,18 +23,17 @@
         type="number"
         min="2"
         value="2"
-        step="1"
       />개
     </label>
     <div id="options-container">
       <input
-        class="invalid option"
+        class="option"
         name="option"
         type="text"
         placeholder="후보를 정해주세요"
       />
       <input
-        class="invalid option"
+        class="option"
         name="option"
         type="text"
         placeholder="후보를 정해주세요"
@@ -45,46 +43,45 @@
       <label>
         <input
           id="year"
-          class="dates invalid"
           name="year"
-          type="text"
-          maxlength="4"
+          type="number"
+          max="9999"
         />년
       </label>
       <label>
         <input
           id="month"
-          class="dates invalid"
           name="month"
-          type="text"
-          maxlength="2"
+          type="number"
+          min="1"
+          max="12"
         />월
       </label>
       <label>
         <input
           id="date"
-          class="dates invalid"
           name="date"
-          type="text"
-          maxlength="2"
+          type="number"
+          min="1"
+          max="31"
         />일
       </label>
       <label>
         <input
           id="hours"
-          class="dates invalid"
           name="hours"
-          type="text"
-          maxlength="2"
+          type="number"
+          min="0"
+          max="23"
         />시
       </label>
       <label>
         <input
           id="minutes"
-          class="dates invalid"
           name="minutes"
-          type="text"
-          maxlength="2"
+          type="number"
+          min="0"
+          max="59"
         />분
       </label>
     </div>
