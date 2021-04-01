@@ -118,3 +118,19 @@ exports.CreateVote = async ({ voteInputDTO, user }) => {
     return { error };
   }
 };
+
+exports.DeleteVote = async voteId => {
+  try {
+    const voteRecord = await Vote.findByIdAndDelete(voteId);
+
+    if (!voteRecord) {
+      throw new Error("vote was not delete");
+    }
+
+    const vote = voteRecord.toObject();
+
+    return { vote };
+  } catch (error) {
+    return { error };
+  }
+};
