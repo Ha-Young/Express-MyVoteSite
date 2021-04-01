@@ -7,17 +7,17 @@ passport.use(new LocalStrategy({
   passwordField: "password"
 },
   (email, password, done) => {
-    User.findOne({ email }, (err, user) => {
+    User.findOne({ email }, async (err, user) => {
       if (err) {
         return done(err);
       }
 
       if (!user) {
-        return done(null, false, { message: "Incorrect email" });
+        return done(null, false, { message: "가입하지 않은 이메일입니다" });
       }
 
-      if (!user.verifyPassword(password, user.password)) {
-        return done(null, false, { message: "Incorrect password" });
+      if (!await user.verifyPassword(password, user.password)) {
+        return done(null, false, { message: "잘못된 비밀번호입니다" });
       }
 
       return done(null, user);
