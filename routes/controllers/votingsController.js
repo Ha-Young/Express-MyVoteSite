@@ -58,7 +58,6 @@ exports.renderVoteDetailPage = catchAsync(async (req, res, next) => {
     return;
   }
 
-  // 인덴팅을 어떻게 하는 것이 컨벤션인지 모르겠습니다 ㅠㅠㅠㅠ
   const vote = await Vote
     .findById(id)
     .populate("creator")
