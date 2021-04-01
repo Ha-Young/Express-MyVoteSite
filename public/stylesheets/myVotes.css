@@ -2,6 +2,8 @@ header {
   display: flex;
   justify-content: space-evenly;
   padding: 30px;
+  font-weight: 600;
+  border-bottom: 2px solid black;
 }
 
 .myVoteList-wrapper {
@@ -16,7 +18,19 @@ header {
 .voteList-wrapper {
   width: 400px;
   padding: 20px;
-  border: 1px solid black;
+  border: 2px solid black;
+  border-radius: 6px;
+}
+
+.logout-btn:hover {
+  cursor: pointer;
+}
+
+.logout-btn {
+  border-style: none;
+  background-color: white;
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .vote {
@@ -24,7 +38,8 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
+  border: 2px solid black;
+  border-radius: 6px;
   margin: 10px;
 }
 
@@ -42,6 +57,10 @@ header {
 
 .vote-status {
   padding: 5px;
+}
+
+.ended-vote {
+  color: red;
 }
 
 a {

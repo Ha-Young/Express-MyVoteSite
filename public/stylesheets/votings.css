@@ -54,10 +54,17 @@ form {
 }
 
 .submit-btn {
+  font-weight: 600;
   padding: 4px;
 }
 
 .home-btn {
+  font-weight: 600;
+  padding: 4px;
+}
+
+.delete-btn {
+  font-weight: 600;
   padding: 4px;
 }
 

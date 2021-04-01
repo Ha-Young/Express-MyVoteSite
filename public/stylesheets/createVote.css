@@ -1,3 +1,23 @@
+header {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 30px;
+  border-bottom: 2px solid black;
+  font-weight: 600;
+}
+
+.voting-list-btn {
+  border-style: none;
+  background-color: white;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.voting-list-btn:hover {
+  cursor: pointer;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -7,30 +27,53 @@
   height: 100vh;
 }
 
-.voteWrapper {
+.vote-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid black;
-  padding: 20px;
+  border: 2px solid black;
+  border-radius: 6px;
+  padding: 50px;
 }
 
 .title-wrapper {
-  display: flex;
-  justify-content: center;
-  padding: 5px;
+  padding: 10px;
 }
 
-.optionList {
+.start-date-wrapper {
+  padding: 10px;
+}
+
+.end-date-wrapper {
+  padding: 10px;
+}
+
+.option-list-wrapper {
+  text-align: center;
+  padding: 10px;
+}
+
+.option-list {
   display: flex;
   flex-direction: column;
 }
 
-.submit-btn {
+#option {
+  margin: 3px;
+}
+
+.btn-wrapper {
   display: flex;
-  justify-content: center;
-  padding: 10px;
+  justify-content: space-evenly;
+}
+
+.submit-btn {
+  font-weight: 600;
+}
+
+.add-btn {
+  font-weight: 600;
 }
 
 .vote-list-btn {

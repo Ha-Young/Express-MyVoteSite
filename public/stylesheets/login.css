@@ -2,7 +2,8 @@ header {
   display: flex;
   justify-content: space-evenly;
   padding: 10px;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid black;
+  font-weight: 600;
 }
 
 .login-wrapper {
@@ -48,6 +49,7 @@ header {
 }
 
 .login-btn {
+  font-weight: 700;
   padding: 6px;
 }
 

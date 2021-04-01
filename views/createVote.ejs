@@ -1,49 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/stylesheets/createVote.css" />
   <title>createVote</title>
 </head>
   <body>
+    <header>
+      <a href="/">
+        <button class="voting-list-btn">투표목록</button>
+      </a>
+    </header>
     <div class="wrapper">
-      <div class="voteWrapper">
+      <div class="vote-wrapper">
         <form action="/votings" method="POST">
           <div class="title-wrapper">
-            <label for="title">Title: </label>
+            <label for="title">
+              <i class="fa fa-pencil" aria-hidden="true">제목</i>
+            </label>
             <input type="text" id="title" name="title" required />
           </div>
           <div>
-            <div>
-              <label for="startDate">startDateTime: </label>
+            <div class="start-date-wrapper">
+              <label for="startDate">
+                <i class="fa fa-calendar" aria-hidden="true">
+                  시작
+                </i>
+              </label>
               <input type="datetime-local" id="startDate" name="startDate" required />
             </div>
-            <div>
-              <label for="endDate">endDateTime: </label>
+            <div class="end-date-wrapper">
+              <label for="endDate">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                종료
+              </label>
               <input type="datetime-local" id="endDate" name="endDate" required />
             </div>
           </div>
-          <div class="optionListWrapper">
-            <label for="option">Option: </label>
-            <span class="optionList">
+          <div class="option-list-wrapper">
+            <label for="option">선택사항</label>
+            <span class="option-list">
               <input type="text" id="option" name="option" required />
               <input type="text" id="option" name="option" required />
             </span>
           </div>
-          <div class="submit-btn">
-            <button type="submit">Submit</button>
+          <div class="btn-wrapper">
+            <div class="submit-btn">
+              <button type="submit" class="submit-btn">제출</button>
+            </div>
+            <div class="btnWrapper">
+              <button class="add-btn" class="add-btn">옵션추가</button>
+            </div>
           </div>
         </form>
-        <div class="btnWrapper">
-          <button class="add-btn">AddOption</button>
-          <a href="/">
-            <button>home</button>
-          </a>
-        </div>
-      </div>
-      <div class="vote-list-btn">
-        <a href="/">
-          <button>투표목록</button>
-        </a>
       </div>
     </div>
     <Script src="/javascripts/createVote.js"></Script>

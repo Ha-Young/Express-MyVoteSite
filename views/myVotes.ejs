@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/stylesheets/myVotes.css" />
   <title>myVoteList</title>
 </head>
@@ -27,14 +28,15 @@
       <% for (let i = 0; i < myVoteList.length; i++) { %>
         <a href="/votings/<%= myVoteList[i]._id %>">
           <div class="vote">
-            <div class="title">
-              제목: <%= myVoteList[i].title %>
-            </div>
+            <h3 class="title">
+              <%= myVoteList[i].title %>
+            </h3>
             <div class="creator">
-              작성자: <%= myVoteList[i].creator %>
+              <i class="fa fa-id-card"> 작성자: </i>
+              <%= myVoteList[i].creator %>
             </div>
             <div class="expire-date">
-              만료일:
+              <i class="fa fa-table"> 마감일: </i>
               <%=
                 myVoteList[i].endDate.getFullYear() + "년 " +
                 (myVoteList[i].endDate.getMonth() + 1) + "월" +
@@ -43,9 +45,15 @@
             </div>
             <div class="vote-status">
               <% if (myVoteList[i].isOnVote === "true") { %>
-                <div>⭕️ 투표 진행중 ⭕️</div>
+                <div>
+                  <i class="fa fa-paper-plane"></i>
+                  투표 진행중
+                </div>
               <% } else { %>
-                <div>❌ 투표 마감 ❌</div>
+                <div class="ended-vote">
+                  <i class="fa fa-times-circle"></i>
+                  투표 마감
+                </div>
               <% } %>
             </div>
           </div>

@@ -3,7 +3,30 @@ header {
   justify-content: space-evenly;
   align-items: center;
   padding: 30px;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid black;
+  font-weight: 600;
+}
+
+.my-voting-btn {
+  border-style: none;
+  background-color: white;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.my-voting-btn:hover {
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  cursor: pointer;
+}
+
+.logout-btn {
+  border-style: none;
+  background-color: white;
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .votes-wrapper {
