@@ -151,6 +151,7 @@ header .logo {
 }
 header ul {
   display: flex;
+  align-items: center;
   flex-direction: row;
 }
 header ul li {
@@ -310,7 +311,7 @@ h2 {
 .option-list li {
   width: 100%;
   margin: 0 0 0.5em 0;
-  padding: 1em 0.8em;
+  padding: 0em 0.8em;
   border: 1px solid var(--gray);
   box-sizing: border-box;
   transition: 0.3s all;
@@ -321,6 +322,7 @@ h2 {
 .option-list li label {
   width: calc(100% - 30px);
   margin: 0;
+  padding: 1em 0;
   display: inline-block;
 }
 .option-list li input[type="checkbox"] {
@@ -330,4 +332,19 @@ h2 {
 .option-list li input[type="text"] {
   width: calc(100% - 80px);
   margin: 0 10px 0 0;
+}
+
+/**
+ * vote-result
+ */
+
+.vote-result-wrapper {
+  width: 100%;
+  padding: 1em;
+  background: var(--white);
+  box-sizing: border-box;
+}
+
+.chart-wrapper {
+  padding: 1em;
 }

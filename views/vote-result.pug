@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  section
+    h2 VOTE RESULT
+    .vote-result-wrapper
+      .form-box
+        p.vote-title #{vote.title}
+      .form-box
+          ul.vote-info
+            li 📅 #{vote.expiration_date.formatted_date}
+            li 🖌 #{vote.author.name}
+      ul.vote-result.hidden
+        each result in stats
+          li
+            p.title #{result._id}
+            p.count #{result.count}
+      .chart-wrapper
+        canvas#vote-chart
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js")
+  script(src="/javascripts/voteResult.js")

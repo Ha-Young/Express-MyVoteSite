@@ -1,5 +1,6 @@
 const Vote = require("../../models/Vote");
 const User = require("../../models/User");
+const mongoose = require("mongoose");
 const format = require("date-fns/format");
 const { getUserInfo } = require("../../util/jwtHelper");
 
@@ -57,6 +58,70 @@ exports.getVote = async (req, res, next) => {
     res.render("vote-page", { vote, user });
   } catch (err) {
     next(err);
+  }
+};
+
+exports.getVoteResult = async (req, res, next) => {
+  const user = getUserInfo(req.cookies);
+  const { id } = req.params;
+
+  try {
+    const vote = await Vote.findById(id).populate("author", "name").lean();
+
+    vote.expiration_date = {
+      date: vote.expiration_date,
+      formatted_date: format(vote.expiration_date, "yyyy-MM-dd HH:mm")
+    };
+
+    const stats = await Vote.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(id)
+        }
+      },
+      {
+        $addFields: {
+          total: {
+            $sum: "$options.count"
+          }
+        }
+      },
+      {
+        $project: {
+          options: 1,
+          total: 1,
+        }
+      },
+      {
+        $unwind: {
+          path: "$options",
+          includeArrayIndex: "index"
+        }
+      },
+      {
+        $group: {
+          _id: "$options.title",
+          index: {
+            $first: "$index"
+          },
+          count: {
+            $first: "$options.count"
+          },
+          total: {
+            $first: "$total"
+          }
+        }
+      },
+      {
+        $sort: {
+          index: 1
+        }
+      }
+    ]);
+
+    res.status(200).render("vote-result", { vote, stats, user });
+  } catch (err) {
+    console.log(err);
   }
 };
 
