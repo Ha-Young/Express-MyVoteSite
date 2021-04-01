@@ -60,8 +60,28 @@
 
   border: none;
   padding: 0;
-  background-color: whitesmoke;
   cursor: pointer;
+  color: black;
+}
+
+.color0 {
+  background-color: #05ffad;
+}
+
+.color1 {
+  background-color: #ffd774;
+}
+
+.color2 {
+  background-color: #8ef1ff;
+}
+
+.color3 {
+  background-color: #ff9dc7;
+}
+
+.color4 {
+  background-color: #c6ff9d;
 }
 
 .detail-voting-name-font {
@@ -83,7 +103,7 @@
 .detail-voting-date-font {
   font-family: "Song Myung", serif;
   font-size: 40px;
-  color: #ff9dc7;
+  color: aliceblue;
   margin: 0;
   padding-left: 10px;
   margin-bottom: 50px;
