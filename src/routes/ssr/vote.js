@@ -51,6 +51,32 @@ module.exports = app => {
     }
   );
 
+  route.delete(
+    DETAIL,
+    celebrate({
+      params: {
+        vote_id: Joi.string().required(),
+      },
+    }),
+    async (req, res, next) => {
+      try {
+        const { vote_id: voteId } = req.params;
+
+        const { vote, error } = await voteService.DeleteVote(voteId);
+
+        if (error) {
+          throw new Error("can't delete vote");
+        }
+
+        res.locals.vote = vote;
+
+        res.redirect("/");
+      } catch (err) {
+        return next(createError(err));
+      }
+    }
+  );
+
   route.post(
     NEW,
     celebrate({
