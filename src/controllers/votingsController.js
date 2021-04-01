@@ -52,7 +52,7 @@ exports.postNewVoting = async (req, res, next) => {
   const { title, expiration, option } = req.body;
   const { id } = req.user;
 
-  const timeStamp = new Date(expiration.join(" "));
+  const timeStamp = new Date(expiration);
   const options = option.map(item => ({
     title: item,
     count: 0,

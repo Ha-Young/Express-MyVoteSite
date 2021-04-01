@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const createError = require("http-errors");
 const helmet = require("helmet");
 const path = require("path");
+const flash = require("connect-flash");
 
 const sessionLoader = require("./loaders/session");
 const passportLoader = require("./loaders/passport");
@@ -31,11 +32,12 @@ app.use(cookieParser());
 sessionLoader(app);
 passportLoader(app);
 loggerLoader(app);
+app.use(flash());
 
 app.use(localMiddleware);
 
 app.use("/", rootRouter);
-app.use("/auth",authenticated, authRouter);
+app.use("/auth", authenticated, authRouter);
 app.use("/votings", votingRouter);
 
 app.use((req, res, next) => {

@@ -1,21 +1,14 @@
 const createError = require("http-errors");
 const User = require("../../models/User");
 const Voting = require("../../models/Voting");
-const { checkPassword, checkExpiration } = require("../../utils/validates")
 
 exports.validatePostSignUp = async (req, res, next) => {
   try {
-    const { email, password1, password2 } = req.body;
+    const { email } = req.body;
     const isExistEmail = await User.exists({ email });
 
     if (isExistEmail) {
       console.log("exist email!");
-      res.redirect("/auth/signup");
-      return;
-    }
-
-    if (!checkPassword(password1, password2)) {
-      console.log("two password should be equal!");
       res.redirect("/auth/signup");
       return;
     }
@@ -25,19 +18,6 @@ exports.validatePostSignUp = async (req, res, next) => {
     console.log(err);
     next(createError(500));
   }
-};
-
-exports.validatePostNewVoting = (req, res, next) => {
-  const { expiration } = req.body;
-  const timeStamp = new Date(expiration.join(" "));
-
-  if (!checkExpiration(timeStamp)) {
-    console.log("The expiration date cannot be older than the present!");
-    res.redirect("/votings/new");
-    return;
-  }
-
-  next();
 };
 
 exports.validatePostVoting = async (req, res, next) => {

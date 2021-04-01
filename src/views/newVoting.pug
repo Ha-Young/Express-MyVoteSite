@@ -1,13 +1,23 @@
 extends layouts/main
 
+block style
+  link(rel="stylesheet", href="/stylesheets/newVoting.css")
+
 block content
   h1 #{pageTitle}
-  .newVoting-container
-    form.voting-form(action="./new" method="POST")
+  .new-voting-container
+    form.new-voting-form(action="./new" method="POST")
       input(type="text" placeholder="title" name="title" required)
-      input(type="date" name="expiration" required)
-      input(type="time" name="expiration" required)
-      input(type="text" placeholder="option" name="option" required)
-      input(type="text" placeholder="option" name="option" required)
-      button(type="button").add-input-button +
-      button.newVoting-button Create Voting
+      lable(for="expiraton") 만료일:
+      input.expiration(type="datetime-local" name="expiration" id="expiration" required)
+      button.add-option-button(type="button") +
+      .option-container
+        .option
+          input(type="text" placeholder="option" name="option" required)
+          button.remove-option-button.blind(type="button") -
+        .option
+          input(type="text" placeholder="option" name="option" required)
+          button.remove-option-button.blind(type="button") -
+      button.new-voting-button Create Voting
+    .warning-box
+  script(src="/javascripts/newVotings.js")

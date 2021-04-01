@@ -3,6 +3,7 @@ const { generatePassword } = require("../utils/passwordHelper");
 
 exports.getLogin = (req, res) => {
   const queryKey = Object.keys(req.query);
+  const loginErrorMessage = req.flash("error");
 
   res.render("login", {
     pageTitle: "Login",
@@ -10,6 +11,7 @@ exports.getLogin = (req, res) => {
       key: queryKey,
       value: req.query[queryKey],
     },
+    loginErrorMessage,
   });
 };
 exports.postLogin = (req, res) => {
