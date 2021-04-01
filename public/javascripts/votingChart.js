@@ -1,9 +1,9 @@
-const chartContainer = document.querySelector('.chart-container');
-const ctx = document.getElementById('myChart');
+const $chartContainer = document.querySelector('.chart-container');
+const $ctx = document.getElementById('myChart');
 
-const options = JSON.parse(chartContainer.dataset.serverOptions);
+const options = JSON.parse($chartContainer.dataset.serverOptions);
 const chartColors = Array(options.length).fill(null).map(el => randomColorGenerator(256));
-const myChart = new Chart(ctx, {
+const myChart = new Chart($ctx, {
   type: 'pie',
   data: {
     labels: options.map(el => el.option),

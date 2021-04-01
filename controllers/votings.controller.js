@@ -1,5 +1,4 @@
 const createError = require('http-errors');
-const mongoose = require('mongoose');
 
 const Vote = require('../models/Vote');
 const APIFeatures = require('../utils/APIFeatures');
@@ -52,6 +51,15 @@ exports.voting = async (req, res, next) => {
   }
 };
 
+exports.deleteVote = async (req, res, next) => {
+  try {
+    await Vote.findByIdAndDelete(req.params.id);
+    res.json(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.getVotingForm = (req, res) => {
   res.json();
 };
@@ -62,8 +70,4 @@ exports.createVote = async (req, res, next) => {
   } catch (err) {
     next(createError(500));
   }
-};
-
-exports.deleteVote = async (req, res, next) => {
-
 };

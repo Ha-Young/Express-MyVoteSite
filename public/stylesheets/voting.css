@@ -1,12 +1,52 @@
-.chart-container {
-  margin: 40px;
-  width: 500px;
-  height: 500px;
-}
-
-.back-button-container {
+.back-button-container,
+.delete-button-container {
   display: flex;
   justify-content: flex-end;
   padding-top: 20px;
   padding-right: 20px;
+}
+
+.contents-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.description-container {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-evenly;
+  height: 500px;
+}
+
+.no-chart-container {
+  justify-content: center;
+  align-items: center;
+}
+
+.vote-form {
+  flex-flow: column;
+  align-items: initial;
+}
+
+.no-chart-container,
+.vote-form {
+  display: flex;
+  justify-content: center;
+  width: 400px;
+  height: 400px;
+  background-color: #282828;
+  font-size: 30px;
+}
+
+.submit-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.chart-container {
+  margin: 40px;
+  width: 500px;
+  height: 500px;
 }

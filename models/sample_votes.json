@@ -5,156 +5,38 @@
     "expirationDate": "2021-02-19T06:01:17.171Z",
     "status": "in progress",
     "options": [
-      "A",
-      "B",
-      "C"
-    ],
-    "voters": [
-      "6062babedf450a12638259ad"
+      {
+        "option": "A",
+        "voters": []
+      },
+      {
+        "option": "B",
+        "voters": []
+      },
+      {
+        "option": "C",
+        "voters": []
+      }
     ]
   },
   {
-    "title": "ADSFDASFASDF",
+    "title": "취업되냐?",
     "author": "6062ba9adf450a12638259ac",
     "expirationDate": "2021-07-19T06:01:17.171Z",
     "status": "in progress",
     "options": [
-      "A",
-      "B",
-      "C"
-    ],
-    "voters": [
-      "6062babedf450a12638259ad"
-    ]
-  },
-  {
-    "title": "3번sadfas",
-    "author": "6062babedf450a12638259ad",
-    "expirationDate": "2021-08-19T06:01:17.171Z",
-    "status": "in progress",
-    "options": [
-      "A",
-      "B",
-      "C"
-    ],
-    "voters": [
-      "6062babedf450a12638259ad"
-    ]
-  },
-  {
-    "title": "4번asdgns",
-    "author": "6062ba9adf450a12638259ac",
-    "expirationDate": "2021-09-19T06:01:17.171Z",
-    "status": "in progress",
-    "options": [
-      "A",
-      "B",
-      "C"
-    ],
-    "voters": []
-  },
-  {
-    "title": "5번",
-    "author": "6062babedf450a12638259ad",
-    "expirationDate": "2021-10-19T06:01:17.171Z",
-    "status": "in progress",
-    "options": [
-      "A",
-      "B",
-      "C"
-    ],
-    "voters": [
-      "6062ba9adf450a12638259ac"
-    ]
-  },
-  {
-    "title": "6번",
-    "author": "6062ba9adf450a12638259ac",
-    "expirationDate": "2021-10-21T06:01:17.171Z",
-    "status": "in progress",
-    "options": [
-      "A",
-      "B",
-      "C",
-      "D"
-    ],
-    "voters": [
-      "6062ba9adf450a12638259ac"
-    ]
-  },
-  {
-    "title": "7번",
-    "author": "6062ba9adf450a12638259ac",
-    "expirationDate": "2021-10-21T06:01:17.171Z",
-    "status": "in progress",
-    "options": [
-      "A",
-      "B",
-      "C",
-      "D"
-    ],
-    "voters": [
-      "6062ba9adf450a12638259ac"
-    ]
-  },
-  {
-    "title": "8번",
-    "author": "6062babedf450a12638259ad",
-    "expirationDate": "2021-11-21T06:01:17.171Z",
-    "status": "in progress",
-    "options": [
-      "A",
-      "B",
-      "C",
-      "D"
-    ],
-    "voters": [
-      "6062ba9adf450a12638259ac"
-    ]
-  },
-  {
-    "title": "9번",
-    "author": "6062babedf450a12638259ad",
-    "expirationDate": "2021-11-22T06:01:17.171Z",
-    "status": "in progress",
-    "options": [
-      "A",
-      "B",
-      "C",
-      "D"
-    ],
-    "voters": [
-      "6062ba9adf450a12638259ac"
-    ]
-  },
-  {
-    "title": "10번",
-    "author": "6062babedf450a12638259ad",
-    "expirationDate": "2021-12-01T06:01:17.171Z",
-    "status": "in progress",
-    "options": [
-      "A",
-      "B",
-      "C",
-      "D"
-    ],
-    "voters": [
-      "6062ba9adf450a12638259ac"
-    ]
-  },
-  {
-    "title": "11번",
-    "author": "6062babedf450a12638259ad",
-    "expirationDate": "2021-12-02T06:01:17.171Z",
-    "status": "in progress",
-    "options": [
-      "A",
-      "B",
-      "C",
-      "D"
-    ],
-    "voters": [
-      "6062ba9adf450a12638259ac"
+      {
+        "option": "A",
+        "voters": []
+      },
+      {
+        "option": "B",
+        "voters": []
+      },
+      {
+        "option": "C",
+        "voters": []
+      }
     ]
   }
 ]

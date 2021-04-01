@@ -1,6 +1,5 @@
 const createError = require('http-errors');
 
-const User = require('../models/User');
 const Vote = require('../models/Vote');
 const APIFeatures = require('../utils/APIFeatures');
 const generatePageNumbers = require('../utils/generatePageNumbers');
