@@ -28,5 +28,12 @@ const myChart = new Chart(ctx, {
 
   options: {
     responsive: false,
+    scales: {
+      xAxes: [{
+        ticks: {
+          min: 0,
+        }
+      }]
+    }
   },
 });
