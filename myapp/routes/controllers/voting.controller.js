@@ -18,7 +18,7 @@ const getVotingById = async (votingId) => {
     title: voting.title,
     description: voting.description,
     votingItems: voting.voting_items,
-    voters: voting.voters,
+    // voters: voting.voters,
     startedAt,
     endedAt,
     isClosed,

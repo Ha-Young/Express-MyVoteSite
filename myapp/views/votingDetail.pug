@@ -4,7 +4,6 @@ block stylesheet
   link(rel='stylesheet', href='/stylesheets/voting-detail.css')
 
 block content
-  - console.log(votingInfo)
   - const progress = votingInfo.isClosed ? "투표 종료" : "투표 중"
   section.detail
     h2 #{votingInfo.title}
@@ -23,7 +22,7 @@ block content
     div.detail-item-container
       - for (let i = 0; i < votingInfo.votingItems.length; i++)
         - const {item, count} = votingInfo.votingItems[i]
-          div.detail-item(data-voting-id=_id, data-option-id=votingInfo.votingItems[i]._id) #{item} #{count}
+          div.detail-item(data-voting-id=votingInfo._id, data-option-id=votingInfo.votingItems[i]._id) #{item} #{count}
     div.detail-button
       a(href="/") 돌아가기
       button.detail-delete-btn(data-voting-id=_id) 삭제

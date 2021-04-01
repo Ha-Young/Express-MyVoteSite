@@ -11,15 +11,12 @@ router.post("/selection", async (req, res, next) => {
   try {
     const { votingId, optionId } = req.body;
     const voting = await Voting.findOne({ _id: votingId });
-    const { voters } = voting;
-    const { _id } = req.user;
+    // console.log(voting);
+    const votingItems = voting.voting_items;
+    const userId = req.user._id;
+    const option = voting.voting_items.id(optionId);
 
-    if (voters.includes(_id)) {
-    } else {
-    }
-
-    voters.push(_id);
-    option = voting.votingItems.id(optionId);
+    option.voters.push(userId);
     option.count += 1;
 
     await voting.save();
