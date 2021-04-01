@@ -1,8 +1,3 @@
-span {
-  font-size: 0.7vw;
-  padding: 1vw;
-}
-
 .inProgress {
   border: var(--redish) 1px solid;
 }
@@ -48,6 +43,14 @@ span {
   color: var(--redish);
   font-size: 2vw;
   font-weight: 600;
+}
+
+.options {
+  padding: 2vw;
+}
+
+.options a {
+  color: var(--graish-green);
 }
 
 .selectedOption {

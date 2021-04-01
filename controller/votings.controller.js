@@ -64,12 +64,13 @@ exports.updateVoting = async (req, res, next) => {
       return res.send(false);
     }
 
-    voting.options.id(req.body.id).participants.push(req.user.id);
+    voting.participants.push(req.user.id);
+    voting.options.id(req.body.id).likes.push(req.user.id);
 
     const result = await voting.save();
-    res.send(!!result);
+    return res.send(!!result);
   } catch (err) {
-    next(createError(err.status));
+    return next(createError(err.status));
   }
 };
 
@@ -83,11 +84,13 @@ exports.deleteVoting = async (req, res, next) => {
       { _id: req.user.id },
       { $pull: { myVotings: req.params.id } },
     );
+
     if (!updateResult.nModified) {
       return next(createError(500, '이미 삭제되었거나 존재하지않는 투표입니다.'));
     }
-    res.redirect('/');
+
+    return res.redirect('/');
   } catch (err) {
-    next(createError(err.status));
+    return next(createError(err.status));
   }
 };

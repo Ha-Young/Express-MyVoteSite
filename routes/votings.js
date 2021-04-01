@@ -1,13 +1,14 @@
 const express = require('express');
 const votingController = require('../controller/votings.controller');
+const { authCheck } = require('../middlewares/authCheck');
 
 const router = express.Router();
 
-router.get('/new', votingController.showForm);
-router.post('/new', votingController.create);
-router.get('/success', votingController.viewSuccess);
+router.get('/new', authCheck, votingController.showForm);
+router.post('/new', authCheck, votingController.create);
+router.get('/success', authCheck, votingController.viewSuccess);
+router.post('/update/:id', authCheck, votingController.updateVoting);
+router.get('/delete/:id', authCheck, votingController.deleteVoting);
 router.get('/:id', votingController.getOne);
-router.post('/update/:id', votingController.updateVoting);
-router.get('/delete/:id', votingController.deleteVoting);
 
 module.exports = router;

@@ -11,43 +11,47 @@ block content
       title,
       description,
       dueDate,
-      inProgress,
+      isInProgress,
       founder,
       createdAt,
       options,
+      participants,
     } = data;
   div.votingItem.flexColumn.centered
-    -if (inProgress)
+    - if (isInProgress)
       span.inProgress [투표진행중]
-    -else
+    - else
       span.notInProgress [투표종료]
     div.votingItemTop
       div.votingItemTitle #{title}
-      span.votingItemFounder 투표진행자 #{user.username}
+      span.votingItemFounder 투표진행자 #{founder}
     span.createdAt #{createdAt}
     div.dueDate #{dueDate}
     div.description #{description}
     .votingItemBottom
-      -if (inProgress && !options.participants.includes(user.id))
-        each option in options
-          -if (option.likes.includes(user.id))
-            div.options.selectedOption #{option.opt}
-            -if (founder.toString() === user.id.toString())
+      - if (isInProgress) // 진행중
+        - if (user) // 로그인상태
+          each option in options
+            - if (participants.includes(user.id)) // 투표 했음
+              div.options.selectedOption #{option.opt}
+            - else // 투표 안했음
+              div(
+                class="options"
+                data-id=option.id
+                onclick=`sendAjax("/votings/update/${id}", "${option.id}")`
+              ) #{option.opt}
+            - if (founder.toString() === user.id.toString()) // 생성자
               div.likes #{option.likes.length}
-          -else
-            div(
-              class="options"
-              data-id=option.id
-              onclick=`sendAjax("/votings/update/${id}", "${option.id}")`
-            ) #{option.opt}
-            -if (founder.toString() === user.id.toString())
-              div.likes #{option.likes.length}
-      -else
+        - else // 로그아웃
+          each option in options
+            div.options
+              a(href="/auth/login") #{option.opt}
+      - else // 완료
         each option in options
           div.options #{option.opt}
             div.likes #{option.likes.length}
     .votingItemFooter.flexRow
-      -if (founder.toString() === user.id.toString())
+      - if (user && founder.toString() === user.id.toString())
         div.buttons
           a(href=`/votings/delete/${id}`) 삭제
       div.buttons

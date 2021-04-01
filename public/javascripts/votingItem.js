@@ -1,4 +1,11 @@
+let isClicked = false;
+
 function sendAjax(url, id) {
+  console.log('clicked');
+  if (isClicked) {
+    console.log('중복 투표');
+    return;
+  }
   const xhr = new XMLHttpRequest();
   xhr.open('POST', url);
   xhr.setRequestHeader('Content-Type', 'application/json');
@@ -13,5 +20,10 @@ function sendAjax(url, id) {
       .filter(option => option.dataset.id === id);
     target[0].removeAttribute('onclick');
     target[0].classList.add('selectedOption');
+
+    const targetLikes = document.querySelector('.likes');
+    targetLikes.textContent = parseInt(targetLikes.textContent, 10) + 1;
   });
+
+  isClicked = true;
 }

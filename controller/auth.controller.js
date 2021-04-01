@@ -7,7 +7,6 @@ exports.signup = (req, res, next) => {
   res.render('partial/signup');
 };
 
-// eslint-disable-next-line consistent-return
 exports.post = async (req, res, next) => {
   try {
     await check('email').isEmail().run(req);
@@ -37,12 +36,11 @@ exports.post = async (req, res, next) => {
         parseInt(process.env.SECRET_KEY, 10),
       );
       const newUser = await User.create({ username, email, password: hashedPassword });
+
       if (newUser) {
-        // success 보여주기
         console.log('success sign up');
         res.redirect('/auth/login');
       } else {
-        // fail 보여주기
         console.log('signup failed');
       }
     }
@@ -53,6 +51,7 @@ exports.post = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   const fmsg = req.flash();
+
   if (fmsg.error) {
     return res.render('partial/message', {
       message: '가입되지 않은 계정입니다.',
