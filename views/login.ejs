@@ -1,40 +1,57 @@
-<div class="page-wrapper">
-  <div class="login">
-    <div class="login-form">
-      <h1>Log In</h1>
-
-      <form method="post" action="/login">
-        <div class="login-input-set">
-          <p>
-            <input 
-              class="login-input" 
-              type="email" 
-              name="email" 
-              placeholder="&#xf0e0; email"
-            >
-          </p>
-          <p>
-            <input 
-              class="login-input" 
-              type="password" 
-              name="password" 
-              placeholder="&#xf084; Password"
-            >
-          </p>
+<div class="sign-wrapper">
+  <div class="main-bar">
+    <div class="main-title">
+      <h1>VOTING PLATFORM</h1>
+    </div>
+  </div>
+  
+  <div class="sign-content">
+    <div class="sign-content-board">
+      <div class="sign-form">
+        <div class="login-title">
+          <h2>Log In</h2>
         </div>
-        <p>
-          <input class="login-button" type="submit" value="Login">
-        </p>
-        <p class="signup-button">
-          <a class="signup-button-content" href="/signup">join</a>
-        </p>
-        <p class="github-button">
-          <a class="github-button-content" href="/login/github">
-            Sign In with Github
-            <i class="fab fa-github"></i>
-          </a>
-        </p>
-      </form>
+  
+        <form method="post" action="/login">
+          <div class="login-input-set">
+            <p>
+              <input 
+                class="login-input" 
+                type="email" 
+                name="email" 
+                placeholder="&#xf0e0; email"
+                required
+              >
+            </p>
+            <p>
+              <input 
+                class="login-input" 
+                type="password" 
+                name="password" 
+                placeholder="&#xf084; Password"
+                required
+              >
+            </p>
+          </div>
+          <div class="sign-error">
+            <% if (typeof message !== "undefined") { %>
+              <%= message %>
+            <% } %>
+          </div>
+          <p>
+            <input class="login-button" type="submit" value="Login">
+          </p>
+          <p class="signup-button">
+            <a class="signup-button-content" href="/signup">join</a>
+          </p>
+          <p class="github-button">
+            <a class="github-button-content" href="/login/github">
+              Sign In with Github
+              <i class="fab fa-github"></i>
+            </a>
+          </p>
+        </form>
+      </div>
     </div>
   </div>
 </div>

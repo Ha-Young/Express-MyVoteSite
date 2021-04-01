@@ -1,17 +1,41 @@
-function validateUserData(userInfo) {
-  const { name, email, password, confirmPassword } = userInfo;
+const Joi = require("joi");
 
-  if (!name || !email || !password || !confirmPassword) {
-    return "Please enter every information";
-  }
+function validateLogIn(data) {
+  const schema = Joi.object({
+    email: Joi.string()
+      .email({ minDomainSegments: 2 })
+      .required(),
+    password: Joi.string()
+      .min(10)
+      .max(20)
+      .required(),
+  });
+  
+  return schema.validate({ ...data });
+}
 
-  if (password.length < 10) {
-    return "Please enter password more then 10";
-  }
-
-  if (password !== confirmPassword) {
-    return "Please match your password";
-  }
+function validateSignUp(data) {
+  const schema = Joi.object({
+    name: Joi.string()
+      .min(1)
+      .max(20)
+      .required(),
+    email: Joi.string()
+      .email({ minDomainSegments: 2 })
+      .required(),
+    password: Joi.string()
+      .min(10)
+      .max(20)
+      .regex(/^[ -~]+$/i)
+      .required(),
+    confirmPassword: Joi.any()
+      .equal(Joi.ref("password"))
+      .required()
+      .label("password")
+      .messages({ "any.only": "{{#label}} does not match" }),
+  });
+  console.log({...data});
+  return schema.validate({ ...data });
 }
 
 function validateVoting(votingInfo) {
@@ -30,5 +54,6 @@ function validateVoting(votingInfo) {
   }
 }
 
-exports.validateUserData = validateUserData;
 exports.validateVoting = validateVoting;
+exports.validateSignUp = validateSignUp;
+exports.validateLogIn = validateLogIn;

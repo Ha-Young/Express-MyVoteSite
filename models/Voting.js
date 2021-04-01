@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { format } = require("date-fns");
 
 const optionSchema = new mongoose.Schema({
   option: {
@@ -36,8 +37,12 @@ const votingSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-votingSchema.virtual("is_current").get(function() {
+votingSchema.virtual("isCurrent").get(function() {
   return new Date(this.expired_at) > new Date();
+});
+
+votingSchema.virtual("formatedExpiration").get(function() {
+  return format(this.expired_at, "yyyy.MM.dd hh:mm");
 });
 
 module.exports = mongoose.model("Voting", votingSchema);

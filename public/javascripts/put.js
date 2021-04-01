@@ -18,7 +18,7 @@ async function requestUpdateData(ev) {
     });
 
     const { user, votted, isSuccessVoting } = await response.json();
-		console.log(24);
+		
     if (!user) {
       window.location.replace("/login");
     }

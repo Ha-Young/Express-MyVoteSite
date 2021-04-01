@@ -3,7 +3,7 @@
       <% if (typeof voting !== "undefined") { %> 
         <%= voting.title %>
 
-        <% if (!voting.is_current || voting.proponent.toString() === user?.id) { %>
+        <% if (!voting.isCurrent || voting.proponent.toString() === user?.id) { %>
           <% voting.options.forEach((content) => { %>
             <div class="voting-count" id="<%= content.option %>">
               <%= content.count %>

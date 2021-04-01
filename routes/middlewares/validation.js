@@ -1,15 +1,29 @@
-const { validateUserData, validateVoting } = require("../../util/validation");
+const { validateSignUp, validateVoting, validateLogIn } = require("../../util/validation");
 
-function confirmUserData(req, res, next) {
-  const validationMessage = validateUserData(req.body);
-
-  if (validationMessage) {
-    res.status(200).render("signup", { message: validationMessage });
+function confirmLoginData(req, res, next) {
+  const { value, error } = validateLogIn(req.body);
+  
+  if (error) {
+    req.flash("loginError", error.message);
+    res.status(302).redirect("/login");
 
     return;
   }
 
-  delete req.body.confirmPassword; // 여기서 가공해줘도 되나..?
+  next();
+}
+
+function confirmSignUpData(req, res, next) {
+  const { value, error } = validateSignUp(req.body);
+
+  if (error) {
+    req.flash("signUpError", error.message);
+    res.status(302).redirect("/signup");
+
+    return;
+  }
+
+  delete req.body.confirmPassword;
 
   next();
 }
@@ -26,5 +40,6 @@ function confirmVotingData(req, res, next) {
   next();
 }
 
-exports.confirmUserData = confirmUserData;
+exports.confirmSignUpData = confirmSignUpData;
 exports.confirmVotingData = confirmVotingData;
+exports.confirmLoginData = confirmLoginData;

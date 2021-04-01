@@ -50,7 +50,7 @@ exports.isAuthenticated = async (req, res, next) => {
 		const user = await User.findOne({ email: res.locals.user });
 
 		if (!user) {
-			throw new Error("Unauthrized");
+			throw new Error("Unauthorized");
 		}
 		
 		const userData = new User();

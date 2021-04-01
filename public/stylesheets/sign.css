@@ -1,0 +1,105 @@
+input {
+  border: 0;
+}
+
+input::placeholder {
+  color: #641a1a;
+}
+
+.sign-wrapper {
+  display: flex;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+.sign-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin-left: 20%;
+  background-color: #1b1b1b70;
+  z-index: 1;
+}
+
+.sign-content-board {
+  width: 50%;
+  height: 70%;
+  background-color: #9b9999da;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.sign-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+}
+
+.signup-submit,
+.signup-input,
+.login-input,
+.login-button,
+.join-input,
+.join-button,
+.github-button,
+.signup-button {
+  width: 340px;
+  height: 30px;
+  z-index: 200;
+  color: black;
+  font-family: "Font Awesome 5 Brands", "Font Awesome 5 Free";
+  font-weight: 600;
+  border: 0;
+  margin-bottom: 20px auto;
+}
+
+.signup-submit,
+.login-button,
+.github-button,
+.signup-button {
+  display: flex;
+  width: 348px;
+  height: 34px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.692);
+  color: #641a1a;
+  border-radius: 10px;
+}
+
+.signup-input,
+.login-input,
+.join-input {
+  background-color: transparent;
+  border-bottom: 3px solid rgba(255,255,255,0.4);
+}
+
+.login-title {
+  font-size: 30px;
+}
+
+.login-input-set {
+  margin-bottom: 40px;
+}
+
+.login-button {
+  margin-bottom: 40px;
+}
+
+.signup-submit,
+.signup-button-content,
+.github-button-content {
+  color: #641a1a;
+}
+
+.sign-error {
+  max-width: 350px;
+  color: #641a1a;
+  text-align: center;
+}

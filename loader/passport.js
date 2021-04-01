@@ -1,7 +1,6 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GitHubStrategy = require("passport-github").Strategy;
-const JwtStrategy = require("passport-jwt").Strategy;
 
 const User = require("../models/User");
 
@@ -14,6 +13,7 @@ passport.use(
       passReqToCallback: true,
     },
     async (req, email, password, cb) => {
+      console.log(req);
       try {
         const user = await User.findOne({ email });
 
@@ -98,26 +98,3 @@ passport.use(
     }
   )
 );
-
-// function cookieExtractor(req) {
-//   return req && req.cookies ? req.cookies["jwt"] : null;
-// }
-
-// passport.use(
-//   new JwtStrategy(
-//     {
-//       secretOrKey: process.env.JWT_SECRET_KEY,
-//       jwtFromRequest: cookieExtractor,
-//     },
-//     async (payload, cb) => {
-//       try {
-//         const { email } = payload;
-//         const user = await User.findOne({ email });
-//         // password 지워서 줘야함..
-//         cb(null, user || null);
-//       } catch (error) {
-//         cb(error, false);
-//       }
-//     }
-//   )
-// );

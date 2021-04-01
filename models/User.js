@@ -6,7 +6,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Should have username"],
     minlength: 1,
-    maxlength: 15,
   },
   email: {
     type: String,
@@ -16,7 +15,6 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     trim: true,
-    minlength: 9,
   },
   avatar: {
     type: String,

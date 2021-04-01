@@ -1,3 +1,10 @@
+.main-title {
+	font-size: 55px;
+	font-weight: 200px;
+	color: white;
+	z-index: 5;
+}
+
 .main {
 	display: flex;
 	width: 100%;
@@ -6,46 +13,84 @@
 
 .main-bar {
 	position: fixed;
-	width: 30%;
+	width: 20%;
 	height: 100%;
+	background-color: #641a1a;
+	z-index: 5;
 }
-
+/* 
 .main-bar-image {
 	width: 100%;
 	height: 100%;
-}
+} */
 
 .main-content {
-	width: 70%;
-	padding-top: 110px;
-	margin-left: 40%;
+	overflow-y: scroll;
+	width: 80%;
+	padding-top: 130px;
+	margin-left: 20%;
 	min-height: 100%;
-	background-color: #132022;
+	background-color: #1b1b1b70;
+	z-index: 3;
+}
+
+.main-bar-line {
+	text-align: center;
+	width: 85%;
+	margin-top: 470px;
 }
 
 .main-content-board {
+	position: relative;
 	display: grid;
-	grid-template-columns: repeat(2, 40%);
-	grid-template-rows: repeat(3, auto);
-	grid-row-gap: 30px;
-	grid-column-gap: 40px;
-	margin :3%;
-	min-height: 100%;
+	grid-template-columns: repeat(2, 35%);
+	grid-template-rows: repeat(4, 21%);
+	grid-row-gap: 35px;
+	grid-column-gap: 50px;
+	margin-left: 20%;
+	min-height: 95%;
+	z-index: 4;
 }
 
 .main-content-card {
-	background-color: #5c5c599c;
-	border-radius: 10px;
+	padding: 15px;
+	background-color: #838181da;
+	border-radius: 7px;
 }
 
-.main-content-bar {
+.main-content-buttons {
 	display: flex;
+	position: fixed;
+	top: 80%;
+	left: 6%;
+	flex-direction: column;
 	align-items: center;
-	justify-content: space-evenly;
-	margin-left: -40px;
+	justify-items: center;
+	font-size: 25px;
+}
+
+.voting-content-detail {
+	margin-bottom: 5px;
+	font-size: 15px;
 }
 
 .voting-content-font {
-  color: #E9E7BE;
+  color: white;
 	z-index: 8;
+}
+
+.voting-content-title-box {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 35%;
+	margin-bottom: 50px;
+	border-radius: 7px;
+	color: white;
+	background-color: rgba(255, 255, 255, 0.274);
+}
+
+.voting-content-title-content {
+	font-size: 20px;
+	margin-left: 10px;
 }

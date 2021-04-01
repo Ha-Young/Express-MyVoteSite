@@ -3,11 +3,11 @@ const passport = require("passport");
 const mongoose = require("mongoose");
 
 exports.getSignUp = (req, res, next) => {
-  res.status(200).render("signup", { message: "" });
+  res.status(200).render("signup", { message: req.flash("signUpError")[0] });
 };
 
 exports.getLogIn = (req, res, next) => {
-  res.status(200).render("login");
+  res.status(200).render("login", { message: req.flash("loginError")[0] });
 };
 
 exports.getToken = async (req, res, next) => {
@@ -40,7 +40,9 @@ exports.postSignUp = passport.authenticate(
   "local-signup", 
   { successRedirect: "/login", failureRedirect: "/signup", session: false }
 );
-exports.postLogIn = passport.authenticate("local-login", { session: false });
+exports.postLogIn = passport.authenticate("local-login", 
+  { successRedirect: "/login", failureRedirect: "/signup", session: false }
+);
 
 exports.getGitHubLogIn = passport.authenticate("github");
 exports.getGitHubCallback = passport.authenticate("github", { session: false });

@@ -11,6 +11,7 @@ const session = require("express-session");
 const logger = require("morgan");
 const MongoStore = require("connect-mongo");
 const passport = require("passport");
+const flash = require("connect-flash");
 
 const index = require("./routes/index");
 const voting = require("./routes/voting");
@@ -44,6 +45,8 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(flash());
 
 app.use("/", index);
 app.use("/votings", voting);

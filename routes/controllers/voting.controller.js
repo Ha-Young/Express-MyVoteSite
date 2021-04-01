@@ -67,7 +67,6 @@ exports.deleteVoting = async (req, res, next) => {
 };
 
 exports.updateVoting = async (req, res, next) => {
-	console.log(req.originalUrl);
   try {
     const {
       params: { id },
