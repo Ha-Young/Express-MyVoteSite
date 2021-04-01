@@ -14,7 +14,7 @@
       <li>
         <input type="radio" name="option" value=<%=candidates[i].name%> />
         <label><%=candidates[i].name%></label>
-        <% if (showResult) { %>
+        <% if (showResult || status ==="CLOSED") { %>
         <span>투표 수 : <%= candidates[i].count %></span>
         <% } %>
       </li>

@@ -62,6 +62,7 @@ exports.showVoteDetails = async function (req, res, next) {
   res.render("votingDetail", {
     id: vote._id,
     title: vote.title,
+    status: vote.status,
     due_date: vote.due_date,
     candidates: vote.candidates,
     creator: creator,
