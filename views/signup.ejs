@@ -8,38 +8,59 @@
   <title>Document</title>
 </head>
 <body>
+  <header>
+    <% include ./partials/header %>
+  </header>
   <div class="">
+    <h3 class="">New User</h3>
     <form action="/auth/register" method="POST">
       <div class="">
         <div class="">
-          <label> e-mail
-            <input type="text" class="" name="email">
-          </label>
-        </div>
-        <div class="">
-          <label>닉네임
-            <input type="text" class="" name="name">
-          </label>
-        </div>
-        <div class="">
-          <label>비밀번호
-            <input type="text" class="" name="password">
-          </label>
-        </div>
-        <div class="">
-          <label>비밀번호 확인
-            <input type="text" class="" name="passwordCheck">
-          </label>
-        </div>
-        <% if (locals.message) { %>
+          <label for="email" class="">E-mail*</label>
           <div class="">
-            <h2><%= message.fail %></h2>
+            <input type="text" name="email" value="<%= userInput.email %>" class="">
+            <% if(errors.email){ %>
+              <div class="">
+                <span class="invalid-feedback"><%= errors.email.message %></span>
+              </div>
+            <% } %>
           </div>
-        <% } %>
+        </div>
         <div class="">
-          <label>회원가입
-            <input type="submit" class="">
-          </label>
+          <label for="name" class="">Name*</label>
+          <div class="">
+            <input type="text" name="name" value="<%= userInput.name %>" class="">
+            <% if(errors.name){ %>
+              <div class="">
+                <span class="invalid-feedback"><%= errors.name.message %></span>
+              </div>
+            <% } %>
+          </div>
+        </div>
+        <div class="">
+          <label for="password" class="">Password*</label>
+          <div class="">
+            <input type="text" name="password" value="<%= userInput.password %>" class="">
+            <% if(errors.password){ %>
+              <div class="">
+                <span class="invalid-feedback"><%= errors.password.message %></span>
+              </div>
+            <% } %>
+          </div>
+        </div>
+        <div class="">
+          <label for="passwordConfirm" class="">Password Confirm*</label>
+          <div class="">
+            <input type="text" name="passwordConfirm" value="<%= userInput.passwordConfirm %>" class="">
+            <% if(errors.passwordConfirm){ %>
+              <div class="">
+                <span class="invalid-feedback"><%= errors.passwordConfirm.message %></span>
+              </div>
+            <% } %>
+          </div>
+        </div>
+        <div class="">
+          <input type="submit" class="" value="회원가입">
         </div>
       </div>
     </form>

@@ -1,7 +1,7 @@
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-
+// TODO 여기랑 라우터 이름 signup으로 바꿔야할듯?
 exports.register = async function (req, res) {
   const { email, name, password } = req.body;
 

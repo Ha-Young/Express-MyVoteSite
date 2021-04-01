@@ -1,7 +1,5 @@
 const Voting = require('../models/Voting');
 const User = require('../models/User');
-// TODO Joi 가져와서 create할때 validation하기.
-// expiration_date 현시간 이후인지랑 options 2개 이상인지
 
 exports.getNewVotingPage = async function (req, res, next) {
   res.render('newVoting');
@@ -50,6 +48,8 @@ exports.addVote = async function (req, res, next) {
 };
 
 exports.deleteVoting = async function (req, res, next) {
+  // TODO 여기서 지우려는 voting찾고, 그 author가 req.user랑 같은지 판별하는 로직 추가 필요.
+  // 한방에 찾고 author가 req.user랑 같으면 지우는 쿼리를 날릴순 없을까??
   const votingId = req.params.voting_id;
 
   await Voting.findByIdAndDelete(votingId);

@@ -5,18 +5,18 @@ const UserSchema = new mongoose.Schema({
     type: String,
     lowercase: true,
     unique: true,
+    trim: true,
     required: true,
-    trim: true
   },
   password: {
     type: String,
+    minLength: 8,
     required: true,
-    minLength: 8
   },
   name: {
     type: String,
+    trim: true,
     required: true,
-    trim: true
   },
   voting_list: [{
     type: mongoose.Schema.Types.ObjectId,
