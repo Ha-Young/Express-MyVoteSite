@@ -20,10 +20,6 @@ const VoteSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  createdAt: {
-    type: Date,
-    required: true
-  },
   expiredAt: {
     type: String,
     required: true
