@@ -5,10 +5,15 @@ block content
   section
     h2 VOTE LIST
     .vote-list
-      each vote in votes
-        +voteBlock({
-          id: vote._id,
-          title: vote.title,
-          expiration_date: vote.expiration_date,
-          author: vote.author.name
-        })
+      if (votes.length === 0)
+        div.flex-center.empty-result
+          p.icon 🙅‍♂️
+          p 진행중인 투표가 없습니다.
+      else
+        each vote in votes
+          +voteBlock({
+            id: vote._id,
+            title: vote.title,
+            expiration_date: vote.expiration_date,
+            author: vote.author.name
+          })
