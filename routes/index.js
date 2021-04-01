@@ -12,7 +12,7 @@ router.get('/logout', isLoggedIn, (req, res, next) => {
 });
 router.get('/logout/callback', isLoggedIn, userController.logout);
 
-router.get('/signup', function(req, res, next) {
+router.get('/signup', (req, res, next) => {
   res.render('signup');
 });
 router.post('/signup', userController.signup);

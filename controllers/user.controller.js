@@ -61,7 +61,7 @@ exports.signup = async (req, res, next) => {
       nickname: req.body.name,
     });
 
-    res.status(200).redirect('/');
+    res.status(200).redirect('/login');
   } catch (e) {
     next(e);
   }
