@@ -10,7 +10,9 @@ const User = require("../../models/User");
 
 exports.getAllVotes = async (req, res, next) => {
   const user = getUserInfo(req.cookies);
-  let votes = await Vote.find().populate("author", "name").lean();
+  let votes = await Vote.find()
+                        .sort({ expiratin_date: 1 })
+                        .populate("author", "name").lean();
   votes = formatExpirationDate(votes);
 
   res.render("index", { votes, user });
@@ -21,7 +23,9 @@ exports.getCreatedVotes = async (req, res, next) => {
 
   try {
     const userInfo = await User.findOne({ email: user.email });
-    let votes = await Vote.find({ author: userInfo._id }).populate("author", "name").lean();
+    let votes = await Vote.find({ author: userInfo._id })
+                          .sort({ expiratin_date: 1 })
+                          .populate("author", "name").lean();
     votes = formatExpirationDate(votes);
 
     res.render("my-votings", { votes, user });
