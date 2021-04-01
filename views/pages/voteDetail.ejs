@@ -30,7 +30,7 @@
         <ul class="vote-detail-option-list">
           <% for (let i = 0; i < vote.vote_options.length; i++) { %>
             <li>
-              <input type="checkbox" name="checkbox-<%= i %>" id="checkbox-<%= i %>">
+              <input class="vote-option-checkbox" type="checkbox" name="checkbox-<%= i %>" id="checkbox-<%= i %>">
               <label for="checkbox-<%= i %>">
                 <%= vote.vote_options[i].title %>
               </label>
@@ -41,9 +41,10 @@
           <% } %>
         </ul>
       </div>
-      <button class="vote-submit-btn">제출</button>
+      <button class="vote-submit-btn">투표하기</button>
     </div>
   </div>
 </div>
 
 <script src="/javascripts/voteDetailPage.js"></script>
+<script src="/javascripts/voteDetailOptionScript.js"></script>
