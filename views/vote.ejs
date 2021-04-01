@@ -28,6 +28,7 @@
             </div>
           <% } %>
         </form>
+        <span class="vote-message"><%= messages.alreadyVoted %></span>
         <div class="vote-buttons">
           <% if (isProceeding && user.nickname) { %>
             <button class="vote-button" id="patch-button">투표</button>

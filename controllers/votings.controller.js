@@ -70,9 +70,6 @@ exports.voteCreate = async (req, res, next) => {
 exports.createSuccess = (req, res, next) => {
 };
 
-exports.createFailure = (req, res, next) => {
-};
-
 exports.voteUpdate = async (req, res, next) => {
   const { _id: user } = req.user;
   const { id } = req.params;
@@ -81,7 +78,9 @@ exports.voteUpdate = async (req, res, next) => {
 
   for (let i = 0; i < participants.length; i++) {
     if (JSON.stringify(participants[i]) === JSON.stringify(user)) {
+      req.flash('alreadyVoted', 'Have already voted');
       res.status(200).json();
+
       return;
     }
   }

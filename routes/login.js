@@ -3,7 +3,11 @@ const router = express();
 const userController = require('../controllers/user.controller');
 
 router.get('/', (req, res, next) => {
-  res.render('login');
+  try {
+    res.status(200).render('login');
+  } catch (e) {
+    next(e);
+  }
 });
 router.post('/', userController.loginLocal);
 

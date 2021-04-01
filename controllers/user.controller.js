@@ -9,6 +9,7 @@ exports.loginLocal = (req, res, next) => {
 
   if (req.session.voteId) {
     successUrl = '/votings/' + req.session.voteId;
+    req.session.voteId = null;
   }
 
   return (passport.authenticate('local', {
@@ -38,7 +39,11 @@ exports.logout = (req, res, next)=> {
       next(e);
     }
   } else {
-    res.status(200).redirect('/');
+    try {
+      res.status(200).redirect('/');
+    } catch (e) {
+      next(e);
+    }
   }
 };
 
@@ -47,24 +52,20 @@ exports.signup = async (req, res, next) => {
 
   if (email) {
     req.flash("usedEmail", "등록된 이메일입니다.");
-    res.status(200).redirect('/login');
+    res.status(200).redirect('/signup');
 
     return;
   }
 
-  try {
-    const hash = await bcrypt.hash(req.body.password, SALT);
+  const hash = await bcrypt.hash(req.body.password, SALT);
 
-    await User.create({
-      localEmail: req.body.email,
-      password: hash,
-      nickname: req.body.name,
-    });
+  await User.create({
+    localEmail: req.body.email,
+    password: hash,
+    nickname: req.body.name,
+  });
 
-    res.status(200).redirect('/login');
-  } catch (e) {
-    next(e);
-  }
+  res.status(200).redirect('/login');
 };
 
 exports.signout = async (req, res, next) => {

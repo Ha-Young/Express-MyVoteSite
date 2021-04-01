@@ -26,7 +26,7 @@ function patchVote() {
 
   xhr.onload = () => {
     if (xhr.status !== 200) {
-      console.log('Error.');
+      return;
     }
 
     window.location.reload();
