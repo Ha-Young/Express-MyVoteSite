@@ -15,13 +15,11 @@
           <% for (let i = 0; i < validatedVote.length; i++) { %>
             <div class="grid-box">
               <form action="/votings/<%= validatedVote[i]._id %>" method="GET">
-                <div>
-                  <span>투표 주제:  <%= validatedVote[i].title %></span>
+                <div class="title-box">
+                  <span><%= validatedVote[i].title %></span>
                 </div>
-                <div>
+                <div class="info-box">
                   <span>생성자:  <%= validatedVote[i].creater.nickname %></span>
-                </div>
-                <div>
                   <span>종료 시간:  <%= validatedVote[i].convertedExpiredAt %></span>
                 </div>
                 <div class="gird-buttons">
@@ -41,16 +39,14 @@
           <% for (let i = 0; i < expiredVote.length; i++) { %>
             <div class="grid-box">
               <form action="/votings/<%= expiredVote[i]._id %>" method="GET">
-                <div>
-                  <span>투표 주제:  <%= expiredVote[i].title %></span>
+                <div class="title-box">
+                  <span><%= validatedVote[i].title %></span>
                 </div>
-                <div>
-                  <span>생성자:  <%= expiredVote[i].creater.nickname %></span>
+                <div class="info-box">
+                  <span>생성자:  <%= validatedVote[i].creater.nickname %></span>
+                  <span>종료 시간:  <%= validatedVote[i].convertedExpiredAt %></span>
                 </div>
-                <div>
-                  <span>종료 시간:  <%= expiredVote[i].convertedExpiredAt %></span>
-                </div>
-                <button type="submit">결과 보기</button>
+                <button class="grid-button" type="submit">결과 보기</button>
               </form>
             </div>
           <% } %>

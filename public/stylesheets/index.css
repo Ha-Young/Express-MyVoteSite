@@ -10,7 +10,17 @@
 }
 
 .home-left .grid-box {
-  border-right: 1px solid black;
+  border-right: 1px solid #023e8a;
+}
+
+.home-left form {
+  background-color: #1982c4;
+  color: #edf2f4;
+}
+
+.home-right form {
+  background-color: #ef476f;
+  color: #212529;
 }
 
 .vote-state {
@@ -40,17 +50,26 @@
   align-items: center;
   width: 80%;
   height: 80%;
-  border: 1px solid black;
   border-radius: 0.2rem;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
-.grid-buttons {
-
+.title-box {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
 }
 
-.grid-box button {
+.info-box {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin-bottom: 1.5rem;
+}
+
+.grid-button {
   width: 5rem;
   height: 3rem;
-  border: 1px solid black;
+  border: 1px solid #adb5bd;
   border-radius: 0.2rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
