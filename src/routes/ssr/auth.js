@@ -98,7 +98,6 @@ module.exports = app => {
 function authSuccess({ res, token }) {
   res.cookie(jwtCookieKey, token, {
     maxAge: jwtExpires,
-    httpOnly: true,
   });
 
   res.redirect("/");

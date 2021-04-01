@@ -32,12 +32,9 @@ function setVoteOptionsClickEvent() {
 function handleVoteBtnElementClick() {
   if (!LOGIN_UTIL.checkLogin()) {
     const loginPageURL = PATH_UTIL.getRootPath() + "/login";
-    console.log(loginPageURL);
-    window.location.href(loginPageURL);
+    window.location.href = loginPageURL;
     return;
   }
-
-  console.log('login confirm!');
 }
 
 function voteDetailOptionInit() {
