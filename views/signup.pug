@@ -4,28 +4,28 @@ block content
   section
     h2 SIGN UP
     .signup-wrapper
-      form#signup-form(action="/users/signup" method="post")
+      form#signup-form
         .form-box
           label(for="name") NAME
-          input(id="name" type="text" name="name" required)
+          input(id="name" type="text" name="name" placeholder="NAME" required)
         .form-box
           label(for="email") E-MAIL
-          input(id="email" type="email" name="email" required)
+          input(id="email" type="email" name="email" placeholder="EMAIL" required)
         .form-box
           label(for="password") PASSWORD
-          input(id="password" type="password" name="password" required)
+          input(id="password" type="password" name="password" placeholder="PASSWORD" autocomplete required)
         .form-box
           label(for="confirmedPassword") PASSWORD CHECK
-          input(id="confirmedPassword" type="password" name="confirmedPassword" required)
+          input(id="confirmedPassword" type="password" name="confirmedPassword" placeholder="PASSWORD CHECK" autocomplete required)
       .signup-guide
         ul
           li 이름은 최소 2글자 최대 10글자까지 가능합니다.
           li 비밀번호는 최소 8글자 최대 12글자까지 가능합니다.
           li 비밀번호는 최소 하나의 숫자와 하나의 특수문자를 포함해야 합니다.
-      if (error)
-        p.validation #{ error.msg }
+      p.validation.hidden
     ul.button-list
       li
         button(type="submit" class="button" form="signup-form") SIGN UP
       li
         a(href="/" class="button") GO TO MAIN
+  script(type="module" src="/javascripts/signup.js")
