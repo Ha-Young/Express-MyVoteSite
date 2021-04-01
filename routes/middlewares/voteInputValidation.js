@@ -6,14 +6,17 @@ async function voteInputValidation (req, res, next) {
 
     const errorMessages = [];
 
-    const today = format(new Date, "yyyy-MM-dd\'T\'HH:mm");
+    // const today = format(new Date, "yyyy-MM-dd\'T\'HH:mm");
 
     if (!title.length || !expireDate || !votingOptions.length) {
       errorMessages.push({ message: "Please fill out all fields"});
     }
 
+    const today = new Date();
+    const votingDueDate = new Date(expireDate)
+    const isProceeding = today < votingDueDate;
+
     const isOptionsValidated = votingOptions.every(option => option.trim().length > 0);
-    const isExpired =  today > expireDate;
 
     if (!isOptionsValidated) {
         errorMessages.push({message: "Should contain at least 2 options with proper letter"})
@@ -22,7 +25,7 @@ async function voteInputValidation (req, res, next) {
       //return;
     }
 
-    if (isExpired) {
+    if (!isProceeding) {
       errorMessages.push({message: "The due date can't be eariler than today"});
     }
 

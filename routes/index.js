@@ -7,7 +7,7 @@ const signup = require("./auth/signUp");
 
 const homeController = require("../controllers/homeController");
 
-router.get('/', homeController.getHomePage);
+router.get('/', homeController.getVotings);
 
 router.use("/signup", signup);
 router.use("/login", login);

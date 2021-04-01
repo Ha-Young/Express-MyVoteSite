@@ -2,7 +2,7 @@ const $options = document.querySelector(".options");
 const $optionContainer = document.querySelector(".option-container");
 const $optionInput = document.querySelector(".option");
 const $optionAddingBtn = document.querySelector(".option-adding-btn");
-const $optionDeleteBtns = document.getElementsByClassName("option-delete-btn")
+const $optionDeleteBtns = document.getElementsByClassName("option-delete-btn");
 const $optionDeleteBtnList = Array.from($optionDeleteBtns);
 
 $optionAddingBtn.addEventListener("click", handleOptionAddingBtnClick);
@@ -21,7 +21,8 @@ function handleOptionAddingBtnClick(e) {
   const newOptionInput = document.createElement("input");
   const newDeleteBtn = document.createElement("button");
 
-  setAttributes(newOptionInput, { "class": "option", "type": "text", "name": "votingOption", "placeholder": "New Option" });
+  setAttributes(newOptionInput,
+    { "class": "option", "type": "text", "name": "votingOption", "placeholder": "New Option" });
   newOptionContainer.classList.add("option-container");
   newDeleteBtn.classList.add("option-delete-btn");
   newDeleteBtn.textContent = "X";

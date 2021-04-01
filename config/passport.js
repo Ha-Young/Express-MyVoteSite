@@ -6,7 +6,7 @@ const User = require("../models/User");
 
 passport.use(new LocalStrategy(
   { usernameField : "email" ,
-    passwordField: 'password',
+    passwordField: "password",
     passReqToCallback: true,
   },
   async function (req, email, password, done) {
@@ -20,7 +20,7 @@ passport.use(new LocalStrategy(
       const isPasswordMatched = await bcrypt.compare(password, user.password);
 
       if (!isPasswordMatched) {
-        return done(null, false, req.flash("error", "Password is incorrect" ));
+        return done(null, false, req.flash("error", "Password is incorrect"));
       }
 
       return done(null, user);
@@ -28,7 +28,8 @@ passport.use(new LocalStrategy(
     catch (error) {
       done(error, null);
     };
-  }))
+  }
+));
 
 passport.serializeUser((user, done) => done(null, user.id));
 passport.deserializeUser((id, done) => User.findById(id, (err, user) => done(err, user)));

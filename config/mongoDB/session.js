@@ -6,7 +6,7 @@ const mongoSession = session({
   secret: process.env.EXPRESS_SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({ mongoUrl: DB_APP_URL })
+  store: MongoStore.create({ mongoUrl: DB_APP_URL }),
 });
 
 module.exports = mongoSession;

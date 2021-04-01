@@ -1,10 +1,10 @@
 exports.getLogOut = async function(req, res, next) {
-    // console.log(req.flash("error"), "??")
   try {
     req.session.destroy();
     req.logout();
     res.redirect("/");
+    return;
   } catch (error) {
     next(error);
   }
-}
+};

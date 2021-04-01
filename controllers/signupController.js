@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const bcrypt = require("bcryptjs")
+const bcrypt = require("bcryptjs");
 
 exports.registerNewUser = async function(req, res, next) {
   try {
@@ -19,5 +19,5 @@ exports.registerNewUser = async function(req, res, next) {
 };
 
 exports.getSignUpPage = async function(req, res, next) {
-  res.render("signUp", { title: 'Sign up', messages: req.flash("messages") });
+  res.render("signUp", { title: "Sign up", messages: req.flash("messages") });
 }

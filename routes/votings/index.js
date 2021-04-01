@@ -12,17 +12,10 @@ router.get('/new', verifyAuth, function(req, res, next) {
 
 router.post('/new', verifyAuth, voteInputValidation, votingController.postNewVoting);
 
-router.get('/:id', verifyAuth, function(req, res, next) {
-  console.log(req.body)
-  console.log(req.user)
-
-  res.render('votings', { title: 'Voting' , messages: req.flash("messages")});
-});
-
-
-
-
-
+//verifyAuth??
+router.get('/:id', votingController.getSelectedVoting);
+router.put('/:id', verifyAuth, votingController.updateVoting);
+router.delete('/:id', verifyAuth, votingController.deleteVoting);
 
 // router.get('/votings/success', function(req, res, next) {
 //   res.render('voting-success', { title: 'Voting success' });

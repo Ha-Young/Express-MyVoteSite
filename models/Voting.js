@@ -1,8 +1,5 @@
 const mongoose = require("mongoose");
 
-// const solvedProblemSchema = require("./subSchema/SolvedProblem");
-// const findOrCreate = require("mongoose-findorcreate");
-
 const voterSchema = new mongoose.Schema({
   voterId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -10,11 +7,17 @@ const voterSchema = new mongoose.Schema({
   }
 });
 
-const votingOptionSchema = new mongoose.Schema({
-  optionTitle: {
+const optionSchema = new mongoose.Schema({
+  title: {
     type: String,
+    unique: true,
     required: true,
   },
+  // winner: {
+  //   type: Boolean,
+  //   required: false,
+  //   default: false,
+  // },
   voters: [voterSchema],
 }, { timestamps: true });
 
@@ -33,18 +36,26 @@ const VotingSchema = new mongoose.Schema({
     default: Date.now(),
     required: true,
   },
-  isExpired: {
+  isProceeding: {
     type: Boolean,
-    default: false,
+    default: true,
     required: true,
   },
-  votingOptions: {
-    type: [votingOptionSchema],
-    default: [votingOptionSchema, votingOptionSchema],
+  winner: {
+    type: Array,
+    default: [],
+  },
+  voters: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "User",
+    default: [],
+    required: true,
+  },
+  options: {
+    type: [optionSchema],
+    default: [optionSchema, optionSchema],
     required: true,
   },
 }, { timestamps: true });
 
-
-// userSchema.plugin(findOrCreate);
 module.exports = mongoose.model("Voting", VotingSchema);
