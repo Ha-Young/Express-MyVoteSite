@@ -7,28 +7,32 @@
     <link rel='stylesheet' href='/stylesheets/detailVoting.css' />
   </head>
   <body>
-    <section class="voting-information container">
-      <p id="message" class="message-box"></p>
+    <p id="message" class="message-box"></p>
+    <section class="voting-information">
       <article class="voting-list">
         <ul>
-          <p>투표 생성자: <%= author %></p>
-          <p>투표 제목: <%= voting.title %></p>
+          <p>투표 주체자: <%= author %></p>
+          <p>투표 주제: <%= voting.title %></p>
           <p>투표 종료 시간: <%= voting.endDate %></p>
-          <p>투표 목록</p>
           <form>
             <article class="voting-options">
               <% voting.options.forEach(option => { %>
-                <li class="voting-option">
-                  <input
-                    type="radio"
-                    name="option"
-                    value="<%= option.title %>"
-                  >
-                  <%= option.title %>
-                  <% if (isAuthor) { %>
-                    <%= option.value %>
-                  <% } %>
-                </li>
+                <label for="<%= option.title %>">
+                  <li class="voting-option">
+                    <input
+                      id="<%= option.title %>"
+                      type="radio"
+                      name="option"
+                      value="<%= option.title %>"
+                    >
+                    <%= option.title %>/
+                    <% if (isAuthor) { %>
+                      <span class="option-value">
+                        투표 수: <%= option.value %>
+                      </span>
+                    <% } %>
+                  </li>
+                </label>
               <% }) %>
             </article>
             <button id="submitButton" name="<%= voting._id %>">투표 제출</button>

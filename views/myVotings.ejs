@@ -11,9 +11,8 @@
       <% myVotings.forEach(myVoting => { %>
         <article class="voting-list">
           <ul>
-            <p>투표 제목: <%= myVoting.title %></p>
+            <p>투표 주제: <%= myVoting.title %></p>
             <p>투표 종료 시간: <%= myVoting.endDate %></p>
-            <p>투표 목록</p>
             <form
               name="<%= myVoting._id %>"
               action="/voting/votings/<%= myVoting._id %>"
@@ -21,8 +20,8 @@
             >
               <% myVoting.options.forEach(option => { %>
                 <li class="voting-option">
-                  <%= option.title %>
-                  <%= option.value %>
+                  <%= option.title %>/
+                  투표 수: <%= option.value %>
                 </li>
               <% }) %>
               <button type="submit">투표 페이지로</button>

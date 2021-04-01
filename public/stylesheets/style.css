@@ -70,3 +70,21 @@ button {
   cursor: pointer;
   z-index: 1;
 }
+
+.success {
+  display: block;
+  width: 600px;
+  height: 30px;
+  line-height: 30px;
+  margin: 10px auto;
+  background-color: lightgreen;
+}
+
+.failure {
+  display: block;
+  width: 600px;
+  height: 30px;
+  line-height: 30px;
+  margin: 10px auto;
+  background-color: orangered;
+}

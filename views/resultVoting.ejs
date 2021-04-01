@@ -10,7 +10,7 @@
   <body>
     <section class="voting-information container">
       <div class="chart">
-        <canvas id="myChart" name="<%= voting.options %>"></canvas>
+        <canvas id="myChart" name="<%= JSON.stringify(voting.options) %>"></canvas>
       </div>
       <script src="/javascripts/votingChart.js"></script>
       <p id="message" class="message-box"></p>
@@ -23,20 +23,20 @@
         <ul>
           <p>투표 생성자: <%= author %></p>
           <p>투표 종료 시간: <%= voting.endDate %></p>
-          <p>투표 목록</p>
           <article class="voting-options">
             <% voting.options.forEach(option => { %>
-              <li class="voting-option">
-                <input
-                  type="radio"
-                  name="option"
-                  value="<%= option.title %>"
-                >
-                <%= option.title %>
-                <% if (isAuthor) { %>
-                  <%= option.value %>
-                <% } %>
-              </li>
+              <label for="<%= option.title %>">
+                <li class="voting-option">
+                  <input
+                    id="<%= option.title %>"
+                    type="radio"
+                    name="option"
+                    value="<%= option.title %>"
+                  >
+                  <%= option.title %>/
+                  투표 수: <%= option.value %>
+                </li>
+              </label>
             <% }) %>
           </article>
           <% if (isAuthor) { %>

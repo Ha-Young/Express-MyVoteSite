@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include("partial/header") %>
+    <title>Voting Platform</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/detailVoting.css' />
+  </head>
+  <body>
+    <span class="failure">
+      투표 생성에 실패했습니다. 하기의 전달사항을 확인해주십셔
+    </span>
+    <h2><%= message %></h2>
+    <form action="/" method="GET">
+      <button type="submit">투표 목록</button>
+    </form>
+  </body>
+</html>

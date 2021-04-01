@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include("partial/header") %>
+    <title>Voting Platform</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/detailVoting.css' />
+  </head>
+  <body>
+    <span class="success">투표 생성에 성공했습니다.</span>
+    <section id="voting" class="voting-information">
+      <article class="voting-list">
+        <ul>
+          <p>투표 주제: <%= newVoting.title %></p>
+          <p>투표 종료 시간: <%= newVoting.endDate %></p>
+          <form
+            name="<%= newVoting._id %>"
+            action="/voting/votings/<%= newVoting._id %>"
+            method="GET"
+          >
+            <% newVoting.options.forEach(option => { %>
+              <li class="voting-option">
+                <%= option.title %>/
+                투표 수: <%= option.value %>
+              </li>
+            <% }) %>
+            <button type="submit">투표 페이지로</button>
+          </form>
+          <button id="deleteButton" name="<%= newVoting._id %>">삭제</button>
+        </ul>
+        <script src="/javascripts/deleteVoting.js"></script>
+        <form action="/" method="GET">
+          <button type="submit">투표 목록</button>
+        </form>
+      </article>
+    </section>
+  </body>
+</html>

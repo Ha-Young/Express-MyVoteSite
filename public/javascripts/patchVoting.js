@@ -14,10 +14,12 @@ const patchVotedResult = async (votingId, checkedOption) => {
     .then(data => {
       switch (data.status) {
         case 200:
+          alertMessageBox.classList.add("success");
           alertMessageBox.textContent = data.message;
           break;
 
         case 400:
+          alertMessageBox.classList.add("failure");
           alertMessageBox.textContent = data.message;
           break;
 
