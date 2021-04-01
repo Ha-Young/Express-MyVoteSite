@@ -30,7 +30,7 @@ module.exports = function ({ app, routerLoader }) {
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-  app.use(methodOverride());
+  app.use(methodOverride("_method"));
   app.use(cookieParser());
 
   //passport
