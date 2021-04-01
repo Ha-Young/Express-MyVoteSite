@@ -140,7 +140,5 @@ $newVoteForm.addEventListener("submit", async (event) => {
 
   const result = await response.text();
 
-  if (result === "success") {
-    location.replace("/votings/success");
-  }
+  if (result === "success") return location.replace("/votings/success");
 });

@@ -16,6 +16,10 @@
         <a href="/votings/new">투표 생성</a>
         <a href="/my-votings">내 투표 보기</a>
       <% } %>
+
+      <% if (!votes.length) { %>
+        <p>등록된 투표가 없네요 😭</p>
+      <% } %>
       <% votes.map(vote => { %>
         <a href="/votings/<%- vote.id %>">
         <li class="vote">

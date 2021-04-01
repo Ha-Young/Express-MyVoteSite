@@ -51,14 +51,11 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  res.locals.message = err.message;
 
   if (req.app.get("env") !== "development") delete err.stack;
 
-  res.locals.error = err;
-
   res.status(err.status || 500);
-  res.render("error");
+  res.render("error", { message: err.message, error: err });
 });
 
 module.exports = app;

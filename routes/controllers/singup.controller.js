@@ -1,11 +1,14 @@
-const User = require("../../model/User");
-const cryptograph = require("../../utils/cryptograph");
 const createError = require("http-errors");
 
+const User = require("../../model/User");
+
+const cryptograph = require("../../utils/cryptograph");
+
 exports.getSignup = (req, res, next) => res.render("signup");
+
 exports.addUser = async (req, res, next) => {
   if (await User.exists({ email: req.body.email })) {
-    return res.send(400, "이미 가입된 사용자입니다");
+    return res.json({ result: "invalid", message: "already existed" });
   }
 
   const {
@@ -23,7 +26,8 @@ exports.addUser = async (req, res, next) => {
       user_name: userName,
     });
     newUserDoc.save();
-    return res.send(302, "/login");
+
+    return res.json({ result: "success", message: "user has been created" });
   } catch (error) {
     console.error(error);
     return next(createError(500));

@@ -5,11 +5,13 @@
   </head>
   <link rel="stylesheet" href="/stylesheets/login.css" />
   <body>
+    <a href="/">Home</a>
     <h1>로그인</h1>
-    <form action="/login" method="post">
+    <form id="login-form">
       <label>
         email:
       <input
+        id="email"
         type="text"
         name="email"
         autocomplete="email"
@@ -28,17 +30,6 @@
     </div>
     <input type="submit" value="로그인"/>
     </form>
-    <script>
-      const $loginAlert = document.getElementById("login-alert");
-      const isInvalid = "<%- isInvalid %>";
-      const httpMethod = "<%- method %>";
-
-      if (httpMethod === "post" && isInvalid) {
-        $loginAlert.className = "display-block";
-        setTimeout(() => {
-          $loginAlert.className = "display-none";
-        }, 2000);
-      }
-    </script>
+    <script type="module" src="/javascripts/login.js"></script>
   </body>
 </html>

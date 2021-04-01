@@ -5,3 +5,11 @@
 .display-block {
   display: block;
 }
+
+.valid {
+  background-color: greenyellow;
+}
+
+.invalid {
+  background-color: tomato;
+}

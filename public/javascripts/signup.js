@@ -1,10 +1,10 @@
-import emailValidator from "./libs/email-validator/index.js";
+import emailValidator from "../lib/email-validator/index.js";
 
 const $email = document.getElementById("email");
 const $userName = document.getElementById("user-name");
 const $password = document.getElementById("password");
 const $passwordConfirm = document.getElementById("password-confirm");
-const $submit = document.getElementById("submit");
+const $signupForm = document.getElementById("signup-form");
 
 const userData = {
   email: "",
@@ -59,32 +59,71 @@ $passwordConfirm.addEventListener("input", event => {
   }
 });
 
-$submit.addEventListener("click", event => {
-  const TRANSLATIONS = {
-    email: "email",
-    userName: "별명",
-    password: "비밀번호",
-    passwordConfirm: "비밀번호 확인",
-  };
+(function () {
+  let isInvalidClick = false;
 
-  for (const key in userData) {
-    if (!userData[key].length) {
-      return alert(`${TRANSLATIONS[key]}이/가 유효하지 않습니다. 😥`);
+  $signupForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    if (isInvalidClick) return;
+
+    const TRANSLATIONS = {
+      email: "email",
+      userName: "별명",
+      password: "비밀번호",
+      passwordConfirm: "비밀번호 확인",
+    };
+
+    for (const key in userData) {
+      if (!userData[key].length) {
+        const $warningBox = document.createElement("div");
+        $warningBox.className = "warning-box";
+        $warningBox.innerText = `${TRANSLATIONS[key]}이(가) 유효하지 않아요🙄`;
+        document.body.appendChild($warningBox);
+
+        setTimeout(() => {
+          document.body.removeChild($warningBox);
+        }, 2000);
+
+        return;
+      }
     }
-  }
-  delete userData.passwordConfirm;
-  const stringUserData = JSON.stringify(userData);
+    delete userData.passwordConfirm;
+    const userDataForm = JSON.stringify(userData);
 
-  const xhr = new XMLHttpRequest();
-  xhr.open("post", "/signup");
-  xhr.setRequestHeader("Content-type", "application/json");
-  xhr.send(stringUserData);
+    const xhr = new XMLHttpRequest();
+    xhr.open("post", "/signup");
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.send(userDataForm);
 
-  xhr.onload = e => {
-    if (xhr.status === 302) {
-      window.location.replace(window.location.origin + xhr.responseText);
-    } else {
-      alert(xhr.responseText);
-    }
-  };
-});
+    isInvalidClick = true;
+
+    xhr.onload = e => {
+      const { result } = JSON.parse(xhr.responseText);
+
+      if (result === "invalid") {
+        const $warningBox = document.createElement("div");
+        $warningBox.className = "warning-box";
+        $warningBox.innerText = "이미 가입된 이메일이네요 🙄";
+        document.body.appendChild($warningBox);
+
+        setTimeout(() => {
+          document.body.removeChild($warningBox);
+        }, 2000);
+
+        isInvalidClick = false;
+        return;
+      }
+
+      if (result === "success") {
+        const $welcomeBox = document.createElement("div");
+        $welcomeBox.className = "welcome-box";
+        $welcomeBox.innerText = "성공적으로 가입됐어요 🎉\n 로그인하러 이동할게요 🚗"
+        document.body.appendChild($welcomeBox);
+        setTimeout(() => {
+          location.assign("/login");
+        }, 2000);
+      }
+    };
+  });
+})();
