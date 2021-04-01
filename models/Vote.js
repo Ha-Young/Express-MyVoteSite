@@ -28,11 +28,9 @@ const VoteSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  voting_period: {
-    type: String,
-  },
   participated_users: {
     type: [mongoose.Schema.Types.ObjectId],
+    ref: "User",
     default: []
   },
   options: [OptionSchema]
