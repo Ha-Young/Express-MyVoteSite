@@ -7,16 +7,13 @@ window.myCookieController = (function () {
   };
 
   const getCookie = function (cookieName) {
-    console.log('getCookie', cookieName);
     if (document.cookie) {
       const array = document.cookie.split((escape(cookieName)+'='));
       if (array.length >= 2){
         const arraySub = array[1].split(';');
-        console.log('find', unescape(arraySub[0]));
         return unescape(arraySub[0]);
       }
     }
-    console.log('not find');
     return null;
   };
 

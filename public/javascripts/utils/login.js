@@ -1,12 +1,11 @@
 /* eslint-disable no-undef */
-const JWT_COOKIE_KEY = "VCwpAthtk";
+const JWT_COOKIE_KEY = "VC_wpAthtk";
 const LOGIN_ALLROW_DAY = 1;
 
 const COOKIE_UTIL = window.myCookieController;
 
 window.myLoginController = (function () {
   const checkLogin = () => {
-    console.log('checkLogin');
     return COOKIE_UTIL.getCookie(JWT_COOKIE_KEY) ? true : false;
   };
 
