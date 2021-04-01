@@ -2,7 +2,7 @@ include mixins/voteList
 include mixins/header
 head
   link(rel='stylesheet' href='/css/newForm.min.css')
-  link(rel="stylesheet", href="/css/skate.min.css")
+  link(rel="stylesheet", href='/css/dashboard.min.css')
 .container
   .sidebar
     span.logo V
@@ -12,23 +12,25 @@ head
     +header(user)
     .main-container
       if (vote)
-        h4 #{vote.title}
-        p avilable - #{vote.isVotable}
-        p expired At - #{vote.expiredAt}
-        p by #{vote.creatorName}
-        | vote whatever you want
-        if (vote.isVotable)
-          form(action=`/vote/${vote._id}?_method=PUT` method='POST')
-            each count, option in vote.options
-              .form-group
-                label
-                  input.input-radio(name='option' value=`${option}` type='radio')
-                  | #{option}
-                  if (isCreator)
-                    | -- 현재 현황: #{count}
-            button(type='submit') Submit
-        else
-          h2 winner is ...#{vote.winner}
+        .vote
+          .vote-wrapper
+            h4 #{vote.title}
+            p avilable - #{vote.isVotable}
+            p expired At - #{vote.expiredAt}
+            p by #{vote.creatorName}
+            | vote whatever you want
+          if (vote.isVotable)
+            form(action=`/vote/${vote._id}?_method=PUT` method='POST')
+              each count, option in vote.options
+                .form-group
+                  label
+                    input.input-radio(name='option' value=`${option}` type='radio')
+                    | #{option}
+                    if (isCreator)
+                      | -- 현재 현황: #{count}
+              button(type='submit') Submit
+          else
+            h2 winner is ...#{vote.winner}
       if (isCreator)
         form(action=`/vote/${vote._id}?_method=DELETE` method='POST')
           button(type='submit') DELETE

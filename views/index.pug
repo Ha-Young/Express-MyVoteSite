@@ -3,7 +3,7 @@ include mixins/voteList
 include mixins/header
 block append head
   link(rel='stylesheet' href='/css/main.min.css')
-  link(rel='stylesheet', href='/css/skate.min.css')
+  link(rel="stylesheet", href='/css/dashboard.min.css')
 block content
   .container
     .sidebar
@@ -25,7 +25,6 @@ block content
           button(type='submit') SIGN UP
         form(action='/auth/login' method='GET')
           button(type='submit') LOG IN
-          
       button(id='plusButton')
         a(href='/vote/new') MAKE NEW VOTE
       ul.all-votes

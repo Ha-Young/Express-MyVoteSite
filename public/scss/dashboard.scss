@@ -341,7 +341,7 @@ body {
   display: flex;
   align-items: center;
  }
- &-vote__author {
+ &-vote__creator {
   display: flex;
   align-items: center;
   padding-bottom: 10px;
@@ -381,14 +381,14 @@ body {
    background-position-x: 0;
    background-size: 139%;
    filter: saturate(1.4);
-   .author-img {
+   .creator-img {
     margin-top: 14px;
    }
-   .author-img__wrapper svg {
+   .creator-img__wrapper svg {
     border-color: #ffe6b2;
     color: #e7bb7d;
    }
-   .author-detail {
+   .creator-detail {
     margin-left: 0;
    }
   }
@@ -417,7 +417,7 @@ body {
  }
 }
 
-.author {
+.creator {
  &-img {
   width: 52px;
   height: 52px;
@@ -538,7 +538,7 @@ body {
   right: 8px;
  }
 
- &-author {
+ &-creator {
   position: absolute;
   right: 10px;
   transition: 0.4s;

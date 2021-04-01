@@ -5,10 +5,10 @@ mixin voteList(vote, delay)
       //TODO: vote tag css to img
       a(href=`/vote/${vote._id}`)
         img(src='https://images.unsplash.com/photo-1536532184021-da5392b55da1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8Ymx1ZSUyMHNreXxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80')
-      .author-img__wrapper.vote-author
+      .creator-img__wrapper.vote-creator
         svg.feather.feather-check(viewbox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round')
           path(d='M20 6L9 17l-5-5')
-        img.author-img(src='https://images.pexels.com/photos/1680172/pexels-photo-1680172.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500')
+        img.creator-img(src='https://images.pexels.com/photos/1680172/pexels-photo-1680172.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500')
     .vote-by #{vote.creatorName}
     .vote-name #{vote.title}
     .vote-view
