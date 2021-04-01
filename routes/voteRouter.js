@@ -23,5 +23,4 @@ router.get('/error', function(req, res, next) {
 router.get('/:vote_id', isSignIn, getVoteDetail);
 router.put('/:vote_id', isSignIn, redirectIfUserNone, putVoteDetail);
 
-
 module.exports = router;

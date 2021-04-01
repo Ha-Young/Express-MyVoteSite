@@ -7,7 +7,7 @@ function toggleDivs(element) {
     $choiceDiv.style.backgroundColor = "";
   }
 
-  element.style.backgroundColor = "black";
+  element.style.backgroundColor = "rgba(255, 255, 255, .5)";
   $voteButton.setAttribute("choiceId", element.getAttribute("choiceId"));
 }
 
