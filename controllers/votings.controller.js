@@ -7,7 +7,7 @@ const APIFeatures = require('../utils/APIFeatures');
 exports.getVotingPage = async (req, res, next) => {
   try {
     const features = new APIFeatures(
-      Vote.findById(mongoose.Types.ObjectId(req.params.id))
+      Vote.findById(req.params.id)
       , req.query
     ).populate();
     const vote = await features.query.lean();
@@ -34,7 +34,19 @@ exports.getVotingPage = async (req, res, next) => {
 
 exports.voting = async (req, res, next) => {
   try {
+    await Vote.updateOne(
+      {
+        _id: req.params.id,
+        "options.option": req.body.option,
+      },
+      {
+        $push: {
+          "options.$.voters": req.user._id,
+        },
+      }
+    );
 
+    res.redirect(`/votings/${req.params.id}`);
   } catch (err) {
     next(err);
   }

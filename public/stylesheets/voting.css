@@ -3,3 +3,10 @@
   width: 500px;
   height: 500px;
 }
+
+.back-button-container {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 20px;
+  padding-right: 20px;
+}

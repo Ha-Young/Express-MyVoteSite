@@ -10,6 +10,11 @@
 <body>
   <%- include("partials/header", {user}) %>
     <main>
+      <div class="back-button-container">
+        <form method="GET" action="/">
+          <button class="button" type="submit">BACK TO HOME</button>
+        </form>
+      </div>
       <div>
         <p class="title">
           <%= vote.title %>
@@ -30,19 +35,19 @@
           <canvas id="myChart" width="400" height="400"></canvas>
         </div>
           <% } else { %>
-            <% if(isVoted) { %>
+            <% if (isVoted) { %>
               Already Voted
             <% } else { %>
               <form method="POST" action="<%= `/votings/${vote._id}` %>">
-                <% vote.options.forEach(option=> { %>
+                <% vote.options.forEach(el=> { %>
                   <div>
-                    <input type="radio" id="<%= option %>" name="<%= option %>" value="<%= option %>">
-                    <label for="<%= option %>">
-                      <%= option%>
+                    <input type="radio" id="<%= el.option %>" name="option" value="<%= el.option %>">
+                    <label for="<%= el.option %>">
+                      <%= el.option %>
                     </label>
                   </div>
-                  <% }); %>
-                    <button class="button" type="submit">SUBMIT</button>
+                <% }); %>
+                <button class="button" type="submit">SUBMIT</button>
               </form>
             <% } %>
         <% } %>
@@ -52,10 +57,12 @@
         <form method="DELETE" action="<%= `/votings/${vote._id}` %>">
           <button class="button" type="submit">DELETE</button>
         </form>
-        <% } %>
+      <% } %>
     </main>
-    <script src="/Chart.bundle.min.js"></script>
-    <script type="text/javascript" src="/javascripts/votingChart.js"></script>
+    <% if(vote.status === 'terminated' || isAuthor) { %>
+      <script src="/Chart.bundle.min.js"></script>
+      <script type="text/javascript" src="/javascripts/votingChart.js"></script>
+    <% } %>
   </body>
 
 </html>

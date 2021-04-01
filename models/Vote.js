@@ -30,7 +30,7 @@ const voteSchema = new mongoose.Schema({
   options: [
     {
       option: {
-        type: [mongoose.Schema.Types.Mixed]
+        type: mongoose.Schema.Types.Mixed
       },
       voters: [
         {
