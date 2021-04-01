@@ -7,6 +7,7 @@ const getProgress = require("../utils/getProgress");
 const getLoginStatus = require("../utils/getLoginStatus");
 
 router.get("/new", (req, res, next) => {
+  console.log(req.user);
   try {
     const isLogin = getLoginStatus(req);
     if (!isLogin) return res.status(302).redirect("/");
@@ -23,6 +24,8 @@ router.post("/new", async (req, res, next) => {
     const isLogin = getLoginStatus(req);
     if (!isLogin) return res.status(302).redirect("/");
 
+    const { _id } = req.user;
+    console.log(_id);
     const { date, time, title, desc, item } = req.body;
     const isoString = date.concat("T", time);
     const votingItems = [];
@@ -32,7 +35,7 @@ router.post("/new", async (req, res, next) => {
     });
 
     await Voting.create({
-      // author: "김태리",
+      author: _id,
       title: title,
       description: desc,
       votingItems: votingItems,

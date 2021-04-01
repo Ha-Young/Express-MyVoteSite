@@ -34,7 +34,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (userId, done) => {
   try {
-    const user = await User.findOne({ _id: userId });
+    const user = await User.findOne({ _id: userId }, "_id name");
     done(null, user);
   } catch {
     done(null, false, { message: "Internal Server Error" });
