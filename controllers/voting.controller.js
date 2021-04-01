@@ -50,18 +50,15 @@ module.exports.getVoting = async (req, res, next) => {
     const votingId = req.params.voting_id;
     const currentVoting =
       await Voting.findById(votingId)
-        .populate("publisher", "name email")
+        .populate("publisher", "name email");
 
     if (!currentVoting) {
       next(createError(404, "Can't find the voting"));
       return;
     }
 
-    let isPublisher = false;
-    const userEmail = res.locals.userEmail
-    if (currentVoting.publisher.email === userEmail) {
-      isPublisher = true;
-    }
+    const userEmail = res.locals.userEmail;
+    const isPublisher = currentVoting.publisher.email === userEmail;
 
     console.log("isPublisher", isPublisher);
 
@@ -122,9 +119,32 @@ module.exports.putVoting = async (req, res, next) => {
       );
     }
 
-    await currentVoting.save()
+    await currentVoting.save();
 
-    res.status(201).json({ result: true });
+    res.status(201).end();
+  } catch (err) {
+    next(createError(500, err.message));
+  }
+};
+
+module.exports.deleteVoting = async (req, res, next) => {
+  try {
+    const votingId = req.params.voting_id;
+    const currentVoting =
+      await Voting.findById(votingId)
+        .populate("publisher", "name email");
+
+    const userEmail = res.locals.userEmail;
+    const isPublisher = currentVoting.publisher.email === userEmail;
+
+    if (!isPublisher) {
+      next(createError(403, err.message));
+      return;
+    }
+
+    await currentVoting.deleteOne();
+
+    res.status(201).end();
   } catch (err) {
     next(createError(500, err.message));
   }

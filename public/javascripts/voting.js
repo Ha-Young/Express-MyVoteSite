@@ -1,6 +1,7 @@
 const form = document.querySelector(".voting-form");
 const messageBox = document.querySelector(".message-box");
 const indexLinkButton = document.querySelector(".index-link-button");
+const deleteButton = document.querySelector(".delete-voting-button");
 const ctx = document.querySelector(".chart");
 
 const setMessage = (message) => {
@@ -23,21 +24,49 @@ const handleSubmit = async (e) => {
   }
 
   try {
-    await fetch(window.location.pathname, {
+    const response = await fetch(window.location.pathname, {
       headers: {
         "Content-Type": "application/json"
       },
       method: "put",
       body: JSON.stringify(selectedOptions),
     });
+
+    const votingResult = await response.json();
+
+    if (votingResult.result) {
+      window.location.reload();
+    } else {
+      window.location.href = "/login";
+    }
   } catch (err) {
     setMessage("error!");
-  } finally {
-    window.location.reload();
+  }
+};
+
+const handleDeleteButtonClick = async (e) => {
+  e.preventDefault();
+
+  try {
+    await fetch(window.location.pathname, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "delete",
+    });
+
+    window.location.href = "/";
+  } catch (err) {
+    setMessage("error!");
   }
 };
 
 indexLinkButton.addEventListener("click", handleIndexLinkButton);
+
+if (deleteButton) {
+  deleteButton.addEventListener("click", handleDeleteButtonClick);
+}
+
 if (form) {
   form.addEventListener("submit", handleSubmit);
 }
