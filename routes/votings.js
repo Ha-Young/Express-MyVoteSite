@@ -47,7 +47,7 @@ router.post("/new", requireAuth, async function (req, res) {
   res.redirect("/");
 });
 
-router.get("/:vote_id", requireAuth, voteController.showVoteDetails);
+router.get("/:vote_id", voteController.showVoteDetails);
 router.put("/:vote_id", voteController.addOneToSelectedOption);
 router.delete("/:vote_id", requireAuth, voteController.deleteVoting);
 

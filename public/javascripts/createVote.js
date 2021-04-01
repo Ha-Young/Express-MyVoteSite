@@ -11,6 +11,7 @@ function sendAjax(url, data) {
 
   xhr.addEventListener("load", function () {
     console.log(xhr.responseText);
+    window.location.href = "/";
   });
 }
 
