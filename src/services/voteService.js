@@ -76,7 +76,7 @@ exports.GetVote = async ({ voteId, user }) => {
 
     const vote = voteRecord.toObject();
 
-    if (vote.creator._id.equals(user._id)) {
+    if (user && vote.creator._id.equals(user._id)) {
       vote.myVote = true;
     }
 
@@ -130,6 +130,35 @@ exports.DeleteVote = async voteId => {
     const vote = voteRecord.toObject();
 
     return { vote };
+  } catch (error) {
+    return { error };
+  }
+};
+
+exports.VoteToOption = async ({ voteId, optionId }) => {
+  try {
+    const vote = await Vote.findById(voteId);
+
+    if (!vote) {
+      throw new Error("can not find vote...");
+    }
+
+    const option = vote.vote_options.id(optionId);
+
+    if (!option) {
+      // 404 error badrequest
+      throw new Error("can not find option...");
+    }
+
+    option.count += 1;
+    vote.entire_count += 1;
+
+    console.log('prev save vote', vote);
+
+    vote.save();
+
+    return { vote };
+
   } catch (error) {
     return { error };
   }
