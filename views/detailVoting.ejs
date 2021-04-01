@@ -3,8 +3,8 @@
   <head>
     <%- include("partial/header") %>
     <title>Voting Platform</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/detailVoting.css' />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/detailVoting.css" />
   </head>
   <body>
     <p id="message" class="message-box"></p>
@@ -40,7 +40,7 @@
           <% if (isAuthor) { %>
             <button id="deleteButton" name="<%= voting._id %>">삭제</button>
             <script src="/javascripts/deleteVoting.js"></script>
-            <% } %>
+          <% } %>
           <script src="/javascripts/patchVoting.js"></script>
         </ul>
         <form action="/" method="GET">

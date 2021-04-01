@@ -6,6 +6,9 @@ const Voting = require("../../models/Voting");
 const getDateFormat = require("../../utils/getDateFormat");
 const validateDate = require("../../utils/validateDate");
 
+const ERROR = require("../../constants/errorConstants");
+const VOTING = require("../../constants/votingConstants");
+
 const Controller = {};
 
 Controller.getAllVotings = async (req, res, next) => {
@@ -26,7 +29,7 @@ Controller.getAllVotings = async (req, res, next) => {
     res.render("index", { votings, user: currentUser });
   } catch (error) {
     console.error(error.message);
-    next(createError(500, "Server Error"));
+    next(createError(500, ERROR.SERVER_ERROR));
   }
 };
 
@@ -37,7 +40,7 @@ Controller.getNewVoting = async (req, res, next) => {
     res.render("newVoting", { votings });
   } catch (error) {
     console.error(error.message);
-    next(createError(500, "Server Error"));
+    next(createError(500, ERROR.SERVER_ERROR));
   }
 };
 
@@ -49,7 +52,7 @@ Controller.postNewVoting = async (req, res, next) => {
     const isProgress = validateDate(endDate, Date.now());
 
     if (!isProgress) {
-      return res.render("failure", { message: "현재 시간 이후를 입력하십시오" });
+      return res.render("failure", { message: VOTING.TIME_OUT_MESSAGE });
     }
 
     const filteredOptions = req.body.option.filter(option => option.length > 0);
@@ -72,12 +75,12 @@ Controller.postNewVoting = async (req, res, next) => {
 
     await user.save();
     res.render("success", {
-      message: "투표를 생성했습니다.",
+      message: VOTING.SUCCESS_PRODUCE_MESSAGE,
       newVoting,
     });
   } catch (error) {
     console.error(error.message);
-    next(createError(500, "Server Error"));
+    next(createError(500, ERROR.SERVER_ERROR));
   }
 };
 
@@ -90,36 +93,37 @@ Controller.getMyVotings = async (req, res, next) => {
       .exec((error, voting) => {
         if (error) {
           console.error(error.message);
-          return next(createError(500, "Server Error"));
+          return next(createError(500, ERROR.SERVER_ERROR));
         }
 
         res.render("myVotings", { myVotings: voting.votingList });
       });
   } catch (error) {
     console.error(error.message);
-    next(createError(500, "Server Error"));
+    next(createError(500, ERROR.SERVER_ERROR));
   }
 };
 
 Controller.getDetailVoting = async (req, res, next) => {
   try {
     const currentVotingId = req.params.id;
-    const voting = await Voting.findById({ _id: currentVotingId });
     const currentUser = req.user;
-    let isAuthor = false;
 
     Voting.findById({ _id: currentVotingId })
       .populate("user")
-      .exec((err, data) => {
+      .exec((err, voting) => {
+        const author = voting.user;
+
         if (err) return res.render("error", { message: err.message });
-        if (currentUser) {
-          isAuthor = (currentUser._id.toString() === data.user._id.toString());
-        }
+
+        const isAuthor =  currentUser
+          ? (currentUser._id.toString() === author._id.toString())
+          : false;
 
         if (voting.isProgress) {
           res.render("detailVoting", {
             voting,
-            author: data.user.email,
+            author: author.email,
             isAuthor,
           });
         } else {
@@ -133,7 +137,7 @@ Controller.getDetailVoting = async (req, res, next) => {
 
           res.render("resultVoting", {
             voting,
-            author: data.user.email,
+            author: author.email,
             isAuthor,
             highestOption,
           });
@@ -141,7 +145,7 @@ Controller.getDetailVoting = async (req, res, next) => {
       });
   } catch (error) {
     console.error(error.message);
-    next(createError(500, "Server Error"));
+    next(createError(500, ERROR.SERVER_ERROR));
   }
 };
 
@@ -160,7 +164,7 @@ Controller.patchDetailVoting = async (req, res, next) => {
     if (!isVotedUser) {
       voting.options.forEach(option => {
         if (option.title === checkedOption) {
-          option.value += 1;
+          option.value += VOTING.OPTION_UPPER_VALUE;
         }
       });
 
@@ -168,13 +172,13 @@ Controller.patchDetailVoting = async (req, res, next) => {
 
       await voting.save();
 
-      res.json({ status: 200, message: "투표 성공" });
+      res.json({ status: 200, message: VOTING.SUCCESS_VOTING_MESSAGE });
     } else {
-      return res.json({ status: 400, message: "이미 투표하셨습니다." });
+      return res.json({ status: 400, message: VOTING.ALREADY_VOTED_MESSAGE });
     }
   } catch (error) {
     console.error(error.message);
-    next(createError(500, "Server Error"));
+    next(createError(500, ERROR.SERVER_ERROR));
   }
 };
 
@@ -198,7 +202,7 @@ Controller.deleteVoting = async (req, res, next) => {
     res.status(201).end();
   } catch (error) {
     console.error(error.message);
-    next(createError(500, "Server Error"));
+    next(createError(500, ERROR.SERVER_ERROR));
   }
 };
 

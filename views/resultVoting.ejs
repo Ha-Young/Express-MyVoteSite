@@ -3,8 +3,8 @@
   <head>
     <%- include("partial/header") %>
     <title>Voting Platform</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/detailVoting.css' />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/detailVoting.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   </head>
   <body>
@@ -17,8 +17,8 @@
       <article class="voting-list">
         <div class="result">
           <p>최종 결과</p>
-          <p>투표 제목: <%= highestOption.title %></p>
-          <p>투표수: <%= highestOption.value %></p>
+          <p>최다 득점 타이틀: <%= highestOption.title %></p>
+          <p>최다표 수: <%= highestOption.value %></p>
         </div>
         <ul>
           <p>투표 생성자: <%= author %></p>
