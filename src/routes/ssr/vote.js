@@ -31,7 +31,8 @@ module.exports = app => {
     async (req, res, next) => {
       try {
         const { vote_id: voteId } = req.params;
-        const { vote, error } = await voteService.GetVote(voteId);
+
+        const { vote, error } = await voteService.GetVote({ voteId, user: req.user });
 
         if (error) {
           throw new Error("can't get vote detail");

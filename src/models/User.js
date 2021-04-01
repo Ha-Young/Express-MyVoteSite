@@ -15,7 +15,7 @@ const joiUserSchema = Joi.object({
   voted_votes: Joi.array().items(Joi.objectId),
 });
 
-const UserSchema = new mongoose.Schema(joigoose.convert(joiUserSchema));
+const UserSchema = new mongoose.Schema(joigoose.convert(joiUserSchema), { timestamps: true });
 
 UserSchema.pre("save", function (next) {
   const user = this;

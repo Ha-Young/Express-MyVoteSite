@@ -1,10 +1,9 @@
 const { Joi } = require("celebrate");
-const { format, isPast } = require("date-fns");
 const mongoose = require("mongoose");
 const mongoosePaginate = require('mongoose-paginate-v2');
-const joigoose = require("joigoose")(mongoose);
-
-const { dateFormat } = require("../config");
+const joigoose = require("joigoose")(mongoose, null, {
+  timestamp: true,
+});
 
 Joi.objectId = require("joi-objectid")(Joi);
 
@@ -20,11 +19,9 @@ const joiVoteSchema = Joi.object({
   is_process: Joi.boolean(),
   vote_options: Joi.array().items(joiVoteOptionSchema).required(),
   entire_count: Joi.number(),
-  creatAt: Joi.date().required(),
-  updateAt: Joi.date().required(),
 });
 
-const VoteSchema = new mongoose.Schema(joigoose.convert(joiVoteSchema));
+const VoteSchema = new mongoose.Schema(joigoose.convert(joiVoteSchema), { timestamps: true });
 VoteSchema.index('expire_datetime');
 VoteSchema.index('creator');
 VoteSchema.plugin(mongoosePaginate);
@@ -42,7 +39,7 @@ VoteSchema.pre("save", function (next) {
 });
 
 VoteSchema.pre(/^find/, async function (next) {
-  await Vote.updateMany({ expiration: { $lte: new Date() } }, { is_process: false });
+  await Vote.updateMany({ expire_datetime: { $lte: new Date() } }, { is_process: false });
   next();
 });
 
