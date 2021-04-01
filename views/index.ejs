@@ -1,9 +1,24 @@
-<a href="/my-votings">내 투표 보기</a>
-<% votings.forEach((voting) => { %>
-  <a href="/votings/<%= voting._id %>">
-    <div><%= voting.title %></div>
-    <div><%= voting.proponent?.name %></div>
-    <div><%= voting.expired_at %></div>
-  </a>
-<% }) %>
-<a href="/votings/new">투표 생성하기</a>
+<%- include("partials/header") %>
+
+<div class="main">
+	<div class="main-bar">
+		<img class="main-bar-image" src="/images/main-side.jpg" />
+	</div>
+	<div class="main-content">
+		<div class="main-content-bar">
+			<a href="/my-votings" class="voting-content-font">내 투표 보기</a>
+			<a href="/votings/new" class="voting-content-font">투표 생성하기</a>
+		</div>
+		<div class="main-content-board">
+			<% votings.forEach((voting) => { %>
+				<div class="main-content-card">
+					<a href="/votings/<%= voting._id %>">
+						<div class="voting-content-font"><%= voting.title %></div>
+						<div class="voting-content-font"><%= voting.proponent?.name %></div>
+						<div class="voting-content-font"><%= voting.expired_at %></div>
+					</a>
+				</div>
+			<% }) %>
+		</div>
+	</div>
+</div>
