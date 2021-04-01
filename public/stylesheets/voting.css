@@ -1,0 +1,9 @@
+.hidden {
+  display: none;
+}
+
+.canvas-container {
+  position: relative;
+  width: 50%;
+  height: 50%;
+}
