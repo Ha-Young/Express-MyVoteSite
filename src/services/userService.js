@@ -1,26 +1,42 @@
+const mongoose = require("mongoose");
 const User = require("../models/User");
 
-exports.VoteToOption = async ({ userId, voteId }) => {
+exports.CheckAreadyVote = async ({ userId, voteId }) => {
   try {
-    console.log('userService VoteToOption');
-
     const userRecord = await User.findById(userId);
 
     if (!userRecord) {
       throw new Error("can not find user");
     }
 
-    console.log('userRecord', userRecord);
+    const checkVoteId = userRecord.voted_votes.includes(mongoose.Types.ObjectId(voteId));
 
-    userRecord.voted_votes.push(voteId);
+    return checkVoteId ? { isAreadyVote: true } : { isAreadyVote: false };
 
-    console.log('vote userRecord', userRecord);
+  } catch (error) {
+    return { error };
+  }
+};
 
-    userRecord.save();
+exports.VoteToOption = async ({ userId, voteId }) => {
+  try {
 
-    const user = userRecord.toObject();
+    const userRecord = await User.updateOne(
+      {
+        _id: userId,
+      },
+      {
+        $push: {
+          voted_votes: mongoose.Types.ObjectId(voteId),
+        },
+      }
+    );
 
-    return { user };
+    if (!userRecord) {
+      throw new Error("can not find user");
+    }
+
+    return { result: true };
   } catch (error) {
     return { error };
   }

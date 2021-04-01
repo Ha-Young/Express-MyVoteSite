@@ -54,7 +54,6 @@ module.exports = app => {
       },
     }),
     async (req, res, next) => {
-      console.log("here");
       try {
         const { vote_id: voteId } = req.params;
 
@@ -85,14 +84,27 @@ module.exports = app => {
       },
     }),
     async (req, res, next) => {
-      console.log("here");
-      // if (!req.user || ObjectId.isValid(req.user._id)) {
-      //   return next(createError(401));
-      // }
+      if (!req.user || ObjectId.isValid(req.user._id)) {
+        return next(createError(401));
+      }
 
       try {
         const { vote_id: voteId } = req.params;
         const { optionId } = req.body;
+        const userId = req.user._id;
+
+        const { isAreadyVote, error: checkError } = await userService.CheckAreadyVote({ userId, voteId });
+
+        if (isAreadyVote) {
+          return res.json({
+            result: false,
+            areadyVoted: true,
+          });
+        }
+
+        if (checkError) {
+          return next(createError(checkError));
+        }
 
         const { error: voteServiceError } = await voteService.VoteToOption({ voteId, optionId });
 
@@ -100,9 +112,7 @@ module.exports = app => {
           return next(createError(voteServiceError));
         }
 
-        console.log(req.user._id);
-
-        const { error: userServiceError } = await userService.VoteToOption({ userId: req.user._id, voteId });
+        const { error: userServiceError } = await userService.VoteToOption({ userId, voteId });
 
         if (userServiceError) {
           return next(createError(userServiceError));
