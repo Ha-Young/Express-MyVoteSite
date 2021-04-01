@@ -12,7 +12,7 @@ exports.getLogIn = (req, res, next) => {
 
 exports.getToken = async (req, res, next) => {
   const { user, cookies } = req;
-  const userData = user instanceof mongoose.Model ? user.toObject() : user; // tojson
+  const userData = user instanceof mongoose.Model ? user.toObject() : user;
   
   try {
     const token = await jwt.sign(
@@ -21,7 +21,7 @@ exports.getToken = async (req, res, next) => {
       { expiresIn: "1h" }
     );
     
-		const redirectUrl = cookies["redirect"] ? cookies["redirect"] : "/";
+		const redirectUrl = cookies["redirect"] || "/";
 
     res
       .cookie("jwt", token, { httpOnly: true })
@@ -41,7 +41,7 @@ exports.postSignUp = passport.authenticate(
   { successRedirect: "/login", failureRedirect: "/signup", session: false }
 );
 exports.postLogIn = passport.authenticate("local-login", 
-  { successRedirect: "/login", failureRedirect: "/signup", session: false }
+  { successRedirect: "/", failureRedirect: "/login", session: false }
 );
 
 exports.getGitHubLogIn = passport.authenticate("github");

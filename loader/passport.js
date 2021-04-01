@@ -13,7 +13,6 @@ passport.use(
       passReqToCallback: true,
     },
     async (req, email, password, cb) => {
-      console.log(req);
       try {
         const user = await User.findOne({ email });
 

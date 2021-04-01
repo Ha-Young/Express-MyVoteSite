@@ -6,7 +6,7 @@ exports.getAllVotings = async (req, res, next) => {
 	
   try {
     const votings = await Voting.find().populate("proponent", "name");
-    
+
     res.status(200).render("index", { votings, user });
   } catch (error) {
     next(error);
@@ -117,6 +117,8 @@ exports.getMyVotingPage = async (req, res, next) => {
   }
 };
 
-exports.getMyPage = (req, res, next) => {
-  res.status(200).render("newVoting");
+exports.getVotingPage = (req, res, next) => {
+  const [error] = req.flash("newVotingError");
+
+  res.status(200).render("newVoting", { message: error });
 };

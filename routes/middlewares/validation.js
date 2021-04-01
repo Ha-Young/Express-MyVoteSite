@@ -1,6 +1,6 @@
 const { validateSignUp, validateVoting, validateLogIn } = require("../../util/validation");
 
-function confirmLoginData(req, res, next) {
+exports.confirmLoginData = (req, res, next) => {
   const { value, error } = validateLogIn(req.body);
   
   if (error) {
@@ -11,11 +11,11 @@ function confirmLoginData(req, res, next) {
   }
 
   next();
-}
+};
 
-function confirmSignUpData(req, res, next) {
+exports.confirmSignUpData = (req, res, next) => {
   const { value, error } = validateSignUp(req.body);
-
+  
   if (error) {
     req.flash("signUpError", error.message);
     res.status(302).redirect("/signup");
@@ -26,20 +26,18 @@ function confirmSignUpData(req, res, next) {
   delete req.body.confirmPassword;
 
   next();
-}
+};
 
-function confirmVotingData(req, res, next) {
-  const validationMessage = validateVoting(req.body);
-
-  if (validationMessage) {
-    res.status(200).render("newVoting", { message: validationMessage });
+exports.confirmVotingData = (req, res, next) => {
+  const { value, error } = validateVoting(req.body);
+  
+  if (error) {
+    console.log(error.message);
+    req.flash("newVotingError", error.message);
+    res.status(302).redirect("/votings/new");
 
     return;
   }
 
   next();
-}
-
-exports.confirmSignUpData = confirmSignUpData;
-exports.confirmVotingData = confirmVotingData;
-exports.confirmLoginData = confirmLoginData;
+};

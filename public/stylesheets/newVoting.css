@@ -1,0 +1,83 @@
+.new-voting-wrapper {
+	display: flex;
+	width: 100%;
+	min-height: 100%;
+}
+
+.new-voting-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin-left: 20%;
+  background-color: #1b1b1b70;
+  z-index: 1;
+}
+
+.new-voting-board {
+  width: 50%;
+  height: 70%;
+  background-color: #9b9999da;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.voting-input {
+  width: 300px;
+  height: 30px;
+  margin-bottom: 10px;
+  background-color: transparent;
+  font-family: "Font Awesome 5 Brands", "Font Awesome 5 Free";
+  font-weight: 600;
+  border-bottom: 3px solid rgba(255,255,255,0.4);
+}
+
+.voting-submit {
+  width: 300px;
+  height: 30px;
+  margin-bottom: 10px;
+  background-color: rgba(255, 255, 255, 0.692);
+  border-radius: 10px;
+}
+
+.new-voting-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+}
+
+.voting-input-box {
+  max-width: 300px;
+}
+
+.voting-button {
+  display: flex;
+  justify-items: end;
+  align-items: flex-end;
+}
+
+.voting-button-box {
+  display: flex;
+  justify-items: end;
+  align-items: flex-end;
+}
+
+.voting-redirect {
+  border: 1px solid #641a1a;
+  border-radius: 5px;
+  background-color: #641a1a;
+  color: white;
+}
+
+.voting-add-button {
+  border: 0;
+  background-color: rgba(255, 255, 255, 0.692);
+  border-radius: 5px;
+}
+
+.new-voting-error {
+  width: 300px;
+  color: #641a1a;
+}

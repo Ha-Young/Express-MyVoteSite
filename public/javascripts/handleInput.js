@@ -1,10 +1,10 @@
 function addInput() {
-  const button = document.querySelector("button");
+  const button = document.querySelector(".voting-add-button");
 
   button.addEventListener("click", (ev) => {
     ev.preventDefault();
 
-    const inputBox = document.querySelector(".input-box");
+    const inputBox = document.querySelector(".voting-input-box");
     const newInput = document.createElement("input");
 
     newInput.classList.add("voting-input");

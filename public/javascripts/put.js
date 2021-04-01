@@ -21,11 +21,11 @@ async function requestUpdateData(ev) {
 		
     if (!user) {
       window.location.replace("/login");
-    }
+    } // error.. push 미들웨어
 
     if (isSuccessVoting) {
       const votingCount = document.getElementById(`${value}`);
-      votingCount.textContent = votted;
+      votingCount?.textContent = votted;
     }
   } catch (error) {
     console.error(error);

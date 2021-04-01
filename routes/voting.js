@@ -3,14 +3,14 @@ const router = express.Router();
 
 const votingController = require("./controllers/voting.controller");
 
-const { confirmVotingData } = require("./middlewares/validation"); // joi사용하기
+const { confirmVotingData } = require("./middlewares/validation");
 const { verifyToken, getUserDataByToken, isAuthenticated } = require("./middlewares/authorization");
 
 router.get(
 	"/new", 
 	verifyToken,
 	isAuthenticated,
-	votingController.getMyPage
+	votingController.getVotingPage
 );
 router.post(
 	"/new", 

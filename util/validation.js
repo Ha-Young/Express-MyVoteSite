@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-function validateLogIn(data) {
+exports.validateLogIn = (data) => {
   const schema = Joi.object({
     email: Joi.string()
       .email({ minDomainSegments: 2 })
@@ -12,9 +12,9 @@ function validateLogIn(data) {
   });
   
   return schema.validate({ ...data });
-}
+};
 
-function validateSignUp(data) {
+exports.validateSignUp = (data) => {
   const schema = Joi.object({
     name: Joi.string()
       .min(1)
@@ -34,26 +34,21 @@ function validateSignUp(data) {
       .label("password")
       .messages({ "any.only": "{{#label}} does not match" }),
   });
-  console.log({...data});
+  
   return schema.validate({ ...data });
-}
+};
 
-function validateVoting(votingInfo) {
-  const { title, expired_at, options } = votingInfo;
-
-  if (!title || !expired_at || !options) {
-    return "Please enter every information";
-  }
-
-  if (options.length < 2) {
-    return "Please enter options more then 2";
-  }
-
-  if (new Date(expired_at) < new Date()) {
-    return "Please set expired date after now";
-  }
-}
-
-exports.validateVoting = validateVoting;
-exports.validateSignUp = validateSignUp;
-exports.validateLogIn = validateLogIn;
+exports.validateVoting = (data) => {
+  const schema = Joi.object({
+    title: Joi.string()
+      .required(),
+    expired_at: Joi.date()
+      .greater("now")
+      .required(),
+    options: Joi.array()
+      .min(2)
+      .items(Joi.string())
+  });
+  
+  return schema.validate({ ...data });
+};
