@@ -44,12 +44,19 @@ exports.showVoteDetails = async function (req, res, next) {
   const vote = await Voting.findById(id);
   const creator = await User.findById(vote.creator);
 
+  let showResult = false;
+
+  if (creator._id.toString() === req.session.passport.user) {
+    showResult = true;
+  }
+
   res.render("votingDetail", {
     id: vote._id,
     title: vote.title,
     due_date: vote.due_date,
     candidates: vote.candidates,
-    creator: creator
+    creator: creator,
+    showResult: showResult
   });
 }
 

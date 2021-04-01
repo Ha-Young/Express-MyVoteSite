@@ -9,12 +9,22 @@
   <h1><%=title%></h1>
   <h2><%=due_date%></h2>
   <form class="vote-options" id=<%=id%>>
-    <% for (let i = 0; i < candidates.length; i++) { %>
-    <input type="radio" name="option" value=<%=candidates[i].name%> />
-    <label><%=candidates[i].name%></label>
-    <% } %>
+    <ul>
+      <% for (let i = 0; i < candidates.length; i++) { %>
+      <li>
+        <input type="radio" name="option" value=<%=candidates[i].name%> />
+        <label><%=candidates[i].name%></label>
+        <% if (showResult) { %>
+        <span>투표 수 : <%= candidates[i].count %></span>
+        <% } %>
+      </li>
+      <% } %>
+    </ul>
+
     <input type="submit" value="Submit" />
   </form>
+
+
   <a href="/">Back</a>
 </body>
 <script src="/javascripts/updateVote.js"></script>
