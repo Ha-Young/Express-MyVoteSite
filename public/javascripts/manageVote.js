@@ -1,4 +1,4 @@
-import showModal from "./modal.js";
+import showModal, { showValidation } from "./common.js";
 
 const submitButton = document.querySelector("#submitButton");
 const options = document.querySelectorAll(".option-list li input");
@@ -36,9 +36,7 @@ submitButton.addEventListener("click", async () => {
     const result = await response.json();
 
     if (result.error) {
-      const validationText = document.querySelector(".validation");
-      validationText.classList.remove("hidden");
-      validationText.textContent = result.error.msg;
+      showValidation(result.error.msg);
     } else {
       showModal(result.result);
     }
