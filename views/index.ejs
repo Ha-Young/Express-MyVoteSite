@@ -8,21 +8,22 @@
   <body>
     <%- include("partial/header") %>
     <article class="buttons">
+      <% if (user || null) { %>
+        <span class="user-info"><%= user.email %></span>
+        <form action="/auth/logout" method="GET">
+          <button type="submit">로그아웃</button>
+        </form>
+      <% } else { %>
+        <form action="/auth/login" method="GET">
+          <button type="submit">로그인</button>
+        </form>
+      <% } %>
       <form action="/voting/votings/new" method="GET">
         <button type="submit">투표 생성</button>
       </form>
       <form action="/voting/votings/my-votings" method="GET">
         <button type="submit">내 투표보기</button>
       </form>
-      <% if (!user) { %>
-      <form action="/auth/login" method="GET">
-        <button type="submit">로그인</button>
-      </form>
-      <% } else { %>
-        <form action="/auth/logout" method="GET">
-          <button type="submit">로그아웃</button>
-        </form>
-      <% } %>
     </article>
     <section class="container">
       <ul class="votings">

@@ -47,22 +47,15 @@ Controller.postNewVoting = async (req, res, next) => {
     const { title } = req.body;
     const endDate = getDateFormat(req.body["end-date"]);
     const isProgress = validateDate(endDate, Date.now());
-    const options = [];
 
     if (!isProgress) {
       return res.render("failure", { message: "현재 시간 이후를 입력하십시오" });
     }
 
-    for (const votingElement in req.body) {
-      const optionTitle = req.body[votingElement];
-
-      if (votingElement.includes("option") && 0 < optionTitle.length) {
-        options.push({
-          title: optionTitle,
-          value: 0,
-        });
-      }
-    }
+    const filteredOptions = req.body.option.filter(option => option.length > 0);
+    const options = filteredOptions.map(option => {
+      return { title: option, value: 0 };
+    });
 
     const newVoting = new Voting({
       title,
@@ -78,7 +71,10 @@ Controller.postNewVoting = async (req, res, next) => {
     user.votingList.push(newVoting._id);
 
     await user.save();
-    res.render("success", { newVoting });
+    res.render("success", {
+      message: "투표를 생성했습니다.",
+      newVoting,
+    });
   } catch (error) {
     console.error(error.message);
     next(createError(500, "Server Error"));
