@@ -5,7 +5,7 @@ const REFRESH_TOKEN = "refreshToekn";
 
 const handleLogoutButtonClick = async (e) => {
   try {
-    fetch("/login", {
+    await fetch("/login", {
       headers: {
         "Content-Type": "application/json"
       },
