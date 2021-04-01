@@ -19,6 +19,16 @@ router.post("/selection", async (req, res, next) => {
     option.voters.push(userId);
     option.count += 1;
 
+    // const counts = [];
+    // for (let i = 0; i < votingItems.length; i++) {
+    //   counts.push({ item: votingItems[i].item, count: votingItems[i].count });
+    // }
+    // user에 투표했는지 판단...중복투표 차단...
+
+    votingItems.sort((a, b) => b.count - a.count);
+    console.log(votingItems);
+    voting.result = votingItems[0].item;
+
     await voting.save();
 
     res.status(200).json({ count: option.count });

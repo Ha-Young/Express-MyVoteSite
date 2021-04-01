@@ -5,7 +5,9 @@
     "description": "저녁 먹을꺼임???",
     "voting_items": [{"item": "찬성", "count": 2, "voters": ["6061b68a076c4013b266d988", "6061b6a3076c4013b266d989"]}, {"item": "반대", "count": 0, "voters": []} ],
     "started_at": "2021-03-30T17:21:57.696Z",
-    "ended_at": "2021-04-01T17:21:57.696Z"
+    "ended_at": "2021-04-01T17:21:57.696Z",
+    "result": "",
+    "closed": false
   },
   {
     "author": "6061b6a3076c4013b266d989",
@@ -13,7 +15,10 @@
     "description": "축구 할꺼임???",
     "voting_items": [{"item": "찬성", "count": 2, "voters": ["6061b91e3c485213f8e36d55", "6061b6a3076c4013b266d989"]}, {"item": "반대", "count": 0, "voters": []} ],
     "started_at": "2021-03-29T17:21:57.696Z",
-    "ended_at": "2021-03-30T17:21:57.696Z"
+    "ended_at": "2021-03-30T17:21:57.696Z",
+    "result": "",
+    "closed": false
+
   },
   {
     "author": "6061b91e3c485213f8e36d55",
@@ -21,6 +26,8 @@
     "description": "집에 갈꺼임???",
     "voting_items": [{"item": "찬성", "count": 1, "voters": ["6061b68a076c4013b266d988", "6061b6a3076c4013b266d989"]}, {"item": "반대", "count": 1, "voters": ["6061b91e3c485213f8e36d55"]} ],
     "started_at": "2021-03-28T17:21:57.696Z",
-    "ended_at": "2021-04-04T17:21:57.696Z"
+    "ended_at": "2021-04-04T17:21:57.696Z",
+    "result": "",
+    "closed": false
   }
 ]

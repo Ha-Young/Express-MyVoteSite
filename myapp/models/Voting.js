@@ -13,6 +13,8 @@ const votingSchema = new mongoose.Schema({
   ],
   started_at: { type: Date, default: new Date().toISOString() },
   ended_at: { type: Date, default: new Date().toISOString() },
+  result: { type: String },
+  closed: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model("Voting", votingSchema);
