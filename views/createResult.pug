@@ -4,8 +4,8 @@ block content
 	.result-container
 		.result-image-container
 		.result-message-container
-			span=message
+			span.result-message=message
 		.result-buttons-container
-			a(href="/").result-button-home 목록으로 돌아가기
+			a(href="/").result-button.result-button-home 목록으로 돌아가기
 			if result === "success"
-				a(href="/votings/" + votingId).result-button-detail 생성한 투표 보러가기
+				a(href="/votings/" + votingId).result-button.result-button-detail 생성한 투표 보러가기

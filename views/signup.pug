@@ -3,26 +3,31 @@ html
 	head
 		meta(charset="UTF-8")
 		meta(name="viewport" content="width=device-width, initial-scale=1.0")
-		link(rel="stylesheet" href="stylesheets/style.css")
+		link(rel="stylesheet" href="/stylesheets/auth.css")
 		link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Open+Sans:wght@300;400;600;700&display=swap")
 		title Vanivote | Easy Voting Platform
 
 	body
 		.form-container.signup-form-container
-			form(action="/users/signUp", method="post")
-				.form__input.signup-form__input
-					label.form__label(for="name") Name
+			h1.form-title.signup-form-title Sign Up
+			form(action="/users/signUp", method="post").form.signup-form
+				.form__input-container.signup-form__input
+					label.form__label(for="name") 이름
 					input(type="text", name="name", placeholder="Username", required=true)
-				.form__input.signup-form__input
-					label.form__label(for="email") Email
+				.form__input-container.signup-form__input
+					label.form__label(for="email") 이메일
 					input(type="email", name="email", placeholder="you@example.com", required=true)
-				.form__input.signup-form__input
-					label.form__label(for="password") Password
+				.form__input-container.signup-form__input
+					label.form__label(for="password") 비밀번호
 					input(type="password", name="password", placeholder="••••••••", required=true, minlength="8")
-				.form__input.signup-form__input
-					label.form__label(for="passwordConfirm") Password Confirm
+				.form__input-container.signup-form__input
+					label.form__label(for="passwordConfirm") 비밀번호 확인
 					input(type="password", name="passwordConfirm", placeholder="••••••••", required=true, minlength="8")
-				.form__input.signup-form__input
-					button(type="submit", value="Sign Up") Sign Up
-			.login-container
-				a(href="/users/login").login-link Log In
+				.form-buttons-container
+					.form__input.form-button-container
+						button(type="submit", value="Sign Up").form-button.main-button Sign Up
+					.form-button-container
+							a(href="/users/login").form-button.sub-button Log In
+			.logo-container
+				span.logo-main Vani
+				span.logo-sub Vote
