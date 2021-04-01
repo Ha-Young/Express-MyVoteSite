@@ -4,5 +4,5 @@ const logoutWrapper = document.querySelector(".logout-wrapper");
 logoutBtn.addEventListener("click", () => {
   document.cookie = "access_token" + '=; Max-Age=0';
 
-  logoutWrapper.removeChild(logoutBtn);
+  window.location.href = "/login";
 });

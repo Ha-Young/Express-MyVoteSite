@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/stylesheets/login.css" />
     <title>Login</title>
   </head>
   <body>
@@ -10,32 +12,35 @@
           투표목록
         </div>
       </a>
-      <a href="/votings">
+      <a href="/signup">
         <div>
-          투표 상세 페이지
+          회원가입
         </div>
       </a>
     </header>
-    <div>
-      <div>
-        <h1>Login</h1>
+    <div class="login-wrapper">
+      <div class="login-form-wrapper">
+        <div>
+          <h1>Login</h1>
+        </div>
+        <form action="/login" method="POST">
+          <div class="form">
+            <div class="email">
+              <i class="fa fa-envelope"></i>
+              <label for="email">Email: </label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <div class="password">
+              <i class="fa fa-key"></i>
+              <label for="password">Password: </label>
+              <input type="password" id="password" name="password" required />
+            </div>
+          </div>
+          <div class="login-btn-wrapper">
+            <button type="submit" class="login-btn">Login</button>
+          </div>
+        </form>
       </div>
-      <form action="/login" method="POST">
-        <div>
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required />
-        </div>
-        <div>
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      <a href="/signup">
-        <div>
-          Signup
-        </div>
-      </a>
     </div>
   </body>
 </html>

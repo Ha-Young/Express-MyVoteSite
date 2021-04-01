@@ -16,11 +16,11 @@ exports.loginUser = async (req, res, next) => {
   }
 
   const user = await User.findOne({ email });
-  const id = user._id;
-
+  console.log(user);
   if (!user) {
     res.redirect(301, "/login");
   } else {
+    const id = user._id;
     const token = jwt.sign({ id }, process.env.JWT_SECRETKEY);
 
     res
