@@ -4,6 +4,7 @@ const {
   ACCESS_TOKEN,
   ACCESS_TOKEN_EXPIRATION_TIME,
 } = require("../constant/token");
+const { ORIGINAL_URL } = require("../constant/login");
 
 module.exports.isAuthenticated = async (req, res, next) => {
   try {
@@ -33,9 +34,7 @@ module.exports.isAuthenticated = async (req, res, next) => {
           { expiresIn: ACCESS_TOKEN_EXPIRATION_TIME }
         );
 
-        res.cookie(
-          ACCESS_TOKEN, newAccessToken,
-        );
+        res.cookie(ACCESS_TOKEN, newAccessToken);
         console.log("create new access token with refreshToken");
 
         res.locals.userEmail = email;
@@ -57,7 +56,15 @@ module.exports.isAuthenticated = async (req, res, next) => {
 
 module.exports.redirectIfNotLoggedIn = async (req, res, next) => {
   if (!res.locals.userEmail) {
-    res.status(302).redirect("/login");
+    console.log("Unauthenticated!", req.method);
+    res.cookie(ORIGINAL_URL, req.originalUrl);
+    console.log("originalURL", req.originalUrl);
+
+    if (req.method === "GET") {
+      res.status(302).redirect("/login");
+    } else {
+      res.status(401).json({ result: false });
+    }
   } else {
     next();
   }
