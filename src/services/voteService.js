@@ -137,25 +137,27 @@ exports.DeleteVote = async voteId => {
 
 exports.VoteToOption = async ({ voteId, optionId }) => {
   try {
-    const vote = await Vote.findById(voteId);
+    const voteRecord = await Vote.findById(voteId);
 
-    if (!vote) {
+    if (!voteRecord) {
       throw new Error("can not find vote...");
     }
 
-    const option = vote.vote_options.id(optionId);
+    const optionRecord = voteRecord.vote_options.id(optionId);
 
-    if (!option) {
+    if (!optionRecord) {
       // 404 error badrequest
       throw new Error("can not find option...");
     }
 
-    option.count += 1;
-    vote.entire_count += 1;
+    optionRecord.count += 1;
+    voteRecord.entire_count += 1;
 
-    console.log('prev save vote', vote);
+    console.log('prev save vote', voteRecord);
 
-    vote.save();
+    voteRecord.save();
+
+    const vote = voteRecord.toObject();
 
     return { vote };
 

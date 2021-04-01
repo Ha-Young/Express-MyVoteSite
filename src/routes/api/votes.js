@@ -94,15 +94,21 @@ module.exports = app => {
         const { vote_id: voteId } = req.params;
         const { optionId } = req.body;
 
-        const { vote, error } = await voteService.VoteToOption({ voteId, optionId });
+        const { error: voteServiceError } = await voteService.VoteToOption({ voteId, optionId });
 
-        if (error) {
-          return next(createError(error));
+        if (voteServiceError) {
+          return next(createError(voteServiceError));
         }
 
         console.log(req.user._id);
 
-        await userService.VoteToOption({ userId: req.user._id, voteId });
+        const { error: userServiceError } = await userService.VoteToOption({ userId: req.user._id, voteId });
+
+        if (userServiceError) {
+          return next(createError(userServiceError));
+        }
+
+        res.json({ result: true });
 
       } catch (error) {
         next(createError(error));
