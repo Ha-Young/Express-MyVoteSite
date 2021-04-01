@@ -4,7 +4,7 @@ function authenticateUser(req, res, next) {
     return;
   }
 
-  res.status(301).redirect("/auth/login");
+  res.status(301).redirect(`/auth/login?url=${req.headers.referer}`);
 }
 
 module.exports = authenticateUser;
