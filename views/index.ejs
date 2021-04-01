@@ -1,51 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/stylesheets/index.css" />
     <title>votingPage</title>
   </head>
   <body>
-    <%- include("partials/header") %>
-    <div class="votes-wrapper">
-      <div class="vote-wrapper">
-        <% for (let i = 0; i < votes.length; i++) { %>
-          <a href="/votings/<%= votes[i]._id %>">
-            <div class="vote">
-              <div class="title">
-                제목: <%= votes[i].title %>
+    <header>
+      <a href="/signup">
+        <div>
+          회원가입
+        </div>
+      </a>
+      <a href="/login">
+        <div>
+          로그인
+        </div>
+      </a>
+      <a href="/votings/new">
+        <div class="create-vote-wrapper">
+          <div class="create-vote">투표 생성하기</div>
+        </div>
+      </a>
+      <% if (isUserLogedIn) { %>
+        <form action="/my-votings" method="GET">
+          <div class="my-voting-wrapper">
+            <button class="my-voting-btn">내 투표목록</button>
+          </div>
+        </form>
+        <div class="logout-wrapper">
+          <button class="logout-btn">로그아웃</button>
+        </div>
+      <% } %>
+    </header>
+    <main class="votes-wrapper">
+      <div class="progress-vote-wrapper">
+        <% for (let i = 0; i < progressingVote.length; i++) { %>
+          <a href="/votings/<%= progressingVote[i]._id %>">
+            <div class="progress-vote">
+              <div class="title-wrapper">
+                <h3>
+                  <%= progressingVote[i].title %>
+                </h3>
               </div>
-              <div class="creator">
-                작성자: <%= votes[i].creator %>
+              <div class="creator-wrapper">
+                <div class="creator">
+                  <i class="fa fa-id-card"> 작성자: </i>
+                  <%= progressingVote[i].creator %>
+                </div>
               </div>
-              <div class="expire-date">
-                만료일:
-                <%=
-                  votes[i].endDate.getFullYear() + "년 " +
-                  (votes[i].endDate.getMonth() + 1) + "월" +
-                  votes[i].endDate.getDate() + "일"
-                %>
+              <div class="expire-date-wrapper">
+                <div class="end-date">
+                  <i class="fa fa-table"> 마감일: </i>
+                  <%=
+                    progressingVote[i].endDate.getFullYear() + "년" +
+                    (progressingVote[i].endDate.getMonth() + 1) + "월" +
+                    progressingVote[i].endDate.getDate() + "일"
+                  %>
+                </div>
               </div>
-              <div class="vote-status">
-                <% if (votes[i].isOnVote === "true") { %>
-                  <div>⭕️ 투표 진행중 ⭕️</div>
-                <% } else { %>
-                  <div>❌ 투표 마감 ❌</div>
-                <% } %>
+              <div class="progressing-status-wrapper">
+                <div class="progressing-status">
+                  <i class="fa fa-paper-plane"></i>
+                  투표 진행중
+                </div>
               </div>
             </div>
           </a>
         <% } %>
       </div>
-      <footer>
-        <div class="btn-wrapper">
-          <a href="/votings/new">
-            <div>
-              <button class="create-vote">투표 생성하기</button>
+      <div class="ended-vote-wrapper">
+        <% for (let i = 0; i < endedVote.length; i++) { %>
+          <a href="/votings/<%= endedVote[i]._id %>">
+            <div class="ended-vote">
+              <div class="title-wrapper">
+                <h3>
+                  <%= endedVote[i].title %>
+                </h3>
+              </div>
+              <div class="ended-creator-wrapper">
+                <div class="creator">
+                  <i class="fa fa-id-card"> 작성자: </i>
+                  <%= endedVote[i].creator %>
+                </div>
+              </div>
+              <div class="ended-expire-date-wrapper">
+                <div class="end-date">
+                  <i class="fa fa-table"> 마감일: </i>
+                  <%=
+                    endedVote[i].endDate.getFullYear() + "년" +
+                    (endedVote[i].endDate.getMonth() + 1) + "월" +
+                    endedVote[i].endDate.getDate() + "일"
+                  %>
+                </div>
+              </div>
+              <div class="ended-status-wrapper">
+                <div class="progressing-status">
+                  <i class="fa fa-times-circle"></i>
+                  투표 마감
+                </div>
+              </div>
             </div>
           </a>
-        </div>
-      </footer>
-    </div>
+        <% } %>
+      </div>
+    </main>
     <% if (isUserLogedIn) { %>
       <Script src="/javascripts/index.js"></Script>
     <% } %>

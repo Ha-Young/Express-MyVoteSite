@@ -14,6 +14,6 @@ const deleteVoting = async () => {
 
 deleteBtn.addEventListener("click", async () => {
   event.preventDefault();
-  console.log("💣")
+  console.log("wokring");
   deleteVoting();
 });

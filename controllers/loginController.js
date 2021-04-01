@@ -16,8 +16,14 @@ exports.loginUser = async (req, res, next) => {
   }
 
   const user = await User.findOne({ email });
-  console.log(user);
+
   if (!user) {
+    res.redirect(301, "/login");
+  }
+
+  const isCorrectUser = await user.correctPassword(password, user.password);
+
+  if (!isCorrectUser) {
     res.redirect(301, "/login");
   } else {
     const id = user._id;

@@ -32,4 +32,8 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
+userSchema.methods.correctPassword = async (candidatePassword, userPassword) => {
+  return await bycrypt.compare(candidatePassword, userPassword )
+};
+
 module.exports = mongoose.model("User", userSchema);
