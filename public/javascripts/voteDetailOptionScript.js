@@ -46,22 +46,32 @@ function goToLoginPage() {
   window.location.href = loginPageURL;
 }
 
-async function handleVoteBtnElementClick() {
+async function voteToOption() {
+  const optionId = getCheckedOptionId();
+
+  const voteId = window.location.pathname.split("/votings/")[1];
+
+  const { result, error, areadyVoted } = await API_VOTE.voteToOption({ voteId, optionId });
+
+  if (result) {
+    return alert("투표 성공!");
+  }
+
+  if (areadyVoted) {
+    return alert("이미 투표하셨습니다.");
+  }
+
+  if (error) {
+    return alert(error);
+  }
+}
+
+function handleVoteBtnElementClick() {
   if (!LOGIN_UTIL.checkLogin()) {
     return goToLoginPage();
   }
 
-  const optionId = getCheckedOptionId();
-
-  console.log(API_VOTE.voteToOption);
-
-  const voteId = window.location.pathname.split("/votings/")[1];
-
-  console.log(voteId);
-
-  const result = await API_VOTE.voteToOption({ voteId, optionId });
-
-  console.log(result);
+  voteToOption();
 }
 
 function voteDetailOptionInit() {
