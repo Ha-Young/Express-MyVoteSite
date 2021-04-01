@@ -68,10 +68,10 @@ exports.postNewVoting = async (req, res, next) => {
       postedBy: id,
     });
 
-    res.redirect("/");
+    res.redirect("/votings/success");
   } catch (err) {
     console.log(err);
-    next(createError(500));
+    res.redirect("/votings/error");
   }
 };
 
