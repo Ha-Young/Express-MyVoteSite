@@ -6,9 +6,7 @@ const voteService = require("../../services/voteService");
 const {
   PREFIX,
   DETAIL,
-  ERROR,
   NEW,
-  SUCCESS,
 } = require("../../config/routes").VOTE;
 const isLogin = require("../middlewares/isLogin");
 
