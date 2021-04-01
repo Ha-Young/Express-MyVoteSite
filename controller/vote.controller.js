@@ -61,7 +61,7 @@ module.exports.getVoteDetail = async function getVoteDetail(req, res, next) {
 
   const vote = await Vote.findById(vote_id).populate("creator").lean();
   vote.dueDate = datefns.format(vote.dueDate, "yyyy/M/d h:m:s");
-  vote.isCreator = String(vote.creator._id) === String(user._id);
+  vote.isCreator = user && String(vote.creator._id) === String(user._id);
 
   res.render("voteDetail", { vote, user });
 }
@@ -77,11 +77,13 @@ module.exports.putVoteDetail = async function putVoteDetail(req, res, next) {
     const targetVote = await Vote.findById(vote_id).lean();
 
     const targetChoice = targetVote.choices.find(choice => String(choice._id) === chosenId);
-    targetChoice.selectUser.push(user._id);
+    if (!targetChoice.selectUser.includes(user._id)) {
+      targetChoice.selectUser.push(user._id);
+      await Vote.findOneAndUpdate({ _id: vote_id }, { $set: { choices: targetVote.choices }});
+      return res.send("success");
+    };
 
-    await Vote.findOneAndUpdate({ _id: vote_id }, { $set: { choices: targetVote.choices }});
-
-    res.send("success");
+    res.send("중복 불가!!");
   } catch (err) {
     res.send("fail");
   }

@@ -29,7 +29,7 @@ $voteButton.addEventListener("click" , (event) => {
   });
 });
 
-$deleteButton.addEventListener("click", (event) => {
+$deleteButton && $deleteButton.addEventListener("click", (event) => {
   const voteId = $deleteButton.getAttribute("voteId");
   fetch(`/votings/${voteId}`, {
     method: "DELETE"
