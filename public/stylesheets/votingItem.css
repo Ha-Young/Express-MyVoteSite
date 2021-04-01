@@ -14,7 +14,6 @@ span {
 
 .votingItem {
   width: 90%;
-  height: 30vh;
   margin-top: 10vh;
   color: var(--graish-green);
 }
@@ -30,7 +29,7 @@ span {
   background-color: var(--graish-blue);
 }
 
-.votingItemBottom .description {
+.description {
   color: var(--purple-deep);
   font-size: 4vw;
 }
@@ -52,5 +51,9 @@ span {
 }
 
 .selectedOption {
+  background-color: var(--redish);
+}
+
+.likes {
   background-color: var(--redish);
 }

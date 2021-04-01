@@ -5,7 +5,17 @@ block stylesheet
 
 block content
   script(src="/javascripts/votingItem.js")
-  -const { id, title, description, dueDate, inProgress, founder, createdAt, options } = data;
+  -
+    const {
+      id,
+      title,
+      description,
+      dueDate,
+      inProgress,
+      founder,
+      createdAt,
+      options,
+    } = data;
   div.votingItem.flexColumn.centered
     -if (inProgress)
       span.inProgress [투표진행중]
@@ -18,26 +28,27 @@ block content
     div.dueDate #{dueDate}
     div.description #{description}
     .votingItemBottom
-      each option in options
-        div(
-          class="options"
-          data-id=option.id
-          onclick=`sendAjax("/votings/update/${id}", "${option.id}")`
-        ) #{option.opt}
-    -if (founder.toString() === user.id.toString())
+      -if (inProgress && !options.participants.includes(user.id))
+        each option in options
+          -if (option.likes.includes(user.id))
+            div.options.selectedOption #{option.opt}
+            -if (founder.toString() === user.id.toString())
+              div.likes #{option.likes.length}
+          -else
+            div(
+              class="options"
+              data-id=option.id
+              onclick=`sendAjax("/votings/update/${id}", "${option.id}")`
+            ) #{option.opt}
+            -if (founder.toString() === user.id.toString())
+              div.likes #{option.likes.length}
+      -else
+        each option in options
+          div.options #{option.opt}
+            div.likes #{option.likes.length}
+    .votingItemFooter.flexRow
+      -if (founder.toString() === user.id.toString())
+        div.buttons
+          a(href=`/votings/delete/${id}`) 삭제
       div.buttons
-        a(href=`/votings/delete/${id}`) 삭제
-    div.buttons
-      a(href="javascript:window.history.back();") 목록으로 돌아가기
-
-
-//- - 투표 만료 날짜 및 시간은 현재 날짜와 시간보다 과거일 수 없습니다.
-//- - 만료된 투표의 경우, 투표 결과를 표기해주어야 합니다. (가장 많은 선택을 받은 사항 표기)
-//- - 중복 투표는 불가능합니다.
-//- - 만료되지 않은 투표는 투표를 하더라도 결과 확인이 불가능합니다.
-//- - 단, 투표 생성자는 언제든지 투표 결과를 확인할 수 있습니다.
-//- - 투표 생성자에게는 "삭제" 버튼이 보여야 합니다.
-//- - 투표 생성자가 "삭제"할 경우, 더 이상 투표는 참가할 수 없습니다.
-//- - 투표 생성자라 하더라도 이미 생성한 투표를 수정하는 것은 불가능합니다.
-//- - 로그인하지 않은 사용자가 투표를 시도할 경우, 로그인 페이지로 이동해야 합니다.
-//- - 위 상황에서 로그인하지 않았던 사용자가 로그인 페이지에서 로그인 할  경우, 다시 방문했던 투표 페이지로 돌아와야 합니다.
+        a(href="javascript:window.history.back();") 목록으로 돌아가기

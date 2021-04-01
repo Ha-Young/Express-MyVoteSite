@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 const mongoose = require('mongoose');
 
 const votingSchema = new mongoose.Schema({
@@ -13,19 +14,32 @@ const votingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  inProgress: {
+  isInProgress: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   founder: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
-  participants: [mongoose.Schema.Types.ObjectId],
+  participants: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  }],
   options: [{
     opt: String,
-    likes: Number,
+    likes: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    }],
   }],
 }, { timestamps: true });
 
-module.exports = mongoose.model('Voting', votingSchema);
+// eslint-disable-next-line prefer-arrow-callback
+votingSchema.pre(/^find/, async function (next) {
+  await Voting.updateMany({ dueDate: { $lte: new Date() } }, { isInProgress: false });
+  next();
+});
+
+const Voting = mongoose.model('Voting', votingSchema);
+module.exports = Voting;
