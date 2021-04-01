@@ -6,6 +6,8 @@
 </head>
 
 <body>
+  <%- include("partials/title") %>
+  <%- include("partials/menu") %>
   <ul class="my-voting-list">
     <% for (let i = 0; i < myVotings.length; i++) { %>
     <li id=<%=myVotings[i]._id%>>

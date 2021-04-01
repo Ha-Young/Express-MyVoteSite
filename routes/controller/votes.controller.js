@@ -45,8 +45,9 @@ exports.showVoteDetails = async function (req, res, next) {
   const creator = await User.findById(vote.creator);
 
   let showResult = false;
+  const passport = req.session.passport;
 
-  if (creator._id.toString() === req.session.passport.user) {
+  if (passport && creator._id.toString() === passport.user) {
     showResult = true;
   }
 
@@ -64,14 +65,13 @@ exports.addOneToSelectedOption = async function (req, res, next) {
   const userId = req.session.passport.user;
   const votingId = req.params.vote_id;
   const selectedOptionName = req.body.name;
-  console.log(selectedOptionName, userId);
   const hasParticipated = await User.find(
     {
       _id: userId,
       participated_votings: votingId
     }
   );
-  console.log(hasParticipated.length);
+
   if (hasParticipated.length) {
     res.render("index");
     return;
