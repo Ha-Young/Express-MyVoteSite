@@ -1,32 +1,72 @@
 <link rel="stylesheet" href="/stylesheets/style.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
 
-
 <div class="votings-info-wrapper">
   <div class="voting-info-board">
-    <span class="voting-info-font"><%= userName %></span>
-    <a class="voting-info-font" href="/votings">ALL</a>
-    <a class="voting-info-font" href="/votings/my-votings/<%= userId%>">My votes</a>
-    <a class="voting-info-font" href="/votings">Log out</a>
+    <span class="voting-info-username-font"><%= userName %></span>
+    <a class="voting-info-link" href="/votings">ALL</a>
+    <a class="voting-info-link" href="/votings/my-votings/<%= userId %>">My votes</a>
+    <% if(userName){ %>
+      <a class="voting-info-link" href="/logout">Log out</a>
+    <% } else{ %>
+      <a class="voting-info-link" href="/signup">Sign up</a>
+    <% } %>
   </div>  
+  <% if(isCreator){ %>
+    <button class="voting-info-delete-link">Delete</a>
+  <% } else{ %>
+    <button class="voting-info-delete-link hidden">Delete</a>
+  <% } %>
 </div>
 <div class="votings-wrapper">
   <div class="detail-voting-wrapper">
-    <div class="detail-voting-chart">
-      <canvas id="myChart" width="400" height="400"></canvas>
-    </div>
-    <div class="detail-voting-info">
-      <span>name : <%= voting.name %></span>
-      <span>nickname : <%= voting.nickname %></span>
-      <span>isExpired : <%= voting.isExpired %></span>
-      <span>Expired date : <%= voting.expireDate%></span>
+    <span class="detail-message-board"></span>
 
+    <% if(isCreator || voting.isExpired){ %>
+      <div class="detail-voting-chart">
+        <canvas id="myChart" width="400" height="400"></canvas>
+      </div>
+    <% } else{ %>
+      <div class="detail-voting-chart">
+        <div class="detail-voting-chart-status-message">투표 진행중!</div>
+        <div class="detail-voting-chart hidden">
+          <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+      </div>
+    <% } %>
+ 
+    <div class="detail-voting-info">
+      <span class="detail-voting-name-font"><%= voting.name %></span>
+      <span class="detail-voting-nickname-font"><%= voting.nickname %></span>
+      <span class="detail-voting-date-font">만료 날짜: <%= voting.expireDate%></span>
+   
+    <% if(voting.isExpired){ %>
+      <h1>투표 종료!</h1>
+      <div class="detail-option-button-board"></div>
+      <% } else{ %>
+        <% if(didVote){ %>
+          <h1>이미 투표하셨습니다</h1>
+          <div class="detail-option-button-board"></div>
+        <% } else{ %>
+          <div class="detail-option-button-board">
+            <% for(let i = 0; i < options.length; i++) { %>
+              <button class="detail-voting-option-button <%= i %>" data-optionName="<%= options[i].name %>"><%= options[i].name %></span>
+            <% } %>
+          </div>
+        <% } %>
+      <% } %>
+
+    </div>
+
+    <div class="detail-voting hidden" data-votingId="<%= voting._id %>" data-userId="<%= userId %>">
       <% for(let i = 0; i < options.length; i++) { %>
-        <span class="detail-voting-option" data-voteCount=<%= options[i].voteCount %>>count <%= options[i].voteCount %></span>
-        <span class="detail-voting-option" data-optionName=<%= options[i].name %>> <%= options[i].name %></span>
+        <button class="detail-voting-option-info" data-voteCount="<%= options[i].voteCount %>" data-optionName="<%= options[i].name %>"></span>
       <% } %>
     </div>
+
   </div>
 </div>
+
+
 
 <script defer type="text/javascript" src="/javascripts/detailVoting.js"></script>

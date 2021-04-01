@@ -33,21 +33,40 @@
   margin-left: 200px;
 }
 
-.voting-info-font {
+.voting-info-link {
   color: white;
   font-size: 40px;
   font-weight: 900;
 }
 
+.voting-info-username-font {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: beige;
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.voting-info-delete-link {
+  color: rgba(rgb(236, 45, 45));
+  font-size: 40px;
+  font-weight: 900;
+  margin-left: 400px;
+}
+
 .votings-grid-board {
   display: grid;
-  grid-template-columns: repeat(3, minmax(100px, auto));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 
   background-color: #0074ff;
   width: 80%;
 
-  row-gap: 1em;
-  padding: 1em;
+  column-gap: 50px;
+
+  row-gap: 10px;
+  padding: 10px;
 }
 
 .voting-grid-card {
@@ -57,10 +76,28 @@
   align-items: flex-start;
 
   height: 38em;
-  width: 490px;
-
-  background-color: #edc791;
+  width: 108%;
   border-radius: 0.1em;
+}
+
+.green {
+  background-color: #05ffad;
+}
+
+.beige {
+  background-color: #ffd774;
+}
+
+.skyblue {
+  background-color: #8ef1ff;
+}
+
+.pink {
+  background-color: #ff9dc7;
+}
+
+.sage {
+  background-color: #c6ff9d;
 }
 
 .voting-grid-img {

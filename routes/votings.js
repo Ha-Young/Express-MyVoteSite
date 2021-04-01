@@ -4,16 +4,20 @@ const passport = require("passport");
 
 const votingsController = require("./controller/votingsController");
 
-router.get(
+router.get("/", votingsController.renderVotingsPage);
+
+router.get("/id/:id", votingsController.renderDetailPage);
+
+router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
-  votingsController.renderVotingsPage
+  votingsController.renderDetailPage
 );
 
-router.get(
-  "/:id",
+router.post(
+  "/voted/:id",
   passport.authenticate("jwt", { session: false }),
-  votingsController.renderDetailPage
+  votingsController.updateVotingOption
 );
 
 module.exports = router;

@@ -33,13 +33,17 @@ exports.checkGoogleAuth = function (req, res, next) {
   passport.authenticate(
     "google",
     { session: false, scope: ["profile", "email"] },
-    (err, profile) => {
-      console.log("errr is this?", err);
-      if (err) {
+    (error, profile) => {
+      console.log(error);
+      if (error) {
         const createdError = createError(500, errorMessage.SERVER_ERROR);
         return next(createdError);
       }
       req.user = profile;
+      console.log(
+        "-----------------------------------------------------req.user",
+        req.user
+      );
       next();
     }
   )(req, res);

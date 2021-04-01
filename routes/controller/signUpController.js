@@ -8,7 +8,6 @@ exports.renderSignUpPage = function (req, res, next) {
 };
 
 exports.createUser = async function (req, res, next) {
-  console.log("validated body", req.body);
   try {
     const isUser = await User.findOne({ email: req.body.email });
 

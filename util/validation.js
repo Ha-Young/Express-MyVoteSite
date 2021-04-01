@@ -59,6 +59,23 @@ const checkExpiredDate = (voting) => {
   return (voting.isExpired = false);
 };
 
+const checkCreator = (userId, creatorId) => {
+  console.log("id check------------", userId, creatorId);
+  console.log("id check------------", userId === creatorId);
+  if (userId === creatorId.toString()) {
+    return true;
+  }
+  return false;
+};
+
+/**
+ * check voters
+ * @param {Array} voters - array fetched from db.
+ */
+const checkVoter = (voters, userId) => {
+  return voters.some((voterId) => voterId.toString() === userId);
+};
+
 const getToday = () => {
   const date = new Date();
   const year = date.getFullYear();
@@ -73,3 +90,5 @@ module.exports.validateVoteForm = validateVoteForm;
 
 module.exports.validateVotingDate = validateVotingDate;
 module.exports.checkExpiredDate = checkExpiredDate;
+module.exports.checkCreator = checkCreator;
+module.exports.checkVoter = checkVoter;

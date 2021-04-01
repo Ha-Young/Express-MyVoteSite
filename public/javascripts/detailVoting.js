@@ -1,24 +1,92 @@
-const votingOptions = document.querySelectorAll(".detail-voting-option");
-console.log("votingOption", votingOptions);
+const votingButtonBoard = document.querySelector(".detail-option-button-board");
+const messageBoard = document.querySelector(".detail-message-board");
+const deleteButton = document.querySelector(".voting-info-delete-link");
+const votingOptionsHidden = document.querySelectorAll(
+  ".detail-voting-option-info"
+);
+const votingId = document
+  .querySelector(".detail-voting")
+  .getAttribute("data-votingId");
+
+const voterId = document
+  .querySelector(".detail-voting")
+  .getAttribute("data-userId");
+
+const optionsInfo = {};
+const chartColors = [];
+
+for (const option of votingOptionsHidden) {
+  optionsInfo[option.getAttribute("data-optionName")] = Number(
+    option.getAttribute("data-voteCount")
+  );
+  chartColors.push(getRandomColor());
+}
 
 const chart = {
-  labels: [],
-  data: [],
+  labels: Object.keys(optionsInfo),
+  data: Object.values(optionsInfo),
 };
 
-for (const option of votingOptions) {
-  console.log("option", option);
-}
+let isSelected = false;
+votingButtonBoard.addEventListener("click", (e) => {
+  if (isSelected) {
+    return;
+  }
+
+  const optionName = e.target.getAttribute("data-optionName");
+  const userClickedOption = { votingId, optionName, voterId };
+
+  fetchVoting(
+    `http://localhost:3000/votings/voted/${votingId}`,
+    userClickedOption,
+    "POST"
+  )
+    .then((data) => {
+      votingButtonBoard.classList.add("hidden");
+      console.log("data", data);
+      console.log("data", data.status);
+      if (data.status === 401) {
+        messageBoard.textContent = "로그인 창으로 이동합니다...";
+        setTimeout(() => {
+          window.location.href = "http://localhost:3000/logIn";
+        }, 2000);
+      } else {
+        messageBoard.textContent = "투표 되었습니다!";
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      messageBoard.textContent("다시 시도해 주세요!");
+    });
+
+  isSelected = true;
+});
+
+deleteButton.addEventListener("click", (e) => {
+  fetchVoting(
+    `http://localhost:3000/votings/delete/${votingId}`,
+    { votingId },
+    "DELETE"
+  )
+    .then((data) => {
+      console.log("data is", data);
+      window.location.href = "http://localhost:3000/votings";
+    })
+    .catch((error) => {
+      console.error(error);
+      messageBoard.textContent("다시 시도해 주세요!");
+    });
+});
 
 const ctx = document.getElementById("myChart");
 const myChart = new Chart(ctx, {
   type: "doughnut",
   data: {
-    labels: ["사과", "사과"],
+    labels: chart.labels,
     datasets: [
       {
-        data: [25, 1],
-        backgroundColor: getRandomColor(),
+        data: chart.data,
+        backgroundColor: chartColors,
         borderWidth: 1,
       },
     ],
@@ -26,10 +94,25 @@ const myChart = new Chart(ctx, {
 });
 
 function getRandomColor() {
-  var letters = "0123456789ABCDEF".split("");
-  var color = "#";
-  for (var i = 0; i < 6; i++) {
+  const letters = "0123456789ABCDEF".split("");
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
+}
+
+function fetchVoting(url = "", data = {}, type) {
+  console.log("post data is", JSON.stringify(data));
+  return fetch(url, {
+    method: type,
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    body: JSON.stringify(data),
+  }).catch((response) => response.json());
 }

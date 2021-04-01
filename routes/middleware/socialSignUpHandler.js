@@ -7,7 +7,6 @@ const User = require("../../models/User");
 dotenv.config();
 
 exports.createUser = async function (req, res, next) {
-  console.log("user passed by google", req.user);
   try {
     const isUser = await User.findOne({ email: req.user.email });
 
