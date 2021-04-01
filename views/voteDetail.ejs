@@ -5,7 +5,7 @@
       <div>email: <%= vote.creator?.email || "탈퇴한 회원" %></div>
       <div>마감일: <%= vote.dueDate %></div>
     </div>
-    <% if (isCreator) { %>
+    <% if (isCreator || user?.admin) { %>
       <form action="/votings/<%= vote._id %>?_method=DELETE" method="POST">
         <button type="submit">삭제</button>
       </form>
@@ -36,7 +36,7 @@
           <% }) %>
         </div>
         <% if (!isVoted) { %>
-          <button type="submit">확인</button>
+          <button class="submit-button" type="submit">확인</button>
         <% } %>
       </form>
     <% } %>

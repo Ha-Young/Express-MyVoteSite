@@ -1,6 +1,8 @@
 * {
   box-sizing: border-box;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: white;
+  border-radius: 5px;
 }
 
 h1 {
@@ -52,6 +54,16 @@ footer {
   background-color: white;
   border-top: 2px solid rgba(0, 0, 0, 0.1);
   text-align: center;
+}
+
+.submit-button {
+  width: 100px;
+  height: 30px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .body-container {
@@ -150,16 +162,29 @@ footer {
 .vote-form {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .vote-button-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
   min-height: 100px;
   padding: 5px;
 }
 
 .vote-button {
+  display: flex;
+}
+
+.vote-button + .vote-button {
+  margin-top: 5px;
+}
+.vote-button label {
+  display: inline-block;
   width: 100%;
-  text-align: center;
+  padding: 3px;
+  background-color: #CDC6A5;
 }
 
 nav {
