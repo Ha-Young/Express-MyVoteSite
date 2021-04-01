@@ -1,6 +1,5 @@
 const createError = require('http-errors');
 const { check, validationResult } = require('express-validator');
-const passport = require('passport');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
@@ -48,7 +47,6 @@ exports.post = async (req, res, next) => {
       }
     }
   } catch (err) {
-    // err.errors['_id'].message;
     next(createError(err.message));
   }
 };

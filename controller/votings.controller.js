@@ -9,8 +9,10 @@ exports.showForm = (req, res) => {
 exports.create = async (req, res, next) => {
   try {
     const {
-      title, description, dueDate, inProgress, founder, options,
+      title, description, dueDate, inProgress, founder,
     } = req.body;
+    const options = [];
+    req.body.options.forEach(opt => options.push({ opt, likes: 0 }));
 
     const votingData = await Voting.create({
       title, description, dueDate, inProgress, founder, options,
@@ -35,7 +37,7 @@ exports.getOne = async (req, res, next) => {
   try {
     const voteData = await Voting.findById(req.params.id).exec();
     if (voteData) {
-      res.render('partial/votingView', {
+      res.render('partial/votingItem', {
         user: req.user,
         data: voteData,
       });
@@ -48,9 +50,23 @@ exports.getOne = async (req, res, next) => {
 };
 
 exports.viewSuccess = (req, res, next) => {
-  console.log(req.user);
   res.render('partial/message', {
     user: req.user,
     message: '투표 등록 성공!',
   });
+};
+
+exports.updateVoting = async (req, res, next) => {
+  try {
+    const voting = await Voting.findOne({ _id: req.params.id });
+    voting.options.id(req.body.id).likes += 1;
+    const result = await voting.save();
+    if (result) {
+      res.send('투표완료!');
+    } else {
+      res.send('삭제 되었거나 존재하지 않는 투표입니다');
+    }
+  } catch (err) {
+    next(createError(err.status));
+  }
 };

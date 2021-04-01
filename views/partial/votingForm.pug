@@ -23,6 +23,11 @@ block content
           option(value="true") 공개
     div
       label 투표기간:
-        input(type="datetime-local" name="dueDate" value=today)
+        input(
+          type="datetime-local"
+          name="dueDate"
+          value=today
+          min=today
+        )
     button.submitBtn SUBMIT
   script(src="/javascripts/votingForm.js")

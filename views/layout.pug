@@ -4,8 +4,10 @@ html
     meta(charset='utf-8')
     link(rel="stylesheet", href="/stylesheets/style.css")
     title Voting Platform
+    block stylesheet
   body
     include partial/header
 
-    block content
+    main.flexColumn.alignCentered
+      block content
     script(src="/javascripts/index.js")

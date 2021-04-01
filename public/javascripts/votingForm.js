@@ -1,10 +1,8 @@
 const container = document.querySelector('.optionsContainer');
 const addOptionBtn = document.querySelector('.addOptionBtn');
 
-let optionId = 0;
 if (addOptionBtn) {
   addOptionBtn.addEventListener('click', event => {
-    optionId += 1;
     event.preventDefault();
     const newInput = document.createElement('input');
     newInput.value = '옵션을 추가하세요';

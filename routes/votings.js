@@ -7,5 +7,6 @@ router.get('/new', votingController.showForm);
 router.post('/new', votingController.create);
 router.get('/success', votingController.viewSuccess);
 router.get('/:id', votingController.getOne);
+router.post('/update/:id', votingController.updateVoting);
 
 module.exports = router;

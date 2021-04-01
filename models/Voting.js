@@ -22,16 +22,10 @@ const votingSchema = new mongoose.Schema({
     required: true,
   },
   participants: [mongoose.Schema.Types.ObjectId],
-  voteOptions: {
-    likes: {
-      type: Number,
-      default: 0,
-    },
-    disLikes: {
-      type: Number,
-      default: 0,
-    },
-  },
+  options: [{
+    opt: String,
+    likes: Number,
+  }],
 }, { timestamps: true });
 
 module.exports = mongoose.model('Voting', votingSchema);

@@ -44,6 +44,12 @@ img {
   width: 100%;
 }
 
+main {
+  width: 100vw;
+  height: 90vh;
+  background-color: blanchedalmond;
+}
+
 form {
   width: 80vw;
   height: 50vh;
@@ -72,14 +78,17 @@ form {
 .flexColumn {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .flexRow {
   display: flex;
-  flex-direction: column;
+}
+
+.centered {
   justify-content: center;
+}
+
+.alignCentered {
   align-items: center;
 }
 
