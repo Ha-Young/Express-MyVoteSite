@@ -4,6 +4,6 @@ block content
   div #{message}
   div.buttons
     a(href="/") Home
-  -if (!user)
+  - if (!user)
     div.buttons
       a(href="/auth/login") Login

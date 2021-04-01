@@ -3,6 +3,7 @@ extends ../layout.pug
 block content
   form(action="/votings/new", method="post")
     - const today = moment().format('yyyy-MM-DDTHH:mm:ss')
+    - const minVotingTime = moment().add(1, 'day').format('yyyy-MM-DDTHH:mm:ss')
     div
       label 등록자 이름:
         input(type="text" name="founder" readOnly value=user.id)
@@ -22,7 +23,7 @@ block content
         input(
           type="datetime-local"
           name="dueDate"
-          value=today
+          value=minVotingTime
           min=today
         )
     button.submitBtn SUBMIT

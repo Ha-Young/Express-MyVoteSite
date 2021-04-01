@@ -8,5 +8,9 @@ block content
     div #{error.message}
   div.buttons
     a(href="/") Home
-  div.buttons
-    a(href="/auth/login") Login
+  if (user)
+    div.buttons
+      a(href="/auth/login") Login
+  else
+    div.buttons
+      a(href="/auth/signup") SignUp

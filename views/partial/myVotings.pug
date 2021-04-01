@@ -3,6 +3,16 @@ extends ../layout.pug
 block content
   div.flexColumn
     each data in list
-      -const { id, title, description, dueDate, inProgress, founder, createdAt, options } = data;
+      -
+        const {
+          id,
+          title,
+          description,
+          dueDate,
+          inProgress,
+          founder,
+          createdAt,
+          options
+        } = data;
       div.votingContainer
         a(href=`/votings/${id}`) #{id}
