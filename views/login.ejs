@@ -16,19 +16,29 @@
     <form action="/auth/login" method="POST">
       <div class="">
         <div class="">
-          <label> e-mail
-            <input type="text" class="" name="email">
-          </label>
+          <label for="email" class="">E-mail*</label>
+          <div class="">
+            <input type="text" name="email" value="<%= userInput.email %>" class="">
+            <% if(errors.email){ %>
+              <div class="">
+                <span class="invalid-feedback"><%= errors.email.message %></span>
+              </div>
+            <% } %>
+          </div>
         </div>
         <div class="">
-          <label>비밀번호
-            <input type="text" class="" name="password">
-          </label>
+          <label for="password" class="">Password*</label>
+          <div class="">
+            <input type="text" name="password" value="<%= userInput.password %>" class="">
+            <% if(errors.password){ %>
+              <div class="">
+                <span class="invalid-feedback"><%= errors.password.message %></span>
+              </div>
+            <% } %>
+          </div>
         </div>
         <div class="">
-          <label>로그인
-            <input type="submit" class="">
-          </label>
+          <input type="submit" class="" value="Login">
         </div>
       </div>
     </form>

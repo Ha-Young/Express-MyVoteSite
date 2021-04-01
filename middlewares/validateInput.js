@@ -40,6 +40,7 @@ exports.loginSchema = function (req, res, next) {
       .error(new Error(loginErrorMessage.INVALID_EMAIL)),
     password: Joi.string()
       .min(8)
+      .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])"))
       .required()
       .error(new Error(loginErrorMessage.INVALID_PASSWORD)),
   });
@@ -77,12 +78,9 @@ async function validateRequest(req, res, next, schema, redirectPath) {
 
     next();
   } catch (err) {
-    // TODO 여기서 원래 path로 redirect하는데 데이터도 갖고 있어야함. 어? 이러면 flash써야할거같은데...
-    // flash쓰면 뭐가 뭔지 어떻게 알지?? 지금은 그냥 텍스트만 들어가는데..
-    // 사실 에러낼건 아님.. 찐 에러는 아니고 걸린거니까!!
-    console.log('in joi catch error')
     req.flash('userInput', req.body);
-    req.flash('errors', getErrorType(err))
+    req.flash('errors', getErrorType(err));
+
     res.redirect(redirectPath);
   }
 }

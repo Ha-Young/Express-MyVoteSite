@@ -1,6 +1,6 @@
-const Voting = require('../models/Voting');
-const User = require('../models/User');
-
 exports.getLoginPage = async function (req, res, next) {
-  res.render('login');
+  const userInput = req.flash('userInput')[0] || {};
+  const errors = req.flash('errors')[0] || {};
+
+  res.render('login', { userInput, errors });
 };
