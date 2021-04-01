@@ -2,27 +2,31 @@ extends layout
 
 block content
   h1 투표하세요
-  div(class="votes")
+  div.message
+  div.votes
     div
       div=vote.title
       div=vote.author
-      div(class="expired_at")=vote.expiredAt
-      div(class="vote_state")
-  form(action="/votings/"+vote._id method="POST")
-    -vote.options.forEach(option => {
-      div
-        span(class="content")=option.content
-        span=option.count
-        input(type="radio" name="option" value=option.content)
-    -})
-    button 제출
-    -if (vote.author === name) {
-      button 삭제
-      button 투표진행상황보기
-    -}
+      div.expired-at=vote.expiredAt
+      div.vote-state
+  div.form-container
+    form.form-submit-vote(action="/votings/"+vote._id method="POST")
+      -vote.options.forEach(option => {
+        div
+          span.content=option.content
+          input(type="radio" name="option" value=option._id data-count=option.count data-content=option.content)
+      -})
+      button.button-submit-vote(type="submit") 제출
+      -if (vote.author === name) {
+        button.button-delete-vote 삭제
+      -}
   div
     a(href="/") 돌아가기
-  canvas(id="myChart" width="200" height="200")
-  script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js")
-  script(src="/javascripts/chart.js")
-
+  -if (vote.author !== name) {
+    div.show-chart
+      include partials/chart
+  -} else {
+    include partials/chart
+  -}
+  script(src="/javascripts/votingState.js")
+  script(src="/javascripts/submitVote.js")

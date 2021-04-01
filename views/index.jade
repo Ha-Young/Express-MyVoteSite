@@ -2,13 +2,13 @@ extends layout
 
 block content
   h1 투표목록
-  ul(class="votes")
+  div.votes
     -votes.forEach((vote) => {
       a(href="/votings/"+vote._id)
         div=vote.title
         div=vote.author
-        div(class="expired_at")=vote.expiredAt
-        div(class="vote_state")
+        div.expired-at=vote.expiredAt
+        div.vote-state
     -})
   div
     a(href="/auth/logout") logout
