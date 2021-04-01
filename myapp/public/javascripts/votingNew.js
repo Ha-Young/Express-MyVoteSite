@@ -8,7 +8,7 @@ $addBtn.addEventListener("click", () => {
   itemNum++;
 
   $input.type = "text";
-  $input.name = "item";
+  $input.name = "items";
   $input.autocomplete = "off";
   $input.placeholder = "투표항목을 입력하세요 : )";
 

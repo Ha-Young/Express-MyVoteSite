@@ -1,28 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+body {
+  font-family: "Jua", "sans-serif";
+}
+
 header {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   width: 100vw;
   height: 10vh;
-  background-color: tomato;
+  background-color: #247BA0;
 }
 
-header nav {
+header > nav {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 20%;
+  width: 30%;
   height: 50%;
+  margin: 3%
 }
 
 header a {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50%;
+  width: 30%;
   height: 100%;
-  color: black;
+  color: white;
   text-decoration: none;
+  font-size: 3vmin;
+}
+
+header a:hover {
+  color: #FDE74C;
 }
 
 section {

@@ -12,7 +12,7 @@ router.get("/new", (req, res, next) => {
   console.log(req.user);
   try {
     const isLogin = getLoginStatus(req);
-    if (!isLogin) return res.status(302).redirect("/");
+    // if (!isLogin) return res.status(302).redirect("/");
     res.render("votingNew", { isLogin });
   } catch (err) {
     console.error(`get /new in votings.js ${err.message}`);

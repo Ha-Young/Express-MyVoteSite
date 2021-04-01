@@ -3,6 +3,7 @@ const createError = require("http-errors");
 const authRouter = require("./auth");
 const Voting = require("../models/Voting");
 const getLoginStatus = require("../utils/getLoginStatus");
+const { updateAndGetVotings } = require("./controllers/voting.controller");
 const router = express.Router();
 
 router.use("/", authRouter);
@@ -10,14 +11,7 @@ router.use("/", authRouter);
 router.get("/", async (req, res, next) => {
   try {
     const isLogin = getLoginStatus(req);
-    await Voting.updateMany(
-      {
-        ended_at: { $lte: new Date().getTime() },
-      },
-      { closed: true },
-    );
-    const voting = await Voting.find();
-
+    const voting = await updateAndGetVotings();
     res.render("index", { isLogin, voting });
   } catch (err) {
     console.error(`get / ${err.message}`);
