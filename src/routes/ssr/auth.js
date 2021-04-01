@@ -5,7 +5,7 @@ const passport = require("passport");
 
 const authService = require("../../services/authService");
 const { jwtCookieKey, jwtExpires } = require("../../config").jwt;
-const isLogin = require("../middlewares/isLogin");
+const authChecker = require("../middlewares/authChecker");
 const { PREFIX, SIGNUP, LOGIN, LOGOUT,
   LOGIN_GOOGLE, LOGIN_GOOGLE_REDIRECT } = require("../../config/routes").AUTH;
 
@@ -85,7 +85,7 @@ module.exports = app => {
     authSuccess({ res, token });
   });
 
-  route.post(LOGOUT, isLogin, (req, res, next) => {
+  route.post(LOGOUT, (req, res, next) => {
     try {
       res.clearCookie(jwtCookieKey);
       return res.redirect("/login");

@@ -3,14 +3,13 @@ const createError = require("http-errors");
 
 const { HOME } = require("../../config/routes");
 const { GetAllVotes } = require("../../services/voteService");
-const isLogin = require("../middlewares/isLogin");
 const authRoute = require("./auth");
 const voteRoute = require("./vote");
 
 module.exports = () => {
   const app = express.Router();
 
-  app.get(HOME, isLogin, async (req, res, next) => {
+  app.get(HOME, async (req, res, next) => {
     try {
       const { votes } = await GetAllVotes();
 

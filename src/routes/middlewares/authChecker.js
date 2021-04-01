@@ -1,4 +1,3 @@
-const createError = require("http-errors");
 const jwt = require("jsonwebtoken");
 
 const User = require("../../models/User");
@@ -13,16 +12,14 @@ const getTokenFromHeader = req => {
   return null;
 };
 
-const isLogin = (req, res, next) => {
+const authChecker = (req, res, next) => {
   const jwtToken = getTokenFromHeader(req);
-
-  if (!jwtToken) {
-    return res.redirect('/login');
-  }
 
   jwt.verify(jwtToken, jwtSecret, async (err, decoded) => {
     if (err) {
-      return next(createError(err));
+      res.user = null;
+      res.locals.user = {};
+      return next();
     }
 
     const user = await User.findById(decoded._id);
@@ -38,4 +35,4 @@ const isLogin = (req, res, next) => {
   });
 };
 
-module.exports = isLogin;
+module.exports = authChecker;

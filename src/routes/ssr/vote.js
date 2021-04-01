@@ -8,12 +8,11 @@ const {
   DETAIL,
   NEW,
 } = require("../../config/routes").VOTE;
-const isLogin = require("../middlewares/isLogin");
 
 const route = Router();
 
 module.exports = app => {
-  app.use(PREFIX, isLogin, route);
+  app.use(PREFIX, route);
 
   route.get(NEW, (req, res) => {
     res.render("voteCreate");
