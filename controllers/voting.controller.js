@@ -6,7 +6,9 @@ const User = require("../models/User");
 const validateVotingData = require("../utils/validateVotingData");
 
 module.exports.getNew = async (req, res, next) => {
-  res.status(200).render("createVoting");
+  res.status(200).render("createVoting", {
+    user: res.locals.userEmail,
+  });
 };
 
 module.exports.postNew = async (req, res, next) => {
@@ -16,6 +18,7 @@ module.exports.postNew = async (req, res, next) => {
     console.log("new voting\n", toBeCreatedVoting);
 
     const validationResult = validateVotingData(toBeCreatedVoting);
+
     if (validationResult.result) {
       const newVoting = new Voting({
         title: toBeCreatedVoting.title,
