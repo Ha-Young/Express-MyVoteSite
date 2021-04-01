@@ -1,5 +1,6 @@
 const { format } = require("date-fns");
 
+const { dateFormat } = require("../config");
 const Vote = require("../models/Vote");
 
 exports.GetAllVotes = async () => {
@@ -67,7 +68,7 @@ exports.GetVotes = async ({ condition, page, limit, sort_field, sort_order }) =>
 
 exports.GetVote = async voteId => {
   try {
-    const vote = await Vote.findById(voteId);
+    const vote = await Vote.findById(voteId).populate('creator', 'name', 'User');
 
     if (!vote) {
       throw new Error("can't get vote");
@@ -96,7 +97,7 @@ exports.CreateVote = async ({ voteInputDTO, user }) => {
       vote_options: voteOptions,
       expire_datetime: format(
         new Date(voteInputDTO.expire_datetime),
-        "yyyy-MM-dd hh:mm:ss"
+        dateFormat
       ),
     });
 

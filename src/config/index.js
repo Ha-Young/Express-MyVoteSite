@@ -9,6 +9,7 @@ module.exports = {
   rootURL: "http://localhost:3000",
   port: normalizePort(process.env.PORT || '3000'),
   databaseURL: process.env.MONGODB_URI,
+  dateFormat: "yyyy-MM-dd hh:mm:ss",
 
   jwt: {
     jwtSecret: process.env.JWT_SECRET,
