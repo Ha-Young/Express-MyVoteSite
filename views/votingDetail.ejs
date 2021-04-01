@@ -1,46 +1,63 @@
-<div class="voting-field">
-  <div class="voting-content">
+<div class="voting-detail-wrapper">
+  <div class="voting-detail-bar">
+		<div class="voting-bar-title">
+			<h1>About Voting</h1>
+    </div>
+    <img class="voting-bar-image" src="/images/voting-bar.jpeg" />
+    <hr class="main-bar-line">
+		<div class="main-content-buttons">
+      <a href="/">Return</a>
+    </div>
+  </div>
+  <div class="voting-detail-content">
+    <div class="voting-detail-board">
       <% if (typeof voting !== "undefined") { %> 
-        <%= voting.title %>
+        <div class="voting-detail-title" name="<%= voting.title %>">
+          <%= voting.title %>
+        </div>
 
         <% if (!voting.isCurrent || voting.proponent.toString() === user?.id) { %>
+          <canvas class="voting-chart" id="voting-chart"></canvas>
           <% voting.options.forEach((content) => { %>
-            <div class="voting-count" id="<%= content.option %>">
+            <div class="voting-count" id="<%= content.option %>" name="<%= content.count %>">
               <%= content.count %>
             </div>
           <% }) %>
         <% } %>
         <div>
-          <%= voting.expired_at %>
+          <%= voting.formatedExpiration %>
         </div>
-        
-        <form class="voting-form">
-          <div>
-            <% voting.options.forEach((content) => { %>
+          <% if (voting.isCurrent) { %>
+            <form class="voting-form">
               <div>
-                <input type="radio" name="voting-option" value="<%= content.option %>">
-                <lavel><%= content.option %></lavel>
+                <% voting.options.forEach((content) => { %>
+                  <div>
+                    <input type="radio" name="voting-option" value="<%= content.option %>">
+                    <lavel><%= content.option %></lavel>
+                  </div>
+                <% }) %>
               </div>
-            <% }) %>
-          </div>
-          <input 
-            class="vote-form-button" 
-            type="submit" 
-            value="Vote"  
-          />
+              <input 
+                class="vote-form-button" 
+                type="submit" 
+                value="Vote"  
+              />
+            </form>
+          <% } %>
+        <% } %>
+        <% if (voting.proponent.toString() === user?.id) { %>
+        <form class="voting-delete-form">
+          <input class="voting-delete-button" type="submit" value="Delete" />
         </form>
-      <% } %>
-
-    </form>
-    <% if (voting.proponent.toString() === user?.id) { %>
-      <form class="voting-delete-form">
-        <input class="voting-delete-button" type="submit" value="Delete" />
-      </form>
-    <% } %>
+      <% } %> 
+    </div>
   </div>
 </div>
 
-<a href="/">Return</a>
+<script>
+  const options = "<%= voting.options %>";
+</script>
 
 <script src="/javascripts/delete.js"></script>
 <script src="/javascripts/put.js"></script>
+<script src="/javascripts/chart.js"></script>

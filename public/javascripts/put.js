@@ -25,7 +25,7 @@ async function requestUpdateData(ev) {
 
     if (isSuccessVoting) {
       const votingCount = document.getElementById(`${value}`);
-      votingCount?.textContent = votted;
+      votingCount.textContent = votted;
     }
   } catch (error) {
     console.error(error);
