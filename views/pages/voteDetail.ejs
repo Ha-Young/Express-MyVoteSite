@@ -2,31 +2,31 @@
 <div class="vote-detail-wrapper">
   <div class="vote-detail-cont grid-split-two">
     <%- include('../mixins/voteDetail_info.ejs') %>
-    <div class="vote-result-column vote-detail-option-wrapper">
-      <div class="vote-detail-option-content">
-        <h2>투표 선택</h2>
-        <ul class="vote-detail-option-list">
-          <% for (let i = 0; i < vote.vote_options.length; i++) { %>
-            <li>
-              <input class="vote-option-checkbox" type="checkbox" name="checkbox-<%= i %>" id="checkbox-<%= i %>" data-optionid="<%= vote.vote_options[i]._id %>">
-              <label for="checkbox-<%= i %>">
-                <%= vote.vote_options[i].title %>
-              </label>
-              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <path d="M 10 50 L 40 86 L 90 10" stroke="#ffff" stroke-dasharray="140" stroke-dashoffset="140"></path>
-              </svg>
-            </li>
-          <% } %>
-        </ul>
+
+    <% if (vote.is_process) { %>
+      <div class="vote-result-column vote-detail-option-wrapper">
+        <%- include('../mixins/voteDetail_options.ejs') %>
       </div>
-      <button class="vote-submit-btn">투표하기</button>
-    </div>
+    <% } else { %>
+      <div class="vote-result-column vote-detail-result-wrapper">
+        <%- include('../mixins/voteDetail_result.ejs') %>
+      </div>
+    <% } %>
   </div>
 </div>
 
-<script src="/javascripts/utils/path.js"></script>
-<script src="/javascripts/utils/cookie.js"></script>
-<script src="/javascripts/utils/login.js"></script>
-<script src="/javascripts/api/vote.js"></script>
+<% if (vote.is_process) { %>
+  <script src="/javascripts/utils/path.js"></script>
+  <script src="/javascripts/utils/cookie.js"></script>
+  <script src="/javascripts/utils/login.js"></script>
+  <script src="/javascripts/api/vote.js"></script>
+  <script src="/javascripts/voteDetailOptionScript.js"></script>
+<% } else { %>
+  <script>
+    window.app = {};
+    window.app.vote = <%- JSON.stringify(vote) %>;
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>
+  <script src="/javascripts/chart.js"></script>
+<% } %>
 <script src="/javascripts/voteDetailPage.js"></script>
-<script src="/javascripts/voteDetailOptionScript.js"></script>

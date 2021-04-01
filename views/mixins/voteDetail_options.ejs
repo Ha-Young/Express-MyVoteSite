@@ -1,0 +1,17 @@
+<div class="vote-detail-option-content">
+  <h2>투표 선택</h2>
+  <ul class="vote-detail-option-list">
+    <% for (let i = 0; i < vote.vote_options.length; i++) { %>
+      <li>
+        <input class="vote-option-checkbox" type="checkbox" name="checkbox-<%= i %>" id="checkbox-<%= i %>" data-optionid="<%= vote.vote_options[i]._id %>">
+        <label for="checkbox-<%= i %>">
+          <%= vote.vote_options[i].title %>
+        </label>
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 10 50 L 40 86 L 90 10" stroke="#ffff" stroke-dasharray="140" stroke-dashoffset="140"></path>
+        </svg>
+      </li>
+    <% } %>
+  </ul>
+</div>
+<button class="vote-submit-btn">투표하기</button>
