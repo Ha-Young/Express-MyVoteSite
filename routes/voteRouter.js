@@ -20,8 +20,8 @@ router.get('/error', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/:vote_id', getVoteDetail);
-router.put('/:vote_id', putVoteDetail);
+router.get('/:vote_id', isSignIn, getVoteDetail);
+router.put('/:vote_id', isSignIn, redirectIfUserNone, putVoteDetail);
 
 
 module.exports = router;

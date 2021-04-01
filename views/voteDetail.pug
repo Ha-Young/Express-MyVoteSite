@@ -7,13 +7,12 @@ block content
       img.voteDetail__titleImg(src="/images/vote.png" alt="img")
       h1.voteDetail__title #{vote.title}
       .voteDetail__info
-        .voteDetail__dueDate #{vote.dueDate}
-        .voteDetail__creator #{vote.creator.name}
+        label.voteDetail__dueDate.form-label #{vote.dueDate}
+        label.voteDetail__creator.form-label #{vote.creator.name}
       .voteDetail__vote
-        .voteDetail__enable 진행중
         each choice in vote.choices
           .voteDetail__choice(choiceId=choice._id onclick="toggleDivs(this)")
             img.voteDetail__choiceImage(src=choice.pictureURL alt="pic")
             .voteDetail__choiceTitle #{choice.choiceTitle}
-        button.voteButton(voteId=vote._id) 투표
+        button.voteButton.btn.btn-success(voteId=vote._id) 투표
   script(src="/javascripts/voteDetail.js")

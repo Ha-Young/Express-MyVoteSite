@@ -58,7 +58,8 @@ module.exports.postNewVote = async function postNewVote(req, res, next) {
 
 module.exports.getVoteDetail = async function getVoteDetail(req, res, next) {
   const {
-    params: { vote_id }
+    params: { vote_id },
+    user
   } = req;
 
   const vote = await Vote.findById(vote_id).populate("creator").lean();
@@ -66,7 +67,7 @@ module.exports.getVoteDetail = async function getVoteDetail(req, res, next) {
   vote.dueDate = datefns.format(vote.dueDate, "yyyy/M/d h:m:s");
   console.log(vote.dueDate);
 
-  res.render("voteDetail", { vote });
+  res.render("voteDetail", { vote, user });
 }
 
 module.exports.putVoteDetail = async function putVoteDetail(req, res, next) {
