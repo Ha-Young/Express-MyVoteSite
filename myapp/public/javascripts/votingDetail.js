@@ -23,7 +23,7 @@ const onClickVotingOption = (ev) => {
     }
   };
 
-  xhr.open("POST", "/ajax/changeVotingCount");
+  xhr.open("POST", "/ajax/selection");
   xhr.setRequestHeader("Content-Type", "application/json");
 
   const json = JSON.stringify({ votingId, optionId });

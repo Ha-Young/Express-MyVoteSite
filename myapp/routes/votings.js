@@ -2,9 +2,10 @@ const express = require("express");
 const createError = require("http-errors");
 const router = express.Router();
 const Voting = require("../models/Voting");
-const getLocalTime = require("../utils/getLocalTime");
-const getProgress = require("../utils/getProgress");
+// const getLocalTime = require("../utils/getLocalTime");
+// const getProgress = require("../utils/getProgress");
 const getLoginStatus = require("../utils/getLoginStatus");
+const { getVotingById } = require("./controllers/voting.controller");
 
 router.get("/new", (req, res, next) => {
   console.log(req.user);
@@ -25,7 +26,6 @@ router.post("/new", async (req, res, next) => {
     if (!isLogin) return res.status(302).redirect("/");
 
     const { _id } = req.user;
-    console.log(_id);
     const { date, time, title, desc, item } = req.body;
     const isoString = date.concat("T", time);
     const votingItems = [];
@@ -65,37 +65,31 @@ router.get("/:votingId", async (req, res, next) => {
   try {
     const isLogin = getLoginStatus(req);
     const { votingId } = req.params;
-    const voting = await Voting.findOne({ _id: votingId }).populate(
-      "author",
-      "name",
-    );
+    console.log(getVotingById);
+    const votingInfo = await getVotingById(votingId);
+    console.log("hello");
+    // const voting = await Voting.findOne({ _id: votingId }).populate(
+    //   "author",
+    //   "name",
+    // );
 
-    const {
-      _id,
-      author,
-      title,
-      description,
-      votingItems,
-      voters,
-      startTime,
-      endTime,
-    } = voting;
+    // const {
+    //   _id,
+    //   author,
+    //   title,
+    //   description,
+    //   votingItems,
+    //   voters,
+    //   startTime,
+    //   endTime,
+    // } = voting;
 
-    const startLocalTime = getLocalTime(startTime);
-    const endLocalTime = getLocalTime(endTime);
-    const isClosed = getProgress(endTime);
-
+    // const startLocalTime = getLocalTime(startedAt);
+    // const endLocalTime = getLocalTime(endedAt);
+    // const isClosed = getProgress(endedAt);
     res.status(200).render("votingDetail", {
       isLogin,
-      _id,
-      author,
-      title,
-      description,
-      votingItems,
-      voters,
-      startLocalTime,
-      endLocalTime,
-      isClosed,
+      votingInfo,
     });
   } catch (err) {
     console.error(`get /:votingId in votings.js ${err.message}`);

@@ -4,10 +4,15 @@ const votingSchema = new mongoose.Schema({
   author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   title: { type: String },
   description: { type: String },
-  votingItems: [{ item: { type: String }, count: { type: Number } }],
-  voters: [mongoose.Schema.Types.ObjectId],
-  startTime: { type: Date, default: new Date().toISOString() },
-  endTime: { type: Date, default: new Date().toISOString() },
+  voting_items: [
+    {
+      item: { type: String },
+      count: { type: Number },
+      voters: [{ type: mongoose.Schema.Types.ObjectId }],
+    },
+  ],
+  started_at: { type: Date, default: new Date().toISOString() },
+  ended_at: { type: Date, default: new Date().toISOString() },
 });
 
 module.exports = mongoose.model("Voting", votingSchema);
