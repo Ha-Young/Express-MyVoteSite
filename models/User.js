@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.pre(
   "save",
-  async function (next) {
+  async (next) => {
     await bcrypt
       .hash(this.password, saltRounds)
       .then((hash) => {
@@ -26,9 +26,22 @@ UserSchema.pre(
         next();
       })
       .catch((err) =>
-        next(createError(500, "Password hashing failed"))
+        next(createError(500, PASSWORD_HASHING_FAILED_ERROR))
       );
   }
 );
+
+UserSchema.methods.validatePassword = async (inputPassword, passwordHash) => {
+  const comparisonResult = await bcrypt
+    .compare(inputPassword, passwordHash)
+    .then((result) => {
+      return result;
+    })
+    .catch((err) =>
+      next(createError(500, HASHED_PASSWORD_COMPARISON_FAILED_ERROR))
+    );
+
+  return comparisonResult;
+}
 
 module.exports = mongoose.model("user", UserSchema);

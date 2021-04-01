@@ -1,0 +1,15 @@
+const INTERNAL_SERVER_ERROR = "Internal Server Error";
+const UNFILLED_INFORMATION_ERROR = "Please enter your Email and Password";
+const MISMATCHED_CONFIRM_PASSWORD_ERROR = "The passwords are not the same";
+const ALREADY_SIGNED_UP_USER_ERROR = "User already exists";
+const PASSWORD_HASHING_FAILED_ERROR = "Failed to hash password";
+const HASHED_PASSWORD_COMPARISON_FAILED_ERROR= "Failed to compare hashed password"
+
+module.exports = {
+  INTERNAL_SERVER_ERROR,
+  UNFILLED_INFORMATION_ERROR,
+  MISMATCHED_CONFIRM_PASSWORD_ERROR,
+  ALREADY_SIGNED_UP_USER_ERROR,
+  PASSWORD_HASHING_FAILED_ERROR,
+  HASHED_PASSWORD_COMPARISON_FAILED_ERROR,
+};
