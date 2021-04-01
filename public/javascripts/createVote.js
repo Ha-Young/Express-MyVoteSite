@@ -16,8 +16,8 @@ function sendAjax(url, data) {
 
 function getUserInputData(e) {
   e.preventDefault();
-  const title = document.querySelector(".title").value;
-  const date = document.querySelector(".date").value;
+  const title = document.querySelector(".input-title").value;
+  const date = document.querySelector(".input-date").value;
   const optionContainer = document.querySelector(".create-option-container").children;
   const options = [];
 

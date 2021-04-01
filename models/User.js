@@ -1,22 +1,30 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
+const Voting = require("./Voting");
+
 const User = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
   password: {
     type: String,
-    required: true,
+    required: true
   },
+  participated_votings: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "voting"
+    }
+  ],
   created_votings: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "voting",
-    },
-  ],
+      ref: "voting"
+    }
+  ]
 });
 
 User.pre("save", async function (next) {
@@ -26,5 +34,12 @@ User.pre("save", async function (next) {
   this.password = hash;
   next();
 });
+
+// User.post("updateOne", removeLinkedDocuments);
+
+// async function removeLinkedDocuments(document) {
+//   console.log(document);
+//   await Voting.deleteOne({ _id: { $in: document.created_votings } });
+// }
 
 module.exports = mongoose.model("user", User);

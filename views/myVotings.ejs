@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+
+<body>
+  <ul class="my-voting-list">
+    <% for (let i = 0; i < myVotings.length; i++) { %>
+    <li id=<%=myVotings[i]._id%>>
+      <span><%=myVotings[i].title%></span>
+      <span><%=myVotings[i].due_date%></span>
+      <span><%=myVotings[i].status%></span>
+      <button class="delete-vote-button">delete</button>
+    </li>
+    <% }%>
+  </ul>
+</body>
+<script src="/javascripts/deleteVote.js"></script>
+
+</html>

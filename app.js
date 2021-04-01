@@ -8,6 +8,7 @@ const index = require("./routes/index");
 const login = require("./routes/api/login");
 const signup = require("./routes/api/signup");
 const votings = require("./routes/votings");
+const myVotings = require("./routes/myVotings");
 
 const bodyParser = require("body-parser");
 
@@ -54,6 +55,7 @@ app.use("/", index);
 app.use("/login", login);
 app.use("/signup", signup);
 app.use("/votings", votings);
+app.use("/my-votings", myVotings);
 
 app.use(function (req, res, next) {
   next(createError(404));

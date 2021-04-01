@@ -1,5 +1,5 @@
 const date = document.querySelector(".input-date");
-const container = document.querySelector(".option-container");
+const container = document.querySelector(".create-option-container");
 
 const plusButton = document.querySelector(".add-option");
 const minusButton = document.querySelector(".delete-option");

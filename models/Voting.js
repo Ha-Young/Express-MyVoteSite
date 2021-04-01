@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
 
+const User = require("./User");
+
 const Voting = mongoose.Schema({
   title: {
     type: String,
@@ -31,6 +33,14 @@ const Voting = mongoose.Schema({
       },
     },
   ],
+});
+
+Voting.post("deleteOne", async function (document) {
+  const votingId = this.getFilter()["_id"];
+  const creatorId = this.getFilter()["creator"];
+
+  await User.updateOne({ _id: creatorId },
+    { $pull: { created_votings: votingId } });
 });
 
 module.exports = mongoose.model("voting", Voting);

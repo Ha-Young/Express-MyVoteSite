@@ -10,14 +10,14 @@
   <a href="/my-votings">My Votings</a>
   <ul class="vote-list">
     <% for (let i = 0; i < allVotings.length; i++) { %>
+    <% if (allVotings[i].status === "PROCEEDING") { %>
     <% const address = `/votings/${allVotings[i]._id}` %>
     <a class="vote-button" href=<%=address%> <li>
       <h2><%= allVotings[i].title%></h2>
-      <% for (let j = 0; j < allVotings[i].candidates.length; j++) { %>
-      <span><%=allVotings[i].candidates[j].name%></span>
-      <% } %>
+      <h1><%= allVotings[i].creator%></h1>
       </li>
     </a>
+    <% } %>
     <% } %>
   </ul>
 

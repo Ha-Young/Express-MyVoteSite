@@ -7,6 +7,19 @@ exports.getAllVotings = async function (req, res, next) {
   res.render("index", { allVotings: allVotings });
 }
 
+exports.showMyVotings = async function (req, res, next) {
+  const userId = req.session.passport.user;
+  let myVotingsIdList = await User.findById(userId).select("created_votings");
+
+  myVotingsIdList = myVotingsIdList.created_votings;
+
+  const myVotings = await Voting.find({
+    _id: { $in: myVotingsIdList }
+  });
+
+  res.render("myVotings", { myVotings: myVotings });
+}
+
 exports.showVoteDetails = async function (req, res, next) {
   const id = req.params.vote_id;
   const vote = await Voting.findById(id);
@@ -22,6 +35,7 @@ exports.showVoteDetails = async function (req, res, next) {
 }
 
 exports.addOneToSelectedOption = async function (req, res, next) {
+  const userId = req.session.passport.user;
   const votingId = req.params.vote_id;
   const selectedOptionName = req.body.name;
 
@@ -35,7 +49,23 @@ exports.addOneToSelectedOption = async function (req, res, next) {
     }
   }
 
+  await User.updateOne(
+    { _id: userId },
+    { $push: { participated_votings: votingId } }
+  );
+
   await Voting.updateOne({ _id: votingId }, {
     candidates: candidates,
   });
+}
+
+exports.deleteVoting = async function (req, res, next) {
+  const userId = req.session.passport.user;
+  const votingId = req.params.vote_id;
+
+  // await User.deleteOne({ _id: userId },
+  //   { $pull: { created_votings: votingId } }
+  // );
+
+  const result = await Voting.deleteOne({ _id: votingId, creator: userId });
 }

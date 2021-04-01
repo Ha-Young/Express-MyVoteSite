@@ -9,12 +9,10 @@ const Voting = require("../models/Voting");
 const voteController = require("./controller/votes.controller");
 
 router.get("/new", requireAuth, function (req, res) {
-  console.log("test");
   res.render("createVoting", { message: "모든 칸을 입력해주세요." });
 });
 
 router.post("/new", requireAuth, async function (req, res) {
-  console.log(req.body);
   const title = req.body.title;
   const date = req.body.date;
   const options = req.body.options;
@@ -38,14 +36,17 @@ router.post("/new", requireAuth, async function (req, res) {
     due_date: date,
     candidates: candidates,
   }
+  const createdVoting = await new Voting(newVoting).save();
 
-  console.log(newVoting);
-  await new Voting(newVoting).save();
+  await User.updateOne(
+    { _id: creatorId },
+    { $push: { created_votings: createdVoting._id } });
+
   res.redirect("/");
 });
 
 router.get("/:vote_id", voteController.showVoteDetails);
-router.put("/:vote_id", voteController.addOneToSelectedOption);
-
+router.put("/:vote_id", requireAuth, voteController.addOneToSelectedOption);
+router.delete("/:vote_id", requireAuth, voteController.deleteVoting);
 
 module.exports = router;
