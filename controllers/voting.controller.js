@@ -91,7 +91,7 @@ module.exports.getVoting = async (req, res, next) => {
   }
 };
 
-module.exports.postVoting = async (req, res, next) => {
+module.exports.putVoting = async (req, res, next) => {
   try {
     const votingId = req.params.voting_id;
     const currentVoting =
@@ -115,15 +115,7 @@ module.exports.postVoting = async (req, res, next) => {
 
     currentVoting.voters = { ...currentVoting.voters, [userEmail]: true };
 
-    if (currentVoting.isAbleSelectMultipleOptions) {
-      for (const option of selectedOptions.option) {
-        currentVoting.options.set(
-          option,
-          currentVoting.options.get(option) + 1
-        );
-      }
-    } else {
-      const option = selectedOptions.option;
+    for (const option of selectedOptions) {
       currentVoting.options.set(
         option,
         currentVoting.options.get(option) + 1
@@ -132,7 +124,7 @@ module.exports.postVoting = async (req, res, next) => {
 
     await currentVoting.save()
 
-    res.status(301).redirect(`/votings/${votingId}`);
+    res.status(201).json({ result: true });
   } catch (err) {
     next(createError(500, err.message));
   }
