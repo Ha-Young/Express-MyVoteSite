@@ -8,5 +8,6 @@ router.post('/new', votingController.create);
 router.get('/success', votingController.viewSuccess);
 router.get('/:id', votingController.getOne);
 router.post('/update/:id', votingController.updateVoting);
+router.get('/delete/:id', votingController.deleteVoting);
 
 module.exports = router;
