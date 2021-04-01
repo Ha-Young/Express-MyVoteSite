@@ -60,15 +60,15 @@ exports.viewSuccess = (req, res, next) => {
 exports.updateVoting = async (req, res, next) => {
   try {
     const voting = await Voting.findOne({ _id: req.params.id });
+    if (!voting) {
+      return res.send(false);
+    }
+
     voting.participants.push(req.user.id);
     voting.options.id(req.body.id).likes += 1;
 
     const result = await voting.save();
-    if (result) {
-      res.send(true);
-    } else {
-      res.send(false);
-    }
+    res.send(!!result);
   } catch (err) {
     next(createError(err.status));
   }
