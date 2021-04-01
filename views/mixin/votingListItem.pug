@@ -9,7 +9,7 @@ mixin votingListItem(voting={})
       div.voting-container
         h2.voting-title= voting.title
         p.description= voting.description
-        p.expiration-time= voting.expirationTime
+        p.expiration-time= voting.formattedExpirationTime
         if isExpired
           p.isExpired Expired
         else
