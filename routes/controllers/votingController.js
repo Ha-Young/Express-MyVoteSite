@@ -1,12 +1,10 @@
-const createError = require("http-errors");
-
 const User = require("../../models/User");
 const Voting = require("../../models/Voting");
 
 const getDateFormat = require("../../utils/getDateFormat");
 const validateDate = require("../../utils/validateDate");
+const handleError = require("../../utils/handleError");
 
-const ERROR = require("../../constants/errorConstants");
 const VOTING = require("../../constants/votingConstants");
 
 const Controller = {};
@@ -26,10 +24,12 @@ Controller.getAllVotings = async (req, res, next) => {
       }
     });
 
+
+
     res.render("index", { votings, user: currentUser });
   } catch (error) {
     console.error(error.message);
-    next(createError(500, ERROR.SERVER_ERROR));
+    next(handleError(500, error));
   }
 };
 
@@ -40,7 +40,7 @@ Controller.getNewVoting = async (req, res, next) => {
     res.render("newVoting", { votings });
   } catch (error) {
     console.error(error.message);
-    next(createError(500, ERROR.SERVER_ERROR));
+    next(handleError(500, error));
   }
 };
 
@@ -80,7 +80,7 @@ Controller.postNewVoting = async (req, res, next) => {
     });
   } catch (error) {
     console.error(error.message);
-    next(createError(500, ERROR.SERVER_ERROR));
+    next(handleError(500, error));
   }
 };
 
@@ -93,14 +93,14 @@ Controller.getMyVotings = async (req, res, next) => {
       .exec((error, voting) => {
         if (error) {
           console.error(error.message);
-          return next(createError(500, ERROR.SERVER_ERROR));
+          return next(handleError(500, error));
         }
 
         res.render("myVotings", { myVotings: voting.votingList });
       });
   } catch (error) {
     console.error(error.message);
-    next(createError(500, ERROR.SERVER_ERROR));
+    next(handleError(500, error));
   }
 };
 
@@ -111,11 +111,13 @@ Controller.getDetailVoting = async (req, res, next) => {
 
     Voting.findById({ _id: currentVotingId })
       .populate("user")
-      .exec((err, voting) => {
+      .exec((error, voting) => {
+        if (error) {
+          console.error(error.message);
+          return next(handleError(500, error));
+        }
+
         const author = voting.user;
-
-        if (err) return res.render("error", { message: err.message });
-
         const isAuthor =  currentUser
           ? (currentUser._id.toString() === author._id.toString())
           : false;
@@ -145,7 +147,7 @@ Controller.getDetailVoting = async (req, res, next) => {
       });
   } catch (error) {
     console.error(error.message);
-    next(createError(500, ERROR.SERVER_ERROR));
+    next(handleError(500, error));
   }
 };
 
@@ -172,13 +174,13 @@ Controller.patchDetailVoting = async (req, res, next) => {
 
       await voting.save();
 
-      res.json({ status: 200, message: VOTING.SUCCESS_VOTING_MESSAGE });
+      res.status(200).json({ message: VOTING.SUCCESS_VOTING_MESSAGE });
     } else {
-      return res.json({ status: 400, message: VOTING.ALREADY_VOTED_MESSAGE });
+      return res.status(400).json({ message: VOTING.ALREADY_VOTED_MESSAGE });
     }
   } catch (error) {
     console.error(error.message);
-    next(createError(500, ERROR.SERVER_ERROR));
+    next(handleError(500, error));
   }
 };
 
@@ -202,7 +204,7 @@ Controller.deleteVoting = async (req, res, next) => {
     res.status(201).end();
   } catch (error) {
     console.error(error.message);
-    next(createError(500, ERROR.SERVER_ERROR));
+    next(handleError(500, error));
   }
 };
 

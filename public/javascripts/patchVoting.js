@@ -11,18 +11,17 @@ const patchVotedResult = async (votingId, checkedOption) => {
       "Content-type": "application/json; charset=UTF-8"
     },
   });
+  const parseData = await data.json();
 
-  const responseData = await data.json();
-
-  switch (responseData.status) {
+  switch (data.status) {
     case 200:
       alertMessageBox.classList.add("success");
-      alertMessageBox.textContent = responseData.message;
+      alertMessageBox.textContent = parseData.message;
       break;
 
     case 400:
       alertMessageBox.classList.add("failure");
-      alertMessageBox.textContent = responseData.message;
+      alertMessageBox.textContent = parseData.message;
       break;
 
     case 403:
