@@ -26,7 +26,9 @@ exports.postLogin = (req, res) => {
 };
 
 exports.getSignup = (req, res) => {
-  res.render("signup", { pageTitle: "Signup" });
+  const errorMessage = req.flash("error");
+
+  res.render("signup", { pageTitle: "Signup", errorMessage });
 };
 exports.postSignup = async (req, res) => {
   const { username, email, password1: password } = req.body;

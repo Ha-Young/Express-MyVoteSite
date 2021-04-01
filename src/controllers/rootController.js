@@ -24,7 +24,7 @@ exports.myVotings = async (req, res, next) => {
     const { id } = req.user;
 
     try {
-      userVoting = await Voting.find({ "postedBy": id });
+      userVoting = await Voting.find({ "postedBy.id": id });
     } catch (err) {
       console.log("Failed find user voting!");
       next(createError(500));

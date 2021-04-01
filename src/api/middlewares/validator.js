@@ -8,7 +8,7 @@ exports.validatePostSignUp = async (req, res, next) => {
     const isExistEmail = await User.exists({ email });
 
     if (isExistEmail) {
-      console.log("exist email!");
+      req.flash("error", "존재하는 이메일입니다.");
       res.redirect("/auth/signup");
       return;
     }

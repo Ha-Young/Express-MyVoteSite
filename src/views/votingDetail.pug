@@ -2,7 +2,7 @@ extends layouts/main
 
 block content
   h1 #{pageTitle}
-  .posted-by 생성자: #{voting.postedBy}
+  .posted-by 생성자: #{voting.postedBy.username}
   .expiration 만료일: #{new Date(voting.expiration).toLocaleString()}
   if voting.progress
     .progress 상태: 진행 중
@@ -16,7 +16,7 @@ block content
         label(for=`${option.id}`) #{option.title}
     button.submit-voting-button Vote
   if currentUser.id
-    if (voting.postedBy.toString() === currentUser.id.toString())
+    if (voting.postedBy.id.toString() === currentUser.id.toString())
       .result Result: #{votingResult.join(", ")}
       a.delete-voting-link(href=`/votings/${voting.id}/delete`)
         button.delete-voting-button Delete Voting

@@ -52,7 +52,7 @@ exports.getNewVoting = (req, res) => {
 };
 exports.postNewVoting = async (req, res, next) => {
   const { title, expiration, option } = req.body;
-  const { id } = req.user;
+  const { id, username } = req.user;
 
   const timeStamp = new Date(expiration);
   const options = option.map(item => ({
@@ -65,7 +65,10 @@ exports.postNewVoting = async (req, res, next) => {
       title,
       expiration: timeStamp,
       options,
-      postedBy: id,
+      postedBy: {
+        id,
+        username,
+      },
     });
 
     res.redirect("/votings/success");

@@ -8,7 +8,7 @@ block content
       input.email(type="email" placeholder="email" name="email" required=true)
       input.password1(type="password" placeholder="password1" name="password1" required=true)
       input.password2(type="password" placeholder="password2" name="password2" required=true)
-      .warning-box
+      .warning-box #{errorMessage}
       button.signup-button Signup
 
-  script(src="/javascripts/postSignup.validation.js")
+  script(src="/javascripts/signup/validation.js")
