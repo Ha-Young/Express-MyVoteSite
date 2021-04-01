@@ -1,8 +1,9 @@
 const ctx = document.getElementById("myChart");
+// eslint-disable-next-line
 const myChart = new Chart(ctx, {
-  type: "bar",
+  type: "horizontalBar",
   data: {
-    labels: ["집가라", "집좀가자"],
+    labels: ["1", "2"],
     datasets: [{
       label: "# of Votes",
       data: [12, 19, 3, 5, 2, 3],
@@ -27,7 +28,7 @@ const myChart = new Chart(ctx, {
   },
   options: {
     scales: {
-      yAxes: [{
+      xAxes: [{
         ticks: {
           beginAtZero: true,
         },

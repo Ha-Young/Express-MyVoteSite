@@ -5,5 +5,6 @@ module.exports = catchAsync(async (req, res, next) => {
     return next();
   }
 
+  req.flash("location", req.params.id);
   res.redirect("/auth/login");
 });

@@ -13,30 +13,33 @@
   </div>
   <h1 class="vote-title"><%= vote.title %></h1>
   <div>
-    <form class="vote-form" action="/votings/<%= vote._id %>" method="POST">
-      <div class="vote-button-container">
-        <% vote.options.map((option, index) => { %>
-          <div class="vote-button">
-            <input
-              class="<%- (isCreator || isVoted) ? 'hidden' : '' %>"
-              type="radio"
-              id="<%= index%>"
-              name="voted"
-              value="<%= option._id %>"
-            />
-            <label for="<%= index %>"><%= option.name %></label>
-            <% if (isCreator) { %>
-              <span><%= option.voters.length %></span>
-            <% } %>
-          </div>
-        <% }) %>
-        <canvas id="myChart" width="400" height="400"></canvas>
-      </div>
-      <button
-        class="<%- (isCreator || isVoted) ? 'hidden' : '' %>"
-        type="submit">확인
-      </button>
-    </form>
+    <% if (isCreator || !vote.isInProgress) { %>
+      <canvas
+        id="myChart"
+        width="400"
+        height="200"
+      ></canvas>
+    <% } else { %>
+      <form class="vote-form" action="/votings/<%= vote._id %>" method="POST">
+        <div class="vote-button-container">
+          <% vote.options.map((option, index) => { %>
+            <div class="vote-button">
+              <input
+                class="<%- (isCreator || isVoted) ? 'hidden' : '' %>"
+                type="radio"
+                id="<%= index%>"
+                name="voted"
+                value="<%= option._id %>"
+              />
+              <label for="<%= index %>"><%= option.name %></label>
+            </div>
+          <% }) %>
+        </div>
+        <% if (!isVoted) { %>
+          <button type="submit">확인</button>
+        <% } %>
+      </form>
+    <% } %>
   </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>

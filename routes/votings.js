@@ -11,7 +11,7 @@ router
 
 router
   .route(PARAM_ID)
-  .get(authenticateUser, votingsController.renderVoteDetailPage)
+  .get(votingsController.renderVoteDetailPage)
   .post(authenticateUser, votingsController.voting)
   .delete(votingsController.deleteVote);
 

@@ -16,7 +16,8 @@ module.exports = {
   rules: {
     semi: ["error", "always"],
     quotes: ["error", "double"],
-    indent: ["error", 2, { SwitchCase: 1 }],
+    indent: ["error", 2, { SwitchCase: 1, MemberExpression: 1 }],
+    "newline-per-chained-call": ["error", { ignoreChainWithDepth: 2 }],
     "no-plusplus": "off",
     "comma-dangle": ["error", "always-multiline"],
     "no-unused-vars": ["warn", { argsIgnorePattern: "err|req|res|next|val" }],
@@ -38,5 +39,6 @@ module.exports = {
     "no-return-await": "off",
     "arrow-body-style": "off",
     "wrap-iife": ["error", "inside"],
+    "no-unused-expressions": "off",
   },
 };

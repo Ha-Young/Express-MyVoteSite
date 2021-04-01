@@ -49,7 +49,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   const user = await User.findOne({ email }).select("+password");
-  const correct = await user?.correctPassword(req.body.password, user.password);
+  const correct = await user?.correctPassword(password, user.password);
 
   if (!user || !correct) {
     req.flash("message", "Incorrect email or password.");
@@ -58,13 +58,16 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+  const location = req.flash("location")[0] || null;
 
   res.cookie("voting_platform", token, {
     httpOnly: true,
     maxAge: 60 * 60 * 24,
   });
 
-  res.redirect("/");
+  location
+    ? res.redirect(`/votings/${location}`)
+    : res.redirect("/");
 });
 
 exports.logout = (req, res, next) => {

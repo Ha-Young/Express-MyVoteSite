@@ -52,14 +52,19 @@ exports.renderVoteDetailPage = catchAsync(async (req, res, next) => {
     return;
   }
 
-  const vote = await Vote.findById(id).populate("creator").populate("voters").lean();
+  // 인덴팅을 어떻게 하는 것이 컨벤션인지 모르겠습니다 ㅠㅠㅠㅠ
+  const vote = await Vote
+    .findById(id)
+    .populate("creator")
+    .populate("voters")
+    .lean();
 
   if (!vote) {
     res.redirect("/");
     return;
   }
 
-  res.locals.isVoted = vote.voters.some((voter) => voter._id.equals(req.user._id));
+  res.locals.isVoted = vote.voters.some((voter) => voter._id.equals(req.user?._id));
   res.locals.isCreator = req.user?._id.equals(vote.creator._id);
   res.locals.vote = addFormattedDueDate(vote);
   res.locals.user = req.user;
@@ -89,5 +94,5 @@ exports.voting = catchAsync(async (req, res, next) => {
     },
   );
 
-  res.redirect("/");
+  res.redirect(`/votings/${id}`);
 });

@@ -31,7 +31,7 @@ module.exports = (err, req, res, next) => {
 
     res.status(error.statusCode).render("error", { layout: false });
   } else {
-    console.log("ERROR ❗️", error);
+    console.log("ERROR ❗️", err);
 
     res.locals.status = "error";
     res.locals.message = "Internal Server Error.";
