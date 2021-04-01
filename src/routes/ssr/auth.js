@@ -5,7 +5,6 @@ const passport = require("passport");
 
 const authService = require("../../services/authService");
 const { jwtCookieKey, jwtExpires } = require("../../config").jwt;
-const authChecker = require("../middlewares/authChecker");
 const { PREFIX, SIGNUP, LOGIN, LOGOUT,
   LOGIN_GOOGLE, LOGIN_GOOGLE_REDIRECT } = require("../../config/routes").AUTH;
 
