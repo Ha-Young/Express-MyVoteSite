@@ -65,7 +65,7 @@ exports.renderVoteDetailPage = catchAsync(async (req, res, next) => {
   }
 
   res.locals.isVoted = vote.voters.some((voter) => voter._id.equals(req.user?._id));
-  res.locals.isCreator = req.user?._id.equals(vote.creator._id);
+  res.locals.isCreator = req.user?._id.equals(vote.creator?._id);
   res.locals.vote = addFormattedDueDate(vote);
   res.locals.user = req.user;
   res.render("voteDetail");
