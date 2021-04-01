@@ -45,8 +45,10 @@ form {
 }
 
 .register-btn-wrapper {
+  display: flex;
+  justify-content: center;
   position: relative;
-  bottom: 20px;
+  top: 20px;
 }
 
 .register-btn {
