@@ -4,24 +4,26 @@ block content
   section
     h2 CREATE VOTE
     .create-vote-wrapper
-      form#create-vote(action="/votings/new" method="post")
+      form#create-vote
         .form-box.border-none
           label.hidden(for="title") TITLE
-          input(id="title" class="input-title" type="text" name="title" required)
+          input(id="title" class="input-title" type="text" name="title" placeholder="Title" required)
         .form-box
           label(for="expiration_date") EXPIRATION DATE
           input(id="expiration_date" name="expiration_date" type="datetime-local" required)
-        .form-box
+        .form-box.border-none
           ul.option-list
+            li
+              input(name="option_title" type="text" placeholder="Option" required)
+              button.button.red.deleteButton(type="button") DELETE
           ul.button-list.align-left
             li
               button#optionButton.button(type="button") ADD OPTION
             li
               button#clearAllOptionsButton.button(type="button") CLEAR ALL OPTIONS
-      if (error)
-        p.validation #{error.msg}
+      p.validation.hidden
       ul.button-list
         li
-          button#createVoteButton.button(type="submit" form="create-vote") CREATE
+          button.button(type="submit" form="create-vote") CREATE
 
   script(type="module" src="/javascripts/createVote.js")

@@ -16,11 +16,16 @@ block content
             p.title #{result._id}
             p.count #{result.count}
       .chart-wrapper
-        canvas#vote-chart
+        if (stats[0].total === 0)
+          div.flex-center.empty-result
+            p.icon 🙅‍♀️
+            p 투표한 사람이 아직 없습니다.
+        else
+          canvas#vote-chart
       ul.button-list
         if (user)
           li
-            button#deleteButton.button(type="button") DELETE
+            button#deleteButton.button.red(type="button") DELETE
         li
           button#backButton.button(type="submit") BACK
   script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js")

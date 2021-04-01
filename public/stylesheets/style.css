@@ -239,6 +239,9 @@ header {
   justify-content: space-between;
   background: var(--main-color);
   box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  z-index: 15;
 }
 header .logo {
   display: inline-block;
@@ -278,7 +281,7 @@ footer {
 main {
   width: 100%;
   height: auto;
-  padding: 0 0 50px 0;
+  padding: 60px 0 50px 0;
 }
 
 section {
@@ -300,6 +303,18 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+.empty-result {
+  width: 100%;
+  height: auto;
+  padding: 1em;
+  flex-direction: column;
+  background: var(--white);
+  font-size: 2em;
+  box-sizing: border-box;
+}
+.empty-result .icon {
+  font-size: 4em;
 }
 
 .voteBlock {

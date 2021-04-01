@@ -18,9 +18,9 @@ block content
               input(type="checkbox" id=`${option.title}` name="options" value=`${option.title}`)
       p.validation.hidden
       ul.button-list
-        if (user)
+        if (vote.author.name === user.name)
           li
-            button#deleteButton.button(type="button") DELETE
+            button#deleteButton.button.red(type="button") DELETE
           li
             a.button(href=`/votings/${vote._id}/result`) RESULT
         li
