@@ -9,6 +9,7 @@ const indexRouter = require("./routes/index");
 const signupRouter = require("./routes/signup");
 const loginRouter = require("./routes/login");
 const votingsRouter = require("./routes/votings");
+const myVotingsRouter = require("./routes/myVotings");
 
 const {
   isAuthenticated,
@@ -37,6 +38,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/signup", isNotAuthenticated, signupRouter);
 app.use("/login", loginRouter);
 app.use("/votings", isAuthenticated, votingsRouter);
+app.use("/my-votings", isAuthenticated, redirectIfNotLoggedIn, myVotingsRouter);
 app.use("/", isAuthenticated, indexRouter);
 
 app.use((req, res, next) => {

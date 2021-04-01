@@ -1,0 +1,14 @@
+extends layout
+include mixin/votingListItem
+
+block append head
+  link(rel="stylesheet" href="/stylesheets/myVotings.css")
+block content
+  include header
+  h1 My voting list
+  ul.voting-list
+    each voting in myVotingList
+      +votingListItem(voting)
+
+  button.create-voting-button(type="button") Create Voting
+  script(src="/javascripts/myVotings.js")
