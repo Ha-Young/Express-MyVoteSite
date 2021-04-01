@@ -5,6 +5,7 @@
 @import "newVote.css";
 @import "detailVoting.css";
 @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Song+Myung&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
 
 html,
 body {
@@ -24,6 +25,10 @@ body {
 .index-title-signUp {
   text-decoration: none;
   color: white;
+}
+
+a {
+  font-family: "Fredoka One", cursive;
 }
 
 a:link {
