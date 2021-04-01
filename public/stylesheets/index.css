@@ -30,7 +30,7 @@ header {
   display: flex;
   justify-content: space-around;
   flex-direction: column;
-  padding: 50px;
+  padding: 30px;
   margin: 15px;
 }
 
@@ -65,7 +65,7 @@ header {
   display: flex;
   justify-content: space-around;
   flex-direction: column;
-  padding: 50px;
+  padding: 30px;
   margin: 15px;
 }
 

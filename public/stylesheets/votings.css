@@ -1,37 +1,64 @@
-.body {
+body {
   margin: 0px;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .onVote-wrapper {
-  position: relative;
-  left: 35%;
-  top: 300px;
-  border: 1px solid black;
-  width: 500px;
+  display: flex;
+  border: 2px solid black;
+  border-radius: 6px;
+  padding: 40px;
+}
+
+.option-list {
+  padding-bottom: 5px;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 300px;
 }
 
 .title {
-  padding: 5px;
+  padding: 10px;
 }
 
 .creator {
-  padding: 5px;
+  padding: 10px;
 }
 
 .endDate {
-  padding: 5px;
+  padding: 10px;
 }
 
 .vote-status {
-  padding: 5px;
+  padding: 10px;
+}
+
+.check-box-wrapper {
+  padding: 10px;
+}
+
+.radio-box {
+  padding: 3px;
+}
+
+.btn-wrapper {
+  padding: 10px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.submit-btn {
+  padding: 4px;
+}
+
+.home-btn {
+  padding: 4px;
 }
 
 .end-vote-wrapper {

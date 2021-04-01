@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/stylesheets/votings.css" />
   <title>votings</title>
 </head>
@@ -8,45 +9,57 @@
   <% if (isOnVote === "true") { %>
     <div class="onVote-wrapper">
       <form name="<%= votingId %>" class="outer-form">
-        <div class="title">
-          제목: <%= title %>
+        <div class="info-wrapper">
+          <h3 class="title">
+            <%= title %>
+          </h3>
+          <div class="creator">
+            <i class="fa fa-id-card"> 작성자: </i>
+            <%= creator %>
+          </div>
+          <div class="endDate">
+            <i class="fa fa-table"> 마감일: </i>
+            <%=
+            endDate.getFullYear() + "년 " +
+            (endDate.getMonth() + 1) + "월" +
+            endDate.getDate() + "일"
+            %>
+          </div>
         </div>
-        <div class="creator">
-          생성자: <%= creator %>
+        <div class="option-list-wrapper">
+          <div class="check-box-wrapper">
+            <div class="option-list">
+              <i class="fa fa-list"></i>
+              투표목록
+            </div>
+            <% for (let i = 0; i < option.length; i++) { %>
+              <div class="radio-box">
+                <label for="option"><%= option[i].optionTitle %></label>
+                <input
+                  type="radio"
+                  id="option"
+                  name="option"
+                  value="<%= option[i].optionTitle %>"
+                  class="radio"
+                />
+                <% if (isValidateUser) { %>
+                  <span class="result-value">
+                    <%= option[i].votedUsers.length %>
+                  </span>
+                <% } %>
+              </div class="radio-box">
+            <% } %>
+          </div>
         </div>
-        <div class="endDate">
-          만료날짜: <%= endDate %>
-        </div>
-        <div class="vote-status">
-          투표 진행중 ⭕️
-        </div>
-        <div class="checkBox-wrapper">
-          투표목록
-          <% for (let i = 0; i < option.length; i++) { %>
-            <div class="radio-box">
-              <label for="option"><%= option[i].optionTitle %></label>
-              <input
-                type="radio"
-                id="option"
-                name="option"
-                value="<%= option[i].optionTitle %>"
-                class="radio"
-              />
-              <% if (isValidateUser) { %>
-                <span class="result-value">
-                  <%= option[i].votedUsers.length %>
-                </span>
-              <% } %>
-            </div class="radio-box">
+        <div class="btn-wrapper">
+          <button type="submit" class="submit-btn">투표하기</button>
+          <button class="home-btn">투표목록</button>
+          <% if (isValidateUser) { %>
+            <div>
+              <button class="delete-btn">삭제</button>
+            </div>
           <% } %>
         </div>
-        <button type="submit" class="submit-btn">투표하기</button>
-        <button class="home-btn">투표목록</button>
-        <% if (isValidateUser) { %>
-          <div>
-            <button class="delete-btn">삭제</button>
-          </div>
-        <% } %>
       </form>
     </div>
     <Script src="/javascripts/votings.js"></Script>
@@ -58,12 +71,12 @@
       <canvas id="myChart" optionTitle="<%= JSON.stringify(option) %>"></canvas>
       <div class="button-wrapper">
         <a href="/">
-          <div>
+          <div class="vote-list-wrapper">
             <button>투표목록</button>
           </div>
         </a>
         <% if (isValidateUser) { %>
-          <div>
+          <div class="delete-btn-wrapper">
             <button class="delete-btn">삭제</button>
           </div>
         <% } %>
