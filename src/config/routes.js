@@ -37,6 +37,7 @@ const ROUTE = {
       PREFIX: "/votes",
       VOTES: "/",
       VOTE: "/:vote_id",
+      VOTE_TO_OPTION: "/:vote_id/vote-to-option",
     },
   },
 };

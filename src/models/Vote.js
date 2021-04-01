@@ -22,6 +22,7 @@ const joiVoteSchema = Joi.object({
 });
 
 const VoteSchema = new mongoose.Schema(joigoose.convert(joiVoteSchema), { timestamps: true });
+
 VoteSchema.index('expire_datetime');
 VoteSchema.index('creator');
 VoteSchema.plugin(mongoosePaginate);
