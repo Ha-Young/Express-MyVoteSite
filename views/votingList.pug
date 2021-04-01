@@ -21,5 +21,5 @@ block content
 					endDate: voting.endDate,
 					options: voting.options
 				})
-		else
-			h1 투표가 없습니다.
+	if data.votings.length === 0
+		h1.no-votings 투표가 없습니다.

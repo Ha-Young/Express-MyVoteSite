@@ -1,6 +1,5 @@
 const User = require("./../models/userModel");
 const createToken = require("./../utils/createToken");
-// const CreateError = require("./../utils/createError");
 const catchAsync = require("./../utils/catchAsync");
 
 exports.getSignUp = (req, res, next) => {
@@ -8,20 +7,19 @@ exports.getSignUp = (req, res, next) => {
 };
 
 exports.createUser = catchAsync(async (req, res, next) => {
-  const {
-    name,
-    email,
-    password,
-    passwordConfirm,
-    passwordChangedAt,
-  } = req.body;
+  const { name, email, password, passwordConfirm } = req.body;
+
+  if (password !== passwordConfirm) {
+    return res.status(400).render("error", {
+      message: "비밀번호가 일치하지 않습니다.",
+    });
+  }
 
   const newUser = await User.create({
     name,
     email,
     password,
     passwordConfirm,
-    passwordChangedAt,
   });
 
   const token = createToken(newUser._id);
@@ -46,7 +44,7 @@ exports.postLogIn = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(401).json({
+    return res.status(400).render("error", {
       message: "이메일과 비밀번호를 모두 입력하세요.",
     });
   }
@@ -54,7 +52,7 @@ exports.postLogIn = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email }).select("+password");
 
   if (!user) {
-    return res.status(401).json({
+    return res.status(400).render("error", {
       message: "해당하는 유저가 없습니다.",
     });
   }
@@ -62,7 +60,7 @@ exports.postLogIn = catchAsync(async (req, res, next) => {
   const isPasswordCorrect = user.comparePassword(password, user.password);
 
   if (!isPasswordCorrect) {
-    return res.status(401).json({
+    return res.status(400).render("error", {
       message: "비밀번호가 틀렸습니다.",
     });
   }

@@ -11,7 +11,10 @@ block content
 			.votingPage-result
 				.votingPage-result-option
 					span.result-text 결과 :&nbsp;
-					span.result-option=data.winner.option
+					if status !== "진행중" && status !== "종료"
+						span.result-option 결과가 없습니다.
+					else
+						span.result-option=data.winner.option
 				.votingPage-result-count
 					span.result-text 득표 수 :&nbsp;
 					span.result-count=data.winner.count
@@ -33,7 +36,7 @@ block content
 					.votingPage-option-container
 						.votingPage-option=option.option
 						.votingPage-option=option.count
-			else if status === "취소됨"
+			else if status === "취소됨" || status === "예정"
 				each option in options
 					.votingPage-option-container
 						.votingPage-option=option.option
@@ -49,7 +52,7 @@ block content
 					.votingPage-option-container
 						input.votingPage-option(type="radio", name="choice", value=option.option, id=option.option).votingPage-option
 						label.votingPage-option-label(for=option.option)=option.option
-		if status !== "종료" && status !== "취소됨"
+		if status === "진행중"
 			.votingPage-vote-button-container
 				button.votingPage-vote-button(id=_id) 투표하기
 		if data.isCreator

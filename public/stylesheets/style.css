@@ -7,6 +7,7 @@
 body {
   font: 14px "Nanum Gothic", Helvetica, Arial, sans-serif;
   background-color: #fff8f9;
+  position: relative;
 }
 
 main {
@@ -60,8 +61,12 @@ a:hover {
 .header__options {
   font-size: 0.8rem;
   font-weight: 600;
-  margin: 0 10px;
+  margin: 0 13px;
   cursor: pointer;
+}
+
+.header__options:hover {
+  font-weight: 800;
 }
 
 .header__options.logout {
@@ -72,6 +77,24 @@ a:hover {
   border-radius: 40px;
   background-color: #ff3465;
   color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  background-color: #fff8f9;
+}
+
+.footer__text {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #3a1d1d;
 }
 
 /* Voting List */
@@ -92,9 +115,10 @@ a:hover {
   font-weight: 600;
   border: none;
   border-radius: 40px;
-  background-color: #ff8ca8;
+  background-color: #ff3666;
   color: white;
   text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .votings {
@@ -104,6 +128,12 @@ a:hover {
   grid-template-columns: repeat(3, 1fr);
   column-gap: 20px;
   row-gap: 20px;
+  margin-top: 40px;
+}
+
+.no-votings {
+  width: 100%;
+  text-align: center;
   margin-top: 40px;
 }
 
@@ -227,11 +257,11 @@ a:hover {
 
 .votingPage-option-container {
   margin-bottom: 15px;
-  cursor: pointer;
 }
 
 .votingPage-option-label {
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .votingPage-option-result {
@@ -315,7 +345,7 @@ a:hover {
   height: 2rem;
   padding-left: 10px;
   font-size: 1rem;
-  border: 0.5px solid #9e9e9e;
+  border: none;
   border-radius: 5px;
 }
 
@@ -379,14 +409,14 @@ a:hover {
 .result-buttons-container {
   margin-top: 80px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 55%;
 }
-.result-button-home {
-  color: white;
-}
 
-.result-button {
+.result-button,
+.result-button-home,
+.result-button-home:visited,
+.result-button-home:hover {
   padding: 8px 16px;
   font-size: 0.8rem;
   font-weight: 600;
@@ -394,4 +424,10 @@ a:hover {
   border-radius: 40px;
   background-color: #ff3465;
   color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.result-message {
+  font-size: 1.3rem;
+  font-weight: 600;
 }

@@ -1,9 +1,14 @@
-extends layouts/main
+doctype html
+html
+	head
+		meta(charset="UTF-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1.0")
+		link(rel="stylesheet" href="/stylesheets/error.css")
+		link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Open+Sans:wght@300;400;600;700&display=swap")
+		title Vanivote | Easy Voting Platform
 
-block content
-	.error-container
-		.error-image-container
+	body
 		.error-message-container
-			span=message
-		.error-buttons-container
-			a(href="/").error-button-home 목록으로 돌아가기
+			span.error-message=message
+		.error-button-container
+			a(href="/").error-button 돌아가기

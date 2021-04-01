@@ -2,7 +2,7 @@ const moment = require("moment");
 
 const User = require("./../models/userModel");
 const Voting = require("./../models/votingModel");
-const CreateError = require("./../utils/createError");
+
 const catchAsync = require("./../utils/catchAsync");
 const getVotingStatus = require("./../utils/getVotingStatus");
 const convertFormat = require("./../utils/convertFormat");
@@ -100,7 +100,6 @@ exports.createNewVoting = async (req, res, next) => {
   try {
     const { name, startDate, endDate, options } = req.body;
     const status = getVotingStatus(startDate, endDate);
-
     const createdBy = req.user.id;
     const createdAt = moment().format("YYYY-MM-DDTHH:mm");
     const convertedStartDate = moment(startDate).format("YYYY-MM-DDTHH:mm");
@@ -110,6 +109,20 @@ exports.createNewVoting = async (req, res, next) => {
       .map((option) => {
         return { option, votee: [] };
       });
+
+    if (new Date() - new Date(endDate) > 0) {
+      return res.status(400).render("error", {
+        result: "fail",
+        message: "종료 시점은 현재 이후여야 합니다.",
+      });
+    }
+
+    if (new Date(startDate) - new Date(endDate) > 0) {
+      return res.status(400).render("error", {
+        result: "fail",
+        message: "시작 시점은 종료 시점 이후여야 합니다.",
+      });
+    }
 
     const newVoting = await Voting.create({
       name,
@@ -146,10 +159,6 @@ exports.getSelectedVoting = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
   const results = [];
   let isCreator = false;
-
-  if (!voting) {
-    return res.status(200).render("notExistingVoting");
-  }
 
   if (voting.createdBy._id.toString() === userId.toString()) {
     isCreator = true;

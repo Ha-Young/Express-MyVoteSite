@@ -1,0 +1,41 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font: 14px "Nanum Gothic", Helvetica, Arial, sans-serif;
+  background-color: #fff8f9;
+}
+
+a,
+a:visited,
+a:hover {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+}
+
+.error-message-container {
+  margin-top: -10vh;
+}
+
+.error-message {
+  display: block;
+  margin-bottom: 50px;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.error-button {
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 40px;
+  background-color: #ff3465;
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
+}

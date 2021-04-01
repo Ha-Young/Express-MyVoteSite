@@ -20,7 +20,7 @@ const handleValidationErrorDB = (err) => {
 };
 
 const handleJWTError = () => {
-  const message = "유효하지 않은 토큰입니다. 나중에 다시 시도해주세요.";
+  const message = "유효하지 않은 토큰 정보입니다. 나중에 다시 시도해주세요.";
 
   return new CreateError(message, 400);
 };
@@ -41,17 +41,18 @@ const sendErrorDev = (err, res) => {
 };
 
 const sendErrorProd = (err, res) => {
+  console.log("sendErroPord");
   if (err.isOperational) {
-    res.status(err.statusCode).json({
+    res.status(err.statusCode).render("error", {
       status: err.status,
       message: err.message,
     });
   } else {
     console.log(`ERROR ❌`, err);
 
-    res.status(500).json({
+    res.status(500).render("error", {
       status: "error",
-      message: "알 수 없는 에러가 발생하였습니다.",
+      message: "죄송합니다. 에러가 발생하였습니다.",
     });
   }
 };
