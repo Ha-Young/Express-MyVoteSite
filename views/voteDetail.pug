@@ -9,13 +9,22 @@ block content
       .voteDetail__info
         label.voteDetail__dueDate.form-label #{vote.dueDate}
         label.voteDetail__creator.form-label #{vote.creator.name}
+      if (vote.isEnable)
+        if (vote.isCreator)
+          .form-check.form-switch
+            input.form-check-input#resultToggle(type="checkbox")
+            label.form-check-label(for="flexSwitchCheckDefault") Result Toggle
+        else
+          h1.finishedMessage Finished!
       .voteDetail__vote
-        .voteDetail__resultChart
-          canvas#myChart
-        each choice in vote.choices
-          .voteDetail__choice(choiceId=choice._id onclick="toggleDivs(this)" selectNum=choice.selectUser.length choiceTitle=choice.choiceTitle)
-            img.voteDetail__choiceImage(src=choice.pictureURL alt="pic")
-            .voteDetail__choiceTitle #{choice.choiceTitle}
+        .voteDetail__voteContent
+          if (vote.isEnable)
+            .voteDetail__resultChart#chartDiv
+              canvas#myChart
+          each choice in vote.choices
+            .voteDetail__choice(choiceId=choice._id onclick="toggleDivs(this)" selectNum=choice.selectUser.length choiceTitle=choice.choiceTitle)
+              img.voteDetail__choiceImage(src=choice.pictureURL alt="pic")
+              .voteDetail__choiceTitle #{choice.choiceTitle}
         .voteDetail__buttons
           button.voteButton.btn.btn-success(voteId=vote._id) Vote!
           if (vote.isCreator)

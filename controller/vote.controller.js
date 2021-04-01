@@ -76,15 +76,18 @@ module.exports.putVoteDetail = async function putVoteDetail(req, res, next) {
   try {
     const targetVote = await Vote.findById(vote_id).lean();
 
-    const targetChoice = targetVote.choices.find(choice => String(choice._id) === chosenId);
-    if (!targetChoice.selectUser.includes(user._id)) {
-      targetChoice.selectUser.push(user._id);
-      await Vote.findOneAndUpdate({ _id: vote_id }, { $set: { choices: targetVote.choices }});
-      return res.send("success");
-    };
+    targetVote.choices.forEach(choice => {
+      choice.selectUser = choice.selectUser.filter(id => String(id) !== String(user._id));
+    });
 
-    res.send("중복 불가!!");
+    const targetChoice = targetVote.choices.find(choice => String(choice._id) === chosenId);
+    targetChoice.selectUser.push(user._id);
+
+    await Vote.findOneAndUpdate({ _id: vote_id }, { $set: { choices: targetVote.choices }});
+
+    res.send("Success!!");
   } catch (err) {
+    console.error(err);
     res.send("fail");
   }
 }

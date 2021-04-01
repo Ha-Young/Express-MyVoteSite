@@ -1,6 +1,7 @@
 const $choiceDivs = document.getElementsByClassName("voteDetail__choice");
 const $voteButton = document.querySelector(".voteButton");
 const $deleteButton = document.getElementById("deleteButton");
+const $resultToggleButton = document.getElementById("resultToggle");
 
 function toggleDivs(element) {
   const $choiceDivs = document.getElementsByClassName("voteDetail__choice");
@@ -31,6 +32,7 @@ $voteButton.addEventListener("click" , (event) => {
 
 $deleteButton && $deleteButton.addEventListener("click", (event) => {
   const voteId = $deleteButton.getAttribute("voteId");
+
   fetch(`/votings/${voteId}`, {
     method: "DELETE"
   }).then((result) => {
@@ -40,6 +42,25 @@ $deleteButton && $deleteButton.addEventListener("click", (event) => {
     window.location.href = "/";
   });
 });
+
+$resultToggleButton && $resultToggleButton.addEventListener("click", (event) => {
+  const $chartDiv = document.getElementById("chartDiv");
+  console.log($chartDiv.style.display);
+  if ($chartDiv.style.display === "none" || !$chartDiv.style.display) {
+    for (const $choiceDiv of $choiceDivs) {
+      $choiceDiv.style.visibility = "hidden";
+    }
+
+    $chartDiv.style.display = "flex";
+  } else {
+    for (const $choiceDiv of $choiceDivs) {
+      $choiceDiv.style.visibility = "visible";
+    }
+
+    $chartDiv.style.display = "none";
+  }
+});
+
 
 // TODO: 여기에 이것을 만든 사용자가 왔을 경우 몇가지 특별한 동작을 추가한다.
 // TODO: (선택사항...) 남은시간을 표시해주는 것을 보여준다. (setInterval)
