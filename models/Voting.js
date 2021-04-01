@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const VotingSchema = new mongoose.Schema({
+const votingSchema = new mongoose.Schema({
   title: {
     type: String,
     trim: true,
@@ -26,24 +26,24 @@ const VotingSchema = new mongoose.Schema({
   }]
 });
 
-VotingSchema.virtual('selected_option').get(function() {
+votingSchema.virtual('selected_option').get(function() {
   const optionsCopy = [...this.options];
 
   return optionsCopy.sort((a, b) => b.count - a.count)[0].optionTitle;
 });
 
-VotingSchema.methods.addVoteCount = function(target) {
+votingSchema.methods.addVoteCount = function(target) {
   const targetOption = this.options.find(option => option.optionTitle === target);
   targetOption.count += 1;
 
   return this.save();
 };
 
-VotingSchema.statics.updateExpiredVotingStatus = function (now) {
+votingSchema.statics.updateExpiredVotingStatus = function (now) {
   return this.updateMany(
     { expiration_date: { $lte: now } },
     { status: 'expired' }
   );
 };
 
-module.exports = mongoose.model('Voting', VotingSchema);
+module.exports = mongoose.model('Voting', votingSchema);

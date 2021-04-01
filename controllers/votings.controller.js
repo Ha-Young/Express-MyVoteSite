@@ -1,7 +1,7 @@
 const Voting = require('../models/Voting');
 const User = require('../models/User');
 
-exports.getNewVotingPage = async function (req, res, next) {
+exports.renderNewVoting = async function (req, res, next) {
   res.render('newVoting');
 };
 
@@ -21,8 +21,9 @@ exports.createVoting = async function (req, res, next) {
   res.redirect('/votings/success');
 };
 
-exports.getVotingDetailPage = async function (req, res, next) {
+exports.renderVotingDetail = async function (req, res, next) {
   const votingId = req.params.voting_id;
+
   const voting = await Voting.findById(votingId).lean().populate('author');
 
   res.render('votingDetail', { voting });
@@ -31,6 +32,7 @@ exports.getVotingDetailPage = async function (req, res, next) {
 exports.addVote = async function (req, res, next) {
   const votingId = req.params.voting_id;
   const selectedOption = req.body.option;
+
   const voting = await Voting.findById(votingId);
   const currentUser = await User.findById(req.user);
 
@@ -58,10 +60,10 @@ exports.deleteVoting = async function (req, res, next) {
   res.end();
 };
 
-exports.error = function (req, res, next) {
-  res.render('votingError');
+exports.renderCreateVotingError = function (req, res, next) {
+  res.render('createVotingError');
 };
 
-exports.success = function (req, res, next) {
-  res.render('votingSuccess');
+exports.renderCreateVotingSuccess = function (req, res, next) {
+  res.render('createVotingSuccess');
 };

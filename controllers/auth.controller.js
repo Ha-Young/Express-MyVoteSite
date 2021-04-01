@@ -2,7 +2,7 @@ const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { mongodbErrorMessage } = require('../constants/mongodbErrorMessage');
-const { getErrorType } = require('../utils');
+const { getErrorMessage } = require('../utils');
 
 exports.signup = async function (req, res) {
   const { email, name, password } = req.body;
@@ -12,7 +12,7 @@ exports.signup = async function (req, res) {
 
   if (isEmailAlreadyUsed) {
     req.flash('userInput', req.body);
-    req.flash('errors', getErrorType(new Error(mongodbErrorMessage.EMAIL_ALREADY_EXIST)));
+    req.flash('errors', getErrorMessage(new Error(mongodbErrorMessage.EMAIL_ALREADY_EXIST)));
 
     return res.status(301).redirect('/signup');
   } else {
@@ -34,7 +34,7 @@ exports.login = async function (req, res) {
 
   if (!currentUser) {
     req.flash('userInput', req.body);
-    req.flash('errors', getErrorType(new Error(mongodbErrorMessage.EMAIL_DOESNT_EXIST)));
+    req.flash('errors', getErrorMessage(new Error(mongodbErrorMessage.EMAIL_DOESNT_EXIST)));
 
     return res.status(301).redirect('/login');
   }
@@ -43,7 +43,7 @@ exports.login = async function (req, res) {
 
   if (!correctPassword) {
     req.flash('userInput', req.body);
-    req.flash('errors', getErrorType(new Error(mongodbErrorMessage.WRONG_PASSWORD)));
+    req.flash('errors', getErrorMessage(new Error(mongodbErrorMessage.WRONG_PASSWORD)));
 
     return res.status(301).redirect('/login');
   }

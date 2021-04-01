@@ -6,17 +6,7 @@ const {
 } = require('../constants/joiErrorMessage');
 const { mongodbErrorMessage } = require('../constants/mongodbErrorMessage');
 
-exports.getDecodedToken = function (token) {
-  return jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(301).redirect('/login');
-    }
-
-    return decoded.id;
-  });
-};
-
-exports.getErrorType = function (err) {
+exports.getErrorMessage = function (err) {
   switch (err.message) {
     case signupErrorMessage.INVALID_EMAIL:
       return { email: {

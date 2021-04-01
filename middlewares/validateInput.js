@@ -4,12 +4,12 @@ const {
   loginErrorMessage,
   createVotingErrorMessage
 } = require('../constants/joiErrorMessage');
-const { getErrorType } = require('../utils');
+const { getErrorMessage } = require('../utils');
 
 // TODO error 종류에 따라서 다른 에러메시지를 던지는것도 괜찮을듯??
 //+ 지금은 옵션에서 얼리abort시켜놔서 에러 한개만 잡히는데 여러개 잡아도 좋을듯
 
-exports.signupSchema = function (req, res, next) {
+exports.signupValidation = function (req, res, next) {
   const schema = Joi.object({
     email: Joi.string()
       .email()
@@ -35,7 +35,7 @@ exports.signupSchema = function (req, res, next) {
   validateRequest(req, res, next, schema, '/signup');
 };
 
-exports.loginSchema = function (req, res, next) {
+exports.loginInputValidation = function (req, res, next) {
   const schema = Joi.object({
     email: Joi.string()
       .email()
@@ -51,7 +51,7 @@ exports.loginSchema = function (req, res, next) {
   validateRequest(req, res, next, schema, '/login');
 };
 
-exports.createVotingSchema = function (req, res, next) {
+exports.createVotingInputValidation = function (req, res, next) {
   const schema = Joi.object({
     title: Joi.string()
       .required()
@@ -82,7 +82,7 @@ async function validateRequest(req, res, next, schema, redirectPath) {
     next();
   } catch (err) {
     req.flash('userInput', req.body);
-    req.flash('errors', getErrorType(err));
+    req.flash('errors', getErrorMessage(err));
 
     res.redirect(redirectPath);
   }
