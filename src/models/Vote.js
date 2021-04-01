@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const mongoosePaginate = require('mongoose-paginate-v2');
 const joigoose = require("joigoose")(mongoose);
 
-Joi.objectId = require('joi-objectid')(Joi);
+Joi.objectId = require("joi-objectid")(Joi);
 
 const joiVoteOptionSchema = Joi.object().keys({
   title: Joi.string().required(),
