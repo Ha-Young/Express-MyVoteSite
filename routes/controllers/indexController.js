@@ -5,8 +5,7 @@ const { addFormattedDueDate } = require("../../utils/index");
 
 exports.renderIndexPage = catchAsync(async (req, res, next) => {
   const query = Vote.find().populate("creator");
-  const features = new APIFeatures(query)
-    .sort();
+  const features = new APIFeatures(query).sort();
   const votes = await features.query.lean();
 
   res.locals.user = req.user;
