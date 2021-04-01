@@ -1,34 +1,34 @@
-console.dir(window.app.vote);
+const { options } = window.app.vote;
+const voteResult = options.map((option) => {
+  return { name: option.name, count: option.voters.length };
+});
+
+const generateRandomColor = () => {
+  const randomNumber = () => Math.floor(Math.random() * 150);
+
+  return `rgba(${randomNumber()}, ${randomNumber()}, ${randomNumber()}, 0.7)`;
+};
+
+const labels = voteResult.map((option) => option.name);
+const data = voteResult.map((option) => option.count);
+const colors = voteResult.map(() => generateRandomColor());
 
 const ctx = document.getElementById("myChart");
 // eslint-disable-next-line
 const myChart = new Chart(ctx, {
   type: "horizontalBar",
   data: {
-    labels: ["1", "2"],
+    labels,
     datasets: [{
-      label: "# of Votes",
-      data: [12, 19],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-      ],
+      data,
+      backgroundColor: colors,
+      borderColor: colors,
       borderWidth: 1,
+      minBarLength: 5,
     }],
   },
   options: {
+    legend: false,
     scales: {
       xAxes: [{
         ticks: {
