@@ -1,17 +1,25 @@
 const Voting = require("../../models/Voting");
 const User = require("../../models/User");
 
+const moment = require("moment");
+
 exports.getAllVotings = async function (req, res, next) {
   let myVotings = [];
   let creatorId;
+
+  const currentDate = moment(new Date()).format("YYYY-MM-DD");
+  await Voting.updateMany(
+    { due_date: currentDate },
+    { $set: { "status": "CLOSED" } }
+  );
 
   if (req.session.passport) {
     creatorId = req.session.passport.user;
     const myVotingIdList = await User.findById(creatorId);
 
-    myVotings = await Voting.find({
-      creator: { $in: myVotingIdList }
-    });
+    myVotings = await Voting.find(
+      { creator: { $in: myVotingIdList } }
+    );
   }
 
   const notMyVotings = await Voting.find(
@@ -86,7 +94,7 @@ exports.addOneToSelectedOption = async function (req, res, next) {
       break;
     }
   }
-  console.log(candidates);
+
   await User.updateOne(
     { _id: userId },
     { $push: { participated_votings: votingId } }
