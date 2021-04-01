@@ -7,7 +7,7 @@
           <div class="vote <%- vote.isInProgress ? 'in-progress' : 'closed' %>">
             <div>
               <h1><%= vote.title %></h1>
-              <p>생성자 : <%= vote.creator?.name %></p>
+              <p>생성자 : <%= vote.creator?.name || "탈퇴한 회원" %></p>
               <p>마감일 : <%= vote.dueDate %></p>
             </div>
             <div>
