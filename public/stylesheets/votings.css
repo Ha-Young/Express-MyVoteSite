@@ -76,3 +76,17 @@ form {
   justify-content: center;
   align-items: center;
 }
+
+#myChart {
+  width: 800px;
+}
+
+.vote-list-wrapper {
+  font-weight: 600;
+  padding: 4px;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: space-around;
+}
