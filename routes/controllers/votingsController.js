@@ -102,3 +102,6 @@ exports.voting = catchAsync(async (req, res, next) => {
 
   res.redirect(`${VOTINGS_ROUTE}/${id}`);
 });
+
+exports.sendVoteDetails = catchAsync(async (req, res, next) => {
+});

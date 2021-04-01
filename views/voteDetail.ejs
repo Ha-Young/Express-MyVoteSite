@@ -2,7 +2,7 @@
   <div class="vote-detail-creator-info">
     <div>
       <div>이름: <%= vote.creator?.name || "탈퇴한 회원" %></div>
-      <div>email: <%= vote.creator?.email ||  %></div>
+      <div>email: <%= vote.creator?.email || "탈퇴한 회원" %></div>
       <div>마감일: <%= vote.dueDate %></div>
     </div>
     <% if (isCreator) { %>
@@ -42,5 +42,11 @@
     <% } %>
   </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>
-<script src="/javascripts/chart.js"></script>
+<% if (isCreator || !vote.isInProgress) { %>
+  <script>
+    window.app = {};
+    window.app.vote = <%- JSON.stringify(vote) %>;
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>
+  <script src="/javascripts/chart.js"></script>
+<% } %>

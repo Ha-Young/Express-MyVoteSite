@@ -1,3 +1,5 @@
+console.dir(window.app.vote);
+
 const ctx = document.getElementById("myChart");
 // eslint-disable-next-line
 const myChart = new Chart(ctx, {
@@ -6,7 +8,7 @@ const myChart = new Chart(ctx, {
     labels: ["1", "2"],
     datasets: [{
       label: "# of Votes",
-      data: [12, 19, 3, 5, 2, 3],
+      data: [12, 19],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
