@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <%- include("partials/head") %>
+</head>
+<body>
+  <div>
+    <h2><%- userName %>님이 만든 투표</h2>
+    <ul>
+      <% creatingVotes.map(vote => { %>
+        <a href="/votings/<%- vote.id %>">
+          <li><%- vote.title %></li>
+        </a>
+      <% }) %>
+    </ul>
+  </div>
+  <div>
+    <h2><%- userName %>님이 참가한 투표</h2>
+    <% participatingVotes.map(vote => { %>
+      <a href="/votings/<%- vote.id %>">
+        <li><%- vote.title %></li>
+      </a>
+    <% }) %>
+  </div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <%- include("partials/head") %>
+  <link rel="stylesheet" href="/stylesheets/newVoteForm.css">
+</head>
+<body>
+  <form id="new-vote-form">
+    <label>
+      투표 주제
+      <input
+        id="vote-title"
+        class="invalid"
+        name="title"
+        type="text"
+        placeholder="투표 주제를 정해주세요"
+      />
+    </label>
+    <label>
+      후보
+      <input
+        id="options-number"
+        type="number"
+        min="2"
+        value="2"
+      />개
+    </label>
+    <div id="options-container">
+      <input
+        class="invalid option"
+        name="option"
+        type="text"
+        placeholder="후보를 정해주세요"
+      />
+      <input
+        class="invalid option"
+        name="option"
+        type="text"
+        placeholder="후보를 정해주세요"
+      />
+    </div>
+    <div>
+      <label>
+        <input
+          id="year"
+          class="dates invalid"
+          name="year"
+          type="text"
+          maxlength="4"
+        />년
+      </label>
+      <label>
+        <input
+          id="month"
+          class="dates invalid"
+          name="month"
+          type="text"
+          maxlength="2"
+        />월
+      </label>
+      <label>
+        <input
+          id="date"
+          class="dates invalid"
+          name="date"
+          type="text"
+          maxlength="2"
+        />일
+      </label>
+      <label>
+        <input
+          id="hours"
+          class="dates invalid"
+          name="hours"
+          type="text"
+          maxlength="2"
+        />시
+      </label>
+      <label>
+        <input
+          id="minutes"
+          class="dates invalid"
+          name="minutes"
+          type="text"
+          maxlength="2"
+        />분
+      </label>
+    </div>
+    <input type="submit" value="생성"/>
+  </form>
+  <script src="/javascripts/newVoteForm.js"></script>
+</body>
+</html>

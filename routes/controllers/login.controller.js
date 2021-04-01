@@ -3,7 +3,6 @@ const cryptograph = require("../../utils/cryptograph");
 
 exports.getLogin = (req, res, next) => {
   const renderProps = { isInvalid: false, method: "get" };
-  console.log(req.session)
   res.render("login", renderProps);
 }
 
@@ -17,8 +16,9 @@ exports.validateUser = async (req, res, next) => {
     if (cryptoPassword === user.password) {
       req.session.isLogin = true;
       req.session.userId = user._id;
-
-      return res.redirect("/");
+      const redirectPath = req.cookies.lastHref || "/";
+      res.clearCookie("lastHref");
+      return res.redirect(redirectPath);
     }
   }
 

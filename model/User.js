@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: [true, "이메일을 입력해주세요"],
+    required: [true, "email is required"],
   },
   password: {
     type: String,
-    required: [true, "비밀번호를 입력해주세요"],
+    required: [true, "password is required"],
   },
   _salt: {
     type: String,
@@ -15,17 +15,20 @@ const UserSchema = new mongoose.Schema({
   },
   user_name: {
     type: String,
-    required: [true, "사용자 이름(별명)을 입력해주세요"],
+    required: [true, "user_name is required"],
   },
   votings: [{
+    _id: false,
     voteId: {
       type: mongoose.ObjectId,
       ref: "Vote",
+      required: [true, "voteId in votings is required"],
     },
     optionId: {
       type: mongoose.ObjectId,
       ref: "Vote",
     },
+    isCreator: Boolean,
   }],
 }, { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } });
 

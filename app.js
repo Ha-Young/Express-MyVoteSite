@@ -35,11 +35,13 @@ const signupRouter = require("./routes/signup");
 const loginRouter = require("./routes/login");
 const indexRouter = require("./routes/index");
 const votingsRouter = require("./routes/votings");
+const myVotingsRouter = require("./routes/myVotings");
 
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
 app.use("/", indexRouter);
 app.use("/votings", votingsRouter);
+app.use("/my-votings", myVotingsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

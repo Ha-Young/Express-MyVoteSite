@@ -1,0 +1,3 @@
+const appendWarningBox = (targetElement) => {
+  
+};

@@ -3,6 +3,50 @@ const createError = require("http-errors");
 const Vote = require("../../model/Vote");
 const User = require("../../model/User");
 
+exports.getNewVoteForm = (req, res, next) => res.render("newVoteForm");
+
+exports.createVote = async (req, res, next) => {
+  const title = req.body.title;
+  const creator = req.session.userId;
+  const options = req.body.option.map(option => {
+    return {
+      title: option,
+      voters: [],
+    };
+  });
+  const { year, month, date, hours, minutes } = req.body;
+  const expire_at = new Date(
+    Number(year),
+    Number(month) - 1,
+    Number(date),
+    Number(hours),
+    Number(minutes),
+  ).toISOString();
+
+  const newVoteDoc = new Vote({
+    title,
+    creator,
+    options,
+    expire_at,
+  });
+  await newVoteDoc.save();
+  const voteCreatorDoc = await User.findById(creator);
+  voteCreatorDoc.votings.push({
+    voteId: newVoteDoc._id,
+    isCreator: true,
+  });
+  voteCreatorDoc.save();
+  return res.send("success");
+};
+
+exports.getSuccess = (req, res, next) => {
+  res.render("successVote");
+};
+
+exports.getError = (req, res, next) => {
+  res.render("errorVote");
+};
+
 exports.getVote = async (req, res, next) => {
   const { id: voteId } = req.params;
   const vote = await Vote
@@ -65,15 +109,20 @@ exports.patchVote = async (req, res, next) => {
 
   const voterDoc = await User.findById(voterId);
   const hasVoted = voterDoc.votings
-    .some(voting => voting.voteId.toString() === voteId);
+    .some(voting => voting.voteId === voteId);
 
-  if (hasVoted) return res.send(400);
+  if (hasVoted) {
+    return res.json({ result: "fail", message: "이미 투표하셨어요 😰" });
+  }
 
   const voteDoc = await Vote.findById(voteId);
 
+  if (!voteDoc) {
+    return res.json({ result: "cancel", message: "투표가 취소됐어요 😓"});
+  }
+
   voterOptions.map(async voterOptId => {
     voteDoc.options.some((option, index) => {
-      debugger;
       if (option._id.toString() === voterOptId) {
         voteDoc.options[index].voters.push(voterId);
         voteDoc.save();
@@ -83,6 +132,8 @@ exports.patchVote = async (req, res, next) => {
       }
     });
   });
+
+  return res.json({ result: "success", message: "투표 성공! 🥳"});
 }
 
 exports.deleteVote = async (req, res, next) => {
@@ -96,3 +147,6 @@ exports.deleteVote = async (req, res, next) => {
     next(createError(500, error));
   }
 };
+
+
+

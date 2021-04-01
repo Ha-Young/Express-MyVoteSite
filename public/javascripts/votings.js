@@ -8,9 +8,12 @@ const $queryVoter = document.getElementById("query-voter");
 const voteBoxes = [...$voteBoxes];
 const expireAt = Date.parse($expire.dataset.expire);
 
-$voteBoxContainer.addEventListener("input", (event) => {
+document.cookie = "";
+
+$voteBoxContainer.addEventListener("input", async (event) => {
   if (!$queryVoter) {
-    
+    document.cookie = `lastHref=${location.href}; path=/`;
+    return location.replace("/login");
   }
   voteBoxes.forEach(voteBox => {
     const isDuplicated
@@ -46,6 +49,12 @@ $voteBtn.addEventListener("click", async (event) => {
       body: JSON.stringify(options),
     },
   );
+  const { result, message } = await response.json();
+
+  alert(message);
+
+  if (result === "success") location.reload();
+
 });
 
 if ($deleteBtn) {
