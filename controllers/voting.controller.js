@@ -121,7 +121,7 @@ module.exports.putVoting = async (req, res, next) => {
 
     await currentVoting.save();
 
-    res.status(201).end();
+    res.status(201).json({ result: true });
   } catch (err) {
     next(createError(500, err.message));
   }
