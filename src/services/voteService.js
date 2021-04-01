@@ -66,12 +66,18 @@ exports.GetVotes = async ({ condition, page, limit, sort_field, sort_order }) =>
   }
 };
 
-exports.GetVote = async voteId => {
+exports.GetVote = async ({ voteId, user }) => {
   try {
-    const vote = await Vote.findById(voteId).populate('creator', 'name', 'User');
+    const voteRecord = await Vote.findById(voteId).populate('creator', 'name', 'User');
 
-    if (!vote) {
+    if (!voteRecord) {
       throw new Error("can't get vote");
+    }
+
+    const vote = voteRecord.toObject();
+
+    if (vote.creator._id.equals(user._id)) {
+      vote.myVote = true;
     }
 
     return { vote };

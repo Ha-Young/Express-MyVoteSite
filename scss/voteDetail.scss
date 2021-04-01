@@ -82,6 +82,14 @@ $btnH: 36px;
 
   .vote-info-content {
     font-size: 1.2rem;
+
+    .live-color {
+      color: #8DC63F;
+    }
+
+    .end-color {
+      color: #3b2626;
+    }
   }
 }
 
@@ -95,4 +103,19 @@ $btnH: 36px;
   color: white;
   border-radius: 2px;
   cursor: pointer;
+}
+
+.vote-delete-form {
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+
+  button {
+    width: 60px;
+    height: 30px;
+    background-color: rgb(219, 22, 22);
+    color: white;
+    border-radius: 2px;
+    cursor: pointer;
+  }
 }

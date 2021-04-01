@@ -1,0 +1,40 @@
+<div class="vote-result-column vote-info">
+  <h2 class="vote-title"><%= vote.title %></h2>
+  <div class="vote-stage">
+    <% if (vote.is_process) { %>
+      <span class="stage live"></span>
+    <% } else { %>
+      <span class="stage end"></span>
+    <% } %>
+  </div>
+  <div class="vote-infos-list">
+    <div class="vote-info-row">
+      <span class="vote-info-label">작성자</span>
+      <span class="vote-info-content"><%= vote.creator.name %></span>
+    </div>
+    <div class="vote-info-row">
+      <span class="vote-info-label">만료날짜</span>
+      <span class="vote-info-content"><%= vote.expire_datetime %></span>
+    </div>
+    <div class="vote-info-row">
+      <span class="vote-info-label">투표 상태</span>
+      <span class="vote-info-content">
+        <% if (vote.is_process) { %>
+          <span class="live-color">투표 가능</span>
+        <% } else { %>
+          <span class="end-color">만료됨</span>
+        <% } %>
+      </span>
+    </div>
+  </div>
+  <button class="vote-info-back-btn">
+    <i class="fas fa-step-backward"></i>
+  </button>
+  <% if (vote.myVote) { %>
+    <form class="vote-delete-form" action="/votings/<%= vote._id %>?_method=DELETE" method="POST">
+      <button type="submit">
+        <i class="far fa-trash-alt"></i>
+      </button>
+    </form>
+  <% } %>
+</div>
