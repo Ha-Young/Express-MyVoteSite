@@ -91,6 +91,11 @@
   text-align: center;
 }
 
+.arrow-icon {
+  width: 30px;
+  margin-right: 50px;
+}
+
 .posting-time-icon {
   width: 100px;
   height: 100px;

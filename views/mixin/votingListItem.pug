@@ -23,6 +23,9 @@ mixin votingListItem(voting={})
               div.voting-posting-time
                 p.time-description Published at
                 p.time= voting.formattedPostingTime
+            img.arrow-icon(
+              src="/images/chevron-right-solid.svg"
+            )
             div.voting-time
               img.expiration-time-icon(
                 src="/images/calendar-check-regular.svg"
