@@ -1,14 +1,17 @@
 extends layout
 
 block content
-  form#login-form
-    .form-box
-      label(for="email") E-MAIL
-      input(id="email" type="email" name="email" autocomplete required)
-    .form-box
-      label(for="password") PASSWORD
-      input(id="password" type="password" name="password" autocomplete required)
-  p.validation.hidden
+  section
+    h2 Login
+    .login-wrapper
+      form#login-form
+        .form-box
+          label(for="email") E-MAIL
+          input(id="email" type="email" name="email" autocomplete required)
+        .form-box
+          label(for="password") PASSWORD
+          input(id="password" type="password" name="password" autocomplete required)
+      p.validation.hidden
   ul.button-list
     li
       button#loginButton(type="submit" class="button" form="login-form") LOGIN

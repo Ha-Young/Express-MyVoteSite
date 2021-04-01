@@ -1,28 +1,31 @@
 extends layout
 
 block content
-  form#signup-form(action="/users/signup" method="post")
-    .form-box
-      label(for="name") NAME
-      input(id="name" type="text" name="name" required)
-    .form-box
-      label(for="email") E-MAIL
-      input(id="email" type="email" name="email" required)
-    .form-box
-      label(for="password") PASSWORD
-      input(id="password" type="password" name="password" required)
-    .form-box
-      label(for="confirmedPassword") PASSWORD CHECK
-      input(id="confirmedPassword" type="password" name="confirmedPassword" required)
-  .guide
-    ul
-      li 이름은 최소 2글자 최대 10글자까지 가능합니다.
-      li 비밀번호는 최소 8글자 최대 12글자까지 가능합니다.
-      li 비밀번호는 최소 하나의 숫자와 하나의 특수문자를 포함해야 합니다.
-  if (error)
-    p.validation #{ error.msg }
-  ul.button-list
-    li
-      button(type="submit" class="button" form="signup-form") SIGN UP
-    li
-      a(href="/" class="button") GO TO MAIN
+  section
+    h2 SIGN UP
+    .signup-wrapper
+      form#signup-form(action="/users/signup" method="post")
+        .form-box
+          label(for="name") NAME
+          input(id="name" type="text" name="name" required)
+        .form-box
+          label(for="email") E-MAIL
+          input(id="email" type="email" name="email" required)
+        .form-box
+          label(for="password") PASSWORD
+          input(id="password" type="password" name="password" required)
+        .form-box
+          label(for="confirmedPassword") PASSWORD CHECK
+          input(id="confirmedPassword" type="password" name="confirmedPassword" required)
+      .signup-guide
+        ul
+          li 이름은 최소 2글자 최대 10글자까지 가능합니다.
+          li 비밀번호는 최소 8글자 최대 12글자까지 가능합니다.
+          li 비밀번호는 최소 하나의 숫자와 하나의 특수문자를 포함해야 합니다.
+      if (error)
+        p.validation #{ error.msg }
+    ul.button-list
+      li
+        button(type="submit" class="button" form="signup-form") SIGN UP
+      li
+        a(href="/" class="button") GO TO MAIN
