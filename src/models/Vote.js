@@ -18,7 +18,6 @@ const joiVoteSchema = Joi.object({
   expire_datetime: Joi.date().required(),
   is_process: Joi.boolean(),
   vote_options: Joi.array().items(joiVoteOptionSchema).required(),
-  entire_count: Joi.number(),
 });
 
 const VoteSchema = new mongoose.Schema(joigoose.convert(joiVoteSchema), { timestamps: true });
@@ -31,7 +30,6 @@ VoteSchema.pre("save", function (next) {
   const vote = this;
   try {
     vote.is_process = true;
-    vote.entire_count = 0;
 
     next();
   } catch (error) {
