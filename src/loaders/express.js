@@ -55,6 +55,13 @@ module.exports = function ({ app, routerLoader }) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error', { user: req.user || {} });
+
+    if (req.headers["content-type"] === "application/json" || err.json) {
+      res.json({
+        error: err.message.toLowerCase() || "error",
+      });
+    } else {
+      res.render("error");
+    }
   });
 };

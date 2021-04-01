@@ -29,7 +29,7 @@ window.api.vote = (function () {
     const response = await window.fetch(votesURL, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json;charset=utf-8",
+        "Content-Type": "application/json",
       },
     });
 
@@ -37,19 +37,16 @@ window.api.vote = (function () {
   }
 
   async function voteToOption({ voteId, optionId }) {
-    const voteToOptionURL = `${API_VOTES}/${voteId}/${API_VOTE_TO_OPTION}`
+    const voteToOptionURL = `${API_VOTES}/${voteId}/${API_VOTE_TO_OPTION}`;
 
     const postBody = {
       optionId,
     };
-    console.log('voteToOptionURL', voteToOptionURL);
-    console.log('post body', postBody);
-    console.log('post body stringfy', JSON.stringify(postBody));
 
     const response = await window.fetch(voteToOptionURL, {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json;charset=utf-8",
+        "content-type": "application/json",
       },
       body: JSON.stringify(postBody),
     });
