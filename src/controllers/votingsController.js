@@ -3,9 +3,10 @@ const Voting = require("../models/Voting");
 const { getVotingResult } = require("../utils/getVotingResult");
 
 exports.getVoting = async (req, res, next) => {
-  try {
-    const { id } = req.params;
+  const { id } = req.params;
+  const errorMessage = req.flash("error");
 
+  try {
     const voting = await Voting.findById(id);
 
     if (!voting) {
@@ -19,6 +20,7 @@ exports.getVoting = async (req, res, next) => {
       pageTitle: voting.title,
       voting,
       votingResult,
+      errorMessage,
     });
   } catch (err) {
     console.log(err);

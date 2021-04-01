@@ -22,16 +22,9 @@ exports.validatePostSignUp = async (req, res, next) => {
 
 exports.validatePostVoting = async (req, res, next) => {
   const votingId = req.params.id;
-  const selection = Object.keys(req.body);
 
   if (!req.user) {
     res.redirect(`/auth/login?votings=${votingId}`);
-    return;
-  }
-
-  if (selection.length !== 1) {
-    console.log("Choose one option!");
-    res.redirect(`/votings/${votingId}`);
     return;
   }
 
@@ -46,13 +39,13 @@ exports.validatePostVoting = async (req, res, next) => {
     }
 
     if (!voting.progress) {
-      console.log("Voting end!");
+      req.flash("error", "종료된 투표입니다.");
       res.redirect(`/votings/${votingId}`);
       return;
     }
 
     if (voting.participants.indexOf(userId) !== -1) {
-      console.log("Can't vote the same twice!");
+      req.flash("error", "같은 투표에 두 번 이상 참여할 수 없습니다.");
       res.redirect(`/votings/${votingId}`);
       return;
     }

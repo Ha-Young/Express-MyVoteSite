@@ -29,8 +29,8 @@ const submitHandler = (e) => {
   signupForm.submit();
 };
 
-const init = () => {
+const validator = () => {
   signupForm.addEventListener("submit", submitHandler);
 };
 
-init();
+validator();

@@ -3,6 +3,11 @@ extends layouts/main
 block style
   link(rel="stylesheet", href="/stylesheets/newVoting.css")
 
+mixin option
+  .option
+    input(type="text" placeholder="option" name="option" autocomplete=false required)
+    button.remove-option-button.blind(type="button") -
+
 block content
   h1 #{pageTitle}
   .new-voting-container
@@ -12,12 +17,10 @@ block content
       input.expiration(type="datetime-local" name="expiration" id="expiration" required)
       button.add-option-button(type="button") +
       .option-container
-        .option
-          input(type="text" placeholder="option" name="option" required)
-          button.remove-option-button.blind(type="button") -
-        .option
-          input(type="text" placeholder="option" name="option" required)
-          button.remove-option-button.blind(type="button") -
+        +option
+        +option
       button.new-voting-button Create Voting
     .warning-box
-  script(src="/javascripts/newVotings.js")
+
+  script(src="/javascripts/newVoting/validation.js")
+  script(src="/javascripts/newVoting/newOption.js")

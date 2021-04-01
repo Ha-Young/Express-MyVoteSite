@@ -45,7 +45,10 @@ const initializeLocal = (passport) => {
     try {
       const user = await User.findById(id);
 
-      done(null, user);
+      done(null, {
+        id: user.id,
+        username: user.username,
+      });
     } catch (err) {
       console.log("Fail deserializeUser!");
       done(err);

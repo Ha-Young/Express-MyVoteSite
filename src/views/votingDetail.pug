@@ -10,9 +10,10 @@ block content
     .progress 상태: 종료
 
   form.voting-form(action=`/votings/${voting.id}` method="POST")
-    each option in voting.options
-      input(type="checkbox" name=`${option.id}` id=`${option.id}`)
-      label(for=`${option.id}`) #{option.title}
+    .option-list
+      each option in voting.options
+        input.option(type="checkbox" name=`${option.id}` id=`${option.id}`)
+        label(for=`${option.id}`) #{option.title}
     button.submit-voting-button Vote
   if currentUser.id
     if (voting.postedBy.toString() === currentUser.id.toString())
@@ -21,3 +22,6 @@ block content
         button.delete-voting-button Delete Voting
   else if (!voting.progress)
     .result Result: #{votingResult.join(", ")}
+  .warning-box #{errorMessage}
+
+  script(src="/javascripts/votingDetail/validation.js")
