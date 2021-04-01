@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const votingSchema = new mongoose.Schema({
-  author: { type: String, default: "anonymity" },
+  author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   title: { type: String },
   description: { type: String },
   votingItems: [{ item: { type: String }, count: { type: Number } }],

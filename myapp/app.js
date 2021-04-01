@@ -11,7 +11,7 @@ const votingsRouter = require("./routes/votings");
 const ajaxRouter = require("./routes/ajax");
 
 const Voting = require("./models/Voting");
-const mockupData = require("./models/voting_mockup.json");
+const votingMockupData = require("./models/voting_mockup.json");
 const initializeMongoDB = require("./utils/initializeMongoDB");
 
 require("dotenv").config();
@@ -28,7 +28,7 @@ db.on("error", () => console.log("MongoDB Connection Error : ("));
 db.once("open", () => console.log("MongoDB Connection Success! : )"));
 
 if (process.env.MAKE_SAMPLE_MONGODB === "true") {
-  initializeMongoDB(Voting, mockupData);
+  initializeMongoDB(Voting, votingMockupData);
 }
 
 app.set("views", path.join(__dirname, "views"));

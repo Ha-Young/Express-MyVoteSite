@@ -1,6 +1,6 @@
 [
   {
-    "author": "임진주",
+    "author": "6061b68a076c4013b266d988",
     "title": "오늘 저녁",
     "description": "저녁 먹을꺼임???",
     "votingItems": [{"item": "찬성", "count": 3}, {"item": "반대", "count": 2} ],
@@ -9,7 +9,7 @@
     "endTime": "2021-04-01T17:21:57.696Z"
   },
   {
-    "author": "손범수",
+    "author": "6061b6a3076c4013b266d989",
     "title": "이번주 축구",
     "description": "축구 할꺼임???",
     "votingItems": [{"item": "찬성", "count": 2}, {"item": "반대", "count": 3} ],
@@ -18,7 +18,7 @@
     "endTime": "2021-03-30T17:21:57.696Z"
   },
   {
-    "author": "황한주",
+    "author": "6061b91e3c485213f8e36d55",
     "title": "집에 가자",
     "description": "집에 갈꺼임???",
     "votingItems": [{"item": "찬성", "count": 1}, {"item": "반대", "count": 0} ],

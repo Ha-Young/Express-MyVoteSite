@@ -18,7 +18,7 @@ block content
           | 종료 시간
           |  #{endLocalTime.month}월 #{endLocalTime.date}일
           |  #{endLocalTime.hour}시 #{endLocalTime.minute}분
-    div.detail-author 작성자 #{author}
+    div.detail-author 작성자 #{author.name}
     div.detail-item-container
       - for (let i = 0; i < votingItems.length; i++)
         - const {item, count} = votingItems[i]

@@ -62,7 +62,11 @@ router.get("/:votingId", async (req, res, next) => {
   try {
     const isLogin = getLoginStatus(req);
     const { votingId } = req.params;
-    const voting = await Voting.findOne({ _id: votingId });
+    const voting = await Voting.findOne({ _id: votingId }).populate(
+      "author",
+      "name",
+    );
+
     const {
       _id,
       author,
