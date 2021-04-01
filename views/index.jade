@@ -1,19 +1,19 @@
 extends layout
 
 block content
-  h1 투표목록
-  div.votes
-    -votes.forEach((vote) => {
-      a(href="/votings/"+vote._id)
-        div=vote.title
-        div=vote.author
-        div.expired-at=vote.expiredAt
-        div.vote-state
-    -})
-  div
-    a(href="/auth/logout") logout
-  div
-    a(href="/votings/my-votings") 내 투표
-  div
-    a(href="/votings/new") 투표생성
+  div.page-container
+    h1 투표목록
+    div.votes
+      -votes.forEach((vote) => {
+        a(href="/votings/"+vote._id)
+          div=vote.title
+          div=vote.author
+          div.expired-at=vote.expiredAt
+          div.vote-state
+      -})
+    div
+      a(href="/my-votings") 마이페이지
+    div
+      a(href="/votings/new") 투표생성
   script(src="/javascripts/votingState.js")
+  link(rel="stylesheet", href="/stylesheets/list.css")

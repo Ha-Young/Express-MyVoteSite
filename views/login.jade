@@ -1,16 +1,12 @@
-extends layout 
-
-block content
-  h1="Voting Platform"
-  div
+main.login-container
+  h1 Voting Platform
+  p=errorMessage
+  div.form-container
     form(action="/auth/login" method="POST")
-      div
-        label(for="email")="email"
-          input(type="text" name="email")
-      div
-        label(for="password")="password"
-          input(type="password" name="password")
-      button login
+      input(type="text" name="email" placeholder="이메일" required)
+      input(type="password" name="password" placeholder="패스워드" required)
+      button 로그인
     form(action="/auth/signup")
-      button signup
+      button.signup-button 회원가입
     p=message
+  link(rel="stylesheet", href="/stylesheets/login.css")

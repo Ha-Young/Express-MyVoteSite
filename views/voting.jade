@@ -9,17 +9,18 @@ block content
       div=vote.author
       div.expired-at=vote.expiredAt
       div.vote-state
-  div.form-container
-    form.form-submit-vote(action="/votings/"+vote._id method="POST")
+  form.form-submit-vote(action="/votings/"+vote._id method="POST")
+    div.form-container
       -vote.options.forEach(option => {
         div
           span.content=option.content
           input(type="radio" name="option" value=option._id data-count=option.count data-content=option.content)
       -})
-      button.button-submit-vote(type="submit") 제출
-      -if (vote.author === name) {
-        button.button-delete-vote 삭제
-      -}
+        button.button-submit-vote(type="submit") 제출
+  -if (vote.author === name) {
+    form.form-delete-vote(action="/votings/"+vote._id method="POST")
+      button.button-delete-vote(type="submit") 삭제
+  -}
   div
     a(href="/") 돌아가기
   -if (vote.author !== name) {
@@ -30,3 +31,5 @@ block content
   -}
   script(src="/javascripts/votingState.js")
   script(src="/javascripts/submitVote.js")
+  script(src="/javascripts/deleteVote.js")
+

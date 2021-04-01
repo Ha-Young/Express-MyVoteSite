@@ -2,3 +2,13 @@ extends layout
 
 block content
   h1 내 투표 목록을 살펴보세요
+  div.votes
+    -myVotings.forEach(vote => {
+      a(href="/votings/"+vote._id)
+        div ⭐️
+        div=vote.title
+        div.expired-at=vote.expiredAt
+        div.vote-state
+    -})
+  a(href="/") 홈으로
+  script(src="/javascripts/votingState.js")
