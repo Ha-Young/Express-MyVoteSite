@@ -27,14 +27,17 @@ const voteSchema = new mongoose.Schema({
     },
     default: 'in progress'
   },
-  options: {
-    type: [mongoose.Schema.Types.Mixed],
-    required: [true, 'Please provide vote options']
-  },
-  voters: [
+  options: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      option: {
+        type: [mongoose.Schema.Types.Mixed]
+      },
+      voters: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User'
+        }
+      ]
     }
   ]
 });

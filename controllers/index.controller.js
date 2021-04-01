@@ -49,7 +49,6 @@ exports.getMyVotes = async (req, res, next) => {
       .populate()
       .paginate();
     const votes = await features.query.lean();
-
     if (!votes) {
       return next(createError(404));
     }

@@ -39,3 +39,19 @@ exports.validateQueries = (query) => {
 
   return schema.validate(query);
 };
+
+exports.validateNewVoteInputs = (data) => {
+  const schema = Joi.object().keys({
+
+  });
+
+  return schema.validate(data);
+};
+
+exports.validateVoteInputs = (data) => {
+  const schema = Joi.object().keys({
+
+  });
+
+  return schema.validate(data);
+};

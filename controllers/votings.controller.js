@@ -2,26 +2,29 @@ const createError = require('http-errors');
 const mongoose = require('mongoose');
 
 const Vote = require('../models/Vote');
+const APIFeatures = require('../utils/APIFeatures');
 
 exports.getVotingPage = async (req, res, next) => {
   try {
-    const vote = await Vote
-      .findById({ _id: mongoose.Types.ObjectId(req.params.id) })
-      ?.populate('author', 'nickname email')
-      ?.lean();
+    const features = new APIFeatures(
+      Vote.findById(mongoose.Types.ObjectId(req.params.id))
+      , req.query
+    ).populate();
+    const vote = await features.query.lean();
 
     if (!vote) {
       return next(createError(400));
     }
 
     const isAuthor = req.user?.email === vote.author.email;
-    //status로 구분됨
-    const isExpired = new Date() >= new Date(vote.expirationDate);
+    const isVoted = vote.options.reduce((acc, curr) => {
+      return acc || !!curr.voters.some(voter => voter.email === req.user?.email);
+    }, false);
 
     res.render('voting', {
       user: req.user,
       isAuthor,
-      isExpired,
+      isVoted,
       vote
     });
   } catch (err) {

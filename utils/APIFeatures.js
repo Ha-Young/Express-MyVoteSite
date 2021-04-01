@@ -71,7 +71,10 @@ class APIFeatures {
     }
 
     let docs = 'author';
-    let options = 'nickname';
+    let options = 'nickname email';
+    let docsObject = {
+      path: 'options.voters'
+    };
 
     if (this.queryString.docs && this.queryString.options) {
       docs = this.queryString.docs.split(',').join(' ');
@@ -79,6 +82,7 @@ class APIFeatures {
     }
 
     this.query = this.query.populate(docs, options);
+    this.query = this.query.populate(docsObject);
     return this;
   }
 }

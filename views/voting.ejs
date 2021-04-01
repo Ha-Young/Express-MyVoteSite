@@ -4,6 +4,7 @@
 <head>
   <title>Voting Platform</title>
   <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/voting.css" />
 </head>
 
 <body>
@@ -24,17 +25,27 @@
             <%= vote.status %>
           </li>
         </ul>
-        <form method="POST" action="<%= `/votings/${vote._id}` %>">
-          <% vote.options.forEach(option=> { %>
-            <div>
-              <input type="radio" id="<%= option%>" name="drone" value="<%= option%>">
-              <label for="<%= option%>">
-                <%= option%>
-              </label>
-            </div>
-            <% }); %>
-              <button class="button" type="submit">SUBMIT</button>
-        </form>
+        <% if(vote.status === 'terminated' || isAuthor) { %>
+          <div class="chart-container" data-server-options="<%= JSON.stringify(vote.options) %>">
+          <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+          <% } else { %>
+            <% if(isVoted) { %>
+              Already Voted
+            <% } else { %>
+              <form method="POST" action="<%= `/votings/${vote._id}` %>">
+                <% vote.options.forEach(option=> { %>
+                  <div>
+                    <input type="radio" id="<%= option %>" name="<%= option %>" value="<%= option %>">
+                    <label for="<%= option %>">
+                      <%= option%>
+                    </label>
+                  </div>
+                  <% }); %>
+                    <button class="button" type="submit">SUBMIT</button>
+              </form>
+            <% } %>
+        <% } %>
       </div>
 
       <% if (isAuthor) { %>
@@ -43,6 +54,8 @@
         </form>
         <% } %>
     </main>
-</body>
+    <script src="/Chart.bundle.min.js"></script>
+    <script type="text/javascript" src="/javascripts/votingChart.js"></script>
+  </body>
 
 </html>

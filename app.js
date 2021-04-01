@@ -37,6 +37,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(compression());
 app.use(express.static('public'));
+app.use(express.static(`${__dirname}/node_modules/chart.js/dist/`))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
