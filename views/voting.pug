@@ -10,7 +10,9 @@ block content
   p.voting-state= currentState
   p.voting-publisher Published by #{voting.publisher.name}
   div.option-box
-    if !isAlreadyVoted
+    if currentState === "expired"
+      div.cant-vote-message-box This voting is expired.
+    else if !isAlreadyVoted
       form.voting-form(action="/votings/" + voting._id method="post")
         if voting.isAbleSelectMultipleOptions
           each count, option in options
@@ -24,11 +26,11 @@ block content
               = option
         button.submit-button(type="submit") VOTE
     else
-      p.already-voted-voting You voted already.
+      div.cant-vote-message-box You voted already.
   div.message-box
   p.expirationTime Expiration Time #{expirationTime}
   button.index-link-button(type="button") < Voting List
-  if isPublisher
+  if currentState === "expired" || isPublisher
     button.delete-voting-button(type="button") Delete
     div.chart-box
       canvas.chart(width="700" height="400")
