@@ -34,6 +34,18 @@ $detailItems.forEach((dom) => {
   dom.addEventListener("click", onClickVotingOption);
 });
 
-// $detaiDeleteBtn.addEventListener((ev) => {
-//   ev.target.dataset.id
-// })
+$detaiDeleteBtn.addEventListener("click", (ev) => {
+  const xhr = new XMLHttpRequest();
+  const votingId = ev.target.dataset.votingId;
+
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      window.location.href = "/";
+    }
+  };
+
+  xhr.open("POST", "/ajax/deleteVoting");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  const json = JSON.stringify({ votingId });
+  xhr.send(json);
+});

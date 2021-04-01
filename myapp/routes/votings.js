@@ -58,18 +58,6 @@ router.get("/error", (req, res, next) => {
   res.render("createResult", { isLogin, isCreate: false });
 });
 
-router.post("/delete", async (req, res, next) => {
-  try {
-    const isLogin = getLoginStatus(req);
-    if (!isLogin) return res.status(302).redirect("/");
-
-    await Voting.deleteOne({});
-  } catch (err) {
-    console.error(`get /delete in votings.js ${err.message}`);
-    next(createError(500, "Internal Server Error"));
-  }
-});
-
 router.get("/:votingId", async (req, res, next) => {
   try {
     const isLogin = getLoginStatus(req);
