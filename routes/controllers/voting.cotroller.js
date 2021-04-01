@@ -55,6 +55,11 @@ exports.getVote = async (req, res, next) => {
       formatted_date: format(vote.expiration_date, "yyyy-MM-dd HH:mm")
     };
 
+    if (vote.expiration_date.date < new Date()) {
+      res.redirect(`/votings/${id}/result`);
+      return;
+    }
+
     res.render("vote-page", { vote, user });
   } catch (err) {
     next(err);
@@ -203,8 +208,10 @@ exports.createVote = async (req, res, next) => {
 
     await vote.save();
 
-    res.status(201).render("success", { message: "success!!!!!", user });
+    // res.status(201).render("success", { message: "success!!!!!", user });
+    res.status(201).json({ result: "투표가 생성되었습니다."});
   } catch (err) {
-    res.status(500).render("error", { message: "error", user });
+    // res.status(500).render("error", { message: "error", user });
+    res.status(500).json({ result: "투표 생성에 실패하였습니다." });
   }
 };
