@@ -57,13 +57,15 @@ exports.addOneToSelectedOption = async function (req, res, next) {
   const userId = req.session.passport.user;
   const votingId = req.params.vote_id;
   const selectedOptionName = req.body.name;
-
+  console.log(selectedOptionName, userId);
   const hasParticipated = await User.find(
-    { _id: userId },
-    { participated_votings: votingId }
+    {
+      _id: userId,
+      participated_votings: votingId
+    }
   );
-
-  if (hasParticipated) {
+  console.log(hasParticipated.length);
+  if (hasParticipated.length) {
     res.render("index");
     return;
   }
@@ -77,7 +79,7 @@ exports.addOneToSelectedOption = async function (req, res, next) {
       break;
     }
   }
-
+  console.log(candidates);
   await User.updateOne(
     { _id: userId },
     { $push: { participated_votings: votingId } }

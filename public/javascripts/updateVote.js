@@ -2,7 +2,7 @@ const options = document.querySelector(".vote-options");
 
 function sendAjax(url, data) {
   data = JSON.stringify(data);
-
+  console.log(url, data);
   const xhr = new XMLHttpRequest();
   xhr.open("PUT", url);
   xhr.setRequestHeader("Content-type", "application/json");

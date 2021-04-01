@@ -43,8 +43,14 @@ Voting.post("deleteOne", async function (document) {
   const votingId = this.getFilter()["_id"];
   const creatorId = this.getFilter()["creator"];
 
-  await User.updateOne({ _id: creatorId },
+  await User.updateMany(
+    { _id: creatorId },
     { $pull: { created_votings: votingId } });
+
+  await User.updateMany(
+    {},
+    { $pull: { participated_votings: votingId } }
+  );
 });
 
 module.exports = mongoose.model("voting", Voting);
