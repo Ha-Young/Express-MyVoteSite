@@ -3,11 +3,8 @@ const $addBtn = document.querySelector(".add-btn");
 const $deleteBtn = document.querySelector(".delete-btn");
 const $votingNew = document.querySelector(".voting-new");
 
-let itemNum = 0;
-
 $addBtn.addEventListener("click", () => {
   const $input = document.createElement("input");
-  itemNum++;
 
   $input.type = "text";
   $input.name = "items";
@@ -21,7 +18,6 @@ $deleteBtn.addEventListener("click", () => {
   const lastChild = $item.lastChild;
 
   if (lastChild) {
-    itemNum--;
     lastChild.remove();
   }
 });

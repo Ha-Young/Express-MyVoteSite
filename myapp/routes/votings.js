@@ -12,7 +12,7 @@ router.get("/new", (req, res, next) => {
   try {
     const isLogin = getLoginStatus(req);
     if (!isLogin) return res.status(302).redirect("/");
-    res.render("votingNew", { isLogin });
+    res.status(200).render("votingNew", { isLogin });
   } catch (err) {
     console.error(`get /new in votings.js ${err.message}`);
     next(createError(500, "Internal Server Error"));
@@ -24,21 +24,21 @@ router.post("/new", async (req, res, next) => {
     const isLogin = getLoginStatus(req);
     if (!isLogin) return res.status(302).redirect("/");
     await createVoting(req);
-    res.status(202).redirect("/votings/success");
+    res.status(200).redirect("/votings/success");
   } catch (err) {
     console.error(`post /new in voting.js ${err.message}`);
-    next(createError(500, "Internal Server Error"));
+    res.status(500).redirect("/votings/error");
   }
 });
 
 router.get("/success", (req, res, next) => {
   const isLogin = getLoginStatus(req);
-  res.render("createResult", { isLogin, isCreate: true });
+  res.status(200).render("createResult", { isLogin, isCreate: true });
 });
 
 router.get("/error", (req, res, next) => {
   const isLogin = getLoginStatus(req);
-  res.render("createResult", { isLogin, isCreate: false });
+  res.status(200).render("createResult", { isLogin, isCreate: false });
 });
 
 router.get("/:votingId", async (req, res, next) => {

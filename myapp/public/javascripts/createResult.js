@@ -1,6 +1,6 @@
 const $countTime = document.querySelector(".countTime");
 const TIME_INTERVAL = 1000;
-let countTime = 5;
+let countTime = 3;
 
 $countTime.textContent = countTime;
 
