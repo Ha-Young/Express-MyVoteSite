@@ -8,4 +8,4 @@ exports.getDecodedToken = function (token) {
 
     return decoded.id;
   });
-}
+};

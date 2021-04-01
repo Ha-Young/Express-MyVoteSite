@@ -1,9 +1,19 @@
 const mongoose = require('mongoose');
 
 const VotingSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  expiration_date: { type: Date, required: true },
+  title: {
+    type: String,
+    trim: true,
+    required: true
+  },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  expiration_date: {
+    type: Date,
+    required: true
+  },
   status: {
     type: String,
     enum: ['inprogress', 'expired'],
@@ -11,7 +21,7 @@ const VotingSchema = new mongoose.Schema({
     required: true
   },
   options: [{
-    optionTitle: { type: String, required: true },
+    optionTitle: { type: String, trim: true, required: true },
     count: { type: Number, default: 0 }
   }]
 });

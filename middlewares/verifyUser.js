@@ -16,4 +16,4 @@ exports.verifyUser = async function (req, res, next) {
 
     next();
   });
-}
+};

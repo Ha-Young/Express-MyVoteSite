@@ -18,4 +18,4 @@ exports.verifyVote = async function (req, res, next) {
 
     next();
   });
-}
+};

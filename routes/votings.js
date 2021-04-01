@@ -8,8 +8,8 @@ const { createVotingSchema } = require('../middlewares/validateInput');
 
 router.get('/new', verifyUser, controller.getNewVotingPage);
 router.post('/new', verifyUser, createVotingSchema, controller.createVoting);
-router.get('/success', verifyUser);
-router.get('/error', verifyUser);
+router.get('/success', verifyUser, controller.success);
+router.get('/error', verifyUser, controller.error);
 router.delete('/delete/:voting_id', verifyUser, controller.deleteVoting);
 router.get('/:voting_id', addUserInfo, controller.getVotingDetailPage);
 router.patch('/:voting_id', verifyVote, controller.addVote);

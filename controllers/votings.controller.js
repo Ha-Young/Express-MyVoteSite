@@ -20,7 +20,7 @@ exports.createVoting = async function (req, res, next) {
     options,
   });
 
-  res.redirect('/');
+  res.redirect('/votings/success');
 };
 
 exports.getVotingDetailPage = async function (req, res, next) {
@@ -56,4 +56,12 @@ exports.deleteVoting = async function (req, res, next) {
 
   //TODO 삭제 성공 페이지 찍고 가는게 나을듯?
   res.end();
-}
+};
+
+exports.error = function (req, res, next) {
+  res.render('votingError');
+};
+
+exports.success = function (req, res, next) {
+  res.render('votingSuccess');
+};
