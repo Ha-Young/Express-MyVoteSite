@@ -100,7 +100,9 @@ module.exports = app => {
           return next(createError(error));
         }
 
-        // await userService.VoteToOption({ userId: req.user._id, voteId });
+        console.log(req.user._id);
+
+        await userService.VoteToOption({ userId: req.user._id, voteId });
 
       } catch (error) {
         next(createError(error));
