@@ -5,7 +5,7 @@ block append head
   link(rel="stylesheet" href="/stylesheets/myVotings.css")
 block content
   include header
-  h1 My voting list
+  h1 My votings
   ul.voting-list
     each voting in myVotingList
       +votingListItem(voting)
