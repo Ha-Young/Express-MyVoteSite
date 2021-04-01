@@ -3,12 +3,19 @@
 
 <head>
   <title>Voting Platform</title>
-  <link rel="stylesheet" href="/stylesheets/auth.css" />
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/newVoting.css" />
 </head>
 
 <body>
+  <%- include("partials/header", {user}) %>
   <main>
-    <form class="auth-form" action="/votings/new" method="post">
+    <div class="back-button-container">
+      <form method="GET" action="/">
+        <button class="button" type="submit">BACK TO HOME</button>
+      </form>
+    </div>
+    <form class="new-voting-form" action="/votings/new" method="post">
       <h1>
         <%= title %>
       </h1>
@@ -17,22 +24,39 @@
           <%= message %>
         </h3>
       </div>
-      <div class="title-container">
+      <div class="form-input-material">
+        <label for="title">title</label>
         <input type="text" name="title" id="title" placeholder=" " required class="form-control-material" />
         <p class="form-message">
           <%= ...infoMessages.filter(message=> message.includes('email')) %>
         </p>
       </div>
-      <div class="date-container">
+      <div class="form-input-material">
+        <label for="expiration-date">date</label>
         <input type="datetime-local" name="expiration-date" id="expiration-date" required
-          class="form-control-material" />
+          class="form-control-material" min=<%= today %>>
         <p class="form-message">
           <%= ...infoMessages.filter(message=> message.includes('email')) %>
         </p>
       </div>
-      <div class=""><button type="submit" class="btn btn-ghost">Sign Up</button></div>
+      <div class="options-container">
+        <div class="option form-input-material">
+          <label for="option">Option</label>
+          <input type="text" name="1" id="option1" placeholder=" " required class="form-control-material" />
+        </div>
+        <div class="option form-input-material">
+          <label for="option">Option</label>
+          <input type="text" name="2" id="option2" placeholder=" " required class="form-control-material" />
+        </div>
+      </div>
+      <p class="form-message">
+        <%= ...infoMessages.filter(message=> message.includes('email')) %>
+      </p>
+      <button class="btn btn-ghost add-button">ADD</button>
+      <button type="submit" class="btn btn-ghost">SUBMIT</button>
     </form>
   </main>
+  <script type="text/javascript" src="/javascripts/newVotingForm.js"></script>
 </body>
 
 </html>
