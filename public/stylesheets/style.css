@@ -56,6 +56,7 @@ input:active {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 20;
 }
 
 .modal-box {
@@ -281,7 +282,10 @@ footer {
 main {
   width: 100%;
   height: auto;
+  min-height: 100vh;
   padding: 60px 0 50px 0;
+  box-sizing: border-box;
+  position: relative;
 }
 
 section {
@@ -467,4 +471,27 @@ h2 {
 
 .chart-wrapper {
   padding: 1em;
+}
+
+/**
+ * error template
+ */
+.error-wrapper {
+  width: 800px;
+  height: 300px;
+  margin: -150px 0 0 -400px;
+  padding: 1em;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--white);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.error-wrapper .icon {
+  font-size: 6em;
+}
+.error-wrapper .status {
+  font-size: 3em;
+  font-weight: bold;
 }

@@ -1,6 +1,8 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  section
+    .error-wrapper.flex-center
+      p.icon 🤦‍♀️
+      p.status #{error.status}
+      h2 #{error.message}
