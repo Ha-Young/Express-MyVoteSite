@@ -7,7 +7,6 @@ const onClickVotingOption = (ev) => {
   const optionId = ev.target.dataset.optionId;
 
   xhr.onreadystatechange = () => {
-    console.log(xhr.readyState);
     if (xhr.readyState === 4 && xhr.status === 200) {
       console.log("AJAX Response Success");
       const { count } = JSON.parse(xhr.responseText);

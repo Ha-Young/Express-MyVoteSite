@@ -9,7 +9,10 @@ html
     header
       nav
         a.login(href="/") Home
-        a.login(href="/login") Login
-        a.logout(href="/signup") Sign up
+        if isLogin
+          a.login(href="/logout") Logout
+        else
+          a.login(href="/login") Login
+          a.logout(href="/signup") Sign up
     section
       block content

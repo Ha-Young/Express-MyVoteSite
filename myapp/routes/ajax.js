@@ -1,13 +1,14 @@
 const express = require("express");
 const createError = require("http-errors");
-const mongoose = require("mongoose");
-const User = require("../models/User");
-const { findOneAndUpdate } = require("../models/Voting");
 const Voting = require("../models/Voting");
+const getLoginStatus = require("../utils/getLoginStatus");
 
 const router = express.Router();
 
 router.post("/changeVotingCount", async (req, res, next) => {
+  const isLogin = getLoginStatus(req);
+  if (!isLogin) return res.status(403).send();
+
   try {
     const { votingId, optionId } = req.body;
     const voting = await Voting.findOne({ _id: votingId });

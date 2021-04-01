@@ -4,10 +4,14 @@ const router = express.Router();
 const Voting = require("../models/Voting");
 const getLocalTime = require("../utils/getLocalTime");
 const getProgress = require("../utils/getProgress");
+const getLoginStatus = require("../utils/getLoginStatus");
 
 router.get("/new", (req, res, next) => {
   try {
-    res.render("votingNew");
+    const isLogin = getLoginStatus(req);
+    if (!isLogin) return res.status(302).redirect("/");
+
+    res.render("votingNew", { isLogin });
   } catch (err) {
     console.error(`get /new in votings.js ${err.message}`);
     next(createError(500, "Internal Server Error"));
@@ -16,6 +20,9 @@ router.get("/new", (req, res, next) => {
 
 router.post("/new", async (req, res, next) => {
   try {
+    const isLogin = getLoginStatus(req);
+    if (!isLogin) return res.status(302).redirect("/");
+
     const { date, time, title, desc, item } = req.body;
     const isoString = date.concat("T", time);
     const votingItems = [];
@@ -43,16 +50,19 @@ router.post("/new", async (req, res, next) => {
 
 router.post("/delete", async (req, res, next) => {
   try {
+    const isLogin = getLoginStatus(req);
+    if (!isLogin) return res.status(302).redirect("/");
+
     await Voting.deleteOne({});
   } catch (err) {
-    console.error(`get /new in votings.js ${err.message}`);
+    console.error(`get /delete in votings.js ${err.message}`);
     next(createError(500, "Internal Server Error"));
   }
 });
 
 router.get("/:votingId", async (req, res, next) => {
-  console.log(req.query);
   try {
+    const isLogin = getLoginStatus(req);
     const { votingId } = req.params;
     const voting = await Voting.findOne({ _id: votingId });
     const {
@@ -71,6 +81,7 @@ router.get("/:votingId", async (req, res, next) => {
     const isClosed = getProgress(endTime);
 
     res.status(200).render("votingDetail", {
+      isLogin,
       _id,
       author,
       title,
