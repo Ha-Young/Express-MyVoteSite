@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const Vote = require('../../models/vote');
-const convertDate = require('../../utils/combineDateAndTime');
-const filterOption = require('../../utils/filterOption');
-const classifyAccordingToIsproceeding = require('../../utils/classifyAccordingToIsproceeding');
+const Vote = require('../models/vote');
+const convertDate = require('../utils/combineDateAndTime');
+const filterOption = require('../utils/filterOption');
+const classifyAccordingToIsproceeding = require('../utils/classifyAccordingToIsproceeding');
 
 exports.voteGetAll = async (req, res, next) => {
   const votes = await Vote.find();
@@ -43,7 +43,7 @@ exports.voteCreate = async (req, res, next) => {
     expired_time: expiredTime,
   } = req.body;
   const { _id, nickname } = req.user;
-  const expiredAt = expiredDate + "T" + expiredTime;
+  const expiredAt = expiredTime ? expiredDate + "T" + expiredTime : expiredDate;
   const convertedExpiredAt = convertDate(expiredDate, expiredTime);
 
   if (new Date(expiredAt) < new Date()) {

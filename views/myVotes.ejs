@@ -38,11 +38,11 @@
             <div class="grid-box">
               <form action="/votings/<%= expiredVote[i]._id %>" method="GET">
                 <div class="title-box">
-                  <span><%= validatedVote[i].title %></span>
+                  <span><%= expiredVote[i].title %></span>
                 </div>
                 <div class="info-box">
-                  <span>생성자:  <%= validatedVote[i].creater.nickname %></span>
-                  <span>종료 시간:  <%= validatedVote[i].convertedExpiredAt %></span>
+                  <span>생성자:  <%= expiredVote[i].creater.nickname %></span>
+                  <span>종료 시간:  <%= expiredVote[i].convertedExpiredAt %></span>
                 </div>
                 <button class="grid-button" type="submit">결과 보기</button>
               </form>

@@ -2,47 +2,47 @@
 <html>
   <head>
     <%- include ('partials/head') %>
+    <link rel="stylesheet" href="/stylesheets/vote.css">
   </head>
   <body>
     <%- include ('partials/header') %>
 
-    <h1><%= title %></h1>
-
-    <div>
-      <div>
-        <span>생성자:  <%= creater.nickname %></span>
+    <div class="vote-container">
+      <div class="info-box">
+        <div class="info-creater">
+          <span>생성자:  <%= creater.nickname %></span>
+        </div>
+        <div class="info-expired-time">
+          <span>종료 시간:  <%= convertedExpiredAt %></span>
+        </div>
       </div>
-      <div>
-        <span>진행 여부:  <%= isProceeding %></span>
-      </div>
-      <div>
-        <span>종료 시간:  <%= convertedExpiredAt %></span>
-      </div>
-      <div>
-        <span>- 선택 사항 -</span>
+      <div class="option-container">
+        <h1><%= title %></h1>
         <form name="<%= id %>" id="patch-form">
           <% for (let i = 0; i < options.length; i++) { %>
-            <div>
-              <label><input type="radio" name="voted" value="<%= options[i].text %>">
+            <div class="option">
+              <label>
+                <input type="radio" name="voted" value="<%= options[i].text %>" style="<%= isProceeding ? "" : "visibility: hidden;" %>">
                 <%= options[i].text %>
               </label>
             </div>
           <% } %>
         </form>
-      </div>
-      <% if (isProceeding && user.nickname) { %>
-        <button id="patch-button" name="<%= user.nickname %>">투표</button>
-      <% } else if (isProceeding) { %>
-        <a href="/login">투표</a>
-      <% } %>
+        <div class="vote-buttons">
+          <% if (isProceeding && user.nickname) { %>
+            <button class="vote-button" id="patch-button">투표</button>
+          <% } else if (isProceeding) { %>
+            <a class="vote-button" href="/login">투표</a>
+          <% } %>
 
-      <% if (creater._id.toString() === user._id.toString()) { %>
-        <button id="delete-button">삭제</button>
-      <% } %>
+          <% if (creater._id.toString() === user._id.toString()) { %>
+            <button class="vote-button" id="delete-button">삭제</button>
+          <% } %>
+        </div>
+      </div>
     </div>
 
     <%- include ('partials/footer') %>
-
-    <script src="/javascripts/votingAjax.js"></script>
+    <script src="/javascripts/voteAjax.js"></script>
   </body>
 </html>

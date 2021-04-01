@@ -2,41 +2,38 @@
 <html>
   <head>
     <%- include ('partials/head') %>
-    <!-- <link rel="stylesheet" href="/stylesheets/signPage.css"> -->
+    <link rel="stylesheet" href="/stylesheets/voteCreate.css">
   </head>
   <body>
     <%- include ('partials/header') %>
 
     <h1 class="page-title">Create Vote</h1>
-    <form action="/votings/new" method="POST">
-      <input type="text" name="title" id="title" placeholder="vote title" required>
-      <div>
-        <label><input type="radio" name="option_type" value="text" checked>TEXT</label>
-        <label><input type="radio" name="option_type" value="date">DATE</label>
-      </div>
-      <input type="date" name="expired_date" id="expired-date" required>
-      <input type="time" name="expired_time" id="expired-time" required>
-      <div id="options">
-        <input type="option" name="option" class="option" placeholder="write option" required>
-        <input type="option" name="option" class="option" placeholder="write option" required>
-      </div>
-      <div>
-        <div id="option-create">
-          <span> + Add Option</span>
+    <div class="create-container">
+      <form class="create-form" action="/votings/new" method="POST">
+        <input type="text" name="title" id="title" placeholder="title..." required>
+        <input type="date" name="expired_date" id="expired-date" required>
+        <input type="time" name="expired_time" id="expired-time">
+        <div id="options">
+          <input type="option" name="option" class="option" placeholder="write option" required>
+          <input type="option" name="option" class="option" placeholder="write option" required>
         </div>
-        <div id="option-delete">
-          <span> - Delete Option</span>
+        <div class="buttons">
+          <button id="option-create">
+            <span> + Add Option</span>
+          </button>
+          <button id="option-delete">
+            <span> - Delete Option</span>
+          </button>
         </div>
-      </div>
-      <span id="form-message"></span>
-      <div>
-        <button class="page-button" type="submit">Done</button>
-        <button id="form-reset" type="reset">Reset</button>
-      </div>
-    </form>
-    <a href="/">Home</a>
+        <span id="form-message"></span>
+        <div class="buttons">
+          <button class="page-button" type="submit">Done</button>
+          <button id="form-reset" type="reset">Reset</button>
+        </div>
+      </form>
+    </div>
 
     <%- include ('partials/footer') %>
-    <script src="/javascripts/votingCreate.js"></script>
+    <script src="/javascripts/voteCreate.js"></script>
   </body>
 </html>

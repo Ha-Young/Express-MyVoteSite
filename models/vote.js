@@ -30,10 +30,6 @@ const voteSchema = new mongoose.Schema({
     default: true,
     required: true,
   },
-  optionType: {
-    type: String,
-    required: true,
-  },
   options: [{
     text: {
       type: String,

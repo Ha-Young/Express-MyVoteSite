@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const isLoggedIn = require('./middleware/isLoggedIn');
-const votingsController = require('./controllers/votings.controller');
+const votingsController = require('../controllers/votings.controller');
 
 router.get('/new', isLoggedIn, (req, res, next) => {
   res.render('voteCreate');

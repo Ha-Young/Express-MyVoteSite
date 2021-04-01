@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const isLoggedIn = require('./middleware/isLoggedIn');
-const votingsController = require('../routes/controllers/votings.controller');
-const userController = require('../routes/controllers/user.controller');
+const votingsController = require('../controllers/votings.controller');
+const userController = require('../controllers/user.controller');
 
 /* GET home page. */
 router.get('/', votingsController.voteGetAll);
