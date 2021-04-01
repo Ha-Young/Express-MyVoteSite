@@ -1,4 +1,11 @@
 const jwt = require("jsonwebtoken");
+const {
+  AUTH_ROUTE,
+  SIGNUP,
+  LOGIN,
+  ROOT_ROUTE,
+  VOTINGS_ROUTE,
+} = require("../../constants");
 
 const User = require("../../models/User");
 const catchAsync = require("../../utils/catchAsync");
@@ -19,7 +26,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   if (!name || !email || !password || !passwordConfirm) {
     req.flash("message", "Provide all informations.");
-    res.redirect("/auth/signup");
+    res.redirect(AUTH_ROUTE + SIGNUP);
     return;
   }
 
@@ -30,7 +37,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordConfirm,
   });
 
-  res.redirect("/auth/login");
+  res.redirect(AUTH_ROUTE + LOGIN);
 });
 
 exports.renderLoginPage = (req, res, next) => {
@@ -44,7 +51,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   if (!email || !password) {
     req.flash("message", "Provide email and password.");
-    res.redirect("/auth/login");
+    res.redirect(AUTH_ROUTE + LOGIN);
     return;
   }
 
@@ -53,7 +60,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   if (!user || !correct) {
     req.flash("message", "Incorrect email or password.");
-    res.redirect("/auth/login");
+    res.redirect(AUTH_ROUTE + LOGIN);
     return;
   }
 
@@ -66,11 +73,11 @@ exports.login = catchAsync(async (req, res, next) => {
   });
 
   location
-    ? res.redirect(`/votings/${location}`)
-    : res.redirect("/");
+    ? res.redirect(`${VOTINGS_ROUTE}/${location}`)
+    : res.redirect(ROOT_ROUTE);
 });
 
 exports.logout = (req, res, next) => {
   res.clearCookie("voting_platform");
-  res.redirect("/");
+  res.redirect(ROOT_ROUTE);
 };

@@ -5,6 +5,12 @@ const Vote = require("../../models/Vote");
 const catchAsync = require("../../utils/catchAsync");
 const { addFormattedDueDate, extractOptions } = require("../../utils/index");
 const AppError = require("../../utils/AppError");
+const {
+  NEW,
+  VOTINGS_ROUTE,
+  MY_VOTINGS_ROUTE,
+  ROOT_ROUTE,
+} = require("../../constants");
 
 exports.renderVotingsPage = (req, res, next) => {
   res.locals.message = req.flash("message")[0] || null;
@@ -18,18 +24,18 @@ exports.createVote = catchAsync(async (req, res, next) => {
 
   if (options.length < 2) {
     req.flash("message", "Provide options more than Two.");
-    res.redirect("/votings/new");
+    res.redirect(VOTINGS_ROUTE + NEW);
   }
 
   if (!title || !expiration) {
     req.flash("message", "Provide title and expiration.");
-    res.redirect("/votings/new");
+    res.redirect(VOTINGS_ROUTE + NEW);
     return;
   }
 
   if (expiration < moment().format()) {
     req.flash("message", "A expiration date must be after now.");
-    res.redirect("/votings/new");
+    res.redirect(VOTINGS_ROUTE + NEW);
     return;
   }
 
@@ -41,7 +47,7 @@ exports.createVote = catchAsync(async (req, res, next) => {
     createdAt: moment().format(),
   });
 
-  res.redirect("/my-votings");
+  res.redirect(MY_VOTINGS_ROUTE);
 });
 
 exports.renderVoteDetailPage = catchAsync(async (req, res, next) => {
@@ -60,7 +66,7 @@ exports.renderVoteDetailPage = catchAsync(async (req, res, next) => {
     .lean();
 
   if (!vote) {
-    res.redirect("/");
+    res.redirect(ROOT_ROUTE);
     return;
   }
 
@@ -74,7 +80,7 @@ exports.renderVoteDetailPage = catchAsync(async (req, res, next) => {
 exports.deleteVote = async (req, res, next) => {
   await Vote.deleteOne({ _id: req.params.id });
 
-  res.redirect("/");
+  res.redirect(ROOT_ROUTE);
 };
 
 exports.voting = catchAsync(async (req, res, next) => {
@@ -94,5 +100,5 @@ exports.voting = catchAsync(async (req, res, next) => {
     },
   );
 
-  res.redirect(`/votings/${id}`);
+  res.redirect(`${VOTINGS_ROUTE}/${id}`);
 });
