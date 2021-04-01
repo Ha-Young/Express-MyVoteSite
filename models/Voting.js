@@ -5,6 +5,9 @@ const votingSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  imageUrl: {
+    type: String,
+  },
   description: {
     type: String,
   },
@@ -15,6 +18,10 @@ const votingSchema = new mongoose.Schema({
   },
   voters: {
     type: Object,
+  },
+  postingTime: {
+    type:Date,
+    require: true,
   },
   expirationTime: {
     type: Date,

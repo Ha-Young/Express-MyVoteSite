@@ -31,6 +31,9 @@ module.exports.postNew = async (req, res, next) => {
           }, new Map()),
         isAbleSelectMultipleOptions:
           toBeCreatedVoting.isAbleSelectMultipleOptions,
+        imageUrl:
+          toBeCreatedVoting.imageUrl,
+        postingTime: new Date(),
       });
 
       await newVoting.save();

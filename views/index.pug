@@ -8,10 +8,9 @@ block append head
 block content
   include header
   div.votings-container
-    h1 Votings
     ul.votings
       each voting in votingList
         +votingListItem(voting)
 
-    button.create-voting-button(type="button") Create Voting
+    button.create-voting-button(type="button") +
   script(src="/javascripts/index.js")

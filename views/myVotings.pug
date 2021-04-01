@@ -2,13 +2,15 @@ extends layout
 include mixin/votingListItem
 
 block append head
-  link(rel="stylesheet" href="/stylesheets/myVotings.css")
+  link(rel="stylesheet" href="/stylesheets/index.css")
+  link(rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous")
+
 block content
   include header
-  h1 My votings
-  ul.voting-list
-    each voting in myVotingList
-      +votingListItem(voting)
+  div.votings-container
+    ul.votings
+      each voting in myVotingList
+        +votingListItem(voting)
 
-  button.create-voting-button(type="button") Create Voting
+    button.create-voting-button(type="button") +
   script(src="/javascripts/myVotings.js")

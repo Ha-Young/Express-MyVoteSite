@@ -10,6 +10,7 @@ router.get("/", async (req, res, next) => {
     const votingList = await Voting.find().lean();
     for (const voting of votingList) {
       voting.formattedExpirationTime = format(voting.expirationTime, "yyyy-MM-dd HH:mm");
+      voting.formattedPostingTime = format(voting.postingTime, "yyyy-MM-dd HH:mm");
     }
 
     res.render("index", {

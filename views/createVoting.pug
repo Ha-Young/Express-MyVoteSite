@@ -3,6 +3,7 @@ extends layout
 block append head
   link(rel="stylesheet" href="/stylesheets/createVoting.css")
 block content
+  include header
   h1.create-voting-title Create voting
   div.create-voting.container
     form.create-voting-form
@@ -11,7 +12,10 @@ block content
       label.create-voting-label Description
         textarea.input-description(name="description")
       label.create-voting-label Can select Multiple Options
-        <input type="checkbox" name="isAbleSelectMultipleOptions">
+        input.input-is-able-select-multiple-options(
+          type="checkbox"
+          name="isAbleSelectMultipleOptions"
+        )
       label.create-voting-label Options
         ol.options
           li
@@ -22,8 +26,14 @@ block content
             button.option-remove-button(type="button") ×
         button.option-add-button(type="button") +
       label.create-voting-label Expiration Date
-        input.input-expiration-time(type="datetime-local", name="expirationTime" required)
+        input.input-expiration-time(
+          type="datetime-local"
+          name="expirationTime"
+          required
+        )
       div.message-box
+      label.create-voting-label Image URL
+        input.input-image-url(type="text", name="imageUrl")
       button.submit-button(type="submit") Create
     button.index-link-button(type="button") < Voting List
   script(src="/javascripts/createVoting.js")

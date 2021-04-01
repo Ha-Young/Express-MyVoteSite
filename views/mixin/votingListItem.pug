@@ -7,11 +7,33 @@ mixin votingListItem(voting={})
   a(href="/votings/" + voting._id)
     li(class="voting " + expiredVotingClassName)
       div.voting-container
-        if isExpired
-          div(class="isExpired expired-mark") Expired
-        else
-          div(class="isExpired in-progress-mark") in Progress
-        h2.voting-title= voting.title
-        p.description= voting.description
-        p.expiration-time= voting.formattedExpirationTime
+        div.voting-info-box
+          if isExpired
+            div(class="isExpired expired-mark") Expired
+          else
+            div(class="isExpired in-progress-mark") in Progress
+          h2.voting-title= voting.title
+          div.voting-description= voting.description
+          div.time-box
+            div.voting-time
+              img.posting-time-icon(
+                src="/images/vote-yea-solid.svg"
+                alt="posting-time-icon"
+              )
+              div.voting-posting-time
+                p.time-description Published at
+                p.time= voting.formattedPostingTime
+            div.voting-time
+              img.expiration-time-icon(
+                src="/images/calendar-check-regular.svg"
+                alt="expiration-time-icon"
+              )
+              div.voting-expiration-time
+                p.time-description Expired at
+                p.time= voting.formattedExpirationTime
+        img.voting-image(
+          src=voting.imageUrl
+          alt="voting-image"
+          onerror="this.src='/images/voting.png'"
+        )
 

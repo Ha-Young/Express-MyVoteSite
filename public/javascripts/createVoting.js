@@ -47,10 +47,12 @@ const handleSubmit = async (e) => {
     title: e.target.title.value,
     description: e.target.description.value,
     options:
-      Array.from(e.target.elements.option).map((node) => node.value),
+      Array.from(e.target.elements.option)
+        .map((node) => node.value),
     expirationTime: e.target.expirationTime.value,
     isAbleSelectMultipleOptions:
       e.target.isAbleSelectMultipleOptions.checked,
+    imageUrl: e.target.imageUrl.value,
   };
 
   try {
