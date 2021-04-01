@@ -1,75 +1,90 @@
+const createError = require("http-errors");
+const { celebrate, Joi } = require("celebrate");
 const { Router } = require("express");
-const { celebrate, Joi } = require('celebrate');
-const { logger } = require("../../loaders/logger");
+const passport = require("passport");
 
-// const AuthService = require('../../services/auth');
-// const middlewares = require('../middlewares');
-const { api } = require("../../config/routes");
+const authService = require("../../services/authService");
+const { jwtCookieKey, jwtExpires } = require("../../config").jwt;
+const { AUTH } = require("../../config/routes").API;
 
 const route = Router();
 
 module.exports = app => {
-  app.use(api.auth.prefix, route);
+  app.use(AUTH.PREFIX, route);
 
-  // route.post(
-  //   api.auth.signup,
-  //   celebrate({
-  //     body: Joi.object({
-  //       name: Joi.string().required(),
-  //       email: Joi.string().required(),
-  //       password: Joi.string().required(),
-  //     }),
-  //   }),
-  //   async (req, res, next) => {
-  //     logger.debug('Calling Sign-Up endpoint with body: %o', req.body );
-  //     try {
-  //       const { user, token } = await AuthService.SignUp(req.body);
-  //       return res.status(201).json({ user, token });
-  //     } catch (e) {
-  //       logger.error('🔥 error: %o', e);
-  //       return next(e);
-  //     }
-  //   }
-  // );
+  route.post(
+    AUTH.LOGIN,
+    celebrate({
+      body: Joi.object({
+        email: Joi.string().required(),
+        password: Joi.string().required(),
+      }),
+    }),
+    async (req, res, next) => {
+      try {
+        const { email, password } = req.body;
+        const { token, error } = await authService.SignIn(email, password);
 
-  // route.post(
-  //   api.auth.signin,
-  //   celebrate({
-  //     body: Joi.object({
-  //       email: Joi.string().required(),
-  //       password: Joi.string().required(),
-  //     }),
-  //   }),
-  //   async (req, res, next) => {
-  //     logger.debug('Calling Sign-In endpoint with body: %o', req.body);
-  //     try {
-  //       const { email, password } = req.body;
-  //       const { user, token } = await AuthService.SignIn(email, password);
-  //       return res.json({ user, token }).status(200);
-  //     } catch (e) {
-  //       logger.error('🔥 error: %o',  e );
-  //       return next(e);
-  //     }
-  //   }
-  // );
+        if (error) {
+          return res.render("login", { error });
+        }
 
-  // /**
-  //  * @TODO Let's leave this as a place holder for now
-  //  * The reason for a logout route could be deleting a 'push notification token'
-  //  * so the device stops receiving push notifications after logout.
-  //  *
-  //  * Another use case for advance/enterprise apps, you can store a record of the jwt token
-  //  * emitted for the session and add it to a black list.
-  //  * It's really annoying to develop that but if you had to, please use Redis as your data store
-  //  */
-  // route.post(api.auth.logout, middlewares.isAuth, (req, res, next) => {
-  //   logger.debug('Calling Sign-Out endpoint with body: %o', req.body);
-  //   try {
-  //     //@TODO AuthService.Logout(req.user) do some clever stuff
-  //     return res.status(200).end();
-  //   } catch (e) {
-  //     logger.error('🔥 error %o', e);
-  //     return next(e);
-  //   }
-  // });
+        authSuccess({ res, token });
+      } catch (err) {
+        return next(createError(err));
+      }
+    }
+  );
+
+  route.post(
+    AUTH.SIGNUP,
+    celebrate({
+      body: Joi.object({
+        name: Joi.string().required(),
+        email: Joi.string().required(),
+        password: Joi.string().required(),
+      }),
+    }),
+    async (req, res, next) => {
+      try {
+        const { user, token, error } = await authService.SignUp(req.body);
+
+        if (error) {
+          return res.render("login", { error });
+        }
+
+        authSuccess({ res, token });
+        return res.render("index", { user });
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+
+  route.get(AUTH.LOGIN_GOOGLE, passport.authenticate('google', { scope: ['profile','email'], session: false }));
+
+  route.get(AUTH.LOGIN_GOOGLE_REDIRECT, passport.authenticate('google', { session: false }), async (req, res)=>{
+    const userInputDTO = {
+      name: req.user.displayName,
+      email: req.user._json.email,
+      provider: req.user.provider,
+    };
+
+    const { token, error } = await authService.SocialLogin(userInputDTO);
+
+    if (error) {
+      return res.render("login", { error });
+    }
+
+    authSuccess({ res, token });
+  });
 };
+
+function authSuccess({ res, token }) {
+  res.cookie(jwtCookieKey, token, {
+    maxAge: jwtExpires,
+    httpOnly: true,
+  });
+
+  res.redirect("/");
+}
