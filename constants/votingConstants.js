@@ -4,4 +4,6 @@ module.exports = {
   SUCCESS_VOTING_MESSAGE: "투표 성공",
   ALREADY_VOTED_MESSAGE: "이미 투표하셨습니다",
   OPTION_UPPER_VALUE: 1,
+  OPTION_DEFAULT_VALUE: 0,
+  OPTION_LIMIT_LENGTH: 0,
 };

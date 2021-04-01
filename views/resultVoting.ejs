@@ -8,6 +8,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   </head>
   <body>
+    <form action="/" method="GET">
+      <button type="submit">투표 목록</button>
+    </form>
     <section class="voting-information container">
       <div class="chart">
         <canvas id="myChart" name="<%= JSON.stringify(voting.options) %>"></canvas>
@@ -44,9 +47,6 @@
             <script src="/javascripts/deleteVoting.js"></script>
           <% } %>
         </ul>
-        <form action="/" method="GET">
-          <button type="submit">투표 목록</button>
-        </form>
       </article>
     </section>
   </body>

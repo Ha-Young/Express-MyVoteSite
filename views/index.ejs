@@ -8,7 +8,7 @@
   <body>
     <%- include("partial/header") %>
     <article class="buttons">
-      <% if (user || null) { %>
+      <% if (user) { %>
         <span class="user-info"><%= user.email %></span>
         <form action="/auth/logout" method="GET">
           <button type="submit">로그아웃</button>

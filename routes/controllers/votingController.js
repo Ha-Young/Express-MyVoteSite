@@ -45,7 +45,7 @@ Controller.getNewVoting = async (req, res, next) => {
 Controller.postNewVoting = async (req, res, next) => {
   try {
     const currentUserId = req.user._id;
-    const { title } = req.body;
+    const { title, option } = req.body;
     const endDate = getDateFormat(req.body["end-date"]);
     const isProgress = validateDate(endDate, Date.now());
 
@@ -53,10 +53,12 @@ Controller.postNewVoting = async (req, res, next) => {
       return res.redirect("/voting/votings/error");
     }
 
-    const filteredOptions = req.body.option.filter(option => option.length > 0);
+    const filteredOptions = option.filter(
+      option => VOTING.OPTION_LIMIT_LENGTH < option.length
+    );
 
     const options = filteredOptions.map(option => {
-      return { title: option, value: 0 };
+      return { title: option, value: VOTING.OPTION_DEFAULT_VALUE };
     });
 
     const newVoting = new Voting({
@@ -152,7 +154,10 @@ Controller.getDetailVoting = async (req, res, next) => {
             isAuthor,
           });
         } else {
-          let highestOption = { value: 0 };
+          let highestOption = {
+            title: undefined,
+            value: VOTING.OPTION_DEFAULT_VALUE
+          };
 
           voting.options.forEach(option => {
             if (highestOption.value < option.value) {
