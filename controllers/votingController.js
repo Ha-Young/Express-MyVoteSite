@@ -5,10 +5,10 @@ const Voting = require("./../models/votingModel");
 const CreateError = require("./../utils/createError");
 const catchAsync = require("./../utils/catchAsync");
 const getVotingStatus = require("./../utils/getVotingStatus");
+const convertFormat = require("./../utils/convertFormat");
 
 exports.getVotings = catchAsync(async (req, res, next) => {
   const findArgs = {};
-  console.log(req.originalUrl);
 
   if (req.originalUrl === "/upcoming") {
     findArgs.status = "예정";
@@ -20,7 +20,9 @@ exports.getVotings = catchAsync(async (req, res, next) => {
     findArgs.status = "취소됨";
   }
 
-  const votings = await Voting.find(findArgs);
+  const votings = await Voting.find(findArgs)
+    .populate("createdBy")
+    .lean();
 
   votings.forEach(async (voting) => {
     const updatedStatus = getVotingStatus(
@@ -35,29 +37,13 @@ exports.getVotings = catchAsync(async (req, res, next) => {
     }
   });
 
+  const convertedVotings = convertFormat(votings);
+
   res.status(200).render("votingList", {
     status: "success",
     results: votings.length,
     data: {
-      votings,
-    },
-  });
-});
-
-exports.getSearchedVotings = catchAsync(async (req, res, next) => {
-  const searchKeyword = req.params.serch_keyword;
-  const searchedVotings = await Voting.find({
-    name: { $search: searchKeyword },
-  });
-
-  if (!searchedVotings) {
-    return next(new CreateError("검색 중 문제가 발생했습니다.", 400));
-  }
-
-  res.status(200).json({
-    status: "success",
-    data: {
-      votings: searchedVotings,
+      votings: convertedVotings,
     },
   });
 });
@@ -69,11 +55,12 @@ exports.myVotings = catchAsync(async (req, res, next) => {
     .lean();
 
   const votings = myVotings.createHistory;
+  const convertedVotings = convertFormat(votings);
 
   res.status(200).render("votingList", {
     status: "success",
     data: {
-      votings,
+      votings: convertedVotings,
     },
   });
 });
@@ -83,16 +70,14 @@ exports.votedVotings = catchAsync(async (req, res, next) => {
   const votedData = await User.findById(userId)
     .populate("voteHistory")
     .lean();
-  const votedVotings = [];
 
-  if (votedData.length > 0) {
-    votedData.forEach((data) => votedVotings.push(data.voting));
-  }
+  const votedVotings = votedData.voteHistory;
+  const convertedVotings = convertFormat(votedVotings);
 
   res.status(200).render("votingList", {
     state: "success",
     data: {
-      votings: votedVotings,
+      votings: convertedVotings,
     },
   });
 });
@@ -136,59 +121,62 @@ exports.createNewVoting = async (req, res, next) => {
       options: convertedOptions,
     });
 
-    await User.update(
-      { _id: createdBy },
-      { $push: { createHistory: newVoting._id } }
-    );
+    await User.findByIdAndUpdate(createdBy, {
+      $push: { createHistory: newVoting._id },
+    });
 
-    res.status(200).render("successCreate", {
+    res.status(200).render("createResult", {
+      result: "success",
+      message: "투표를 성공적으로 등록하였습니다.",
       votingId: newVoting._id,
     });
   } catch (err) {
-    res.status(404).render("failCreate", {
-      status: "fail",
+    res.status(404).render("createResult", {
+      result: "fail",
+      message: "투표 등록에 실패하였습니다.",
     });
   }
 };
 
 exports.getSelectedVoting = catchAsync(async (req, res, next) => {
   const votingId = req.params.id;
-  const voting = await Voting.findById(votingId).lean();
+  const voting = await Voting.findById(votingId)
+    .populate("createdBy")
+    .lean();
+  const userId = req.user.id;
   const results = [];
   let isCreator = false;
 
   if (!voting) {
-    return next(new CreateError("해당하는 투표가 없습니다.", 404));
+    return res.status(200).render("notExistingVoting");
   }
 
-  const userId = req.user.id;
-  const userChoice = await User.find(
-    { _id: userId },
-    { "voteHistory.voting": votingId }
-  ).select("voteHistory.answer");
-
-  if (voting.createdBy.toString() === userId.toString()) {
+  if (voting.createdBy._id.toString() === userId.toString()) {
     isCreator = true;
   }
 
-  if (
-    voting.createdBy.toString() === userId.toString() ||
-    voting.status === "종료"
-  ) {
-    const { options } = voting;
-    options.forEach((result) => {
-      const { option, votee } = result;
-      results.push({ option, count: votee.length });
-    });
-  }
+  voting.options.forEach((result) => {
+    results.push({ option: result.option, count: result.count });
+  });
+
+  const winner = { option: "", index: 0, count: 0 };
+
+  voting.options.forEach((option, index) => {
+    if (winner.count < option.count) {
+      winner.count = option.count;
+      winner.option = option.option;
+      winner.index = index;
+    }
+  });
+
+  const convertedVoting = convertFormat(voting);
 
   res.status(200).render("votingPage", {
     status: "success",
     data: {
-      voting,
+      voting: convertedVoting,
       isCreator,
-      userChoice,
-      results,
+      winner,
     },
   });
 });
@@ -196,42 +184,51 @@ exports.getSelectedVoting = catchAsync(async (req, res, next) => {
 exports.voteVoting = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const userChoice = req.body.choice;
-  const choiceNumber = req.body.number;
   const votingId = req.params.id;
-  const voting = await Voting.findById(votingId);
+  const currentVoting = await Voting.findById(votingId);
+  const { votedUsers } = currentVoting;
 
-  // Voting의 옵션 업데이트하기
+  if (votedUsers.indexOf(userId) !== -1) {
+    return res.status(200).json({
+      message: "already voted",
+    });
+  }
 
-  // User의 votedVotings 업데이트하기
-  // const updatedUser = await User.findByIdAndUpdate(userId, {})
+  currentVoting.votedUsers = [...currentVoting.votedUsers, userId];
+  currentVoting.options = currentVoting.options.map((option) => {
+    if (option.option === userChoice) {
+      option.count += 1;
+    }
 
-  res.status(200).json({
-    status: "success",
-    data: {
-      voting,
-      userChoice,
-    },
+    return option;
+  });
+
+  await currentVoting.save();
+  await User.findByIdAndUpdate(userId, { $push: { voteHistory: votingId } });
+
+  return res.status(200).json({
+    message: "success voting",
   });
 });
 
-// 투표 삭제
 exports.deleteVoting = catchAsync(async (req, res, next) => {
   const voting = await Voting.findByIdAndDelete(req.params.id);
 
   if (!voting) {
-    return next(new CreateError("해당하는 투표가 없습니다.", 404));
+    return res.status(200).json({
+      message: "fail",
+    });
   }
 
-  res.status(204).json({
-    status: "success",
-    data: null,
+  return res.status(200).json({
+    message: "success",
   });
 });
 
 exports.cancelVoting = catchAsync(async (req, res, next) => {
   await Voting.findByIdAndUpdate(req.params.id, { status: "취소됨" });
 
-  res.status(204).json({
-    status: "success",
+  return res.status(200).json({
+    message: "success",
   });
 });

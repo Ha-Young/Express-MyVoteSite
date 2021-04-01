@@ -12,14 +12,7 @@ router
   .get(authController.getLogIn)
   .post(authController.postLogIn);
 
-router.post("/forgotPassword", authController.forgotPassword);
-
-router
-  .route("/resetPassword")
-  .get(authController.getResetPassword)
-  .post(authController.resetPassword);
-
 router.delete("/deleteUser", authController.deleteUser);
-router.post("/logout", authController.getLogOut);
+router.post("/logout", authController.logOut);
 
 module.exports = router;

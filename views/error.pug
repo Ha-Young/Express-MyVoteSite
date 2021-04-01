@@ -1,6 +1,9 @@
-extends layout
+extends layouts/main
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+	.error-container
+		.error-image-container
+		.error-message-container
+			span=message
+		.error-buttons-container
+			a(href="/").error-button-home 목록으로 돌아가기

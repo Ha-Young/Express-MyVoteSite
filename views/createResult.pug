@@ -1,0 +1,11 @@
+extends layouts/main
+
+block content
+	.result-container
+		.result-image-container
+		.result-message-container
+			span=message
+		.result-buttons-container
+			a(href="/").result-button-home 목록으로 돌아가기
+			if result === "success"
+				a(href="/votings/" + votingId).result-button-detail 생성한 투표 보러가기

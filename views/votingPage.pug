@@ -2,40 +2,61 @@ extends layouts/main
 
 block content
 	-const { _id, name, status, createdBy, createdAt, startDate, endDate, options } = data.voting;
-	.voting-name-container
-		h1(id=_id).voting-name=name
-	.voting-status-container
-		.voting-status=status
-	.voting-createdAt-container
-		.voting-createdAt=createdAt
-	.voting-startDate-container
-		span 시작일
-		span.voting-startDate=startDate
-	.voting-endDate-container
-		span 종료일
-		span.voting-endDate=endDate
-	.voting-vote-options-container
-	if status === "취소됨"
-		each option in options
-			.voting-option-container
-				.voting-result=option.option
-	else if status !== "종료"
-		each option in options
-			.voting-option-container
-				input(type="radio", name="choice", value=option.option, id=option.option).voting-option
-				label(for=option.option)=option.option
-		.voting-vote-button-container
-			button.voting-vote-button(id=_id) 투표하기
-	else
-		each result in data.results
-			.voting-result-container
-				.voting-result=result.option
-				.voting-result=result.count
-	if data.isCreator
-		.votin-admin-buttons-container
-		if status !== "취소됨"
-			button.voting-cancel(id=_id) 취소하기
-		button.voting-delete(id=_id) 삭제하기
+	.votingPage-container
+		.votingPage-items.votingPage-name-container
+			h1(id=_id).votingPage-name=name
+		.votingPage-items.votingPage-status-container
+			.votingPage-status=status
+		if data.isCreator || status === "종료"
+			.votingPage-result
+				.votingPage-result-option
+					span.result-text 결과 :&nbsp;
+					span.result-option=data.winner.option
+				.votingPage-result-count
+					span.result-text 득표 수 :&nbsp;
+					span.result-count=data.winner.count
+		.votingPage-items.votingPage-metadata-container
+			.votingPage-metadata-createdBy-container
+				span 작성자 &nbsp;
+				span.votingPage-metadata-createdBy=createdBy
+			.votingPage-metadata-createdBy-container
+				span 등록일 &nbsp;
+				span.votingPage-metadata-createdAt=createdAt
+			.votingPage-metadata-timeline-container
+				span 투표기간 &nbsp;
+				span.votingPage-timeline-startDate=startDate
+				span ~&nbsp;
+				span.votingPage-timeline-endDate=endDate
+		.votingPage-items.votingPage-options-container
+			if status === "종료"
+				each option in options
+					.votingPage-option-container
+						.votingPage-option=option.option
+						.votingPage-option=option.count
+			else if status === "취소됨"
+				each option in options
+					.votingPage-option-container
+						.votingPage-option=option.option
+			else if data.isCreator
+				each option in options
+					.votingPage-option-container
+						input.votingPage-option(type="radio", name="choice", value=option.option, id=option.option).votingPage-option
+						label.votingPage-option-label(for=option.option)=option.option 
+						span.votingPage-option-result &nbsp;&nbsp;&nbsp;득표수 : 
+						span.votingPage-option-result=option.count
+			else
+				each option in options
+					.votingPage-option-container
+						input.votingPage-option(type="radio", name="choice", value=option.option, id=option.option).votingPage-option
+						label.votingPage-option-label(for=option.option)=option.option
+		if status !== "종료" && status !== "취소됨"
+			.votingPage-vote-button-container
+				button.votingPage-vote-button(id=_id) 투표하기
+		if data.isCreator
+			.votingPage-admin-buttons-container
+				if status !== "취소됨"
+					button.votingPage-admin-button.votingPage-cancel(id=_id) 취소하기
+				button.votingPage-admin-button.votingPage-delete(id=_id) 삭제하기
 
 	script(src="/javascripts/votingPage.js")
 

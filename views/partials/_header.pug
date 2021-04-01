@@ -1,13 +1,10 @@
 header.header-container
-	a(href="/").header__logo-container
-		h1.header__logo VaniVote
-	.header__search-container
-		form
-			input(type="text", placeholder="Search by term", name="term")
+	a(href="/").header__title-container
+		span.header__title Vani
+		span.header__title.header__title-sub Vote
 	.header__options-container
-		a(href="/votings/new").votings-create 새 투표 만들기
+		a(href="/votings/new").header__options.createVoting 새 투표 만들기
 		br
-		a(href="/my-votings").header__options__myVotings.myVotings 내 투표
-		a(href="/my-voted").header__options__votedVotings.votedVotings 참여한 투표
-		.header__options__profile.profile 내 정보 수정
-		.header__options__logout.logout 로그아웃
+		a(href="/my-votings").header__options.myVotings 내 투표
+		a(href="/my-voted").header__options.votedVotings 참여한 투표
+		.header__options.logout 로그아웃

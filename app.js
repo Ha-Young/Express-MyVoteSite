@@ -11,7 +11,6 @@ const mainRouter = require("./routes/mainRouter");
 const userRouter = require("./routes/userRouter");
 const votingsRouter = require("./routes/votingRouter");
 const checkTokenAuth = require("./middlewares/checkTokenAuth");
-const checkLoggedIn = require("./middlewares/checkLoggedIn");
 
 const app = express();
 
@@ -27,7 +26,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", mainRouter);
-app.use("/users", checkLoggedIn, userRouter);
+app.use("/users", userRouter);
 app.use("/votings", checkTokenAuth, votingsRouter);
 
 app.all("*", (req, res, next) => {

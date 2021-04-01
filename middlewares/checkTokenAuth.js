@@ -5,19 +5,15 @@ const User = require("./../models/userModel");
 module.exports = catchAsync(async (req, res, next) => {
   const clientToken = req.cookies.jwt;
 
-  if (!clientToken) {
-    return res.status(200).redirect("login");
+  if (!clientToken || clientToken === "loggedout") {
+    return res.status(200).redirect("/users/login");
   }
 
   const decoded = await jwt.verify(clientToken, process.env.JWT_SECRET);
   const currentUser = await User.findById(decoded.id);
 
   if (!currentUser) {
-    return res.status(200).redirect("login");
-  }
-
-  if (currentUser.changedPasswordAfter(decoded.iat)) {
-    return res.status(200).redirect("login");
+    return res.status(200).redirect("/users/login");
   }
 
   if (req.originalUrl.includes("users")) {

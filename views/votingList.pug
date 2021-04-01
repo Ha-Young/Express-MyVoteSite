@@ -2,15 +2,11 @@ extends layouts/main
 include mixins/_votingCard
 
 block content
-	.votings-options-container
-		.votings-options-filter
-			a(href="/upcoming").votings-filter.upcoming 예정
-			br
-			a(href="/ongoing").votings-filter.ongoing 진행중
-			br
-			a(href="/ended").votings-filter.ended 종료
-			br
-			a(href="/canceled").votings-filter.canceled 취소
+	.votings-options-filter
+		a(href="/upcoming").votings-filter.upcoming 예정
+		a(href="/ongoing").votings-filter.ongoing 진행중
+		a(href="/ended").votings-filter.ended 종료
+		a(href="/canceled").votings-filter.canceled 취소됨
 
 	.votings
 		if data.votings.length > 0
@@ -27,5 +23,3 @@ block content
 				})
 		else
 			h1 투표가 없습니다.
-
-	//- script(src="/javascripts/votingList.js")

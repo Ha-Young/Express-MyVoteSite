@@ -10,10 +10,9 @@ const OptionSchema = new Schema({
     type: Mixed,
     required: true,
   },
-  votee: {
-    type: [ObjectId],
-    ref: "User",
-    default: [],
+  count: {
+    type: Number,
+    default: 0,
   },
 });
 
@@ -23,6 +22,11 @@ const VotingSchema = new Schema({
     required: [true, "투표 제목을 입력하세요."],
     maxlength: [40, "투표 제목은 2글자에서 40글자 이내 여야 합니다."],
     minlength: [2, "투표 제목은 2글자에서 40글자 이내 여야 합니다."],
+  },
+  votedUsers: {
+    type: [ObjectId],
+    ref: "User",
+    default: [],
   },
   createdBy: {
     type: ObjectId,
@@ -64,13 +68,6 @@ const VotingSchema = new Schema({
       message: "투표 항목은 2개 이상이어야 합니다.",
     },
   },
-});
-
-VotingSchema.pre("save", (next) => {
-  console.log(this.startDate);
-  console.log(this.endDate);
-
-  next();
 });
 
 const Voting = mongoose.model("Voting", VotingSchema);

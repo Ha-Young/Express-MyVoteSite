@@ -1,25 +1,26 @@
+
 extends layouts/main
 
 block content
 	.form-container.createVoting-form-container
 		form.createVoting-form(action="/votings/new", method="post")
 			.form__input.createVoting-form__input
-				label.form__label(for="name") 제목
-				input(type="text", name="name", placeholder="투표 제목", required=true)
+				label.form__label(for="name") 투표제목
+				input.form__input__name(type="text", name="name", placeholder="투표 제목", required=true)
 			.form__input.createVoting-form__input
 				label.form__label(for="startDate") 시작시간
-				input(type="datetime-local", name="startDate", value=(data.startDate ? data.startDate : ""))
+				input.form__input__startDate(type="datetime-local", name="startDate", value=(data.startDate ? data.startDate : ""))
 			.form__input.createVoting-form__input
 				label.form__label(for="endDate") 종료시간
-				input(type="datetime-local", name="endDate", value=(data.endDate ? data.endDate : ""))
-			.createVoting-form__input-options-container.options-container
+				input.form__input__endDate(type="datetime-local", name="endDate", value=(data.endDate ? data.endDate : ""))
+			.form__input.createVoting-form__input-options-container.options-container
 				label.form__label(for="options") 투표항목
 				input(type="text", name="options", placeholder="항목을 입력하세요.", required=true).form__input.createVoting-form__input.input-options
 				input(type="text", name="options", placeholder="항목을 입력하세요.", required=true).form__input.createVoting-form__input.input-options
-			.form__input.createVoting-form__input
-				.form__input__add-option.add-option 항목추가
-				.form__input__delete-option.delete-option 항목제거
-			.form__input.createVoting-form__input
-				button.btn.btn--yellow(type="submit") 투표생성
+			.form__options.createVoting-form__input
+				.form__option.add-option 추가
+				.form__option.delete-option 제거
+			.form__submit-container
+				button.submit__btn(type="submit") 투표생성
 
-	script(src="/javascripts/createVoting.js")
+		script(src="/javascripts/createVoting.js")

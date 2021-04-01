@@ -10,15 +10,17 @@ html
 
 	body
 		.form-container.login-form-container
-		form.login-form(action="/users/login", method="post")
+		form(action="/users/login", method="post").login-form
 			.form__input.login-form__input
 				label.form__label(for="email") Email
-				input(type="email", name="email", placeholder="you@example.com")
+				input.login-form-email(type="email", name="email", placeholder="you@example.com", required=true)
 			.form__input.login-form__input
 				label.form__label(for="password") Password
-				input(type="password", name="password", placeholder="••••••••", minlength="8")            
+				input.login-form-password(type="password", name="password", placeholder="••••••••", minlength="8", required=true)
 			.form__input.login-form__input
-				button.btn.btn--yellow(type="submit") Login
-		include partials/_socialLogin
+				button.btn.btn--yellow(type="submit") Log In
+		.signup-container
+			a(href="/users/signup").signup-link Sign Up
 
 
+		script(src="/javascripts/login.js")

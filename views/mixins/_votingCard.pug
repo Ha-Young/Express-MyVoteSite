@@ -1,18 +1,17 @@
 mixin votingCard(voting={})
-	form.votingCard(action="votings/" + voting.id, method="get")
+	a(href="/votings/" + voting.id).votingCard
 		.voting-name-container
-			h1=voting.name
+			h1.voting-name=voting.name
 		.voting-status-container
 			.voting-status=voting.status
-		.voting-createdBy-container
-			.voting-createdBy=voting.createdBy
-		.voting-createdAt-container
-			.voting-createdAt=voting.createdAt
-		.voting-startDate-container
-			span 시작일
+		.voting-metadata-container
+			.voting-createdBy-container
+				span 작성자 &nbsp;
+				span.voting-createdBy=voting.createdBy
+			.voting-createdAt-container
+				span 등록일 &nbsp;
+				span.voting-createdAt=voting.createdAt
+		.voting-timeline-container
 			span.voting-startDate=voting.startDate
-		.voting-endDate-container
-			span 종료일
+			span &nbsp;~&nbsp;
 			span.voting-endDate=voting.endDate
-		.voting-vote-container
-			button.voting-vote 투표하기

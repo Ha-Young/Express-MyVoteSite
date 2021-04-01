@@ -1,8 +1,8 @@
-const $votingName = document.querySelector(".voting-name");
-const $voteButton = document.querySelector(".voting-vote-button");
-const $voteOptions = document.querySelectorAll(".voting-option");
-const $cancelVotingButton = document.querySelector(".voting-cancel");
-const $deleteVotingButton = document.querySelector(".voting-delete");
+const $votingName = document.querySelector(".votingPage-name");
+const $voteButton = document.querySelector(".votingPage-vote-button");
+const $voteOptions = document.querySelectorAll(".votingPage-option");
+const $cancelVotingButton = document.querySelector(".votingPage-cancel");
+const $deleteVotingButton = document.querySelector(".votingPage-delete");
 const votingId = $votingName.id;
 
 const submitVoting = (data) => {
@@ -12,7 +12,15 @@ const submitVoting = (data) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  }).then((res) => window.location.reload());
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.message === "already voted") {
+        window.location.replace("/votings/alreadyVoted");
+      } else if (res.message === "success voting") {
+        window.location.replace("/votings/successVoting");
+      }
+    });
 };
 
 if ($voteButton) {
@@ -34,7 +42,15 @@ if ($cancelVotingButton) {
   $cancelVotingButton.addEventListener("click", () => {
     fetch(`/votings/${votingId}/cancel`, {
       method: "PATCH",
-    }).then((res) => window.location.reload());
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        if (res.message === "success") {
+          // alert
+          window.location.replace(window.location.origin);
+        }
+      });
   });
 }
 
@@ -42,6 +58,17 @@ if ($deleteVotingButton) {
   $deleteVotingButton.addEventListener("click", () => {
     fetch(`/votings/${votingId}`, {
       method: "DELETE",
-    }).then((res) => window.location.replace("/"));
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        if (res.message === "success") {
+          // alert
+          window.location.replace(window.location.origin);
+        }
+      });
   });
 }
