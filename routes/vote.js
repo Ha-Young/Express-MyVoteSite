@@ -10,6 +10,6 @@ router.post('/new', checkAuthenticated, voteController.postNewVote);
 
 router.get('/:id', voteController.getVoteById);
 router.put('/:id', checkAuthenticated, voteController.updateVoteById);
-router.delete('/:id', voteController.deleteVote);
+router.delete('/:id', voteController.deleteVoteById);
 
 module.exports = router;

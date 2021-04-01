@@ -1,22 +1,27 @@
+const createError = require('http-errors');
+
 const Vote = require('../models/Vote');
+const User = require('../models/User');
+const { getFormattedCurrentDateTime } = require('../util/time');
+
+const INITIAL_COUNT = 0;
 
 function renderVote(req, res) {
   res.status(200).render('voting', { title: 'login success' });
 }
 
 function renderNewVote(req, res) {
-  //TODO: to util
-  const minDateTime = new Date(Date.now() + 9 * 3600000).toISOString().substr(0, 16);
-  
-  res.render('newVote', {minDateTime});
+  const minDateTime = getFormattedCurrentDateTime();
+
+  res.status(200).render('newVote', { minDateTime });
 }
 
-async function postNewVote(req, res) {
+async function postNewVote(req, res, next) {
   const { title, expiredAt, options, description } = req.body;
 
-  let formattedOptions = options.reduce((acc, cur) => {
-    // TODO: ZERO - constant
-    acc[cur] = 0;
+  const formattedOptions = options.reduce((acc, cur) => {
+    acc[cur] = INITIAL_COUNT;
+
     return acc;
   }, {});
 
@@ -33,7 +38,7 @@ async function postNewVote(req, res) {
     await vote.save();
     res.redirect('/home');
   } catch (error) {
-    console.error(error);
+    next(createError(500));
   }
 }
 
@@ -60,31 +65,36 @@ async function getVoteById(req, res) {
 
 }
 
-async function updateVoteById(req, res) {
+async function updateVoteById(req, res, next) {
   const { option } = req.body;
-  const { id } = req.params;
+  const { _id: userId } = req.user;
+  const { id: voteId } = req.params;
 
   const optionKey = `options.${option}`;
   
   try {
-    const vote = await Vote.findByIdAndUpdate(id, { 
+    const vote = await Vote.findByIdAndUpdate(voteId, { 
       $inc: {
         [optionKey]: 1,
       },
     });
   
+    await User.addCompletedVotesById(userId, voteId);
+
     await vote.save();
     res.status(301).redirect('/');
   } catch (error) {
-
+    next(createError(500));
   }
 }
 
-async function deleteVote(req, res) {
+async function deleteVoteById(req, res) {
   const { id } = req.params;
 
   try {
     await Vote.findOneAndDelete(id);
+    await User.deleteCompletedVotes(id);
+
     res.status(200).redirect('/home');
   } catch (error) {
 
@@ -103,8 +113,9 @@ async function renderMyVote(req, res) {
 
 exports.renderVote = renderVote;
 exports.renderNewVote = renderNewVote;
+
 exports.postNewVote = postNewVote;
 exports.getVoteById = getVoteById;
 exports.updateVoteById = updateVoteById;
-exports.deleteVote = deleteVote;
+exports.deleteVoteById = deleteVoteById;
 exports.renderMyVote = renderMyVote;

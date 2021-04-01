@@ -16,13 +16,13 @@ head
           form(action='/auth/signup' method='POST')
             .form-group
               label(for='name') Name
-              input#name.form-control(type='text' name='name' required)
+              input#name.form-control(type='text' name='name' maxLength='15' required)
             .form-group
               label(for='email') Email
-              input#email.form-control(type='email' name='email' required)
+              input#email.form-control(type='email' name='email' maxLength='30' required)
             .form-group
               label(for='password') Password
-              input#password.form-control(type='password' name='password' required)
+              input#password.form-control(type='password' name='password' minlength='8' required)
             button.btn.btn-primary(type='submit') Register
           br
           .alert.alert-dismissible.alert-info
