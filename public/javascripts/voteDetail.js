@@ -12,16 +12,17 @@ function toggleDivs(element) {
 }
 
 $voteButton.addEventListener("click" , async (event) => {
-  console.log($voteButton.attributes.choiceId);
-  console.log($voteButton.attributes.vote);
   const voteId = $voteButton.getAttribute("voteId");
   const chosenId = $voteButton.getAttribute("choiceId");
-  await fetch(`/votings/${voteId}`, {
+  fetch(`/votings/${voteId}`, {
     method: "PUT",
     body: JSON.stringify({ chosenId }),
     headers: {
       "Content-Type": "application/json"
     }
+  }).then(result => {
+    console.log(result);
+    window.location.href = `/votings/${voteId}`;
   });
 });
 

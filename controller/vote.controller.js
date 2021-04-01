@@ -73,9 +73,16 @@ module.exports.getVoteDetail = async function getVoteDetail(req, res, next) {
 module.exports.putVoteDetail = async function putVoteDetail(req, res, next) {
   const {
     params: { vote_id },
-    body,
+    body: { chosenId },
     user
   } = req;
 
-  console.log("put server : ", vote_id, body);
+  const targetVote = await Vote.findById(vote_id).lean();
+
+  const targetChoice = targetVote.choices.find(choice => String(choice._id) === chosenId);
+  targetChoice.selectUser.push(user._id);
+
+  await Vote.findOneAndUpdate({ _id: vote_id }, { $set: { choices: targetVote.choices }});
+
+  res.send("success");
 }
