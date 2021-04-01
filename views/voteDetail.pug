@@ -12,7 +12,8 @@ block content
       .voteDetail__vote
         .voteDetail__enable 진행중
         each choice in vote.choices
-          .voteDetail__choice(id=choice._id)
+          .voteDetail__choice(choiceId=choice._id onclick="toggleDivs(this)")
             img.voteDetail__choiceImage(src=choice.pictureURL alt="pic")
             .voteDetail__choiceTitle #{choice.choiceTitle}
-
+        button.voteButton(voteId=vote._id) 투표
+  script(src="/javascripts/voteDetail.js")

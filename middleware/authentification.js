@@ -14,15 +14,13 @@ module.exports.isSignIn = async function isSignIn(req, res, next) {
     return next();
   }
 
-  const dcdAccessToken = jwt.verify(accessToken, process.env.JWT_SECRET);
-  const dcdRefreshToken = jwt.verify(refreshToken, process.env.JWT_SECRET);
+  const dcdAccessToken = jwt.decode(accessToken);
+  const dcdRefreshToken = jwt.decode(refreshToken);
   console.log(!dcdAccessToken || dcdAccessToken.exp < now);
   console.log(!dcdRefreshToken || dcdRefreshToken.exp < now);
 
   if (!dcdAccessToken || dcdAccessToken.exp < now) {
-    // access token이 만료됨
     if (!dcdRefreshToken || dcdRefreshToken.exp < now) {
-      // 만료됨
       console.log("token expired : ");
       return next();
     }
@@ -42,7 +40,6 @@ module.exports.isSignIn = async function isSignIn(req, res, next) {
       expiresIn: "30m",
     });
 
-    // 새로운 액세스 토큰 발급
     res.cookie("access", newAccessToken);
   }
 

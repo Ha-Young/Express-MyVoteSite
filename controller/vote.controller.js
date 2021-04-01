@@ -68,3 +68,13 @@ module.exports.getVoteDetail = async function getVoteDetail(req, res, next) {
 
   res.render("voteDetail", { vote });
 }
+
+module.exports.putVoteDetail = async function putVoteDetail(req, res, next) {
+  const {
+    params: { vote_id },
+    body,
+    user
+  } = req;
+
+  console.log("put server : ", vote_id, body);
+}
