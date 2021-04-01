@@ -6,8 +6,6 @@ const router = express.Router();
 
 /* GET users listing. */
 router.get("/login", (req, res, next) => {
-  const url = req.originUrl;
-    console.log(url);
   res.status(200).render("login");
 });
 
@@ -16,13 +14,9 @@ router.post("/login", validateLogin, usersController.signIn);
 router.get("/logout", usersController.signOut);
 
 router.get("/signup", (req, res, next) => {
-  res.status(200).render("signup", { error: null });
+  res.status(200).render("signup");
 });
 
-router.post(
-  "/signup",
-  validateUser,
-  usersController.signUp
-);
+router.post("/signup", validateUser, usersController.signUp);
 
 module.exports = router;
