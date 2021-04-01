@@ -23,7 +23,7 @@ block content
         else
           canvas#vote-chart
       ul.button-list
-        if (user)
+        if (vote.author.name === user.name)
           li
             button#deleteButton.button.red(type="button") DELETE
         li
