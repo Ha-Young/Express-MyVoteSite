@@ -152,8 +152,6 @@ exports.VoteToOption = async ({ voteId, optionId }) => {
 
     optionRecord.count += 1;
 
-    console.log('prev save vote', voteRecord);
-
     voteRecord.save();
 
     const vote = voteRecord.toObject();

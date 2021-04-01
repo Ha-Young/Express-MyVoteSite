@@ -84,7 +84,7 @@ module.exports = app => {
       },
     }),
     async (req, res, next) => {
-      if (!req.user || ObjectId.isValid(req.user._id)) {
+      if (!req.user || !ObjectId.isValid(req.user._id)) {
         return next(createError(401));
       }
 
