@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,900');
+
+.vote-detail-option-wrapper {
+  position: relative;
+  padding: 20px;
+  background-color: #8DC63F;
+  font-size: 1.4rem;
+	font-weight: 500;
+  overflow-y: hidden;
+}
+
+.vote-detail-option-content {
+  height: 100%;
+  padding: 20px;
+  border: 2px solid rgba(255,255,255,0.5);
+  overflow-y: hidden;
+
+  h2 {
+    padding: 20px 0;
+    font-size: 1.4rem;
+  }
+}
+
+.vote-detail-option-list {
+  height: calc(100% - 40px);
+
+  overflow-y: scroll;
+}
+
+.vote-detail-option-list li {
+	display: list-item;
+	position: relative;
+	list-style: none;
+	padding: 20px 0;
+  margin-left: 20px;
+  text-align: left;
+}
+
+.vote-detail-option-list input[type="checkbox"] {
+	display: inline-block;
+	vertical-align: middle;
+	opacity: 0;
+  cursor: pointer;
+}
+
+.vote-detail-option-list input[type="checkbox"],
+.vote-detail-option-list label::before {
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+  cursor: pointer;
+}
+
+
+.vote-detail-option-list label {
+	display: inline-block;
+	position: relative;
+	font-size: 1em;
+	padding: 0 0 0 80px;
+  cursor: pointer;
+}
+
+.vote-detail-option-list label::before {
+	content: '';
+	border: 3px solid #fff;
+	opacity: 0.7;
+	transition: opacity 0.3s;
+}
+
+.vote-detail-option-list input[type="checkbox"]:checked + label::before {
+	opacity: 1;
+}
+
+.vote-detail-option-list svg {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 28px;
+	height: 28px;
+	margin-top: -15px;
+	pointer-events: none;
+}
+
+.vote-detail-option-list svg path {
+	stroke-width: 15px;
+	fill: none;
+	transition: stroke-dashoffset 0.2s ease-in 0s;
+}
+
+.vote-detail-option-list svg path + path {
+	transition: stroke-dashoffset 0.2s ease-out 0.2s;
+}
+
+.vote-detail-option-list input[type="checkbox"]:checked ~ svg path {
+	stroke-dashoffset: 0;
+}
+
+.vote-submit-btn {
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+  width: 60px;
+  height: 30px;
+  background-color: mediumpurple;
+  border-radius: 2px;
+  cursor: pointer;
+}
