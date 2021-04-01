@@ -5,15 +5,15 @@ const messageBox = document.querySelector(".message-box");
 const indexLinkButton = document.querySelector(".index-link-button");
 
 const optionTemplate =
-  `<li>
+  `<li class="option-list">
     <input
-      class="input-options"
+      class="input-text input-option"
       type="text"
       name="option"
       required
     />
     <button
-      class="option-remove-button"
+      class="option-remove-button input-button"
       type="button"
     >
       ×

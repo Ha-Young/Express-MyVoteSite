@@ -15,6 +15,7 @@ router.get("/", async (req, res, next) => {
 
     for (const voting of usersVotingList) {
       voting.formattedExpirationTime = format(voting.expirationTime, "yyyy-MM-dd HH:mm");
+      voting.formattedPostingTime = format(voting.postingTime, "yyyy-MM-dd HH:mm");
     }
 
     res.render("myVotings", {

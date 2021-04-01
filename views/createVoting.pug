@@ -2,38 +2,71 @@ extends layout
 
 block append head
   link(rel="stylesheet" href="/stylesheets/createVoting.css")
+  link(rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous")
 block content
   include header
-  h1.create-voting-title Create voting
   div.create-voting.container
+    h1.create-voting-title Create voting
     form.create-voting-form
       label.create-voting-label Title
-        input.input-title(type="text", name="title" required)
+        input(
+          class="input-text input-title"
+          type="text"
+          name="title"
+          required
+        )
       label.create-voting-label Description
-        textarea.input-description(name="description")
-      label.create-voting-label Can select Multiple Options
+        textarea(
+          class="input-text input-description"
+          name="description"
+        )
+      label.create-voting-label Options
+        ul.options
+          li.option-list
+            input(
+              class="input-text input-option"
+              type="text"
+              name="option"
+              required
+            )
+            button(
+              class="option-remove-button input-button"
+              type="button"
+            ) ×
+          li.option-list
+            input(
+              class="input-text input-option"
+              type="text"
+              name="option"
+              required
+            )
+            button(
+              class="option-remove-button input-button"
+              type="button"
+            ) ×
+        button(
+          class="option-add-button input-button"
+          type="button"
+        ) +
+      label.create-voting-checkbox-label Can select Multiple Options
         input.input-is-able-select-multiple-options(
           type="checkbox"
           name="isAbleSelectMultipleOptions"
         )
-      label.create-voting-label Options
-        ol.options
-          li
-            input.input-options(type="text" name="option" required)
-            button.option-remove-button(type="button") ×
-          li
-            input.input-options(type="text" name="option" required)
-            button.option-remove-button(type="button") ×
-        button.option-add-button(type="button") +
       label.create-voting-label Expiration Date
-        input.input-expiration-time(
+        input(
+          class="input-date input-expiration-time"
           type="datetime-local"
           name="expirationTime"
           required
         )
       div.message-box
       label.create-voting-label Image URL
-        input.input-image-url(type="text", name="imageUrl")
-      button.submit-button(type="submit") Create
-    button.index-link-button(type="button") < Voting List
+        input(
+          class="input-image-url input-text"
+          type="text"
+          name="imageUrl"
+        )
+      button(class="submit-button input-button" type="submit") Create
+    button(class="index-link-button input-button" type="button") << Voting List
   script(src="/javascripts/createVoting.js")
