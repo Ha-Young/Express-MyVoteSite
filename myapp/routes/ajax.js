@@ -18,12 +18,6 @@ router.post("/selection", async (req, res, next) => {
     option.voters.push(userId);
     option.count += 1;
 
-    // const counts = [];
-    // for (let i = 0; i < votingItems.length; i++) {
-    //   counts.push({ item: votingItems[i].item, count: votingItems[i].count });
-    // }
-    // user에 투표했는지 판단...중복투표 차단...
-
     votingItems.sort((a, b) => b.count - a.count);
     voting.result = votingItems[0].item;
 
@@ -39,7 +33,6 @@ router.post("/selection", async (req, res, next) => {
 router.post("/deleteVoting", async (req, res, next) => {
   const isLogin = getLoginStatus(req);
   if (!isLogin) return res.status(403).end();
-  // 사용자 권한 넣을것...
 
   try {
     const { votingId } = req.body;

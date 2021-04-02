@@ -1,7 +1,5 @@
-const mongoose = require("mongoose");
 const Voting = require("../../models/Voting");
 const getLocalTime = require("../../utils/getLocalTime");
-const getProgress = require("../../utils/getProgress");
 
 const updateAndGetVotings = async () => {
   await Voting.updateMany(
@@ -20,7 +18,6 @@ const getVotingById = async (votingId) => {
 
   const startedAt = getLocalTime(voting.started_at);
   const endedAt = getLocalTime(voting.ended_at);
-  // const isClosed = getProgress(voting.ended_at);
 
   const votingInfo = {
     _id: voting._id,
