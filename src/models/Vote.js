@@ -27,18 +27,6 @@ VoteSchema.index('expire_datetime');
 VoteSchema.index('creator');
 VoteSchema.plugin(mongoosePaginate);
 
-VoteSchema.pre("save", function (next) {
-  const vote = this;
-  try {
-    vote.is_process = true;
-    vote.entire_count = 0;
-
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
-
 VoteSchema.pre(/^find/, async function (next) {
   await Vote.updateMany({ expire_datetime: { $lte: new Date() } }, { is_process: false });
   next();

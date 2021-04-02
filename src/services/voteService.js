@@ -104,6 +104,8 @@ exports.CreateVote = async ({ voteInputDTO, userId }) => {
       ...voteInputDTO,
       creator: userId,
       vote_options: voteOptions,
+      entire_count: 0,
+      is_process: true,
     });
 
     if (!voteRecord) {
