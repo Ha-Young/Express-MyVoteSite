@@ -13,9 +13,13 @@
         <input type="password" name="password" />
         <span class="err-msg"><%= error.password %></span>
       </fieldset>
+      <fieldset class="invisible">
+        <span>prevPath</span>
+        <input type="text" name="prevPath" value="<%= query.prevPathname %>"/>
+      </fieldset>
       <p class="forgot-pass">Forgot password?</p>
       <button class="submit">Sign In</button>
-      <a href="/login-google">
+      <a href="/login-google?prevPath=<%= query.prevPathname %>">
         <button type="button" class="fb-btn">
           Connect with <span>Google</span>
         </button>

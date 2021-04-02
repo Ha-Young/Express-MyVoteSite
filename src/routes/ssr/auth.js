@@ -14,7 +14,10 @@ module.exports = app => {
   app.use(PREFIX, route);
 
   route.get(LOGIN, (req, res) => {
-    res.render("login", { user: req.user || {}, error: {} });
+    const query = req.query || {};
+    query.prevPathname = query.prevPathname || "";
+
+    res.render("login", { user: req.user || {}, query, error: {} });
   });
 
   route.post(
@@ -23,18 +26,19 @@ module.exports = app => {
       body: Joi.object({
         email: Joi.string().required(),
         password: Joi.string().required(),
+        prevPath: Joi.string().allow(''),
       }),
     }),
     async (req, res, next) => {
       try {
-        const { email, password } = req.body;
+        const { email, password, prevPath } = req.body;
         const { token, error } = await authService.SignIn(email, password);
 
         if (error) {
           return res.render("login", { error });
         }
 
-        authSuccess({ res, token });
+        authSuccess({ res, token, prevPath });
       } catch (err) {
         return next(createError(err));
       }
@@ -66,7 +70,14 @@ module.exports = app => {
     }
   );
 
-  route.get(LOGIN_GOOGLE, passport.authenticate('google', { scope: ['profile','email'], session: false }));
+  route.get(
+    LOGIN_GOOGLE,
+    (req, res, next) => {
+      const prevPath = req.query.prevPath || "";
+      req.session.prevPath = prevPath;
+      next();
+    },
+    passport.authenticate('google', { scope: ['profile','email'], session: false }));
 
   route.get(LOGIN_GOOGLE_REDIRECT, passport.authenticate('google', { session: false }), async (req, res)=>{
     const userInputDTO = {
@@ -81,7 +92,11 @@ module.exports = app => {
       return res.render("login", { error });
     }
 
-    authSuccess({ res, token });
+    const prevPath = req.session.prevPath || "";
+
+    req.session.destroy();
+
+    authSuccess({ res, token, prevPath });
   });
 
   route.post(LOGOUT, (req, res, next) => {
@@ -94,10 +109,14 @@ module.exports = app => {
   });
 };
 
-function authSuccess({ res, token }) {
+function authSuccess({ res, token, prevPath }) {
   res.cookie(jwtCookieKey, token, {
     maxAge: jwtExpires,
   });
+
+  if (prevPath) {
+    return res.redirect(prevPath);
+  }
 
   res.redirect("/");
 }

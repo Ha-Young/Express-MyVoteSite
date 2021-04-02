@@ -1,6 +1,3 @@
-const { format } = require("date-fns");
-
-const { dateFormat } = require("../config");
 const Vote = require("../models/Vote");
 
 exports.GetAllVotes = async () => {
@@ -148,8 +145,6 @@ exports.VoteToOption = async ({ voteId, optionId }) => {
 
     optionRecord.count += 1;
     voteRecord.entire_count += 1;
-
-    console.log(voteRecord);
 
     voteRecord.save();
 

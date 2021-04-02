@@ -42,7 +42,7 @@ function setVoteOptionsClickEvent() {
 }
 
 function goToLoginPage() {
-  const loginPageURL = PATH_UTIL.getRootPath() + "/login";
+  const loginPageURL = PATH_UTIL.getRootPath() + `/login?prevPathname=${window.location.pathname}`;
   window.location.href = loginPageURL;
 }
 
