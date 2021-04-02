@@ -1,13 +1,13 @@
 <div class="voting-detail-wrapper">
   <div class="voting-detail-bar">
-		<div class="voting-bar-title">
-			<h1>About Voting</h1>
+    <div class="voting-bar-title">
+      <h1>About Voting</h1>
     </div>
 
     <img class="voting-bar-image" src="/images/voting-bar.jpeg" />
     <hr class="main-bar-line">
 
-		<div class="main-content-buttons">
+    <div class="main-content-buttons">
       <a href="/">Return</a>
     </div>
   </div>
@@ -60,10 +60,10 @@
 <script src="/javascripts/put.js"></script>
 
 <% if (!voting.isCurrent || voting.proponent.toString() === user?.id) { %>
-	<script>
-		const options = <%- JSON.stringify(voting.options) %>;
-	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <script>
+    const options = <%- JSON.stringify(voting.options) %>;
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
   <script src="/javascripts/chart.js"></script>
   <script src="/javascripts/delete.js"></script>
 <% } %>

@@ -1,8 +1,8 @@
 .voting-detail-bar {
-	position: fixed;
-	width: 25%;
-	height: 100%;
-	z-index: 5;
+  position: fixed;
+  width: 25%;
+  height: 100%;
+  z-index: 5;
 }
 
 .voting-bar-title {
@@ -10,14 +10,14 @@
   font-size: 60px;
   font-weight: 200px;
   text-align: right;
-	color: rgb(59, 59, 59);
-	z-index: 5;
+  color: rgb(59, 59, 59);
+  z-index: 5;
 }
 
 .voting-detail-wrapper {
-	display: flex;
-	width: 100%;
-	min-height: 100%;
+  display: flex;
+  width: 100%;
+  min-height: 100%;
 }
 
 .voting-detail-content {
@@ -32,18 +32,18 @@
 }
 
 .voting-detail-header {
-	width: 80%;
-	display: flex;
-	justify-content: flex-start;
-	flex-direction: column;
-	margin-bottom: 30px;
+  width: 80%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-bottom: 30px;
 }
 
 .voting-detail-board {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 40%;
   height: 60%;
   background-color: #e9e7e7da;
@@ -61,10 +61,10 @@
 }
 
 .voting-bar-image {
-	width: 100%;
+  width: 100%;
   height: 100%;
 }
 
 .voting-detail-title {
-	font-size: 20px;
+  font-size: 20px;
 }

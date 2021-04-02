@@ -1,43 +1,43 @@
 <%- include("partials/header") %>
 
 <div class="main">
-	<div class="main-bar">
-		<div class="main-title">
-			<h1>VOTING PLATFORM</h1>
-		</div>
-		<hr class="main-bar-line">
-		<div class="main-content-buttons">
-			<a href="/my-votings" class="voting-content-font">My Voting</a>
-			<a href="/votings/new" class="voting-content-font">New Voting</a>
-		</div>
-	</div>
-	<div class="main-content">
-		<div class="main-content-board">
-			<% votings.forEach((voting) => { %>
-				<div class="main-content-card">
-					<div class="voting-content-title-box">
-						<div class="voting-content-title-content">
-							<%= voting.title %></div>
-					</div>
-					<a href="/votings/<%= voting._id %>">
-						<div class="voting-content-font">
-							<div>
-								<div class="voting-content-detail">
-									<i class="fas fa-pencil-alt"></i>
-									<%= voting.proponent?.name %>
-								</div>
-								<div class="voting-content-detail">
-									<i class="far fa-clock"></i>
-									<%= voting.formatedExpiration %>
-									<% if (!voting.isCurrent) { %>
-										<i class="fas fa-hourglass-end"></i>
-									<% } %>
-								</div>
-							</div>
-						</div>
-					</a>
-				</div>
-			<% }) %>
-		</div>
-	</div>
+  <div class="main-bar">
+    <div class="main-title">
+      <h1>VOTING PLATFORM</h1>
+    </div>
+    <hr class="main-bar-line">
+    <div class="main-content-buttons">
+      <a href="/my-votings" class="voting-content-font">My Voting</a>
+      <a href="/votings/new" class="voting-content-font">New Voting</a>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="main-content-board">
+      <% votings.forEach((voting) => { %>
+        <div class="main-content-card">
+          <div class="voting-content-title-box">
+            <div class="voting-content-title-content">
+              <%= voting.title %></div>
+          </div>
+          <a href="/votings/<%= voting._id %>">
+            <div class="voting-content-font">
+              <div>
+                <div class="voting-content-detail">
+                  <i class="fas fa-pencil-alt"></i>
+                  <%= voting.proponent?.name %>
+                </div>
+                <div class="voting-content-detail">
+                  <i class="far fa-clock"></i>
+                  <%= voting.formatedExpiration %>
+                  <% if (!voting.isCurrent) { %>
+                    <i class="fas fa-hourglass-end"></i>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      <% }) %>
+    </div>
+  </div>
 </div>

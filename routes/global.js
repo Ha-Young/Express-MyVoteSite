@@ -8,31 +8,31 @@ const { confirmSignUpData, confirmLoginData } = require("./middlewares/validatio
 const { verifyToken, isAuthenticated, getUserDataByToken } = require("./middlewares/authorization");
 
 router.get(
-	"/", 
-	verifyToken, 
-	getUserDataByToken, 
-	votingController.getAllVotings
+  "/", 
+  verifyToken, 
+  getUserDataByToken, 
+  votingController.getAllVotings
 );
 router.get(
-	"/logout", 
-	verifyToken, 
-	getUserDataByToken, 
-	userController.logOut
+  "/logout", 
+  verifyToken, 
+  getUserDataByToken, 
+  userController.logOut
 );
 
 router.get(
-	"/my-votings", 
-	verifyToken, 
-	isAuthenticated, 
-	votingController.getMyVotingPage
+  "/my-votings", 
+  verifyToken, 
+  isAuthenticated, 
+  votingController.getMyVotingPage
 );
 
 router.get("/login", userController.logIn);
 router.post(
-	"/login", 
-	confirmLoginData,
-	userController.tryLocalLogIn, 
-	userController.getToken
+  "/login", 
+  confirmLoginData,
+  userController.tryLocalLogIn, 
+  userController.getToken
 );
 
 router.get("/login/github", userController.gitHubLogIn);
@@ -40,9 +40,9 @@ router.get("/login/github/callback", userController.tryGitHubLogIn, userControll
 
 router.get("/signup", userController.signUp);
 router.post(
-	"/signup", 
-	confirmSignUpData, 
-	userController.trySignUp
+  "/signup", 
+  confirmSignUpData, 
+  userController.trySignUp
 );
 
 module.exports = router;

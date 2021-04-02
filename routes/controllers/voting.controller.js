@@ -3,7 +3,7 @@ const User = require("../../models/User");
 
 exports.getAllVotings = async (req, res, next) => {
   const { user } = req;
-	
+  
   try {
     const votings = await Voting.find().populate("proponent", "name");
 
@@ -24,12 +24,12 @@ exports.createNewVoting = async (req, res, next) => {
         return { option };
       }),
     });
-		
+    
     const updateUser = await User.findByIdAndUpdate(user._id, {
-			$push: { voting: newVoting._id }
-		});
-		
-		await updateUser.save();
+      $push: { voting: newVoting._id }
+    });
+    
+    await updateUser.save();
 
     res.status(302).redirect("/");
   } catch (error) {
@@ -110,7 +110,7 @@ exports.getMyVotingPage = async (req, res, next) => {
   
   try {
     const [user] = await User.find({ _id }).populate("voting");
-		
+    
     res.status(200).render("myVoting", { votings: user.voting });
   } catch (error) {
     next(error);
