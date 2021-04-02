@@ -222,3 +222,19 @@
   margin: 0;
   background: #8DC63F;
 }
+
+.filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  a {
+    margin: 20px;
+    transition: font-weight .3s ease-in-out;
+
+    &:hover {
+      font-weight: 800;
+    }
+  }
+}

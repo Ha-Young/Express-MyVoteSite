@@ -24,8 +24,17 @@
   }
 
   .menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     a button {
+      margin: 20px;
+      font-size: 1.2rem;
       cursor: pointer;
+      transition: font-weight .3s ease-in-out;
+      &:hover {
+        font-weight: 800;
+      }
     }
   }
 
@@ -48,7 +57,7 @@
   }
 
   .user-name {
-    color: beige;
+    color: #8DC63F;
   }
 
   .logout-btn {
