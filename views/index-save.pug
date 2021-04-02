@@ -1,0 +1,38 @@
+extends layout
+include mixins/voteList
+include mixins/header
+block append head
+  link(rel='stylesheet' href='/css/main.min.css')
+  link(rel='stylesheet', href='/css/dashboard.min.css')
+block content
+  .container
+    .sidebar
+      span.logo V
+      a.logo-expand(href='/') VOTE HERE
+      include partials/sidebar.pug
+    .wrapper
+      h1= votehere
+      +header(user)
+      if (user)
+        form(action='/myvote')
+          button(type='submit') MY-VOTES
+        form(action='/auth/logout?_method=DELETE' method='POST')
+          button(type='submit') LOGOUT
+      else
+        form(action='/auth/github' method='GET')
+          button(type='submit') LOGIN WITH GITHUB
+        form(action='/auth/signup' method='GET')
+          button(type='submit') SIGN UP
+        form(action='/auth/login' method='GET')
+          button(type='submit') LOG IN
+      button(id='plusButton')
+        a(href='/vote/new') MAKE NEW VOTE
+      ul.all-votes
+        if (allVotes)
+          each vote in allVotes
+            +voteList(vote, 3)
+              .eachVote
+                h4 #{vote.title}
+                p avilable - #{vote.isVotable}
+                p expired At - #{vote.expiredAt}
+                p by #{vote.creatorName}

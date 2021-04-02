@@ -1,10 +1,11 @@
 function checkAuthenticated(req, res, next) {
-  const { headers: { referer } } = req;
-
   if (req.isAuthenticated()) {
     res.locals.user = req.user;
-    return next();
+    next();
+    return;
   }
+
+  const { headers: { referer } } = req;
 
   req.session.referrer = referer;
   res.redirect('/auth/login');

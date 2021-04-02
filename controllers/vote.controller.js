@@ -7,8 +7,16 @@ const { getRandomImage } = require('../util/getRandomImage');
 
 const INITIAL_COUNT = 0;
 
-function renderVote(req, res) {
-  res.status(200).render('voting', { title: 'login success' });
+// TODO: name
+async function renderAllVotes(req, res) {
+  try {
+    await Vote.updateIsVotable();
+    const votes = await Vote.find({}).lean();
+
+    res.status(200).render('index', { votes });
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function renderNewVote(req, res) {
@@ -113,7 +121,8 @@ async function renderMyVote(req, res) {
   }
 }
 
-exports.renderVote = renderVote;
+
+exports.renderAllVotes = renderAllVotes;
 exports.renderNewVote = renderNewVote;
 exports.renderMyVote = renderMyVote;
 

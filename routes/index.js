@@ -3,30 +3,11 @@ const router = express.Router();
 
 const voteController = require('../controllers/vote.controller');
 const { checkAuthenticated, addUserInfo } = require('../middlewares/auth');
-const Vote = require('../models/Vote');
 
 /* GET home page. */
 
-router.get('/', addUserInfo, require('./home'));
-
-router.get('/dashboard', addUserInfo, async (req, res, next) => {
-  const votes = await Vote.find({}).lean();
-
-  if (!req.user) {
-    req.user = {
-      name: "kim",
-      avatarUrl: "https://storage.jewheart.com/content/users/avatars/1606/avatar_1606_500.jpg?1558623487",
-    };
-  }
-
-  res.locals.user = req.user;
-  res.locals.votes = votes;
-  res.render('dashboard');
-});
-
+router.get('/', addUserInfo, voteController.renderAllVotes);
 router.get('/myvotes', checkAuthenticated, voteController.renderMyVote);
- // TODO :delete
-router.use('/home', require('./home'));
 router.use('/auth', require('./auth'));
 router.use('/vote', require('./vote'));
 

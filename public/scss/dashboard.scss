@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
 // TODO: indenting or ignore this
 
@@ -17,7 +17,7 @@ img {
 }
 
 :root {
-  --body-font: "Inter", sans-serif;
+  --body-font: 'Inter', sans-serif;
   --theme-bg: #1f1d2b;
   --body-color: #808191;
   --button-bg: #353340;
@@ -29,7 +29,7 @@ img {
 body {
   font-family: var(--body-font);
   color: var(--body-color);
-  background-image: url("https://images.unsplash.com/photo-1445251836269-d158eaa028a6?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1951&q=80");
+  background-image: url('https://images.unsplash.com/photo-1445251836269-d158eaa028a6?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1951&q=80');
   background-image: url(https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80);
   background-position: center;
   background-size: cover;
@@ -56,7 +56,7 @@ body {
    rgba(31, 29, 43, 0.3113620448179272) 64%
   );
   opacity: 0.4;
-  content: "";
+  content: '';
  }
 }
 
@@ -106,7 +106,7 @@ body {
    position: sticky;
    top: 0;
    &:before {
-    content: "";
+    content: '';
     position: absolute;
     top: -30px;
     left: 0;
@@ -239,7 +239,7 @@ body {
   font-weight: 500;
   padding: 0 40px 0 16px;
   box-shadow: 0 0 0 2px rgba(134, 140, 160, 0.02);
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56.966 56.966' fill='%23717790c7'%3e%3cpath d='M55.146 51.887L41.588 37.786A22.926 22.926 0 0046.984 23c0-12.682-10.318-23-23-23s-23 10.318-23 23 10.318 23 23 23c4.761 0 9.298-1.436 13.177-4.162l13.661 14.208c.571.593 1.339.92 2.162.92.779 0 1.518-.297 2.079-.837a3.004 3.004 0 00.083-4.242zM23.984 6c9.374 0 17 7.626 17 17s-7.626 17-17 17-17-7.626-17-17 7.626-17 17-17z'/%3e%3c/svg%3e");
+  background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56.966 56.966' fill='%23717790c7'%3e%3cpath d='M55.146 51.887L41.588 37.786A22.926 22.926 0 0046.984 23c0-12.682-10.318-23-23-23s-23 10.318-23 23 10.318 23 23 23c4.761 0 9.298-1.436 13.177-4.162l13.661 14.208c.571.593 1.339.92 2.162.92.779 0 1.518-.297 2.079-.837a3.004 3.004 0 00.083-4.242zM23.984 6c9.374 0 17 7.626 17 17s-7.626 17-17 17-17-7.626-17-17 7.626-17 17-17z'/%3e%3c/svg%3e');
   background-size: 14px;
   background-repeat: no-repeat;
   background-position: 96%;
@@ -359,7 +359,7 @@ body {
   margin-bottom: 30px;
  }
  &-vote {
-  background-image: url("https://assets.codepen.io/3364143/skate-removebg-preview.png");
+  background-image: url('https://assets.codepen.io/3364143/skate-removebg-preview.png');
   background-size: 80%;
   background-position-x: 150px;
   background-color: #31abbd;
@@ -514,7 +514,7 @@ body {
   display: inline-flex;
   position: relative;
   &:before {
-   content: "";
+   content: '';
    background-color: #22b07d;
    width: 6px;
    height: 6px;

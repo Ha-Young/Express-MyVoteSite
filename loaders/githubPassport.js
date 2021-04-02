@@ -7,7 +7,7 @@ function initialize() {
   passport.serializeUser((user, done) => {
     done(null, user._id);
   });
-  
+
   passport.deserializeUser(async (id, done) => {
     try {
       const user = await User.findById(id);
@@ -17,12 +17,12 @@ function initialize() {
       console.error(error);
     }
   });
-  
+
   async function authenticateUser(accessToken, refreshToken, profile, done) {
     const { email, login: name, avatar_url: avatarUrl, id } = profile._json;
 
-    try { 
-      const user = await User.findOrCreate({ 
+    try {
+      const user = await User.findOrCreate({
         email,
         name,
         avatarUrl,
@@ -35,11 +35,11 @@ function initialize() {
       return done(error);
     }
   }
-  
+
   passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/github/callback",
+    callbackURL: 'http://localhost:3000/auth/github/callback',
   }, authenticateUser));
 }
 

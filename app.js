@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
 const methodOverride = require('method-override');
+const flash = require('express-flash');
 
 const initDB = require('./configs/db');
 const initGithubPassport = require('./loaders/githubPassport');
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('./configs/session'));
 
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'));

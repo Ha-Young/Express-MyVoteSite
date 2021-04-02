@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   avatarUrl: { type: String },
   githubId: { type: String },
   password: { type: String },
-  completedVotes: [{ type: mongoose.Schema.Types.ObjectID, ref: "Vote" }],
+  completedVotes: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Vote' }],
 }, {
   timestamps: true,
 });
@@ -45,4 +45,4 @@ userSchema.statics.deleteCompletedVotes = async function(voteId) {
   }
 }
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', userSchema);
