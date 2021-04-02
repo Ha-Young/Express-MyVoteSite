@@ -69,4 +69,13 @@ exports.signup = async (req, res, next) => {
 };
 
 exports.signout = async (req, res, next) => {
+  const { _id } = req.user;
+
+  try {
+    await User.deleteOne({ _id });
+    req.session.destroy();
+    res.redirect('/');
+  } catch (e) {
+    next(e);
+  }
 };

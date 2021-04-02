@@ -3,7 +3,6 @@ const githubPassport = require('./github');
 const localPassport = require('./local');
 const User = require('../../models/user');
 
-
 function passportLoader(app) {
   githubPassport(
     passport,
@@ -12,7 +11,7 @@ function passportLoader(app) {
       githubId: user.id,
       nickname: user.displayName,
       root: 'github',
-    })
+    }),
   );
   localPassport(
     passport,
@@ -22,7 +21,5 @@ function passportLoader(app) {
   app.use(passport.initialize());
   app.use(passport.session());
 }
-
-
 
 module.exports = passportLoader;

@@ -23,6 +23,16 @@
   color: #212529;
 }
 
+.home-left .grid-button {
+  background-color: #e0fbfc;
+  color: #212529;
+}
+
+.home-right .grid-button {
+  background-color: #e0fbfc;
+  color: #212529;
+}
+
 .vote-state {
   text-align: center;
 }

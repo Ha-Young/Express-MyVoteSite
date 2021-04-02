@@ -82,7 +82,11 @@ exports.voteCreate = async (req, res, next) => {
 };
 
 exports.createSuccess = (req, res, next) => {
-  res.status(200).render('createSuccess');
+  try {
+    res.status(200).render('createSuccess');
+  } catch (e) {
+    next(e);
+  }
 };
 
 exports.voteUpdate = async (req, res, next) => {

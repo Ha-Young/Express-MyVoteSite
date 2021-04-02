@@ -16,11 +16,11 @@ input {
 }
 
 .create-form {
+  background-color: #1982c4;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1rem;
-  background-color: #1982c4;
   border-radius: 0.2rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
@@ -34,20 +34,20 @@ input {
 }
 
 #options {
+  background-color: #1982c4;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 22rem;
   padding: 2rem;
-  background-color: #1982c4;
   border-radius: 0.2rem;
 }
 
 .option {
+  background-color: #edf6f9;
   width: 10rem;
   margin-bottom: 0.3rem;
   padding: 0.2rem;
-  background-color: #edf6f9;
   border-radius: 0.2rem;
   font-size: 1rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -62,9 +62,9 @@ input {
 }
 
 .buttons button {
+  background-color: #1982c4;
   width: 10rem;
   height: 2rem;
-  background-color: #1982c4;
   border: 1px solid #edf2f4;
   border-radius: 0.2rem;
   font-size: 1rem;
