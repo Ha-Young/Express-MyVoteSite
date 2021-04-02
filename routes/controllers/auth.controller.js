@@ -45,7 +45,7 @@ exports.postSignup = async function (req, res, next) {
     });
 
     req.flash("message", "회원가입을 축하합니다");
-    res.status(301).redirect("/votings/success");
+    res.status(302).redirect("/votings/success");
   } catch (err) {
     next(err);
   }
