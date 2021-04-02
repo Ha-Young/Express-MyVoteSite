@@ -25,34 +25,36 @@
         </h3>
       </div>
       <div class="form-input-material">
-        <label for="title">title</label>
+        <label for="title">Title</label>
         <input type="text" name="title" id="title" placeholder=" " required class="form-control-material" />
         <p class="form-message">
-          <%= ...infoMessages.filter(message=> message.includes('email')) %>
+          <%= ...infoMessages.filter(message=> message.includes('title')) %>
         </p>
       </div>
       <div class="form-input-material">
-        <label for="expiration-date">date</label>
+        <label for="expiration-date">Date</label>
         <input type="datetime-local" name="expiration-date" id="expiration-date" required
           class="form-control-material" min=<%= today %>>
         <p class="form-message">
-          <%= ...infoMessages.filter(message=> message.includes('email')) %>
+          <%= ...infoMessages.filter(message=> message.includes('expirationDate')) %>
         </p>
       </div>
-      <div class="options-container">
-        <div class="option form-input-material">
-          <label for="option">Option</label>
-          <input type="text" name="1" id="option1" placeholder=" " required class="form-control-material" />
-        </div>
-        <div class="option form-input-material">
-          <label for="option">Option</label>
-          <input type="text" name="2" id="option2" placeholder=" " required class="form-control-material" />
-        </div>
-      </div>
-      <p class="form-message">
-        <%= ...infoMessages.filter(message=> message.includes('email')) %>
+      <ul class="options-container">
+        <li class="option-block form-input-material">
+          <label for="option1">Option</label>
+          <input type="text" name="option" id="option1" placeholder=" " required class="option form-control-material" />
+        </li>
+        <li class="option-block form-input-material">
+          <label for="option2">Option</label>
+          <input type="text" name="option" id="option2" placeholder=" " required class="option form-control-material" />
+        </li>
+      </ul>
+      <p class="option-message">
       </p>
-      <button class="btn btn-ghost add-button">ADD</button>
+      <div class="option-buttons-container">
+        <button type="button" class="btn btn-ghost subtract-button">-</button>
+        <button type="button" class="btn btn-ghost add-button">+</button>
+      </div>
       <button type="submit" class="btn btn-ghost">SUBMIT</button>
     </form>
   </main>

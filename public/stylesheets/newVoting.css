@@ -69,7 +69,7 @@ main {
 
 .new-voting-form button,
 .new-voting-form input {
-  width: 250px;
+  width: 270px;
   outline: none;
 }
 
@@ -87,6 +87,10 @@ main {
 
 .form-message {
   position: absolute;
+}
+
+.form-message,
+.option-message {
   font-size: 12px;
   line-height: 1.33337;
   font-weight: 400;
@@ -96,6 +100,14 @@ main {
   text-align: right;
 }
 
+.options-container {
+  list-style: none;
+}
+
+.option-buttons-container {
+  display: flex;
+  width: 80%;
+}
 
 .btn-ghost {
   --btn-color: var(--primary-color);
@@ -126,8 +138,4 @@ main {
 
 .btn-ghost:hover::before {
   transform: translateX(100%);
-}
-
-.new-voting-form .add-option-button {
-  width: 30%;
 }

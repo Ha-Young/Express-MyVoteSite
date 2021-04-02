@@ -5,7 +5,7 @@
  * @param {function} next - function to move next middleware
  * @returns {undefined} does not have any return value
  */
-exports.votes = (req, res, next) => {
+exports.authenticateVotes = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
@@ -18,7 +18,7 @@ exports.votes = (req, res, next) => {
   return res.redirect('/auth/login');
 };
 
-exports.auth = (req, res, next) => {
+exports.authenticateAuth = (req, res, next) => {
   if (req.path.includes('logout')) {
     if (req.isAuthenticated()) {
       return next();
@@ -34,7 +34,7 @@ exports.auth = (req, res, next) => {
   return next();
 };
 
-exports.index = (req, res, next) => {
+exports.authenticateIndex = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }

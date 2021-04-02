@@ -6,6 +6,7 @@ $deleteButton.addEventListener('click', function () {
   }).then(res => {
     window.location.href = '/';
   }).catch(err => {
+    //how to handle error? in here or in server
     console.err(err);
     window.location.href = '/';
   });

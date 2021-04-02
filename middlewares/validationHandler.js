@@ -11,7 +11,7 @@ const User = require('../models/User');
  * @param {function} next - function to move next middleware
  * @returns {undefined} does not have any return value
  */
-exports.signup = async (req, res, next) => {
+exports.validateSignup = async (req, res, next) => {
   const { error, value } = validateSignUpInputs(req.body);
 
   if (error) {
@@ -31,7 +31,7 @@ exports.signup = async (req, res, next) => {
   }
 };
 
-exports.login = (req, res, next) => {
+exports.validateLogin = (req, res, next) => {
   const { error } = validateLoginInputs(req.body);
 
   if (error) {
@@ -42,7 +42,7 @@ exports.login = (req, res, next) => {
   return next();
 };
 
-exports.query = (req, res, next) => {
+exports.validateQuery = (req, res, next) => {
   const { error } = validateQueries(req.query);
 
   if (error) {

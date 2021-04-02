@@ -1,16 +1,21 @@
 const router = require('express').Router();
 const passport = require('passport');
 
-const authController = require('../controllers/auth.controller');
-const authenticationHandler = require('../middlewares/authenticationHandler');
-const validationHandler = require('../middlewares/validationHandler');
+const {
+  getSignUpForm,
+  createUser,
+  getLoginForm,
+  logOut
+} = require('../controllers/auth.controller');
+const { authenticateAuth } = require('../middlewares/authenticationHandler');
+const { validateSignup, validateLogin } = require('../middlewares/validationHandler');
 
-router.use(authenticationHandler.auth);
+router.use(authenticateAuth);
 
 router
   .route('/signup')
-  .get(authController.getSignUpForm)
-  .post(validationHandler.signup, authController.createUser);
+  .get(getSignUpForm)
+  .post(validateSignup, createUser);
 
 router
   .route('/github')
@@ -26,8 +31,8 @@ router
 
 router
   .route('/login')
-  .get(authController.getLoginForm)
-  .post(validationHandler.login, passport.authenticate('local', {
+  .get(getLoginForm)
+  .post(validateLogin, passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/auth/login',
     failureFlash: true
@@ -35,6 +40,6 @@ router
 
 router
   .route('/logout')
-  .get(authController.logOut);
+  .get(logOut);
 
 module.exports = router;

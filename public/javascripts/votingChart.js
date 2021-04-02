@@ -39,5 +39,5 @@ function randomColorGenerator(max) {
   return {
     backgroundColor: `rgba(${r}, ${g}, ${b}, 0.4)`,
     borderColor: `rgba(${r}, ${g}, ${b}, 1)`
-  }
+  };
 }

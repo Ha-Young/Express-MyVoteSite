@@ -64,7 +64,7 @@ exports.getVotingForm = (req, res) => {
   const title = 'Create Vote';
   const infoMessages = req.flash('info');
   const message = req.flash('error');
-  const today = new Date().toISOString().split('.')[0];
+  const today = new Date().toISOString().split('T')[0] + 'T00:00';
 
   res.render('newVoting', {
     user: req.user,
@@ -77,7 +77,7 @@ exports.getVotingForm = (req, res) => {
 
 exports.createVote = async (req, res, next) => {
   try {
-
+    console.log(req.body);
   } catch (err) {
     next(createError(500));
   }
