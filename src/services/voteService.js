@@ -101,10 +101,6 @@ exports.CreateVote = async ({ voteInputDTO, userId }) => {
       ...voteInputDTO,
       creator: userId,
       vote_options: voteOptions,
-      expire_datetime: format(
-        new Date(voteInputDTO.expire_datetime),
-        dateFormat
-      ),
     });
 
     if (!voteRecord) {
