@@ -2,35 +2,36 @@
 <html>
   <head>
     <%- include ('partials/head') %>
-    <!-- <link rel="stylesheet" href="/stylesheets/login.css" /> -->
+    <link rel="stylesheet" href="/stylesheets/loginSignup.css" />
   </head>
   <body>
     <%- include ('partials/header') %>
-    <div class="container">
-      <div class="log-in form">
-        <!-- <img class="app-logo" src="/assets/images/sudal.png" > -->
-        <h1>Login</h1>
-        <a href="/login/github">
-          <div class="git-in">
-            <span>
-              Login with GitHub
-            </span>
-            <!-- <img class="git-logo" src="/assets/images/githubLogoWhite.png"> -->
-          </div>
-        </a>
-        <form action="/login" method="POST">
-          <div class="log-input">
-            <input type="email" id="email" name="email" placeholder="email" required>
-          </div>
-          <div class="log-input">
-            <input type="password" id="password" name="password" placeholder="password" required>
-          </div>
-          <button class="log-in-button" type="submit">Log In</button>
-        </form>
-        <h2><%= messages.error ? messages.error : ""  %></h2>
-      </div>
-    </div>
 
-    <%- include ('partials/footer') %>
+    <div class="card">
+      <form action="/login" method="POST">
+        <h2 class="title"> Log in</h2>
+        <p class="subtitle">Don't have an account? <a href="/signup"> sign Up</a></p>
+
+        <div class="social-login">
+            <a class="github-btn" href="login/github">
+              <p class="btn-text">Sign in with Github</p>
+              <img alt="Github" src="/images/githubLogoBlack.png" />
+            </a>
+        </div>
+
+        <p class="or"><span>or</span></p>
+
+        <div class="email-login">
+            <label for="email"> <b>Email</b></label>
+            <input type="email" placeholder="Enter Email" id="email" name="email" required>
+            <label for="password"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" id="password" name="password" required>
+        </div>
+        <button class="cta-btn" type="submit">Log In</button>
+      </form>
+      <h2><%= messages.error ? messages.error : ""  %></h2>
+  </div>
+
+  <%- include ('partials/footer') %>
   </body>
 </html>

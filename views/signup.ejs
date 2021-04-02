@@ -2,29 +2,30 @@
 <html>
   <head>
     <%- include ('partials/head') %>
-    <link rel="stylesheet" href="/stylesheets/signUp.css" >
+    <link rel="stylesheet" href="/stylesheets/loginSignup.css" >
   </head>
   <body>
     <%- include ('partials/header') %>
-    <div class="container">
-      <div class="sign-up form">
-        <h1 class="sign-in-title">Sign Up</h1>
-        <form action="/signup" method="POST">
-          <div>
-            <input type="text" name="name" id="name" placeholder="name" required >
-          </div>
-          <div>
-            <input type="email" name="email" id="email" placeholder="email" required >
-          </div>
-          <div>
-            <input type="password" name="password" id="password" placeholder="password" required >
-          </div>
-          <button class="sign-up-button" type="submit">Sign Up</button>
-        </form>
-        <a class="back" href="/login">Back</a>
-        <h2><%= messages.usedEmail %></h2>
-      </div>
-    </div>
+
+    <div class="card">
+      <form action="/signup" method="POST">
+        <h2 class="title"> Sign Up</h2>
+        <p class="subtitle">You have already account? <a href="/login"> log in</a></p>
+
+        <p class="or"><span>or</span></p>
+
+        <div class="email-login">
+            <label for="name"> <b>Name</b></label>
+            <input type="name" placeholder="Enter Name" id="name" name="name" required>
+            <label for="email"> <b>Email</b></label>
+            <input type="email" placeholder="Enter Email" id="email" name="email" required>
+            <label for="password"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" id="password" name="password" required>
+        </div>
+        <button class="cta-btn" type="submit">Sign Up</button>
+      </form>
+      <h2><%= messages.usedEmail %></h2>
+  </div>
 
     <%- include ('partials/footer') %>
   </body>
