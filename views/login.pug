@@ -7,16 +7,16 @@ block content
       form#login-form
         .form-box
           label(for="email") E-MAIL
-          input(id="email" type="email" name="email" autocomplete required)
+          input(id="email" type="email" name="email" placeholder="E-MAIL" autocomplete required)
         .form-box
           label(for="password") PASSWORD
-          input(id="password" type="password" name="password" autocomplete required)
+          input(id="password" type="password" name="password" placeholder="PASSWORD" autocomplete required)
       p.validation.hidden
   ul.button-list
     li
-      button#loginButton(type="submit" class="button" form="login-form") LOGIN
+      button#loginButton.button.purple(type="submit" form="login-form") LOGIN
     li
-      button#googleLoginButton(type="button" class="button") LOGIN WITH GOOGLE
+      button#googleLoginButton.button.yellow(type="button") LOGIN WITH GOOGLE
     li
-      a(href="/users/signup" class="button") CREATE ACCOUNT
+      a.button(href="/users/signup") CREATE ACCOUNT
   script(type="module" src="/javascripts/login.js")

@@ -5,6 +5,6 @@ header.flex-center
     ul
       li.name Hello, #{user.name}
       li
-        button(type="button" id="logoutButton" class="button") LOGOUT
+        button#logoutButton.button(type="button") LOGOUT
   else
-    a(href="/users/login" class="button") LOGIN
+    a.button(href="/users/login") LOGIN
