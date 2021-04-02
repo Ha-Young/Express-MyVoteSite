@@ -1,8 +1,11 @@
 const dayjs = require("dayjs");
+
 const { convertDate } = require("../../utils/conversion");
+const resultMessage = require("../../constants/resultMessage");
 
 const Vote = require("../../models/Vote");
 const User = require("../../models/User");
+
 
 exports.renderSuccess = function (req, res, next) {
   try {
@@ -92,7 +95,7 @@ exports.castVote = async function (req, res, next) {
     );
 
     if (isParticipated) {
-      res.status(200).json({ "participated": true });
+      res.status(200).json({ participated: true });
       return;
     }
 
@@ -105,10 +108,10 @@ exports.castVote = async function (req, res, next) {
     await vote.save();
     await Vote.findOneAndUpdate(
       { _id: voteId },
-      { $addToSet: { participated_users: [ userId ] } }
+      { $addToSet: { participated_users: [ userId ] } },
     );
 
-    res.status(200).json({ "success": true });
+    res.status(200).json({ success: true });
   } catch (err) {
     next(err);
   }
@@ -131,7 +134,7 @@ exports.deleteVote = async function (req, res, next) {
     }
 
     await user.save();
-    res.status(200).json({ "success": true });
+    res.status(200).json({ success: true });
   } catch (err) {
     next(err);
   }
