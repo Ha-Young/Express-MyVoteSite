@@ -90,6 +90,8 @@ module.exports = app => {
           return next(createError(error));
         }
 
+
+
         res.redirect("/");
       } catch (error) {
         return next(createError(error));
