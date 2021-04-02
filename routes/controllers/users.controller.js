@@ -34,6 +34,6 @@ exports.generateToken = async (req, res, next) => {
     });
     res.redirect(302, "/");
   } catch (err) {
-    next(createError(500, err, INTERNAL_SERVER_ERROR));
+    next(createError(500, INTERNAL_SERVER_ERROR));
   }
 };

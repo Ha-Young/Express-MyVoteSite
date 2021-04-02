@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create Voting</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+      <h1>Create Voting</h1>
+      <form action="/votings/new" method="post">
+        <p>투표 제목</p>
+        <input type="text" name="title" />
+        <p>만료 날짜 및 시간</p>
+        <input type="datetime-local" name="expirationDateAndTime" />
+        <p>선택 사항</p>
+        <div class="options-container">
+          <input type="text" name="option" />
+          <input type="text" name="option" />
+        </div>
+        <div>
+          <button class="option-add-btn">선택 사항 추가</button>
+          <button class="option-remove-btn">선택 사항 제거</button>
+        </div>
+        <button type="submit">생성</button>
+      </form>
+      <a href="http://localhost:3000/">Back to Home</a>
+      <script
+        type="text/javascript"
+        src="/javascripts/controllOptionAddAndRemove.js"
+      >
+      </script>
+  </body>
+</html>

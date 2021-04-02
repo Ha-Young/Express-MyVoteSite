@@ -3,7 +3,9 @@ const UNFILLED_INFORMATION_ERROR = "Please enter your Email and Password";
 const MISMATCHED_CONFIRM_PASSWORD_ERROR = "The passwords are not the same";
 const ALREADY_SIGNED_UP_USER_ERROR = "User already exists";
 const PASSWORD_HASHING_FAILED_ERROR = "Failed to hash password";
-const HASHED_PASSWORD_COMPARISON_FAILED_ERROR= "Failed to compare hashed password"
+const HASHED_PASSWORD_COMPARISON_FAILED_ERROR = "Failed to compare hashed password";
+const UNAUTHORIZED_TOKEN_ERROR = "Unauthorized Token";
+const FAILED_TO_DECODE_TOKEN_ERROR = "Failed to decode token";
 
 module.exports = {
   INTERNAL_SERVER_ERROR,
@@ -12,4 +14,6 @@ module.exports = {
   ALREADY_SIGNED_UP_USER_ERROR,
   PASSWORD_HASHING_FAILED_ERROR,
   HASHED_PASSWORD_COMPARISON_FAILED_ERROR,
+  UNAUTHORIZED_TOKEN_ERROR,
+  FAILED_TO_DECODE_TOKEN_ERROR,
 };

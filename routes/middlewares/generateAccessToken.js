@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const createError = require("http-errors");
 const jwt = require("jsonwebtoken");
 const SECRET_KEY = process.env.TOKEN_SECRET_KEY;
@@ -11,6 +9,6 @@ const generateAccessToken = (payload) => {
   } catch (err) {
     return next(createError(500, INTERNAL_SERVER_ERROR));
   }
-}
+};
 
 exports.generateAccessToken = generateAccessToken;
