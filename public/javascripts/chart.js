@@ -11,8 +11,8 @@ if (datas.every(node => node === 0)) {
   const contentPosition = document.querySelector('.chart-empty-alert');
   const alertNode = document.createElement("h2");
   const content = document.createTextNode('투표 결과가 존재하지 않습니다.');
-  alertNode.appendChild(content);
 
+  alertNode.appendChild(content);
   contentPosition.appendChild(alertNode);
 } else {
   const myDoughnutChart = new Chart(ctx, {

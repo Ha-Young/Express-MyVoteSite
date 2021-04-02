@@ -1,7 +1,6 @@
 const createError = require('http-errors');
 const Voting = require('../models/Voting');
 const User = require('../models/User');
-const mongoose = require('mongoose');
 
 exports.renderNewVoting = function (req, res, next) {
   res.render('newVoting');
@@ -40,26 +39,21 @@ exports.renderVotingDetail = async function (req, res, next) {
 };
 
 exports.addVote = async function (req, res, next) {
-  const votingId = req.params.voting_id;
   const selectedOption = req.body.option;
 
-  if (!mongoose.isValidObjectId(votingId)) {
-    return res.json({ error: 400 });
-  }
-
   try {
-    const voting = await Voting.findById(votingId);
+    const voting = await Voting.findById(req.votingId);
     const currentUser = await User.findById(req.user);
 
     if (!voting) {
       return res.json({ error: 404 });
     }
 
-    if (currentUser.isAlreadyVote(votingId)) {
+    if (currentUser.isAlreadyVote(req.votingId)) {
       return res.json({ error: "이미 투표했습니다." });
     } else {
       await voting.addVoteCount(selectedOption);
-      await currentUser.addVotingList(votingId);
+      await currentUser.addVotingList(req.votingId);
     }
 
     res.json({ success: "성공" });
@@ -69,11 +63,11 @@ exports.addVote = async function (req, res, next) {
 };
 
 exports.deleteVoting = async function (req, res, next) {
-  // TODO 여기서 지우려는 voting찾고, 거기 author가 req.user랑 같은지 판별하는 로직 추가 필요.
-  // 한방에 찾고 author가 req.user랑 같으면 지우는 쿼리를 날릴순 없을까??
-  const votingId = req.params.voting_id;
   try {
-    await Voting.findByIdAndDelete(votingId);
+    await Voting.findOneAndDelete({
+      _id: req.votingId,
+      author: req.user,
+    });
 
     res.json({ success: "성공" });
   } catch (err) {

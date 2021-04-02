@@ -2,6 +2,7 @@
   visibility: hidden;
 }
 
-.already-alert {
+.already-alert,
+.need-option-select {
   color: red;
 }

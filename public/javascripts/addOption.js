@@ -1,4 +1,5 @@
 const addOptionButton = document.querySelector('.option-add-button');
+
 addOptionButton.addEventListener('click', handleClick);
 
 function handleClick () {

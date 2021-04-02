@@ -1,4 +1,5 @@
 const $logoutButton = document.querySelector('.logout');
+
 $logoutButton.addEventListener('click', handleLogout);
 
 function handleLogout (e) {

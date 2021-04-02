@@ -41,9 +41,14 @@
             <input type="submit" class="form-submit-button" data-votingid="<%= voting._id %>">
           </label>
         <% } %>
-        <div class="hidden">
-          <span class="already-alert">
+        <div class="hidden already-alert">
+          <span class="">
             이미 투표했습니다.
+          </span>
+        </div>
+        <div class="hidden need-option-select">
+          <span class="">
+            투표할 선택지를 뽑아 주세요!
           </span>
         </div>
       </form>

@@ -18,7 +18,7 @@
         <div class="">
           <label for="email" class="">E-mail*</label>
           <div class="">
-            <input type="text" name="email" value="<%= userInput.email %>" class="">
+            <input type="email" name="email" value="<%= userInput.email %>" class="" required>
             <% if(errors.email){ %>
               <div class="">
                 <span class="invalid-feedback"><%= errors.email.message %></span>
@@ -29,7 +29,7 @@
         <div class="">
           <label for="password" class="">Password*</label>
           <div class="">
-            <input type="text" name="password" value="<%= userInput.password %>" class="">
+            <input type="text" name="password" value="<%= userInput.password %>" class="" required>
             <% if(errors.password){ %>
               <div class="">
                 <span class="invalid-feedback"><%= errors.password.message %></span>

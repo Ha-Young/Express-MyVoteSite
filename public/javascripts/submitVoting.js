@@ -1,11 +1,27 @@
 const $formSubmitButton = document.querySelector('.form-submit-button');
-const $alreadyVotedAlert = document.querySelector('.hidden');
+const $alreadyVotedAlert = document.querySelector('.already-alert');
+const $needOptionSelect = document.querySelector('.need-option-select');
+
 $formSubmitButton.addEventListener('click', handleSubmitButtonClick);
 
 async function handleSubmitButtonClick (e) {
   e.preventDefault();
 
-  const selected_option = document.querySelector('input[name="option"]:checked').value;
+  if (!$needOptionSelect.classList.contains('hidden')) {
+    $needOptionSelect.add('hidden');
+  }
+
+  if (!$alreadyVotedAlert.classList.contains('hidden')) {
+    $alreadyVotedAlert.add('hidden');
+  }
+
+  let selected_option;
+
+  try {
+    selected_option = document.querySelector('input[name="option"]:checked').value;
+  } catch (err) {
+    return $needOptionSelect.classList.remove('hidden');
+  }
 
   try {
     const response = await fetch(`/votings/${$formSubmitButton.dataset.votingid}`, {

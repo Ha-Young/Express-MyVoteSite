@@ -1,4 +1,5 @@
 const $deleteButton = document.querySelector('.delete-button');
+
 $deleteButton.addEventListener('click', handleDeleteButtonClick);
 
 async function handleDeleteButtonClick (e) {
@@ -15,11 +16,11 @@ async function handleDeleteButtonClick (e) {
     const responseBody = await response.json();
 
     if (responseBody.error) {
-      window.location.href = '/error';
+      window.location.href = `/error/${responseBody.error}`;
     } else {
       window.location.href = `/`;
     }
   } catch (err) {
-    console.log(err);
+    window.location.href = '/error/500';
   }
 }
