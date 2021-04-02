@@ -112,6 +112,104 @@ input:active {
 }
 
 /**
+ * loading
+ */
+
+.loading-wrapper {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  animation: remove-loading 0.5s ease 3.3s normal forwards;
+}
+
+.loading-top {
+  width: 100%;
+  height: 50%;
+  background: var(--main-color);
+  animation: loading-up 1s ease 2.5s normal forwards;
+}
+
+.loading-bottom {
+  width: 100%;
+  height: 50%;
+  background: var(--main-color);
+  animation: loading-down 1s ease 2.5s normal forwards;
+}
+
+.loading-info {
+  position: absolute;
+  animation: fade-out 0.5s ease 2.5s normal forwards;
+}
+
+.loading-text {
+  margin: 0;
+  padding: 0;
+  font-size: 5em;
+  color: var(--white);
+}
+
+.loading-bar {
+  width: 2px;
+  height: 20px;
+  margin-top: -10px;
+  background: var(--yellow);
+  position: fixed;
+  top: 50%;
+  left: 0;
+  animation: bar-growing 2.3s ease 0s normal forwards;
+}
+
+@keyframes remove-loading {
+  0% {
+    margin: 0;
+  }
+  100% {
+    margin: 0 0 0 -100%;
+  }
+}
+
+@keyframes bar-growing {
+  0% {
+    width: 2px;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes loading-up {
+  0% {
+    margin: 0;
+  }
+  100% {
+    margin: -50% 0 0 0;
+  }
+}
+
+@keyframes loading-down {
+  0% {
+    margin: 0;
+  }
+  100% {
+    margin: 100% 0 0 0;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/**
  * button
  */
 
@@ -133,6 +231,14 @@ button:hover {
 .button.red {
   background: var(--red);
   color: #ffffff;
+}
+.button.yellow {
+  background: var(--yellow);
+  color: var(--black);
+}
+.button.purple {
+  background: var(--main-color);
+  color: var(--white);
 }
 
 .flex-center {
@@ -269,11 +375,88 @@ footer {
   width: 100%;
   height: 30px;
   padding: 0 1em;
-  justify-content: space-between;
   background: var(--yellow);
   box-sizing: border-box;
   position: fixed;
   bottom: 0;
+}
+
+footer p {
+  width: 100%;
+  text-align: right;
+}
+
+.vote-alphabet-icons {
+  width: 0;
+  height: 0;
+  position: relative;
+}
+.vote-alphabet-icons li {
+  width: 35px;
+  height: 50px;
+  margin: -90px 0 0 0;
+  background: var(--white);
+  box-shadow: 2px 2px 3px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  position: absolute;
+}
+.vote-alphabet-icons li:nth-child(2n) {
+  margin: -60px 0 0 0;
+}
+.vote-alphabet-icons .v-icon {
+  margin: -90px 0 0 0;
+  background: var(--main-color);
+  color: var(--white);
+  animation: up-down-odd 2s ease 0s infinite forwards;
+}
+.vote-alphabet-icons .o-icon {
+  left: 45px;
+  background: rgba(255, 170, 48, 1);
+  animation: up-down-even 2s ease 0.5s infinite forwards;
+}
+.vote-alphabet-icons .t-icon {
+  left: 90px;
+  background: rgba(255, 100, 90, 1);
+  color: var(--white);
+  animation: up-down-odd 2s ease 1.5s infinite forwards;
+}
+.vote-alphabet-icons .e-icon {
+  left: 135px;
+  background: rgba(48, 255, 183, 1);
+  animation: up-down-even 2s ease 2s infinite forwards;
+}
+.vote-alphabet-icons .emoji-icon {
+  left: 180px;
+  background: var(--yellow);
+  color: var(--main-color);
+  animation: up-down-odd 2s ease 2.5s infinite forwards;
+}
+
+@keyframes up-down-odd {
+  0% {
+    margin: -90px 0 0 0;
+  }
+  50% {
+    margin: -100px 0 0 0;
+  }
+  10% {
+    margin: -90px 0 0 0;
+  }
+}
+
+@keyframes up-down-even {
+  0% {
+    margin: -60px 0 0 0;
+  }
+  50% {
+    margin: -70px 0 0 0;
+  }
+  10% {
+    margin: -60px 0 0 0;
+  }
 }
 
 /**
@@ -288,6 +471,19 @@ main {
   box-sizing: border-box;
   position: relative;
 }
+main::after {
+  content: "VOTE VOTE VOTE VOTE VOTE VOTE";
+  width: 100%;
+  margin: 0 0 0 -50%;
+  color: rgba(0, 0, 0, 0.04);
+  white-space: nowrap;
+  font-size: 13em;
+  transform: rotate(-18deg);
+  position: absolute;
+  top: 40vh;
+  left: 50vw;
+  z-index: -1;
+}
 
 section {
   width: 100%;
@@ -296,6 +492,7 @@ section {
 }
 
 h2 {
+  padding: 0.5em 0;
   font-size: 2em;
   text-align: center;
 }
@@ -323,7 +520,7 @@ h2 {
 }
 
 .voteBlock {
-  width: 100%;
+  width: calc(50% - 1em);
   margin: 0 0 2em 0;
   padding: 1.5em;
   background: var(--white);
@@ -345,7 +542,7 @@ h2 {
   z-index: -1;
 }
 .voteBlock:hover {
-  margin: 0 0 2em -1em;
+  margin: -10px 0 2em 0;
 }
 .voteBlock ul li {
   font-size: 1em;
