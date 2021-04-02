@@ -79,7 +79,21 @@ body {
   transition-duration: 0.2s;
   overflow-y: auto;
   overflow-x: hidden;
-
+  .delete-form {
+    display: flex;
+    margin-top: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    &:hover {
+      color: #fff;
+      svg {
+        background: #ff7551;
+      }
+    }
+  }
+  .delete-button {
+    all: unset;
+  }
   .logo {
     display: none;
     width: 30px;
@@ -92,23 +106,23 @@ body {
     justify-content: center;
 
     &-expand {
-    text-decoration: none;
-    color: #fff;
-    font-size: 19px;
-    font-weight: 600;
-    line-height: 34px;
-    position: sticky;
-    top: 0;
-    &:before {
-      content: '';
-      position: absolute;
-      top: -30px;
-      left: 0;
-      background: var(--theme-bg);
-      width: 200px;
-      height: 70px;
-      z-index: -1;
-    }
+      text-decoration: none;
+      color: #fff;
+      font-size: 19px;
+      font-weight: 600;
+      line-height: 34px;
+      position: sticky;
+      top: 0;
+      &:before {
+        content: '';
+        position: absolute;
+        top: -30px;
+        left: 0;
+        background: var(--theme-bg);
+        width: 200px;
+        height: 70px;
+        z-index: -1;
+      }
     }
   }
   &-link {
