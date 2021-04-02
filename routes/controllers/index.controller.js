@@ -4,7 +4,12 @@ const User = require("../../models/User");
 exports.getAll = async function (req, res, next) {
   try {
     const votes = await Vote.find();
-    const name = req.user.name;
+    let name;
+
+    if (req.user) {
+      name = req.user.name;
+    }
+
     res.status(200).render("index", { votes, name });
   } catch (err) {
     next(err);
