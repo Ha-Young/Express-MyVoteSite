@@ -26,7 +26,6 @@ module.exports.isSignIn = async function isSignIn(req, res, next) {
     }
 
     const refreshTargetUser = await User.findById(dcdRefreshToken._id).lean();
-    console.log(refreshTargetUser.email);
 
     if (refreshTargetUser.email !== dcdAccessToken.email) {
       console.log("token not same : ");
@@ -54,6 +53,14 @@ module.exports.isSignIn = async function isSignIn(req, res, next) {
 module.exports.redirectIfUserNone = function redirectIfUserNone(req, res, next) {
   if (!req.user) {
     return res.redirect("/signin");
+  }
+
+  next();
+}
+
+module.exports.responseIfUserNone = function responseIfUserNone(req, res, next) {
+  if (!req.user) {
+    return res.json("none");
   }
 
   next();

@@ -85,7 +85,7 @@ module.exports.putVoteDetail = async function putVoteDetail(req, res, next) {
 
     await Vote.findOneAndUpdate({ _id: vote_id }, { $set: { choices: targetVote.choices }});
 
-    res.send("Success!!");
+    res.json("success");
   } catch (err) {
     console.error(err);
     res.send("fail");

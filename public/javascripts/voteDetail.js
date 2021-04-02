@@ -16,18 +16,31 @@ function toggleDivs(element) {
 $voteButton.addEventListener("click" , (event) => {
   const voteId = $voteButton.getAttribute("voteId");
   const chosenId = $voteButton.getAttribute("choiceId");
+
+  if (!voteId) {
+    return alert("선택지를 선택해주세요!");
+  }
+
   fetch(`/votings/${voteId}`, {
     method: "PUT",
     body: JSON.stringify({ chosenId }),
     headers: {
       "Content-Type": "application/json"
     }
-  }).then(() => {
-    window.location.href = `/votings/${voteId}`;
-  }).catch(err => {
-    console.error(err);
-    window.location.href = `/votings/${voteId}`;
-  });
+  }).then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      if (result === "none") {
+        window.location.href = "/signin";
+      } else {
+        window.location.href = `/votings/${voteId}`;
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      window.location.href = `/signin`;
+    });
 });
 
 $deleteButton && $deleteButton.addEventListener("click", (event) => {
@@ -35,7 +48,7 @@ $deleteButton && $deleteButton.addEventListener("click", (event) => {
 
   fetch(`/votings/${voteId}`, {
     method: "DELETE"
-  }).then((result) => {
+  }).then(() => {
     window.location.href = "/";
   }).catch(err => {
     console.error(err);

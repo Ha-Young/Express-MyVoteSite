@@ -9,7 +9,7 @@ block content
       .voteDetail__info
         label.voteDetail__dueDate.form-label #{vote.dueDate}
         label.voteDetail__creator.form-label #{vote.creator.name}
-      if (vote.isEnable)
+      if (!vote.isEnable)
         if (vote.isCreator)
           .form-check.form-switch
             input.form-check-input#resultToggle(type="checkbox")
@@ -26,7 +26,7 @@ block content
               img.voteDetail__choiceImage(src=choice.pictureURL alt="pic")
               .voteDetail__choiceTitle #{choice.choiceTitle}
         .voteDetail__buttons
-          button.voteButton.btn.btn-success(voteId=vote._id) Vote!
+          button.voteButton.btn.btn-success Vote!
           if (vote.isCreator)
             button#deleteButton.btn.btn-danger(voteId=vote._id) Delete
   script(src="/javascripts/voteDetail.js")

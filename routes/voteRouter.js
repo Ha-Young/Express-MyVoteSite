@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const { isSignIn, redirectIfUserNone } = require("../middleware/authentification");
+const { isSignIn, redirectIfUserNone, responseIfUserNone } = require("../middleware/authentification");
 
 const { getNewVote, postNewVote, getVoteDetail, putVoteDetail, deleteVote } = require("../controller/vote.controller");
 
@@ -21,7 +21,7 @@ router.get('/error', function(req, res, next) {
 });
 
 router.get('/:vote_id', isSignIn, getVoteDetail);
-router.put('/:vote_id', isSignIn, redirectIfUserNone, putVoteDetail);
+router.put('/:vote_id', isSignIn, responseIfUserNone, putVoteDetail);
 router.delete('/:vote_id', deleteVote);
 
 module.exports = router;
