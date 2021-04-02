@@ -23,7 +23,7 @@
 .create-voting-label {
   display: flex;
   flex-flow: column nowrap;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .create-voting-option-label {
@@ -124,4 +124,11 @@
   bottom: 60px;
   font-size: 1.2rem;
   padding: 15px;
+}
+
+.message-box {
+  height: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #ce3d3d;
 }
