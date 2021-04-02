@@ -62,6 +62,12 @@ module.exports = app => {
           throw new Error("can't delete vote");
         }
 
+        const { error: userMyVoteDeleteError } = await userService.DeleteMyVote({ userId: req.user._id, voteId });
+
+        if (userMyVoteDeleteError) {
+          throw new Error("can't delete my vote in user");
+        }
+
         res.locals.vote = vote;
 
         res.redirect("/");
