@@ -49,6 +49,7 @@ exports.showVoteDetails = async function (req, res, next) {
   const id = req.params.vote_id;
   const voting = await Voting.findById(id);
   const creator = await User.findById(voting.creator);
+  const isLoggedIn = req.session.passport ? true : false;
 
   let showResult = false;
   const passport = req.session.passport;
@@ -58,6 +59,7 @@ exports.showVoteDetails = async function (req, res, next) {
   }
 
   res.render("votingDetail", {
+    isLoggedIn: isLoggedIn,
     voting: voting,
     creator: creator,
     showResult: showResult

@@ -46,7 +46,7 @@ passport.use("local-login", new LocalStrategy(
 ));
 
 router.get("/", (req, res) => {
-  res.render("login");
+  res.render("login", { isLoggedIn: false });
 });
 
 router.post("/", (req, res, next) => {

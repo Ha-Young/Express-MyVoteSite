@@ -9,7 +9,14 @@ const Voting = require("../models/Voting");
 const voteController = require("./controller/votes.controller");
 
 router.get("/new", requireAuth, function (req, res) {
-  res.render("createVoting", { message: "모든 칸을 입력해주세요." });
+  const isLoggedIn = req.session.passport ? true : false;
+
+  res.render("createVoting",
+    {
+      message: "모든 칸을 입력해주세요.",
+      isLoggedIn: isLoggedIn
+    }
+  );
 });
 
 router.post("/new", requireAuth, async function (req, res) {

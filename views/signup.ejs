@@ -2,10 +2,13 @@
 <html>
 
 <head>
-  <link ret="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/style.css" />
 </head>
 
 <body>
+  <%- include("partials/title") %>
+  <%- include("partials/authButton") %>
+  <%- include("partials/menu") %>
   <h1>Sign Up</h1>
   <form name="signup" action="/signup" method="POST">
     <input type="text" name="username" placeholder="username" />
@@ -13,7 +16,6 @@
     <input type="text" name="password" placeholder="password" />
     <input type="submit" value="Create" />
   </form>
-  <a href="/login">Log In</a>
 </body>
 
 </html>

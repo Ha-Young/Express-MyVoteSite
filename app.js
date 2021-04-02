@@ -66,11 +66,12 @@ app.use(function (req, res, next) {
 });
 
 app.use(function (err, req, res, next) {
+  const isLoggedIn = req.body.passport ? true : false;
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
-  console.log("errorrr");
+
   res.status(err.status || 500);
-  res.render("error");
+  res.render("error", { isLoggedIn: isLoggedIn });
 });
 
 module.exports = app;

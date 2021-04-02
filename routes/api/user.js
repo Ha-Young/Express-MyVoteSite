@@ -28,10 +28,10 @@ router.post("/", async (req, res) => {
     password,
   });
 
-  bcrypt.genSalt(saltRounds, function (err, salt) {
-    bcrypt.hash(password, salt, function (err, hash) {
-      if (err) {
-        throw new Error("오류 발생");
+  bcrypt.genSalt(saltRounds, function (error, salt) {
+    bcrypt.hash(password, salt, function (error, hash) {
+      if (error) {
+        throw new Error(error);
       }
 
       newUser.password = hash;

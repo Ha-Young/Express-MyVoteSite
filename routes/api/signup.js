@@ -7,7 +7,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const User = require("../../models/User");
 
 router.get("/", (req, res) => {
-  res.render("signup");
+  res.render("signup", { isLoggedIn: false });
 });
 
 passport.use(
