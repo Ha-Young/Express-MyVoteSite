@@ -4,9 +4,6 @@ const createError = require("http-errors");
 const errorMessage = require("../../constants/errorMessage");
 
 exports.renderNewVotePage = function (req, res, next) {
-  // console.log("looking for", req.user);
-  // console.log("cookie", req.cookies["jwt"]);
-
   res.status(200).render("newVote", { messages: req.flash("createVoteError") });
 };
 

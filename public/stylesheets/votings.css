@@ -43,8 +43,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-  color: beige;
+  font-family: "Fredoka One", cursive;
+  color: white;
   font-size: 40px;
   font-weight: 900;
 }

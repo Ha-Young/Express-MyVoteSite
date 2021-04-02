@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const createError = require("http-errors");
+const errorMessage = require("../constants/errorMessage");
 
 const votingsController = require("./controller/votingsController");
 
@@ -16,7 +18,19 @@ router.post(
 
 router.post(
   "/voted/:id",
-  passport.authenticate("jwt", { session: false }),
+  function (req, res, next) {
+    passport.authenticate("jwt", { session: false }, function (err, user) {
+      if (err) {
+        return next(createError(500, errorMessage.SERVER_ERROR));
+      }
+
+      if (!user) {
+        req.flash("prevUrl", req.body.currentUrl);
+        return res.status(401).send();
+      }
+      return res.redirect("/votings");
+    })(req, res, next);
+  },
   votingsController.updateVotingOption
 );
 

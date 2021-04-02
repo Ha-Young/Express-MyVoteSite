@@ -34,7 +34,12 @@ votingButtonBoard.addEventListener("click", (e) => {
   }
 
   const optionName = e.target.getAttribute("data-optionName");
-  const userClickedOption = { votingId, optionName, voterId };
+  const userClickedOption = {
+    votingId,
+    optionName,
+    voterId,
+    currentUrl: window.location.href,
+  };
 
   fetchVoting(
     `http://localhost:3000/votings/voted/${votingId}`,
@@ -45,9 +50,13 @@ votingButtonBoard.addEventListener("click", (e) => {
       votingButtonBoard.classList.add("hidden");
       console.log("data", data);
       console.log("data", data.status);
+      console.log(window.location.href);
+
       if (data.status === 401) {
         messageBoard.textContent = "로그인 창으로 이동합니다...";
         setTimeout(() => {
+          console.log(data.url);
+          localStorage.setItem("prev", window.location.href);
           window.location.href = "http://localhost:3000/logIn";
         }, 2000);
       } else {

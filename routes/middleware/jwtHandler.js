@@ -17,12 +17,14 @@ exports.signToken = function (req, res, next) {
         const createdError = createError(500, errorMessage.SERVER_ERROR);
         return next(createdError);
       }
+
+      const prevUrl = req.flash("prevUrl");
       return res
         .cookie("jwt", token, {
           httpOnly: true,
         })
         .status(200)
-        .redirect("/votings");
+        .redirect(prevUrl.length ? prevUrl : "/votings");
     }
   );
 };

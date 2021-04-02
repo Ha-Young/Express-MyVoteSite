@@ -31,6 +31,10 @@ a {
   font-family: "Fredoka One", cursive;
 }
 
+.sans-serif {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif !important;
+}
+
 a:link {
   text-decoration: none;
 }
