@@ -24,7 +24,10 @@ const UserSchema = new mongoose.Schema({
       ref: "Vote",
       required: [true, "voteId in votings is required"],
     },
-    optionId: mongoose.ObjectId,
+    optionId: {
+      type: mongoose.ObjectId,
+      ref: "Vote",
+    },
     isCreator: Boolean,
   }],
 }, { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } });
