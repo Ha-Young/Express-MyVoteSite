@@ -13,8 +13,8 @@ router.post("/login",
   }
 ), (req, res, next) => {
   try {
-    const redirectUrl = req.headers.referer.replace("http://localhost:3000/auth/login?url=", "");
     const loginUrl = "http://localhost:3000/auth/login";
+    const redirectUrl = req.headers.referer.replace(loginUrl+"?url=", "");
 
     if (redirectUrl !== "undefined" && redirectUrl !== loginUrl) {
       res.redirect(redirectUrl);
