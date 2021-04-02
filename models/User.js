@@ -31,5 +31,3 @@ UserSchema.methods.verifyPassword = async (plainPassword, encodedPassword) => {
 }
 
 module.exports = mongoose.model("User", UserSchema);
-
-//model은 스키마를 감싸주는 역할
