@@ -77,7 +77,7 @@ exports.postLogIn = catchAsync(async (req, res, next) => {
 
   res.cookie("jwt", token, cookieOptions);
 
-  if (req.query && req.query.id) {
+  if (req.query && req.query.id !== "undefined") {
     res.status(201).redirect(`/votings/${req.query.id}`);
   } else {
     res.status(201).redirect("/");

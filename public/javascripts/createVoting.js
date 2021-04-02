@@ -1,4 +1,3 @@
-// const $createVotingForm = document.querySelector(".createVoting-form");
 const $optionsContainer = document.querySelector(".options-container");
 const $addOptionBtn = document.querySelector(".add-option");
 const $deleteOptionBtn = document.querySelector(".delete-option");
