@@ -71,7 +71,8 @@
   color: white;
 }
 
-.voting-add-button {
+.voting-add-button,
+.voting-delete-button {
   border: 0;
   background-color: rgba(255, 255, 255, 0.692);
   border-radius: 5px;

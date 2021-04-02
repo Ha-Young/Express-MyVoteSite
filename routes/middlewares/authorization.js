@@ -19,7 +19,7 @@ exports.verifyToken = (req, res, next) => {
     next();
   } catch (error) {
 		console.log(error);
-		next(error); // next("TokenExpiredError"); // 419 // next("unauthorized"); // 401
+		next(error);
   }
 };
 

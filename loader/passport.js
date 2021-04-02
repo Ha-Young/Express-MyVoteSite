@@ -4,6 +4,9 @@ const GitHubStrategy = require("passport-github").Strategy;
 
 const User = require("../models/User");
 
+const { ErrorHandler } = require("../util/error");
+const { SERVER_ERROR } = require("../constants/error");
+
 passport.use(
   "local-signup",
   new LocalStrategy(
@@ -39,22 +42,25 @@ passport.use(
     {
       usernameField: "email",
       passwordField: "password",
+      passReqToCallback: true,
       session: false,
     },
-    async (email, password, cb) => {
+    async (req, email, password, cb) => {
+      console.log(req.body);
       try {
         if (!email || !password) {
-          throw new Error("Bad Request"); // 400번 // validate로 가라..
+          throw new ErrorHandler(400, SERVER_ERROR.BAD_REQUEST);
         }
 
         const user = await User.findOne({ email });
 
         if (user) {
           user.comparePassword(password, cb);
+
           return;
         }
 
-        cb("wrong email", false); // 메시지 빼주고 throw로 바꾸기....
+        cb(null, false);
       } catch (error) {
         cb(error);
       }
@@ -80,7 +86,6 @@ passport.use(
         const user = await User.findOne({ email });
 
         if (!user) {
-          // undefined인 경우에도 호출..? 왜..?
           const newUser = User({
             email,
             name,

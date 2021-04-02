@@ -31,6 +31,7 @@
                 placeholder="&#xf084; Password"
                 required
               >
+              <input type="hidden" name="prevpage" value="<%= query %>">
             </p>
           </div>
           <div class="sign-error">
@@ -45,7 +46,7 @@
             <a class="signup-button-content" href="/signup">join</a>
           </p>
           <p class="github-button">
-            <a class="github-button-content" href="/login/github">
+            <a class="github-button-content" href="/login/github/<%= query %>">
               Sign In with Github
               <i class="fab fa-github"></i>
             </a>

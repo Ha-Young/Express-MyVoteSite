@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
+const { ErrorHandeler, ErrorHandler } = require("../util/error");
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -26,16 +28,12 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre("save", async function(next) {
-  if (!this.isModified("password")) return next(); // 고치기..
+  if (!this.isModified("password")) return next();
 
-  if (this.password.length > 9) {
-    const password = this.password;
-    this.password = await bcrypt.hash(password, Number(process.env.SALT_ROUNDS));
-    
-    next();
-  } else {
-    throw new Error("Password should be longer then 10"); // error throw하기.. 이건 여기서 던지면 안돼..!
-  }
+  const password = this.password;
+  this.password = await bcrypt.hash(password, Number(process.env.SALT_ROUNDS));
+
+  next();
 });
 
 userSchema.virtual("id").get(function() {
@@ -51,7 +49,7 @@ userSchema.methods.comparePassword = async function(pw ,cb) {
 
       cb(null, user);
     } else {
-      cb(null, false); // 이유 고시해주기... 너 어디로 가니..?
+      cb(null, false);
     }
   } catch (error) {
     cb(error);

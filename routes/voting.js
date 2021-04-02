@@ -10,14 +10,14 @@ router.get(
 	"/new", 
 	verifyToken,
 	isAuthenticated,
-	votingController.getVotingPage
+	votingController.getNewVotingPage
 );
 router.post(
 	"/new", 
 	verifyToken,
 	isAuthenticated,
 	confirmVotingData, 
-	votingController.postNewVoting
+	votingController.createNewVoting
 );
 
 router.get(
@@ -38,13 +38,5 @@ router.put(
 	getUserDataByToken,
 	votingController.updateVoting
 );
-
-router.get("/success", (req, res, next) => {
-
-});
-
-router.get("/error", (req, res, next) => {
-
-});
 
 module.exports = router;

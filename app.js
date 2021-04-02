@@ -13,8 +13,12 @@ const MongoStore = require("connect-mongo");
 const passport = require("passport");
 const flash = require("connect-flash");
 
-const index = require("./routes/index");
+const global = require("./routes/global");
 const voting = require("./routes/voting");
+
+const { ErrorHandler } = require("./util/error");
+const { SERVER_ERROR } = require("./constants/error");
+const { TIME } = require("./constants/time");
 
 const app = express();
 
@@ -37,7 +41,7 @@ app.use(session({
   secret: process.env.SECRET_SESSION,
   resave: true,
   saveUninitialized: false,
-  cookie: { maxAge: 60 * 60 * 1000 },
+  cookie: { maxAge: TIME.SECONDS * TIME.MINETES * TIME.SECOND },
   store: MongoStore.create({
     mongoUrl: process.env.MONGO_DB_URL,
   }),
@@ -48,17 +52,17 @@ app.use(passport.session());
 
 app.use(flash());
 
-app.use("/", index);
+app.use("/", global);
 app.use("/votings", voting);
 
 app.use((req, res, next) => {
-  next(404);
+  next(new ErrorHandler(404, SERVER_ERROR.NOT_FOUND));
 });
 
 app.use(function(err, req, res, next) {
-  res.locals.message = err.message;
+  res.locals.message = err.message || SERVER_ERROR.INTERNAL_SERVER_ERROR;
   res.locals.error = req.app.get("env") === "development" ? err : {};
-  // render the error page
+  
   res.status(err.status || 500);
   res.render("error");
 });

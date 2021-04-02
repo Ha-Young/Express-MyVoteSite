@@ -13,7 +13,7 @@ exports.getAllVotings = async (req, res, next) => {
   }
 };
 
-exports.postNewVoting = async (req, res, next) => {
+exports.createNewVoting = async (req, res, next) => {
   const { body: { options, expired_at, title }, user } = req;
   try {
     const newVoting = await Voting.create({
@@ -44,7 +44,7 @@ exports.getVotingDetail = async (req, res, next) => {
       user,
     } = req;
     const voting = await Voting.findById(id);
-
+    
     res.status(200).render("votingDetail", { voting, user }); //가공해서 주기..?
   } catch (error) {
     next(error);
@@ -71,35 +71,37 @@ exports.updateVoting = async (req, res, next) => {
     const {
       params: { id },
       user,
-			originalUrl,
+      originalUrl,
       body: { option },
     } = req;
 
-		if (!user) {
-			res
-				.cookie("redirect", `${originalUrl}`, { httpOnly: true })
-				.json({ user });
+    let isSuccessVoting = false;
+    
+    if (!user) {
+      res.status(200).json({ isSuccessVoting, queryString: originalUrl });
+      
+      return;
 		}
-		
+    console.log(id);
     const voting = await Voting.findById(id);
     const isVoted = voting.voters.some((voter) => user.id === voter.toString());
-    let isSuccessVoting = false;
-		
-    if (!isVoted) {
-      const targetKey = voting.options.findIndex((content) => content.option === option);
-      voting.voters.push(user.id);
-      const votted = ++voting.options[targetKey].count;
 
-      await voting.save(); 
-
-      isSuccessVoting = true;
-
-      res.status(200).json({ user: user.name, isSuccessVoting, votted });
+    if (isVoted) {
+      res.status(200).json({ isSuccessVoting });
 
       return;
     }
+		
+    const targetKey = voting.options.findIndex((content) => content.option === option);
+    const votingCount = ++voting.options[targetKey].count;
 
-    res.status(200).json({ user: user.name, isSuccessVoting });
+    voting.voters.push(user.id);
+
+    await voting.save(); 
+
+    isSuccessVoting = true;
+
+    res.status(200).json({ isSuccessVoting, result: votingCount });
   } catch (error) {
     next(error);
   }
@@ -117,7 +119,7 @@ exports.getMyVotingPage = async (req, res, next) => {
   }
 };
 
-exports.getVotingPage = (req, res, next) => {
+exports.getNewVotingPage = (req, res, next) => {
   const [error] = req.flash("newVotingError");
 
   res.status(200).render("newVoting", { message: error });
