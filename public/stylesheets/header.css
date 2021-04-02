@@ -6,7 +6,9 @@
 }
 
 .header-left {
+  display: flex;
   width: 30%;
+  justify-content: center;
 }
 
 .header-right {
@@ -18,4 +20,8 @@
 .header-item {
   width: 150px;
   margin: auto 0;
+}
+
+.logout {
+  color: tomato;
 }
