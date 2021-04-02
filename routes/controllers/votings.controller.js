@@ -6,7 +6,6 @@ const resultMessage = require("../../constants/resultMessage");
 const Vote = require("../../models/Vote");
 const User = require("../../models/User");
 
-
 exports.renderSuccess = function (req, res, next) {
   try {
     successMessage = req.flash();
