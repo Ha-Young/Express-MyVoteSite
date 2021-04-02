@@ -77,8 +77,17 @@ exports.getVotingForm = (req, res) => {
 
 exports.createVote = async (req, res, next) => {
   try {
-    console.log(req.body);
+    const { title, expirationDate, options } = req.body;
+    await Vote.create({
+      title,
+      author: req.user._id,
+      expirationDate: new Date(expirationDate),
+      status: 'in progress',
+      options: options.map(option => ({ option, voters: [] }))
+    });
+
+    res.redirect('/');
   } catch (err) {
-    next(createError(500));
+    next(err);
   }
 };

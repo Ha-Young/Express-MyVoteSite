@@ -34,12 +34,12 @@ function generateOptionBlock() {
   $list.classList.add('option-block', 'form-input-material');
   $label.setAttribute('for', `option${$optionsContainer.childElementCount + 1}`);
   $label.textContent = 'Option';
-  $input.classList.add('option', 'form-control-material')
   $input.setAttribute('type', 'text');
-  $input.setAttribute('name', 'option');
+  $input.setAttribute('name', 'options');
   $input.setAttribute('id', `option${$optionsContainer.childElementCount + 1}`);
   $input.setAttribute('placeholder', ' ');
   $input.setAttribute('required', '');
+  $input.classList.add('option', 'form-control-material');
   $list.appendChild($label);
   $list.appendChild($input);
 

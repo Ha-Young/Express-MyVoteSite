@@ -33,7 +33,7 @@
       </div>
       <div class="form-input-material">
         <label for="expiration-date">Date</label>
-        <input type="datetime-local" name="expiration-date" id="expiration-date" required
+        <input type="datetime-local" name="expirationDate" id="expiration-date" required
           class="form-control-material" min=<%= today %>>
         <p class="form-message">
           <%= ...infoMessages.filter(message=> message.includes('expirationDate')) %>
@@ -42,11 +42,11 @@
       <ul class="options-container">
         <li class="option-block form-input-material">
           <label for="option1">Option</label>
-          <input type="text" name="option" id="option1" placeholder=" " required class="option form-control-material" />
+          <input type="text" name="options" id="option1" placeholder=" " required class="option form-control-material" />
         </li>
         <li class="option-block form-input-material">
           <label for="option2">Option</label>
-          <input type="text" name="option" id="option2" placeholder=" " required class="option form-control-material" />
+          <input type="text" name="options" id="option2" placeholder=" " required class="option form-control-material" />
         </li>
       </ul>
       <p class="option-message">
