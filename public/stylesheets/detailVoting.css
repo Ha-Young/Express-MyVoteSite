@@ -7,13 +7,13 @@
 }
 
 .detail-voting-chart {
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+
   width: 50%;
   height: 100%;
-
   overflow: hidden;
 }
 
@@ -33,35 +33,104 @@
 }
 
 .detail-message-board {
-  color: white;
-  font-size: 40px;
-  font-weight: 900;
   position: absolute;
   top: 50%;
   left: 50%;
+
+  color: white;
+  font-size: 40px;
+  font-weight: 900;
 }
 
 .detail-option-button-board {
   display: flex;
   flex-direction: column;
-  height: 40%;
+
   width: 100%;
+  height: 40%;
 }
 
 .detail-voting-option-button {
-  appearance: none;
-  height: 25%;
   width: 100%;
+  height: 25%;
 
+  color: black;
   font-family: "Black Han Sans", sans-serif;
   font-size: 50px;
 
   margin-bottom: 10px;
-
-  border: none;
   padding: 0;
+
+  appearance: none;
+  border: none;
   cursor: pointer;
-  color: black;
+}
+
+.detail-voting-name-font {
+  color: aliceblue;
+  font-family: "Black Han Sans", sans-serif;
+  font-size: 100px;
+
+  margin: 0;
+  padding-left: 10px;
+}
+
+.detail-voting-nickname-font {
+  color: #ffd774;
+  font-family: "Black Han Sans", sans-serif;
+  font-size: 50px;
+
+  margin: 0;
+  padding-left: 10px;
+}
+
+.detail-voting-date-font {
+  color: aliceblue;
+  font-family: "Song Myung", serif;
+  font-size: 40px;
+
+  margin: 0;
+  padding-left: 10px;
+  margin-bottom: 50px;
+}
+
+.detail-voting-chart-status-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+
+  width: 400px;
+  height: 400px;
+
+  color: white;
+  font-family: "Black Han Sans", sans-serif;
+  font-size: 70px;
+
+  background-color: #ff9dc7;
+  border-radius: 50%;
+
+  right: 80%;
+  animation: spinner 4s linear infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes slideshow {
+  0% {
+    left: 1000px;
+  }
+  100% {
+    left: -1000px;
+  }
+}
+
+@keyframes spinner {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(-360deg);
+  }
 }
 
 .color0 {
@@ -82,69 +151,4 @@
 
 .color4 {
   background-color: #c6ff9d;
-}
-
-.detail-voting-name-font {
-  font-family: "Black Han Sans", sans-serif;
-  font-size: 100px;
-  margin: 0;
-  padding-left: 10px;
-  color: aliceblue;
-}
-
-.detail-voting-nickname-font {
-  font-family: "Black Han Sans", sans-serif;
-  font-size: 50px;
-  margin: 0;
-  padding-left: 10px;
-  color: #ffd774;
-}
-
-.detail-voting-date-font {
-  font-family: "Song Myung", serif;
-  font-size: 40px;
-  color: aliceblue;
-  margin: 0;
-  padding-left: 10px;
-  margin-bottom: 50px;
-}
-
-.detail-voting-chart-status-message {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  flex-wrap: nowrap;
-
-  font-family: "Black Han Sans", sans-serif;
-  font-size: 70px;
-  color: white;
-  background-color: #ff9dc7;
-  border-radius: 50%;
-
-  right: 80%;
-
-  animation: spinner 4s linear infinite;
-
-  width: 400px;
-  height: 400px;
-  transform-style: preserve-3d;
-}
-
-@keyframes slideshow {
-  0% {
-    left: 1000px;
-  }
-  100% {
-    left: -1000px;
-  }
-}
-
-@keyframes spinner {
-  from {
-    transform: rotateY(0deg);
-  }
-  to {
-    transform: rotateY(-360deg);
-  }
 }

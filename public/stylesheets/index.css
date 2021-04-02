@@ -3,28 +3,18 @@
   justify-content: center;
   align-items: center;
   flex-wrap: nowrap;
+
   width: 100vw;
   height: 100vh;
-  height: 33%;
   overflow: hidden;
 }
 
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
 .index-font-upper {
+  color: blanchedalmond;
   font-family: "Times New Roman", Times, serif;
   font-weight: 100;
   font-size: 20vw;
+
   background: rgb(240, 190, 81);
   background: linear-gradient(
     90deg,
@@ -32,12 +22,13 @@
     rgba(223, 206, 153, 1) 39%,
     rgba(255, 161, 28, 1) 100%
   );
-  color: blanchedalmond;
+
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
 
 .index-font-middle {
+  color: white;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   font-weight: 900;
   font-size: 25vw;
@@ -46,7 +37,7 @@
     rgba(62, 161, 219, 1) 11.2%,
     rgba(93, 52, 236, 1) 100.2%
   );
-  color: white;
+
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
@@ -67,4 +58,16 @@
   );
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

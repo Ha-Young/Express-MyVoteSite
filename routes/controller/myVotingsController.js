@@ -1,4 +1,3 @@
-const Voting = require("../../models/Voting");
 const User = require("../../models/User");
 const createError = require("http-errors");
 const errorMessage = require("../../constants/errorMessage");

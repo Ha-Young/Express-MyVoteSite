@@ -9,7 +9,6 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 dotenv.config();
 
 const User = require("../models/User");
-
 const extractCookie = (req) => {
   return req.cookies ? req.cookies["jwt"] : null;
 };

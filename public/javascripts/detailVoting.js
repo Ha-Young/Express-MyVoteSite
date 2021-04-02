@@ -12,20 +12,27 @@ const voterId = document
   .querySelector(".detail-voting")
   .getAttribute("data-userId");
 
-const optionsInfo = {};
-const chartColors = [];
-
-for (const option of votingOptionsHidden) {
-  optionsInfo[option.getAttribute("data-optionName")] = Number(
-    option.getAttribute("data-voteCount")
-  );
-  chartColors.push(getRandomColor());
-}
-
+const chartdatas = createChartData(votingOptionsHidden);
+const dataColors = createChartColor(votingOptionsHidden.length);
 const chart = {
-  labels: Object.keys(optionsInfo),
-  data: Object.values(optionsInfo),
+  labels: Object.keys(chartdatas),
+  data: Object.values(chartdatas),
 };
+
+const ctx = document.getElementById("myChart");
+const myChart = new Chart(ctx, {
+  type: "doughnut",
+  data: {
+    labels: chart.labels,
+    datasets: [
+      {
+        data: chart.data,
+        backgroundColor: dataColors,
+        borderWidth: 1,
+      },
+    ],
+  },
+});
 
 let isSelected = false;
 votingButtonBoard.addEventListener("click", (e) => {
@@ -48,15 +55,9 @@ votingButtonBoard.addEventListener("click", (e) => {
   )
     .then((data) => {
       votingButtonBoard.classList.add("hidden");
-      console.log("data", data);
-      console.log("data", data.status);
-      console.log(window.location.href);
-
       if (data.status === 401) {
         messageBoard.textContent = "로그인 창으로 이동합니다...";
         setTimeout(() => {
-          console.log(data.url);
-          localStorage.setItem("prev", window.location.href);
           window.location.href = "http://localhost:3000/logIn";
         }, 2000);
       } else {
@@ -64,10 +65,8 @@ votingButtonBoard.addEventListener("click", (e) => {
       }
     })
     .catch((error) => {
-      console.error(error);
       messageBoard.textContent("다시 시도해 주세요!");
     });
-
   isSelected = true;
 });
 
@@ -78,28 +77,11 @@ deleteButton.addEventListener("click", (e) => {
     "DELETE"
   )
     .then((data) => {
-      console.log("data is", data);
       window.location.href = "http://localhost:3000/votings";
     })
     .catch((error) => {
-      console.error(error);
       messageBoard.textContent("다시 시도해 주세요!");
     });
-});
-
-const ctx = document.getElementById("myChart");
-const myChart = new Chart(ctx, {
-  type: "doughnut",
-  data: {
-    labels: chart.labels,
-    datasets: [
-      {
-        data: chart.data,
-        backgroundColor: chartColors,
-        borderWidth: 1,
-      },
-    ],
-  },
 });
 
 function getRandomColor() {
@@ -112,7 +94,6 @@ function getRandomColor() {
 }
 
 function fetchVoting(url = "", data = {}, type) {
-  console.log("post data is", JSON.stringify(data));
   return fetch(url, {
     method: type,
     mode: "cors",
@@ -124,4 +105,24 @@ function fetchVoting(url = "", data = {}, type) {
     redirect: "follow",
     body: JSON.stringify(data),
   }).catch((response) => response.json());
+}
+
+function createChartData(options) {
+  const optionsInfo = {};
+  for (const option of options) {
+    optionsInfo[option.getAttribute("data-optionName")] = Number(
+      option.getAttribute("data-voteCount")
+    );
+  }
+
+  return optionsInfo;
+}
+
+function createChartColor(optionsLength) {
+  const chartColors = [];
+  for (let i = 0; i < optionsLength; i++) {
+    chartColors.push(getRandomColor());
+  }
+
+  return chartColors;
 }

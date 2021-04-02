@@ -2,8 +2,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
   width: 100%;
   height: 90%;
+
   background-color: #0074ff;
 }
 
@@ -11,7 +13,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
   width: 100%;
+
   background-color: #0074ff;
 }
 
@@ -20,8 +24,9 @@
   align-items: center;
   justify-content: flex-start;
 
-  height: 10%;
   width: 100%;
+  height: 10%;
+
   background-color: #0074ff;
 }
 
@@ -29,6 +34,7 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+
   width: 800px;
   margin-left: 200px;
 }
@@ -43,6 +49,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   font-family: "Fredoka One", cursive;
   color: white;
   font-size: 40px;
@@ -50,23 +57,23 @@
 }
 
 .voting-info-delete-link {
+  margin-left: 400px;
+
   color: rgba(rgb(236, 45, 45));
   font-size: 40px;
   font-weight: 900;
-  margin-left: 400px;
 }
 
 .votings-grid-board {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 50px;
+  row-gap: 10px;
+
+  width: 80%;
+  padding: 10px;
 
   background-color: #0074ff;
-  width: 80%;
-
-  column-gap: 50px;
-
-  row-gap: 10px;
-  padding: 10px;
 }
 
 .voting-grid-card {
@@ -75,9 +82,45 @@
   justify-content: center;
   align-items: flex-start;
 
-  height: 38em;
   width: 108%;
+  height: 38em;
+
   border-radius: 0.1em;
+}
+
+.voting-grid-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.voting-name-font {
+  margin: 0;
+  padding-left: 10px;
+
+  color: aliceblue;
+  font-family: "Black Han Sans", sans-serif;
+  font-size: 100px;
+}
+
+.voting-creator-font {
+  padding-left: 10px;
+
+  color: grey;
+  font-family: "Song Myung", serif;
+  font-size: 40px;
+}
+
+.expired {
+  text-decoration: red line-through;
+  text-decoration-thickness: 30%;
+}
+
+.add-button {
+  color: black;
+  font-size: 300px;
+  font-weight: 900;
+  margin-left: 150px;
 }
 
 .green {
@@ -98,37 +141,4 @@
 
 .sage {
   background-color: #c6ff9d;
-}
-
-.voting-grid-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.voting-name-font {
-  font-family: "Black Han Sans", sans-serif;
-  font-size: 100px;
-  margin: 0;
-  padding-left: 10px;
-  color: aliceblue;
-}
-
-.voting-creator-font {
-  font-family: "Song Myung", serif;
-  font-size: 40px;
-  color: grey;
-  padding-left: 10px;
-}
-
-.expired {
-  text-decoration: red line-through;
-  text-decoration-thickness: 30%;
-}
-
-.add-button {
-  color: black;
-  font-size: 300px;
-  font-weight: 900;
-  margin-left: 150px;
 }

@@ -28,7 +28,6 @@ exports.createVote = async function (req, res, next) {
 
     console.log(voting);
 
-    //수정 필요...
     await voting.save(async (err, voting) => {
       await user.votings.push(voting._id);
       await user.save();

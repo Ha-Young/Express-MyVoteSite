@@ -4,40 +4,40 @@
   <div class="voting-info-board">
     <span class="voting-info-username-font"><%= userName %></span>
     <a class="voting-info-link" href="/votings">ALL</a>
-    <a class="voting-info-link" href="/votings/my-votings/<%= userId%>">My votes</a>
+    <a class="voting-info-link" href="/votings/my-votings/">My votes</a>
+
     <% if(userName){ %>
       <a class="voting-info-link" href="/logout">Log out</a>
     <% } else{ %>
       <a class="voting-info-link" href="/signup">Sign up</a>
     <% } %>
   </div>
-  
-  <div></div>
 </div>
+
 <div class="votings-wrapper">
   <div class="voting-marign-wrapper">
-  <div class="votings-grid-board">
-    <% for(let i = 0; i < votingWithImg.length; i++) { %>
-      <div class="voting-grid-card <%= votingWithImg[i].colorClass %>">
-        <% if(votingWithImg[i] === 'img'){ %>
-          <img class="voting-grid-img" src='/images/smileface.jpg'>
-        <% } else{ %>
-
-            <% if(votingWithImg[i].isExpired){ %>
-              <a href="/votings/id/<%= votingWithImg[i]._id%>"><p class="voting-name-font expired"><%= votingWithImg[i].name %></p></a>
-              <span class="voting-creator-font">이미 마감됨!</span>
-              <% } else{ %>
-                <a href="/votings/id/<%= votingWithImg[i]._id%>"><p class="voting-name-font"><%= votingWithImg[i].name %></p></a>
-                <span class="voting-creator-font"><%= votingWithImg[i].expireDate %> 에 마감</span>
-              <% } %>
-            
-              <span class="voting-creator-font"><%= votingWithImg[i].createdBy.name %></span>
-        <% } %>
-        </div>
-    <% } %>
-    <div class="voting-grid-card ">
-      <span class="add-button"><a href="/votings/new">+</a></span>
+    <div class="votings-grid-board">
+      <% for(let i = 0; i < votingWithImg.length; i++) { %>
+        <div class="voting-grid-card <%= votingWithImg[i].colorClass %>">
+          <% if(votingWithImg[i] === 'img'){ %>
+            <img class="voting-grid-img" src='/images/smileface.jpg'>
+          <% } else{ %>
+  
+              <% if(votingWithImg[i].isExpired){ %>
+                <a href="/votings/id/<%= votingWithImg[i]._id%>"><p class="voting-name-font expired"><%= votingWithImg[i].name %></p></a>
+                <span class="voting-creator-font">이미 마감됨!</span>
+                <% } else{ %>
+                  <a href="/votings/id/<%= votingWithImg[i]._id%>"><p class="voting-name-font"><%= votingWithImg[i].name %></p></a>
+                  <span class="voting-creator-font"><%= votingWithImg[i].expireDate %> 에 마감</span>
+                <% } %>
+              
+                <span class="voting-creator-font"><%= votingWithImg[i].createdBy.name %></span>
+          <% } %>
+          </div>
+      <% } %>
+      <div class="voting-grid-card ">
+        <span class="add-button"><a href="/votings/new">+</a></span>
+      </div>
     </div>
-  </div>
   </div>
 </div>

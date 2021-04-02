@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 
 const validateRegisterForm = (requestedBody) => {
@@ -30,7 +31,7 @@ const validateVoteForm = (requestedBody) => {
     voteName: Joi.string().required().min(1),
     creator: Joi.string().required(),
     expireDate: Joi.date(),
-    // expireDate: Joi.date().greater("now"),
+    // expireDate: Joi.date().greater("now"), 테스트 용도로 주석 지우지 않음
     options: Joi.array().min(3),
   });
 
@@ -52,6 +53,19 @@ const validateVotingDate = (votings) => {
   return votings;
 };
 
+function checkLogIn(token) {
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+      return { userId: decoded._id, userName: decoded.name };
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    return { userId: null, userName: null };
+  }
+}
+
 const checkExpiredDate = (voting) => {
   if (voting.expireDate < getToday()) {
     return (voting.isExpired = true);
@@ -60,8 +74,6 @@ const checkExpiredDate = (voting) => {
 };
 
 const checkCreator = (userId, creatorId) => {
-  console.log("id check------------", userId, creatorId);
-  console.log("id check------------", userId === creatorId);
   if (userId === creatorId.toString()) {
     return true;
   }
@@ -92,3 +104,4 @@ module.exports.validateVotingDate = validateVotingDate;
 module.exports.checkExpiredDate = checkExpiredDate;
 module.exports.checkCreator = checkCreator;
 module.exports.checkVoter = checkVoter;
+module.exports.checkLogIn = checkLogIn;

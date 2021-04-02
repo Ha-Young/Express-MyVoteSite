@@ -7,6 +7,7 @@ const {
   checkExpiredDate,
   checkCreator,
   checkVoter,
+  checkLogIn,
 } = require("../../util/validation");
 dotenv.config();
 
@@ -68,10 +69,6 @@ exports.renderDetailPage = async function (req, res, next) {
     const isCreator = checkCreator(userProfile.userId, voting.createdBy);
     const didVote = checkVoter(voting.voters, userProfile.userId);
     const options = voting.options;
-    console.log("is creator?", isCreator);
-    console.log("did vote?", didVote);
-    console.log("voting-------------", voting);
-    console.log("options------------", options);
 
     res.status(200).render("detailVoting", {
       voting,
@@ -86,19 +83,6 @@ exports.renderDetailPage = async function (req, res, next) {
     next(createError(500, errorMessage.SERVER_ERROR));
   }
 };
-
-function checkLogIn(token) {
-  if (token) {
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-      return { userId: decoded._id, userName: decoded.name };
-    } catch (error) {
-      console.log(error);
-    }
-  } else {
-    return { userId: null, userName: null };
-  }
-}
 
 function insertRandomImage(array) {
   for (let i = 0; i < array.length / 4; i++) {

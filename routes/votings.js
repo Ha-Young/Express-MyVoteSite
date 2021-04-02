@@ -28,7 +28,8 @@ router.post(
         req.flash("prevUrl", req.body.currentUrl);
         return res.status(401).send();
       }
-      return res.redirect("/votings");
+
+      return next();
     })(req, res, next);
   },
   votingsController.updateVotingOption
