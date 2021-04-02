@@ -1,6 +1,8 @@
+const mongoose = require('mongoose');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const Vote = require('../models/vote');
 
 const SALT = 6;
 
@@ -70,10 +72,22 @@ exports.signup = async (req, res, next) => {
 
 exports.signout = async (req, res, next) => {
   const { _id } = req.user;
+  const { ObjectId } = mongoose.Types;
 
   try {
+    const votes = await Vote.aggregate([
+      {
+        $match: { "creater._id": ObjectId(_id) }
+      }
+    ]);
+
+    for (let i = 0; i < votes.length; i++) {
+      await Vote.deleteOne({ _id: votes[i]._id });
+    }
+
     await User.deleteOne({ _id });
     req.session.destroy();
+
     res.redirect('/');
   } catch (e) {
     next(e);
