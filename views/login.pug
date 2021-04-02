@@ -3,31 +3,27 @@ extends layout
 block append head
   link(rel="stylesheet" href="/stylesheets/login.css")
 block content
-  div(class="login-container")
-    form(class="login-form")
-      label(class="login-label") Email
-        input(
+  div.login-container
+    form.login-form
+      label.login-label Email
+        input.input-email(
           name="email"
-          class="input-email"
           type="email"
           autocomplete="username"
           required
         )
-      label(class="login-label") Password
-        input(
+      label.login-label Password
+        input.input-password(
           name="password"
-          class="input-password"
           type="password"
           autocomplete="current-password"
           required
         )
-      div(class="message-box")
-      button(
+      div.message-box
+      button.login-button(
         type="submit"
-        class="login-button"
       ) Log in
-      button(
+      button.signup-link-button(
         type="button"
-        class="signup-link-button"
       ) Sign up
   script(src="/javascripts/login.js")

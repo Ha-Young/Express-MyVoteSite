@@ -9,9 +9,9 @@ mixin votingListItem(voting={})
       div.voting-container
         div.voting-info-box
           if isExpired
-            div(class="isExpired expired-mark") Expired
+            div.isExpired.expired-mark Expired
           else
-            div(class="isExpired in-progress-mark") in Progress
+            div.isExpired.in-progress-mark in Progress
           h2.voting-title= voting.title
           div.voting-description= voting.description
           div.time-box

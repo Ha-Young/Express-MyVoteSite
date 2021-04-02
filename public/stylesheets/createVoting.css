@@ -1,4 +1,4 @@
-.create-voting.container {
+.create-voting-container {
   display: flex;
   flex-flow: column nowrap;
   width: 500px;

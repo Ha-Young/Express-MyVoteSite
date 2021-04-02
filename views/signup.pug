@@ -3,46 +3,40 @@ extends layout
 block append head
   link(rel="stylesheet" href="/stylesheets/signup.css")
 block content
-  div(class="signup-container")
-    form(class="signup-form")
-      label(class="signup-label") Name
-        input(
+  div.signup-container
+    form.signup-form
+      label.signup-label Name
+        input.input-name(
           name="name"
-          class="input-name"
           type="text"
           required
         )
-      label(class="signup-label") Email
-        input(
+      label.signup-label Email
+        input.input-email(
           name="email"
-          class="input-email"
           type="email"
           autocomplete="username"
           required
         )
-      label(class="signup-label") Password
-        input(
+      label.signup-label Password
+        input.input-password(
           name="password"
-          class="input-password"
           type="password"
           autocomplete="new-password"
           required
         )
-      label(class="signup-label") Password Confirm
-        input(
+      label.signup-label Password Confirm
+        input.input-password-confirm(
           name="passwordConfirm"
-          class="input-password-confirm"
           type="password"
           autocomplete="new-password"
           required
         )
-      div(class="message-box")
-      button(
+      div.message-box
+      button.signup-button(
         type="submit"
-        class="signup-button"
       ) Sign-up
-      button(
+      button.login-link-button(
         type="button"
-        class="login-link-button"
       ) Log in
   script(src="/javascripts/signup.js")
