@@ -81,8 +81,8 @@ exports.updateVoting = async (req, res, next) => {
       res.status(200).json({ isSuccessVoting, queryString: originalUrl });
       
       return;
-		}
-    console.log(id);
+    }
+    
     const voting = await Voting.findById(id);
     const isVoted = voting.voters.some((voter) => user.id === voter.toString());
 

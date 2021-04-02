@@ -46,7 +46,6 @@ passport.use(
       session: false,
     },
     async (req, email, password, cb) => {
-      console.log(req.body);
       try {
         if (!email || !password) {
           throw new ErrorHandler(400, SERVER_ERROR.BAD_REQUEST);
