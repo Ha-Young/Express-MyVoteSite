@@ -8,6 +8,7 @@ initializePassport(passport);
 
 /* GET users listing. */
 router.get("/login", (req, res, next) => {
+  req.session.referrer = req.header("Referer");
   res.status(200).render("login");
 });
 
@@ -19,8 +20,10 @@ router.get("/login-google", passport.authenticate("google", {
 
 router.get("/login-google/callback", passport.authenticate("google", {
   failureRedirect: "/login",
-  successRedirect: "/"
-}));
+}), (req, res, next) => {
+  const referrer = req.session.referrer ?? "/";
+  res.status(200).redirect(referrer);
+});
 
 router.get("/logout", usersController.signOut);
 

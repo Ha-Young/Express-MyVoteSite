@@ -111,7 +111,7 @@ exports.validateCastingVote = [
   check("options")
     .custom(async (value, { req }) => {
       const { id } = req.params;
-      const user = getUserInfo(req.cookies);
+      const user = getUserInfo(req.session);
       const userInfo = await User.findOne({ email: user.email });
       const isCasted = userInfo.casted_votes.find(vote => vote.toString() === id);
 
