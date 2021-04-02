@@ -1,4 +1,5 @@
 const createError = require("http-errors");
+const mongoose = require("mongoose");
 
 const Vote = require("../../model/Vote");
 const User = require("../../model/User");
@@ -10,46 +11,49 @@ exports.getNewVoteForm = (req, res, next) => {
 }
 
 exports.createVote = async (req, res, next) => {
-  const title = req.body.title;
-  const creator = req.session.userId;
-  const options = req.body.option.map(option => {
-    return {
-      title: option,
-      voters: [],
-    };
-  });
-  const { year, month, date, hours, minutes } = req.body;
-  const expire_at = new Date(
-    Number(year),
-    Number(month) - 1,
-    Number(date),
-    Number(hours),
-    Number(minutes),
-  ).toISOString();
+  try {
+    const title = req.body.title;
+    const creator = req.session.userId;
+    const options = req.body.option.map(option => {
+      return {
+        title: option,
+        voters: [],
+      };
+    });
+    const { year, month, date, hours, minutes } = req.body;
+    const expire_at = new Date(
+      Number(year),
+      Number(month) - 1,
+      Number(date),
+      Number(hours),
+      Number(minutes),
+    ).toISOString();
 
-  const newVoteDoc = new Vote({
-    title,
-    creator,
-    options,
-    expire_at,
-  });
-  await newVoteDoc.save();
-  const voteCreatorDoc = await User.findById(creator);
-  voteCreatorDoc.votings.push({
-    voteId: newVoteDoc._id,
-    isCreator: true,
-  });
-  voteCreatorDoc.save();
-  return res.send("success");
+    const newVoteDoc = new Vote({
+      title,
+      creator,
+      options,
+      expire_at,
+    });
+
+    const voteCreatorDoc = await User.findById(creator);
+    voteCreatorDoc.votings.push({
+      voteId: newVoteDoc._id,
+      isCreator: true,
+    });
+    await Promise.all([voteCreatorDoc.save(), newVoteDoc.save()]);
+
+    return res.send("success");
+  } catch (error) {
+    console.error(error);
+
+    return next(createError(500, error));
+  }
 };
 
-exports.getSuccess = (req, res, next) => {
-  res.render("successVote");
-};
+exports.getSuccess = (req, res, next) => res.render("successVote");
 
-exports.getError = (req, res, next) => {
-  res.render("errorVote");
-};
+exports.getError = (req, res, next) => res.render("errorVote");
 
 exports.getVote = async (req, res, next) => {
   const { id: voteId } = req.params;
@@ -65,7 +69,6 @@ exports.getVote = async (req, res, next) => {
   if (!vote) return next();
 
   const options = vote.options.map(option => {
-
     return {
       id: option._id.toString(),
       title: option.title,
@@ -79,7 +82,9 @@ exports.getVote = async (req, res, next) => {
 
   if (req.session.userId) {
     isCreator = req.session.userId.toString() === creatorId;
-    voterName = (await User.findById(req.session.userId, ["user_name"]).lean()).user_name;
+    voterName = (
+      await User.findById(req.session.userId, ["user_name"]).lean()
+    ).user_name;
   }
 
   const expireDate = new Date(vote.expire_at);
@@ -94,6 +99,11 @@ exports.getVote = async (req, res, next) => {
   const renderProps = {
     voterName,
     isCreator,
+    options,
+    creator: {
+      id: creatorId,
+      name: vote.creator.user_name,
+    },
     vote: {
       id: vote._id.toString(),
       title: vote.title,
@@ -105,20 +115,21 @@ exports.getVote = async (req, res, next) => {
         0,
       ),
     },
-    creator: {
-      id: creatorId,
-      name: vote.creator.user_name,
-    },
-    options,
   };
 
-  res.render("votings", renderProps);
+  return res.render("votings", renderProps);
 };
 
 exports.patchVote = async (req, res, next) => {
   const voteId = req.params.id;
   const voterId = req.session.userId;
   const voterOptionIds = req.body;
+
+  const voteDoc = await Vote.findById(voteId);
+
+  if (!voteDoc) {
+    return res.json({ result: "cancel", message: "투표가 취소됐어요 😓" });
+  }
 
   const voterDoc = await User.findById(voterId);
   const hasVoted = voterDoc.votings
@@ -128,12 +139,6 @@ exports.patchVote = async (req, res, next) => {
 
   if (hasVoted) {
     return res.json({ result: "fail", message: "이미 투표하셨어요 😰" });
-  }
-
-  const voteDoc = await Vote.findById(voteId);
-
-  if (!voteDoc) {
-    return res.json({ result: "cancel", message: "투표가 취소됐어요 😓" });
   }
 
   voterOptionIds.forEach(optId => {
@@ -157,51 +162,28 @@ exports.patchVote = async (req, res, next) => {
   });
 
   try {
+    await Promise.all([voteDoc.save(), voterDoc.save()]);
 
-    await voteDoc.save();
-    await voterDoc.save();
     return res.json({ result: "success", message: "투표 성공! 🥳"});
   } catch (error) {
     console.error(error);
+
     return next(createError(500, error));
   }
-  // voterOptionIds.forEach(async voterOptId => {
-  //   const isSaved = voteDoc.options.some((option, index) => {
-  //     if (option._id.toString() === voterOptId) {
-  //       voteDoc.options[index].voters.push(voterId);
-  //       voteDoc.save();
-  //       for (let i = 0; i < voterDoc.votings.length; i++) {
-  //         const votedId = voterDoc.votings[i].voteId.toString();
-  //         if ( votedId === voteId) {
-  //           debugger;
-  //           voterDoc.votings[i] =  { ...voterDoc.votings[i], optionId: option._id };
-  //           voterDoc.save();
-  //           return true;
-  //         }
-  //       }
-  //     }
-  //   });
-
-  //   if (!isSaved) {
-  //     voterDoc.votings.push({ voteId, optionId: option._id });
-  //     voterDoc.save();
-  //   }
-  // });
-
-  // return res.json({ result: "success", message: "투표 성공! 🥳"});
 }
 
 exports.deleteVote = async (req, res, next) => {
   const { id: voteId } = req.params;
+
   try {
-    await Vote.findByIdAndDelete(voteId);
+    const id = mongoose.Types.ObjectId(voteId);
+    await User.updateMany({}, { $pull: { votings: { voteId: id } } });
+    await Vote.findById(voteId).remove();
 
     return res.send(`${voteId} is deleted.`);
   } catch (error) {
     console.error(error);
-    next(createError(500, error));
+
+    return next(createError(500, error));
   }
 };
-
-
-

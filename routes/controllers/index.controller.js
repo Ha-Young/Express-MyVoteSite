@@ -31,6 +31,7 @@ exports.getHome = async (req, res, next) => {
 
 exports.getProgressVotesList = async (req, res, next) => {
   const votes = [];
+
   (await Vote
     .find({})
     .populate("creator", { user_name: 1 })
@@ -58,13 +59,14 @@ exports.getProgressVotesList = async (req, res, next) => {
       state,
     });
   });
-
   votes.sort((a, b) =>  Date.parse(b.expire) - Date.parse(a.expire));
+
   return res.render("index", { votes });
 }
 
 exports.getCloseVotesList = async (req, res, next) => {
   const votes = [];
+
   (await Vote
     .find({})
     .populate("creator", { user_name: 1 })
@@ -92,7 +94,7 @@ exports.getCloseVotesList = async (req, res, next) => {
       state,
     });
   });
-
   votes.sort((a, b) =>  Date.parse(b.expire) - Date.parse(a.expire));
+
   return res.render("index", { votes });
 }

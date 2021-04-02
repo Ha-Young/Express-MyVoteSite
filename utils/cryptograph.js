@@ -8,6 +8,7 @@ const cryptograph = (password, userSalt = null) => {
     CRYPTO_ALGORITHM,
     CRYPTO_TO_STRING_ENCTYPE,
   } = process.env;
+
   const salt
     = userSalt
     || crypto.randomBytes(Number(CRYPTO_BUFFER_BYTE)).toString(CRYPTO_ENCTYPE);

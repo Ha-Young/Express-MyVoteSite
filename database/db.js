@@ -7,12 +7,12 @@ mongoose.connect(
     useUnifiedTopology: true,
     useCreateIndex: true,
     useFindAndModify: true,
-  }
+  },
 );
 
 const db = mongoose.connection;
 
 db.on("error", console.error);
 db.once("open", () => {
-  console.log("mongoose has connected to mongodb");
+console.log("mongoose has connected to mongodb");
 });

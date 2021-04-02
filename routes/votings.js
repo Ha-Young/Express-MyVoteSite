@@ -1,13 +1,13 @@
 const router = require("express").Router();
 
 const {
+  getVote,
+  patchVote,
+  deleteVote,
   getNewVoteForm,
   createVote,
   getSuccess,
   getError,
-  getVote,
-  patchVote,
-  deleteVote,
 } = require("./controllers/votings.controller");
 
 router.get("/:id", getVote);

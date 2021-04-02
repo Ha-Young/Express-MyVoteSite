@@ -27,8 +27,8 @@ $userName.addEventListener("input", event => {
   const value = event.target.value;
 
   if (value.includes(" ")) {
-    $userName.className = "invalid";
     event.target.value = event.target.value.trim();
+    $userName.className = "invalid";
   } else {
     userData.userName = event.target.value;
     $userName.className = "valid";
@@ -36,8 +36,7 @@ $userName.addEventListener("input", event => {
 });
 
 $password.addEventListener("input", event => {
-  const validator =
-    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,20}$/;
+  const validator = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,20}$/;
 
   if (event.target.value.match(validator)) {
     userData.password = event.target.value;
@@ -50,6 +49,7 @@ $password.addEventListener("input", event => {
 
 $passwordConfirm.addEventListener("input", event => {
   const value = event.target.value;
+
   if (value === userData.password) {
     userData.passwordConfirm = event.target.value;
     $passwordConfirm.className = "valid";
@@ -80,7 +80,6 @@ $passwordConfirm.addEventListener("input", event => {
         $warningBox.className = "warning-box";
         $warningBox.innerText = `${TRANSLATIONS[key]}이(가) 유효하지 않아요🙄`;
         document.body.appendChild($warningBox);
-
         setTimeout(() => {
           document.body.removeChild($warningBox);
         }, 2000);
@@ -88,6 +87,7 @@ $passwordConfirm.addEventListener("input", event => {
         return;
       }
     }
+
     delete userData.passwordConfirm;
     const userDataForm = JSON.stringify(userData);
 
@@ -98,7 +98,7 @@ $passwordConfirm.addEventListener("input", event => {
 
     isInvalidClick = true;
 
-    xhr.onload = e => {
+    xhr.onload = () => {
       const { result } = JSON.parse(xhr.responseText);
 
       if (result === "invalid") {
@@ -106,12 +106,11 @@ $passwordConfirm.addEventListener("input", event => {
         $warningBox.className = "warning-box";
         $warningBox.innerText = "이미 가입된 이메일이네요 🙄";
         document.body.appendChild($warningBox);
-
         setTimeout(() => {
           document.body.removeChild($warningBox);
         }, 2000);
-
         isInvalidClick = false;
+
         return;
       }
 

@@ -39,10 +39,7 @@ const validations = {
       && columnsNum - 1 !== value
       && value < 2;
 
-    if (isInvalid) {
-      event.target.value = columnsNum;
-      return;
-    }
+    if (isInvalid) return event.target.value = columnsNum;
 
     const changedColumnsNum = Number(event.target.value);
 
@@ -55,13 +52,13 @@ const validations = {
       validations.option.isValid = false;
     } else {
       $optionsContainer.removeChild($optionsContainer.lastChild);
-      [...$optionsContainer.children].some((optionEl => {
+      [...$optionsContainer.children].some(optionEl => {
         if (optionEl.value.trim() === "") {
           validations.option.isValid = false;
           return true;
         }
         validations.option.isValid = true;
-      }));
+      });
     }
     columnsNum = changedColumnsNum;
   });
@@ -105,6 +102,7 @@ $newVoteForm.addEventListener("input", (event) => {
             break;
           }
         }
+
         validations.option.isValid = isValid;
       }
 

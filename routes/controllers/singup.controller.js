@@ -1,8 +1,8 @@
 const createError = require("http-errors");
 
-const User = require("../../model/User");
-
 const cryptograph = require("../../utils/cryptograph");
+
+const User = require("../../model/User");
 
 exports.getSignup = (req, res, next) => res.render("signup");
 
@@ -18,7 +18,7 @@ exports.addUser = async (req, res, next) => {
   } = req.body;
 
   try {
-    const { cryptoPassword, salt } = await cryptograph(password);
+    const { cryptoPassword, salt } = cryptograph(password);
     const newUserDoc = new User({
       email,
       password: cryptoPassword,
@@ -30,6 +30,7 @@ exports.addUser = async (req, res, next) => {
     return res.json({ result: "success", message: "user has been created" });
   } catch (error) {
     console.error(error);
+
     return next(createError(500));
   }
 };

@@ -1,13 +1,12 @@
 const createError = require("http-errors");
 
-const User = require("../../model/User");
-
 const cryptograph = require("../../utils/cryptograph");
+
+const User = require("../../model/User");
 
 exports.getLogin = (req, res, next) => res.render("login");
 
 exports.validateUser = async (req, res, next) => {
-
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email }).lean();

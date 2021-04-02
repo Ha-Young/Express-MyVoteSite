@@ -15,6 +15,7 @@ $voteBoxContainer.addEventListener("input", async (event) => {
     document.cookie = `lastHref=${location.href}; path=/`;
     return location.replace("/login");
   }
+
   voteBoxes.forEach(voteBox => {
     const isDuplicated
       = voteBox.name !== event.target.name

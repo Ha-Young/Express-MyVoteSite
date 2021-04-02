@@ -17,12 +17,14 @@ $email.addEventListener("input", (event) => {
 
   $loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+
     if ($email.dataset.isValid === "false") {
       clearTimeout(timeoutId);
       $loginAlert.className = "display-block";
       timeoutId = setTimeout(() => {
         $loginAlert.className = "display-none";
       }, 2000);
+
       return;
     }
 
@@ -45,6 +47,7 @@ $email.addEventListener("input", (event) => {
       timeoutId = setTimeout(() => {
         $loginAlert.className = "display-none";
       }, 2000);
+
       return;
     }
 
