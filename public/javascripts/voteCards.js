@@ -2,23 +2,22 @@ const $voteCards = document.getElementsByClassName("voteCard");
 const $deleteButtons = document.getElementsByClassName("deleteButton");
 
 for (let $voteCard of $voteCards) {
-  $voteCard.addEventListener("click", (event) => {
+  $voteCard.addEventListener("click", () => {
     window.location.href = `/votings/${$voteCard.id}`;
   });
 }
 
 for (let $deleteButton of $deleteButtons) {
-  $deleteButton.addEventListener("click", (event) => {
+  $deleteButton.addEventListener("click", () => {
     const targetVoteId = $deleteButton.getAttribute("voteId");
+
     fetch(`/votings/${targetVoteId}`, {
       method: "DELETE",
-    }).then(result => {
-      console.log(result);
+    }).then(() => {
       window.location.href = "/";
-    }).catch((err) => {
-      console.error(err);
+    }).catch(() => {
+      alert("에러가 발생했습니다! 다시 시도해 주세요!");
+      window.location.href = "/";
     });
   });
 }
-
-// TODO: creator인 사용자의 card에는 특별한 버튼을 추가해준다.

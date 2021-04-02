@@ -29,7 +29,3 @@ addSelections();
 addSelections();
 
 document.getElementById("selectionPlus").addEventListener("click", addSelections);
-
-document.getElementById("voteSubmitButton").addEventListener("click", (event) => {
-  
-});

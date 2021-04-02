@@ -43,16 +43,13 @@ $voteButton.addEventListener("click" , (event) => {
     })
     .then((result) => {
       if (result === "none") {
-        document.cookie =`redirectURL=/votings/${voteId}`;
-        document.cookie =`test=adsf`;
         window.location.href = "/signin";
       } else {
         window.location.href = `/votings/${voteId}`;
       }
     })
     .catch(err => {
-      console.error(err);
-      window.location.href = `/signin`;
+      window.location.href = "/signin";
     });
 });
 
@@ -64,14 +61,11 @@ $deleteButton && $deleteButton.addEventListener("click", (event) => {
   }).then(() => {
     window.location.href = "/";
   }).catch(err => {
-    console.error(err);
     window.location.href = "/";
   });
 });
 
 $resultToggleButton && $resultToggleButton.addEventListener("click", (event) => {
-
-
   if ($chartDiv.style.display === "none" || !$chartDiv.style.display) {
     for (const $choiceDiv of $choiceDivs) {
       $choiceDiv.style.visibility = "hidden";
@@ -88,7 +82,3 @@ $resultToggleButton && $resultToggleButton.addEventListener("click", (event) => 
     $chartDiv.style.display = "none";
   }
 });
-
-
-// TODO: 여기에 이것을 만든 사용자가 왔을 경우 몇가지 특별한 동작을 추가한다.
-// TODO: (선택사항...) 남은시간을 표시해주는 것을 보여준다. (setInterval)

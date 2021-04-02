@@ -16,11 +16,6 @@ const passport = require("passport");
 
 const app = express();
 
-const dummy = require("./dummy");
-const Vote = require("./model/Vote");
-//console.log(dummy);
-//dummy.forEach(el => Vote.create(el));
-// view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 

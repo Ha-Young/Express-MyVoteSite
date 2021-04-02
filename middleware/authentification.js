@@ -10,25 +10,20 @@ module.exports.isSignIn = async function isSignIn(req, res, next) {
   const refreshToken = req.cookies["refresh"];
 
   if (!accessToken || !refreshToken) {
-    console.log("no token : ");
     return next();
   }
 
   const dcdAccessToken = jwt.decode(accessToken);
   const dcdRefreshToken = jwt.decode(refreshToken);
-  console.log(!dcdAccessToken || dcdAccessToken.exp < now);
-  console.log(!dcdRefreshToken || dcdRefreshToken.exp < now);
 
   if (!dcdAccessToken || dcdAccessToken.exp < now) {
     if (!dcdRefreshToken || dcdRefreshToken.exp < now) {
-      console.log("token expired : ");
       return next();
     }
 
     const refreshTargetUser = await User.findById(dcdRefreshToken._id).lean();
 
     if (refreshTargetUser.email !== dcdAccessToken.email) {
-      console.log("token not same : ");
       return next();
     }
 
@@ -44,9 +39,8 @@ module.exports.isSignIn = async function isSignIn(req, res, next) {
 
   const { email } = jwt.decode(req.cookies["access"]);
   const user = await User.findOne({ email }).lean();
-  console.log("auth user: ", user);
-
   req.user = user;
+
   next();
 }
 

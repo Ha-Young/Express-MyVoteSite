@@ -1,6 +1,6 @@
-const Vote = require("../model/Vote");
-
 const datefns = require("date-fns");
+
+const Vote = require("../model/Vote");
 
 module.exports.main = async function main(req, res, next) {
   const {

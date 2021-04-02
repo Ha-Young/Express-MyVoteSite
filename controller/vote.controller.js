@@ -1,4 +1,5 @@
 const datefns = require("date-fns");
+
 const Vote = require("../model/Vote");
 
 module.exports.getNewVote = function getNewVote(req, res, next) {
@@ -7,6 +8,7 @@ module.exports.getNewVote = function getNewVote(req, res, next) {
   } = req;
 
   const messages = req.flash("info")[0];
+
   res.render("voteNew", { messages, user });
 }
 
@@ -49,7 +51,6 @@ module.exports.postNewVote = async function postNewVote(req, res, next) {
     req.flash("info", err.message);
     res.redirect("/votings/new");
   }
-
   res.redirect("/");
 }
 
@@ -87,8 +88,7 @@ module.exports.putVoteDetail = async function putVoteDetail(req, res, next) {
 
     res.json("success");
   } catch (err) {
-    console.error(err);
-    res.send("fail");
+    res.json("fail");
   }
 }
 
@@ -102,6 +102,6 @@ module.exports.deleteVote = async function deleteVote(req, res, next) {
 
     res.send("success");
   } catch (err) {
-    res.send("fail");
+    res.status(500).send("fail");
   }
 }

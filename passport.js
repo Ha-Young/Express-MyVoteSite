@@ -41,9 +41,7 @@ passport.use(new JwtStrategy({
   }
 
   const { _id, email } = refreshToken;
-  console.log('payload : ', jwt_payload);
   User.findOne({ email: accessToken.email }, function(err, user) {
-    console.log(err, user);
     if (err) {
       return done(err, false);
     }
