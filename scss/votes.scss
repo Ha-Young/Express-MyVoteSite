@@ -23,21 +23,25 @@
   font-size: 14px;
   line-height: 40px;
 }
+
 .list .vote-item .pull-right {
   position: absolute;
   right: 0;
   top: 0;
 }
+
 @media screen and (max-width: 800px) {
   .list .vote-item .stage:not(.active) {
     display: none;
   }
 }
+
 @media screen and (max-width: 700px) {
   .list .vote-item .vote-progress-bg {
     display: none;
   }
 }
+
 @media screen and (max-width: 600px) {
   .list .vote-item .pull-right {
     position: static;
@@ -45,6 +49,7 @@
     padding-bottom: 10px;
   }
 }
+
 .list .vote-country,
 .list .vote-progress,
 .list .vote-completes,
@@ -74,36 +79,29 @@
   overflow: hidden;
 }
 
-.vote-stage .stage {
-  display: inline-block;
-  vertical-align: middle;
-  width: 16px;
-  height: 16px;
-  overflow: hidden;
-  border-radius: 50%;
-  padding: 0;
-  margin: 0 2px;
-  background: #f2f2f2;
-  text-indent: -9999px;
-  color: transparent;
-  line-height: 16px;
-}
-.vote-stage .stage.active {
-  background: #A1A1A4;
-}
+.vote-stage {
+  .stage {
+    display: inline-block;
+    vertical-align: middle;
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+    border-radius: 50%;
+    padding: 0;
+    margin: 0 2px;
+    background: #f2f2f2;
+    text-indent: -9999px;
+    color: transparent;
+    line-height: 16px;
+  }
 
-.list .list-only {
-  display: auto;
-}
-.list .grid-only {
-  display: none !important;
-}
+  .live {
+    background-color: #8DC63F
+  }
 
-.grid .grid-only {
-  display: auto;
-}
-.grid .list-only {
-  display: none !important;
+  .ended {
+    background-color: #A1A1A4;
+  }
 }
 
 .grid .vote-item {
@@ -189,9 +187,6 @@
   position: absolute;
   top: 20px;
   right: 20px;
-}
-.grid .vote-stage .stage {
-  display: none;
 }
 .grid .vote-stage .active {
   display: block;

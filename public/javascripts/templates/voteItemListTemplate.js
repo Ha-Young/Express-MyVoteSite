@@ -1,6 +1,14 @@
+/* eslint-disable indent */
 /* eslint-disable no-undef */
 const voteItemListTemplate = (function () {
-  function voteItemTemplate({ _id, title, is_process, entire_count, expire_datetime, creator }) {
+  function voteItemTemplate({
+    _id,
+    title,
+    is_process,
+    entire_count,
+    expire_datetime,
+    creator,
+  }) {
     const creatorName = creator.name;
 
     return `
@@ -25,10 +33,10 @@ const voteItemListTemplate = (function () {
 
             <span class="vote-end-date ended"> ${expire_datetime}</span>
             <span class="vote-stage">
-              <span class="stage draft">Draft</span>
-              <span class="stage awarded">Awarded</span>
-              <span class="stage live">Live</span>
-              <span class="stage ended active">Ended</span>
+              ${is_process
+                  ? `<span class="stage live">Live</span>`
+                  : `<span class="stage ended">Ended</span>`
+                }
             </span>
           </div>
         </li>
@@ -36,11 +44,11 @@ const voteItemListTemplate = (function () {
     `;
   }
 
-  return (function (votes) {
+  return function (votes) {
     const voteItemTemplateList = votes.map(vote => voteItemTemplate(vote));
 
-    return voteItemTemplateList.join('\n');
-  });
+    return voteItemTemplateList.join("\n");
+  };
 })();
 
 window.templates = {
