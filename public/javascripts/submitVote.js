@@ -20,12 +20,12 @@
     try {
       const response = await fetch(currentUrl, {
         method: "PUT",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(option)
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(option),
       });
 
       const result = await response.json();
-      const {success, participated} = result;
+      const { success, participated, url } = result;
 
       if (participated) {
         message.textContent = "이미 투표하셨습니다";
@@ -36,7 +36,11 @@
         message.textContent = "투표해주셔서 감사합니다";
         window.location.reload();
       }
-    } catch {
+
+      if (url) {
+        window.location.replace(url);
+      }
+    } catch (err) {
       window.location.replace("/");
     }
   }
