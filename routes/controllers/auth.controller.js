@@ -1,6 +1,8 @@
 const bcrypt = require("bcrypt");
 const User = require("../../models/User");
 
+const resultMessage = require("../../constants/resultMessage");
+
 exports.renderLogin = function (req, res, next) {
   try {
     const flashMessage = req.flash();
@@ -34,7 +36,7 @@ exports.postSignup = async function (req, res, next) {
     const user = await User.findOne({ email });
 
     if (user) {
-      res.render("signup", { message: "이미 존재하는 이메일 입니다" });
+      res.render("signup", { message: resultMessage.INVALID_EMAIL });
       return;
     }
 
@@ -44,7 +46,7 @@ exports.postSignup = async function (req, res, next) {
       password: encryptedPassword,
     });
 
-    req.flash("message", "회원가입을 축하합니다");
+    req.flash("message", resultMessage.SUCCESS_SIGNUP);
     res.status(302).redirect("/votings/success");
   } catch (err) {
     next(err);
