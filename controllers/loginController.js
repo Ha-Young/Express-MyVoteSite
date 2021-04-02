@@ -5,13 +5,7 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
 exports.loginPage = (req, res) => {
-  let { pageId } = req.query;
-
-  if (pageId) {
-    res.render("login", { pageId });
-
-    return;
-  }
+  const { pageId } = req.query;
 
   res.render("login", { pageId });
 };
@@ -20,15 +14,13 @@ exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
   const { pageId } = req.query;
 
-  if (!email || !password) {
-    createError(400, "please provide email and password")
-  }
+  if (!email || !password) createError(400, "please provide email and password");
 
   const user = await User.findOne({ email });
 
   if (!user) {
 
-    res.redirect(301, "/login");
+    res.redirect(301, `/login/?pageId=${pageId}`);
     return;
   }
 

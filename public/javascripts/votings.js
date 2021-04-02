@@ -2,7 +2,7 @@ const form = document.querySelector(".outer-form");
 const submitBtn = document.querySelector(".submit-btn");
 const homeBtn = document.querySelector(".home-btn");
 
-const updateVoting = async (option, targetIndex) => {
+const updateVoting = async (option) => {
   if (!document.cookie.includes("access_token")) {
     window.location.href = `/login?pageId=${form.name}`;
 
@@ -18,13 +18,9 @@ const updateVoting = async (option, targetIndex) => {
       })
     });
 
-    if (response.status === 400) {
-      alert("이미 투표를 하셨습니다 다음에 이용해주세요");
-    }
+    if (response.status === 400) alert("이미 투표를 하셨습니다 다음에 이용해주세요");
 
-    if(response.status === 200) {
-      alert("투표가 성공적으로 반영되었습니다 👏🏻");
-    }
+    if(response.status === 200) alert("투표가 성공적으로 반영되었습니다 👏🏻");
 
     window.location.href = "/";
   } catch(e) {
@@ -44,14 +40,12 @@ submitBtn.addEventListener("click", async () => {
   const radios = document.querySelectorAll(".radio");
 
   let checkedValue = null;
-  let targetIndex = null;
 
   radios.forEach((radio, index) => {
     if (radio.checked === true) {
       checkedValue = radio.value;
-      targetIndex = index;
     }
   });
 
-  await updateVoting(checkedValue, targetIndex);
+  await updateVoting(checkedValue);
 });

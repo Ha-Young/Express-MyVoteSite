@@ -8,6 +8,7 @@ exports.createVotePage = (req, res) => {
 
 exports.getVote = async (req, res) => {
   const token = req.cookies["access_token"];
+
   let decoded = null;
   let user = null;
   let isValidateUser = false;
@@ -78,11 +79,9 @@ exports.patchVoteResult = async (req, res) => {
   const token = req.cookies["access_token"];
   const decoded = jwt.verify(token, process.env.JWT_SECRETKEY);
   const user = await User.findById(decoded.id);
-
   const userId = user._id;
   const voteId = req.params.id;
   const selectedOption = req.body.option;
-
   const vote = await Vote.findById(voteId);
   const { votedUsersId, option } = vote;
   const isUserVoted = votedUsersId.includes(userId);

@@ -11,6 +11,7 @@ exports.getMainPage = async (req, res) => {
   votes.forEach(vote => {
     if (vote.endDate <= currentDate) {
       vote.isOnVote = false;
+
       endedVote.push(vote);
     } else {
       progressingVote.push(vote);
