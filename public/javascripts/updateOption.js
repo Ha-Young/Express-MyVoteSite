@@ -1,51 +1,89 @@
 const $votingSubmitBtn = document.querySelector('.voting-submit-btn');
 const $options = document.querySelectorAll('.option-radio');
+const $votingInfo = document.querySelector(".voting-info");
 const $optionsList = Array.from($options);
+console.log($votingSubmitBtn)
 
 //const $options = document.getElementsByName('.option');
 
 async function handleVotingSubmit(e) {
-try {
-   e.preventDefault();
+  try {
+    e.preventDefault();
 
     let selectedOptionValue = null;
     let selectedOptionId = null;
 
     for (let option of $optionsList) {
-        if (option.checked) {
-          selectedOptionValue = option.value;
-          selectedOptionId = option.id;
+      console.log(option, "list")
+      if (option.checked) {
+        selectedOptionValue = option.value;
+        selectedOptionId = option.id;
 
-          break;
-        }
+        break;
+      }
     }
 
-    const originalPath = window.location.origin;
+    const originPath = window.location.origin;
     const votingPath = window.location.pathname;
     const votingId = votingPath.split("/").pop();
 
-    console.log(selectedOptionId, selectedOptionValue, "idddddd")
-    //..
+    console.log(selectedOptionId, selectedOptionValue, votingId, "idddddd")
+    console.log(`${originPath}${votingPath}`, "path")
+
+    if (!selectedOptionId || !selectedOptionValue) {
+      console.log(selectedOptionId, selectedOptionValue, "inside")
+
+      const errorMessage = document.createElement("p");
+      $votingInfo.appendChild(errorMessage);
+      errorMessage.textContent = "please select at least one option";
+      window.location.href = `${originPath}${votingPath}`;
+    }
+
+
 
     const fetching = await fetch(
-      `${originalPath}${votingPath}`,
-      { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ votingId, selectedOptionValue, selectedOptionId })
-    }
-    );
-    // const content = await rawResponse.json();
-    //     console.log(content, "contet")
+      `${originPath}${votingPath}`,
+      {
+        method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ votingId, selectedOptionValue, selectedOptionId })
+      });
+      const content = await fetching.json();
 
-    if (fetching.status === 200) {
-      window.location.href = "/";
-    } else { // 굉장히 취약한듯..
-      window.location.href = "/login";
-    }
+      if (content === "no user") {
+        window.location.href = "/login"
+        return;
+      } else if (content === "user exist")  {
+        
+        window.location.href = `${originPath}${votingPath}`
+      } else if (content === "already voted") {
+        const errorMessage = document.createElement("p");
+      $votingInfo.appendChild(errorMessage);
+      errorMessage.textContent = "alraedy voted for this voting";
+        window.location.href = `${originPath}${votingPath}`
+      }
+
+    // const content = await fetching.json();
+    // //     console.log(content, "contet")
+
+    // if (fetching.status === 200) {
+    //   window.location = "/";
+    // } else 
+    // }
+    // if (fetching.status === 400){ // 굉장히 취약한듯..
+      //   window.location = "/login";
+    // const result = await fetching.json();
+    // console.log(result);
+
+    // window.location.href = result;
+    // }
   } catch (error) {
-   console.warn(error);
+    console.warn(error);
   }
 }
 
-$votingSubmitBtn.addEventListener("click", handleVotingSubmit);
+if ($votingSubmitBtn) {
+  $votingSubmitBtn.addEventListener("click", handleVotingSubmit);
+}
+
 
 
 
@@ -92,25 +130,29 @@ if ($deleteButton) {
   $deleteButton.addEventListener("click", handleDeleteBtnClick)
 }
 
+
+
 async function handleDeleteBtnClick(e) {
-    const votingPath = window.location.pathname;
+  //response.result
+  // 성공 표시
+  // redirect to 문제, flash 가져갈것
+  try {
+    e.preventDefault();
+
     const originPath = window.location.origin;
+    const votingPath = window.location.pathname;
 
-    console.log(`${originPath}${votingPath}`)
-    //response.result
-    // 성공 표시
-    // redirect to 문제, flash 가져갈것
-    try {
-        const rawResponse = await fetch(`${originPath}${votingPath}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' }});
-        const content = await rawResponse.json();
+    const rawResponse = await fetch(`${originPath}${votingPath}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
+    const content = await rawResponse.json();
+    console.log(rawResponse, content, "!?")
 
-        if (content.status === 200) {
-          window.location.href = "/";
-        }
-
-    } catch (error) {
-        console.warn(error)
+    if (content.result === "ok") {
+      window.location.href = "/";
     }
+
+  } catch (error) {
+    console.warn(error)
+  }
 }
 
 
@@ -121,10 +163,10 @@ async function handleDeleteBtnClick(e) {
 //       redirect: 'follow',
 //       headers: { 'Content-Type': 'application/json' },
 //     };
-  
+
 //     try {
 //       const response = await fetch(`${location.origin}/votings/${votingId}`, option);
-  
+
 //       if (response.result = 'ok') {
 //         window.location.href = `${location.origin}/`;
 //       }

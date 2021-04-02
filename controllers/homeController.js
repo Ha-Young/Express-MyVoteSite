@@ -1,3 +1,4 @@
+const { findByIdAndUpdate } = require("../models/Voting");
 const Voting = require("../models/Voting");
 
 function checkExpireDate(expireDate) {
@@ -24,19 +25,19 @@ exports.getVotings = async function (req, res, next) {
     const votings = await Voting.find().populate("author").lean();
 
     const homeVotingDisplayList = votings.map(voting => {
-      const isProceeding = checkExpireDate(voting.expireDate);
-      const winner = [];
+     const isProceeding = checkExpireDate(voting.expireDate);
+     const winner = [];
 
-      if (isProceeding) {
-        const maxCount = getMaxVoterCount(voting.votingOptions);
+      if (!isProceeding) {
+        const maxCount = getMaxVoterCount(voting.options);
 
-        voting.votingOptions.forEach(option => {
+        voting.options.forEach(option => {
           if (option.voters.length >= maxCount) {
             winner.push(option.optionTitle);
           }
         });
+
       }
-      // saving?
 
       return {
         _id: voting._id,
@@ -47,7 +48,11 @@ exports.getVotings = async function (req, res, next) {
         isProceeding: isProceeding,
         winner: winner,
       }
+
     })
+    console.log(homeVotingDisplayList, "????")
+
+   // await Voting.({_id: voting._id}, { isProceeding: isProceeding, winner: winner})
 
     res.render("index",
       { title: "Home", displayName, homeVotingDisplayList, error: req.flash("error") }

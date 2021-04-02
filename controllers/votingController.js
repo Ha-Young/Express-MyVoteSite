@@ -2,24 +2,30 @@ const Voting = require("../models/Voting");
 const User = require("../models/User");
 const { format } = require("date-fns");
 
-exports.postNewVoting = async function(req, res, next) {
+exports.postNewVoting = async function (req, res, next) {
   try {
-    const votingOptionFormat = req.body.votingOptions.map(option => ({ optionTitle: option }));
-    // console.log(req.body, "body")
+    console.log(req.body)
+    const { title, expireDate, options } = req.body;
+    const { _id } = req.user;
+
+    const votingOptionFormat = options.map(option => {
+      console.log(option, "??")
+      return { title: option }
+    });
 
     const newVoting = await Voting.create({
-      title: req.body.title,
-      author: req.user._id,
-      expireDate: req.body.expireDate,
-      votingOptions: votingOptionFormat,
+      title: title,
+      author: _id,
+      expireDate: expireDate,
+      options: votingOptionFormat,
     });
 
     await User.findByIdAndUpdate(
-      { _id: req.user._id },
-      { $push: { votingsCreatedByMe: newVoting._id }}
+      { _id },
+      { $push: { votingsCreatedByMe: newVoting._id } }
     );
 
-    req.flash("messages", { message: "Registered your voting successfully!"});
+    req.flash("messages", { message: "Registered your voting successfully!" });
     res.redirect("/votings/new");
   } catch (error) {
     next(error);
@@ -29,13 +35,14 @@ exports.postNewVoting = async function(req, res, next) {
 exports.getSelectedVoting = async function (req, res, next) {
   try {
     const { params, user } = req;
-
+    // console.log(req.body, req.params, req.user)
     const isLoggedIn = req.user ? true : false;
-    const { title, author, votingOptions, expireDate, isProceeding, winner } = await Voting.findById(params.id).populate("author").lean();
+    const { title, author, options, expireDate, isProceeding, winner } = await Voting.findById(params.id).populate("author").lean();
+    //const selectedVoting = await Voting.findById(params.id).populate("author").lean();
+    //console.log(selectedVoting, "???")
     const isAuthor = isLoggedIn && String(author._id) === String(user._id);
-    console.log(isAuthor)
 
-    const votingOptionFormat = votingOptions.map(option => {
+    const votingOptionFormat = options.map(option => {
       const { _id, title, voters } = option;
 
       return {
@@ -45,6 +52,8 @@ exports.getSelectedVoting = async function (req, res, next) {
       }
     });
 
+    console.log(votingOptionFormat, "@?@?$")
+  // const checkProceeding = checkExpireDate(expireDate)
     const votingDetailFormat = {
       title: title,
       author: author.userName,
@@ -55,7 +64,7 @@ exports.getSelectedVoting = async function (req, res, next) {
     };
 
     res.render("voting",
-      { title: "Voting", votingDetailFormat, votingOptionFormat, isAuthor, isLoggedIn, messages: req.flash("messages")}
+      { title: "Voting", votingDetailFormat, votingOptionFormat, isAuthor, isLoggedIn, messages: req.flash("messages") }
     );
   } catch (error) {
     next(error);
@@ -67,30 +76,50 @@ exports.deleteVoting = async function (req, res, next) {
     const votingId = req.params.id;
 
     await Voting.findByIdAndDelete(votingId);
-    res.json({ result: "ok" });
+
+    await User.findByIdAndUpdate(
+      req.user._id,
+      { $pull: { votingsCreatedByMe: { $in: [votingId] }, myVotingList: { $in: [votingId] } }},
+      { new: true },
+    );
+
+    res.status(200).json({ result: "ok" });
 
     // res.end();
-  } catch(error) {
+  } catch (error) {
     next(error);
   }
 };
 
+// votingsCreatedByMe: { $in: [votingId] }, 
 exports.updateVoting = async function (req, res, next) {
   try {
-    const { votingId, selectedOptionValue, selectedOptionId } = req.body;
+    console.log(req.body, "??????!?!?!@$?#%$%")
 
-    if (!req.user) {
-      res.redirect("/login");
+    const { votingId, selectedOptionValue, selectedOptionId } = req.body;
+    const userId = req.user._id;
+
+    console.log(votingId, selectedOptionValue, selectedOptionId, userId, "~~~~~~~~~~")
+
+
+    const userVotingList = await User.findById({ _id: userId }).populate("myVotingList").lean();
+
+    const isDuplicatedVoting = userVotingList.myVotingList.find(votingList => String(votingList._id) === String(votingId));
+
+      if (isDuplicatedVoting) {
+      res.json("already voted");
       return;
     }
 
-    const votingOptions = await Voting.findById({ _id: votingId }).populate("votingOptions");
-
     await Voting.findOneAndUpdate(
       { _id: votingId },
-      { $push: { 'votingOptions.$[option].voters': req.user._id }},
+      { $push: { 'options.$[option].voters': userId }},
       { arrayFilters: [{"option._id": selectedOptionId }]}
     );
+
+    await User.findByIdAndUpdate({ _id: userId }, { $push : { myVotingList: votingId }});
+
+    res.json("user exist")
   } catch (error) {
     next(error);
   }

@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 const verifyAuth = require("../middlewares/verifyAuth");
 const voteInputValidation = require("../middlewares/voteInputValidation");
+const votingSubmitValidation = require("../middlewares/votingSubmitValidation");
 const votingController = require("../../controllers/votingController");
+const checkUserExist = require("../middlewares/checkUserExist");
 
 router.get('/new', verifyAuth, function(req, res, next) {
   const displayName = req.user ? req.user.userName : null;
@@ -14,7 +16,7 @@ router.post('/new', verifyAuth, voteInputValidation, votingController.postNewVot
 
 //verifyAuth??
 router.get('/:id', votingController.getSelectedVoting);
-router.put('/:id', verifyAuth, votingController.updateVoting);
+router.put('/:id', checkUserExist, votingController.updateVoting); //verifyAuth, put
 router.delete('/:id', verifyAuth, votingController.deleteVoting);
 
 // router.get('/votings/success', function(req, res, next) {

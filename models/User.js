@@ -18,6 +18,11 @@ const userSchema = new mongoose.Schema({
     trim: true,
     required: true,
   },
+  myVotingList: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Voting",
+    default: [],
+  },
   votingsCreatedByMe: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: "Voting",

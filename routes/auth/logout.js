@@ -3,6 +3,6 @@ const router = express.Router();
 const logoutController = require("../../controllers/logoutController");
 const verifyAuth = require("../middlewares/verifyAuth")
 
-router.get('/', verifyAuth, logoutController.getLogOut);
+router.get('/', logoutController.getLogOut);
 
 module.exports = router;

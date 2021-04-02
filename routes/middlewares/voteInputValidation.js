@@ -1,32 +1,26 @@
-const { format } = require('date-fns');
-
-async function voteInputValidation (req, res, next) {
+async function voteInputValidation(req, res, next) {
   try {
-    const { title, expireDate, votingOptions } = req.body;
+    console.log(req.body,"111111")
+    const { title, expireDate, options } = req.body;
 
     const errorMessages = [];
 
-    // const today = format(new Date, "yyyy-MM-dd\'T\'HH:mm");
-
-    if (!title.length || !expireDate || !votingOptions.length) {
+    if (!title.length || !expireDate || !options.length) {
       errorMessages.push({ message: "Please fill out all fields"});
     }
 
     const today = new Date();
-    const votingDueDate = new Date(expireDate)
+    const votingDueDate = new Date(expireDate);
     const isProceeding = today < votingDueDate;
 
-    const isOptionsValidated = votingOptions.every(option => option.trim().length > 0);
+    const isOptionsValidated = options && options.every(option => option.trim().length > 0);
 
     if (!isOptionsValidated) {
-        errorMessages.push({message: "Should contain at least 2 options with proper letter"})
-      //req.flash('message', "Should contain at least 2 options with proper letter");
-      //res.redirect("/votings/new");
-      //return;
+      errorMessages.push({message: "Should contain at least 2 options with proper letter"});
     }
 
     if (!isProceeding) {
-      errorMessages.push({message: "The due date can't be eariler than today"});
+      errorMessages.push({message: "The expire date can't be eariler than today"});
     }
 
     if (errorMessages.length) {

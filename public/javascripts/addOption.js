@@ -1,6 +1,7 @@
-const $options = document.querySelector(".options");
+const $options = document.querySelector(".option-wrap");
 const $optionContainer = document.querySelector(".option-container");
 const $optionInput = document.querySelector(".option");
+
 const $optionAddingBtn = document.querySelector(".option-adding-btn");
 const $optionDeleteBtns = document.getElementsByClassName("option-delete-btn");
 const $optionDeleteBtnList = Array.from($optionDeleteBtns);
@@ -26,6 +27,7 @@ function handleOptionAddingBtnClick(e) {
   newOptionContainer.classList.add("option-container");
   newDeleteBtn.classList.add("option-delete-btn");
   newDeleteBtn.textContent = "X";
+  newDeleteBtn.addEventListener("click", handleOptionDeleteBtnClick)
   newOptionContainer.appendChild(newOptionInput);
   newOptionContainer.appendChild(newDeleteBtn);
   $options.appendChild(newOptionContainer);
@@ -35,7 +37,7 @@ function handleOptionAddingBtnClick(e) {
 function handleOptionDeleteBtnClick(e) {
     e.preventDefault();
     console.log(e.currentTarget, "~~~~~~~")
-    e.currentTarget.remove();
+    e.currentTarget.parentNode.remove();
     return
 }
 

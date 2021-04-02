@@ -45,12 +45,6 @@ const VotingSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
-  voters: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: "User",
-    default: [],
-    required: true,
-  },
   options: {
     type: [optionSchema],
     default: [optionSchema, optionSchema],

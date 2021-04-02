@@ -9,7 +9,7 @@ const express = require("express");
 const path = require("path");
 const mongoSession = require("./config/mongoDB/session");
 const bodyParser = require("body-parser");
-// const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const flash = require("connect-flash");
@@ -32,9 +32,9 @@ app.use(passport.session());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(cookieParser());
 app.use(express.static("public"));
 
 app.use(flash());
