@@ -37,7 +37,6 @@ function deleteVote() {
 
   xhr.onload = () => {
     window.location.replace("http://localhost:8080");
-    console.log(xhr.response);
   };
 }
 

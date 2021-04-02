@@ -18,14 +18,17 @@
       </div>
       <div class="option-container">
         <h1><%= title %></h1>
-        <form name="<%= id %>" id="patch-form">
+        <form name="<%= id %>" id="patch-form" action="/votings/<%= id %>/result" method="GET">
           <% for (let i = 0; i < options.length; i++) { %>
             <div class="option">
               <label>
-                <input type="radio" name="voted" value="<%= options[i].text %>" style="<%= isProceeding ? "" : "visibility: hidden;" %>">
+                <input type="radio" name="voted" value="<%= options[i].text %>" style="<%= isProceeding ? "" : "visibility: hidden;" %>" />
                 <%= options[i].text %>
               </label>
             </div>
+          <% } %>
+          <% if (creater._id.toString() === user._id.toString()) { %>
+            <button type="submit">결과 보기</button>
           <% } %>
         </form>
         <span class="vote-message"><%= messages.alreadyVoted %></span>

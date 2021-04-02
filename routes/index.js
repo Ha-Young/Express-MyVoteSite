@@ -9,7 +9,7 @@ router.get('/', wrapAsync(votingsController.voteGetAll));
 
 router.get('/logout', isLoggedIn, (req, res, next) => {
   try {
-    res.render('logout');
+    res.status(200).render('logout');
   } catch (e) {
     next(e);
   }
@@ -23,7 +23,7 @@ router.post('/signup', wrapAsync(userController.signup));
 
 router.get('/signout', isLoggedIn, (req, res, next) => {
   try {
-    res.render('signout');
+    res.status(200).render('signout');
   } catch (e) {
     next(e);
   }

@@ -1,11 +1,22 @@
+const optionText = document.getElementsByClassName('option-text');
+const optionCount = document.getElementsByClassName('option-count');
+
+const text = [];
+const count = [];
+
+for (let i = 0; i < optionText.length; i++) {
+  text.push(optionText[i].getAttribute('name'));
+  count.push(optionCount[i].getAttribute('name'));
+}
+
 const ctx = document.getElementById('vote-chart').getContext('2d');
 const myChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'pie',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: text,
         datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: count,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -25,13 +36,4 @@ const myChart = new Chart(ctx, {
             borderWidth: 1
         }]
     },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
 });
