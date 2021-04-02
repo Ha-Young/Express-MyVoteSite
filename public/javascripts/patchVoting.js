@@ -8,7 +8,7 @@ const patchVotedResult = async (votingId, checkedOption) => {
       checkedOption,
     }),
     headers: {
-      "Content-type": "application/json; charset=UTF-8"
+      "Content-Type": "application/json; charset=UTF-8"
     },
   });
 
@@ -25,7 +25,7 @@ const patchVotedResult = async (votingId, checkedOption) => {
       alertMessageBox.textContent = parseData.message;
       break;
 
-    case 403:
+    case 401:
       window.location.href = "/auth/login";
       break;
 

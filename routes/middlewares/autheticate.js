@@ -4,7 +4,7 @@ const authenticateUser = (req, res, next) => {
   } else {
     if (req.params.id) {
       res.cookie("votingUrl", req.params.id);
-      return res.status(403).json({ message: "로그인 하셔야합니다." });
+      return res.status(401).json({ message: "로그인 하셔야합니다." });
     }
 
     res.status(301).redirect("/auth/login");

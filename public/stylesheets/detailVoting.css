@@ -33,11 +33,11 @@ ul {
   border: 1px solid white;
 }
 
-.voting-options {
+/* .voting-options {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
+} */
 
 .voting-option {
   display: block;

@@ -68,10 +68,6 @@ button {
   color: white;
 }
 
-.left-header {
-  display: flex;
-}
-
 .home-link {
   position: absolute;
   display: inline-block;

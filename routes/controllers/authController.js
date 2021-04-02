@@ -1,6 +1,8 @@
 const passport = require("passport");
 
 const User = require("../../models/User");
+const validationPassword = require("../../utils/validationPassword");
+const validationEmail = require("../../utils/validationEmail");
 
 const AUTH = require("../../constants/authConstants");
 
@@ -21,23 +23,14 @@ Controller.postSignup = async (req, res, next) => {
       return res.render("error", { message: AUTH.EXISTING_USER });
     }
 
-    const emailRegex = new RegExp("([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})");
+    const passwordValidation = validationPassword(password, checkingPassword);
+    const emailValidation = validationEmail(email);
 
-    if (!emailRegex.test(email)) {
-      return res.render("error", { message: AUTH.EMAIL_FORMAT });
-    }
-
-    if (password.length !== checkingPassword.length) {
-      return res.render("error", { message: AUTH.DIFFERENT_PASSWORD });
+    if (passwordValidation || emailValidation) {
+      return res.render("error", { message: passwordValidation || emailValidation });
     }
 
     const user = await User({ email });
-
-    const passwordRegex = new RegExp("^(?=.*[0-9])(?=.*[a-zA-z]).{8,15}$");
-
-    if (!passwordRegex.test(password)) {
-      return res.render("error", { message: AUTH.WORNG_PASSWORD_MESSAGE });
-    }
 
     await User.register(user, password);
     next();
