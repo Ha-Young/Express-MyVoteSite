@@ -49,14 +49,10 @@ router.get("/:votingId", async (req, res, next) => {
     let isAuthor = false;
 
     if (isLogin) {
-      const userId = req.user._id.toString();
-      const authorId = votingInfo.author._id.toString();
-      isAuthor = userId === authorId ? true : false;
-      console.log(userId === authorId);
-      console.log(userId, authorId);
+      const userId = req.user._id;
+      const authorId = votingInfo.author._id;
+      isAuthor = userId.equals(authorId) ? true : false;
     }
-
-    console.log(isAuthor);
 
     res.status(200).render("votingDetail", {
       isLogin,

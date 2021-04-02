@@ -1,33 +1,33 @@
 [
   {
     "author": "6061b68a076c4013b266d988",
-    "title": "오늘 저녁",
-    "description": "저녁 먹을꺼임???",
-    "voting_items": [{"item": "찬성", "count": 2, "voters": ["6061b68a076c4013b266d988", "6061b6a3076c4013b266d989"]}, {"item": "반대", "count": 0, "voters": []} ],
-    "started_at": "2021-03-30T17:21:57.696Z",
+    "title": "오늘 점심 식사",
+    "description": "오늘은 맛있는거 먹게 투표 부탁드려요~",
+    "voting_items": [{"item": "돈까스", "count": 2, "voters": ["6061b68a076c4013b266d988", "6061b6a3076c4013b266d989"]}, {"item": "짜장면", "count": 1, "voters": ["6061b91e3c485213f8e36d55"]} ],
+    "started_at": "2021-03-31T17:21:57.696Z",
     "ended_at": "2021-04-01T17:21:57.696Z",
-    "result": "",
+    "result": "돈까스",
     "closed": false
   },
   {
     "author": "6061b6a3076c4013b266d989",
-    "title": "이번주 축구",
-    "description": "축구 할꺼임???",
-    "voting_items": [{"item": "찬성", "count": 2, "voters": ["6061b91e3c485213f8e36d55", "6061b6a3076c4013b266d989"]}, {"item": "반대", "count": 0, "voters": []} ],
+    "title": "스포츠 브랜드 선호도",
+    "description": "어떤 스포츠 브랜드를 좋아하나요?",
+    "voting_items": [{"item": "아디다스", "count": 0, "voters": []}, {"item": "나이키", "count": 3, "voters": ["6061b68a076c4013b266d988", "6061b91e3c485213f8e36d55", "6061b6a3076c4013b266d989"]} ],
     "started_at": "2021-03-29T17:21:57.696Z",
     "ended_at": "2021-03-30T17:21:57.696Z",
-    "result": "",
+    "result": "나이키",
     "closed": false
 
   },
   {
     "author": "6061b91e3c485213f8e36d55",
-    "title": "집에 가자",
+    "title": "백엔드 vs 프론트엔드",
     "description": "집에 갈꺼임???",
-    "voting_items": [{"item": "찬성", "count": 1, "voters": ["6061b68a076c4013b266d988", "6061b6a3076c4013b266d989"]}, {"item": "반대", "count": 1, "voters": ["6061b91e3c485213f8e36d55"]} ],
+    "voting_items": [{"item": "백엔드", "count": 1, "voters": ["6061b68a076c4013b266d988"]}, {"item": "프론트엔드", "count": 2, "voters": ["6061b91e3c485213f8e36d55", "6061b6a3076c4013b266d989"]} ],
     "started_at": "2021-03-28T17:21:57.696Z",
     "ended_at": "2021-04-04T17:21:57.696Z",
-    "result": "",
+    "result": "프론트 엔드",
     "closed": false
   }
 ]

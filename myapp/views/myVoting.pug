@@ -1,0 +1,16 @@
+extends ./layout.pug
+
+block stylesheet
+  link(rel="stylesheet", href="/stylesheets/my-voting.css")
+
+block content
+  section.voting-list
+    h2 나의 투표
+    div.voting-container
+      - for (let i = 0; i < voting.length; i++)
+        - const { title, _id, result, ended_at } = voting[i]
+        - const path = `/votings/${_id}`
+        div.item
+          a.voting-item(href=path) #{title}
+          div #{result}
+          div #{ended_at}

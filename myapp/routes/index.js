@@ -19,4 +19,13 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/my-votings", async (req, res, next) => {
+  const myVotings = await Voting.find({
+    voting_items: { $elemMatch: { voters: "6061b68a076c4013b266d988" } },
+  });
+  console.log(myVotings);
+
+  res.render("myVoting", { voting: myVotings });
+});
+
 module.exports = router;

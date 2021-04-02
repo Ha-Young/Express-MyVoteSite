@@ -11,7 +11,6 @@ router.post("/selection", async (req, res, next) => {
   try {
     const { votingId, optionId } = req.body;
     const voting = await Voting.findOne({ _id: votingId });
-    // console.log(voting);
     const votingItems = voting.voting_items;
     const userId = req.user._id;
     const option = voting.voting_items.id(optionId);
@@ -26,7 +25,6 @@ router.post("/selection", async (req, res, next) => {
     // user에 투표했는지 판단...중복투표 차단...
 
     votingItems.sort((a, b) => b.count - a.count);
-    console.log(votingItems);
     voting.result = votingItems[0].item;
 
     await voting.save();
