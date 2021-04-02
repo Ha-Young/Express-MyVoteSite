@@ -6,35 +6,65 @@ block append head
 block content
   include header
   div.voting-container
+    if currentState === "Expired"
+      div.is-expired.expired-mark= currentState
+    else
+      div.is-expired.in-progress-mark= currentState
     h2.voting-title= voting.title
-    p.voting-description= voting.description
-    p.voting-state= currentState
-    p.voting-publisher Published by #{voting.publisher.name}
+    div.voting-info-box
+      div.voting-publisher
+        | Published by
+        |  #{voting.publisher.name}
+      div.expirationTime
+        | Expiration at
+        |  #{expirationTime}
+    div.voting-description= voting.description
     div.option-box
-      if currentState === "expired"
-        div.cant-vote-message-box This voting is expired.
-      else if !isAlreadyVoted
-        form.voting-form(action="/votings/" + voting._id method="post")
-          if voting.isAbleSelectMultipleOptions
-            each count, option in options
-              label.option-label
-                input.option-checkbox(type="checkbox" name="option" value=option)
-                = option
-          else
-            each count, option in options
-              label.option-label
-                input.option-radio(type="radio" name="option" value=option)
-                = option
-          button.submit-button(type="submit") VOTE
-      else
-        div.cant-vote-message-box You voted already.
-    div.message-box
-    p.expirationTime Expiration Time #{expirationTime}
-    button.index-link-button(type="button") < Voting List
-    if currentState === "expired" || isPublisher
-      button.delete-voting-button(type="button") Delete
-      div.chart-box
-        canvas.chart(width="700" height="400")
+      form.voting-form(
+        action="/votings/" + voting._id
+        method="post"
+      )
+        h3.select-message Select!
+        if voting.isAbleSelectMultipleOptions
+          each count, option in options
+            label.option-label
+              input.option-checkbox(
+                type="checkbox"
+                name="option"
+                value=option
+                disabled=(
+                  currentState === "Expired"
+                  || isAlreadyVoted
+                )
+              )
+              p.option-title= option
+        else
+          each count, option in options
+            label.option-label
+              input.option-radio(
+                type="radio"
+                name="option"
+                value=option
+                disabled=(
+                  currentState === "Expired"
+                  || isAlreadyVoted
+                )
+              )
+              p.option-title= option
+        div.message-box
+        button.submit-button(type="submit") VOTE
+        if currentState === "Expired"
+          div.filter
+          div.can-not-vote-message-box This voting is expired.
+        else if isAlreadyVoted
+          div.filter
+          div.can-not-vote-message-box You voted already.
+    button.index-link-button(type="button") << Voting List
+    button.delete-voting-button(type="button") Delete
+  if currentState === "Expired" || isPublisher
+    div.chart-box
+      h2.chart-title Result
+      canvas.chart(width="560" height="400")
 
   script var options = !{JSON.stringify(options)}
   script(src="/javascripts/voting.js")

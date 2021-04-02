@@ -70,9 +70,9 @@ module.exports.getVoting = async (req, res, next) => {
 
     const expirationTime = format(currentVoting.expirationTime, "yyyy-MM-dd HH:mm");
     const isExpired = currentVoting.expirationTime - new Date() < 0;
-    let currentState = "activated";
+    let currentState = "in Progress";
     if (isExpired) {
-      currentState = "expired";
+      currentState = "Expired";
     }
 
     const options = Object.fromEntries(currentVoting.options);

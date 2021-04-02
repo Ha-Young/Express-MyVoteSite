@@ -29,7 +29,7 @@
   background-color: #fff;
 }
 
-.isExpired {
+.is-expired {
   display: flex;
   justify-content: center;
   align-items: center;
