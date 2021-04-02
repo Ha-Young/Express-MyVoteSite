@@ -19,6 +19,7 @@
 
       if (success) {
         message.textContent = "투표가 정상적으로 삭제되었습니다";
+        window.location.replace("/");
       }
     } catch {
       window.location.replace("/");
