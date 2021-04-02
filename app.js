@@ -12,6 +12,8 @@ const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth/index");
 const votingRouter = require("./routes/voting/index");
 
+const ERROR_MESSAGE = require("./constants/errorConstants");
+
 const app = express();
 
 require("dotenv").config();
@@ -34,7 +36,7 @@ app.use("/auth", authRouter);
 app.use("/voting", votingRouter);
 
 app.use(function(req, res, next) {
-  next(createError(404));
+  next(createError(404, ERROR_MESSAGE.NOT_FOUND));
 });
 
 app.use(function(err, req, res, next) {

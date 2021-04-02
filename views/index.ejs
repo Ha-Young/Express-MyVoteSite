@@ -10,12 +10,12 @@
     <article class="buttons">
       <% if (user) { %>
         <span class="user-info"><%= user.email %></span>
-        <a href="http://localhost:3000/auth/logout">로그아웃</a>
+        <a href="/auth/logout">로그아웃</a>
       <% } else { %>
-        <a href="http://localhost:3000/auth/login">로그인</a>
+        <a href="/auth/login">로그인</a>
       <% } %>
-      <a href="http://localhost:3000/voting/votings/new">투표 생성</a>
-      <a href="http://localhost:3000/voting/votings/my-votings">내 투표</a>
+      <a href="/voting/votings/new">투표 생성</a>
+      <a href="/voting/votings/my-votings">내 투표</a>
     </article>
     <section class="container">
       <ul class="votings">
@@ -32,7 +32,7 @@
               <% } else { %>
                 <p>투표 종료</p>
               <% } %>
-              <a href="http://localhost:3000/voting/votings/<%= voting._id %>">
+              <a href="/voting/votings/<%= voting._id %>">
                 <% if (voting.isProgress) { %>
                   투표하러 가기
                 <% } else { %>
