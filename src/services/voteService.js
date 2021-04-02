@@ -150,12 +150,9 @@ exports.VoteToOption = async ({ voteId, optionId }) => {
       // 404 error badrequest
       throw new Error("can not find option...");
     }
-    console.log('before', voteRecord);
 
     optionRecord.count += 1;
     voteRecord.entire_count += 1;
-
-    console.log('after', voteRecord);
 
     voteRecord.save();
 
