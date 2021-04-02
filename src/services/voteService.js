@@ -1,14 +1,6 @@
+const mongoose = require("mongoose");
+
 const Vote = require("../models/Vote");
-
-exports.GetAllVotes = async () => {
-  try {
-    const votes = await Vote.find().lean();
-
-    return { votes };
-  } catch (error) {
-    return { error };
-  }
-};
 
 function getVotesQuery(condition) {
   let query = {};
@@ -58,6 +50,20 @@ exports.GetVotes = async ({ condition, page, limit, sort_field, sort_order }) =>
     }
 
     return { votesWithPage: voteRecords };
+  } catch (error) {
+    return { error };
+  }
+};
+
+exports.GetVoteOfUser = async ({ userId }) => {
+  try {
+    const votes = await Vote.find({ creator: mongoose.Types.ObjectId(userId) }).lean();
+
+    if (!votes) {
+      throw new Error("can't get vote");
+    }
+
+    return { votes };
   } catch (error) {
     return { error };
   }
@@ -142,9 +148,12 @@ exports.VoteToOption = async ({ voteId, optionId }) => {
       // 404 error badrequest
       throw new Error("can not find option...");
     }
+    console.log('before', voteRecord);
 
     optionRecord.count += 1;
     voteRecord.entire_count += 1;
+
+    console.log('after', voteRecord);
 
     voteRecord.save();
 
