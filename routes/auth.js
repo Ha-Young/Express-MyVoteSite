@@ -6,15 +6,23 @@ const router = express.Router();
 
 router.get('/signup', authController.signup);
 router.post('/signup', authController.post);
-router.get('/login', authController.login);
+router.get('/logout', authController.logout);
+// router.post(
+//   '/login',
+//   passport.authenticate('local', {
+//     successRedirect: '/',
+//     failureRedirect: '/auth/login',
+//     failureFlash: true,
+//   }),
+// );
 router.post(
   '/login',
   passport.authenticate('local', {
-    successRedirect: '/',
     failureRedirect: '/auth/login',
     failureFlash: true,
   }),
+  authController.result,
 );
-router.get('/logout', authController.logout);
+router.get('/login/:id', authController.login);
 
 module.exports = router;

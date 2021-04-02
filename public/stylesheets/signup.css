@@ -72,11 +72,13 @@
 
 .loginFlex {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .loginFlex .icon {
   width: 5vw;
-  height: 100%;
+  height: 5vw;
   display: flex;
   justify-content: center;
   align-items: center;

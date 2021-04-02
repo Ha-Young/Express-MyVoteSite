@@ -6,6 +6,7 @@ block stylesheet
 
 block content
   form(class="loginForm" action="/auth/login", method="post")
+    input(type="hidden", name="votingId" value=votingId)
     .loginFlex
       .icon
         i.fas.fa-envelope

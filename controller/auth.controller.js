@@ -50,6 +50,7 @@ exports.post = async (req, res, next) => {
 };
 
 exports.login = async (req, res, next) => {
+  console.log(req.params.id);
   const fmsg = req.flash();
 
   if (fmsg.error) {
@@ -57,7 +58,11 @@ exports.login = async (req, res, next) => {
       message: '가입되지 않은 계정입니다.',
     });
   }
-  return res.render('partial/login');
+  return res.render('partial/login', { votingId: req.params.id });
+};
+
+exports.result = async (req, res, next) => {
+  res.redirect(`/votings/${req.body.votingId}`);
 };
 
 exports.logout = (req, res) => {

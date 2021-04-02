@@ -47,7 +47,8 @@ block content
         - else // 로그아웃
           each option in options
             .options
-              a(href="/auth/login") #{option.opt}
+              //- a(href="/auth/login") #{option.opt}
+              a(href=`/auth/login/${id}`) #{option.opt}
       - else // 완료
         each option in options
           .options
