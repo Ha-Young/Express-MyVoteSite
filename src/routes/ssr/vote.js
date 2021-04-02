@@ -2,6 +2,7 @@ const createError = require("http-errors");
 const { celebrate, Joi } = require("celebrate");
 const { Router } = require("express");
 
+const userService = require("../../services/userService");
 const voteService = require("../../services/voteService");
 const {
   PREFIX,
@@ -81,16 +82,24 @@ module.exports = app => {
     }),
     async (req, res, next) => {
       try {
-        const { error } = await voteService.CreateVote({
+        const userId = req.user._id;
+
+        const { vote, error: creatVoteError } = await voteService.CreateVote({
           voteInputDTO: req.body,
-          user: req.user,
+          userId,
         });
 
-        if (error) {
-          return next(createError(error));
+        if (creatVoteError) {
+          return next(createError(creatVoteError));
         }
 
+        const voteId = vote._id;
 
+        const { error: addMyVoteError } = await userService.AddMyVote({ userId, voteId });
+
+        if (addMyVoteError) {
+          return next(createError(addMyVoteError));
+        }
 
         res.redirect("/");
       } catch (error) {
