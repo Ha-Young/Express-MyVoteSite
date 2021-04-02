@@ -21,6 +21,7 @@ exports.renderMyVotings = async function (req, res, next) {
     const userId = req.user._id;
     const name = req.user.name;
     const user = await User.findOne({ _id: userId });
+
     const myVotings = [];
 
     if (user.created_votes.length !== 0) {
