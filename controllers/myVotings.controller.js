@@ -5,7 +5,7 @@ exports.getMyVotings = async function (req, res, next) {
   try {
     await Voting.updateExpiredVotingStatus(new Date());
 
-    const votings = await Voting.find({ author: req.user });
+    const votings = await Voting.find({ author: req.user }).lean();
 
     res.render('myVotings', { votings })
   } catch (err) {

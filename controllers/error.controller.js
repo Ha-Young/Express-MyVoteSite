@@ -1,7 +1,7 @@
-const createError = require('http-errors');
+const statuses = require('statuses');
 
 exports.renderErrorPage = function (req, res, next) {
   const status = parseInt(req.params.status) ?? 500;
 
-  next(createError(status));
+  res.render('error', { message: statuses[status], error: { status } })
 };

@@ -1,7 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
-const status = require('statuses');
+const statuses = require('statuses');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -46,7 +46,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
-  res.locals.message = status[err.status];
+  res.locals.message = statuses[err.status];
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   res.status(err.status || 500);

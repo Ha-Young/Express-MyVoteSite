@@ -2,7 +2,7 @@ const createError = require('http-errors');
 const Voting = require('../models/Voting');
 const User = require('../models/User');
 
-exports.renderNewVoting = function (req, res, next) {
+exports.renderNewVoting = function (req, res) {
   res.render('newVoting');
 };
 
@@ -62,7 +62,7 @@ exports.addVote = async function (req, res, next) {
   }
 };
 
-exports.deleteVoting = async function (req, res, next) {
+exports.deleteVoting = async function (req, res) {
   try {
     await Voting.findOneAndDelete({
       _id: req.votingId,
@@ -75,10 +75,10 @@ exports.deleteVoting = async function (req, res, next) {
   }
 };
 
-exports.renderCreateVotingError = function (req, res, next) {
+exports.renderCreateVotingError = function (req, res) {
   res.render('createVotingError');
 };
 
-exports.renderCreateVotingSuccess = function (req, res, next) {
+exports.renderCreateVotingSuccess = function (req, res) {
   res.render('createVotingSuccess');
 };

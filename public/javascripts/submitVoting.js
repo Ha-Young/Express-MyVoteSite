@@ -8,11 +8,11 @@ async function handleSubmitButtonClick (e) {
   e.preventDefault();
 
   if (!$needOptionSelect.classList.contains('hidden')) {
-    $needOptionSelect.add('hidden');
+    $needOptionSelect.classList.add('hidden');
   }
 
   if (!$alreadyVotedAlert.classList.contains('hidden')) {
-    $alreadyVotedAlert.add('hidden');
+    $alreadyVotedAlert.classList.add('hidden');
   }
 
   let selected_option;
