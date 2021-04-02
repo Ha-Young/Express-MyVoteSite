@@ -3,6 +3,7 @@ function requireAuthToUpdate(req, res, next) {
         return next();
     }
 
+    req.session.returnTo = req.originalUrl;
     res.json("/login");
 }
 

@@ -1,12 +1,11 @@
 const date = document.querySelector(".input-date");
 const container = document.querySelector(".create-option-container");
-
 const plusButton = document.querySelector(".add-option");
 const minusButton = document.querySelector(".delete-option");
 
-
 function addOption(e) {
     e.preventDefault();
+
     const option = document.createElement("input");
 
     option.classList.add("option");
@@ -16,6 +15,7 @@ function addOption(e) {
 
 function deleteOption(e) {
     e.preventDefault();
+
     const numberOfChild = container.childElementCount;
 
     if (numberOfChild === 2) {

@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const { requireAuth } = require("./middleware/requireAuth");
+const requireAuth = require("./middleware/requireAuth");
 const requireAuthToUpdate = require("./middleware/requireAuthToUpdate");
+
 const User = require("../models/User");
 const Voting = require("../models/Voting");
 
@@ -46,12 +47,13 @@ router.post("/new", requireAuth, async function (req, res) {
     due_date: date,
     due_time: time,
     candidates: candidates,
-  }
+  };
   const createdVoting = await new Voting(newVoting).save();
 
   await User.updateOne(
     { _id: creatorId },
-    { $push: { created_votings: createdVoting._id } });
+    { $push: { created_votings: createdVoting._id } }
+  );
 
   res.redirect("/");
 });

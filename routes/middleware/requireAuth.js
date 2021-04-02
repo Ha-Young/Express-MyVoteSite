@@ -7,4 +7,4 @@ function requireAuth(req, res, next) {
   res.redirect("/login");
 }
 
-exports.requireAuth = requireAuth;
+module.exports = requireAuth;

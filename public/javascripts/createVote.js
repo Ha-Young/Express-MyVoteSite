@@ -2,14 +2,12 @@ const voteSubmitButton = document.querySelector(".create-voting-button");
 const form = document.querySelector(".create-voting-form");
 
 function sendNewVoting(url, data) {
-  fetch(
-    url,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    }
-  ).then(() => window.location.href = "/");
+  fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  })
+    .then(() => window.location.href = "/");
 }
 
 function getUserInputData(e) {
@@ -30,7 +28,7 @@ function getUserInputData(e) {
     "date": date,
     "time": time,
     "options": options
-  }
+  };
 
   sendNewVoting("http://localhost:3000/votings/new", inputData);
 }

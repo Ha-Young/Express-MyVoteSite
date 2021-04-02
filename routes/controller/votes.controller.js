@@ -35,9 +35,11 @@ exports.showMyVotings = async function (req, res, next) {
 
   myVotingsIdList = myVotingsIdList.created_votings;
 
-  const myVotings = await Voting.find({
-    _id: { $in: myVotingsIdList }
-  });
+  const myVotings = await Voting.find(
+    {
+      _id: { $in: myVotingsIdList }
+    }
+  );
 
   res.render("myVotings",
     {
@@ -60,12 +62,14 @@ exports.showVoteDetails = async function (req, res, next) {
     showResult = true;
   }
 
-  res.render("votingDetail", {
-    isLoggedIn: isLoggedIn,
-    voting: voting,
-    creator: creator,
-    showResult: showResult
-  });
+  res.render("votingDetail",
+    {
+      isLoggedIn: isLoggedIn,
+      voting: voting,
+      creator: creator,
+      showResult: showResult
+    }
+  );
 }
 
 exports.addOneToSelectedOption = async function (req, res, next) {
@@ -80,8 +84,7 @@ exports.addOneToSelectedOption = async function (req, res, next) {
   );
 
   if (hasParticipated.length) {
-    res.render("index");
-    return;
+    return res.render("index");
   }
 
   const options = await Voting.findById(votingId).select("candidates");
@@ -99,9 +102,10 @@ exports.addOneToSelectedOption = async function (req, res, next) {
     { $push: { participated_votings: votingId } }
   );
 
-  await Voting.updateOne({ _id: votingId }, {
-    candidates: candidates,
-  });
+  await Voting.updateOne(
+    { _id: votingId },
+    { candidates: candidates }
+  );
 }
 
 exports.deleteVoting = async function (req, res, next) {

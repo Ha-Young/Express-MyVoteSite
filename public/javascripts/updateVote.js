@@ -19,8 +19,6 @@ function getUserOption() {
 
   postVote(url, { name: selectedOptionName })
     .then(data => {
-      console.log(data);
-      debugger;
       window.location.href = data;
     });
 }

@@ -1,55 +1,54 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
-
 const User = require("./User");
 
 const Voting = mongoose.Schema({
   title: {
     type: String,
-    required: true,
+    required: true
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    ref: "user"
   },
   creator_username: {
     type: String,
-    required: true,
+    required: true
   },
   due_date: {
     type: String,
-    default: moment(new Date()).format("YYYY-MM-DD"),
+    default: moment(new Date()).format("YYYY-MM-DD")
   },
   due_time: {
     type: String,
-    default: "11:59",
+    default: "11:59"
   },
   status: {
     type: String,
     enum: ["PROCEEDING", "CLOSED"],
-    default: "PROCEEDING",
+    default: "PROCEEDING"
   },
   candidates: [
     {
       name: {
         type: String,
-        required: true,
+        required: true
       },
       count: {
         type: Number,
-        default: 0,
-      },
-    },
-  ],
+        default: 0
+      }
+    }
+  ]
 });
 
-Voting.pre("save", async function (next) {
+Voting.pre("save", function (next) {
   const voting = this;
   const convertedDate = moment(voting.due_date).format("YYYY-MM-DD");
 
   this.due_date = convertedDate;
   next();
-})
+});
 
 Voting.post("deleteOne", async function (document) {
   const votingId = this.getFilter()["_id"];
@@ -57,7 +56,8 @@ Voting.post("deleteOne", async function (document) {
 
   await User.updateOne(
     { _id: creatorId },
-    { $pull: { created_votings: votingId } });
+    { $pull: { created_votings: votingId } }
+  );
 
   await User.updateMany(
     {},
