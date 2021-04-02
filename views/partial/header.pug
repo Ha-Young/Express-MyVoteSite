@@ -1,8 +1,8 @@
 header
   .home
     a(href="/" class="title") Voting Platform
-  if (user)
     .username #{user.username}
+  if (user)
     .router
       a(href="/my-votings") 내 투표보기
       a(href="/auth/logout") LOGOUT

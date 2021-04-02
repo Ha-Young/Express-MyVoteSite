@@ -14,6 +14,16 @@ header {
 
 header .home {
   margin-left: 2vw;
+  display: flex;
+  align-items: center;
+}
+
+.username {
+  padding: .3em 1em;
+  border-radius: 1vw;
+  border-bottom: white .3vw solid;
+  color: white;
+  background-color: var(--pink);
 }
 
 header .title {
