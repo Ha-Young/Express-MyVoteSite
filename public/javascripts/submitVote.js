@@ -28,11 +28,13 @@
       const {success, participated} = result;
 
       if (participated) {
+        message.textContent = "이미 투표하셨습니다";
         window.location.replace("/");
       }
 
       if (success) {
         message.textContent = "투표해주셔서 감사합니다";
+        window.location.reload();
       }
     } catch {
       window.location.replace("/");
