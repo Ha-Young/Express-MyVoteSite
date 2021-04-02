@@ -43,6 +43,10 @@ app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
 app.use("/", indexRouter);
 app.use("/votings", votingsRouter);
+app.use((req, res, next) => {
+  if (!req.session.userId) return res.redirect("/login");
+  next();
+});
 app.use("/my-votings", myVotingsRouter);
 app.use("/logout", logoutRouter);
 

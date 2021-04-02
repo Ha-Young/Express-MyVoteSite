@@ -3,7 +3,11 @@ const createError = require("http-errors");
 const Vote = require("../../model/Vote");
 const User = require("../../model/User");
 
-exports.getNewVoteForm = (req, res, next) => res.render("newVoteForm");
+exports.getNewVoteForm = (req, res, next) => {
+  if (!req.session.userId) return res.redirect("/login");
+
+  return res.render("newVoteForm");
+}
 
 exports.createVote = async (req, res, next) => {
   const title = req.body.title;
@@ -49,24 +53,23 @@ exports.getError = (req, res, next) => {
 
 exports.getVote = async (req, res, next) => {
   const { id: voteId } = req.params;
+  if (voteId === "new" || voteId === "success" || voteId === "error") {
+    return next();
+  }
+
   const vote = await Vote
     .findById(voteId)
     .populate("creator", { user_name: 1 })
-    .populate("options.voters", { user_name: 1 })
     .lean();
 
+  if (!vote) return next();
+
   const options = vote.options.map(option => {
-    const voters = option.voters.map(user => {
-      return {
-        id: user._id.toString(),
-        userName: user.user_name,
-      };
-    });
 
     return {
       id: option._id.toString(),
       title: option.title,
-      voters,
+      numberOfVoters: option.voters.length,
     };
   });
 
@@ -79,6 +82,15 @@ exports.getVote = async (req, res, next) => {
     voterName = (await User.findById(req.session.userId, ["user_name"]).lean()).user_name;
   }
 
+  const expireDate = new Date(vote.expire_at);
+  const dates = {
+    year: expireDate.getFullYear(),
+    month: expireDate.getMonth() + 1,
+    date: expireDate.getDate(),
+    hours: expireDate.getHours(),
+    minutes: expireDate.getMinutes(),
+  };
+
   const renderProps = {
     voterName,
     isCreator,
@@ -86,9 +98,10 @@ exports.getVote = async (req, res, next) => {
       id: vote._id.toString(),
       title: vote.title,
       isExpired: Date.parse(vote.expire_at) < Date.now() ? true : false,
+      dates,
       expireAt: vote.expire_at,
       allVotingNum: options.reduce(
-        (sum, option) => sum + option.voters.length,
+        (sum, option) => sum + option.numberOfVoters,
         0,
       ),
     },
@@ -105,14 +118,12 @@ exports.getVote = async (req, res, next) => {
 exports.patchVote = async (req, res, next) => {
   const voteId = req.params.id;
   const voterId = req.session.userId;
-  const voterOptions = req.body;
+  const voterOptionIds = req.body;
 
   const voterDoc = await User.findById(voterId);
   const hasVoted = voterDoc.votings
     .some(voting => {
-      if (voting.voteId.toString() === voteId && voting.optionId) {
-        return true;
-      }
+      return voting.voteId.toString() === voteId && voting.optionId
     });
 
   if (hasVoted) {
@@ -125,30 +136,59 @@ exports.patchVote = async (req, res, next) => {
     return res.json({ result: "cancel", message: "투표가 취소됐어요 😓" });
   }
 
-  voterOptions.forEach(async voterOptId => {
-    const isSaved = voteDoc.options.some((option, index) => {
-      if (option._id.toString() === voterOptId) {
-        voteDoc.options[index].voters.push(voterId);
-        voteDoc.save();
-        for (let i = 0; i < voterDoc.votings.length; i++) {
-          const votedId = voterDoc.votings[i].voteId.toString();
-          if ( votedId === voteId) {
-            debugger;
-            voterDoc.votings[i] =  { ...voterDoc.votings[i], optionId: option._id };
-            voterDoc.save();
-            return true;
-          }
-        }
+  voterOptionIds.forEach(optId => {
+    for (const option of voteDoc.options) {
+      if (option._id.toString() === optId) {
+        option.voters.push(optId);
       }
-    });
-
-    if (!isSaved) {
-      voterDoc.votings.push({ voteId, optionId: option._id });
-      voterDoc.save();
     }
+
+    let isAddedOptId = false;
+
+    for (const voting of voterDoc.votings) {
+      if (voting.voteId.toString() === voteId) {
+        voting.optionId = optId;
+        isAddedOptId = true;
+        break;
+      }
+    }
+
+    if (!isAddedOptId) voterDoc.votings.push({ voteId, optionId: optId });
   });
 
-  return res.json({ result: "success", message: "투표 성공! 🥳"});
+  try {
+
+    await voteDoc.save();
+    await voterDoc.save();
+    return res.json({ result: "success", message: "투표 성공! 🥳"});
+  } catch (error) {
+    console.error(error);
+    return next(createError(500, error));
+  }
+  // voterOptionIds.forEach(async voterOptId => {
+  //   const isSaved = voteDoc.options.some((option, index) => {
+  //     if (option._id.toString() === voterOptId) {
+  //       voteDoc.options[index].voters.push(voterId);
+  //       voteDoc.save();
+  //       for (let i = 0; i < voterDoc.votings.length; i++) {
+  //         const votedId = voterDoc.votings[i].voteId.toString();
+  //         if ( votedId === voteId) {
+  //           debugger;
+  //           voterDoc.votings[i] =  { ...voterDoc.votings[i], optionId: option._id };
+  //           voterDoc.save();
+  //           return true;
+  //         }
+  //       }
+  //     }
+  //   });
+
+  //   if (!isSaved) {
+  //     voterDoc.votings.push({ voteId, optionId: option._id });
+  //     voterDoc.save();
+  //   }
+  // });
+
+  // return res.json({ result: "success", message: "투표 성공! 🥳"});
 }
 
 exports.deleteVote = async (req, res, next) => {

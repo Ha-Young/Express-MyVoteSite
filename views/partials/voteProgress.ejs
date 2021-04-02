@@ -16,7 +16,7 @@
         />
       </label>
       <% if (isCreator) { %>
-        <span>투표 수: <%- option.voters.length %></span>
+        <span>투표 수: <%- option.numberOfVoters %></span>
       <% } %>
     <% }) %>
   </fieldset>
@@ -25,6 +25,11 @@
 <span>진행 중</span>
 <span>총 투표 수: <%- vote.allVotingNum %></span>
 <span id="expire-date" data-expire="<%- vote.expireAt %>">
-  <%= vote.expireAt %> 까지
+  <%- vote.dates.year %>년
+  <%- vote.dates.month %>월
+  <%- vote.dates.date %>일
+  <%- vote.dates.hours %>시
+  <%- vote.dates.minutes %>분
+  까지
 </span>
 <script src="/javascripts/votings.js"></script>

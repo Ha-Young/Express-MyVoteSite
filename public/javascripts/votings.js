@@ -27,8 +27,12 @@ $voteBoxContainer.addEventListener("input", async (event) => {
 $voteBtn.addEventListener("click", async (event) => {
   if (expireAt <= Date.now()) {
     event.preventDefault();
-    alert("투표가 종료됐어요 😥");
-    return window.location.reload();
+    const $modal = document.createElement("div");
+    $modal.className = "modal";
+    $modal.innerText = "투표가 종료됐어요 🤭";
+    document.body.appendChild($modal);
+    setTimeout(() => location.reload(), 1500);
+    return;
   }
 
   const options = [];
@@ -38,7 +42,15 @@ $voteBtn.addEventListener("click", async (event) => {
 
   if (!options.length) {
     event.preventDefault();
-    return alert("선택해야 투표할 수 있어요!");
+    const $warningBox = document.createElement("div");
+    $warningBox.className = "warning-box";
+    $warningBox.innerText = "투표할 항목을 선택해주세요 🤏";
+
+    $voteBtn.parentNode.insertBefore($warningBox, $voteBtn.nextSibling);
+    setTimeout(() => {
+      $voteBtn.parentNode.removeChild($warningBox);
+    }, 1000);
+    return;
   }
 
   const response = await fetch(
@@ -49,25 +61,35 @@ $voteBtn.addEventListener("click", async (event) => {
       body: JSON.stringify(options),
     },
   );
+
   const { result, message } = await response.json();
+  const $modal = document.createElement("div");
+  $modal.className = "modal";
+  $modal.innerText = message;
+  document.body.appendChild($modal);
+  setTimeout(() => {
+    switch (result) {
+      case "success":
+      location.reload();
 
-  alert(message);
+      break;
+      case "fail":
+        document.body.removeChild($modal);
 
-  if (result === "success") location.reload();
-
+        break;
+      default:
+        location.replace("/");
+    }
+  }, 1500);
 });
 
 if ($deleteBtn) {
   $deleteBtn.addEventListener("click", async () => {
-    if (confirm("정말 투표를 삭제 하실건가요? 🤔")) {
-
       const response = await fetch(
         location.href,
         { method: "DELETE", redirect: "follow" },
       );
 
-      if (response.ok) location.replace("/");
-    }
-
+      if (response.ok) location.assign("/");
   });
 }

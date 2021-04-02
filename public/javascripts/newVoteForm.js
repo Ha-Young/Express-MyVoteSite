@@ -67,8 +67,6 @@ const validations = {
   });
 })();
 
-
-
 const voteExpiration = {
   year: Number($year.value),
   month: Number($month.value),

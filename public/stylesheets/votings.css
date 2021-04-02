@@ -1,0 +1,13 @@
+.modal {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(31, 31, 31, 0.7);
+  color: rgb(240, 240, 240);
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
