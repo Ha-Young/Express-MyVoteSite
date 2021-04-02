@@ -4,6 +4,7 @@
   const message = document.querySelector(".message");
 
   if (!buttonDeleteVote) return;
+
   async function deleteVote(e) {
     e.preventDefault();
 
@@ -15,7 +16,7 @@
       });
 
       const result = await response.json();
-      const {success} = result;
+      const { success } = result;
 
       if (success) {
         message.textContent = "투표가 정상적으로 삭제되었습니다";
