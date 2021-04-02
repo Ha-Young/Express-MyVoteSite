@@ -15,12 +15,11 @@ Controller.getAllVotings = async (req, res, next) => {
     const currentUser = req.user;
 
     votings.forEach(async (voting) => {
-      const votingEndDate = voting.endDate;
-      const isProgress = validateDate(votingEndDate, Date.now());
+      const { endDate } = voting;
+      const isProgressNow = validateDate(endDate, Date.now());
 
-      if (!isProgress && voting.isProgress) {
-        voting.isProgress = isProgress;
-        await voting.save();
+      if (!isProgressNow && voting.isProgress) {
+        await voting.update({ isProgress: isProgressNow });
       }
     });
 
@@ -47,9 +46,9 @@ Controller.postNewVoting = async (req, res, next) => {
     const currentUserId = req.user._id;
     const { title, option } = req.body;
     const endDate = getDateFormat(req.body["end-date"]);
-    const isProgress = validateDate(endDate, Date.now());
+    const isCorrectDate = validateDate(endDate, Date.now());
 
-    if (!isProgress) {
+    if (!isCorrectDate) {
       return res.redirect("/voting/votings/error");
     }
 
@@ -65,7 +64,7 @@ Controller.postNewVoting = async (req, res, next) => {
       title,
       endDate,
       options,
-      user: currentUserId,
+      author: currentUserId,
     });
 
     await newVoting.save();
@@ -75,7 +74,6 @@ Controller.postNewVoting = async (req, res, next) => {
     user.votingList.push(newVoting._id);
 
     await user.save();
-
 
     res.redirect(`/voting/votings/success/${newVoting._id}`);
   } catch (error) {
@@ -115,13 +113,13 @@ Controller.getMyVotings = async (req, res, next) => {
 
     User.findById({ _id: currentUserId })
       .populate("votingList")
-      .exec((error, voting) => {
+      .exec((error, user) => {
         if (error) {
           console.error(error.message);
           return next(handleError(500, error));
         }
 
-        res.render("myVotings", { myVotings: voting.votingList });
+        res.render("myVotings", { myVotings: user.votingList });
       });
   } catch (error) {
     console.error(error.message);
@@ -135,31 +133,32 @@ Controller.getDetailVoting = async (req, res, next) => {
     const currentUser = req.user;
 
     Voting.findById({ _id: currentVotingId })
-      .populate("user")
+      .populate("author")
       .exec((error, voting) => {
         if (error) {
           console.error(error.message);
           return next(handleError(500, error));
         }
 
-        const author = voting.user;
+        const { author, options, isProgress } = voting;
         const isAuthor =  currentUser
           ? (currentUser._id.toString() === author._id.toString())
           : false;
 
-        if (voting.isProgress) {
+        if (isProgress) {
           res.render("detailVoting", {
             voting,
             author: author.email,
             isAuthor,
           });
         } else {
-          let highestOption = {
-            title: undefined,
-            value: VOTING.OPTION_DEFAULT_VALUE
-          };
+          let highestOption;
 
-          voting.options.forEach(option => {
+          options.forEach(option => {
+            if (!highestOption) {
+              return highestOption = option;
+            }
+
             if (highestOption.value < option.value) {
               highestOption = option;
             }
@@ -183,22 +182,24 @@ Controller.patchDetailVoting = async (req, res, next) => {
   try {
     const { checkedOption } = req.body;
     const votingId = req.params.id;
-    const userId = req.user._id;
+    const currentUserId = req.user._id;
 
     const voting = await Voting.findById({ _id: votingId });
 
     const isVotedUser = voting.votingUserList.some(userVotedId =>
-      userVotedId.toString() === userId.toString()
+      userVotedId.toString() === currentUserId.toString()
     );
 
     if (!isVotedUser) {
-      voting.options.forEach(option => {
+      const { options, votingUserList } = voting;
+
+      options.forEach(option => {
         if (option.title === checkedOption) {
           option.value += VOTING.OPTION_UPPER_VALUE;
         }
       });
 
-      voting.votingUserList.push(userId);
+      votingUserList.push(currentUserId);
 
       await voting.save();
 

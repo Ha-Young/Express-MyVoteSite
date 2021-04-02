@@ -14,38 +14,34 @@
           <p>투표 주체자: <%= author %></p>
           <p>투표 주제: <%= voting.title %></p>
           <p>투표 종료 시간: <%= voting.endDate %></p>
-          <form>
-            <article class="voting-options">
-              <% voting.options.forEach(option => { %>
-                <label for="<%= option.title %>">
-                  <li class="voting-option">
-                    <input
-                      id="<%= option.title %>"
-                      type="radio"
-                      name="option"
-                      value="<%= option.title %>"
-                    >
-                    <%= option.title %>
-                    <% if (isAuthor) { %>
-                      <span class="option-value">
-                        투표 수: <%= option.value %>
-                      </span>
-                    <% } %>
-                  </li>
-                </label>
-              <% }) %>
-            </article>
-            <button id="submitButton" name="<%= voting._id %>">투표 제출</button>
-          </form>
+          <article class="voting-options">
+            <% voting.options.forEach(option => { %>
+              <label for="<%= option.title %>">
+                <li class="voting-option">
+                  <input
+                    id="<%= option.title %>"
+                    type="radio"
+                    name="option"
+                    value="<%= option.title %>"
+                  >
+                  <%= option.title %>
+                  <% if (isAuthor) { %>
+                    <span class="option-value">
+                      투표 수: <%= option.value %>
+                    </span>
+                  <% } %>
+                </li>
+              </label>
+            <% }) %>
+          </article>
+          <button id="submitButton" name="<%= voting._id %>">투표 제출</button>
           <% if (isAuthor) { %>
             <button id="deleteButton" name="<%= voting._id %>">삭제</button>
             <script src="/javascripts/deleteVoting.js"></script>
           <% } %>
           <script src="/javascripts/patchVoting.js"></script>
         </ul>
-        <form action="/" method="GET">
-          <button type="submit">투표 목록</button>
-        </form>
+        <a href="http://www.localhost:3000/">투표 목록</a>
       </article>
     </section>
   </body>

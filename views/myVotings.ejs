@@ -13,25 +13,19 @@
           <ul>
             <p>투표 주제: <%= myVoting.title %></p>
             <p>투표 종료 시간: <%= myVoting.endDate %></p>
-            <form
-              name="<%= myVoting._id %>"
-              action="/voting/votings/<%= myVoting._id %>"
-              method="GET"
-            >
-              <% myVoting.options.forEach(option => { %>
-                <li class="voting-option">
-                  <%= option.title %>/
-                  투표 수: <%= option.value %>
-                </li>
-              <% }) %>
-              <button type="submit">투표 페이지로</button>
-            </form>
+            <% myVoting.options.forEach(option => { %>
+              <li class="voting-option">
+                <%= option.title %>/
+                투표 수: <%= option.value %>
+              </li>
+            <% }) %>
+            <a href="http://www.localhost:3000/voting/votings/<%= myVoting._id %>">
+              투표 페이지로
+            </a>
             <button id="deleteButton" name="<%= myVoting._id %>">삭제</button>
           </ul>
           <script src="/javascripts/deleteVoting.js"></script>
-          <form action="/" method="GET">
-            <button type="submit">투표 목록</button>
-          </form>
+          <a href="http://www.localhost:3000/">투표 목록</a>
         </article>
       <% }) %>
     </section>
