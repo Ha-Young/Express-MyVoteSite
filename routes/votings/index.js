@@ -19,8 +19,8 @@ router.get("/new", verifyAuth, function(req, res, next) {
 
 router.post("/new", verifyAuth, newVotingInputValidation, votingController.postNewVoting);
 
-router.get('/:id', votingController.getSelectedVoting);
-router.put('/:id', verifyUser, votingController.updateVoting);
-router.delete('/:id', verifyAuth, votingController.deleteVoting);
+router.get("/:id", votingController.getSelectedVoting);
+router.put("/:id", verifyUser, votingController.updateVoting);
+router.delete("/:id", verifyAuth, votingController.deleteVoting);
 
 module.exports = router;

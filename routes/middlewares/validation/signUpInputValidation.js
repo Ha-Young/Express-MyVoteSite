@@ -30,7 +30,7 @@ async function signUpInputValidation (req, res, next) {
     const user = await User.findOne({ email });
 
     if (user) {
-      errorMessages.push({ message: "This Email is already exist"});
+      errorMessages.push({ message: "This Email is already exist" });
     }
 
     if (errorMessages.length) {

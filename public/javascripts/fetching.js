@@ -65,7 +65,6 @@ async function handleVotingSubmit(e) {
   }
 }
 
-
 async function handleDeleteBtnClick(e) {
   try {
     e.preventDefault();

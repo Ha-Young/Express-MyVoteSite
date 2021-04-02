@@ -6,7 +6,7 @@ async function newVotingInputValidation(req, res, next) {
     const { title, expireDate, options } = req.body;
 
     if (!title.length || !expireDate || !options.length) {
-      errorMessages.push({ message: "Please fill out all fields"});
+      errorMessages.push({ message: "Please fill out all fields" });
     }
 
     const isProceeding = checkExpireDate(expireDate);
@@ -14,11 +14,11 @@ async function newVotingInputValidation(req, res, next) {
     const isOptionsValidated = options && options.every(option => option.trim().length > 0);
 
     if (!isOptionsValidated) {
-      errorMessages.push({message: "Should contain at least 2 options with proper letter"});
+      errorMessages.push({message: "Should contain at least 2 options with proper letter" });
     }
 
     if (!isProceeding) {
-      errorMessages.push({message: "The expire date can't be eariler than today"});
+      errorMessages.push({message: "The expire date can't be eariler than today" });
     }
 
     if (errorMessages.length) {

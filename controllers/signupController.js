@@ -6,7 +6,8 @@ exports.getSignUpPage = async function(req, res, next) {
     "signUp",
     { title: "Sign up",
       messages: req.flash("messages")
-    });
+    }
+  );
 }
 
 exports.registerNewUser = async function(req, res, next) {
