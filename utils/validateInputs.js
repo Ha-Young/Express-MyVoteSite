@@ -41,16 +41,19 @@ exports.validateQueries = (query) => {
 };
 
 exports.validateNewVoteInputs = (data) => {
+  const now = (new Date()).toISOString();
   const schema = Joi.object().keys({
-
+    title: Joi.string().required(),
+    expirationDate: Joi.date().iso().min(now).required(),
+    options: Joi.array().min(2).max(8).required()
   });
 
-  return schema.validate(data);
+  return schema.validate(data, { abortEarly: false });
 };
 
 exports.validateVoteInputs = (data) => {
   const schema = Joi.object().keys({
-
+    option: Joi.any().required
   });
 
   return schema.validate(data);

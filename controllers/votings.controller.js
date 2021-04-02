@@ -66,14 +66,12 @@ exports.deleteVote = async (req, res, next) => {
 exports.getVotingForm = (req, res) => {
   const title = 'Create Vote';
   const infoMessages = req.flash('info');
-  const message = req.flash('error');
   const today = new Date().toISOString().split('T')[0] + 'T00:00';
 
   res.render('newVoting', {
     user: req.user,
     title,
     today,
-    message,
     infoMessages
   });
 };

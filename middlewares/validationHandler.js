@@ -1,7 +1,9 @@
 const {
   validateLoginInputs,
   validateSignUpInputs,
-  validateQueries
+  validateQueries,
+  validateNewVoteInputs,
+  validateVoteInputs
 } = require('../utils/validateInputs');
 const User = require('../models/User');
 /**
@@ -47,6 +49,28 @@ exports.validateQuery = (req, res, next) => {
 
   if (error) {
     return res.redirect('back');
+  }
+
+  return next();
+};
+
+exports.validateNewVote = (req, res, next) => {
+  const { error } = validateNewVoteInputs(req.body);
+
+  if (error) {
+    req.flash('info', error.details.map(err => err.message));
+    return res.redirect('/votings/new');
+  }
+
+  return next();
+};
+
+exports.validateVote = (req, res, next) => {
+  const { error } = validateVoteInputs(req.body);
+
+  if (error) {
+    req.flash('info', error.details.map(err => err.message));
+    return res.redirect(`/votings/${req.params.id}`);
   }
 
   return next();
