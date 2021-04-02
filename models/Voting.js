@@ -32,6 +32,13 @@ votingSchema.virtual('selected_option').get(function() {
   return optionsCopy.sort((a, b) => b.count - a.count)[0].optionTitle;
 });
 
+votingSchema.statics.updateExpiredVotingStatus = function (now) {
+  return this.updateMany(
+    { expiration_date: { $lte: now } },
+    { status: 'expired' }
+  );
+};
+
 votingSchema.methods.addVoteCount = function(target) {
   const targetOption = this.options.find(option => option.optionTitle === target);
   targetOption.count += 1;
@@ -39,11 +46,8 @@ votingSchema.methods.addVoteCount = function(target) {
   return this.save();
 };
 
-votingSchema.statics.updateExpiredVotingStatus = function (now) {
-  return this.updateMany(
-    { expiration_date: { $lte: now } },
-    { status: 'expired' }
-  );
+votingSchema.methods.isExistOption = function(target) {
+  return this.options.some(option => option.optionTitle === target);
 };
 
 module.exports = mongoose.model('Voting', votingSchema);

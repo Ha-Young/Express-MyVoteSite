@@ -7,7 +7,7 @@ exports.verifyVote = async function (req, res, next) {
       if (err) {
         res.cookie('prev_page', req.originalUrl);
 
-        return res.json({ error: 401});
+        return res.status(401).json({ error: 401});
       }
 
       if (!req.user) {
@@ -18,6 +18,6 @@ exports.verifyVote = async function (req, res, next) {
       next();
     });
   } catch (err) {
-    res.json({ error: 500});
+    res.status(500).json({ error: 500});
   }
 };

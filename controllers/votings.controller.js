@@ -20,7 +20,7 @@ exports.createVoting = async function (req, res, next) {
       options,
     });
 
-    res.redirect('/votings/success');
+    res.status(301).redirect('/votings/success');
   }catch (err) {
     next(createError(500, err));
   }
@@ -46,11 +46,15 @@ exports.addVote = async function (req, res, next) {
     const currentUser = await User.findById(req.user);
 
     if (!voting) {
-      return res.json({ error: 404 });
+      return res.status(404).json({ error: 404 });
+    }
+
+    if (!voting.isExistOption(selectedOption)) {
+      return res.status(400).json({ error: 400 });
     }
 
     if (currentUser.isAlreadyVote(req.votingId)) {
-      return res.json({ error: "이미 투표했습니다." });
+      return res.status(400).json({ error: "이미 투표했습니다." });
     } else {
       await voting.addVoteCount(selectedOption);
       await currentUser.addVotingList(req.votingId);
@@ -71,7 +75,7 @@ exports.deleteVoting = async function (req, res) {
 
     res.json({ success: "성공" });
   } catch (err) {
-    res.json({ error: "실패" });
+    res.status(500).json({ error: "실패" });
   }
 };
 
