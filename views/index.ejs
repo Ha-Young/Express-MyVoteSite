@@ -7,35 +7,33 @@
   <body>
     <%- include("./partials/header.ejs") %>
     <div class="main-content">
-      <h1><%= title %></h1>
-      <p><%= title %> here is main</p>
-        <div>
-          <button class="voting-add-btn">
-            <% if (displayName) { %>
-              <a href="/votings/new">Add Voting!</a>
-            <% } else { %>
-              <a href="/login">Log in to add Voting!</a>
-            <% } %>
-          </button>
-        </div>
+      <div>
+        <button class="voting-add-btn">
+          <% if (displayName) { %>
+            <a href="/votings/new">Add Voting!</a>
+          <% } else { %>
+            <a href="/login">Log in to add Voting!</a>
+          <% } %>
+        </button>
+      </div>
 
-      <% if (votings.length > 0) { %>
-        <% votings.forEach(function(voting) { %>
-          <div>
-            <a href="/votings/<%= voting._id %>">
-              <h2><%= voting.title %></h2>
-              <h3>Author: <%= voting.author %></h3>
-              <h4>contact: <%= voting.authorEmail %></h4>
-              <h4>Status: <%= voting.isProceeding %></h4>
-            <% if (voting.isProceeding) { %>
-              <h3>Expire Date: <%= voting.expireDate %></h3>
-            <% } else { %>
-              <h3>This voting is finished</h3>
-            <% } %>
-            </a>
-          </div>
-        <% }) %>
-      <% } %>
+    <% if (votings.length > 0) { %>
+      <% votings.forEach(function(voting) { %>
+        <div>
+          <a href="/votings/<%= voting._id %>">
+            <h2><%= voting.title %></h2>
+            <h3>Author: <%= voting.author.userName %></h3>
+            <h4>contact: <%= voting.author.email %></h4>
+            <h4>Status: <%= voting.isProceeding %></h4>
+          <% if (voting.isProceeding) { %>
+            <h3>Expire Date: <%= voting.expireDate %></h3>
+          <% } else { %>
+            <h3>This voting is finished</h3>
+          <% } %>
+          </a>
+        </div>
+      <% }) %>
+    <% } %>
 
     <%- include("./partials/footer.ejs") %>
     </div>

@@ -1,6 +1,7 @@
 const Voting = require("../models/Voting");
 const User = require("../models/User");
 const { format } = require("date-fns");
+const { getMaxVoterCount } = require("../utils/votingHelpers");
 
 exports.postNewVoting = async function (req, res, next) {
   try {
@@ -45,6 +46,12 @@ exports.getSelectedVoting = async function (req, res, next) {
     const votingOptionFormat = options.map(option => {
       const { _id, title, voters } = option;
 
+      if (isProceeding) {
+        if (voters.length === getMaxVoterCount(options)) {
+          winner.push(title);
+        }
+      }
+
       return {
         _id: _id,
         title: title,
@@ -66,7 +73,6 @@ exports.getSelectedVoting = async function (req, res, next) {
         votingDetailFormat,
         votingOptionFormat,
         isAuthor,
-        isLoggedIn,
         messages: req.flash("messages")
       }
     );
