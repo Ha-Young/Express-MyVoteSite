@@ -1,5 +1,5 @@
-mixin voteList(vote, delay)
-  .vote.delay-animation(style='--delay: .3s')
+mixin voteList(vote)
+  .vote
     .vote-status #{vote.isVotable ? 'vote now' : 'finished'}
     .vote-wrapper
       a(href=`/vote/${vote._id}`)

@@ -1,17 +1,14 @@
 include mixins/voteList
 include mixins/header
 head
- link(rel='stylesheet', href='/css/dashboard.min.css')
- script(src='https://kit.fontawesome.com/5fab680b0a.js' crossorigin='anonymous')
+  link(rel='stylesheet' href='/css/dashboard.min.css')
+  script(src='https://kit.fontawesome.com/5fab680b0a.js' crossorigin='anonymous')
 .container
-  .sidebar
-    span.logo V
-    a.logo-expand(href='/') Vote
-    include partials/sidebar.pug
+  include partials/sidebar.pug
   .wrapper
     +header(user)
     .main-container
-      .small-header.delay-animation(style='--delay: .1s') Most Popular
+      .small-header.delay-animation(style='delay: .1s') Most Popular
       .main-votes
         .main-vote.delay-animation(style='--delay: .1s')
           .main-vote__title Vote your favorite outdoor sports
@@ -42,6 +39,6 @@ head
                 span
                 | 2 weeks ago
       .small-header.delay-animation(style='--delay: .3s') Discover
-      .votes
+      .votes.delay-animation(style='--delay: .3s')
         each vote of votes
           +voteList(vote)

@@ -1,14 +1,11 @@
 include mixins/voteList
 include mixins/header
 head
-  link(rel='stylesheet', href='/css/form.min.css')
-  link(rel='stylesheet', href='/css/dashboard.min.css')
+  link(rel='stylesheet' href='/css/form.min.css')
+  link(rel='stylesheet' href='/css/dashboard.min.css')
   script(src='https://kit.fontawesome.com/5fab680b0a.js' crossorigin='anonymous')
 .container
-  .sidebar
-    span.logo V
-    a.logo-expand(href='/') Vote Here
-    include partials/sidebar.pug
+  include partials/sidebar.pug
   .wrapper
     +header(user)
     .main-container
