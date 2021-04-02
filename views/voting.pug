@@ -5,35 +5,36 @@ block append head
   script(src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0")
 block content
   include header
-  h2.voting-title= voting.title
-  p.voting-description= voting.description
-  p.voting-state= currentState
-  p.voting-publisher Published by #{voting.publisher.name}
-  div.option-box
-    if currentState === "expired"
-      div.cant-vote-message-box This voting is expired.
-    else if !isAlreadyVoted
-      form.voting-form(action="/votings/" + voting._id method="post")
-        if voting.isAbleSelectMultipleOptions
-          each count, option in options
-            label.option-label
-              input.option-checkbox(type="checkbox" name="option" value=option)
-              = option
-        else
-          each count, option in options
-            label.option-label
-              input.option-radio(type="radio" name="option" value=option)
-              = option
-        button.submit-button(type="submit") VOTE
-    else
-      div.cant-vote-message-box You voted already.
-  div.message-box
-  p.expirationTime Expiration Time #{expirationTime}
-  button.index-link-button(type="button") < Voting List
-  if currentState === "expired" || isPublisher
-    button.delete-voting-button(type="button") Delete
-    div.chart-box
-      canvas.chart(width="700" height="400")
+  div.voting-container
+    h2.voting-title= voting.title
+    p.voting-description= voting.description
+    p.voting-state= currentState
+    p.voting-publisher Published by #{voting.publisher.name}
+    div.option-box
+      if currentState === "expired"
+        div.cant-vote-message-box This voting is expired.
+      else if !isAlreadyVoted
+        form.voting-form(action="/votings/" + voting._id method="post")
+          if voting.isAbleSelectMultipleOptions
+            each count, option in options
+              label.option-label
+                input.option-checkbox(type="checkbox" name="option" value=option)
+                = option
+          else
+            each count, option in options
+              label.option-label
+                input.option-radio(type="radio" name="option" value=option)
+                = option
+          button.submit-button(type="submit") VOTE
+      else
+        div.cant-vote-message-box You voted already.
+    div.message-box
+    p.expirationTime Expiration Time #{expirationTime}
+    button.index-link-button(type="button") < Voting List
+    if currentState === "expired" || isPublisher
+      button.delete-voting-button(type="button") Delete
+      div.chart-box
+        canvas.chart(width="700" height="400")
 
   script var options = !{JSON.stringify(options)}
   script(src="/javascripts/voting.js")
