@@ -1,4 +1,4 @@
-import showModal, { showValidation, deleteVote } from "./common.js";
+import showModal, { showValidation, deleteVote } from "./util.js";
 
 const submitButton = document.querySelector("#submitButton");
 const options = document.querySelectorAll(".option-list li input");

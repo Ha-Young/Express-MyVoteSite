@@ -1,4 +1,4 @@
-import { deleteVote } from "./common.js";
+import { deleteVote } from "./util.js";
 
 const backButton = document.querySelector("#backButton");
 

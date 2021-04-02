@@ -1,4 +1,4 @@
-import showModal, { showValidation } from "./common.js";
+import showModal, { showValidation } from "./util.js";
 
 const addOptionButton = document.querySelector("#optionButton");
 const optionList = document.querySelector(".option-list");

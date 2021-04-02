@@ -1,4 +1,4 @@
-import { showValidation } from "./common.js";
+import { showValidation } from "./util.js";
 
 const loginForm = document.querySelector("#login-form")
 const emailInput = document.querySelector("input[type='email']");
@@ -7,6 +7,7 @@ const googleLoginButton = document.querySelector("#googleLoginButton");
 
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
+
   const email = emailInput.value;
   const password = passwordInput.value;
   const previousUrl = document.referrer;

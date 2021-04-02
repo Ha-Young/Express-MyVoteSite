@@ -1,4 +1,4 @@
-import { showValidation } from "./common.js";
+import { showValidation } from "./util.js";
 
 const signUpForm = document.querySelector("#signup-form");
 
