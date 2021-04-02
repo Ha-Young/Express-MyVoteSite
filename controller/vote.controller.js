@@ -49,9 +49,10 @@ module.exports.postNewVote = async function postNewVote(req, res, next) {
     });
   } catch (err) {
     req.flash("info", err.message);
-    res.redirect("/votings/new");
+    res.redirect("/error");
   }
-  res.redirect("/");
+
+  res.redirect("/success");
 }
 
 module.exports.getVoteDetail = async function getVoteDetail(req, res, next) {

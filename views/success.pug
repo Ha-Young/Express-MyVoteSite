@@ -1,0 +1,10 @@
+extends layouts/layout
+
+block content
+  link(rel="stylesheet/less" type="text/css" href="/stylesheets/success.less")
+  .success__outer
+    .success__inner
+      .success__imageWrapper
+        img#success__image(src="/images/success.png")
+      h1.success__text Success!!
+  script(src="/javascripts/success.js")

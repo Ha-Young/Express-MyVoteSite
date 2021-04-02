@@ -16,3 +16,11 @@ module.exports.main = async function main(req, res, next) {
 
   res.render("main", { user, votes });
 }
+
+module.exports.success = function success(req, res, next) {
+  res.render("success");
+}
+
+module.exports.error = function error(req, res, next) {
+  res.render("voteError");
+}

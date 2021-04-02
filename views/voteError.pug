@@ -1,0 +1,11 @@
+
+extends layouts/layout
+
+block content
+  link(rel="stylesheet/less" type="text/css" href="/stylesheets/voteError.less")
+  .error__outer
+    .error__inner
+      .error__imageWrapper
+        img#error__image(src="/images/voteError.png")
+      h1.error__text Success!!
+  script(src="/javascripts/voteError.js")
