@@ -5,8 +5,8 @@ main.login-container
     form(action="/auth/login" method="POST")
       input(type="text" name="email" placeholder="이메일" required)
       input(type="password" name="password" placeholder="패스워드" required)
-      button 로그인
+      button.login-button 로그인
     form(action="/auth/signup")
       button.signup-button 회원가입
-    p=message
+  link(rel="stylesheet", href="/stylesheets/style.css")
   link(rel="stylesheet", href="/stylesheets/login.css")

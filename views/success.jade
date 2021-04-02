@@ -1,6 +1,9 @@
 extends layout 
 
 block content
-  h1 Voting Platform
-  p 투표가 생성되었습니다
-    a(href="/") 돌아가기
+  div.page-container
+    h1 성공!!
+    div
+      p.success-message=message
+    a(href="/") ←돌아가기
+  link(rel="stylesheet", href="/stylesheets/success.css")

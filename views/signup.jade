@@ -1,13 +1,17 @@
-h1 signup
-div
-  form(action="/auth/signup" method="POST")
-    label(for="name") 이름
-      input(type="text" name="name" required)
-    label(for="email") 이메일
-      input(type="text" name="email" required)
-    label(for="password") 비밀번호
-      input(type="text" name="password" required)
-    button(type="submit") 제출
-div=message
-a(href="/auth/login") 로그인
+extends layout
 
+block content
+  include partials/header
+  div.page-container
+    h1 회원가입
+    div.form-container
+      form(action="/auth/signup" method="POST")
+        label(for="name")
+          input(type="text" name="name" placeholder="이름" required)
+        label(for="email")
+          input(type="text" name="email" placeholder="이메일" required)
+        label(for="password")
+          input(type="text" name="password" placeholder="비밀번호" required)
+        button(type="submit") 제출
+    p.message=message
+  link(rel="stylesheet", href="/stylesheets/signup.css")

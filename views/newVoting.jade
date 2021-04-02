@@ -1,32 +1,36 @@
 extends layout
 
 block content
-  h1 투표를 생성해보세요
+  include partials/header
+  div.page-container
+    h1 투표를 생성해보세요
     form(action="/votings/new" method="POST")
-      div
-        input(type="text" placeholder="제목" name="title" required)
-      div
-        select.expired-at(name="day" required)
-          option 일
-          -for (let i = 1; i < 8; i++) {
-            option(value=i)=i
-          -}
-        select.expired-at(name="hour" required)
-          option(selected) 시간
-          -for (let i = 1; i < 24; i++) {
-            option(value=i)=i
-          -}
-        select.expired-at(name="minute" required)
-          option(selected) 분
-          -for (let i = 1; i < 60; i++) {
-            option(value=i)=i
-          -}
       div.input-container
-        input(type="text" placeholder="선택사항1" name="option" required)
-        input(type="text" placeholder="선택사항2" name="option" required)
-      button.button-add-option(type="button") +
+        input.title(type="text" placeholder="제목" name="title" required)
+        div.select-container
+          select.expired-at(name="day" required)
+            option 일
+            -for (let i = 1; i < 8; i++) {
+              option(value=i)=i
+            -}
+          select.expired-at(name="hour" required)
+            option(selected) 시간
+            -for (let i = 1; i < 24; i++) {
+              option(value=i)=i
+            -}
+          select.expired-at(name="minute" required)
+            option(selected) 분
+            -for (let i = 1; i < 60; i++) {
+              option(value=i)=i
+            -}
       div
+        div.option-input-container
+          input(type="text" placeholder="선택사항1" name="option" required)
+          input(type="text" placeholder="선택사항2" name="option" required)
+      div.button-container
+        button.button-add-option(type="button") +
         button.button-create-vote(type="submit") 생성하기
-    a(href="/") 돌아가기
-    p=message
-  script(src="/javascripts/index.js")
+      a(href="/") ←돌아가기
+      p=message
+  script(src="/javascripts/insertOptionBox.js")
+  link(rel="stylesheet", href="/stylesheets/newVoting.css")

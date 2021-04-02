@@ -3,9 +3,14 @@ nav.navbar
   ul.menu
     li
       a(href="/") 홈
+    -if (name) {
     li 
       a(href="/auth/logout") 로그아웃
     li
       a(href="/votings/new") 투표생성
     li
       a(href="/my-votings") 마이페이지
+    -} else {
+    li
+      a(href="/auth/login") 로그인
+    -}
