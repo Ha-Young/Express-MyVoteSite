@@ -41,7 +41,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
-// app.use("/logout", logoutRouter);
 app.use("/votings", votingsRouter);
 app.use("/my-votings", myVotingsRouter);
 

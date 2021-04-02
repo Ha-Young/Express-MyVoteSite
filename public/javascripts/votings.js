@@ -4,7 +4,7 @@ const homeBtn = document.querySelector(".home-btn");
 
 const updateVoting = async (option, targetIndex) => {
   if (!document.cookie.includes("access_token")) {
-    window.location.href = "/login";
+    window.location.href = `/login?pageId=${form.name}`;
 
     return;
   }
@@ -55,4 +55,3 @@ submitBtn.addEventListener("click", async () => {
 
   await updateVoting(checkedValue, targetIndex);
 });
-
