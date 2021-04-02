@@ -18,7 +18,6 @@ module.exports = () => {
   });
 
   app.get(MY_VOTINGS, async (req, res, next) => {
-    console.log('here');
     try {
       const { _id: userId } = req.user;
 
