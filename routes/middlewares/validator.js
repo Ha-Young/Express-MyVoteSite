@@ -88,6 +88,9 @@ exports.validateCreatingVote = [
     .isLength({ min: 1 })
     .withMessage("옵션 제목을 입력해야 합니다.")
     .custom(value => {
+      if (value.some((option, index) => value.indexOf(option) !== index)) {
+        throw new Error("같은 옵션이 있으면 안 됩니다.");
+      }
       if (!Array.isArray(value) || value.length < 2) {
         throw new Error("옵션은 최소 두 개 이상이어야 합니다.");
       }
