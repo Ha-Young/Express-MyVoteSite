@@ -2,7 +2,7 @@ const createError = require('http-errors');
 
 const Vote = require('../models/Vote');
 const User = require('../models/User');
-const { getFormattedCurrentDateTime } = require('../util/time');
+const { getFormattedCurrentDateTime } = require('../util/getCurrentTime');
 const { getRandomImage } = require('../util/getRandomImage');
 
 const INITIAL_COUNT = 0;
@@ -46,7 +46,7 @@ async function postNewVote(req, res, next) {
 
   try {
     await vote.save();
-    res.redirect('/home');
+    res.status(301).redirect('/');
   } catch (error) {
     next(createError(500));
   }
@@ -105,7 +105,7 @@ async function deleteVoteById(req, res) {
     await Vote.findByIdAndDelete(id);
     await User.deleteCompletedVotes(id);
 
-    res.status(200).redirect('/home');
+    res.status(200).redirect('/');
   } catch (error) {
     next(createError(500));
   }

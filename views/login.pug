@@ -10,20 +10,15 @@ head
   .wrapper
     +header(user)
     .main-container
-      .main-vote.anim(style='--delay: .1s')
-        .container.login-container
-          h3.display-4 LOGIN
-          form(action='/auth/login' method='POST')
-            .form-group
-              label(for='email') Email
-              input#email.form-control(type='email' name='email' required)
-            .form-group
-              label(for='password') Password
-              input#password.form-control(type='password' name='password' required)
-            .alert.alert-dismissible.alert-danger
-            //- TODO: flash? or error message;
-            button.btn.btn-primary.submit LOGIN
-          br
-          .alert.alert-dismissible.alert-info
-            strong If not a member?
-            a(href='/auth/signup') Register Here
+      .form-container.anim(style='--delay: .1s')
+        h2 LOGIN
+        form(action='/auth/login' method='POST')
+          .form-group
+            label(for='email') Email
+            input#email.form-control(type='email' name='email' required)
+          .form-group
+            label(for='password') Password
+            input#password.form-control(type='password' name='password' required)
+          .alert.alert-dismissible.alert-danger
+          //- TODO: flash? or error message;
+          button.btn.btn-primary.submit LOGIN

@@ -10,21 +10,21 @@ head
   .wrapper
     +header(user)
     .main-container
-      .main-vote.anim(style='--delay: .1s')
-        .container.login-container.jumbotron
-          h1.display-3 Register
-          form(action='/auth/signup' method='POST')
-            .form-group
-              label(for='name') Name
-              input#name.form-control(type='text' name='name' maxLength='15' required)
-            .form-group
-              label(for='email') Email
-              input#email.form-control(type='email' name='email' maxLength='30' required)
-            .form-group
-              label(for='password') Password
-              input#password.form-control(type='password' name='password' minlength='8' required)
-            button.btn.btn-primary(type='submit') Register
-          br
-          .alert.alert-dismissible.alert-info
-            strong Already have an account?
-            a(href='/') Login Here
+      .form-container.anim(style='--delay: .1s')
+        h2 Register
+        form(action='/auth/signup' method='POST')
+          .form-group
+            label(for='name') Name
+            input#name.form-control(type='text' name='name' maxLength='15' required)
+          .form-group
+            label(for='email') Email
+            input#email.form-control(type='email' name='email' maxLength='30' required)
+          .form-group
+            label(for='password') Password
+            input#password.form-control(type='password' name='password' minlength='8' required)
+          .form-group
+            label(for='confirm-password') Confirm Password
+            input#confirm-password.form-control(type='password' name='confirm-password' minlength='8' required)
+          p#validation-message All fields must be filled
+          button#register.btn.btn-primary(type='submit' disabled) Register
+script(src='/javascripts/join.js')

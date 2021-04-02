@@ -17,7 +17,7 @@ function getGithubAuth(req, res) {
 }
 
 function getGithubAuthCallback(rea, res) {
-  res.status(301).redirect('/home');
+  res.status(301).redirect('/');
 }
 
 function getRegister(req, res, next) {
