@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  overflow: auto;
 }
 
 .votes {
@@ -12,9 +13,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
   flex-direction: column;
   margin: 1em;
+  margin: 0;
 }
 
 .votes a {
@@ -23,9 +24,17 @@
   justify-content: center;
   list-style: none;
   padding-left: 0;
-  width: 25em;
-  height: 10em;
+  width: 30em;
+  height: 7em;
   border: 1px solid black;
-  padding: 1.5em;
+  padding: 0 1.5em;
   margin: 0.5em;
+}
+
+.votes a div {
+  padding: 5px;
+}
+
+.vote-state {
+  color: blue;
 }

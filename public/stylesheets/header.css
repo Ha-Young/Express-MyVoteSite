@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px 20px;
-  background-color: yellow;
+  background-color: #3dc1d3;
 }
 
 .menu {
@@ -17,7 +17,7 @@
 }
 
 .menu li:hover {
-  background-color: white;
+  background-color: #63cdda;
   border-radius: 4px;
 }
 
