@@ -1,4 +1,6 @@
-require('dotenv').config();
+if (process.env.NODE_ENV) {
+  require('dotenv').config();
+}
 
 const createError = require('http-errors');
 const express = require('express');
@@ -18,7 +20,7 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(logger('dev')); // TODO ????
+app.use(logger('dev'));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));

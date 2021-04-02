@@ -41,4 +41,3 @@ function handleKeyupPasswords() {
 
 emailField.addEventListener('keyup', handleKeyupEmail);
 confirmPasswordInput.addEventListener('keyup', handleKeyupPasswords);
-
