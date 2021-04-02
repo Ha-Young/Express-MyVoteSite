@@ -1,6 +1,6 @@
 const dayjs = require("dayjs");
 
-exports.convert = function (createdAt, day, hour, minute) {
+exports.convertDate = function (createdAt, day, hour, minute) {
   let expiredAt = createdAt;
 
   if (!isNaN(day)) {
