@@ -1,14 +1,12 @@
-#header
-  div
-    a(href="/") Voting Platform
-  - if (user)
-    div #{user.username}
-    div
+header
+  .home
+    a(href="/" class="title") Voting Platform
+  if (user)
+    .username #{user.username}
+    .router
       a(href="/my-votings") 내 투표보기
-    div
       a(href="/auth/logout") LOGOUT
-  - else
-    div
-      a(href="/auth/signup") SIGNUP
-    div
-      a(href="/auth/login") LOGIN
+  else
+    .router
+      a(href="/auth/signup") Sing up
+      a(href="/auth/login") Sign in

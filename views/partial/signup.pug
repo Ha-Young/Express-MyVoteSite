@@ -1,17 +1,41 @@
 extends ../layout.pug
 
+block stylesheet
+  link(rel="stylesheet", href="/stylesheets/signup.css")
+
 block content
-  form(action="signup", method="post")
-    div
-      label Username:
-        input(type="text" name="username" required value="uand1")
-    div
-      label Your Email:
-        input(type="email" name="email" required value="uand1@naver.com")
-    div
-      label Password:
-        input(type="password" name="password" required value="1234")
-    div
-      label Confirm:
-        input(type="password" name="confirm" required value="1234")
-    button(type="submit") SUBMIT
+  .signupContainer
+    .leftSide
+      i.fas.fa-dice-d6
+      i.fas.fa-dice-d6
+      pre
+        |  투표를 만들고,
+        | 투표에 참여하세요!
+
+    form(class="signupForm" action="signup", method="post")
+      .loginFlex
+        .icon
+          i.fas.fa-dice-d6
+        .textBox
+          label(for="username") Username:
+          input(type="text" id="username" name="username" required)
+      .loginFlex
+        .icon
+          i.fas.fa-envelope
+        .textBox
+          label(for="email") Your Email:
+          input(type="email" id="email" name="email" required)
+      .loginFlex
+        .icon
+          i.fas.fa-lock
+        .textBox
+          label(for="password") Password:
+          input(type="password" id="password" name="password" required)
+      .loginFlex
+        .icon
+          i.fas.fa-lock-open
+        .textBox
+          label(for="password") Confirm:
+          input(type="password" id="password" name="confirm" required)
+      .rightSide
+        button(type="submit") SUBMIT

@@ -1,0 +1,95 @@
+.signupContainer {
+  width: 90%;
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+}
+
+.leftSide {
+  color: white;
+  font-size: 10vw;
+}
+
+.leftSide i:nth-child(1) {
+  position: relative;
+  top: 10vh;
+  left: 10vw;
+}
+
+.leftSide i:nth-child(2) {
+  position: relative;
+  top: 15vh;
+  left: 8vw;
+  transform: rotate(35deg);
+}
+
+.leftSide pre {
+  position: relative;
+  top: 25vh;
+  left: 10vw;
+  font-size: 1.5vw;
+}
+
+.signupForm {
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 2vw;
+  border: var(--pink) .1vw solid;
+}
+
+.textBox {
+  position: relative;
+  width: 100%;
+}
+
+.textBox label {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  padding: .8em .5em;
+  color: var(--gray);
+  cursor: text;
+}
+
+.textBox input {
+  width: 100%;
+  height: auto;
+  line-height: normal;
+  padding: .8em .5em;
+  font-family: inherit;
+  border: 1px solid var(--gray);
+  border-radius: 0;
+  outline-style: none;
+  appearance: none;
+}
+
+.rightSide {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.loginFlex {
+  display: flex;
+}
+
+.loginFlex .icon {
+  width: 5vw;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--pink);
+  border-radius: 50%;
+  margin-right: 2vw;
+}
+
+.leftSide {
+  background-color: var(--pink);
+}
+
+.loginFlex i {
+  font-size: 2vw;
+  color: white;
+}

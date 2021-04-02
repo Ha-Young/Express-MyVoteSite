@@ -1,62 +1,60 @@
-.inProgress {
-  border: var(--redish) 1px solid;
-}
-
-.notInProgress {
-  color: var(--graish-blue);
-  background-color: var(--graish-green);
-}
-
 .votingItem {
   width: 90%;
-  margin-top: 10vh;
-  color: var(--graish-green);
+  height: 70%;
+}
+
+.votingItem div {
+  margin-bottom: 1vw;
 }
 
 .votingItemTitle {
-  padding: 2vw 0;
-  font-size: 4vw;
-  text-align: center;
-}
-
-.votingItemBottom {
-  padding: 2vw;
-  background-color: var(--graish-blue);
-}
-
-.description {
-  color: var(--purple-deep);
-  font-size: 4vw;
-}
-
-.votingItemBottom .options {
-  font-size: 4vw;
+  width: 100%;
+  height: 5vh;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
 }
 
 .createdAt {
-  display: inline-block;
-  font-size: 0.7vw;
-  background-color: var(--graish-blue);
+  font-size: .7vw;
+  font-weight: 400;
+  color: var(--font-color);
 }
 
 .dueDate {
-  color: var(--redish);
-  font-size: 2vw;
-  font-weight: 600;
+  font-weight: 400;
+  color: var(--pink);
+  background-color: var(--beige);
+  padding: 1vw;
+}
+
+.description {
+  width: 100%;
+  height: 20vh;
+  padding: 1vw;
+  margin-top: 2vw;
+  margin-bottom: 1vw;
+  border: var(--light-gray) 1px solid;
+  border-radius: 1vw;
 }
 
 .options {
-  padding: 2vw;
-}
-
-.options a {
-  color: var(--graish-green);
-}
-
-.selectedOption {
-  background-color: var(--redish);
+  width: 100%;
+  height: 7vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: var(--pink) .3vw solid;
+  padding-left: 1vw;
+  margin-bottom: 1vw;
 }
 
 .likes {
-  background-color: var(--redish);
+  margin-right: 3vw;
+}
+
+.votingItemFooter {
+  position: absolute;
+  right: 5vw;
 }

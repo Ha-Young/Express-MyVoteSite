@@ -1,10 +1,30 @@
 extends layout.pug
 
+block stylesheet
+  link(rel="stylesheet", href="/stylesheets/main.css")
+  link(rel="stylesheet", href="/stylesheets/votingItem.css")
+
 block content
-  h2 Voting Content
-  div.buttons
+  button
     a(href="/votings/new") 새로운 투표 등록하기
-  .votingContainer
+  .votingList
     each data in list
-      div.votingBox
-        a(href=`/votings/${data.id}`) #{data.title}
+      -
+        const {
+          id,
+          title,
+          dueDate,
+          isInProgress,
+          founder,
+          participants,
+        } = data;
+      .votingBox
+        a(href=`/votings/${id}`)
+          .progressBox
+            - if (isInProgress)
+              span.inProgress [투표진행중]
+            - else
+              span.notInProgress [투표종료]
+            span.participants #{participants.length} 명이 참여중
+          .votingItemTitle #{title}
+          span.founder #{founder}

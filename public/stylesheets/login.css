@@ -1,0 +1,19 @@
+.loginForm {
+  width: 60%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 5vh;
+}
+
+.loginForm .loginFlex {
+  width: 80%;
+  margin-bottom: 3vh;
+}
+
+.loginForm button {
+  width: 80%;
+  cursor: pointer;
+}

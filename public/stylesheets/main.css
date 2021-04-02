@@ -1,0 +1,41 @@
+.votingList {
+  width: 90%;
+  height: 80%;
+  margin-top: 5vh;
+  overflow-y: scroll;
+}
+
+.votingBox {
+  width: 100%;
+  padding: 1em;
+  border-radius: 2vw;
+  border: var(--light-pink) 1px solid;
+  margin-bottom: 1vw;
+  cursor: pointer;
+}
+
+.expiredMessage {
+  font-size: .7vw;
+  color: var(--dark-gray);
+}
+
+.inProgress {
+  color: var(--pink);
+}
+
+.notInProgress {
+  margin-right: 1vw;
+}
+
+.progressBox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.founder {
+  display: inline-block;
+  padding: .3vw;
+  font-size: .7vw;
+  font-weight: 300;
+  background-color: var(--graish-white);
+}

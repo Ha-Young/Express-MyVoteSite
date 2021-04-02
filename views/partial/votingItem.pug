@@ -17,42 +17,45 @@ block content
       options,
       participants,
     } = data;
-  div.votingItem.flexColumn.centered
+  .votingItem.flexColumn.centered
     - if (isInProgress)
       span.inProgress [투표진행중]
     - else
       span.notInProgress [투표종료]
-    div.votingItemTop
-      div.votingItemTitle #{title}
-      span.votingItemFounder 투표진행자 #{founder}
-    span.createdAt #{createdAt}
-    div.dueDate #{dueDate}
-    div.description #{description}
+      span.expiredMessage 종료된 투표는 참여할 수 없습니다.
+    .votingItemTitle #{title}
+    div
+      span.founder 투표진행자 #{founder}
+      span.createdAt #{createdAt}
+    span.dueDate 참여가능 시간 #{dueDate}
+    .description #{description}
     .votingItemBottom
       - if (isInProgress) // 진행중
         - if (user) // 로그인상태
           each option in options
             - if (participants.includes(user.id)) // 투표 했음
-              div.options.selectedOption #{option.opt}
+              .options
+                .selectedOption #{option.opt}
             - else // 투표 안했음
-              div(
-                class="options"
-                data-id=option.id
-                onclick=`sendAjax("/votings/update/${id}", "${option.id}")`
-              ) #{option.opt}
+                div(
+                  class="options"
+                  data-id=option.id
+                  onclick=`sendAjax("/votings/update/${id}", "${option.id}")`
+                ) #{option.opt}
             - if (founder.toString() === user.id.toString()) // 생성자
-              div.likes #{option.likes.length}
+                .likes #{option.likes.length}
         - else // 로그아웃
           each option in options
-            div.options
+            .options
               a(href="/auth/login") #{option.opt}
       - else // 완료
         each option in options
-          div.options #{option.opt}
-            div.likes #{option.likes.length}
+          .options
+            div #{option.opt}
+            .likes #{option.likes.length}
     .votingItemFooter.flexRow
       - if (user && founder.toString() === user.id.toString())
-        div.buttons
+        button
           a(href=`/votings/delete/${id}`) 삭제
-      div.buttons
+      button
         a(href="javascript:window.history.back();") 목록으로 돌아가기

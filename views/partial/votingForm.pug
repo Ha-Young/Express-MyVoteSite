@@ -1,5 +1,8 @@
 extends ../layout.pug
 
+block stylesheet
+  link(rel="stylesheet", href="/stylesheets/votingForm.css")
+
 block content
   form(action="/votings/new", method="post")
     - const today = moment().format('yyyy-MM-DDTHH:mm:ss')
