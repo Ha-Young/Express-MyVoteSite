@@ -25,6 +25,30 @@ exports.AddMyVote = async ({ userId, voteId }) => {
   }
 };
 
+exports.DeleteMyVote = async ({ userId, voteId }) => {
+  try {
+    const userRecord = await User.updateOne(
+      {
+        _id: userId,
+      },
+      {
+        $pull: {
+          my_votes: mongoose.Types.ObjectId(voteId),
+        },
+      }
+    );
+
+    if (!userRecord) {
+      throw new Error("can not delete my vote");
+    }
+
+    return { result: true };
+
+  } catch (error) {
+    return { error };
+  }
+};
+
 exports.CheckAreadyVote = async ({ userId, voteId }) => {
   try {
     const userRecord = await User.findById(userId);
