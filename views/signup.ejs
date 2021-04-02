@@ -6,9 +6,11 @@
 </head>
 
 <body>
-  <%- include("partials/title") %>
+  <div class="header-container">
+    <%- include("partials/title") %>
+    <%- include("partials/menu") %>
+  </div>
   <%- include("partials/authButton") %>
-  <%- include("partials/menu") %>
   <h1>Sign Up</h1>
   <form name="signup" action="/signup" method="POST">
     <input type="text" name="username" placeholder="username" />

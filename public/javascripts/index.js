@@ -39,7 +39,6 @@ function setMinDate() {
         dd = "0" + dd;
     }
 
-    console.log(date);
     today = yyyy + "-" + mm + "-" + dd;
     date.setAttribute("min", today);
 }

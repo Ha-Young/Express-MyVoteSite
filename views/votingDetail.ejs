@@ -6,8 +6,10 @@
 </head>
 
 <body>
-  <%- include("partials/title") %>
-  <%- include("partials/authButton") %>
+  <div class="header-container">
+    <%- include("partials/title") %>
+    <%- include("partials/authButton") %>
+  </div>
   <%- include("partials/menu") %>
   <span><%=voting.title%></span>
   <span><%=voting.due_date%></span>

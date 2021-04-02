@@ -6,9 +6,11 @@
 </head>
 
 <body>
-  <%- include("partials/title") %>
-  <%- include("partials/authButton") %>
-  <%- include("partials/menu") %>
+  <div class="header-container">
+    <%- include("partials/title") %>
+    <%- include("partials/authButton") %>
+    <%- include("partials/menu") %>
+  </div>
   <h2><%=error.status%></h2>
   <span><%=message%></span>
   <a href="/login">로그인 화면으로 돌아가기</a>

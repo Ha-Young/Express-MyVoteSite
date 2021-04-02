@@ -6,22 +6,25 @@
 </head>
 
 <body>
-  <%- include("partials/title") %>
-  <%- include("partials/authButton") %>
+  <div class="header-container">
+    <%- include("partials/title") %>
+    <%- include("partials/authButton") %>
+  </div>
   <%- include("partials/menu") %>
-  <form class="create-voting-form" name="create-voting" action="/votings/new" method="POST">
-    <input class="input-title" type="text" name="title" placeholder="title" />
-    <input class="input-date" type="date" name="date" />
-    <input class="input-time" type="time" name="time" />
-    <div class="create-option-container">
-      <input class="option" type="text" name="option" placeholder="option 1" />
-      <input class="option" type="text" name="option" placeholder="option 2" />
-
-    </div>
-    <button type="button" class="delete-option">-</button>
-    <button type="button" class="add-option">+</button>
-    <input class="create-voting-button" type="submit" value="create" />
-  </form>
+  <div class="content-container">
+    <form class="create-voting-form" name="create-voting" action="/votings/new" method="POST">
+      <input class="input-title" type="text" name="title" placeholder="title" />
+      <input class="input-date" type="date" name="date" />
+      <input class="input-time" type="time" name="time" />
+      <div class="create-option-container">
+        <input class="option" type="text" name="option" placeholder="option 1" />
+        <input class="option" type="text" name="option" placeholder="option 2" />
+      </div>
+      <button type="button" class="delete-option">-</button>
+      <button type="button" class="add-option">+</button>
+      <input class="create-voting-button" type="submit" value="create" />
+    </form>
+  </div>
   <!-- <span><%=message%></span> -->
 </body>
 <script src="/javascripts/index.js"></script>

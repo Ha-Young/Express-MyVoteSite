@@ -6,18 +6,27 @@
 </head>
 
 <body>
-  <%- include("partials/title") %>
-  <%- include("partials/authButton") %>
+  <div class="header-container">
+    <%- include("partials/title") %>
+    <%- include("partials/authButton") %>
+  </div>
   <%- include("partials/menu") %>
-  <ul class="my-voting-list">
-    <% for (let i = 0; i < myVotings.length; i++) { %>
-    <li id=<%=myVotings[i]._id%>>
-      <span><%=myVotings[i].title%></span>
-      <span><%=myVotings[i].due_date%></span>
-      <span><%=myVotings[i].status%></span>
-    </li>
-    <% }%>
-  </ul>
+  <div class="content-container">
+    <ul class="voting-list">
+      <% for (let i = 0; i < myVotings.length; i++) { %>
+      <% const action = `/votings/${myVotings[i]._id}`%>
+      <a href=<%= action %>>
+        <li class="voting" id=<%=myVotings[i]._id%>>
+          <span><%=myVotings[i].title%></span>
+          <span><%= myVotings[i].creator_username %></span>
+          <span><%=myVotings[i].due_date%></span>
+          <span><%= myVotings[i].due_time %></span>
+          <span><%=myVotings[i].status%></span>
+        </li>
+      </a>
+      <% }%>
+    </ul>
+  </div>
 </body>
 
 </html>

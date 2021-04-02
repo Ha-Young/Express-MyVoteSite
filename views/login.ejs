@@ -6,8 +6,10 @@
 </head>
 
 <body>
-  <%- include("partials/title") %>
-  <%- include("partials/authButton") %>
+  <div class="header-container">
+    <%- include("partials/title") %>
+    <%- include("partials/authButton") %>
+  </div>
   <%- include("partials/menu") %>
   <span>Log In</span>
   <form name="login" action="/login" method="POST">

@@ -22,6 +22,7 @@ router.get("/new", requireAuth, function (req, res) {
 router.post("/new", requireAuth, async function (req, res) {
   const title = req.body.title;
   const date = req.body.date;
+  const time = req.body.time;
   const options = req.body.options;
   const creatorId = req.session.passport.user;
   const candidates = [];
@@ -43,6 +44,7 @@ router.post("/new", requireAuth, async function (req, res) {
     creator: creatorId,
     creator_username: creatorUsername,
     due_date: date,
+    due_time: time,
     candidates: candidates,
   }
   const createdVoting = await new Voting(newVoting).save();

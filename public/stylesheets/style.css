@@ -8,26 +8,31 @@ a {
   text-decoration: none;
 }
 
-.app-title {
+input {
+  display: block;
+  width: 240px;
+  height: 30px;
+  margin: 10px;
+}
 
+.header-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu-container {
+  display: flex;
+  justify-content: center;
 }
 
 .menu {
-  display: flex;
-  justify-content: center;
-}
-
-.home-button, .create-voting-button, .my-voting-button {
-  margin: 30px;
-}
-
-.voting-list {
-  display: flex;
-  justify-content: center;
+  margin: 25px 50px;
 }
 
 .voting {
   margin: 30px;
+  padding: 30px;
+  border: 1px solid black;
 }
 
 .vote-form {
@@ -35,17 +40,13 @@ a {
   border: 1px solid gray;
 }
 
-.title, .date, .option{
-  display: block;
-  margin: 10px;
-  width: 200px;
-  height: 20px;
+.content-container {
+  display: flex;
+  justify-content: center;
 }
 
-.option {
-
-}
-
-.vote-button {
-  background-color: lightcyan;
+.create-voting-form {
+  padding: 30px;
+  margin: 20px;
+  border: 1px solid black;
 }

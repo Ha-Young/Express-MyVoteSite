@@ -11,8 +11,10 @@ exports.getAllVotings = async function (req, res, next) {
 
   await Voting.updateMany(
     {
-      due_date: formattedDate,
-      due_time: formattedTime
+      $and: [
+        { due_date: { $lte: formattedDate } },
+        { due_time: { $lte: formattedTime } }
+      ]
     },
     { $set: { "status": "CLOSED" } }
   );
