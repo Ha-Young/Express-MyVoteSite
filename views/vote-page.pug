@@ -22,9 +22,9 @@ block content
           li
             button#deleteButton.button.red(type="button") DELETE
           li
-            a.button(href=`/votings/${vote._id}/result`) RESULT
+            a.button.yellow(href=`/votings/${vote._id}/result`) RESULT
         li
-          button#submitButton.button(type="submit") SUBMIT
+          button#submitButton.button.purple(type="submit") SUBMIT
         li
           a.button(href="/") GO TO MAIN
     script(type="module" src="/javascripts/manageVote.js")

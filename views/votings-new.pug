@@ -18,13 +18,13 @@ block content
               button.button.red.deleteButton(type="button") DELETE
           ul.button-list.align-left
             li
-              button#optionButton.button(type="button") ADD OPTION
+              button#optionButton.button.yellow(type="button") ADD OPTION
             li
-              button#clearAllOptionsButton.button(type="button") CLEAR ALL OPTIONS
+              button#clearAllOptionsButton.button.red(type="button") CLEAR ALL OPTIONS
       p.validation.hidden
       ul.button-list
         li
-          button.button(type="submit" form="create-vote") CREATE
+          button.button.purple(type="submit" form="create-vote") CREATE
         li
           a.button(href="/") GO TO MAIN
   script(type="module" src="/javascripts/createVote.js")
