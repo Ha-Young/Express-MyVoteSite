@@ -21,6 +21,11 @@ exports.addFormattedDueDate = (votes) => {
   });
 };
 
+/**
+ * extract options from req.body and return them
+ * @param {object} req req object of route callback function
+ * @returns options passed by req.body
+ */
 exports.extractOptions = (req) => {
   const options = [];
 
@@ -37,4 +42,13 @@ exports.extractOptions = (req) => {
     });
 
   return options;
+};
+
+exports.hideEmail = (email) => {
+  const indexOfAt = email.indexOf("@");
+  const extracted = email.substring(0, indexOfAt);
+  const hideFrom = (extracted.length / 2) > 3 ? 3 : Math.floor(extracted.length / 2);
+  const hidden = `${extracted.substring(0, hideFrom)}*****`;
+
+  return hidden + email.substring(indexOfAt, email.length);
 };

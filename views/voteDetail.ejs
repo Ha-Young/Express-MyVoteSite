@@ -5,6 +5,14 @@
         <span class="cherl-font">Creator</span>
         <span class="gamja-font"><%= vote.creator?.name || "탈퇴한 회원" %></span>
       </div>
+      <div>
+        <span class="cherl-font">email: </span>
+        <% if (vote.creator?.email) { %>
+          <span class="cherl-font"><%= vote.creator.email %></span>
+        <% } else { %>
+          <sapn class="gamja-font">탈퇴한 회원</sapn>
+        <% }%>
+      </div>
       <div class="cherl-font">Due Date: <%= vote.dueDate %></div>
     </div>
     <% if (isCreator || user?.admin) { %>

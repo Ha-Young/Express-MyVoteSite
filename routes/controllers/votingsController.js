@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const Vote = require("../../models/Vote");
 const catchAsync = require("../../utils/catchAsync");
-const { addFormattedDueDate, extractOptions } = require("../../utils/index");
+const { addFormattedDueDate, extractOptions, hideEmail } = require("../../utils/index");
 const AppError = require("../../utils/AppError");
 const {
   NEW,
@@ -68,6 +68,8 @@ exports.renderVoteDetailPage = catchAsync(async (req, res, next) => {
     res.redirect(ROOT_ROUTE);
     return;
   }
+
+  vote.creator.email = hideEmail(vote.creator.email);
 
   res.locals.isVoted = vote.voters.some((voter) => voter._id.equals(req.user?._id));
   res.locals.isCreator = req.user?._id.equals(vote.creator?._id);
