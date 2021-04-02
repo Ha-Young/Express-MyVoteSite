@@ -35,17 +35,33 @@
   border-radius: 10px;
 }
 
-.voting-item {
+.item {
   display: flex;
   flex-flow: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   box-sizing: border-box;
   width: 90%;
-  height: 10%;
-  margin: 3%;
+  height: 30%;
+  margin: 3% auto;
   border: 3px solid #A8DADC;
   border-radius: 10px;
+  color: #247BA0;
+  text-decoration: none;
+}
+
+.item:hover {
+  background-color: #A8DADC;;
+  color: white;
+}
+
+.item > a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  height: 30%;
+  font-size: 3vmin;
   color: #247BA0;
   text-decoration: none;
 }
@@ -54,6 +70,14 @@
   background-color: #A8DADC;
   color: white;
   text-decoration: none;
+}
+
+.item > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  height: 30%;
 }
 
 .btn-container {

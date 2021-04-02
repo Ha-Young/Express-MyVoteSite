@@ -11,6 +11,6 @@ block content
         - const { title, _id, result, ended_at } = voting[i]
         - const path = `/votings/${_id}`
         div.item
-          a.voting-item(href=path) #{title}
+          a(href=path) #{title}
           div #{result}
           div #{ended_at}
