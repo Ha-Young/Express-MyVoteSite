@@ -25,8 +25,6 @@ userSchema.statics.addCompletedVotesById = async function(userId, voteId) {
   }
 }
 
-// TODO : delete me.
-
 userSchema.statics.deleteCompletedVotes = async function(voteId) {
   const filter = {
     'completedVotes': { '$elemMatch': { '$eq': voteId } },

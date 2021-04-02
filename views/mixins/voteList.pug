@@ -1,8 +1,7 @@
 mixin voteList(vote, delay)
   .vote.delay-animation(style='--delay: .3s')
-    .vote-status #{vote.isVotable ? 'vote' : 'finished'}
+    .vote-status #{vote.isVotable ? 'vote now' : 'finished'}
     .vote-wrapper
-      // TODO: vote tag css to img
       a(href=`/vote/${vote._id}`)
         img(src=`${vote.imgUrl}`)
       if (vote.creatorImgUrl)
@@ -13,6 +12,6 @@ mixin voteList(vote, delay)
     .vote-by #{vote.creatorName}
     .vote-name #{vote.title}
     .vote-view
-      | 54K views
+      | 220 view
       span.seperate.vote-seperate
-      | #{vote.expiredAt}
+      | Until #{vote.expiredAt}

@@ -1,8 +1,8 @@
-const emailField = document.getElementById('email');
-const passwordInput = document.getElementById('password');
-const confirmPasswordInput = document.getElementById('confirm-password');
-const validationMessageField = document.getElementById('validation-message');
-const signupButton = document.getElementById('signup');
+const emailField = document.querySelector('#email');
+const passwordInput = document.querySelector('#password');
+const confirmPasswordInput = document.querySelector('#confirm-password');
+const validationMessageField = document.querySelector('#validation-message');
+const signupButton = document.querySelector('.submit-button');
 
 function ValidateEmail(userEmail) {
   const format = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;

@@ -6,14 +6,13 @@ const defaultUserImgUrl = 'https://ccbg.boun.edu.tr/sites/ccbg.boun.edu.tr/files
 const voteSchema = new mongoose.Schema({
   title: { type: String, required: true },
   creatorId: { type: mongoose.Schema.Types.ObjectId, required: true },
-  creatorName: { type: String, required: true },
   expiredAt: { type: Date, required: true },
   options: { type: Object, required: true },
+  creatorName: { type: String, required: true },
+  creatorImgUrl: { type: String, default: defaultUserImgUrl},
   winner: { type: String },
   imgUrl: { type: String },
-  creatorImgUrl: { type: String, default: defaultUserImgUrl},
   isVotable: { type: Boolean, default: true },
-  completedVotes: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Vote' }],
 }, {
   timestamps: true,
 });
@@ -24,7 +23,7 @@ voteSchema.statics.updateIsVotable = async function() {
   const currentDate = new Date();
 
   const filter = {
-    'isVotable': true, 
+    'isVotable': true,
     'expiredAt': { '$lte': currentDate },
   };
 

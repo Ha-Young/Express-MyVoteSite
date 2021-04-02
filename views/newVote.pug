@@ -1,7 +1,7 @@
 include mixins/voteList
 include mixins/header
 head
-  //- link(rel='stylesheet' href='/css/newForm.min.css')
+  link(rel='stylesheet' href='/css/form.min.css')
   link(rel='stylesheet', href='/css/dashboard.min.css')
   script(src='https://kit.fontawesome.com/5fab680b0a.js' crossorigin='anonymous')
 .container
@@ -13,13 +13,13 @@ head
     .main-container
       .form-container.delay-animation(style='--delay: .1s')
         h2 Create New Vote
-        form#vote-form(action='/vote/new' method='POST')
+        form.vote-form(action='/vote/new' method='POST')
           .form-group
             label(for='title') Title
-              input.form-control(type='text' name='title' placeholder='Enter title' required)
+            input.form-control(type='text' name='title' placeholder='Enter title' required)
           .form-group
             label(for='title') Expired At
-              input(type='datetime-local' name='expiredAt' min=`${currentDateTime}` required)
+            input(type='datetime-local' name='expiredAt' min=`${currentDateTime}` required)
           .form-group
             p Add Options
             input.add-option-text(type='text')
