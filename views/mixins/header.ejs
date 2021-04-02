@@ -1,17 +1,21 @@
 <header class="header">
   <div class="header-column">
-    <a href="/">
+    <a href="/" class="header-home-link">
       <img class="logo" src="/images/logo.ico" alt="logo" />
+      <h1>Voting</h1>
     </a>
-    <h1>Voting</h1>
   </div>
   <div class="menu">
-    <a href="/votings/new"><button>투표 생성</button></a>
-    <a href="/my-votings"><button>내 투표 보기</button></a>
-  </div>
+      <% if (user._id) { %>
+        <a href="/votings/new"><button>투표 생성</button></a>
+        <a href="/my-votings"><button>내 투표 보기</button></a>
+      <% } else { %>
+        <a href="/login"><button>로그인</button></a>
+      <% } %>
+    </div>
   <div class="user-info header-column align-right">
     <% if (user.isAdmin) {%>
-      <a href="/problems/create"><button class="problem-create-btn">Add Problem</button></a>
+      <a href="/admin"><button>관리자 페이지</button></a>
     <% } %>
     <form class="user-info-form " action="/logout" method="POST">
       <% if (user.name) {%>
