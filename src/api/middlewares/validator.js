@@ -4,11 +4,17 @@ const Voting = require("../../models/Voting");
 
 exports.validatePostSignUp = async (req, res, next) => {
   try {
-    const { email } = req.body;
+    const { email, password1, password2 } = req.body;
     const isExistEmail = await User.exists({ email });
 
     if (isExistEmail) {
       req.flash("error", "존재하는 이메일입니다.");
+      res.redirect("/auth/signup");
+      return;
+    }
+
+    if (password1 !== password2) {
+      req.flash("error", "비밀번호가 다릅니다.");
       res.redirect("/auth/signup");
       return;
     }

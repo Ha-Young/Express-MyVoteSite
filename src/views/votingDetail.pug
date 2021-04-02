@@ -15,13 +15,14 @@ block content
         input.option(type="checkbox" name=`${option.id}` id=`${option.id}`)
         label(for=`${option.id}`) #{option.title}
     button.submit-voting-button Vote
+
   if currentUser.id
     if (voting.postedBy.id.toString() === currentUser.id.toString())
       .result Result: #{votingResult.join(", ")}
-      a.delete-voting-link(href=`/votings/${voting.id}/delete`)
+      form.delete-voting-form(action=`/votings/${voting.id}/delete?_method=DELETE` method="POST")
         button.delete-voting-button Delete Voting
   else if (!voting.progress)
     .result Result: #{votingResult.join(", ")}
   .warning-box #{errorMessage}
 
-  script(src="/javascripts/votingDetail/validation.js")
+  script(src="/javascripts/votingDetail/index.js")

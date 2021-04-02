@@ -1,6 +1,7 @@
 const newVotingForm = document.querySelector(".new-voting-form");
 const expiration = document.querySelector(".expiration");
 const warningBox = document.querySelector(".warning-box");
+const votingButton = document.querySelector(".new-voting-button");
 
 const validateExpiration = (timeStamp) => {
   if (timeStamp.getTime() - Date.now() < 0) {
@@ -24,6 +25,7 @@ const handleSubmit = (e) => {
 
   newVotingForm.submit();
   newVotingForm.removeEventListener("submit", handleSubmit);
+  votingButton.disabled = "disabled";
 };
 
 const validator = () => {

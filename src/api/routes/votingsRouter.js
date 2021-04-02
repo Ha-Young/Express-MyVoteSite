@@ -22,6 +22,6 @@ votingRouter.get("/error", votingFail);
 votingRouter.get("/:id", getVoting);
 votingRouter.post("/:id", validatePostVoting, postVoting);
 
-votingRouter.get("/:id/delete", deleteVoting);
+votingRouter.delete("/:id/delete", deleteVoting);
 
 module.exports = votingRouter;

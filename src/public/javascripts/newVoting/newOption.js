@@ -9,7 +9,7 @@ const newOption = () => {
   return optionClone;
 };
 
-const handleRemoveOptionButton = () => {
+const handleoptionList = () => {
   const optionList = document.querySelectorAll(".option");
 
   for (const option of optionList) {
@@ -23,6 +23,12 @@ const handleRemoveOptionButton = () => {
       removeOptionButton.classList.add("blind");
     }
 
+    if (optionList.length > 4) {
+      addOptionButton.disabled = "disabled";
+    } else {
+      addOptionButton.disabled = null;
+    }
+
     removeOptionButton.removeEventListener("click", handleremoveOptionButonClick);
     removeOptionButton.addEventListener("click", handleremoveOptionButonClick);
   }
@@ -31,13 +37,13 @@ const handleRemoveOptionButton = () => {
 const handleremoveOptionButonClick = (e) => {
   e.target.parentNode.remove();
 
-  handleRemoveOptionButton();
+  handleoptionList();
 };
 
 const handleAddOptionButonClick = () => {
   optionContainer.appendChild(newOption());
 
-  handleRemoveOptionButton();
+  handleoptionList();
 };
 
 const newOptionHandler = () => {

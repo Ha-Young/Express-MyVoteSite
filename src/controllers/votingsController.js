@@ -27,6 +27,7 @@ exports.getVoting = async (req, res, next) => {
     next(createError(500));
   }
 };
+
 exports.postVoting = async (req, res, next) => {
   const userId = req.user.id;
   const votingId = req.params.id;
@@ -34,9 +35,15 @@ exports.postVoting = async (req, res, next) => {
 
   try {
     await Voting.findOneAndUpdate(
-      { _id: votingId, "options._id": selection },
+      {
+        _id: votingId,
+        "options._id": selection
+      },
       { $push:
-        { participants: [userId], "options.$.selector": [userId] }
+        {
+          participants: [userId],
+          "options.$.selector": [userId]
+        },
       }
     );
 
@@ -50,6 +57,7 @@ exports.postVoting = async (req, res, next) => {
 exports.getNewVoting = (req, res) => {
   res.render("newVoting", { pageTitle: "New Voting" });
 };
+
 exports.postNewVoting = async (req, res, next) => {
   const { title, expiration, option } = req.body;
   const { id, username } = req.user;
@@ -63,8 +71,8 @@ exports.postNewVoting = async (req, res, next) => {
   try {
     await Voting.create({
       title,
-      expiration: timeStamp,
       options,
+      expiration: timeStamp,
       postedBy: {
         id,
         username,
@@ -81,6 +89,7 @@ exports.postNewVoting = async (req, res, next) => {
 exports.votingSuccess = (req, res) => {
   res.render("votingSuccess", { pageTitle: "Voting Success" });
 };
+
 exports.votingFail = (req, res) => {
   res.render("votingError", { pageTitle: "Voting Error" });
 };

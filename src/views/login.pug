@@ -3,13 +3,15 @@ extends layouts/main
 block content
   h1 #{pageTitle}
   .login-container
-    form.login-form(
+    form.submit-form(
       action=`/auth/login?${nextPage.key}=${nextPage.value}`
       method="POST"
     )
       input(type="email" placeholder="email" name="email" required=true)
       input(type="password" placeholder="password" name="password" required=true)
-      button.login-button Login
+      button.submit-button Login
     .warning-box #{errorMessage}
-    a.signup-link(href="./signup")
+    a.signup-link(href="/auth/signup")
       button.signup-button Signup
+
+  script(src="/javascripts/common/submitHandler.js")

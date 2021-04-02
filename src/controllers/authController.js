@@ -1,3 +1,4 @@
+const createError = require("http-errors");
 const User = require("../models/User");
 const { generatePassword } = require("../utils/passwordHelper");
 
@@ -14,6 +15,7 @@ exports.getLogin = (req, res) => {
     errorMessage,
   });
 };
+
 exports.postLogin = (req, res) => {
   const queryKey = Object.keys(req.query);
 
@@ -30,14 +32,20 @@ exports.getSignup = (req, res) => {
 
   res.render("signup", { pageTitle: "Signup", errorMessage });
 };
-exports.postSignup = async (req, res) => {
+
+exports.postSignup = async (req, res, next) => {
   const { username, email, password1: password } = req.body;
 
-  await User.create({
-    username,
-    email,
-    ...generatePassword(password),
-  });
+  try {
+    await User.create({
+      username,
+      email,
+      ...generatePassword(password),
+    });
 
-  res.redirect("/auth/login");
+    res.redirect("/auth/login");
+  } catch (err) {
+    console.log(err);
+    next(createError(500));
+  }
 };

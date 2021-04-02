@@ -18,18 +18,16 @@ exports.logout = (req, res) => {
 };
 
 exports.myVotings = async (req, res, next) => {
-  let userVoting;
-
   if (req.user) {
     const { id } = req.user;
 
     try {
-      userVoting = await Voting.find({ "postedBy.id": id });
+      const userVoting = await Voting.find({ "postedBy.id": id });
+
+      res.render("myVoting", { pageTitle: "My Votings", userVoting });
     } catch (err) {
       console.log("Failed find user voting!");
       next(createError(500));
     }
   }
-
-  res.render("myVoting", { pageTitle: "My Votings", userVoting });
 };

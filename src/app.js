@@ -6,6 +6,7 @@ const createError = require("http-errors");
 const helmet = require("helmet");
 const path = require("path");
 const flash = require("connect-flash");
+const methodOverride = require("method-override");
 
 const sessionLoader = require("./loaders/session");
 const passportLoader = require("./loaders/passport");
@@ -26,8 +27,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(helmet());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(methodOverride("_method"));
 
 sessionLoader(app);
 passportLoader(app);

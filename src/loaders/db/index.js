@@ -13,6 +13,7 @@ let url;
 switch (process.env.NODE_ENV) {
   case "production":
     url = `http://localhost:${process.env.PORT || 4000}`;
+    // 배포 후 수정
     break;
   case "development":
     url = `http://localhost:${process.env.PORT || 4000}`;

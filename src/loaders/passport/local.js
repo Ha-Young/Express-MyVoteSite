@@ -26,12 +26,12 @@ const initializeLocal = (passport) => {
     } catch (err) {
       console.log(err);
       done(err);
-    }
-  }
+    };
+  };
 
   passport.use(new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password',
+    usernameField: "email",
+    passwordField: "password",
     session: true,
     passReqToCallback: false,
   },

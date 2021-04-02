@@ -5,3 +5,7 @@
 .blind {
   display: none;
 }
+
+.option {
+  display: flex;
+}

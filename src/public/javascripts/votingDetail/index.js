@@ -1,6 +1,10 @@
 const votingForm = document.querySelector(".voting-form");
 const optionList = document.querySelectorAll(".option");
 const warningBox = document.querySelector(".warning-box");
+const voteButton = document.querySelector(".submit-voting-button");
+
+const deleteVotingForm = document.querySelector(".delete-voting-form");
+const deleteButton = document.querySelector(".delete-voting-button");
 
 const checkOptions = () => {
   let checked = 0;
@@ -29,10 +33,22 @@ const handleSubmit = (e) => {
   warningBox.textContent = "";
 
   votingForm.submit();
+  votingForm.removeEventListener("submit", handleSubmit);
+
+  voteButton.disabled = "disabled";
+  deleteButton.disabled = "disabled";
 };
 
-const validator = () => {
+const handleDeleteButtonClick = () => {
+  deleteVotingForm.removeEventListener("submit", handleDeleteButtonClick);
+
+  voteButton.disabled = "disabled";
+  deleteButton.disabled = "disabled";
+};
+
+const init = () => {
   votingForm.addEventListener("submit", handleSubmit);
+  deleteVotingForm.addEventListener("submit", handleDeleteButtonClick);
 };
 
-validator();
+init();

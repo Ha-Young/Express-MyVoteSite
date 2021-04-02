@@ -6,19 +6,19 @@ const userSchema = new Schema({
     type: String,
     lowercase: true,
     unique: true,
-    require: true,
-  },
-  hash: {
-    type: String,
-    require: true,
-  },
-  salt: {
-    type: String,
-    require: true,
+    required: true,
   },
   username: {
     type: String,
-    require: true,
+    required: true,
+  },
+  hash: {
+    type: String,
+    required: true,
+  },
+  salt: {
+    type: String,
+    required: true,
   },
 });
 
