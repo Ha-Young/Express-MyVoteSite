@@ -2,10 +2,8 @@ const $logoutButton = document.querySelector('.logout');
 
 $logoutButton.addEventListener('click', handleLogout);
 
-function handleLogout (e) {
-  e.preventDefault();
-
-  document.cookie = 'access_token=; max-age=-1';
-
+function handleLogout () {
+  document.cookie = 'access_token=; Max-Age=0';
+  console.log(document.cookie)
   window.location.href = '/';
 }
