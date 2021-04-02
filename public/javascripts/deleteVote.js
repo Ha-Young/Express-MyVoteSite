@@ -1,7 +1,6 @@
-const myVotingList = document.querySelector(".my-voting-list");
+const deleteVotingButton = document.querySelector(".delete-voting-button");
 
 function requestDelete(url) {
-  console.log(url);
   const xhr = new XMLHttpRequest();
   xhr.open("DELETE", url);
   xhr.send(null);
@@ -12,22 +11,16 @@ function requestDelete(url) {
 }
 
 function deleteVoting(e) {
-  console.log("test");
   e.stopPropagation();
 
-  const targetClassName = e.target.classList[0];
-  if (targetClassName !== "delete-vote-button") {
-    return;
-  }
-
-  const voteId = e.target.parentElement.id;
+  const voteId = e.target.id;
   const url = "http://localhost:3000/votings/" + voteId;
 
   requestDelete(url);
 }
 
 function init() {
-  myVotingList.addEventListener("click", deleteVoting);
+  deleteVotingButton.addEventListener("click", deleteVoting);
 }
 
 init();

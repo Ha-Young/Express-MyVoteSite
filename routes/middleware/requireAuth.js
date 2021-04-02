@@ -1,6 +1,5 @@
-
 function requireAuth(req, res, next) {
-  if (req.session.passport) {
+  if (req.isAuthenticated()) {
     return next();
   }
 

@@ -8,6 +8,28 @@ a {
   text-decoration: none;
 }
 
+.app-title {
+
+}
+
+.menu {
+  display: flex;
+  justify-content: center;
+}
+
+.home-button, .create-voting-button, .my-voting-button {
+  margin: 30px;
+}
+
+.voting-list {
+  display: flex;
+  justify-content: center;
+}
+
+.voting {
+  margin: 30px;
+}
+
 .vote-form {
   width: 300px;
   border: 1px solid gray;
@@ -21,7 +43,7 @@ a {
 }
 
 .option {
-  
+
 }
 
 .vote-button {

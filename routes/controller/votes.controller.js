@@ -4,32 +4,25 @@ const User = require("../../models/User");
 const moment = require("moment");
 
 exports.getAllVotings = async function (req, res, next) {
-  let myVotings = [];
-  let creatorId;
+  const currentDate = new Date();
+  const formattedDate = moment(currentDate).format("YYYY-MM-DD");
+  const formattedTime = moment(currentDate).format("HH:mm");
+  const isLoggedIn = req.session.passport ? true : false;
 
-  const currentDate = moment(new Date()).format("YYYY-MM-DD");
   await Voting.updateMany(
-    { due_date: currentDate },
+    {
+      due_date: formattedDate,
+      due_time: formattedTime
+    },
     { $set: { "status": "CLOSED" } }
   );
 
-  if (req.session.passport) {
-    creatorId = req.session.passport.user;
-    const myVotingIdList = await User.findById(creatorId);
-
-    myVotings = await Voting.find(
-      { creator: { $in: myVotingIdList } }
-    );
-  }
-
-  const notMyVotings = await Voting.find(
-    { creator: { $ne: creatorId } }
-  );
+  const votings = await Voting.find();
 
   res.render("index",
     {
-      myVotings: myVotings,
-      notMyVotings: notMyVotings
+      isLoggedIn: isLoggedIn,
+      votings: votings
     }
   );
 }
@@ -44,13 +37,18 @@ exports.showMyVotings = async function (req, res, next) {
     _id: { $in: myVotingsIdList }
   });
 
-  res.render("myVotings", { myVotings: myVotings });
+  res.render("myVotings",
+    {
+      isLoggedIn: true,
+      myVotings: myVotings
+    }
+  );
 }
 
 exports.showVoteDetails = async function (req, res, next) {
   const id = req.params.vote_id;
-  const vote = await Voting.findById(id);
-  const creator = await User.findById(vote.creator);
+  const voting = await Voting.findById(id);
+  const creator = await User.findById(voting.creator);
 
   let showResult = false;
   const passport = req.session.passport;
@@ -60,11 +58,7 @@ exports.showVoteDetails = async function (req, res, next) {
   }
 
   res.render("votingDetail", {
-    id: vote._id,
-    title: vote.title,
-    status: vote.status,
-    due_date: vote.due_date,
-    candidates: vote.candidates,
+    voting: voting,
     creator: creator,
     showResult: showResult
   });

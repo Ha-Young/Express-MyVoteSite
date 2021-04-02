@@ -19,16 +19,18 @@ function getUserInputData(e) {
   e.preventDefault();
   const title = document.querySelector(".input-title").value;
   const date = document.querySelector(".input-date").value;
+  const time = document.querySelector(".input-time").value;
   const optionContainer = document.querySelector(".create-option-container").children;
   const options = [];
 
   for (let i = 0; i < optionContainer.length; i++) {
     options.push(optionContainer[i].value);
   }
-
+  console.log(time);
   const inputData = {
     "title": title,
     "date": date,
+    "time": time,
     "options": options
   }
 

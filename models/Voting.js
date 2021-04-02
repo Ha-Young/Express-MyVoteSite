@@ -20,6 +20,10 @@ const Voting = mongoose.Schema({
     type: String,
     default: moment(new Date()).format("YYYY-MM-DD"),
   },
+  due_time: {
+    type: String,
+    default: "11:59",
+  },
   status: {
     type: String,
     enum: ["PROCEEDING", "CLOSED"],

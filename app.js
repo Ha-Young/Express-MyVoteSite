@@ -6,6 +6,7 @@ const passport = require("passport");
 
 const index = require("./routes/index");
 const login = require("./routes/api/login");
+const logout = require("./routes/api/logout");
 const signup = require("./routes/api/signup");
 const votings = require("./routes/votings");
 const myVotings = require("./routes/myVotings");
@@ -43,16 +44,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const session = require("express-session");
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(session({
   secret: "hyeongju",
   resave: false,
   saveUninitialized: true
 }));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use("/", index);
 app.use("/login", login);
+app.use("/logout", logout);
 app.use("/signup", signup);
 app.use("/votings", votings);
 app.use("/my-votings", myVotings);
@@ -64,7 +68,7 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
-
+  console.log("errorrr");
   res.status(err.status || 500);
   res.render("error");
 });

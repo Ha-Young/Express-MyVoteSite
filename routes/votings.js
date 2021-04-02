@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { requireAuth } = require("./middleware/requireAuth");
-
+const requireAuthToUpdate = require("./middleware/requireAuthToUpdate");
 const User = require("../models/User");
 const Voting = require("../models/Voting");
 
@@ -48,7 +48,7 @@ router.post("/new", requireAuth, async function (req, res) {
 });
 
 router.get("/:vote_id", voteController.showVoteDetails);
-router.put("/:vote_id", voteController.addOneToSelectedOption);
+router.put("/:vote_id", requireAuthToUpdate, voteController.addOneToSelectedOption);
 router.delete("/:vote_id", requireAuth, voteController.deleteVoting);
 
 module.exports = router;

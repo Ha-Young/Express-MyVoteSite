@@ -8,36 +8,21 @@
 <body>
   <%- include("partials/title") %>
   <%- include("partials/menu") %>
-  <div class="my-voting-list voting-list">
-    <% for (let i = 0; i < myVotings.length; i++ ) { %>
-    <% const action = `/votings/${myVotings[i]._id}`%>
-    <div id=<%= myVotings[i]._id %>>
-      <a href=<%= action %>>
-        <span><%= myVotings[i].title %></span>
-        <span><%= myVotings[i].creator_username %></span>
-        <span><%= myVotings[i].due_date %></span>
-        <span><%= myVotings[i].status %></span>
-      </a>
-      <button class="delete-vote-button">delete</button>
-    </div>
-    <% } %>
-  </div>
-
   <div class="voting-list">
-    <% for (let i = 0; i < notMyVotings.length; i++ ) { %>
-    <% const action = `/votings/${notMyVotings[i]._id}`%>
-    <div id=<%= notMyVotings[i]._id %>>
+    <% for (let i = 0; i < votings.length; i++ ) { %>
+    <% const action = `/votings/${votings[i]._id}`%>
+    <div id=<%= votings[i]._id %>>
       <a href=<%= action %>>
-        <span><%= notMyVotings[i].title %></span>
-        <span><%= notMyVotings[i].creator_username %></span>
-        <span><%= notMyVotings[i].due_date %></span>
-        <span><%= notMyVotings[i].status %></span>
+        <span><%= votings[i].title %></span>
+        <span><%= votings[i].creator_username %></span>
+        <span><%= votings[i].due_date %></span>
+        <span><%= votings[i].due_time %></span>
+        <span><%= votings[i].status %></span>
       </a>
     </div>
     <% } %>
   </div>
 
 </body>
-<script src="/javascripts/deleteVote.js"></script>
 
 </html>
