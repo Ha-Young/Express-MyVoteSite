@@ -12,7 +12,7 @@
 
 .create-voting-title {
   margin-bottom: 30px;
-  color: #276282;
+  color: #1e4357;
 }
 
 .create-voting-form {
@@ -26,12 +26,20 @@
   margin-bottom: 40px;
 }
 
+.create-voting-option-label {
+  display: flex;
+  flex-flow: column nowrap;
+  margin-bottom: 20px;
+}
+
 .create-voting-checkbox-label {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  padding: 15px;
+  margin-bottom: 40px;
+  border: 0.5px solid #c4c4c4;
 }
 
 .options {
