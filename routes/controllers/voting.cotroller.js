@@ -13,8 +13,8 @@ exports.getAllVotes = async (req, res, next) => {
 
   try {
     let votes = await Vote.find()
-                        .sort({ expiration_date: -1 })
-                        .populate("author", "name").lean();
+                          .sort({ expiration_date: -1 })
+                          .populate("author", "name").lean();
     votes = formatExpirationDate(votes);
 
     res.status(200).render("index", { votes, user });

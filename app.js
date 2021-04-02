@@ -1,4 +1,5 @@
 require("dotenv").config();
+require("./loaders/database");
 const createError = require("http-errors");
 const express = require("express");
 const session = require("express-session");
@@ -6,7 +7,6 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const passport = require("passport");
-require("./loaders/database");
 
 const index = require("./routes/index");
 const users = require("./routes/users");
