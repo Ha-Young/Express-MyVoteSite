@@ -12,7 +12,7 @@
           <h2>Log In</h2>
         </div>
   
-        <form method="post" action="/login">
+        <form method="post" action="/login/?next=<%= query %>">
           <div class="login-input-set">
             <p>
               <input 
@@ -31,7 +31,6 @@
                 placeholder="&#xf084; Password"
                 required
               >
-              <input type="hidden" name="prevpage" value="<%= query %>">
             </p>
           </div>
           <div class="sign-error">
@@ -46,7 +45,7 @@
             <a class="signup-button-content" href="/signup">join</a>
           </p>
           <p class="github-button">
-            <a class="github-button-content" href="/login/github/<%= query %>">
+            <a class="github-button-content" href="/login/github/?next=<%= query %>">
               Sign In with Github
               <i class="fab fa-github"></i>
             </a>

@@ -9,7 +9,6 @@ exports.validateLogIn = (data) => {
       .min(10)
       .max(20)
       .required(),
-    prevpage: Joi.any(),
   });
   
   return schema.validate({ ...data });

@@ -1,6 +1,6 @@
 const deleteForm = document.querySelector(".voting-delete-form");
-const votingContent = document.querySelector(".voting-content");
-const votingField = document.querySelector(".voting-field");
+const votingMiniBoard = document.querySelector(".voting-detail-board-mini");
+const votingBoard = document.querySelector(".voting-detail-board");
 
 async function requestDeleteVoting(ev) {
   ev.preventDefault();
@@ -14,11 +14,11 @@ async function requestDeleteVoting(ev) {
     const message = document.createElement("div");
     message.textContent = `${user}의 투표가 삭제되었습니다.`;
 
-    votingField.removeChild(votingContent);
-    votingField.appendChild(message);
+    votingBoard.removeChild(votingMiniBoard);
+    votingBoard.appendChild(message);
   } catch (error) {
     console.error(error);
   }
 }
 
-deleteForm?.addEventListener("submit", requestDeleteVoting);
+deleteForm.addEventListener("submit", requestDeleteVoting);

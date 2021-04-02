@@ -44,7 +44,7 @@ exports.getVotingDetail = async (req, res, next) => {
       user,
     } = req;
     const voting = await Voting.findById(id);
-    
+
     res.status(200).render("votingDetail", { voting, user });
   } catch (error) {
     next(error);
@@ -76,22 +76,22 @@ exports.updateVoting = async (req, res, next) => {
     } = req;
 
     let isSuccessVoting = false;
-    
+  
     if (!user) {
-      res.status(200).json({ isSuccessVoting, queryString: originalUrl });
-      
+      res.status(200).json({ isSuccessVoting, queryString: originalUrl, message: "로그인이 필요합니다." });
+
       return;
     }
-    
+
     const voting = await Voting.findById(id);
     const isVoted = voting.voters.some((voter) => user.id === voter.toString());
 
     if (isVoted) {
-      res.status(200).json({ isSuccessVoting });
-
+      res.status(200).json({ isSuccessVoting, message: "이미 투표하셨습니다." });
+      
       return;
     }
-		
+
     const targetKey = voting.options.findIndex((content) => content.option === option);
     const votingCount = ++voting.options[targetKey].count;
 
@@ -99,9 +99,7 @@ exports.updateVoting = async (req, res, next) => {
 
     await voting.save(); 
 
-    isSuccessVoting = true;
-
-    res.status(200).json({ isSuccessVoting, result: votingCount });
+    res.status(200).json({ isSuccessVoting, result: votingCount, message: "투표가 완료되었습니다." });
   } catch (error) {
     next(error);
   }

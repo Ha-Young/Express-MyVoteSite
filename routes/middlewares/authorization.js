@@ -1,6 +1,9 @@
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
 
+const { ErrorHandler } = require("../../util/error");
+const { SERVER_ERROR } = require("../../constants/error");
+
 exports.verifyToken = (req, res, next) => {
   try {
     const token = req.cookies["jwt"];
@@ -10,7 +13,7 @@ exports.verifyToken = (req, res, next) => {
 			decoded = jwt.verify(
 				token, 
 				process.env.JWT_SECRET_KEY, 
-				{ expiresIn: "1h" }
+				{ expiresIn: process.env.JWT_EXPIRES_IN }
 			);
 		}
 		
@@ -49,7 +52,7 @@ exports.isAuthenticated = async (req, res, next) => {
 		const user = await User.findOne({ email: res.locals.user });
 
 		if (!user) {
-			throw new Error("Unauthorized");
+			throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
 		}
 		
 		const userData = new User();

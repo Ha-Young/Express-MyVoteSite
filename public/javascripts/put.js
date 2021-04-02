@@ -3,7 +3,7 @@ const votingMessage = document.querySelector(".vote-message");
 
 async function requestUpdateData(ev) {
   ev.preventDefault();
-
+  
   const { baseURI, "voting-option": { value } } = ev.target;
   let redirectUrl = "/login";
 
@@ -18,24 +18,21 @@ async function requestUpdateData(ev) {
         option: value,
 			}), 
     });
-
-    const { isSuccessVoting, queryString, result } = await response.json();
-
+    const { isSuccessVoting, queryString, message } = await response.json();
+    
     if (!isSuccessVoting) {
       if (queryString) {
         redirectUrl += `?next=${queryString}`;
-      } 
 
-      throw new Error("error");
+        throw new Error(message);
+      }
+      
+      votingMessage.textContent = message;
+
+      return;
     }
 
-    const votingCount = document.getElementById(`${value}`);
-
-    if (votingCount) {
-      votingCount.textContent = result;
-    }
-
-    votingMessage.textContent = "투표가 완료되었습니다.";
+    votingMessage.textContent = message;
   } catch (error) {
     console.error(error);
     window.location.href = redirectUrl;
