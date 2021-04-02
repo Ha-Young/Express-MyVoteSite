@@ -15,7 +15,6 @@ module.exports.postNew = async (req, res, next) => {
   try {
     const publisher = await User.findOne({ email: res.locals.userEmail }).lean();
     const toBeCreatedVoting = req.body;
-    console.log("new voting\n", toBeCreatedVoting);
 
     const validationResult = validateVotingData(toBeCreatedVoting);
 
@@ -46,7 +45,6 @@ module.exports.postNew = async (req, res, next) => {
       res.status(422).json(validationResult);
     }
   } catch (err) {
-    console.log(err);
     next(createError(500, err.message));
   }
 };
@@ -66,8 +64,6 @@ module.exports.getVoting = async (req, res, next) => {
     const userEmail = res.locals.userEmail;
     const isPublisher = currentVoting.publisher.email === userEmail;
 
-    console.log("isPublisher", isPublisher);
-
     const expirationTime = format(currentVoting.expirationTime, "yyyy-MM-dd HH:mm");
     const isExpired = currentVoting.expirationTime - new Date() < 0;
     let currentState = "in Progress";
@@ -78,7 +74,6 @@ module.exports.getVoting = async (req, res, next) => {
     const options = Object.fromEntries(currentVoting.options);
 
     const isAlreadyVoted = !!currentVoting.voters[userEmail];
-    console.log("isAlreadyVoted", isAlreadyVoted);
 
     res.status(200).render("voting", {
       voting: currentVoting,
@@ -97,8 +92,7 @@ module.exports.getVoting = async (req, res, next) => {
 module.exports.putVoting = async (req, res, next) => {
   try {
     const votingId = req.params.voting_id;
-    const currentVoting =
-      await Voting.findById(votingId);
+    const currentVoting = await Voting.findById(votingId);
 
     if (!currentVoting) {
       next(createError(400, err.message));
@@ -107,8 +101,6 @@ module.exports.putVoting = async (req, res, next) => {
 
     const selectedOptions = req.body;
     const userEmail = res.locals.userEmail;
-    console.log("selectedOptions" ,selectedOptions);
-    console.log("user", userEmail);
 
     const isAlreadyVoted = !!currentVoting.voters[userEmail];
     if (isAlreadyVoted) {
@@ -138,7 +130,7 @@ module.exports.deleteVoting = async (req, res, next) => {
     const votingId = req.params.voting_id;
     const currentVoting =
       await Voting.findById(votingId)
-        .populate("publisher", "name email");
+        .populate("publisher", "email");
 
     const userEmail = res.locals.userEmail;
     const isPublisher = currentVoting.publisher.email === userEmail;

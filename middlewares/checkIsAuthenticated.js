@@ -10,8 +10,6 @@ module.exports.isAuthenticated = async (req, res, next) => {
   try {
     const accessToken = req.cookies.accessToken;
     const decodedAccessToken = jwt.verify(accessToken, process.env.JWT_ACCESS_KEY);
-    console.log("checkAccessToken", decodedAccessToken);
-    console.log("currentTime", new Date().getTime());
 
     res.locals.userEmail = decodedAccessToken.email;
 
@@ -56,9 +54,7 @@ module.exports.isAuthenticated = async (req, res, next) => {
 
 module.exports.redirectIfNotLoggedIn = async (req, res, next) => {
   if (!res.locals.userEmail) {
-    console.log("Unauthenticated!", req.method);
     res.cookie(ORIGINAL_URL, req.originalUrl);
-    console.log("originalURL", req.originalUrl);
 
     if (req.method === "GET") {
       res.status(302).redirect("/login");
@@ -68,7 +64,7 @@ module.exports.redirectIfNotLoggedIn = async (req, res, next) => {
   } else {
     next();
   }
-}
+};
 
 module.exports.isNotAuthenticated = async (req, res, next) => {
   try {

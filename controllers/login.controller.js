@@ -16,7 +16,6 @@ module.exports.get = async (req, res, next) => {
 
 module.exports.post = async (req, res, next) => {
   const user = req.body;
-  console.log(user);
 
   try {
     const findedUser = await User.findOne({ email: user.email });
@@ -62,14 +61,11 @@ module.exports.post = async (req, res, next) => {
       result: true,
     });
   } catch (err) {
-    console.log(err);
     next(createError(500, err.message));
   }
-}
+};
 
 module.exports.delete = async (req, res, next) => {
-  console.log("logout");
-
   res.clearCookie(ACCESS_TOKEN);
   res.clearCookie(REFRESH_TOKEN);
   res.status(200).end();

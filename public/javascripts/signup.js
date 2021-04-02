@@ -4,11 +4,11 @@ const loginLinkButton = document.querySelector(".login-link-button");
 
 const setMessage = (message) => {
   messageBox.textContent = message;
-}
+};
 
 const handleLoginLinkButtonClick = (e) => {
   window.location.href = "./login";
-}
+};
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -39,10 +39,7 @@ const handleSubmit = async (e) => {
   } catch (err) {
     setMessage("error!");
   }
-
 };
 
 form.addEventListener("submit", handleSubmit);
 loginLinkButton.addEventListener("click", handleLoginLinkButtonClick);
-
-

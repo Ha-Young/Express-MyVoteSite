@@ -17,8 +17,6 @@ module.exports = async (user) => {
     };
   }
 
-  console.log(user.password, user.passwordConfirm);
-
   if (user.password !== user.passwordConfirm) {
     return {
       result: false,

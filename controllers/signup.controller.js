@@ -9,10 +9,7 @@ module.exports.get = async (req, res, next) => {
 
 module.exports.post = async (req, res, next) => {
   const user = req.body;
-  console.log(user);
-
   const validationResult = await validateUserData(user);
-  console.log(validationResult);
 
   if (validationResult.result) {
     try {
@@ -24,7 +21,6 @@ module.exports.post = async (req, res, next) => {
 
       await newUser.save();
     } catch (err) {
-      console.log(err);
       next(createError(500, err.message));
       return;
     }

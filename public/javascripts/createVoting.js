@@ -67,7 +67,7 @@ const handleSubmit = async (e) => {
     const createVotingResult = await response.json();
 
     if (createVotingResult.result) {
-      window.location.href = "/";
+      setMessage("Voting is created Successfully!");
     } else {
       setMessage(createVotingResult.message);
     }
