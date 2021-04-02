@@ -15,10 +15,12 @@ const submitVoting = (data) => {
   })
     .then((res) => res.json())
     .then((res) => {
-      if (res.message === "already voted") {
-        window.location.replace("/votings/alreadyVoted");
+      if (res.message === "not logged in") {
+        window.location.href = `/users/login?id=${votingId}`;
+      } else if (res.message === "already voted") {
+        window.location.href = "/votings/alreadyVoted";
       } else if (res.message === "success voting") {
-        window.location.replace("/votings/successVoting");
+        window.location.href = "/votings/successVoting";
       }
     });
 };

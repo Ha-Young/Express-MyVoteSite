@@ -8,7 +8,7 @@ block content
 	body
 		.auth-form-container.login-form-container
 			h1.auth-form-title.login-form-title Log In
-			form(action="/users/login", method="post").auth-form.login-form
+			form(action=`/users/login?id=${id}`, method="post").auth-form.login-form
 				.auth-form__input-container.login-form__input
 					label.form__label(for="email") 이메일
 					input.login-form-email(type="email", name="email", placeholder="you@example.com", required=true)

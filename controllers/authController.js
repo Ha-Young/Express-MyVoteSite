@@ -36,7 +36,9 @@ exports.createUser = catchAsync(async (req, res, next) => {
 });
 
 exports.getLogIn = (req, res, next) => {
-  res.status(200).render("login");
+  res.status(200).render("login", {
+    id: req.query?.id,
+  });
 };
 
 exports.postLogIn = catchAsync(async (req, res, next) => {
@@ -75,7 +77,11 @@ exports.postLogIn = catchAsync(async (req, res, next) => {
 
   res.cookie("jwt", token, cookieOptions);
 
-  res.status(201).redirect("/");
+  if (req.query && req.query.id) {
+    res.status(201).redirect(`/votings/${req.query.id}`);
+  } else {
+    res.status(201).redirect("/");
+  }
 });
 
 exports.getLogOut = (req, res, next) => {
