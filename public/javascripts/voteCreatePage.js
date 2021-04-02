@@ -5,6 +5,7 @@ const voteCreateFormElement = document.querySelector(".vote-create-form");
 
 const TEMPLATES = window.templates;
 const LIMIT_HOUR = 1;
+let createFlag = false;
 
 function handleOptionRemoveBtnClick(e) {
   const optionItemElement = e.currentTarget.parentNode;
@@ -27,6 +28,10 @@ function handleOptionAddBtnClick() {
 function handleVoteCreateSubmit(e) {
   e.preventDefault();
 
+  if (createFlag) {
+    return;
+  }
+
   if (checkIsDateTimePast()) {
     alert(`만료 날짜를 확인해주세요. 현재 시간보다 ${LIMIT_HOUR}시간 이후의 시간이어야 합니다.`);
     return;
@@ -35,12 +40,15 @@ function handleVoteCreateSubmit(e) {
   const form = e.target;
 
   const dummyVoteOptionElement = document.createElement('textarea');
+  dummyVoteOptionElement.classList.add("invisible");
   dummyVoteOptionElement.value = JSON.stringify(getOptionObjectList());
   dummyVoteOptionElement.name = "vote_options";
 
   form.appendChild(dummyVoteOptionElement);
 
   form.submit();
+
+  createFlag = true;
 }
 
 function getOptionObjectList() {
