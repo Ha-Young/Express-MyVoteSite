@@ -2,17 +2,20 @@
 <html>
   <head>
     <%- include ('partials/head') %>
-    <!-- <link rel="stylesheet" href="/stylesheets/signout.css"> -->
+    <link rel="stylesheet" href="/stylesheets/logoutSignout.css">
   </head>
   <body>
     <%- include ('partials/header') %>
 
     <h1 class="page-title">Sign Out</h1>
-    <form action="/logout/callback" method="GET">
-      <h2 class="page-ment">탈퇴 하시겠습니까?</h2>
-      <h5>(탈퇴하시면 생성한 투표가 모두 사라집니다)</h5>
-      <button class="page-button" type="submit">YES</button>
-    </form>
+
+    <div class="container">
+      <form action="/logout/callback" method="GET">
+        <h2 class="page-ment">탈퇴 하시겠습니까?</h2>
+        <h5>(탈퇴하시면 생성한 투표가 모두 사라집니다)</h5>
+        <button class="page-button" type="submit">YES</button>
+      </form>
+    </div>
 
     <%- include ('partials/footer') %>
   </body>

@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+}
+
+.container form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container h2 {
+  text-align: center;
+}
+
+.container h5 {
+  margin: 0.2rem;
+}
+
+.container button {
+  background-color: #1a759f;
+  margin-top: 2rem;
+  padding: 1.2rem 2rem;
+  border-radius: 0.2rem;
+  font-size: 1.2rem;
+  color: #FFFFFF;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
