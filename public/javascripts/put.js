@@ -4,7 +4,7 @@ async function requestUpdateData(ev) {
   ev.preventDefault();
 
   const { baseURI, "voting-option": { value } } = ev.target;
-
+	
   try {
     const response = await fetch(baseURI, { 
       method: "PUT",
@@ -32,4 +32,6 @@ async function requestUpdateData(ev) {
   }
 }
 
-votingForm.addEventListener("submit", requestUpdateData);
+if (votingForm) {
+	votingForm.addEventListener("submit", requestUpdateData);
+}

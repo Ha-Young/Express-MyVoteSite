@@ -44,7 +44,7 @@ exports.getVotingDetail = async (req, res, next) => {
       user,
     } = req;
     const voting = await Voting.findById(id);
-    
+
     res.status(200).render("votingDetail", { voting, user }); //가공해서 주기..?
   } catch (error) {
     next(error);

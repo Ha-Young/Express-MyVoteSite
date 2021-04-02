@@ -32,7 +32,6 @@ exports.confirmVotingData = (req, res, next) => {
   const { value, error } = validateVoting(req.body);
   
   if (error) {
-    console.log(error.message);
     req.flash("newVotingError", error.message);
     res.status(302).redirect("/votings/new");
 

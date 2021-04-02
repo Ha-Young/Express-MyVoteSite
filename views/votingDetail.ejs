@@ -11,21 +11,18 @@
   </div>
   <div class="voting-detail-content">
     <div class="voting-detail-board">
-      <% if (typeof voting !== "undefined") { %> 
-        <div class="voting-detail-title" name="<%= voting.title %>">
-          <%= voting.title %>
-        </div>
-
-        <% if (!voting.isCurrent || voting.proponent.toString() === user?.id) { %>
-          <canvas class="voting-chart" id="voting-chart"></canvas>
-          <% voting.options.forEach((content) => { %>
-            <div class="voting-count" id="<%= content.option %>" name="<%= content.count %>">
-              <%= content.count %>
-            </div>
-          <% }) %>
-        <% } %>
+      <% if (typeof voting !== "undefined") { %>
+				<div class="voting-detail-header">
+					<div class="voting-detail-title" name="<%= voting.title %>">
+						<%= voting.title %>
+					</div>
+	
+					<% if (!voting.isCurrent || voting.proponent.toString() === user?.id) { %>
+						<%= voting.formatedExpiration %>
+				</div>
+						<canvas class="voting-chart" id="voting-chart" width="350" height="350"></canvas>
+        	<% } %>
         <div>
-          <%= voting.formatedExpiration %>
         </div>
           <% if (voting.isCurrent) { %>
             <form class="voting-form">
@@ -54,10 +51,13 @@
   </div>
 </div>
 
-<script>
-  const options = "<%= voting.options %>";
-</script>
+<% if (!voting.isCurrent || voting.proponent.toString() === user?.id) { %>
+	<script>
+		const options = <%- JSON.stringify(voting.options) %>;
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+	<script src="/javascripts/chart.js"></script>
+	<script src="/javascripts/put.js"></script>
+<% } %>
 
 <script src="/javascripts/delete.js"></script>
-<script src="/javascripts/put.js"></script>
-<script src="/javascripts/chart.js"></script>

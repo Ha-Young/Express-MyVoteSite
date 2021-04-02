@@ -1,19 +1,29 @@
-function addInput() {
-  const button = document.querySelector(".voting-add-button");
+const addButton = document.querySelector(".voting-add-button");
 
-  button.addEventListener("click", (ev) => {
-    ev.preventDefault();
+function addInput(ev) {
+	ev.preventDefault();
 
-    const inputBox = document.querySelector(".voting-input-box");
-    const newInput = document.createElement("input");
+	const inputBox = document.querySelector(".voting-input-box");
+	const newInput = document.createElement("input");
 
-    newInput.classList.add("voting-input");
+	newInput.classList.add("voting-input");
 
-    newInput.setAttribute("placeholder", "option");
-    newInput.setAttribute("name", "options");
+	newInput.setAttribute("placeholder", "option");
+	newInput.setAttribute("name", "options");
 
-    inputBox.appendChild(newInput);
-  });
+	inputBox.appendChild(newInput);
 }
 
-addInput();
+function deleteInput(ev) {
+	ev.preventDefault();
+
+	const inputBox = document.querySelector(".voting-input-box");
+	
+	if (inputBox.length > 2) {
+
+	}
+
+	inputBox.removeChild(newInput);
+}
+
+addButton.addEventListener("click", addInput);
