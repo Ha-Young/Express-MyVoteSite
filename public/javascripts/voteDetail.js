@@ -24,7 +24,7 @@ function toggleDivs(element) {
   $voteButton.setAttribute("choiceId", element.getAttribute("choiceId"));
 }
 
-$voteButton.addEventListener("click" , (event) => {
+$voteButton.addEventListener("click" , () => {
   const voteId = $voteButton.getAttribute("voteId");
   const chosenId = $voteButton.getAttribute("choiceId");
 
@@ -37,7 +37,7 @@ $voteButton.addEventListener("click" , (event) => {
     body: JSON.stringify({ chosenId }),
     headers: {
       "Content-Type": "application/json"
-    }
+    },
   }).then((response) => {
       return response.json();
     })
@@ -48,24 +48,25 @@ $voteButton.addEventListener("click" , (event) => {
         window.location.href = `/votings/${voteId}`;
       }
     })
-    .catch(err => {
+    .catch(() => {
       window.location.href = "/signin";
     });
 });
 
-$deleteButton && $deleteButton.addEventListener("click", (event) => {
+$deleteButton && $deleteButton.addEventListener("click", () => {
   const voteId = $deleteButton.getAttribute("voteId");
 
   fetch(`/votings/${voteId}`, {
-    method: "DELETE"
+    method: "DELETE",
   }).then(() => {
     window.location.href = "/";
-  }).catch(err => {
+  }).catch(() => {
+    alert("에러가 발생했습니다! 다시 시도해 주세요!");
     window.location.href = "/";
   });
 });
 
-$resultToggleButton && $resultToggleButton.addEventListener("click", (event) => {
+$resultToggleButton && $resultToggleButton.addEventListener("click", () => {
   if ($chartDiv.style.display === "none" || !$chartDiv.style.display) {
     for (const $choiceDiv of $choiceDivs) {
       $choiceDiv.style.visibility = "hidden";

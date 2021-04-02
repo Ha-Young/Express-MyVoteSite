@@ -1,6 +1,6 @@
 const selectionDiv = document.querySelector(".voteNew__selections");
 
-const addSelections = (event) => {
+const addSelections = () => {
   const outerDiv = document.createElement("div");
   outerDiv.className = "selection__container";
 
