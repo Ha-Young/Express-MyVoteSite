@@ -1,8 +1,18 @@
 extends layout
 
 block append head
-  link(rel="stylesheet" href="/stylesheets/signup.css")
+  link(
+    rel="stylesheet"
+    href="/stylesheets/signup.css"
+  )
+  link(
+    rel="stylesheet"
+    href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+    crossorigin="anonymous"
+  )
 block content
+  include header
   div.signup-container
     form.signup-form
       label.signup-label Name
@@ -38,5 +48,5 @@ block content
       ) Sign-up
       button.login-link-button(
         type="button"
-      ) Log in
+      ) To log in
   script(src="/javascripts/signup.js")

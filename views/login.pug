@@ -1,8 +1,18 @@
 extends layout
 
 block append head
-  link(rel="stylesheet" href="/stylesheets/login.css")
+  link(
+    rel="stylesheet"
+    href="/stylesheets/login.css"
+  )
+  link(
+    rel="stylesheet"
+    href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+    crossorigin="anonymous"
+  )
 block content
+  include header
   div.login-container
     form.login-form
       label.login-label Email
@@ -20,10 +30,10 @@ block content
           required
         )
       div.message-box
-      button.login-button(
+      button.login-submit-button(
         type="submit"
       ) Log in
       button.signup-link-button(
         type="button"
-      ) Sign up
+      ) To Sign up
   script(src="/javascripts/login.js")

@@ -60,7 +60,8 @@ block content
           div.filter
           div.can-not-vote-message-box You voted already.
     button.index-link-button(type="button") << Voting List
-    button.delete-voting-button(type="button") Delete
+    if isPublisher
+      button.delete-voting-button(type="button") Delete
   if currentState === "Expired" || isPublisher
     div.chart-box
       h2.chart-title Result
