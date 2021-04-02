@@ -1,30 +1,25 @@
-doctype html
-html
-	head
-		meta(charset="UTF-8")
-		meta(name="viewport" content="width=device-width, initial-scale=1.0")
-		link(rel="stylesheet" href="/stylesheets/auth.css")
-		link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Open+Sans:wght@300;400;600;700&display=swap")
-		title Vanivote | Easy Voting Platform
+extends layouts/main
 
+block append head
+	link(rel="stylesheet" href="/stylesheets/style.css")
+	link(rel="stylesheet" href="/stylesheets/auth.css")
+
+block content
 	body
-		.form-container.login-form-container
-			h1.form-title.login-form-title Log In
-			form(action="/users/login", method="post").form.login-form
-				.form__input-container.login-form__input
+		.auth-form-container.login-form-container
+			h1.auth-form-title.login-form-title Log In
+			form(action="/users/login", method="post").auth-form.login-form
+				.auth-form__input-container.login-form__input
 					label.form__label(for="email") 이메일
 					input.login-form-email(type="email", name="email", placeholder="you@example.com", required=true)
-				.form__input-container.login-form__input
+				.auth-form__input-container.login-form__input
 					label.form__label(for="password") 비밀번호
 					input.login-form-password(type="password", name="password", placeholder="••••••••", minlength="8", required=true)
-				.form-buttons-container
+				.auth-form-buttons-container
 					.form__input.form-button-container
-						button(type="submit").form-button.main-button Log In
+						button(type="submit").auth-form-button.main-button Log In
 					.form-button-container
-						a(href="/users/signup").form-button.sub-button Sign Up
+						a(href="/users/signup").auth-form-button.sub-button Sign Up
 			.logo-container
 				span.logo-main Vani
 				span.logo-sub Vote
-
-
-		script(src="/javascripts/login.js")

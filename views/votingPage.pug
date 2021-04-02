@@ -1,5 +1,8 @@
 extends layouts/main
 
+block append head
+	link(rel="stylesheet" href="/stylesheets/style.css")
+
 block content
 	-const { _id, name, status, createdBy, createdAt, startDate, endDate, options } = data.voting;
 	.votingPage-container

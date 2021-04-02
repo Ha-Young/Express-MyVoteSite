@@ -1,6 +1,9 @@
 extends layouts/main
 include mixins/_votingCard
 
+block append head
+	link(rel="stylesheet" href="/stylesheets/style.css")
+
 block content
 	.votings-options-filter
 		a(href="/upcoming").votings-filter.upcoming 예정

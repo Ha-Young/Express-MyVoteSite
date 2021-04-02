@@ -1,13 +1,11 @@
 doctype html
 html
 	head
-		meta(charset="UTF-8")
-		meta(name="viewport" content="width=device-width, initial-scale=1.0")
-		-console.log('render head')
-		link(rel="stylesheet" href="/stylesheets/style.css")
-		//- link(rel="shortcut icon" type="image/png" href="img/favicon.png")
-		link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Open+Sans:wght@300;400;600;700&display=swap")
-		title Vanivote | Easy Voting Platform
+		block head
+			meta(charset="UTF-8")
+			meta(name="viewport" content="width=device-width, initial-scale=1.0")
+			link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Open+Sans:wght@300;400;600;700&display=swap")
+			title Vanivote | Easy Voting Platform
 
 	body
 		include ../partials/_header

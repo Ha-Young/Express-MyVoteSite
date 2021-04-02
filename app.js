@@ -10,7 +10,7 @@ const globalErrorHandler = require("./controllers/errorController");
 const mainRouter = require("./routes/mainRouter");
 const userRouter = require("./routes/userRouter");
 const votingsRouter = require("./routes/votingRouter");
-const checkTokenAuth = require("./middlewares/checkTokenAuth");
+const checkLoggedIn = require("./middlewares/checkLoggedIn");
 
 const app = express();
 
@@ -24,10 +24,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(checkLoggedIn);
 
 app.use("/", mainRouter);
 app.use("/users", userRouter);
-app.use("/votings", checkTokenAuth, votingsRouter);
+app.use("/votings", votingsRouter);
 
 app.all("*", (req, res, next) => {
   next(

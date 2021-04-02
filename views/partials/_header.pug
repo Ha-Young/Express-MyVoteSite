@@ -3,8 +3,12 @@ header.header-container
 		span.header__title Vani
 		span.header__title.header__title-sub Vote
 	.header__options-container
-		a(href="/votings/new").header__options.createVoting 새 투표 만들기
-		br
-		a(href="/my-votings").header__options.myVotings 내 투표
-		a(href="/my-voted").header__options.votedVotings 참여한 투표
-		.header__options.logout 로그아웃
+		if isLoggedIn
+			a(href="/votings/new").header__options.createVoting 새 투표 만들기
+			a(href="/my-votings").header__options.myVotings 내 투표
+			a(href="/my-voted").header__options.votedVotings 참여한 투표
+			a(href="/users/logout").header__options.logout 로그아웃
+		else
+			a(href="/users/login").header__options.logout 로그인
+			a(href="/users/signup").header__options.logout 가입하기
+

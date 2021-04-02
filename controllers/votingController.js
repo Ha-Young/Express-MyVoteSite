@@ -49,6 +49,10 @@ exports.getVotings = catchAsync(async (req, res, next) => {
 });
 
 exports.myVotings = catchAsync(async (req, res, next) => {
+  if (!req.user) {
+    return res.status(200).render("login");
+  }
+
   const userId = req.user.id;
   const myVotings = await User.findById(userId)
     .populate("createHistory")
@@ -66,6 +70,10 @@ exports.myVotings = catchAsync(async (req, res, next) => {
 });
 
 exports.votedVotings = catchAsync(async (req, res, next) => {
+  if (!req.user) {
+    return res.status(200).render("login");
+  }
+
   const userId = req.user.id;
   const votedData = await User.findById(userId)
     .populate("voteHistory")
@@ -83,6 +91,10 @@ exports.votedVotings = catchAsync(async (req, res, next) => {
 });
 
 exports.getNewVoting = (req, res, next) => {
+  if (!req.user) {
+    return res.status(200).render("login");
+  }
+
   const startDate = moment().format("YYYY-MM-DDTHH:mm");
   const endDate = moment()
     .add(3, "days")
@@ -97,6 +109,10 @@ exports.getNewVoting = (req, res, next) => {
 };
 
 exports.createNewVoting = async (req, res, next) => {
+  if (!req.user) {
+    return res.status(200).render("login");
+  }
+
   try {
     const { name, startDate, endDate, options } = req.body;
     const status = getVotingStatus(startDate, endDate);
@@ -156,17 +172,12 @@ exports.getSelectedVoting = catchAsync(async (req, res, next) => {
   const voting = await Voting.findById(votingId)
     .populate("createdBy")
     .lean();
-  const userId = req.user.id;
-  const results = [];
+  const userId = req.user ? req.user.id : "";
   let isCreator = false;
 
   if (voting.createdBy._id.toString() === userId.toString()) {
     isCreator = true;
   }
-
-  voting.options.forEach((result) => {
-    results.push({ option: result.option, count: result.count });
-  });
 
   const winner = { option: "", index: 0, count: 0 };
 
@@ -191,7 +202,7 @@ exports.getSelectedVoting = catchAsync(async (req, res, next) => {
 });
 
 exports.voteVoting = catchAsync(async (req, res, next) => {
-  const userId = req.user._id;
+  const userId = req.user.id;
   const userChoice = req.body.choice;
   const votingId = req.params.id;
   const currentVoting = await Voting.findById(votingId);

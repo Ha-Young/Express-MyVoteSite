@@ -12,7 +12,9 @@ router
   .get(authController.getLogIn)
   .post(authController.postLogIn);
 
-router.delete("/deleteUser", authController.deleteUser);
-router.post("/logout", authController.logOut);
+router
+  .route("/logout")
+  .get(authController.getLogOut)
+  .post(authController.logOut);
 
 module.exports = router;

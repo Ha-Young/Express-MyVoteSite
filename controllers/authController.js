@@ -32,7 +32,6 @@ exports.createUser = catchAsync(async (req, res, next) => {
   };
 
   res.cookie("jwt", token, cookieOptions);
-
   res.status(201).redirect("/");
 });
 
@@ -79,7 +78,9 @@ exports.postLogIn = catchAsync(async (req, res, next) => {
   res.status(201).redirect("/");
 });
 
-exports.deleteUser = (req, res, next) => {};
+exports.getLogOut = (req, res, next) => {
+  res.status(200).render("logout");
+};
 
 exports.logOut = (req, res, next) => {
   res.cookie("jwt", "loggedout", {

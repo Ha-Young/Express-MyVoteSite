@@ -1,0 +1,15 @@
+extends layouts/main
+
+block append head
+	link(rel="stylesheet" href="/stylesheets/style.css")
+	link(rel="stylesheet" href="/stylesheets/auth.css")
+
+block content
+	body
+		.logout-container
+			h1.logout-message 로그아웃 하시겠습니까?
+			button.logout-button Log Out
+			.logo-container
+				span.logo-main Vani
+				span.logo-sub Vote
+	script(src="/javascripts/logout.js")
