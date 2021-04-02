@@ -16,4 +16,4 @@ exports.convertDate = function (createdAt, day, hour, minute) {
   }
 
   return dayjs(expiredAt).format("YYYY-MM-DD HH:mm:ss");
-}
+};
