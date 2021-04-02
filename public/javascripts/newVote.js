@@ -1,6 +1,7 @@
 const addOptionButton = document.querySelector('.add-option-btn');
 const optionText = document.querySelector('.add-option-text');
 const optionsList = document.querySelector('.options');
+const submitButton = document.querySelector('.submit-button');
 
 const MAX_INPUT = 10;
 let inputCount = 0;
@@ -22,6 +23,10 @@ function handleClick() {
   optionsList.appendChild(list);
   optionText.value = '';
   inputCount++;
+
+  if (inputCount > 1) {
+    submitButton.disabled = false;
+  }
 }
 
 addOptionButton.addEventListener('click', handleClick);
