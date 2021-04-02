@@ -1,12 +1,9 @@
 const deleteVotingButton = document.querySelector(".delete-voting-button");
 
 function requestDelete(url) {
-  const xhr = new XMLHttpRequest();
-  xhr.open("DELETE", url);
-  xhr.send(null);
-
-  xhr.addEventListener("load", function () {
-    console.log(xhr.responseText);
+  fetch(url, {
+    method: "DELETE",
+    body: null
   });
 }
 

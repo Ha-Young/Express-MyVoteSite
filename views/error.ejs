@@ -2,13 +2,16 @@
 <html>
 
 <head>
-
+  <link rel="stylesheet" href="/stylesheets/style.css" />
 </head>
 
 <body>
-  <h1><%=message%></h1>
+  <%- include("partials/title") %>
+  <%- include("partials/menu") %>
   <h2><%=error.status%></h2>
-  <article><%=error.stack%></article>
+  <span><%=message%></span>
+  <a href="/login">로그인 화면으로 돌아가기</a>
+
 </body>
 
 </html>

@@ -6,8 +6,6 @@ const LocalStrategy = require("passport-local").Strategy;
 
 const User = require("../../models/User");
 
-const bcrypt = require("bcrypt");
-
 router.get("/", (req, res) => {
   res.render("signup");
 });
@@ -22,7 +20,7 @@ passport.use(
     },
     function (req, username, password, done) {
       const email = req.body.email;
-      console.log(username, password, email);
+
       User.findOne({ email }, async function (err, user) {
         if (err) {
           return done(error);
@@ -38,7 +36,6 @@ passport.use(
     }
   )
 );
-
 
 router.post(
   "/",
