@@ -33,7 +33,9 @@ exports.signIn = async (req, res, next) => {
 };
 
 exports.signOut = (req, res, next) => {
-  res.clearCookie("connect.sid");
+  req.session.destroy(() => {
+    req.session = null;
+  });
   req.logout();
   res.status(200).end();
 };
