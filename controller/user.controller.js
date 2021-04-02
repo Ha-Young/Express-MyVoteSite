@@ -46,7 +46,9 @@ module.exports.postSignIn = async function postSignIn(req, res, next) {
     })
   );
 
-  res.redirect(originalUrl || "/");
+  const redirect = originalUrl || "/";
+  originalUrl && res.clearCookie("originalUrl");
+  res.redirect(redirect);
 }
 
 module.exports.getSignUp = async function getSignUp(req, res, next) {

@@ -1,7 +1,18 @@
+const $contentDivs = document.querySelector(".voteDetail__voteContent");
 const $choiceDivs = document.getElementsByClassName("voteDetail__choice");
 const $voteButton = document.querySelector(".voteButton");
 const $deleteButton = document.getElementById("deleteButton");
 const $resultToggleButton = document.getElementById("resultToggle");
+const $chartDiv = document.getElementById("chartDiv");
+
+if ($chartDiv.getAttribute("isEnable") === "false") {
+  for (const $choiceDiv of $choiceDivs) {
+    $choiceDiv.style.visibility = "hidden";
+  }
+
+  $contentDivs.style.height = "350px";
+  $chartDiv.style.display = "flex";
+}
 
 function toggleDivs(element) {
   const $choiceDivs = document.getElementsByClassName("voteDetail__choice");
@@ -59,19 +70,21 @@ $deleteButton && $deleteButton.addEventListener("click", (event) => {
 });
 
 $resultToggleButton && $resultToggleButton.addEventListener("click", (event) => {
-  const $chartDiv = document.getElementById("chartDiv");
-  console.log($chartDiv.style.display);
+
+
   if ($chartDiv.style.display === "none" || !$chartDiv.style.display) {
     for (const $choiceDiv of $choiceDivs) {
       $choiceDiv.style.visibility = "hidden";
     }
 
+    $contentDivs.style.height = "350px";
     $chartDiv.style.display = "flex";
   } else {
     for (const $choiceDiv of $choiceDivs) {
       $choiceDiv.style.visibility = "visible";
     }
 
+    $contentDivs.style.height = "";
     $chartDiv.style.display = "none";
   }
 });
