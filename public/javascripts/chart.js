@@ -12,13 +12,13 @@ const colorSchemes = ["#d63031", "#e84393", "#55efc4", "#81ecec", "#74b9ff", "#a
 "#00b894", "#00cec9", "#0984e3", "#6c5ce7", "#ffeaa7", "#fab1a0", "#ff7675", "#fd79a8",
 "#fdcb6e", "#e17055"];
 
-const ctx = document.getElementById('myChart').getContext('2d');
+const ctx = document.getElementById("myChart").getContext("2d");
 const chart = new Chart(ctx, {
-  type: 'polarArea',
+  type: "polarArea",
   data: {
     labels: contentDatas,
     datasets: [{
-      label: '# of votes',
+      label: "# of votes",
       backgroundColor: colorSchemes.splice(0, contentDatas.length),
       data: countDatas,
     }],
