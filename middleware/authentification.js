@@ -3,8 +3,6 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../model/User");
 
-module.exports.authToken = passport.authenticate("jwt", { session: false });
-
 module.exports.isSignIn = async function isSignIn(req, res, next) {
   const now = Date.now().valueOf() / 1000;
   const accessToken = req.cookies["access"];

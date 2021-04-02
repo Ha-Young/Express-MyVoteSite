@@ -96,5 +96,3 @@
   - [Deploying with AWS Elastic Beanstalk CLI](https://github.com/vanilla-coding/deploy-with-aws-eb-and-circleci/wiki/Deploying-with-Elastic-Beanstalk-CLI)
 
 **AWS Access key ID와 Secret access key는 그 어떤 경우에도 Github/Gitlab 등의 클라우드에 업로드 되서는 안됩니다. 특별히 주의해주세요.**
-
-Q. refesh token 구현방법, 확인방법

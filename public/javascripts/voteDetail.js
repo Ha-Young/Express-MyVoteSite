@@ -16,6 +16,7 @@ if ($chartDiv.getAttribute("isEnable") === "false") {
 
 function toggleDivs(element) {
   const $choiceDivs = document.getElementsByClassName("voteDetail__choice");
+
   for (let $choiceDiv of $choiceDivs) {
     $choiceDiv.style.backgroundColor = "";
   }
