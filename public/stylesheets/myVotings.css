@@ -16,10 +16,7 @@
   padding-left: 0;
   width: 15em;
   height: 7em;
-  border: 1px #3dc1d3;
-  border-top: none;
-  border-left: none;
-  border-right: none;
+  border: 1px solid #3dc1d3;
   border-style: none none solid none;
   padding: 0 1.5em;
   margin: 0.5em;
