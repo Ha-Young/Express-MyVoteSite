@@ -13,6 +13,9 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  is_google_loggedin: {
+    type: Boolean
+  },
   password: {
     type: String
   },

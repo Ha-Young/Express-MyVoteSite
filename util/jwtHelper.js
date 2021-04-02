@@ -5,7 +5,10 @@ exports.generateToken = (user, key, expiredDate) => {
 };
 
 exports.getUserInfo = (cookies) => {
-  console.log(cookies);
+  if (cookies.passport) {
+    return cookies.passport.user
+  }
+
   if (cookies.accessToken) {
     return jwt.verify(cookies.accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
       if (err) return null;

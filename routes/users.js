@@ -1,8 +1,10 @@
 const express = require("express");
 const usersController = require("./controllers/users.controller");
-const authenticateToken = require("./middlewares/authorization");
 const { validateUser, validateLogin } = require("./middlewares/validator");
 const router = express.Router();
+const passport = require("passport");
+const initializePassport = require("./middlewares/passportConfig");
+initializePassport(passport);
 
 /* GET users listing. */
 router.get("/login", (req, res, next) => {
@@ -11,6 +13,15 @@ router.get("/login", (req, res, next) => {
 
 router.post("/login", validateLogin, usersController.signIn);
 
+router.get("/login-google", passport.authenticate("google", {
+  scope: ["profile", "email"]
+}));
+
+router.get("/login-google/callback", passport.authenticate("google", {
+  failureRedirect: "/login",
+  successRedirect: "/"
+}));
+
 router.get("/logout", usersController.signOut);
 
 router.get("/signup", (req, res, next) => {
@@ -18,5 +29,6 @@ router.get("/signup", (req, res, next) => {
 });
 
 router.post("/signup", validateUser, usersController.signUp);
+
 
 module.exports = router;

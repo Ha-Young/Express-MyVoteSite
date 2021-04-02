@@ -24,8 +24,8 @@ exports.signIn = async (req, res, next) => {
     const accessToken = generateToken(user, process.env.ACCESS_TOKEN_SECRET, "2h");
     const refreshToken = generateToken(user, process.env.REFRESH_TOKEN_SECRET, "14d");
 
-    res.cookie("accessToken", accessToken);
-    res.cookie("refreshToken", refreshToken);
+    req.session.accessToken = accessToken;
+    req.session.refreshToken = refreshToken;
     res.status(200).end();
   } catch (err) {
     next(createError(500, "이런.. 문제가 발생했습니다."));
@@ -33,7 +33,7 @@ exports.signIn = async (req, res, next) => {
 };
 
 exports.signOut = (req, res, next) => {
-  res.clearCookie("accessToken");
-  res.clearCookie("refreshToken");
+  req.session = null;
+  req.logout();
   res.status(200).end();
 };

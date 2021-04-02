@@ -9,7 +9,7 @@ const Vote = require("../../models/Vote");
 const User = require("../../models/User");
 
 exports.getAllVotes = async (req, res, next) => {
-  const user = getUserInfo(req.cookies);
+  const user = getUserInfo(req.session);
   let votes = await Vote.find()
                         .sort({ expiratin_date: 1 })
                         .populate("author", "name").lean();
@@ -19,7 +19,7 @@ exports.getAllVotes = async (req, res, next) => {
 };
 
 exports.getCreatedVotes = async (req, res, next) => {
-  const user = getUserInfo(req.cookies);
+  const user = getUserInfo(req.session);
 
   try {
     const userInfo = await User.findOne({ email: user.email });
@@ -35,7 +35,7 @@ exports.getCreatedVotes = async (req, res, next) => {
 };
 
 exports.getVote = async (req, res, next) => {
-  const user = getUserInfo(req.cookies);
+  const user = getUserInfo(req.session);
   const { id } = req.params;
 
   try {
@@ -58,7 +58,7 @@ exports.getVote = async (req, res, next) => {
 };
 
 exports.getVoteResult = async (req, res, next) => {
-  const user = getUserInfo(req.cookies);
+  const user = getUserInfo(req.session);
   const { id } = req.params;
 
   try {
@@ -122,7 +122,7 @@ exports.getVoteResult = async (req, res, next) => {
 };
 
 exports.castVote = async (req, res, next) => {
-  const user = getUserInfo(req.cookies);
+  const user = getUserInfo(req.session);
   const { id } = req.params;
   let options;
 
@@ -178,7 +178,7 @@ exports.deleteVote = async (req, res, next) => {
 
 exports.createVote = async (req, res, next) => {
   try {
-    const user = getUserInfo(req.cookies);
+    const user = getUserInfo(req.session);
     const userInfo = await User.findOne({ email: user.email });
 
     const options = req.body.option_title;
