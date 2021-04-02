@@ -39,7 +39,11 @@
         <% } else { %>
           <% if (isVoted) { %>
             <div class="no-chart-container">
-              Already Voted
+              <% if (isVoteResult) { %>
+                <%=isVoteResult %>
+              <% } else { %>
+                Already Voted
+              <% } %>
             </div>
           <% } else { %>
             <form class="vote-form" method="POST" action="<%= `/votings/${vote._id}` %>">

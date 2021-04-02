@@ -30,7 +30,8 @@ const voteSchema = new mongoose.Schema({
   options: [
     {
       option: {
-        type: mongoose.Schema.Types.Mixed
+        type: mongoose.Schema.Types.Mixed,
+        required: [true, 'Please provide the option']
       },
       voters: [
         {

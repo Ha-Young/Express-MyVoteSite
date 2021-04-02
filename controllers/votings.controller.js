@@ -15,6 +15,7 @@ exports.getVotingPage = async (req, res, next) => {
       return next(createError(400));
     }
 
+    const isVoteResult = req.flash('success')[0];
     const isAuthor = req.user?.email === vote.author.email;
     const isVoted = vote.options.reduce((acc, curr) => {
       return acc || !!curr.voters.some(voter => voter.email === req.user?.email);
@@ -24,6 +25,7 @@ exports.getVotingPage = async (req, res, next) => {
       user: req.user,
       isAuthor,
       isVoted,
+      isVoteResult,
       vote
     });
   } catch (err) {
@@ -45,6 +47,7 @@ exports.voting = async (req, res, next) => {
       }
     );
 
+    req.flash('success', 'VOTE SUCCESS');
     res.redirect(`/votings/${req.params.id}`);
   } catch (err) {
     next(err);
