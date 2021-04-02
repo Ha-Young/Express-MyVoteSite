@@ -5,4 +5,5 @@ module.exports = {
   EMAIL_FORMAT: "아이디는 이메일 형식으로 입력해주세요",
   PASSWORD_MIN_LENGTH: 8,
   WORNG_PASSWORD_MESSAGE: "비밀번호는 영문, 숫자 조합으로 8~15자리로 입력해주세요",
+  LOGIN_MESSAGE: "로그인 하셔야 합니다.",
 };

@@ -85,7 +85,6 @@ Controller.postNewVoting = async (req, res, next) => {
 Controller.getSuccessVoting = async (req, res, next) => {
   try {
     const newVotingId = req.params.id;
-
     const newVoting = await Voting.findById({ _id: newVotingId });
 
     res.render("success", {

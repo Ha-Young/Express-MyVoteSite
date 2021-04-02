@@ -49,6 +49,7 @@ Controller.postLogin = (req, res) => {
   const successUrl = votingUrl ? `/voting/votings/${votingUrl}` : "/";
 
   res.clearCookie("votingUrl");
+
   passport.authenticate("local", {
     successRedirect: successUrl,
     failureRedirect: "/auth/login",

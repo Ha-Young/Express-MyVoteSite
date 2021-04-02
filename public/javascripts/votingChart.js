@@ -38,7 +38,7 @@ const myChart = new Chart(ctx, {
       yAxes: [{
         ticks: {
           beginAtZero: true
-        }
+        },
       }],
     },
   },
