@@ -1,41 +1,23 @@
 const Voting = require("../models/Voting");
-const { getMaxVoterCount, checkExpireDate } = require("../utils/votingHelpers");
 
 exports.getVotings = async function(req, res, next) {
   try {
-    const displayName = req.user ? req.user.userName : null;
-    const votings = await Voting.find().populate("author").lean();
+    const { user } = req;
+    const displayName = user ? user.userName : null;
+    const today = new Date();
 
-    const homeVotingDisplayList = votings.map(voting => {
-      const isProceeding = checkExpireDate(voting.expireDate);
-      const winner = [];
+    await Voting.updateMany(
+      { expireDate: { $lte: today }},
+      { $set: { isProceeding: false }}
+    );
 
-      if (!isProceeding) {
-        const maxCount = getMaxVoterCount(voting.options);
-
-        voting.options.forEach(option => {
-          if (option.voters.length >= maxCount) {
-            winner.push(option.optionTitle);
-          }
-        });
-      }
-
-      return {
-        _id: voting._id,
-        title: voting.title,
-        author: voting.author.userName,
-        authorEmail: voting.author.email,
-        expireDate: voting.expireDate,
-        isProceeding: isProceeding,
-        winner: winner,
-      }
-    });
+    const votings = await Voting.find();
 
     res.render(
       "index",
       { title: "Home",
         displayName,
-        homeVotingDisplayList,
+        votings,
         error: req.flash("error")
       }
     );

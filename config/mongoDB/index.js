@@ -16,7 +16,7 @@ mongoDb.on("err", (err) => {
 });
 
 mongoDb.once("open", () => {
-  console.log(`Mongodb connected, ${mongoDb.host}`);
+  console.warn(`Mongodb connected, ${mongoDb.host}`);
 });
 
 module.exports = mongoDb;
