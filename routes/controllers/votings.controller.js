@@ -39,10 +39,10 @@ exports.postNewVoting = async function (req, res, next) {
 
     for (let i = 0; i < option.length; i++) {
       if (option[i].length === 0) {
-        break
+        break;
       }
 
-      options.push({content: option[i], count: 0});
+      options.push({ content: option[i], count: 0 });
     }
 
     const newVote = await Vote.create({
@@ -53,8 +53,8 @@ exports.postNewVoting = async function (req, res, next) {
     });
 
     await User.findOneAndUpdate(
-      {_id: userId},
-      {$addToSet: {created_votes: [ newVote._id ]}}
+      { _id: userId },
+      { $addToSet: { created_votes: [ newVote._id ] } },
     );
 
     req.flash("message", "새로운 투표가 생성되었습니다");
@@ -86,13 +86,13 @@ exports.castVote = async function (req, res, next) {
     const optionId = req.body.id;
     const userId = req.user._id;
 
-    const vote = await Vote.findOne({_id: voteId});
+    const vote = await Vote.findOne({ _id: voteId });
     const isParticipated = vote.participated_users.some(user =>
       user.toString() === userId.toString()
     );
 
     if (isParticipated) {
-      res.status(200).json({"participated": true});
+      res.status(200).json({ "participated": true });
       return;
     }
 
@@ -104,11 +104,11 @@ exports.castVote = async function (req, res, next) {
 
     await vote.save();
     await Vote.findOneAndUpdate(
-      {_id: voteId},
-      {$addToSet: {participated_users: [ userId ]}}
+      { _id: voteId },
+      { $addToSet: { participated_users: [ userId ] } }
     );
 
-    res.status(200).json({"success": true});
+    res.status(200).json({ "success": true });
   } catch (err) {
     next(err);
   }
@@ -118,9 +118,11 @@ exports.deleteVote = async function (req, res, next) {
   try {
     const voteId = req.params.id;
     const userId = req.user._id;
-    await Vote.findOneAndDelete({_id: voteId});
-    const user = await User.findOne({_id: userId});
+
+    const user = await User.findOne({ _id: userId });
     const createdVotes = user.created_votes;
+
+    await Vote.findOneAndDelete({ _id: voteId });
 
     for (let i = 0; i < createdVotes.length; i++) {
       if (createdVotes[i]._id.toString() === voteId.toString()) {
@@ -128,9 +130,9 @@ exports.deleteVote = async function (req, res, next) {
       }
     }
 
-    user.save();
-    res.status(200).json({"success": true});
+    await user.save();
+    res.status(200).json({ "success": true });
   } catch (err) {
     next(err);
   }
-}
+};
