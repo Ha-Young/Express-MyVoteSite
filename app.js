@@ -1,10 +1,12 @@
 require("dotenv").config();
 const createError = require("http-errors");
 const express = require("express");
+const session = require("express-session");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const database = require("./loaders/database");
+const passport = require("passport");
+require("./loaders/database");
 
 const index = require("./routes/index");
 const users = require("./routes/users");
@@ -21,6 +23,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(session({
+  secret: process.env.ACCESS_TOKEN_SECRET,
+  resave: true,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/", index);
 app.use("/users", users);
