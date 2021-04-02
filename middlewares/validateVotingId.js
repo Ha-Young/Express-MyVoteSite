@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-exports.validateVotingId = async function (req, res, next) {
+exports.validateVotingId = function (req, res, next) {
   const votingId = req.params.voting_id;
 
   if (!mongoose.isValidObjectId(votingId)) {

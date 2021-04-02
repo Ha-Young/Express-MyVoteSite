@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 const Joi = require('joi');
 const {
   signupErrorMessage,
@@ -19,7 +20,7 @@ exports.signupValidation = function (req, res, next) {
       .error(new Error(signupErrorMessage.INVALID_NAME)),
     password: Joi.string()
       .min(8)
-      .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])"))
+      .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])'))
       .required()
       .error(new Error(signupErrorMessage.INVALID_PASSWORD)),
     passwordConfirm: Joi.string()
@@ -40,7 +41,7 @@ exports.loginInputValidation = function (req, res, next) {
       .error(new Error(loginErrorMessage.INVALID_EMAIL)),
     password: Joi.string()
       .min(8)
-      .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])"))
+      .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])'))
       .required()
       .error(new Error(loginErrorMessage.INVALID_PASSWORD)),
   });
@@ -69,8 +70,8 @@ exports.createVotingInputValidation = function (req, res, next) {
 
 async function validateRequest(req, res, next, schema, redirectPath) {
   const options = {
-      abortEarly: true,
-      allowUnknown: true
+    abortEarly: true,
+    allowUnknown: true
   };
 
   try {

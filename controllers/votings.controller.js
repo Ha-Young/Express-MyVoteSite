@@ -8,7 +8,7 @@ exports.renderNewVoting = function (req, res) {
 
 exports.createVoting = async function (req, res, next) {
   const { title, userOptions, expiration_date } = req.body;
-  const options = userOptions.map((option) => {
+  const options = userOptions.map(option => {
     return { optionTitle: option };
   });
 
@@ -54,13 +54,13 @@ exports.addVote = async function (req, res, next) {
     }
 
     if (currentUser.isAlreadyVote(req.votingId)) {
-      return res.status(400).json({ error: "이미 투표했습니다." });
+      return res.status(400).json({ error: '이미 투표했습니다.' });
     } else {
       await voting.addVoteCount(selectedOption);
       await currentUser.addVotingList(req.votingId);
     }
 
-    res.json({ success: "성공" });
+    res.json({ success: '성공' });
   } catch (err) {
     next(createError(500, err));
   }
@@ -73,9 +73,9 @@ exports.deleteVoting = async function (req, res) {
       author: req.user,
     });
 
-    res.json({ success: "성공" });
+    res.json({ success: '성공' });
   } catch (err) {
-    res.status(500).json({ error: "실패" });
+    res.status(500).json({ error: '실패' });
   }
 };
 

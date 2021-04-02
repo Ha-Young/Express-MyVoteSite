@@ -2,14 +2,14 @@ const $deleteButton = document.querySelector('.delete-button');
 
 $deleteButton.addEventListener('click', handleDeleteButtonClick);
 
-async function handleDeleteButtonClick (e) {
+async function handleDeleteButtonClick(e) {
   e.preventDefault();
 
   try {
     const response = await fetch(`/votings/delete/${$deleteButton.dataset.votingid}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       }
     });
 

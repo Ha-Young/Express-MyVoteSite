@@ -25,11 +25,11 @@ const userSchema = new mongoose.Schema({
   }]
 });
 
-userSchema.methods.isAlreadyVote = function(id) {
+userSchema.methods.isAlreadyVote = function (id) {
   return this.voting_list.includes(id);
 };
 
-userSchema.methods.addVotingList = function(id) {
+userSchema.methods.addVotingList = function (id) {
   this.voting_list.push(id);
   return this.save();
 };

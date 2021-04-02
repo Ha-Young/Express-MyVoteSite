@@ -5,7 +5,7 @@ const User = require('../models/User');
 const { mongodbErrorMessage } = require('../constants/mongodbErrorMessage');
 const { getErrorMessage } = require('../utils');
 
-exports.signup = async function (req, res) {
+exports.signup = async function (req, res, next) {
   const { email, name, password } = req.body;
 
   try {
@@ -32,7 +32,7 @@ exports.signup = async function (req, res) {
   }
 };
 
-exports.login = async function (req, res) {
+exports.login = async function (req, res, next) {
   const { email, password } = req.body;
 
   try {
@@ -57,7 +57,7 @@ exports.login = async function (req, res) {
     res.cookie('access_token', jwt.sign(
       { id: currentUser._id },
       process.env.JWT_SECRET,
-      { expiresIn: '2H'}
+      { expiresIn: '2H' }
     ));
 
     if (req.cookies.prev_page) {

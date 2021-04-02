@@ -26,7 +26,7 @@ const votingSchema = new mongoose.Schema({
   }]
 });
 
-votingSchema.virtual('selected_option').get(function() {
+votingSchema.virtual('selected_option').get(function () {
   const optionsCopy = [...this.options];
 
   return optionsCopy.sort((a, b) => b.count - a.count)[0].optionTitle;
@@ -39,14 +39,14 @@ votingSchema.statics.updateExpiredVotingStatus = function (now) {
   );
 };
 
-votingSchema.methods.addVoteCount = function(target) {
+votingSchema.methods.addVoteCount = function (target) {
   const targetOption = this.options.find(option => option.optionTitle === target);
   targetOption.count += 1;
 
   return this.save();
 };
 
-votingSchema.methods.isExistOption = function(target) {
+votingSchema.methods.isExistOption = function (target) {
   return this.options.some(option => option.optionTitle === target);
 };
 

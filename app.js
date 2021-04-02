@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGODB_URL, {
   useUnifiedTopology: true,
   useCreateIndex: true,
   useFindAndModify: false,
-  dbName: "voting_platform"
+  dbName: 'voting_platform'
 });
 
 const app = express();
@@ -41,11 +41,11 @@ app.use(flash());
 
 app.use(require('./routes'));
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.locals.message = statuses[err.status];
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 

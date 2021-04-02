@@ -7,7 +7,7 @@ exports.getMyVotings = async function (req, res, next) {
 
     const votings = await Voting.find({ author: req.user }).lean();
 
-    res.render('myVotings', { votings })
+    res.render('myVotings', { votings });
   } catch (err) {
     next(createError(500, err));
   }
