@@ -46,8 +46,21 @@ router.get("/:votingId", async (req, res, next) => {
     const { votingId } = req.params;
     const isLogin = getLoginStatus(req);
     const votingInfo = await getVotingById(votingId);
+    let isAuthor = false;
+
+    if (isLogin) {
+      const userId = req.user._id.toString();
+      const authorId = votingInfo.author._id.toString();
+      isAuthor = userId === authorId ? true : false;
+      console.log(userId === authorId);
+      console.log(userId, authorId);
+    }
+
+    console.log(isAuthor);
+
     res.status(200).render("votingDetail", {
       isLogin,
+      isAuthor,
       votingInfo,
     });
   } catch (err) {

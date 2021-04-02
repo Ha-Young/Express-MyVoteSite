@@ -1,4 +1,4 @@
-form {
+.auth {
   display: flex;
   flex-flow: column;
   justify-content: space-around;
@@ -6,7 +6,8 @@ form {
   box-sizing: border-box;
   width: 50vmin;
   height: 50vmin;
-  border: 1px solid;
+  border: 2px solid #A8DADC;
+  border-radius: 5px;
 }
 
 .input-text {
@@ -16,15 +17,27 @@ form {
   box-sizing: border-box;
   width: 70%;
   height: 10%;
-  border: 1px solid;
+  border: 2px solid #A8DADC;
+  border-radius: 5px;
+  font-family: "Jua", "sans-serif";
 }
 
-.input-btn {
+.btn {
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
   width: 70%;
   height: 10%;
-  border: 1px solid;
+  border: 2px solid #F78764;
+  border-radius: 5px;
+  background-color: white;
+  font-family: "Jua", "sans-serif";
+  font-size: 3vmin;
+  color: #F78764;
+}
+
+.btn:hover {
+  background-color: #F78764;
+  color: white;
 }

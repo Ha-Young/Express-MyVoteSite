@@ -4,26 +4,31 @@ block stylesheet
   link(rel='stylesheet', href='/stylesheets/voting-detail.css')
 
 block content
-  - const progress = votingInfo.isClosed ? "투표 종료" : "투표 중"
+  - const progress = votingInfo.isClosed ? `${votingInfo.result} : )` : "투표 중..."
+  - const { title, author} = votingInfo
+  - const { startedAt, endedAt } = votingInfo
+  - const { votingItems } = votingInfo
   section.detail
-    h2 #{votingInfo.title}
-    div.detail-status
-      div.detail-progress #{progress}
-      div.detail-time
-        div
-          | 시작 시간
-          |  #{votingInfo.startedAt.month}월 #{votingInfo.startedAt.date}일
-          |  #{votingInfo.startedAt.hour}시 #{votingInfo.startedAt.minute}분
-        div
-          | 종료 시간
-          |  #{votingInfo.endedAt.month}월 #{votingInfo.endedAt.date}일
-          |  #{votingInfo.endedAt.hour}시 #{votingInfo.endedAt.minute}분
-    div.detail-author 작성자 #{votingInfo.author.name}
-    div.detail-item-container
-      - for (let i = 0; i < votingInfo.votingItems.length; i++)
-        - const {item, count} = votingInfo.votingItems[i]
-          div.detail-item(data-voting-id=votingInfo._id, data-option-id=votingInfo.votingItems[i]._id) #{item} #{count}
-    div.detail-button
+    h2 #{title}
+    div.container
+      div.status
+        div.progress #{progress}
+        div.time
+          div
+            | 시작 시간
+            |  #{startedAt.month}월 #{startedAt.date}일
+            |  #{startedAt.hour}시 #{startedAt.minute}분
+          div
+            | 종료 시간
+            |  #{endedAt.month}월 #{endedAt.date}일
+            |  #{endedAt.hour}시 #{endedAt.minute}분
+      div.author 작성자 #{author.name}
+      div.item-container
+        - for (let i = 0; i < votingItems.length; i++)
+          - const {item, count} = votingItems[i]
+            div.item(data-voting-id=votingInfo._id, data-option-id=votingItems[i]._id) #{item} #{count}
+    div.button
       a(href="/") 돌아가기
-      button.detail-delete-btn(data-voting-id=_id) 삭제
+      if isAuthor
+        a(href="/") 삭제
   script(src="/javascripts/votingDetail.js")

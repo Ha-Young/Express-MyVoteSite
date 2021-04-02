@@ -4,9 +4,9 @@
   justify-content: space-around;
   align-items: center;
   box-sizing: border-box;
-  width: 60vmin;
-  height: 60vmin;
-  border: 1px solid;
+  width: 70vmin;
+  height: 70vmin;
+  color: #247BA0;
 }
 
 .detail > h2 {
@@ -16,20 +16,35 @@
   box-sizing: border-box;
   width: 80%;
   height: 10%;
-  border: 1px solid;
+  border-radius: 10px;
+  background-color: #F78764;
+  font-size: 3vmin;
+  color: white;
 }
 
-.detail-status {
+.container {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  width: 80%;
+  height: 70%;
+  border: 2px solid #A8DADC;
+  border-radius: 10px;
+}
+
+.status {
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
   width: 80%;
   height: 10%;
-  border: 1px solid;
+  font-size: 3vmin;
 }
 
-.detail-time {
+.time {
   display: flex;
   flex-flow: column;
   justify-content: space-around;
@@ -37,49 +52,69 @@
   box-sizing: border-box;
   width: 40%;
   height: 80%;
-  border: 1px solid;
-  font-size: 80%;
+  font-size: 1.5vmin;
 }
 
-.detail-author {
+.author {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   box-sizing: border-box;
   width: 80%;
   height: 5%;
-  border: 1px solid;
 }
 
-.detail-item-container {
-  display: flex;
-  flex-flow: column;
-  justify-content: flex-start;
+.item-container {
   align-items: center;
   box-sizing: border-box;
   width: 80%;
   height: 50%;
-  border: 1px solid;
+  border: 2px solid #A8DADC;
+  border-radius: 10px;
+  overflow: scroll;
 }
 
-.detail-item {
+.item {
   display: flex;
   flex-flow: column;
   justify-content: space-around;
   align-items: center;
   box-sizing: border-box;
   width: 80%;
-  height: 15%;
-  margin: 5%;
-  border: 1px solid;
+  height: 20%;
+  margin: 5% auto;
+  border: 2px solid #A8DADC;
+  border-radius: 10px;
 }
 
-.detail-button {
+.item:hover {
+  background-color: #A8DADC;
+  color: white
+}
+
+.button {
   display: flex;
   justify-content: space-around;
   align-items: center;
   box-sizing: border-box;
   width: 80%;
   height: 10%;
-  border: 1px solid;
+}
+
+.button > a {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  width: 20%;
+  height: 80%;
+  border: 2px solid #F78764;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #F78764;
+}
+
+.button > a:hover {
+  background-color: #F78764;
+  color: white;
 }
