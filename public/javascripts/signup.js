@@ -10,6 +10,11 @@ signUpForm.addEventListener("submit", async (event) => {
   const password = document.querySelector("input[name='password']").value;
   const confirmedPassword = document.querySelector("input[name='confirmedPassword']").value;
 
+  if (!validateEmail(email)) {
+    showValidation("유효하지 않은 이메일 형식입니다.");
+    return;
+  }
+
   try {
     const response = await fetch("/users/signup", {
       method: "POST",
@@ -41,3 +46,7 @@ signUpForm.addEventListener("submit", async (event) => {
   }
 });
 
+function validateEmail(email) {
+  const regex = /^(([^<>\\()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/gm;
+  return regex.test(email);
+}
