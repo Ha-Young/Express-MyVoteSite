@@ -1,0 +1,64 @@
+.page-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow: auto;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.option-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.select-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  height: 2.5em;
+  margin: 0.5em;
+}
+
+select {
+  width: 5em;
+  height: 2.5em;
+  margin: 0.5em;
+}
+
+.option-input-container input {
+  width: 15em;
+  height: 2em;
+  margin: 0.5em;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 5em;
+}
+
+.button-container button {
+  margin: 1px;
+}

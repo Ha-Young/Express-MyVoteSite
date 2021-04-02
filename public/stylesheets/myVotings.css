@@ -1,0 +1,26 @@
+.page-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.votes a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  list-style: none;
+  padding-left: 0;
+  width: 15em;
+  height: 7em;
+  border: 1px #3dc1d3;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-style: none none solid none;
+  padding: 0 1.5em;
+  margin: 0.5em;
+}
