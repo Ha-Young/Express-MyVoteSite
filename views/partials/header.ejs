@@ -3,16 +3,14 @@
     <div class="indicator-wrapper">
       <div class="home-link"><a href="/"><h3>HOME</h3></a></div>
 
- <% if (displayName) {%>
-  <div><h3>안녕하세요, <%= displayName %>님</h3></div>
-  <div class="logout-link"><a href="/logout"><h3>LOGOUT</h3></a></div>
- <div class="my-votings-link"><a href="/my-votings"><h3>MY VOTINGS</h3></a></div>
- <% } else { %>
-   <div class="sign-up-link"><a href="/signup">SIGN UP</a></div>
-   <div class="login-link"><a href="/login">LOG IN</a></div>
- <% } %>
-      <div>
-      </div>
+      <% if (displayName) {%>
+        <div><h3>안녕하세요, <%= displayName %>님</h3></div>
+        <div class="logout-link"><a href="/logout"><h3>LOGOUT</h3></a></div>
+        <div class="my-votings-link"><a href="/my-votings"><h3>MY VOTINGS</h3></a></div>
+      <% } else { %>
+        <div class="sign-up-link"><a href="/signup">SIGN UP</a></div>
+        <div class="login-link"><a href="/login">LOG IN</a></div>
+      <% } %>
     </div>
   </div>
 </nav>

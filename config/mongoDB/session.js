@@ -7,7 +7,7 @@ const mongoSession = session({
   resave: true,
   saveUninitialized: true,
   cookie: { maxAge: 60 * 60 * 1000 },
-  // store: MongoStore.create({ mongoUrl: DB_APP_URL }),
+  store: MongoStore.create({ mongoUrl: DB_APP_URL }),
 });
 
 module.exports = mongoSession;

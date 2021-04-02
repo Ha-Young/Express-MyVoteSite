@@ -1,6 +1,14 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
+exports.getSignUpPage = async function(req, res, next) {
+  res.render(
+    "signUp",
+    { title: "Sign up",
+      messages: req.flash("messages")
+    });
+}
+
 exports.registerNewUser = async function(req, res, next) {
   try {
     const { email, username, password } = req.body;
@@ -17,7 +25,3 @@ exports.registerNewUser = async function(req, res, next) {
     next(error);
   }
 };
-
-exports.getSignUpPage = async function(req, res, next) {
-  res.render("signUp", { title: "Sign up", messages: req.flash("messages") });
-}

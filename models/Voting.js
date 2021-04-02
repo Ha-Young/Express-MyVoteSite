@@ -13,13 +13,9 @@ const optionSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
-  // winner: {
-  //   type: Boolean,
-  //   required: false,
-  //   default: false,
-  // },
   voters: [voterSchema],
 }, { timestamps: true });
+
 
 const VotingSchema = new mongoose.Schema({
   title: {

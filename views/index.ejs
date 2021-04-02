@@ -2,7 +2,7 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
     <%- include("./partials/header.ejs") %>
@@ -15,31 +15,31 @@
               <a href="/votings/new">Add Voting!</a>
             <% } else { %>
               <a href="/login">Log in to add Voting!</a>
-           <% } %>
+            <% } %>
           </button>
         </div>
 
-       <% if (homeVotingDisplayList.length > 0) {%>
+      <% if (homeVotingDisplayList.length > 0) { %>
         <% homeVotingDisplayList.forEach(function(voting) { %>
-      <div>
-        <a href="/votings/<%= voting._id %>">
-          <h2><%= voting.title %></h2>
-          <h3>Author: <%= voting.author %></h3>
-          <h4>contact: <%= voting.authorEmail %></h4>
-          <h4>Status: <%= voting.isProceeding %></h4>
-          <% if (voting.isProceeding) { %>
-            <h3>Expire Date: <%= voting.expireDate %></h3>
-          <%} else { %>
-            <h3>Winner:
-              <% voting.winner.forEach(function(winner) { %>
-                <h3><%= winner %></h3>
-              <% }) %>
-            </h3>
-          <% }%>
-        </a>
-      </div>
-      <% }) %>
-    <% } %>
+          <div>
+            <a href="/votings/<%= voting._id %>">
+              <h2><%= voting.title %></h2>
+              <h3>Author: <%= voting.author %></h3>
+              <h4>contact: <%= voting.authorEmail %></h4>
+              <h4>Status: <%= voting.isProceeding %></h4>
+            <% if (voting.isProceeding) { %>
+              <h3>Expire Date: <%= voting.expireDate %></h3>
+            <% } else { %>
+              <h3>Winner:
+                <% voting.winner.forEach(function(winner) { %>
+                  <h3><%= winner %></h3>
+                <% }) %>
+              </h3>
+            <% } %>
+            </a>
+          </div>
+        <% }) %>
+      <% } %>
 
     <%- include("./partials/footer.ejs") %>
     </div>

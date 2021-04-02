@@ -1,17 +1,15 @@
-async function voteInputValidation(req, res, next) {
-  try {
-    console.log(req.body,"111111")
-    const { title, expireDate, options } = req.body;
+const { checkExpireDate } = require("../../../utils/votingHelpers");
 
+async function newVotingInputValidation(req, res, next) {
+  try {
     const errorMessages = [];
+    const { title, expireDate, options } = req.body;
 
     if (!title.length || !expireDate || !options.length) {
       errorMessages.push({ message: "Please fill out all fields"});
     }
 
-    const today = new Date();
-    const votingDueDate = new Date(expireDate);
-    const isProceeding = today < votingDueDate;
+    const isProceeding = checkExpireDate(expireDate);
 
     const isOptionsValidated = options && options.every(option => option.trim().length > 0);
 
@@ -25,7 +23,7 @@ async function voteInputValidation(req, res, next) {
 
     if (errorMessages.length) {
       errorMessages.forEach(errorMessage => {
-        req.flash('messages', errorMessage);
+        req.flash("messages", errorMessage);
       });
       res.redirect("/votings/new");
       return;
@@ -37,4 +35,4 @@ async function voteInputValidation(req, res, next) {
   }
 }
 
-module.exports = voteInputValidation;
+module.exports = newVotingInputValidation;

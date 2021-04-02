@@ -1,53 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
 </head>
-<body>
+  <body>
     <div>
-        <div>title: <%= votingDetailFormat.title %></div>
-        <h3>Author: <%= votingDetailFormat.author %></h3>
-        <h4>Contact: <%= votingDetailFormat.contact %></h4>
-        <form class="option-form">
-                <% votingOptionFormat.forEach(function(votingOption) { %>
-                  <div>
-                    <label for="<%= votingOption._id %>"><%= votingOption.title %></label>
-                    <input type='radio' class="option-radio" id="<%= votingOption._id %>" name="option" value="<%= votingOption.title %>">
-                    <% if (isAuthor || !votingOptionFormat.isProceeding) { %>
-                      <div><%= votingOption.voters.length %> voters</div>
-                    <% } %>
-                  </div>
-                <% }) %>
-
-                <!-- ??????? -->
-                <% if (isAuthor) {%>
-                  <button class="voting-delete-btn"><p>Delete this Voting</p></button>
-                <% } %>
-        </form>
-
-        <% if(votingDetailFormat.isProceeding) {%>
-          <div class="voting-info">
-          <h3>This voting will expire at <%= votingDetailFormat.expireDate %></h3>
-          <input type=submit class="voting-submit-btn" value="Submit">
+      <h2>title: <%= votingDetailFormat.title %></h2>
+      <h3>Author: <%= votingDetailFormat.author %></h3>
+      <h4>Contact: <%= votingDetailFormat.contact %></h4>
+      <form class="option-form">
+        <% votingOptionFormat.forEach(function(votingOption) { %>
+          <div>
+            <label for="<%= votingOption._id %>"><%= votingOption.title %></label>
+            <input
+              type="radio"
+              class="option-radio"
+              id="<%= votingOption._id %>"
+              name="option"
+              value="<%= votingOption.title %>"
+            >
+            <% if (isAuthor || !votingOptionFormat.isProceeding) { %>
+              <div><%= votingOption.voters.length %> voters</div>
+            <% } %>
           </div>
-        <% } else if (!votingDetailFormat.isProceeding || isAuthor){ %>
-          <div class="voting-info">
-            <h3>Voting Finished</h3>
-              <% if(votingDetailFormat.winner.length > 0) {%>
-                <h3>Winner</h3>
-                  <% votingDetailFormat.winner.forEach(function(user) { %>
-                    <%= user %>
-                <% }) %>
-              <%} else {%>
-                  No Winner!
-                <% }%>
-          </div>
+        <% }) %>
+        <% if (isAuthor) { %>
+          <button class="voting-delete-btn"><p>Delete this Voting</p></button>
         <% } %>
-        <button><a href="/">Go home</a></button>
+      </form>
+      <% if (votingDetailFormat.isProceeding) { %>
+        <div class="voting-info">
+          <h3>This voting will expire at <%= votingDetailFormat.expireDate %></h3>
+          <input type=submit class="voting-submit-btn" value="Submit" >
+        </div>
+      <% } else if (!votingDetailFormat.isProceeding || isAuthor){ %>
+        <div class="voting-info">
+          <h3>Voting Finished</h3>
+          <% if (votingDetailFormat.winner.length > 0) { %>
+            <h3>Winner</h3>
+            <% votingDetailFormat.winner.forEach(function(user) { %>
+              <%= user %>
+            <% }) %>
+          <% } else { %>
+            No Winner!
+          <% }%>
+        </div>
+      <% } %>
+      <button><a href="/">Go home</a></button>
     </div>
-  <script src="/javascripts/updateOption.js"></script>
-</body>
+    <script src="/javascripts/fetching.js"></script>
+  </body>
 </html>

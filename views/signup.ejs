@@ -5,28 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
-</head>
-<body>
-  <form action="/signup" method="post" >
-    <h1>SIGN UP</h1>
-
-   <div>
-    <% if(messages.length > 0) {%>
-      <% messages.forEach(function(errMessage) { %>
-        <div> <strong> <%= errMessage.message %> </strong></div>
-      <% }) %>
+  </head>
+  <body>
+    <form action="/signup" method="post" >
+      <h1>SIGN UP</h1>
+      <div>
+        <% if(messages.length > 0) {%>
+          <% messages.forEach(function(errMessage) { %>
+            <div><strong><%= errMessage.message %></strong></div>
+          <% }) %>
+        <% } %>
       </div>
-    <% } %>
-    <lable for="email">Email</lable>
-      <input type="email" name="email" value="<%= typeof email !== 'undefined' ? email : '' %>" placeholder="Type your email" >
-    <lable for="username">Username</lable>
-      <input type="text" name="username" value="<%= typeof username !== 'undefined' ? username : '' %>" placeholder="Type your username" >
-    <lable for="user-password">Password</lable>
-      <input type="password" name="password" value="<%= typeof password !== 'undefined' ? password : '' %>" placeholder="Type your password" >
-    <label for="user-password-confirm">Password Confirm</label>
-      <input type="password" name="confirmedPassword" value="<%= typeof password !== 'undefined' ? password : '' %>" placeholder="Confirm your password" >
-      <button type="submit">Submit</button>
+      <lable for="email">Email</lable>
+        <input type="email" name="email" placeholder="Type your email" >
+      <lable for="username">Username</lable>
+        <input type="text" name="username" placeholder="Type your username" >
+      <lable for="user-password">Password</lable>
+        <input type="password" name="password" placeholder="Type your password" >
+      <label for="user-password-confirm">Password Confirm</label>
+        <input type="password" name="confirmedPassword" placeholder="Confirm your password" >
+        <button type="submit">Submit</button>
     </form>
-  <div><a href="/">Go to Home</div>
-</body>
+    <div><a href="/">Go to Home</div>
+  </body>
 </html>

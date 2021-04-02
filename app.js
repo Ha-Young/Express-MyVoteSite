@@ -11,7 +11,6 @@ const mongoSession = require("./config/mongoDB/session");
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser');
 const logger = require("morgan");
-const mongoose = require("mongoose");
 const flash = require("connect-flash");
 
 const indexRouter = require("./routes/index");
@@ -32,18 +31,15 @@ app.use(passport.session());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set("views", path.join(__dirname, 'views'));
+app.set("view engine", "ejs");
 app.use(cookieParser());
 app.use(express.static("public"));
-
 app.use(flash());
 
-// app.use(cookieParser());
-
-app.use('/', indexRouter);
+app.use("/", indexRouter);
 app.use("/votings", votingsRouter);
-app.use('/my-votings', myVotingsRouter);
+app.use("/my-votings", myVotingsRouter);
 
 app.use(function(req, res, next) {
   next(createError(404));
@@ -51,10 +47,10 @@ app.use(function(req, res, next) {
 
 app.use(function(err, req, res, next) {
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
   res.status(err.status || 500);
-  res.render('error', { title: "Error", err});
+  res.render("error", { title: "Error", err });
 });
 
 module.exports = app;
