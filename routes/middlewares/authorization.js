@@ -3,10 +3,15 @@ const createError = require("http-errors");
 const { generateToken } = require("../../util/jwtHelper");
 
 exports.authenticateUser = (req, res, next) => {
+  console.log("??authenticate");
+  console.log(req.session);
   if (req.user) {
     this.authenticateGoogle(req, res, next);
-  } else {
+  } else if (req.session.accessToken) {
     this.authenticateToken(req, res, next);
+  } else {
+    // res.status(401).end();
+    res.redirect("/users/login");
   }
 };
 

@@ -9,6 +9,7 @@ const Vote = require("../../models/Vote");
 const User = require("../../models/User");
 
 exports.getAllVotes = async (req, res, next) => {
+  console.log(req.session);
   const user = getUserInfo(req.session);
   let votes = await Vote.find()
                         .sort({ expiratin_date: 1 })

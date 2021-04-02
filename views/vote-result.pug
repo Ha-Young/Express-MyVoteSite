@@ -23,10 +23,10 @@ block content
         else
           canvas#vote-chart
       ul.button-list
-        if (vote.author.name === user.name)
+        if (user && vote.author.name === user.name)
           li
             button#deleteButton.button.red(type="button") DELETE
         li
           button#backButton.button(type="submit") BACK
   script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js")
-  script(src="/javascripts/voteResult.js")
+  script(type="module" src="/javascripts/voteResult.js")

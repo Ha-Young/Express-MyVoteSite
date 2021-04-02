@@ -1,3 +1,5 @@
+import { deleteVote } from "./common.js";
+
 const backButton = document.querySelector("#backButton");
 
 const optionsTitle = document.querySelectorAll(".vote-result li .title");
@@ -40,3 +42,5 @@ backButton.addEventListener("click", () => {
   const previousUrl = document.referrer;
   window.location = previousUrl;
 });
+
+deleteVote();

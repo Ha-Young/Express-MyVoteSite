@@ -33,7 +33,7 @@ exports.signIn = async (req, res, next) => {
 };
 
 exports.signOut = (req, res, next) => {
-  req.session = null;
+  res.clearCookie("connect.sid");
   req.logout();
   res.status(200).end();
 };

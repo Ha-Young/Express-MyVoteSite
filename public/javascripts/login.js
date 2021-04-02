@@ -3,6 +3,7 @@ import { showValidation } from "./common.js";
 const loginForm = document.querySelector("#login-form")
 const emailInput = document.querySelector("input[type='email']");
 const passwordInput = document.querySelector("input[type='password']");
+const googleLoginButton = document.querySelector("#googleLoginButton");
 
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -39,4 +40,8 @@ loginForm.addEventListener("submit", async (event) => {
   } catch (err) {
     console.error(err);
   }
+});
+
+googleLoginButton.addEventListener("click", () => {
+  window.location = "/users/login-google";
 });

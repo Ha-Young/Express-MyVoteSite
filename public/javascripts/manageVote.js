@@ -1,9 +1,8 @@
-import showModal, { showValidation } from "./common.js";
+import showModal, { showValidation, deleteVote } from "./common.js";
 
 const submitButton = document.querySelector("#submitButton");
 const options = document.querySelectorAll(".option-list li input");
 const id = window.location.pathname.substring(9);
-const cookie = document.cookie;
 
 for (let i = 0; i < options.length; i++) {
   options[i].addEventListener("click", (event) => {
@@ -20,11 +19,6 @@ submitButton.addEventListener("click", async () => {
   const optionInputs = document.querySelectorAll("input:checked");
   const options = Array.prototype.slice.call(optionInputs).map(input => input.value);
 
-  if (!cookie.includes("accessToken")) {
-    window.location = "/users/login";
-    return;
-  }
-
   try {
     const response = await fetch(`/votings/${id}`, {
       method: "PATCH",
@@ -33,6 +27,12 @@ submitButton.addEventListener("click", async () => {
       },
       body: JSON.stringify({ options })
     });
+
+    if (response.status === 404) {
+      window.location = "/users/login";
+      return;
+    }
+
     const result = await response.json();
 
     if (result.error) {
@@ -45,4 +45,4 @@ submitButton.addEventListener("click", async () => {
   }
 });
 
-
+deleteVote();
