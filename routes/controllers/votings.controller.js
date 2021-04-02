@@ -31,7 +31,7 @@ exports.postNewVoting = async function (req, res, next) {
     const expiredAt = convertDate(createdAt, day, hour, minute);
 
     if (expiredAt === createdAt) {
-      res.render("newVoting", { message: "만료 기간 및 시간을 입력하세요" });
+      res.render("newVoting", { message: resultMessage.INVALID_PERIOD });
       return;
     }
 
@@ -57,7 +57,7 @@ exports.postNewVoting = async function (req, res, next) {
       { $addToSet: { created_votes: [ newVote._id ] } },
     );
 
-    req.flash("message", "새로운 투표가 생성되었습니다");
+    req.flash("message", resultMessage.SUCCESS_CREATE_VOTE);
     res.redirect("/votings/success");
   } catch (err) {
     next(err);
@@ -119,10 +119,10 @@ exports.deleteVote = async function (req, res, next) {
     const voteId = req.params.id;
     const userId = req.user._id;
 
+    await Vote.findOneAndDelete({ _id: voteId });
+
     const user = await User.findOne({ _id: userId });
     const createdVotes = user.created_votes;
-
-    await Vote.findOneAndDelete({ _id: voteId });
 
     for (let i = 0; i < createdVotes.length; i++) {
       if (createdVotes[i]._id.toString() === voteId.toString()) {
