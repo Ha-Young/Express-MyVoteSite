@@ -45,7 +45,6 @@ if ($cancelVotingButton) {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         if (res.message === "success") {
           // alert
           window.location.replace(window.location.origin);
@@ -64,7 +63,6 @@ if ($deleteVotingButton) {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         if (res.message === "success") {
           // alert
           window.location.replace(window.location.origin);

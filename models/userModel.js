@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 
 const { Schema } = mongoose;
 const {
-  Types: { ObjectId, Mixed },
+  Types: { ObjectId },
 } = Schema;
 
 const UserSchema = new Schema({

@@ -41,15 +41,12 @@ const sendErrorDev = (err, res) => {
 };
 
 const sendErrorProd = (err, res) => {
-  console.log("sendErroPord");
   if (err.isOperational) {
     res.status(err.statusCode).render("error", {
       status: err.status,
       message: err.message,
     });
   } else {
-    console.log(`ERROR ❌`, err);
-
     res.status(500).render("error", {
       status: "error",
       message: "죄송합니다. 에러가 발생하였습니다.",
