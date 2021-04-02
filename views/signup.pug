@@ -2,6 +2,7 @@ include mixins/voteList
 include mixins/header
 head
  link(rel='stylesheet', href='/css/dashboard.min.css')
+ script(src='https://kit.fontawesome.com/5fab680b0a.js' crossorigin='anonymous')
 .container
   .sidebar
     span.logo V
@@ -11,7 +12,7 @@ head
     +header(user)
     .main-container
       .form-container.anim(style='--delay: .1s')
-        h2 Register
+        h2 Sign Up
         form(action='/auth/signup' method='POST')
           .form-group
             label(for='name') Name
@@ -26,5 +27,5 @@ head
             label(for='confirm-password') Confirm Password
             input#confirm-password.form-control(type='password' name='confirm-password' minlength='8' required)
           p#validation-message All fields must be filled
-          button#register.btn.btn-primary(type='submit' disabled) Register
-script(src='/javascripts/join.js')
+          button#signup.btn.btn-primary(type='submit' disabled) Sign up
+script(type='text/javascript' src='/javascripts/join.js')

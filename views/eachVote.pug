@@ -3,14 +3,17 @@ include mixins/header
 head
   link(rel='stylesheet' href='/css/newForm.min.css')
   link(rel='stylesheet', href='/css/dashboard.min.css')
+  script(src='https://kit.fontawesome.com/5fab680b0a.js' crossorigin='anonymous')
 .container
   .sidebar
-    span.logo V
-    a.logo-expand(href='/') Vote Here
+    a.logo-expand(href='/') Vote
     include partials/sidebar.pug
   .wrapper
     +header(user)
     .main-container
+      a(href='/')
+        i.fas.fa-arrow-circle-left
+        | &nbsp Back to list
       if (vote)
         .vote
           .vote-wrapper
@@ -20,7 +23,7 @@ head
             p by #{vote.creatorName}
             | vote whatever you want
           if (vote.isVotable)
-            form(action=`/vote/${vote._id}?_method=PUT` method='POST')
+            form(action=`/vote/${vote._id}?_method=PATCH` method='POST')
               each count, option in vote.options
                 .form-group
                   label

@@ -2,6 +2,7 @@ include mixins/voteList
 include mixins/header
 head
  link(rel='stylesheet', href='/css/dashboard.min.css')
+ script(src='https://kit.fontawesome.com/5fab680b0a.js' crossorigin='anonymous')
 .container
   .sidebar
     span.logo V
@@ -24,11 +25,11 @@ head
                 | 53K votes
                 span.seperate
                 | 2 weeks ago
-          .main-vote__time Finished
+          .main-vote__status Finished
         .main-vote.anim(style='--delay: .2s')
           .main-vote__title What is your preference
           .main-vote__creator.tips
-            .main-vote__time Finished
+            .main-vote__status Finished
             .creator-img__wrapper
               svg.feather.feather-check(viewbox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round')
                 path(d='M20 6L9 17l-5-5')

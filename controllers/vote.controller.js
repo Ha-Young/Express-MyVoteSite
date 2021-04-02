@@ -25,6 +25,16 @@ function renderNewVote(req, res) {
   res.status(200).render('newVote', { currentDateTime });
 }
 
+async function renderMyVote(req, res) {
+  try {
+    const myVotes = await Vote.find({ creatorId: req.user.id }).lean();
+
+    res.status(200).render('myVote', { allVotes: myVotes });
+  } catch (error) {
+    next(createError(500));
+  }
+}
+
 async function postNewVote(req, res, next) {
   const { title, expiredAt, options, description, imgUrl } = req.body;
 
@@ -38,10 +48,11 @@ async function postNewVote(req, res, next) {
     title,
     expiredAt,
     description,
-    imgUrl: imgUrl || getRandomImage(),
     creatorId: req.user._id,
     creatorName: req.user.name,
     options: formattedOptions,
+    imgUrl: imgUrl || getRandomImage(),
+    creatorImgUrl: req.user.avatarUrl,
   });
 
   try {
@@ -52,7 +63,7 @@ async function postNewVote(req, res, next) {
   }
 }
 
-async function getVoteById(req, res) {
+async function getVoteById(req, res, next) {
   const { id } = req.params;
 
   if (req.user) {
@@ -77,13 +88,19 @@ async function getVoteById(req, res) {
 
 async function updateVoteById(req, res, next) {
   const { option } = req.body;
-  const { _id: userId } = req.user;
+  const { _id: userId, completedVotes } = req.user;
   const { id: voteId } = req.params;
 
   const optionKey = `options.${option}`;
 
+  if (completedVotes.includes(voteId)) {
+    req.flash('info', 'You already voted for this.');
+    res.status(301).redirect(req.originalUrl);
+    return;
+  }
+
   try {
-    const vote = await Vote.findByIdAndUpdate(voteId, { 
+    const vote = await Vote.findByIdAndUpdate(voteId, {
       $inc: {
         [optionKey]: 1,
       },
@@ -110,17 +127,6 @@ async function deleteVoteById(req, res) {
     next(createError(500));
   }
 }
-
-async function renderMyVote(req, res) {
-  try {
-    const myVotes = await Vote.find({ creatorId: req.user.id }).lean();
-
-    res.status(200).render('myVote', { allVotes: myVotes });
-  } catch (error) {
-    next(createError(500));
-  }
-}
-
 
 exports.renderAllVotes = renderAllVotes;
 exports.renderNewVote = renderNewVote;

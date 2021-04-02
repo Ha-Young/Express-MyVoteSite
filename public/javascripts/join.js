@@ -2,7 +2,7 @@ const emailField = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 const confirmPasswordInput = document.getElementById('confirm-password');
 const validationMessageField = document.getElementById('validation-message');
-const registerButton = document.getElementById('register');
+const signupButton = document.getElementById('signup');
 
 function ValidateEmail(userEmail) {
   const format = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -31,11 +31,12 @@ function handleKeyupPasswords() {
 
   if (password !== confirmPassword) {
     validationMessageField.textContent = 'passwords not identical';
+    signupButton.disabled = true;
     return;
   }
 
   validationMessageField.textContent = '';
-  registerButton.disabled = false;
+  signupButton.disabled = false;
 }
 
 emailField.addEventListener('keyup', handleKeyupEmail);

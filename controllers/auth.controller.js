@@ -1,6 +1,8 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
+
 const User = require('../models/User');
+const getRandomSalt = require('../util/getRandomSalt');
 
 function renderLogin(req, res) {
   res.status(200).render('login');
@@ -16,19 +18,21 @@ function getGithubAuth(req, res) {
   passport.authenticate('github', { scope: [ 'user:email' ] });
 }
 
-function getGithubAuthCallback(rea, res) {
-  res.status(301).redirect('/');
+function getGithubAuthCallback(req, res) {
+  const referrer = req.session.referrer ?? '/';
+  delete req.session.referrer;
+
+  res.status(301).redirect(referrer);
 }
 
-function getRegister(req, res, next) {
-  res.render('signup');
+function getSignup(req, res, next) {
+  res.status(200).render('signup');
 }
 
-async function postRegister(req, res, next) {
+async function postSignup(req, res, next) {
   try {
-    // TODO: salt 상수화.
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    
+    const hashedPassword = await bcrypt.hash(req.body.password, getRandomSalt());
+
     const user = new User({
       name: req.body.name,
       email: req.body.email,
@@ -38,15 +42,17 @@ async function postRegister(req, res, next) {
     await user.save();
     res.redirect('/');
   } catch (err) {
-    res.redirect('/auth/login/register');
+    req.flash('info', 'Failed to signup, try again :)');
+    res.redirect('/auth/signup');
   }
 }
 
 function postLogin(req, res, next) {
   const referrer = req.session.referrer ?? '/';
+  delete req.session.referrer;
 
   return passport.authenticate('local', {
-    successRedirect: `${referrer}`,
+    successRedirect: referrer,
     failureRedirect: '/login',
     failureFlash: true,
   })(req, res);
@@ -56,6 +62,6 @@ exports.renderLogin = renderLogin;
 exports.logout = logout;
 exports.getGithubAuth = getGithubAuth;
 exports.getGithubAuthCallback = getGithubAuthCallback;
-exports.getRegister = getRegister;
-exports.postRegister = postRegister;
+exports.getSignup = getSignup;
+exports.postSignup = postSignup;
 exports.postLogin = postLogin;

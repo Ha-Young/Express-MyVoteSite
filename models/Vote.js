@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const findOrCreate = require('mongoose-findorcreate');
 
+const defaultUserImgUrl = 'https://ccbg.boun.edu.tr/sites/ccbg.boun.edu.tr/files/default_images/default-user-icon-4.jpg';
+
 const voteSchema = new mongoose.Schema({
   title: { type: String, required: true },
   creatorId: { type: mongoose.Schema.Types.ObjectId, required: true },
@@ -9,6 +11,7 @@ const voteSchema = new mongoose.Schema({
   options: { type: Object, required: true },
   winner: { type: String },
   imgUrl: { type: String },
+  creatorImgUrl: { type: String, default: defaultUserImgUrl},
   isVotable: { type: Boolean, default: true },
   completedVotes: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Vote' }],
 }, {
@@ -42,7 +45,9 @@ voteSchema.statics.updateIsVotable = async function() {
 voteSchema.methods.makeResult = async function() {
   const options = this.options;
 
-  const biggestOption = Object.keys(options).reduce((acc, cur) => options[acc] > options[cur] ? acc : cur);
+  const biggestOption = Object.keys(options).reduce((acc, cur) => {
+    return options[acc] > options[cur] ? acc : cur
+  });
 
   this.winner = biggestOption;
 

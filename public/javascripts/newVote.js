@@ -5,21 +5,18 @@ const optionsList = document.querySelector('.options');
 const MAX_INPUT = 10;
 let inputCount = 0;
 
-// TODO: ender issue.
-
-function handleClick(e) {
+function handleClick() {
   if (inputCount >= MAX_INPUT) {
-    // TODO: need to notify max-input
     return;
   }
 
   const list = document.createElement('li');
   const input = document.createElement('input');
-  
+
   input.setAttribute('name', 'options');
   input.setAttribute('type', 'text');
   input.setAttribute('value', optionText.value);
-  
+
   list.appendChild(input);
 
   optionsList.appendChild(list);

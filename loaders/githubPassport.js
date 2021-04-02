@@ -19,14 +19,14 @@ function initialize() {
   });
 
   async function authenticateUser(accessToken, refreshToken, profile, done) {
-    const { email, login: name, avatar_url: avatarUrl, id } = profile._json;
+    const { email, login: name, avatar_url: avatarUrl, id: githubId } = profile._json;
 
     try {
       const user = await User.findOrCreate({
         email,
         name,
         avatarUrl,
-        githubId: id,
+        githubId,
       });
 
       return done(null, user.doc);

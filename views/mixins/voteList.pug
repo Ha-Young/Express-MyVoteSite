@@ -1,14 +1,15 @@
 mixin voteList(vote, delay)
   .vote
-    .vote-time #{vote.isVotable ? 'vote' : 'finished'}
+    .vote-status #{vote.isVotable ? 'vote' : 'finished'}
     .vote-wrapper
-      //TODO: vote tag css to img
+      // TODO: vote tag css to img
       a(href=`/vote/${vote._id}`)
         img(src=`${vote.imgUrl}`)
-      .creator-img__wrapper.vote-creator
-        svg.feather.feather-check(viewbox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round')
-          path(d='M20 6L9 17l-5-5')
-        img.creator-img(src='https://images.pexels.com/photos/1680172/pexels-photo-1680172.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500')
+      if (vote.creatorImgUrl)
+        .creator-img__wrapper.vote-creator
+          svg.feather.feather-check(viewbox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round')
+            path(d='M20 6L9 17l-5-5')
+          img.creator-img(src=`${vote.creatorImgUrl}`)
     .vote-by #{vote.creatorName}
     .vote-name #{vote.title}
     .vote-view

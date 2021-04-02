@@ -1,7 +1,14 @@
 mixin header(user)
   .header
-    .search-bar
-      input(type='text' placeholder='Search')
+    .notice-container
+      .notice
+        span.anim(style='--delay: .1s')
+          i.fas.fa-volume-down
+          | &nbsp
+          if (messages.info)
+            | #{messages.info}
+          else
+            | Hello #{user ? user.name : 'Guest'}!
     .user-settings
       if (user)
         img.user-img(src=`${user.avatarUrl}` alt='user avatar')
