@@ -1,35 +1,31 @@
 <div class="body-container small-container">
-  <h1>투표 생성</h1>
-  <form class="form" action="/votings/new" method="POST">
-    <div class="alert-msg">
+  <h1 class="bouncy-font">New Vote</h1>
+  <form class="form bouncy-font" action="/votings/new" method="POST">
+    <div class="alert-msg bouncy-font">
       <%= message %>
     </div>
-    <div class="flex-container">
-      <div>
-        <div class="input-container">
-          <label for="title">투표 제목</label>
-          <input name="title" />
-        </div>
-        <div class="input-container">
-          <label for="expiration">마감일</label>
-          <input name="expiration" type="datetime-local" />
-        </div>
-      </div>
-      <div>
-        <ul class="options">
-          <li id="option1">
-            <input class="option" type="text" name="option1" placeholder="option1" />
-            <button class="delete-option-button" type="button">❌</button>
-          </li>
-          <li id="option2">
-            <input class="option" type="text" name="option2" placeholder="option2" />
-            <button class="delete-option-button" type="button">❌</button>
-          </li>
-        </ul>
-        <button class="add-option-button" type="button">➕</button>
-      </div>
+    <div class="input-container">
+      <label for="title">Title</label>
+      <input class="input" name="title"/>
     </div>
-    <button class="submit-button" type="submit">확인</button>
+    <div class="input-container">
+      <label for="expiration">Due Date</label>
+      <input class="input" name="expiration" type="datetime-local"/>
+    </div>
+    <ul class="options">
+      <li id="option1">
+        <span class="bouncy-font">*</span>
+        <input class="option input" type="text" name="option1" placeholder="option1"/>
+        <button class="delete-option-button bouncy-font" type="button">X</button>
+      </li>
+      <li id="option2">
+        <span class="bouncy-font">*</span>
+        <input class="option input" type="text" name="option2" placeholder="option2"/>
+        <button class="delete-option-button bouncy-font" type="button">X</button>
+      </li>
+    </ul>
+    <button class="add-option-button bouncy-font" type="button">+</button>
+    <button class="submit-button bouncy-font" type="submit">OK !</button>
   </form>
 </div>
 <script src="/javascripts/createVoting.js"></script>

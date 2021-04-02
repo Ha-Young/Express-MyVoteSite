@@ -1,8 +1,33 @@
+@font-face {
+  src: url(../fonts/bouncy_2/Bouncy-PERSONAL_USE_ONLY.otf);
+  font-family: "bouncy";
+}
+
+@font-face {
+  src: url(../fonts/cherl/CHERL___.TTF);
+  font-family: "cherl";
+}
+
+@font-face {
+  src: url(../fonts/Gamja_Flower/GamjaFlower-Regular.ttf);
+  font-family: "gamja";
+}
+
+.bouncy-font {
+  font: 2rem "bouncy";
+}
+
+.cherl-font {
+  font: 1rem "cherl";
+}
+
+.gamja-font {
+  font: 2rem "gamja";
+}
+
 * {
   box-sizing: border-box;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: white;
-  border-radius: 5px;
 }
 
 h1 {
@@ -10,10 +35,20 @@ h1 {
   font-size: initial;
 }
 
-input {
+.input {
+  min-width: 400px;
   padding: 5px;
   border: 0;
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.options {
+  list-style: none;
+}
+
+.options li {
+  display: flex;
+  justify-content: space-between;
 }
 
 html,body {
@@ -26,9 +61,8 @@ header {
   display: flex;
   flex-direction: row-reverse;
   width: 100%;
-  height: 50px;
-  top: 0;
-  padding: 10px;
+  height: 100px;
+  padding: 10px 50px;
   background-color: white;
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   justify-content: space-between;
@@ -40,30 +74,38 @@ main {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: calc(100% - 100px);
+  height: calc(100% - 200px);
   padding: 20px;
   background-color: white;
 }
 
 footer {
   position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  height: 50px;
+  height: 100px;
   left: 0;
   bottom: 0;
   background-color: white;
   border-top: 2px solid rgba(0, 0, 0, 0.1);
-  text-align: center;
 }
 
 .submit-button {
-  width: 100px;
-  height: 30px;
-  border: 2px solid rgba(0, 0, 0, 0.1);
+  height: 40px;
+  color: lightseagreen;
+  border: none;
 }
 
-button:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+.add-option-button {
+  color: aqua;
+  border: none;
+}
+
+.delete-option-button {
+  color: lightcoral;
+  border: none;
 }
 
 .body-container {
@@ -115,7 +157,7 @@ button:hover {
   justify-content: space-between;
   width: 80%;
   max-width: 600px;
-  height: 400px;
+  /* height: 400px; */
 }
 
 .in-progress {
@@ -134,7 +176,7 @@ button:hover {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 10px;
+  padding: 5px 40px;
   border-radius: 5px;
 }
 
@@ -175,16 +217,21 @@ button:hover {
 
 .vote-button {
   display: flex;
+  align-items: center;
 }
 
 .vote-button + .vote-button {
   margin-top: 5px;
 }
-.vote-button label {
+
+.option-label {
   display: inline-block;
   width: 100%;
   padding: 3px;
-  background-color: #CDC6A5;
+  font-size: 1.2rem;;
+  border: 1px solid #CDC6A5;
+  border-radius: 5px;
+  text-align: center;
 }
 
 nav {
@@ -197,7 +244,7 @@ a {
 }
 
 a + a {
-  margin-left: 5px;
+  margin-left: 50px;
 }
 
 .hidden {

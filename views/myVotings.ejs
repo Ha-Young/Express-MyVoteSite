@@ -1,28 +1,45 @@
 <div class="body-container">
-  <h1>내 투표</h1>
+  <h1 class="bouncy-font">My Votes</h1>
   <div class="votes-container">
     <% if (votes.length > 0) { %>
-      <% votes.map((vote) => { %>
+      <% votes.map((vote, index) => { %>
         <a href="/votings/<%= vote._id %>">
           <div class="vote <%- vote.isInProgress ? 'in-progress' : 'closed' %>">
             <div>
-              <h1><%= vote.title %></h1>
-              <div>마감일 : <%= vote.dueDate %></div>
+              <h1 class="gamja-font"><%= vote.title %></h1>
+              <div class="cherl-font">Due Date : <%= vote.dueDate %></div>
             </div>
             <div>
               <% if (vote.isInProgress) { %>
-                <% vote.options.map((option) => { %>
-                  <div class="my-votings-option"><%= option.name %> : <%= option.voters.length %></div>
-                <% }) %>
+                <canvas
+                  id="myChart<%= ++index %>"
+                  width="300"
+                  height="150"
+                  >
+                </canvas>
               <% } else { %>
-                <p>마감</p>
+                <p class="bouncy-font">Closed</p>
               <% } %>
             </div>
           </div>
         </a>
       <% }) %>
     <% } else { %>
-      <div>No votes..😥</div>
+      <div class="bouncy-font">No votes..😥</div>
     <% }%>
   </div>
 </div>
+<script>
+  const tempVotes = [];
+  window.app = {};
+
+  for (const vote of <%- JSON.stringify(votes) %>) {
+    if (vote.isInProgress) {
+      tempVotes.push(vote);
+    }
+  }
+
+  window.app.votes = tempVotes;
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>
+<script src="/javascripts/chart.js"></script>

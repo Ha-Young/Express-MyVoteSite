@@ -1,27 +1,28 @@
 <div class="body-container">
-  <h1>Home</h1>
+  <h1 class="bouncy-font">Home</h1>
   <div class="votes-container">
     <% if (votes.length > 0) { %>
       <% votes.map((vote) => { %>
         <a href="/votings/<%= vote._id %>">
           <div class="vote <%- vote.isInProgress ? 'in-progress' : 'closed' %>">
             <div>
-              <h1><%= vote.title %></h1>
-              <p>생성자 : <%= vote.creator?.name || "탈퇴한 회원" %></p>
-              <p>마감일 : <%= vote.dueDate %></p>
+              <h1 class="gamja-font"><%= vote.title %></h1>
+              <span class="cherl-font">Creator : </span>
+              <span class="gamja-font"><%= vote.creator?.name || "탈퇴한 회원" %></span>
+              <p class="cherl-font">Due Date : <%= vote.dueDate %></p>
             </div>
-            <div>
+            <div class="bouncy-font">
               <% if (vote.isInProgress) { %>
-                <p>진행중</p>
+                <p>In Progress</p>
               <% } else { %>
-                <p>마감</p>
+                <p>Closed</p>
               <% } %>
             </div>
           </div>
         </a>
       <% }) %>
     <% } else { %>
-      <div>No votes..😥</div>
+      <div class="bouncy-font">No votes..😥</div>
     <% }%>
   </div>
 </div>

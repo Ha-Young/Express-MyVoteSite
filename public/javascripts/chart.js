@@ -1,40 +1,49 @@
-const { options } = window.app.vote;
-const voteResult = options.map((option) => {
-  return { name: option.name, count: option.voters.length };
-});
+let { votes } = window.app;
+let index = 1;
 
-const generateRandomColor = () => {
-  const randomNumber = () => Math.floor(Math.random() * 150);
+if (!votes) {
+  votes = [window.app.vote];
+}
 
-  return `rgba(${randomNumber()}, ${randomNumber()}, ${randomNumber()}, 0.7)`;
-};
+for (const vote of votes) {
+  const { options } = vote;
+  const voteResult = options.map((option) => {
+    return { name: option.name, count: option.voters.length };
+  });
 
-const labels = voteResult.map((option) => option.name);
-const data = voteResult.map((option) => option.count);
-const colors = voteResult.map(() => generateRandomColor());
+  const generateRandomColor = () => {
+    const randomNumber = () => Math.floor(Math.random() * 150);
 
-const ctx = document.getElementById("myChart");
-// eslint-disable-next-line
-const myChart = new Chart(ctx, {
-  type: "horizontalBar",
-  data: {
-    labels,
-    datasets: [{
-      data,
-      backgroundColor: colors,
-      borderColor: colors,
-      borderWidth: 1,
-      minBarLength: 5,
-    }],
-  },
-  options: {
-    legend: false,
-    scales: {
-      xAxes: [{
-        ticks: {
-          beginAtZero: true,
-        },
+    return `rgba(${randomNumber()}, ${randomNumber()}, ${randomNumber()}, 0.7)`;
+  };
+
+  const labels = voteResult.map((option) => option.name);
+  const data = voteResult.map((option) => option.count);
+  const colors = voteResult.map(() => generateRandomColor());
+
+  const ctx = document.getElementById(`myChart${index++}`);
+  // eslint-disable-next-line
+  const myChart = new Chart(ctx, {
+    type: "horizontalBar",
+    data: {
+      labels,
+      datasets: [{
+        data,
+        backgroundColor: colors,
+        borderColor: colors,
+        borderWidth: 1,
+        minBarLength: 5,
       }],
     },
-  },
-});
+    options: {
+      legend: false,
+      scales: {
+        xAxes: [{
+          ticks: {
+            beginAtZero: true,
+          },
+        }],
+      },
+    },
+  });
+}

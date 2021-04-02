@@ -1,21 +1,31 @@
 <div class="body-container small-container">
   <div class="vote-detail-creator-info">
     <div>
-      <div>이름: <%= vote.creator?.name || "탈퇴한 회원" %></div>
-      <div>email: <%= vote.creator?.email || "탈퇴한 회원" %></div>
-      <div>마감일: <%= vote.dueDate %></div>
+      <div>
+        <span class="cherl-font">Creator</span>
+        <span class="gamja-font"><%= vote.creator?.name || "탈퇴한 회원" %></span>
+      </div>
+      <div>
+        <span class="cherl-font">email: </span>
+        <% if (vote.creator?.email) { %>
+          <span class="cherl-font"><%= vote.creator.email %></span>
+        <% } else { %>
+          <sapn class="gamja-font">탈퇴한 회원</sapn>
+        <% }%>
+      </div>
+      <div class="cherl-font">Due Date: <%= vote.dueDate %></div>
     </div>
     <% if (isCreator || user?.admin) { %>
       <form action="/votings/<%= vote._id %>?_method=DELETE" method="POST">
-        <button type="submit">삭제</button>
+        <button class="bouncy-font submit-button" type="submit">Delete</button>
       </form>
     <% } %>
   </div>
-  <h1 class="vote-title"><%= vote.title %></h1>
+  <h1 class="vote-title gamja-font"><%= vote.title %></h1>
   <div>
     <% if (isCreator || !vote.isInProgress) { %>
       <canvas
-        id="myChart"
+        id="myChart1"
         width="400"
         height="180"
       ></canvas>
@@ -31,12 +41,12 @@
                 name="voted"
                 value="<%= option._id %>"
               />
-              <label for="<%= index %>"><%= option.name %></label>
+              <label class="option-label gamja-font" for="<%= index %>"><%= option.name %></label>
             </div>
           <% }) %>
         </div>
         <% if (!isVoted) { %>
-          <button class="submit-button" type="submit">확인</button>
+          <button class="submit-button bouncy-font" type="submit">OK !</button>
         <% } %>
       </form>
     <% } %>

@@ -1,25 +1,25 @@
 <div class="body-container small-container">
-  <h1>Sign Up</h1>
-  <form class="form" action="/auth/signup" method="POST">
-    <div class="alert-msg">
+  <h1 class="bouncy-font">Sign Up</h1>
+  <form class="form bouncy-font" action="/auth/signup" method="POST">
+    <div class="alert-msg bouncy-font">
       <%= message %>
     </div>
     <div class="input-container">
-      <label for="name">이름</label>
-      <input name="name" />
+      <label for="name">name</label>
+      <input class="input" name="name" />
     </div>
     <div class="input-container">
-      <label for="email">이메일</label>
-      <input type="email" name="email" />
+      <label for="email">email</label>
+      <input class="input" type="email" name="email" />
     </div>
     <div class="input-container">
-      <label for="password">비밀번호</label>
-      <input type="password" name="password" />
+      <label for="password">password</label>
+      <input class="input" type="password" name="password" />
     </div>
     <div class="input-container">
-      <label for="passwordConfirm">비밀번호 확인</label>
-      <input type="password" name="passwordConfirm" />
+      <label for="passwordConfirm">password confirm</label>
+      <input class="input" type="password" name="passwordConfirm" />
     </div>
-    <button class="submit-button" type="submit">확인</button>
+    <button class="submit-button bouncy-font" type="submit">OK !</button>
   </form>
 </div>

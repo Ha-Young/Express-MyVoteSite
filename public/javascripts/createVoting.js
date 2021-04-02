@@ -21,18 +21,24 @@ const handleAddOptionButtonClick = () => {
   }
 
   const li = document.createElement("li");
+  const span = document.createElement("span");
   const input = document.createElement("input");
   const button = document.createElement("button");
 
   li.id = `option${index}`;
+  span.classList.add("bouncy-font");
+  span.textContent = "*";
   input.classList.add("option");
+  input.classList.add("input");
   input.type = "text";
   input.name = `option${index}`;
   input.placeholder = `option${index}`;
   button.classList.add("delete-option-button");
+  button.classList.add("bouncy-font");
   button.type = "button";
-  button.textContent = "❌";
+  button.textContent = "X";
 
+  li.appendChild(span);
   li.appendChild(input);
   li.appendChild(button);
   $options.appendChild(li);

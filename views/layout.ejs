@@ -8,21 +8,19 @@
   <body>
     <header class="header">
       <% if (user) { %>
-        <nav class="layout-nav">
+        <nav class="bouncy-font">
           <a href="/">Home</a>
           <a href="/auth/logout">Log out</a>
         </nav>
-        <nav>
-          <a href="/votings/new">
-            <div>투표 생성하기</div>
-          </a>
-          <a href="/my-votings">내 투표 보기</a>
+        <nav class="bouncy-font">
+          <a href="/votings/new">Create Vote</a>
+          <a href="/my-votings">My Votes</a>
         </nav>
-        <div class="layout-profile">
+        <div class="layout-profile gamja-font">
           <%= user.name %>
         </div>
       <% } else { %>
-        <nav class="layout-nav">
+        <nav class="layout-nav bouncy-font">
           <a href="/">Home</a>
           <a href="/auth/login">Log in</a>
           <a href="/auth/signup">Sign up</a>
@@ -32,8 +30,10 @@
     <main class="main">
       <%- body %>
     </main>
-    <footer class="footer">
-      copyright &copy; by Sungjin_Kim
+    <footer class="footer bouncy-font">
+      <div>
+        copyright &copy; by Sungjin_Kim
+      </div>
     </footer>
   </body>
 </html>
