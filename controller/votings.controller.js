@@ -29,7 +29,7 @@ exports.create = async (req, res, next) => {
       return next(createError(500, '이미 삭제되었거나 존재하지않는 투표입니다.'));
     }
 
-    res.redirect('/votings/success');
+    res.render('partial/message', { isSuccess: true });
   } catch (err) {
     next(createError(err.status));
   }
@@ -48,13 +48,6 @@ exports.getOne = async (req, res, next) => {
   } catch (err) {
     next(createError(err.status));
   }
-};
-
-exports.viewSuccess = (req, res, next) => {
-  res.render('partial/message', {
-    user: req.user,
-    message: '투표 등록 성공!',
-  });
 };
 
 exports.updateVoting = async (req, res, next) => {

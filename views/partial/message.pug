@@ -1,9 +1,15 @@
-extends ../layout.pug
+//- extends ../layout.pug
 
-block content
-  div #{message}
-  div.buttons
-    a(href="/") Home
-  - if (!user)
-    div.buttons
-      a(href="/auth/login") Login
+//- block content
+//-   div #{message}
+//-   div.buttons
+//-     a(href="/") Home
+//-   - if (!user)
+//-     div.buttons
+//-       a(href="/auth/login") Login
+
+if (isSuccess)
+  h1 투표 등록 성공
+else
+  h1 투표 등록 실패
+script(src="/javascripts/message.js")
