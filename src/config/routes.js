@@ -1,5 +1,6 @@
 const ROUTE = {
   HOME: "/",
+  MY_VOTINGS: "/my-votings",
 
   AUTH: {
     PREFIX: "/",
@@ -16,10 +17,6 @@ const ROUTE = {
     NEW: "/new",
     SUCCESS: "/success",
     ERROR: "/error",
-  },
-
-  MY: {
-    VOTHINGS: "my-votings",
   },
 
   API: {
