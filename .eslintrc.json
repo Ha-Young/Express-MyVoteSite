@@ -16,29 +16,25 @@
     "ignorePatterns": ["dist/", "node_modules/"],
     "plugins": ["import", "html"],
     "rules": {
-      // "off" or 0 - turn the rule off
-    // "warn" or 1 - turn the rule on as a warning (doesn’t affect exit code)
-    // "error" or 2 - turn the rule on as an error (exit code is 1 when triggered)
-    // "no-var": "off",
     "no-console": "warn",
     "no-plusplus": "off",
     "no-shadow": "off",
     "vars-on-top": "off",
-    "no-underscore-dangle": "off", // var _foo;
+    "no-underscore-dangle": "off",
     "comma-dangle": "off",
-    "func-names": "off", // setTimeout(function () {}, 0);
+    "func-names": "off",
     "prefer-template": "off",
     "no-nested-ternary": "off",
     "max-classes-per-file": "off",
     "consistent-return": "off",
-    "no-restricted-syntax": ["off", "ForOfStatement"], // disallow specified syntax(ex. WithStatement)
-    "prefer-arrow-callback": "error", // Require using arrow functions for callbacks
+    "no-restricted-syntax": ["off", "ForOfStatement"],
+    "prefer-arrow-callback": "error",
     "require-await": "error",
-    "arrow-parens": ["error", "as-needed"], // a => {}
+    "arrow-parens": ["error", "as-needed"],
     "no-param-reassign": ["error", { "props": false }],
     "no-unused-expressions": ["error", {
-      "allowTernary": true,      // a || b
-      "allowShortCircuit": true, // a ? b : 0
+      "allowTernary": true,
+      "allowShortCircuit": true,
       "allowTaggedTemplates": true
     }],
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
@@ -47,6 +43,6 @@
       "ignoreComments": true,
       "ignoreStrings": true,
       "ignoreTemplateLiterals": true
-    }] // prettier의 printWidth 옵션 대신 사용
+    }]
     }
 }
