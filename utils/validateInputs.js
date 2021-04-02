@@ -53,7 +53,7 @@ exports.validateNewVoteInputs = (data) => {
 
 exports.validateVoteInputs = (data) => {
   const schema = Joi.object().keys({
-    option: Joi.any().required
+    option: Joi.any().required()
   });
 
   return schema.validate(data);

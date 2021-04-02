@@ -40,6 +40,9 @@
           <% if (isVoted) { %>
             <div class="no-chart-container">
               <% if (isVoteResult) { %>
+                <% infoMessages.forEach(infoMessage => { %>
+                  <%= infoMessage %>
+                <% }); %>
                 <%=isVoteResult %>
               <% } else { %>
                 Already Voted

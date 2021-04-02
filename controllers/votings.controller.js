@@ -16,6 +16,7 @@ exports.getVotingPage = async (req, res, next) => {
     }
 
     const isVoteResult = req.flash('success')[0];
+    const infoMessages = req.flash('info');
     const isAuthor = req.user?.email === vote.author.email;
     const isVoted = vote.options.reduce((acc, curr) => {
       return acc || !!curr.voters.some(voter => voter.email === req.user?.email);
@@ -23,6 +24,7 @@ exports.getVotingPage = async (req, res, next) => {
 
     res.render('voting', {
       user: req.user,
+      infoMessages,
       isAuthor,
       isVoted,
       isVoteResult,
