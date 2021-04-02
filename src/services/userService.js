@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const User = require("../models/User");
 
-exports.CreateVote = async ({ userId, voteId }) => {
+exports.AddMyVote = async ({ userId, voteId }) => {
   try {
     const userRecord = await User.updateOne(
       {

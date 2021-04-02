@@ -86,7 +86,7 @@ exports.GetVote = async ({ voteId, user }) => {
   }
 };
 
-exports.CreateVote = async ({ voteInputDTO, user }) => {
+exports.CreateVote = async ({ voteInputDTO, userId }) => {
   try {
     let voteOptions = voteInputDTO.vote_options;
 
@@ -99,7 +99,7 @@ exports.CreateVote = async ({ voteInputDTO, user }) => {
 
     const voteRecord = await Vote.create({
       ...voteInputDTO,
-      creator: user._id,
+      creator: userId,
       vote_options: voteOptions,
       expire_datetime: format(
         new Date(voteInputDTO.expire_datetime),
