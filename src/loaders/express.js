@@ -6,9 +6,11 @@ const methodOverride = require('method-override');
 const path = require("path");
 const { format } = require("date-fns");
 const sassMiddleware = require('node-sass-middleware');
+const session = require('express-session');
 
 const passportLoader = require("./passport");
 const { logger } = require("./logger");
+const { truncateSync } = require("fs");
 
 module.exports = function ({ app, routerLoader }) {
   app.set("view engine", "ejs");
@@ -33,7 +35,14 @@ module.exports = function ({ app, routerLoader }) {
   app.use(methodOverride("_method"));
   app.use(cookieParser());
 
-  //passport
+  // express-session
+  app.use(session({
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true,
+  }));
+
+  // passport
   passportLoader({ app });
 
   // router
