@@ -10,12 +10,17 @@ const User = require("../../models/User");
 
 exports.getAllVotes = async (req, res, next) => {
   const user = getUserInfo(req.session);
-  let votes = await Vote.find()
+
+  try {
+    let votes = await Vote.find()
                         .sort({ expiration_date: -1 })
                         .populate("author", "name").lean();
-  votes = formatExpirationDate(votes);
+    votes = formatExpirationDate(votes);
 
-  res.render("index", { votes, user });
+    res.status(200).render("index", { votes, user });
+  } catch (err) {
+    next(createError(500, "이런.. 투표 목록을 가져오는 데 문제가 발생했습니다."));
+  }
 };
 
 exports.getCreatedVotes = async (req, res, next) => {
@@ -28,7 +33,7 @@ exports.getCreatedVotes = async (req, res, next) => {
                           .populate("author", "name").lean();
     votes = formatExpirationDate(votes);
 
-    res.render("my-votings", { votes, user });
+    res.status(200).render("my-votings", { votes, user });
   } catch (err) {
     next(createError(500, "이런.. 투표 목록을 가져오는 데 문제가 발생했습니다."));
   }
@@ -51,7 +56,7 @@ exports.getVote = async (req, res, next) => {
       return;
     }
 
-    res.render("vote-page", { vote, user });
+    res.status(200).render("vote-page", { vote, user });
   } catch (err) {
     next(createError(500, "이런.. 투표 내용을 가져오는 데 문제가 발생했습니다."));
   }
@@ -153,7 +158,7 @@ exports.castVote = async (req, res, next) => {
       });
     }
 
-    res.status(201).json({ result: "투표를 성공하였습니다." });
+    res.status(200).json({ result: "투표를 성공하였습니다." });
   } catch (err) {
     res.status(500).json({ result: "투표를 실패하였습니다." })
   }
@@ -170,9 +175,9 @@ exports.deleteVote = async (req, res, next) => {
       }
     });
 
-    res.json({ result: "투표가 삭제되었습니다." });
+    res.status(200).json({ result: "투표가 삭제되었습니다." });
   } catch (err) {
-    res.json({ result: "투표 삭제를 실패하였습니다." });
+    res.status(500).json({ result: "투표 삭제를 실패하였습니다." });
   }
 };
 
