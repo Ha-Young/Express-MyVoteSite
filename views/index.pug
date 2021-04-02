@@ -11,8 +11,9 @@ head
   .wrapper
     +header(user)
     .main-container
+      .small-header.delay-animation(style='--delay: .1s') Most Popular
       .main-votes
-        .main-vote.anim(style='--delay: .1s')
+        .main-vote.delay-animation(style='--delay: .1s')
           .main-vote__title Vote your favorite outdoor sports
           .main-vote__creator
             .creator-img__wrapper
@@ -26,7 +27,7 @@ head
                 span.seperate
                 | 2 weeks ago
           .main-vote__status Finished
-        .main-vote.anim(style='--delay: .2s')
+        .main-vote.delay-animation(style='--delay: .2s')
           .main-vote__title What is your preference
           .main-vote__creator.tips
             .main-vote__status Finished
@@ -40,7 +41,7 @@ head
                 | 53K views
                 span
                 | 2 weeks ago
-      .small-header.anim(style='--delay: .3s') Recent Votes
+      .small-header.delay-animation(style='--delay: .3s') Discover
       .votes
         each vote of votes
           +voteList(vote)

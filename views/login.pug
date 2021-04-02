@@ -11,7 +11,7 @@ head
   .wrapper
     +header(user)
     .main-container
-      .form-container.anim(style='--delay: .1s')
+      .form-container.delay-animation(style='--delay: .1s')
         h2 LOGIN
         form(action='/auth/login' method='POST')
           .form-group
@@ -20,6 +20,5 @@ head
           .form-group
             label(for='password') Password
             input#password.form-control(type='password' name='password' required)
-          .alert.alert-dismissible.alert-danger
           //- TODO: flash? or error message;
           button.btn.btn-primary.submit LOGIN

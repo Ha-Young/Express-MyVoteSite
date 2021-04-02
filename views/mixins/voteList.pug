@@ -1,5 +1,5 @@
 mixin voteList(vote, delay)
-  .vote
+  .vote.delay-animation(style='--delay: .3s')
     .vote-status #{vote.isVotable ? 'vote' : 'finished'}
     .vote-wrapper
       // TODO: vote tag css to img

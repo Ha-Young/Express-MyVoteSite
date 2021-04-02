@@ -57,9 +57,11 @@ async function postNewVote(req, res, next) {
 
   try {
     await vote.save();
+    req.flash('info', 'Successfully created new vote!');
     res.status(301).redirect('/');
   } catch (error) {
-    next(createError(500));
+    req.flash('info', 'Error on creating new vote, try again!');
+    res.status(301).redirect('/');
   }
 }
 

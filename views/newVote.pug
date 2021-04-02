@@ -11,7 +11,7 @@ head
   .wrapper
     +header(user)
     .main-container
-      .form-container.anim(style='--delay: .1s')
+      .form-container.delay-animation(style='--delay: .1s')
         h2 Create New Vote
         form#vote-form(action='/vote/new' method='POST')
           .form-group
