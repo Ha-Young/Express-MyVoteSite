@@ -75,8 +75,8 @@ async function handleDeleteBtnClick(e) {
 
     const rawResponse = await fetch(
       totalPath,
-      { method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' }
+      { method: "DELETE",
+        headers: { "Content-Type": "application/json" }
       }
     );
     const content = await rawResponse.json();
