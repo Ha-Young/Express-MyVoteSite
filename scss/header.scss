@@ -6,6 +6,11 @@
   height: 100px;
   background-color: transparent;
 
+  .header-home-link {
+    display: flex;
+    align-items: center;
+  }
+
   .header-column {
     display: flex;
     align-items: center;
@@ -16,6 +21,12 @@
   .logo {
     width: 70px;
     height: 70px;
+  }
+
+  .menu {
+    a button {
+      cursor: pointer;
+    }
   }
 
   .user-info {
