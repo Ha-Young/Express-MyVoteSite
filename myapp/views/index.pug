@@ -8,12 +8,14 @@ block content
     h2 투표목록
     div.voting-container
       - for (let i = 0; i < voting.length; i++)
-        - const { title, _id, result, ended_at } = voting[i]
+        - const { title, _id, result, ended_at, closed } = voting[i]
+        - const {month, date, hour, minute} = getLocalTime(ended_at)
         - const path = `/votings/${_id}`
+        - let votingResult = closed ? result : "투표 중"
         div.item
           a(href=path) #{title}
-          div #{result}
-          div #{ended_at}
+          div #{votingResult}
+          div "#{month}월 #{date}일 #{hour}시 #{minute}분" 까지
     div.btn-container
       a(href="/votings/new") Create Voting
       a(href="/my-votings") My Voting

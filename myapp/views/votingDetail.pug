@@ -4,7 +4,7 @@ block stylesheet
   link(rel='stylesheet', href='/stylesheets/voting-detail.css')
 
 block content
-  - const progress = votingInfo.isClosed ? `${votingInfo.result} : )` : "투표 중..."
+  - const progress = votingInfo.closed ? `${votingInfo.result} : )` : "투표 중..."
   - const { title, author} = votingInfo
   - const { startedAt, endedAt } = votingInfo
   - const { votingItems } = votingInfo

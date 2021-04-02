@@ -20,7 +20,7 @@ const getVotingById = async (votingId) => {
 
   const startedAt = getLocalTime(voting.started_at);
   const endedAt = getLocalTime(voting.ended_at);
-  const isClosed = getProgress(voting.ended_at);
+  // const isClosed = getProgress(voting.ended_at);
 
   const votingInfo = {
     _id: voting._id,
@@ -29,9 +29,9 @@ const getVotingById = async (votingId) => {
     description: voting.description,
     votingItems: voting.voting_items,
     result: voting.result,
+    closed: voting.closed,
     startedAt,
     endedAt,
-    isClosed,
   };
 
   return votingInfo;
