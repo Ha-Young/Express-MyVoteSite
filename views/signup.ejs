@@ -11,62 +11,62 @@
   <header>
     <% include ./partials/header %>
   </header>
-  <div class="">
-    <h3 class="">New User</h3>
+  <div>
+    <h3>New User</h3>
     <form action="/auth/signup" method="POST">
-      <div class="">
-        <div class="">
-          <label for="email" class="">E-mail*</label>
-          <div class="">
-            <input type="email" name="email" value="<%= userInput.email %>" class="" required>
+      <div>
+        <div>
+          <label for="email">E-mail*</label>
+          <div>
+            <input type="email" name="email" value="<%= userInput.email %>" required>
             <% if(errors.email){ %>
-              <div class="">
+              <div>
                 <span class="invalid-feedback"><%= errors.email.message %></span>
               </div>
             <% } %>
           </div>
         </div>
-        <div class="">
-          <label for="name" class="">Name*</label>
-          <div class="">
+        <div>
+          <label for="name">Name*</label>
+          <div>
             <span>영어 대소문자와 숫자로만 구성되고 네글자 이상이어야 합니다.</span>
           </div>
-          <div class="">
-            <input type="text" name="name" value="<%= userInput.name %>" class="" required>
+          <div>
+            <input type="text" name="name" value="<%= userInput.name %>" required>
             <% if(errors.name){ %>
-              <div class="">
+              <div>
                 <span class="invalid-feedback"><%= errors.name.message %></span>
               </div>
             <% } %>
           </div>
         </div>
-        <div class="">
-          <label for="password" class="">Password*</label>
-          <div class="">
+        <div>
+          <label for="password">Password*</label>
+          <div>
             <span>영어 소문자, 대문자, 특수문자(!, @, #, $, %, ^, &, *)를 모두 포함하고 8자리 이상이어야 합니다.</span>
           </div>
-          <div class="">
-            <input type="text" name="password" value="<%= userInput.password %>" class="" required>
+          <div>
+            <input type="text" name="password" value="<%= userInput.password %>" required>
             <% if(errors.password){ %>
-              <div class="">
+              <div>
                 <span class="invalid-feedback"><%= errors.password.message %></span>
               </div>
             <% } %>
           </div>
         </div>
-        <div class="">
-          <label for="passwordConfirm" class="">Password Confirm*</label>
-          <div class="">
-            <input type="text" name="passwordConfirm" value="<%= userInput.passwordConfirm %>" class="" required>
+        <div>
+          <label for="passwordConfirm">Password Confirm*</label>
+          <div>
+            <input type="text" name="passwordConfirm" value="<%= userInput.passwordConfirm %>" required>
             <% if(errors.passwordConfirm){ %>
-              <div class="">
+              <div>
                 <span class="invalid-feedback"><%= errors.passwordConfirm.message %></span>
               </div>
             <% } %>
           </div>
         </div>
-        <div class="">
-          <input type="submit" class="" value="Sign up">
+        <div>
+          <input type="submit" value="Sign up">
         </div>
       </div>
     </form>

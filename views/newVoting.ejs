@@ -5,43 +5,42 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/stylesheets/style.css">
-  <link rel="stylesheet" href="/stylesheets/newVoting.css">
   <title>Document</title>
 </head>
 <body>
   <header>
     <% include ./partials/header %>
   </header>
-  <div class="">
+  <div>
     <form action="/votings/new" method="POST">
-      <div class="">
-        <div class="">
+      <div>
+        <div>
           <label>  투표 제목
-            <input type="text" class="" name="title">
+            <input type="text" name="title">
           </label>
         </div>
         <div class="options-wrapper">
           <label>선택지
-            <input type="text" class="" name="userOptions">
+            <input type="text" name="userOptions">
           </label>
-          <span>선택지는 2 ~ 9개만 허용됩니다.</span>
         </div>
         <button class="option-add-button" type="button">
           한개 더 만들기.
         </button>
-        <div class="">
+        <span>선택지는 2 ~ 9개만 허용됩니다.</span>
+        <div>
           <label>투표 종료일
-            <input type="datetime-local" class="" name="expiration_date">
+            <input type="datetime-local" name="expiration_date">
           </label>
         </div>
         <% if (locals.message) { %>
-          <div class="">
+          <div>
             <h2><%= message.fail %></h2>
           </div>
         <% } %>
-        <div class="">
+        <div>
           <label>만들기
-            <input type="submit" class="">
+            <input type="submit">
           </label>
         </div>
       </div>

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-exports.verifyVote = async function (req, res, next) {
+exports.verifyAddVote = async function (req, res, next) {
   try {
     await jwt.verify(req.cookies.access_token, process.env.JWT_SECRET, async (err, decoded) => {
       if (err) {

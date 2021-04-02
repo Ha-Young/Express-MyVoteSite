@@ -3,10 +3,10 @@
   height: 70%;
   display: grid;
   grid-auto-rows: auto;
-  /* grid-template-columns: ; */
   align-content: center;
   justify-content: center;
-  border: 1px solid black;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .home-grid-item {

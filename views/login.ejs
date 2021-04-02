@@ -11,34 +11,34 @@
   <header>
     <% include ./partials/header %>
   </header>
-  <div class="">
-    <h3 class="">Login</h3>
+  <div>
+    <h3>Login</h3>
     <form action="/auth/login" method="POST">
-      <div class="">
-        <div class="">
-          <label for="email" class="">E-mail*</label>
-          <div class="">
-            <input type="email" name="email" value="<%= userInput.email %>" class="" required>
+      <div>
+        <div>
+          <label for="email">E-mail*</label>
+          <div>
+            <input type="email" name="email" value="<%= userInput.email %>" required>
             <% if(errors.email){ %>
-              <div class="">
+              <div>
                 <span class="invalid-feedback"><%= errors.email.message %></span>
               </div>
             <% } %>
           </div>
         </div>
-        <div class="">
-          <label for="password" class="">Password*</label>
-          <div class="">
-            <input type="text" name="password" value="<%= userInput.password %>" class="" required>
+        <div>
+          <label for="password">Password*</label>
+          <div>
+            <input type="text" name="password" value="<%= userInput.password %>" required>
             <% if(errors.password){ %>
-              <div class="">
+              <div>
                 <span class="invalid-feedback"><%= errors.password.message %></span>
               </div>
             <% } %>
           </div>
         </div>
-        <div class="">
-          <input type="submit" class="" value="Login">
+        <div>
+          <input type="submit" value="Login">
         </div>
       </div>
     </form>

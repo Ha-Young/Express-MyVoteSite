@@ -21,7 +21,7 @@ exports.createVoting = async function (req, res, next) {
     });
 
     res.status(301).redirect('/votings/success');
-  }catch (err) {
+  } catch (err) {
     next(createError(500, err));
   }
 };

@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/stylesheets/style.css">
-  <link rel="stylesheet" href="/stylesheets/myVotings.css">
+  <link rel="stylesheet" href="/stylesheets/home.css">
   <title>Document</title>
 </head>
 <body>
@@ -14,23 +14,20 @@
   </header>
   <div class="home-grid-wrapper">
     <% for (const voting of votings) { %>
-      <a href="<%= `/votings/${voting._id}` %>" class="">
-        <div class="home-grid-item">
-          <div class=""><%= voting.title %></div>
-          <div class="">
-            <div class="">
-              <%= voting.author.name %>
-            </div>
-            <div class="">
+      <a href="<%= `/votings/${voting._id}` %>" class="home-grid-item">
+        <div>
+          <div><h3><%= voting.title %></h3></div>
+          <div>
+            <p>
               <%= voting.expiration_date %>
-            </div>
-            <div class="">
+            </p>
+            <p>
               <%= voting.status %>
-            </div>
+            </p>
             <% if (voting.status === 'expired') { %>
-              <div class="">
+              <p>
                 <%= voting.selected_option %>
-              </div>
+              </p>
             <% } %>
           </div>
         </div>

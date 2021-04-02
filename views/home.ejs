@@ -14,37 +14,37 @@
   </header>
   <div class="home-grid-wrapper">
     <% for (const voting of votings) { %>
-      <a href="<%= `/votings/${voting._id}` %>" class="">
-        <div class="home-grid-item">
-          <div class=""><%= voting.title %></div>
-          <div class="">
-            <div class="">
+      <a href="<%= `/votings/${voting._id}` %>" class="home-grid-item">
+        <div>
+          <div><h3><%= voting.title %></h3></div>
+          <div>
+            <p>
               <%= voting.author.name %>
-            </div>
-            <div class="">
+            </p>
+            <p>
               <%= voting.expiration_date %>
-            </div>
-            <div class="">
+            </p>
+            <p>
               <%= voting.status %>
-            </div>
+            </p>
             <% if (voting.status === 'expired') { %>
-              <div class="">
+              <p>
                 <%= voting.selected_option %>
-              </div>
+              </p>
             <% } %>
           </div>
         </div>
       </a>
     <% } %>
   </div>
-  <div class="">
-    <div class="">
-      <a href="/votings/new" class="">
+  <div>
+    <div>
+      <a href="/votings/new">
         투표 만들기
       </a>
     </div>
-    <div class="">
-      <a href="/my-votings" class="">
+    <div>
+      <a href="/my-votings">
         내 투표보기
       </a>
     </div>

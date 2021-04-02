@@ -14,24 +14,24 @@
   <header>
     <% include ./partials/header %>
   </header>
-  <div class="">
-    <div class="">
+  <div>
+    <div>
       <%= voting.title %>
     </div>
-    <div class="">
-      <div class="">
+    <div>
+      <div>
         <%= voting.expiration_date %>
       </div>
-      <div class="">
+      <div>
         <%= voting.author.name %>
       </div>
     </div>
-    <div class="">
+    <div>
       <form>
         <% for (let i = 0; i < voting.options.length; i++) { %>
           <input
             type="radio"
-            class=""
+           
             name="option"
             value="<%= voting.options[i].optionTitle %>"
             data-count="<%= voting.options[i].count %>"
@@ -45,12 +45,12 @@
           </label>
         <% } %>
         <div class="hidden already-alert">
-          <span class="">
+          <span>
             이미 투표했습니다.
           </span>
         </div>
         <div class="hidden need-option-select">
-          <span class="">
+          <span>
             투표할 선택지를 뽑아 주세요!
           </span>
         </div>
@@ -67,8 +67,8 @@
         삭제하기
       </button>
     <% } %>
-    <div class="">
-      <a href="/" class="">
+    <div>
+      <a href="/">
         목록으로 돌아가기
       </a>
     </div>
