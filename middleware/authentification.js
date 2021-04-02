@@ -60,6 +60,7 @@ module.exports.redirectIfUserNone = function redirectIfUserNone(req, res, next) 
 
 module.exports.responseIfUserNone = function responseIfUserNone(req, res, next) {
   if (!req.user) {
+    res.cookie("originalUrl", req.originalUrl);
     return res.json("none");
   }
 

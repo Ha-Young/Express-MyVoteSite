@@ -26,7 +26,7 @@ block content
               img.voteDetail__choiceImage(src=choice.pictureURL alt="pic")
               .voteDetail__choiceTitle #{choice.choiceTitle}
         .voteDetail__buttons
-          button.voteButton.btn.btn-success Vote!
+          button.voteButton.btn.btn-success(voteId=vote._id) Vote!
           if (vote.isCreator)
             button#deleteButton.btn.btn-danger(voteId=vote._id) Delete
   script(src="/javascripts/voteDetail.js")

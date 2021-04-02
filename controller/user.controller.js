@@ -6,13 +6,14 @@ const User = require("../model/User");
 const Vote = require("../model/Vote");
 
 module.exports.getSignIn = function getSignIn(req, res, next) {
-  console.log(req.flash("info"));
+  console.log(req.cookies["redirectURL"]);
   res.render("signIn", { messages: req.flash("info") });
 }
 
 module.exports.postSignIn = async function postSignIn(req, res, next) {
   const {
-    body: { email, password }
+    body: { email, password },
+    cookies: { originalUrl }
   } = req;
 
   const user = await User.findOne({ email }).lean();
@@ -45,7 +46,7 @@ module.exports.postSignIn = async function postSignIn(req, res, next) {
     })
   );
 
-  res.redirect("/");
+  res.redirect(originalUrl || "/");
 }
 
 module.exports.getSignUp = async function getSignUp(req, res, next) {
@@ -55,7 +56,7 @@ module.exports.getSignUp = async function getSignUp(req, res, next) {
 
 module.exports.postSignUp = async function postSignUp(req, res, next) {
   const {
-    body: { email, password, password2, name },
+    body: { email, password, password2, name }
   } = req;
 
   if (password !== password2) {

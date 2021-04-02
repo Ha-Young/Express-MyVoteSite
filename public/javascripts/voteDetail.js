@@ -17,7 +17,7 @@ $voteButton.addEventListener("click" , (event) => {
   const voteId = $voteButton.getAttribute("voteId");
   const chosenId = $voteButton.getAttribute("choiceId");
 
-  if (!voteId) {
+  if (!chosenId) {
     return alert("선택지를 선택해주세요!");
   }
 
@@ -32,6 +32,8 @@ $voteButton.addEventListener("click" , (event) => {
     })
     .then((result) => {
       if (result === "none") {
+        document.cookie =`redirectURL=/votings/${voteId}`;
+        document.cookie =`test=adsf`;
         window.location.href = "/signin";
       } else {
         window.location.href = `/votings/${voteId}`;
