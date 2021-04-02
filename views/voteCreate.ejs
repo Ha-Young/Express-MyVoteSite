@@ -30,6 +30,11 @@
           <button class="page-button" type="submit">Done</button>
           <button id="form-reset" type="reset">Reset</button>
         </div>
+        <% if (messages.createError) { %>
+          <div class="error-box">
+            <h2><%= messages.createError %></h2>
+          </div>
+        <% } %>
       </form>
     </div>
 

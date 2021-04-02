@@ -12,7 +12,7 @@ router.get('/new', isLoggedIn, (req, res, next) => {
   }
 });
 router.post('/new', isLoggedIn, wrapAsync(votingsController.voteCreate));
-router.get('/success', isLoggedIn, wrapAsync(votingsController.createSuccess));
+router.get('/success', isLoggedIn, votingsController.createSuccess);
 
 router.get('/:id', wrapAsync(votingsController.voteDetail));
 router.get('/:id/result', isLoggedIn, wrapAsync(votingsController.voteResult));

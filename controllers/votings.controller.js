@@ -57,26 +57,32 @@ exports.voteCreate = async (req, res, next) => {
   const convertedExpiredAt = convertDate(expiredDate, expiredTime);
 
   if (new Date(expiredAt) < new Date()) {
+    req.flash('createError', '날짜는 현재 시간 이후로 설정해주세요.');
     res.status(200).render('voteCreate');
     return;
   }
 
-  await Vote.create({
-    title,
-    creater: {
-      _id,
-      nickname,
-    },
-    expiredAt,
-    convertedExpiredAt,
-    optionType,
-    options: filterOption(option),
-  });
-
-  res.status(200).redirect('/');
+  try {
+    await Vote.create({
+      title,
+      creater: {
+        _id,
+        nickname,
+      },
+      expiredAt,
+      convertedExpiredAt,
+      optionType,
+      options: filterOption(option),
+    });
+    res.status(200).redirect('/');
+  } catch (e) {
+    req.flash('createError', '투표 생성에 실패했습니다.');
+    res.status(200).render('voteCreate');
+  }
 };
 
 exports.createSuccess = (req, res, next) => {
+  res.status(200).render('createSuccess');
 };
 
 exports.voteUpdate = async (req, res, next) => {
