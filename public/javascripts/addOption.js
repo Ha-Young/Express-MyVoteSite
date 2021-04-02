@@ -5,7 +5,7 @@ function handleClick () {
   const optionsWrapper = document.querySelector('.options-wrapper');
   const newInput = document.createElement("input");
   newInput.type = "text";
-  newInput.name = "userOptions"
+  newInput.name = "userOptions";
 
   optionsWrapper.appendChild(newInput);
 }

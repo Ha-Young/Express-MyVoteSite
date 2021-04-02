@@ -4,7 +4,6 @@ const path = require('path');
 const status = require('statuses');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
 const session = require('express-session');
 const flash = require('connect-flash');
 
@@ -28,7 +27,6 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -48,8 +46,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
-  // TODO if err가 createError로 생성된거면 그대로 로그 찍으면 안되고 메시지 바꿔서 찍어줘야함. joi에서 넘어오는 메시지 그대로 노출되면 안됨!
-  res.locals.message = err.message;
+  res.locals.message = status[err.status];
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   res.status(err.status || 500);

@@ -6,9 +6,6 @@ const {
 } = require('../constants/joiErrorMessage');
 const { getErrorMessage } = require('../utils');
 
-// TODO error 종류에 따라서 다른 에러메시지를 던지는것도 괜찮을듯??
-//+ 지금은 옵션에서 얼리abort시켜놔서 에러 한개만 잡히는데 여러개 잡아도 좋을듯
-
 exports.signupValidation = function (req, res, next) {
   const schema = Joi.object({
     email: Joi.string()

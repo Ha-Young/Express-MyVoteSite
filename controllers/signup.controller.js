@@ -1,4 +1,4 @@
-exports.getSignupPage = async function (req, res, next) {
+exports.getSignupPage = function (req, res, next) {
   const userInput = req.flash('userInput')[0] || {};
   const errors = req.flash('errors')[0] || {};
 

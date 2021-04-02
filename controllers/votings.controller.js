@@ -3,7 +3,7 @@ const Voting = require('../models/Voting');
 const User = require('../models/User');
 const mongoose = require('mongoose');
 
-exports.renderNewVoting = async function (req, res, next) {
+exports.renderNewVoting = function (req, res, next) {
   res.render('newVoting');
 };
 

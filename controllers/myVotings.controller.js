@@ -1,9 +1,14 @@
+const createError = require('http-errors');
 const Voting = require('../models/Voting');
 
 exports.getMyVotings = async function (req, res, next) {
-  await Voting.updateExpiredVotingStatus(new Date());
+  try {
+    await Voting.updateExpiredVotingStatus(new Date());
 
-  const votings = await Voting.find({ author: req.user });
+    const votings = await Voting.find({ author: req.user });
 
-  res.render('myVotings', { votings })
+    res.render('myVotings', { votings })
+  } catch (err) {
+    next(createError(500, err));
+  }
 };
