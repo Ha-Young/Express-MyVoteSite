@@ -41,6 +41,11 @@
             <input type="submit" class="form-submit-button" data-votingid="<%= voting._id %>">
           </label>
         <% } %>
+        <div class="hidden">
+          <span class="already-alert">
+            이미 투표했습니다.
+          </span>
+        </div>
       </form>
     </div>
     <% if (voting.status === "expired" || (locals.user && locals.user._id.toString() === voting.author._id.toString())) { %>

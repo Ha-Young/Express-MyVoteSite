@@ -5,14 +5,20 @@ async function handleDeleteButtonClick (e) {
   e.preventDefault();
 
   try {
-    await fetch(`/votings/delete/${$deleteButton.dataset.votingid}`, {
+    const response = await fetch(`/votings/delete/${$deleteButton.dataset.votingid}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       }
     });
 
-    window.location.href = '/';
+    const responseBody = await response.json();
+
+    if (responseBody.error) {
+      window.location.href = '/error';
+    } else {
+      window.location.href = `/`;
+    }
   } catch (err) {
     console.log(err);
   }

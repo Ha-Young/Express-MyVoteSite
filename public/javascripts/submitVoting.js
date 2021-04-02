@@ -1,4 +1,5 @@
 const $formSubmitButton = document.querySelector('.form-submit-button');
+const $alreadyVotedAlert = document.querySelector('.hidden');
 $formSubmitButton.addEventListener('click', handleSubmitButtonClick);
 
 async function handleSubmitButtonClick (e) {
@@ -19,13 +20,15 @@ async function handleSubmitButtonClick (e) {
 
     const responseBody = await response.json();
 
-    if (responseBody.error) {
-      window.location.href = '/login';
+    if (responseBody.error === "이미 투표했습니다.") {
+      return $alreadyVotedAlert.classList.remove('hidden');
+    } else if (responseBody.error) {
+      window.location.href = `/error/${responseBody.error}`;
     } else {
       window.location.href = `/votings/${$formSubmitButton.dataset.votingid}`;
     }
 
   } catch (err) {
-    console.log(err);
+    window.location.href = '/error/500';
   }
 }

@@ -1,0 +1,7 @@
+.hidden {
+  visibility: hidden;
+}
+
+.already-alert {
+  color: red;
+}

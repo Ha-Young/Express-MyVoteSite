@@ -5,14 +5,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/stylesheets/style.css">
+  <link rel="stylesheet" href="/stylesheets/votingError.css">
   <title>Document</title>
 </head>
 <body>
-  <header>
-    <% include ./partials/header %>
-  </header>
-  <h1><%= message %></h1>
-  <h2><%= error.status %></h2>
-  <pre><%= error.stack %></pre>
+  <div class="">
+    투표 생성에 실패했습니다ㅠㅠ
+    <div class="">
+      <a href="/">홈으로 돌아가기</a>
+    </div>
+  </div>
 </body>
 </html>
