@@ -278,6 +278,24 @@ body.light-mode:before {
   }
 }
 
+.notification {
+  position: relative;
+  &-number {
+   position: absolute;
+   background-color: #3a6df0;
+   width: 16px;
+   height: 16px;
+   border-radius: 50%;
+   font-size: 10px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: #fff;
+   right: -6px;
+   top: -6px;
+  }
+}
+
 .profile-img {
   width: 32px;
   height: 32px;
