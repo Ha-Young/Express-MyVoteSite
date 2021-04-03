@@ -11,6 +11,7 @@ body {
   margin: 0;
   padding: 0;
   align-items: center;
+  justify-content: center;
   font-family: "Do Hyeon", sans-serif;
   color: black;
 }
@@ -29,7 +30,7 @@ h4 {
   justify-content: flex-end;
   align-items: center;
   width: 100vw;
-  margin: 1vh 0;
+  margin: 6vh 0 1vh 0;
   text-align: center;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
@@ -40,6 +41,7 @@ h4 {
   justify-content: space-around;
   align-items: center;
   width: 35vw;
+  z-index: 2;
 }
 
 .title {
@@ -48,6 +50,7 @@ h4 {
   position: absolute;
   right: translateX(-50);
   width: 100vw;
+  z-index: 1;
 }
 
 footer {
@@ -57,4 +60,33 @@ footer {
   bottom: 0;
   width: 95vw;
   margin-bottom: 2vh;
+}
+
+.global-button {
+  border: 3px solid black;
+  background-color: #efefef;
+  box-shadow: 6px 7px 0px 2px #9c88ff;
+  -webkit-box-shadow: 6px 7px 0px 2px #9c88ff;
+  -moz-box-shadow: 6px 7px 0px 2px #9c88ff;
+  transition: transform 2s;
+  cursor: pointer;
+  width: 20%;
+  height: 4vh;
+  font-size: large;
+  outline: none;
+}
+
+.global-button:hover {
+  border: 4px solid black;
+  border-radius: 20% 70% 23% 37% / 41% 60% 30% 20%;
+  animation: animate 1.5s linear alternate infinite;
+}
+
+@keyframes animate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(3deg);
+  }
 }

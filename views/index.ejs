@@ -22,29 +22,29 @@
       <% } %>
     </div>
     <div clas="main-content-wrap">
-    <div class="main-content">
-    <% if (votings.length > 0) { %>
-      <% votings.forEach(function(voting) { %>
-        <div class="voting-card <% voting.isProceeding ? null : finished %>">
-          <div class="card-container">
-          <a href="/votings/<%= voting._id %>">
-            <h2 class="voting-title"><%= voting.title %></h2>
-            <div class="is-proceeding">
-              <% if (voting.isProceeding) { %>
-                <h3 class="proceeding-font">Proceeding...</h3>
-                <h4 class="expire-date">Expire At: <%= format(voting.expireDate, "yyyy/MM/dd") %></h4>
-              <% } else { %>
-                <h4 class="expire-status finished-font">Finished</h4>
-              <% } %>
+      <div class="main-content">
+      <% if (votings.length > 0) { %>
+        <% votings.forEach(function(voting) { %>
+          <div class="voting-card <% voting.isProceeding ? null : finished %>">
+            <div class="card-container">
+              <a class="voting-link" href="/votings/<%= voting._id %>">
+                <h2 class="voting-title"><%= voting.title %></h2>
+                <div class="is-proceeding">
+                  <% if (voting.isProceeding) { %>
+                    <h3 class="proceeding-font">Proceeding...</h3>
+                    <h4 class="expire-date">Expire at: <%= format(voting.expireDate, "yyyy/MM/dd") %></h4>
+                  <% } else { %>
+                    <h4 class="expire-status finished-font">Finished</h4>
+                  <% } %>
+                </div>
+                <h4 class="author">Author: <%= voting.author.userName %></h4>
+                <h4 class="contact">Contact: <%= voting.author.email %></h4>
+              </a>
             </div>
-            <h4 class="author">Author: <%= voting.author.userName %></h4>
-            <h4 class="contact">Contact: <%= voting.author.email %></h4>
-          </a>
           </div>
-        </div>
-      <% }) %>
-    <% } %>
-    </div>
+        <% }) %>
+      <% } %>
+      </div>
     </div>
     <%- include("./partials/footer.ejs") %>
   </body>
