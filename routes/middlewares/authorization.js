@@ -10,7 +10,7 @@ exports.verifyToken = (req, res, next) => {
       decoded = jwt.verify(
         token, 
         process.env.JWT_SECRET_KEY, 
-        { expiresIn: "1h" }
+        { expiresIn: process.env.JWT_EXPIRES_IN }
       );
     }
     
