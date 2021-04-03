@@ -13,11 +13,11 @@ async function newVotingInputValidation(req, res, next) {
     const isOptionsValidated = options && options.every(option => option.trim().length > 0);
 
     if (!isOptionsValidated) {
-      errorMessages.push({message: "Should contain at least 2 options with proper letter" });
+      errorMessages.push({ message: "Should contain at least 2 options with proper letter" });
     }
 
     if (!isProceeding) {
-      errorMessages.push({message: "The expire date can't be eariler than today" });
+      errorMessages.push({ message: "The expire date can't be eariler than today" });
     }
 
     if (errorMessages.length) {

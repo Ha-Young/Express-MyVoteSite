@@ -1,6 +1,6 @@
 const User = require("../../../models/User");
 
-async function signUpInputValidation (req, res, next) {
+async function signUpInputValidation(req, res, next) {
   try {
     const errorMessages = [];
     const {
@@ -20,7 +20,6 @@ async function signUpInputValidation (req, res, next) {
 
     const registerPasswordFormat = new RegExp("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$");
 
-    /************ TODO : 이메일 형식 validation, regexp로 검증 다시하기 *********/
     if (password.length < 5 || !registerPasswordFormat.test(password)) {
       errorMessages.push({
         message: "Password should contain at least one number, letter, special character, minimum length 8"

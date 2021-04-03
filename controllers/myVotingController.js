@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const { format } = require("date-fns")
+const { format } = require("date-fns");
 
 exports.getMyVotings = async function(req, res, next) {
   const { user } = req;

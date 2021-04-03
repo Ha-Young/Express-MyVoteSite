@@ -81,7 +81,7 @@ async function handleDeleteBtnClick(e) {
     );
     const content = await rawResponse.json();
 
-    if (content.result === "ok") {
+    if (content.result === "voting deleted") {
       window.location.href = "/";
     }
   } catch (error) {

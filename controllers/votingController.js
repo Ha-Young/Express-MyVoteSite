@@ -56,7 +56,7 @@ exports.getSelectedVoting = async function (req, res, next) {
         _id: _id,
         title: title,
         voters: voters,
-      }
+      };
     });
 
     const votingDetailFormat = {
@@ -96,7 +96,7 @@ exports.deleteVoting = async function (req, res, next) {
       { new: true },
     );
 
-    res.status(200).json({ result: "ok" });
+    res.status(200).json({ result: "voting deleted" });
   } catch (error) {
     next(error);
   }
