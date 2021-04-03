@@ -53,3 +53,7 @@ ul {
 .option-value {
   margin-left: 10px;
 }
+
+.highest-option {
+  background: lightgreen;
+}

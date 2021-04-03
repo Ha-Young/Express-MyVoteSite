@@ -151,15 +151,17 @@ Controller.getDetailVoting = async (req, res, next) => {
             isAuthor,
           });
         } else {
-          let highestOption;
+          let highestValue;
 
           options.forEach(option => {
-            if (!highestOption) {
-              return highestOption = option;
+            const { value } = option;
+
+            if (!highestValue) {
+              return highestValue = value;
             }
 
-            if (highestOption.value < option.value) {
-              highestOption = option;
+            if (highestValue < value) {
+              highestValue = value;
             }
           });
 
@@ -167,7 +169,7 @@ Controller.getDetailVoting = async (req, res, next) => {
             voting,
             author: author.email,
             isAuthor,
-            highestOption,
+            highestValue,
           });
         }
       });

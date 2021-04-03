@@ -18,8 +18,7 @@
       <article class="voting-list">
         <div class="result">
           <p>최종 결과</p>
-          <p>최다 득점 타이틀: <%= highestOption.title %></p>
-          <p>최다표 수: <%= highestOption.value %></p>
+          <p>최다표 수: <%= highestValue %></p>
         </div>
         <ul>
           <p>투표 생성자: <%= author %></p>
@@ -27,16 +26,19 @@
           <article>
             <% voting.options.forEach(option => { %>
               <label for="<%= option.title %>">
-                <li class="voting-option">
-                  <input
-                    id="<%= option.title %>"
-                    type="radio"
-                    name="option"
-                    value="<%= option.title %>"
-                  >
+                <% if (highestValue === option.value) { %>
+                  <li class="voting-option highest-option">
+                      <input type="radio">
+                    <%= option.title %>
+                    투표 수: <%= option.value %>
+                  </li>
+                <% } else { %>
+                  <li class="voting-option">
+                    <input type="radio">
                   <%= option.title %>
                   투표 수: <%= option.value %>
                 </li>
+                <% } %>
               </label>
             <% }) %>
           </article>
