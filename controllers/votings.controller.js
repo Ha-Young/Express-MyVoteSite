@@ -62,7 +62,7 @@ exports.voteCreate = async (req, res, next) => {
   }
 
   try {
-    await Vote.create({
+    const data = await Vote.create({
       title,
       creater: {
         _id,
@@ -72,7 +72,7 @@ exports.voteCreate = async (req, res, next) => {
       convertedExpiredAt,
       options: filterOption(option),
     });
-    res.status(200).redirect('/');
+    res.status(200).json(JSON.stringify(data));
   } catch (e) {
     req.flash('createError', '투표 생성에 실패했습니다.');
     res.status(200).render('voteCreate');
