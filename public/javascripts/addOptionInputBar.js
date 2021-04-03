@@ -25,7 +25,7 @@ function handleOptionAddingBtnClick(e) {
     newOptionInput,
     { "class": "option",
       "type": "text",
-      "name": "votingOption",
+      "name": "options",
       "placeholder": "New Option",
     }
   );
