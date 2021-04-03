@@ -1,4 +1,4 @@
-const ctx = document.getElementById("voting-chart");
+const chart = document.getElementById("voting-chart");
 
 const labels = options.map((content) => content.option);
 const data = options.map((content) => content.count);
@@ -15,7 +15,7 @@ function generateRandomColor() {
   return "#" + randomColor;
 }
 
-const chart = new Chart(ctx, {
+const chart = new Chart(chart, {
   type: "doughnut",
   data: {
     labels,
