@@ -9,7 +9,7 @@ exports.getAllVotings = async (req, res, next) => {
 
   try {
     const votings = await Voting.find()
-      .sort({ expired_at: 1 })
+      .sort({ expired_at: -1 })
       .populate("proponent", "name");
 
     res.status(200).render("index", { votings, user });
