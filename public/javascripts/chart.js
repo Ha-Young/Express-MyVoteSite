@@ -1,21 +1,20 @@
-const chart = document.getElementById("voting-chart");
+const votingChart = document.getElementById("voting-chart");
 
-const labels = options.map((content) => content.option);
-const data = options.map((content) => content.count);
-const backgroundColor = options.map(() => generateRandomColor());
+const chartData = {
+  labels: [],
+  data: [],
+  backgroundColor: [],
+};
 
-function generateRandomColor() {
-  const Char = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  let randomColor = "";
-  
-  for(i = 0; i < 6; i++) {
-    randomColor = randomColor + Char[Math.floor(Math.random() * 16)];
-  }
-  
-  return "#" + randomColor;
-}
+options.forEach((content) => {
+  chartData.labels.push(content.option);
+  chartData.data.push(content.count);
+  chartData.backgroundColor.push(generateRandomColor());
+});
 
-const chart = new Chart(chart, {
+const { labels, data, backgroundColor } = chartData;
+
+const chart = new Chart(votingChart, {
   type: "doughnut",
   data: {
     labels,
@@ -30,3 +29,14 @@ const chart = new Chart(chart, {
     responsive: false,
   },
 });
+
+function generateRandomColor() {
+  const Char = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let randomColor = "";
+  
+  for(i = 0; i < 6; i++) {
+    randomColor = randomColor + Char[Math.floor(Math.random() * 16)];
+  }
+  
+  return "#" + randomColor;
+}
