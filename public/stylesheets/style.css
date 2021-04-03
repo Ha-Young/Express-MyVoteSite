@@ -5,7 +5,7 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   font-weight: bold;
   color: black;
-  background-color: #D0D9EB;
+  background-color: white;
 }
 
 ul {
@@ -45,6 +45,33 @@ button {
   outline: none;
 }
 
+.main-page {
+  display: flex;
+}
+
+.side-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  height: 100%;
+  padding: 20px;
+}
+
+.title {
+  margin-bottom: 100px;
+  text-align: center;
+  font-size: 40px;
+}
+
+.description {
+  margin-right: 20px;
+  text-align: left;
+  font-size: 15px;
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -52,6 +79,17 @@ button {
   width: 100%;
   height: 100%;
   min-height: 100vh;
+}
+
+.voting-buttons {
+  display: block;
+  width: 100%;
+  background: #24282C;
+  text-align: right;
+}
+
+.voting-buttons > a {
+  color: white;
 }
 
 .message-box {

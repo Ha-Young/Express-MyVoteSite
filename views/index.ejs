@@ -6,43 +6,63 @@
     <link rel="stylesheet" href="/stylesheets/votingCard.css" />
   </head>
   <body>
-    <%- include("partial/header") %>
-    <article class="buttons">
-      <% if (user) { %>
-        <span class="user-info"><%= user.email %></span>
-        <a href="/auth/logout">로그아웃</a>
-      <% } else { %>
-        <a href="/auth/login">로그인</a>
-      <% } %>
-      <a href="/voting/votings/new">투표 생성</a>
-      <a href="/voting/votings/my-votings">내 투표</a>
-    </article>
-    <section class="container">
-      <ul class="votings">
-        <% votings.forEach(voting => { %>
-          <li class="voting card">
-            <div class="card-header card">
-              <h4><%= voting.title %></h4>
-            </div>
-            <div class="card-info card">
-              <p>투표 종료 날짜</p>
-              <%= voting.endDate %>
-              <% if (voting.isProgress) { %>
-                <p>투표 진행 중</p>
-              <% } else { %>
-                <p>투표 종료</p>
-              <% } %>
-              <a href="/voting/votings/<%= voting._id %>">
-                <% if (voting.isProgress) { %>
-                  투표하러 가기
-                <% } else { %>
-                  투표 결과 보기
-                <% } %>
-              </a>
-            </div>
-          </li>
-        <% }) %>
-      </ul>
+    <section class="main-page">
+      <article class="side-page">
+        <h2 class="title">
+          VOTING<br>
+          PLATFORM
+        </h2>
+        <pre class="description">
+          간단한 투표를 할 수 있는 공간입니다.
+          최대 5개의 투표 리스트를 작성할 수 있으며,
+          결과는 차트를 통해서 보기 쉽게 확인할 수 있습니다!
+          로그인을 한 후 이용해주세요.
+        </pre>
+        <article class="buttons">
+          <% if (user) { %>
+            <a href="/auth/logout">로그아웃</a>
+          <% } else { %>
+            <a href="/auth/login">로그인</a>
+          <% } %>
+          <a href="/auth/signup">회원가입</a>
+        </article>
+      </article>
+      <section class="container">
+        <article class="voting-buttons">
+          <a href="/voting/votings/new">투표 생성</a>
+          <a href="/voting/votings/my-votings">내 투표</a>
+        </article>
+        <ul class="votings">
+          <% votings.forEach(voting => { %>
+            <li class="voting">
+              <div class="card-img"></div>
+              <article class="card-description">
+                <h4><%= voting.title %></h4>
+                <p>투표 종료 날짜</p>
+                <%= voting.endDate %>
+              </article>
+              <article class="card-buttons">
+                <div class="card-button">
+                  <% if (voting.isProgress) { %>
+                    <p>투표 진행 중</p>
+                  <% } else { %>
+                    <p>투표 종료</p>
+                  <% } %>
+                </div>
+                <div class="card-button">
+                  <a href="/voting/votings/<%= voting._id %>">
+                    <% if (voting.isProgress) { %>
+                      투표하러 가기
+                    <% } else { %>
+                      투표 결과 보기
+                    <% } %>
+                  </a>
+                </div>
+              </article>
+            </li>
+          <% }) %>
+        </ul>
+      </section>
     </section>
   </body>
 </html>
