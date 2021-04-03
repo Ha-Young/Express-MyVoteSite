@@ -8,6 +8,7 @@ block content
   - const { title, author} = votingInfo
   - const { startedAt, endedAt } = votingInfo
   - const { votingItems } = votingInfo
+  - const votingId = votingInfo._id
   section.detail
     h2 #{title}
     div.container
@@ -26,9 +27,9 @@ block content
       div.item-container
         - for (let i = 0; i < votingItems.length; i++)
           - const {item, count} = votingItems[i]
-            div.item(data-voting-id=votingInfo._id, data-option-id=votingItems[i]._id) #{item} #{count}
+            div.item(data-voting-id=votingId, data-option-id=votingItems[i]._id) #{item} #{count}
     div.button
       a(href="/") 돌아가기
       if isAuthor
-        a(href="/") 삭제
+        a(href=`/votings/${votingId}/delete`) 삭제
   script(src="/javascripts/votingDetail.js")

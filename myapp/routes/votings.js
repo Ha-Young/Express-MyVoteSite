@@ -65,4 +65,25 @@ router.get("/:votingId", async (req, res, next) => {
   }
 });
 
+router.get("/:votingId/delete", async (req, res, next) => {
+  try {
+    const { votingId } = req.params;
+    const votingInfo = await getVotingById(votingId);
+    const userId = req.user._id;
+    const authorId = votingInfo.author._id;
+    let isAuthor;
+
+    isAuthor = userId.equals(authorId) ? true : false;
+
+    if (isAuthor) {
+      await Voting.deleteOne({ _id: votingId });
+    }
+
+    res.status(302).redirect("/");
+  } catch (err) {
+    console.error(`get /:votingId delete in votings.js ${err.message}`);
+    next(createError(500, "Internal Server Error"));
+  }
+});
+
 module.exports = router;

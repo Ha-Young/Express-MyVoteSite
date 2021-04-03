@@ -24,15 +24,12 @@
 }
 
 .voting-container {
-  display: flex;
-  flex-flow: column;
-  justify-content: flex-start;
-  align-items: center;
   box-sizing: border-box;
   width: 80%;
   height: 70%;
   border: 2px solid #A8DADC;
   border-radius: 10px;
+  overflow: scroll;
 }
 
 .item {
