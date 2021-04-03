@@ -2,8 +2,19 @@ const mongoose = require('mongoose');
 const findOrCreate = require('mongoose-findorcreate');
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  name: {
+    type: String,
+    required: [true, 'name is required'],
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: [true, 'email is required'],
+    validate: {
+      validator: (email) => email.match(/^([\w-]+@([\w-]+\.)+[\w-]{2,4})?$/),
+      message: 'please enter a valid email',
+    },
+  },
   avatarUrl: { type: String },
   githubId: { type: String },
   password: { type: String },
