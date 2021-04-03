@@ -71,7 +71,7 @@ Controller.postNewVoting = async (req, res, next) => {
 
     const user = await User.findById({ _id: currentUserId });
 
-    user.votingList.push(newVoting._id);
+    user.producedVotes.push(newVoting._id);
 
     await user.save();
 
@@ -111,14 +111,14 @@ Controller.getMyVotings = async (req, res, next) => {
     const currentUserId = req.user._id;
 
     User.findById({ _id: currentUserId })
-      .populate("votingList")
+      .populate("producedVotes")
       .exec((error, user) => {
         if (error) {
           console.error(error.message);
           return next(handleError(500, error));
         }
 
-        res.render("myVotings", { myVotings: user.votingList });
+        res.render("myVotings", { myVotings: user.producedVotes });
       });
   } catch (error) {
     console.error(error.message);
@@ -223,9 +223,9 @@ Controller.deleteVoting = async (req, res, next) => {
 
     const user = await User.findById({ _id: currentUserId });
 
-    user.votingList.forEach((voting, index) => {
+    user.producedVotes.forEach((voting, index) => {
       if (voting.toString() === votingId) {
-        user.votingList.splice(index, 1);
+        user.producedVotes.splice(index, 1);
       }
     });
 
