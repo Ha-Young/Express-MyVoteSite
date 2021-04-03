@@ -21,9 +21,9 @@ function createOption() {
 }
 
 function deleteOption() {
-  const leng = $options.length;
+  const length = $options.length;
 
-  if (leng === 2) {
+  if (length === 2) {
     $messageBox.textContent = 'Option least 2.';
 
     return;
