@@ -2,8 +2,7 @@
 <div class="vote-detail-wrapper">
   <div class="vote-detail-cont grid-split-two">
     <%- include('../mixins/voteDetail_info.ejs') %>
-
-    <% if (vote.is_process) { %>
+    <% if (vote.is_process && !vote.myVote) { %>
       <div class="vote-result-column vote-detail-option-wrapper">
         <%- include('../mixins/voteDetail_options.ejs') %>
       </div>
@@ -15,7 +14,7 @@
   </div>
 </div>
 
-<% if (vote.is_process) { %>
+<% if (vote.is_process && !vote.myVote) { %>
   <script src="/javascripts/utils/path.js"></script>
   <script src="/javascripts/utils/cookie.js"></script>
   <script src="/javascripts/utils/login.js"></script>
