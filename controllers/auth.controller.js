@@ -29,10 +29,6 @@ function renderSignup(req, res, next) {
 async function postSignup(req, res, next) {
   const { name, email, password } = req.body;
 
-  name.trim();
-  email.trim();
-  password.trim();
-
   try {
     const hashedPassword = await bcrypt.hash(password, getRandomSalt());
 

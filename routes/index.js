@@ -1,10 +1,9 @@
 const express = require('express');
-const router = express.Router();
 
 const voteController = require('../controllers/vote.controller');
 const { checkAuthenticated, addUserInfo } = require('../middlewares/auth');
 
-/* GET home page. */
+const router = express.Router();
 
 router.get('/', addUserInfo, voteController.renderAllVotes);
 router.get('/myvotes', checkAuthenticated, voteController.renderMyVote);
