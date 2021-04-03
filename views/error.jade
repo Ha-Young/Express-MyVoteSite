@@ -1,6 +1,8 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre= error.stack
+  div.page-container
+    h1 에러발생!!
+    h2= message
+    p= error.status
+  link(rel="stylesheet", href="/stylesheets/error.css")
