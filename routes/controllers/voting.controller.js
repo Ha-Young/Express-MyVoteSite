@@ -20,9 +20,9 @@ exports.createNewVoting = async (req, res, next) => {
   const { body: { options, expired_at, title }, user } = req;
 
   try {
-		if (!user.hasOwnProperty(_id)) {
-			throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
-		}
+    if (!user.hasOwnProperty(_id)) {
+      throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
+    }
 
     const newVoting = await Voting.create({
       title,
@@ -84,7 +84,7 @@ exports.updateVoting = async (req, res, next) => {
     } = req;
 
     let isSuccessVoting = false;
-		
+    
     if (!user) {
       res.status(200).json({ isSuccessVoting, queryString: originalUrl, message: "로그인이 필요합니다." });
 
@@ -115,11 +115,11 @@ exports.updateVoting = async (req, res, next) => {
 
 exports.getMyVotingPage = async (req, res, next) => {
   const { user } = req;
-	
+  
   try {
-		if (!user) {
-			throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
-		}
+    if (!user) {
+      throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
+    }
 
     const [userData] = await User.find({ _id: user._id }).populate("voting");
     
@@ -130,17 +130,17 @@ exports.getMyVotingPage = async (req, res, next) => {
 };
 
 exports.getNewVotingPage = (req, res, next) => {
-	const { user } = req;
+  const { user } = req;
 
-	try {
-		if (!user) {
-			throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
-		}
+  try {
+    if (!user) {
+      throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
+    }
 
-		const [error] =req.flash(CLIENT_ERROR.NEW_VOTING_ERROR);
+    const [error] =req.flash(CLIENT_ERROR.NEW_VOTING_ERROR);
 
-		res.status(200).render("newVoting", { message: error });
-	} catch (error) {
-		next(error);
-	}
+    res.status(200).render("newVoting", { message: error });
+  } catch (error) {
+    next(error);
+  }
 };
