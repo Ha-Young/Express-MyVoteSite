@@ -6,9 +6,11 @@ const { SERVER_ERROR, CLIENT_ERROR } = require("../../constants/error");
 
 exports.getAllVotings = async (req, res, next) => {
   const { user } = req;
-  
+
   try {
-    const votings = await Voting.find().populate("proponent", "name");
+    const votings = await Voting.find()
+      .sort({ expired_at: 1 })
+      .populate("proponent", "name");
 
     res.status(200).render("index", { votings, user });
   } catch (error) {
