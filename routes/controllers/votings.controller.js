@@ -33,7 +33,7 @@ exports.postNewVoting = async function (req, res, next) {
     const expiredAt = convertDate(createdAt, day, hour, minute);
 
     if (expiredAt === createdAt) {
-      res.render("newVoting", { message: resultMessage.INVALID_PERIOD });
+      res.status(200).render("newVoting", { message: resultMessage.INVALID_PERIOD });
       return;
     }
 
@@ -60,7 +60,7 @@ exports.postNewVoting = async function (req, res, next) {
     );
 
     req.flash("message", resultMessage.SUCCESS_CREATE_VOTE);
-    res.redirect("/votings/success");
+    res.status(302).redirect("/votings/success");
   } catch (err) {
     next(err);
   }

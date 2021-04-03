@@ -36,7 +36,7 @@ exports.postSignup = async function (req, res, next) {
     const user = await User.findOne({ email });
 
     if (user) {
-      res.render("signup", { message: resultMessage.INVALID_EMAIL });
+      res.status(200).render("signup", { message: resultMessage.INVALID_EMAIL });
       return;
     }
 

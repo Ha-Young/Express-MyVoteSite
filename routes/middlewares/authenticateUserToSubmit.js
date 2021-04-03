@@ -4,7 +4,7 @@ function authenticateUserToSubmit(req, res, next) {
     return;
   }
 
-  res.json({ url: `/auth/login?url=${ req.originalUrl }` });
+  res.status(301).json({ url: `/auth/login?url=${ req.originalUrl }` });
 }
 
 module.exports = authenticateUserToSubmit;
