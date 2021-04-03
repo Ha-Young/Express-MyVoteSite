@@ -13,14 +13,16 @@ router.post("/login",
   }
 ), (req, res, next) => {
   try {
-    const loginUrl = "http://localhost:3000/auth/login";
-    const redirectUrl = req.headers.referer.replace(loginUrl+"?url=", "");
+    // const loginUrl = "http://localhost:3000/auth/login";
+    // const redirectUrl = req.headers.referer.replace(loginUrl+"?url=", "");
 
-    if (redirectUrl !== "undefined" && redirectUrl !== loginUrl) {
-      res.status(301).redirect(redirectUrl);
-    } else {
-      res.status(301).redirect("/");
-    }
+    // if (redirectUrl !== "undefined" && redirectUrl !== loginUrl) {
+    //   res.status(301).redirect(redirectUrl);
+    // } else {
+    //   res.status(301).redirect("/");
+    // }
+
+    res.status(301).redirect("/");
   } catch (err) {
     next(err);
   }
