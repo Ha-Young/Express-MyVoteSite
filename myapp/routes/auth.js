@@ -1,16 +1,16 @@
 const express = require("express");
 const createError = require("http-errors");
-const crypto = require("crypto");
 const passport = require("passport");
 const User = require("../models/User");
 const getLoginStatus = require("../utils/getLoginStatus");
+const { createUser } = require("./controllers/user.controller");
 require("../utils/localAuthentication");
 
 const router = express.Router();
 
 router.get("/login", (req, res, next) => {
   const isLogin = getLoginStatus(req);
-  res.render("auth", { isLogin, isSignUp: false });
+  res.status(200).render("auth", { isLogin, isSignUp: false });
 });
 
 router.post(
@@ -25,7 +25,7 @@ router.post(
 
 router.get("/signup", (req, res, next) => {
   const isLogin = getLoginStatus(req);
-  res.render("auth", { isLogin, isSignUp: true });
+  res.status(200).render("auth", { isLogin, isSignUp: true });
 });
 
 router.post("/signup", async (req, res, next) => {
@@ -36,12 +36,8 @@ router.post("/signup", async (req, res, next) => {
     if (doc) {
       res.send("중복되는 이메일입니다.");
     } else {
-      const cryptoPassword = crypto
-        .createHash("sha512")
-        .update(password)
-        .digest("base64");
-
-      await User.create({ name, email, password: cryptoPassword });
+      const userInfo = req.body;
+      await createUser(userInfo);
       res.status(302).redirect("/login");
     }
   } catch (err) {
