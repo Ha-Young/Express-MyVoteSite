@@ -49,6 +49,23 @@ exports.DeleteMyVote = async ({ userId, voteId }) => {
   }
 };
 
+exports.CheckMyVote = async ({ userId, voteId }) => {
+  try {
+    const userRecord = await User.findById(userId);
+
+    if (!userRecord) {
+      throw new Error("can not find user");
+    }
+
+    const checkMyVote = userRecord.my_votes.includes(mongoose.Types.ObjectId(voteId));
+
+    return checkMyVote ? { isMyVote: true } : { isMyVote: false };
+
+  } catch (error) {
+    return { error };
+  }
+};
+
 exports.CheckAreadyVote = async ({ userId, voteId }) => {
   try {
     const userRecord = await User.findById(userId);
