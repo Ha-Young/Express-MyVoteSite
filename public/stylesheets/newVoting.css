@@ -1,0 +1,91 @@
+.new-voting-all-wrap {
+  height: 95%;
+}
+
+.new-voting-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60vw;
+  height: 80vh;
+}
+
+.voting-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 70vh;
+}
+
+.voting-form {
+  width: 30vw;
+}
+
+.new-voting-title, .expire-date, .option-wrap, .btn-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.option-container {
+  width: 100%;
+}
+
+.option {
+  width: 85%;
+}
+
+.option-delete-btn {
+  width: 10%;
+  height: 3.5vh;
+  border: 3px solid black;
+  background-color: #fff;
+  border-radius: 2px;
+  font-weight: 200;
+  cursor: pointer;
+}
+
+.option-delete-btn:hover {
+  background-color: #9c88ff;
+}
+
+h3 {
+  margin: 0;
+}
+
+input {
+  height: 3vh;
+  margin: 0.5vh 0;
+  border: 3px solid black;
+  outline: none;
+}
+
+.btn-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 1vh;
+}
+
+.option-adding-btn, .form-submit-btn {
+  height: 3vh;
+  width: 40%;
+  margin: 1vh 0;
+}
+
+.option-adding-btn {
+  box-shadow: 6px 7px 0px 2px #fa983a;
+  -webkit-box-shadow: 6px 7px 0px 2px #fa983a;
+  -moz-box-shadow: 6px 7px 0px 2px #fa983a;
+}
+
+.error-message {
+  margin: 0.5vh 0;
+}
+
+.go-back-to-link {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 2vh 0;
+}

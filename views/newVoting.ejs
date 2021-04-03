@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="/stylesheets/global.css">
+    <link rel="stylesheet" href="/stylesheets/newVoting.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap">
     <title><%= title %></title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
     <%- include("./partials/header.ejs") %>
-    <h1><%= title %></h1>
-    <div class="voting-form-wrap">
-      <h1>Add new voting!</h1>
-      <form class="voting-form" action="/votings/new" method="post" >
-        <div>
-          <div class="title">
-            <lable class="title-lable" for="title">Title</lable>
-            <input class="title-input" type="text" name="title" placeholder="Voting title" >
-          </div>
-          <div class="expire-date">
-            <lable class="expire-date-lable" for="expireDate">Expire Date</lable>
+    <div class="new-voting-all-wrap">
+      <div class="new-voting-wrap">
+        <h1><%= title %></h1>
+        <h2>Add new voting!</h2>
+        <div class="voting-form-container">
+          <form class="voting-form" action="/votings/new" method="post" >
+            <div>
+              <div class="new-voting-title">
+              <lable class="title-lable" for="title"><h3>Title</h3></lable>
+              <input class="title-input" type="text" name="title" placeholder="Voting title" >
+            </div>
+            <div class="expire-date">
+              <lable class="expire-date-lable" for="expireDate"><h3>Expire Date</h3></lable>
               <input class="expire-date-input" type="datetime-local" name="expireDate" >
-          </div>
-          <label class="option-lable" for="options">Option</label>
+            </div>
+            <label class="option-lable" for="options"><h3>Option</h3></label>
             <div class="option-wrap">
               <div class="option-container">
                 <input class="option" type="text" name="options" placeholder="New Option" >
@@ -30,17 +35,22 @@
                 <button class="option-delete-btn">X</button>
               </div>
             </div>
-          <button class="option-adding-btn">More Options</button>
-          <button class="form-subbmit-btn" type="submit">Submit</button>
+            <div class="btn-wrap">
+              <button class="option-adding-btn global-button">More Options</button>
+              <button class="form-submit-btn global-button" type="submit">Submit</button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
+      <% if (messages.length > 0) { %>
+        <% messages.forEach(function(message) { %>
+          <div class="error-message"><strong><%= message.message %></strong></div>
+        <% }) %>
+      <% } %>
+      <div class="go-back-to-link">
+        <a href="/"><h3>Go Back to Home</h3></a>
+      </div>
     </div>
-    <% if (messages.length > 0) { %>
-      <% messages.forEach(function(message) { %>
-        <div><strong><%= message.message %></strong></div>
-      <% }) %>
-    <% } %>
-    <div><a href="/">Go Back to Home</div>
     <%- include("./partials/footer.ejs") %>
     <script src="/javascripts/addOptionInputBar.js"></script>
   </body>

@@ -63,6 +63,10 @@
   height: 100%;
 }
 
+.is-proceeding > h3 {
+  margin-bottom: 1vh;
+}
+
 .finished {
   box-shadow: 6px 7px 0px 2px #E03853;
   -webkit-box-shadow: 6px 7px 0px 2px #E03853;
