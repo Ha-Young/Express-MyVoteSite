@@ -20,25 +20,29 @@ const myChart = new Chart(ctx, {
   type: "pie",
   data: {
     labels,
-    datasets: [{
-      data,
-      backgroundColor: colors,
-      borderColor: colors,
-      borderWidth: 1,
-      minBarLength: 5,
-    }],
+    datasets: [
+      {
+        data,
+        backgroundColor: colors,
+        borderColor: colors,
+        borderWidth: 1,
+        minBarLength: 5,
+      }
+    ],
   },
   options: {
     scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true,
-        },
-      }],
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        }
+      ],
     },
     legend: {
       labels: {
-        fontColor: '#fafafa',
+        fontColor: "#fafafa",
       },
     },
   },

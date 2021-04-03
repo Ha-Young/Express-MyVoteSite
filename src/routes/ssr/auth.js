@@ -5,8 +5,14 @@ const passport = require("passport");
 
 const authService = require("../../services/authService");
 const { jwtCookieKey, jwtExpires } = require("../../config").jwt;
-const { PREFIX, SIGNUP, LOGIN, LOGOUT,
-  LOGIN_GOOGLE, LOGIN_GOOGLE_REDIRECT } = require("../../config/routes").AUTH;
+const {
+  PREFIX,
+  SIGNUP,
+  LOGIN,
+  LOGOUT,
+  LOGIN_GOOGLE,
+  LOGIN_GOOGLE_REDIRECT,
+} = require("../../config/routes").AUTH;
 
 const route = Router();
 
@@ -26,7 +32,7 @@ module.exports = app => {
       body: Joi.object({
         email: Joi.string().required(),
         password: Joi.string().required(),
-        prevPath: Joi.string().allow(''),
+        prevPath: Joi.string().allow(""),
       }),
     }),
     async (req, res, next) => {
@@ -77,27 +83,35 @@ module.exports = app => {
       req.session.prevPath = prevPath;
       next();
     },
-    passport.authenticate('google', { scope: ['profile','email'], session: false }));
+    passport.authenticate("google", {
+      scope: ["profile", "email"],
+      session: false,
+    })
+  );
 
-  route.get(LOGIN_GOOGLE_REDIRECT, passport.authenticate('google', { session: false }), async (req, res)=>{
-    const userInputDTO = {
-      name: req.user.displayName,
-      email: req.user._json.email,
-      provider: req.user.provider,
-    };
+  route.get(
+    LOGIN_GOOGLE_REDIRECT,
+    passport.authenticate("google", { session: false }),
+    async (req, res) => {
+      const userInputDTO = {
+        name: req.user.displayName,
+        email: req.user._json.email,
+        provider: req.user.provider,
+      };
 
-    const { token, error } = await authService.SocialLogin(userInputDTO);
+      const { token, error } = await authService.SocialLogin(userInputDTO);
 
-    if (error) {
-      return res.render("login", { error });
+      if (error) {
+        return res.render("login", { error });
+      }
+
+      const prevPath = req.session.prevPath || "";
+
+      req.session.destroy();
+
+      authSuccess({ res, token, prevPath });
     }
-
-    const prevPath = req.session.prevPath || "";
-
-    req.session.destroy();
-
-    authSuccess({ res, token, prevPath });
-  });
+  );
 
   route.post(LOGOUT, (req, res, next) => {
     try {

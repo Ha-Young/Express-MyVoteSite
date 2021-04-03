@@ -13,6 +13,11 @@ module.exports = {
     ecmaVersion: 12,
   },
   rules: {
+    quotes: [
+      "error",
+      "double",
+      { avoidEscape: true, allowTemplateLiterals: true }
+    ],
     "no-unused-vars": "warn",
     "no-var": "error",
     "no-console": "warn",

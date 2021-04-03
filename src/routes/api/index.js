@@ -1,5 +1,5 @@
 const express = require("express");
-const vote = require('./votes');
+const vote = require("./votes");
 
 // guaranteed to get dependencies
 module.exports = () => {

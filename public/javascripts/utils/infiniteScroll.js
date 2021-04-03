@@ -2,7 +2,7 @@
 window.setInfiniteScroll = (function () {
   function throttleOnRendering(cb) {
     if (!cb) {
-      throw Error('Invalid required arguments');
+      throw Error("Invalid required arguments");
     }
 
     let tick = false;
@@ -29,7 +29,7 @@ window.setInfiniteScroll = (function () {
 
     const handleScrollThrottle = throttleOnRendering(handleScroll);
 
-    window.addEventListener('scroll', handleScrollThrottle);
+    window.addEventListener("scroll", handleScrollThrottle);
   }
 
   return infiniteScroll;

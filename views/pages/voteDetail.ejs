@@ -1,14 +1,14 @@
 <!-- 제목, 생성자, 만료 날짜 및 시간, 진행 중 여부, 투표 선택 사항 -->
 <div class="vote-detail-wrapper">
   <div class="vote-detail-cont grid-split-two">
-    <%- include('../mixins/voteDetail_info.ejs') %>
+    <%- include("../mixins/voteDetail_info.ejs") %>
     <% if (vote.is_process && !vote.myVote) { %>
       <div class="vote-result-column vote-detail-option-wrapper">
-        <%- include('../mixins/voteDetail_options.ejs') %>
+        <%- include("../mixins/voteDetail_options.ejs") %>
       </div>
     <% } else { %>
       <div class="vote-result-column vote-detail-result-wrapper">
-        <%- include('../mixins/voteDetail_result.ejs') %>
+        <%- include("../mixins/voteDetail_result.ejs") %>
       </div>
     <% } %>
   </div>

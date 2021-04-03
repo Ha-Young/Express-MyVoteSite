@@ -1,19 +1,19 @@
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 
-// Set the NODE_ENV to 'development' by default
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+// Set the NODE_ENV to "development" by default
+process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
 dotenv.config();
 
 module.exports = {
   rootURL: "http://localhost:3000",
-  port: normalizePort(process.env.PORT || '3000'),
+  port: normalizePort(process.env.PORT || "3000"),
   databaseURL: process.env.MONGODB_URI,
   dateFormat: "yyyy-MM-dd hh:mm:ss",
 
   jwt: {
     jwtSecret: process.env.JWT_SECRET,
-    jwtCookieKey: 'VC_wpAthtk',
+    jwtCookieKey: "VC_wpAthtk",
     jwtExpires: 60 * 60 * 1000,
   },
 

@@ -2,7 +2,7 @@ const { Joi } = require("celebrate");
 const mongoose = require("mongoose");
 const joigoose = require("joigoose")(mongoose);
 
-Joi.objectId = require('joi-objectid')(Joi);
+Joi.objectId = require("joi-objectid")(Joi);
 
 const joiUserSchema = Joi.object({
   email: Joi.string().email().required(),

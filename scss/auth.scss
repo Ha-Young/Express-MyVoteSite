@@ -42,7 +42,7 @@ $btnH: 36px;
   transition: transform $switchAT ease-in-out;
 
   @include signUpActive {
-    transform: translate3d($formW * -1,0,0);
+    transform: translate3d($formW * -1, 0, 0);
   }
 }
 
@@ -57,30 +57,30 @@ $btnH: 36px;
   padding-top: 360px;
 
   &:before {
-    content: '';
+    content: "";
     position: absolute;
     right: 0;
     top: 0;
     width: $contW;
     height: 100%;
-    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-3.jpg');
+    background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-3.jpg");
     background-size: cover;
     transition: transform $switchAT ease-in-out;
   }
 
   &:after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.6);
   }
 
   @include signUpActive {
     &:before {
-      transform: translate3d($formW,0,0);
+      transform: translate3d($formW, 0, 0);
     }
   }
 
@@ -106,9 +106,8 @@ $btnH: 36px;
     }
 
     &.m--up {
-
       @include signUpActive {
-        transform: translateX($imgW*2);
+        transform: translateX($imgW * 2);
       }
     }
 
@@ -135,7 +134,7 @@ $btnH: 36px;
     cursor: pointer;
 
     &:after {
-      content: '';
+      content: "";
       z-index: 2;
       position: absolute;
       left: 0;
@@ -158,7 +157,7 @@ $btnH: 36px;
       transition: transform $switchAT;
 
       &.m--in {
-        transform: translateY($btnH*-2);
+        transform: translateY($btnH * -2);
 
         @include signUpActive {
           transform: translateY(0);
@@ -167,7 +166,7 @@ $btnH: 36px;
 
       &.m--up {
         @include signUpActive {
-          transform: translateY($btnH*2);
+          transform: translateY($btnH * 2);
         }
       }
     }
@@ -180,14 +179,14 @@ $btnH: 36px;
   @include signUpActive {
     transition-timing-function: ease-in-out;
     transition-duration: $switchAT;
-    transform: translate3d($formW,0,0);
+    transform: translate3d($formW, 0, 0);
   }
 }
 
 .sign-up {
-  transform: translate3d($contW * -1,0,0);
+  transform: translate3d($contW * -1, 0, 0);
 
   @include signUpActive {
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
   }
 }

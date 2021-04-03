@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const voteListElement = document.querySelector('.votes');
+const voteListElement = document.querySelector(".votes");
 
 const API_VOTE = window.api.vote;
 const TEMPLATES = window.templates;
@@ -17,7 +17,8 @@ const DEFAULT_PARAM_GET_VOTES = {
 };
 
 async function getVotes() {
-  const condition = PATH.searchParam('filter');
+  console.log("here");
+  const condition = PATH.searchParam("filter");
 
   const votesWithPage = await API_VOTE.getVotes({
     ...DEFAULT_PARAM_GET_VOTES,
@@ -29,7 +30,7 @@ async function getVotes() {
 
   const votesHTMLTemplate = TEMPLATES.voteItemListTemplate(votes);
 
-  voteListElement.insertAdjacentHTML('beforeend', votesHTMLTemplate);
+  voteListElement.insertAdjacentHTML("beforeend", votesHTMLTemplate);
 }
 
 async function indexPageInit() {

@@ -21,29 +21,30 @@ function getVotesQuery(condition) {
   return query;
 }
 
-exports.GetVotes = async ({ condition, page, limit, sort_field, sort_order }) => {
+exports.GetVotes = async ({
+  condition,
+  page,
+  limit,
+  sort_field,
+  sort_order,
+}) => {
   try {
     const query = getVotesQuery(condition);
 
-    const sort = sort_field
-      ? { [sort_field]: sort_order || 1 }
-      : {};
+    const sort = sort_field ? { [sort_field]: sort_order || 1 } : {};
 
-    const voteRecords = await Vote.paginate(
-      query,
-      {
-        sort,
-        limit,
-        page,
-        populate: {
-          path: "creator",
-          model: "User",
-          select: {
-            name: 1,
-          },
+    const voteRecords = await Vote.paginate(query, {
+      sort,
+      limit,
+      page,
+      populate: {
+        path: "creator",
+        model: "User",
+        select: {
+          name: 1,
         },
-      }
-    );
+      },
+    });
 
     if (!voteRecords) {
       throw new Error("votes was not get");
@@ -57,7 +58,9 @@ exports.GetVotes = async ({ condition, page, limit, sort_field, sort_order }) =>
 
 exports.GetVoteOfUser = async ({ userId }) => {
   try {
-    const votes = await Vote.find({ creator: mongoose.Types.ObjectId(userId) }).lean();
+    const votes = await Vote.find({
+      creator: mongoose.Types.ObjectId(userId),
+    }).lean();
 
     if (!votes) {
       throw new Error("can't get vote");
@@ -71,7 +74,11 @@ exports.GetVoteOfUser = async ({ userId }) => {
 
 exports.GetVote = async ({ voteId, user }) => {
   try {
-    const voteRecord = await Vote.findById(voteId).populate('creator', 'name', 'User');
+    const voteRecord = await Vote.findById(voteId).populate(
+      "creator",
+      "name",
+      "User"
+    );
 
     if (!voteRecord) {
       throw new Error("can't get vote");
@@ -159,7 +166,6 @@ exports.VoteToOption = async ({ voteId, optionId }) => {
     const vote = voteRecord.toObject();
 
     return { vote };
-
   } catch (error) {
     return { error };
   }
