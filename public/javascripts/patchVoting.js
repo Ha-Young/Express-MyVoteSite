@@ -35,7 +35,7 @@ const patchVotedResult = async (votingId, checkedOption) => {
   }
 };
 
-submitButton.addEventListener("click", () => {
+submitButton.addEventListener("click", (event) => {
   const votingId = event.target.name;
   const checkedOption = document.querySelector('input[name="option"]:checked').value;
 

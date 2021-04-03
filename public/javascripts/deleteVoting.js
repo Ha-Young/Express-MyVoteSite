@@ -8,7 +8,7 @@ const deleteVoting = async (votingId) => {
   location.replace("/");
 };
 
-deleteButton.addEventListener("click", () => {
+deleteButton.addEventListener("click", (event) => {
   const votingId = event.target.name;
 
   event.preventDefault();
