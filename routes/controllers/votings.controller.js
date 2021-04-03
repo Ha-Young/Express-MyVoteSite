@@ -30,6 +30,7 @@ exports.postNewVoting = async function (req, res, next) {
     const author = req.user.name;
     const userId = req.user._id;
     const createdAt = dayjs(new Date().toLocaleString()).format("YYYY-MM-DD HH:mm:ss");
+    console.log(createdAt);
     const expiredAt = convertDate(createdAt, day, hour, minute);
 
     if (expiredAt === createdAt) {
