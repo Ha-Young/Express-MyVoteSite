@@ -3,9 +3,6 @@ const createError = require('http-errors');
 const Vote = require('../models/Vote');
 const User = require('../models/User');
 const { getFormattedCurrentDateTime } = require('../util/getCurrentTime');
-const { getRandomImage } = require('../util/getRandomImage');
-
-const INITIAL_COUNT = 0;
 
 async function renderAllVotes(req, res) {
   try {
@@ -15,6 +12,7 @@ async function renderAllVotes(req, res) {
     res.status(200).render('index', { votes });
   } catch (error) {
     console.error(error);
+    next(createError(500));
   }
 }
 
@@ -30,12 +28,14 @@ async function renderMyVote(req, res) {
 
     res.status(200).render('myVote', { allVotes: myVotes });
   } catch (error) {
+    console.error(error);
     next(createError(500));
   }
 }
 
 async function postNewVote(req, res, next) {
   const { title, expiredAt, options, description, imgUrl } = req.body;
+  const INITIAL_COUNT = 0;
 
   const formattedOptions = options.reduce((acc, cur) => {
     acc[cur] = INITIAL_COUNT;
@@ -47,19 +47,19 @@ async function postNewVote(req, res, next) {
     title,
     expiredAt,
     description,
+    imgUrl,
     creatorId: req.user._id,
     creatorName: req.user.name,
     options: formattedOptions,
-    imgUrl: imgUrl || getRandomImage(),
     creatorImgUrl: req.user.avatarUrl,
   });
 
   try {
     await vote.save();
     req.flash('info', 'Successfully created new vote!');
-    res.status(301).redirect('/');
   } catch (error) {
     req.flash('info', 'Error on creating new vote, try again!');
+  } finally {
     res.status(301).redirect('/');
   }
 }
@@ -130,10 +130,11 @@ async function deleteVoteById(req, res) {
 }
 
 exports.renderAllVotes = renderAllVotes;
-exports.renderNewVote = renderNewVote;
 exports.renderMyVote = renderMyVote;
 
+exports.renderNewVote = renderNewVote;
 exports.postNewVote = postNewVote;
+
 exports.getVoteById = getVoteById;
 exports.updateVoteById = updateVoteById;
 exports.deleteVoteById = deleteVoteById;

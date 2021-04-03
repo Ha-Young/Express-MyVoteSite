@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const findOrCreate = require('mongoose-findorcreate');
+const { getRandomImage } = require('../util/getRandomImage');
 
 const voteSchema = new mongoose.Schema({
   title: {
@@ -34,6 +35,7 @@ const voteSchema = new mongoose.Schema({
   },
   imgUrl: {
     type: String,
+    default: getRandomImage(),
   },
 }, {
   timestamps: true,
