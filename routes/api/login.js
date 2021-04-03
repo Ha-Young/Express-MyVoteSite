@@ -8,6 +8,8 @@ const createError = require("http-errors");
 
 const User = require("../../models/User");
 
+const failureMessage = require("../../constants/failureMessage");
+
 passport.serializeUser(function (user, done) {
   done(null, user._id);
 });
@@ -28,7 +30,11 @@ passport.use("local-login", new LocalStrategy(
       const user = await User.findOne({ email: email });
 
       if (!user) {
-        return done(null, false, { message: "아이디가 존재하지 않습니다." });
+        return done(
+          null,
+          false,
+          { message: failureMessage.INVALID_USER_ID_MESSAGE }
+        );
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
@@ -36,7 +42,11 @@ passport.use("local-login", new LocalStrategy(
       if (isMatch) {
         return done(null, user);
       } else {
-        return done(null, false, { message: "비밀번호가 틀렸습니다" });
+        return done(
+          null,
+          false,
+          { message: failureMessage.INVALID_PASSWORD_MESSAGE }
+        );
       }
 
     } catch (error) {
