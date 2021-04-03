@@ -17,9 +17,9 @@ router.post("/login",
     const redirectUrl = req.headers.referer.replace(loginUrl+"?url=", "");
 
     if (redirectUrl !== "undefined" && redirectUrl !== loginUrl) {
-      res.redirect(redirectUrl);
+      res.status(301).redirect(redirectUrl);
     } else {
-      res.redirect("/");
+      res.status(301).redirect("/");
     }
   } catch (err) {
     next(err);
