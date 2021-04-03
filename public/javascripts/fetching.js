@@ -35,29 +35,7 @@ const optionChart = new Chart(myChart, {
         hoverBorderWidth: 3,
         hoverBorderColor: "#000"
     }]
-  },
-  options: {
-    title: {
-      display: true,
-      text: "largest city",
-      fontSize: 25,
-    },
-    legend: {
-      display: false,
-      position: "right",
-      labels: {
-        fontColor: "#000"
-      }
-    },
-    layout: {
-      padding: {
-        left: 50,
-        right: 0,
-        bottom: 0,
-        top: 0,
-      }
-    },
-  },
+  }
 });
 
 async function handleVotingSubmit(e) {
@@ -103,7 +81,7 @@ async function handleVotingSubmit(e) {
         break;
       case "user exist":
         optionData.find(option => option.title === selectedOptionValue).count++;
-        optionChart.data.datasets[0].data = optionData.map(option => option.count)
+        optionChart.data.datasets[0].data = optionData.map(option => option.count);
         optionChart.update();
         break;
       case "already voted":
