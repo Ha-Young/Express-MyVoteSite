@@ -1,0 +1,16 @@
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
+.voting-all-wrap {
+    display: flex;
+    width: 90vw;
+    height: 80vh;
+}
+
+.chart-container {
+    position: relative;
+    width: 70vw;
+}
+

@@ -4,10 +4,18 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/global.css">
+  <link rel="stylesheet" href="/stylesheets/chart.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.1/chart.min.js"></script>
   <title><%= title %></title>
 </head>
   <body>
-    <div>
+    <div class="voting-all-wrap">
+      <% if (isAuthor || !votingOptionFormat.isProceeding) { %>
+        <div class="chart-container">
+          <canvas id="myChart"></canvas>
+        </div>
+      <% } %>
       <h2>title: <%= votingDetailFormat.title %></h2>
       <h3>Author: <%= votingDetailFormat.author %></h3>
       <h4>Contact: <%= votingDetailFormat.contact %></h4>
@@ -21,10 +29,8 @@
               id="<%= votingOption._id %>"
               name="option"
               value="<%= votingOption.title %>"
+              data-value="<%= votingOption.voters.length %>"
             >
-            <% if (isAuthor || !votingOptionFormat.isProceeding) { %>
-              <div><%= votingOption.voters.length %> voters</div>
-            <% } %>
           </div>
         <% }) %>
         <% if (isAuthor) { %>
@@ -36,7 +42,7 @@
           <h3>This voting will expire at <%= votingDetailFormat.expireDate %></h3>
           <input type=submit class="voting-submit-btn" value="Submit" >
         </div>
-      <% } else if (!votingDetailFormat.isProceeding || isAuthor){ %>
+      <% } else if (isAuthor || !votingDetailFormat.isProceeding) { %>
         <div class="voting-info">
           <h3>Voting Finished</h3>
           <% if (votingDetailFormat.winner.length > 0) { %>
@@ -52,5 +58,6 @@
       <button><a href="/">Go home</a></button>
     </div>
     <script src="/javascripts/fetching.js"></script>
+    <script src="/javascripts/deleteVoting.js"></script>
   </body>
 </html>

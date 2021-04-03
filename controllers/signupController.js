@@ -14,7 +14,7 @@ exports.getSignUpPage = function(req, res, next) {
 exports.registerNewUser = async function(req, res, next) {
   try {
     const { email, username, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, SALT_ROUND);
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUND.SALT_ROUND);
 
     await User.create({
       email,

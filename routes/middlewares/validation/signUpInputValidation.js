@@ -15,10 +15,12 @@ async function signUpInputValidation(req, res, next) {
     }
 
     if (!email || !username || !password || !confirmedPassword) {
-      errorMessages.push({ message: "Please fill out all fileds"});
+      errorMessages.push({ message: "Please fill out all fileds" });
     }
 
-    const registerPasswordFormat = new RegExp("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$");
+    const registerPasswordFormat = new RegExp(
+      "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$"
+    );
 
     if (password.length < 5 || !registerPasswordFormat.test(password)) {
       errorMessages.push({
