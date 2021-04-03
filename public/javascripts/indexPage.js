@@ -6,7 +6,7 @@ const TEMPLATES = window.templates;
 const setInfiniteScroll = window.setInfiniteScroll;
 const PATH = window.myPathController;
 
-let currentPage = 0;
+let currentPage = 1;
 
 const DEFAULT_PARAM_GET_VOTES = {
   condition: "all",
@@ -17,7 +17,6 @@ const DEFAULT_PARAM_GET_VOTES = {
 };
 
 async function getVotes() {
-  console.log("here");
   const condition = PATH.searchParam("filter");
 
   const votesWithPage = await API_VOTE.getVotes({
@@ -28,9 +27,15 @@ async function getVotes() {
 
   const votes = votesWithPage.docs;
 
+  if (votes.length === 0) {
+    return;
+  }
+
   const votesHTMLTemplate = TEMPLATES.voteItemListTemplate(votes);
 
   voteListElement.insertAdjacentHTML("beforeend", votesHTMLTemplate);
+
+  currentPage += 1;
 }
 
 async function indexPageInit() {
