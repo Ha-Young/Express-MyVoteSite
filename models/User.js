@@ -57,7 +57,7 @@ userSchema.statics.deleteCompletedVotes = async function(voteId) {
     'completedVotes': {
       '$elemMatch': {
         '$eq': voteId,
-      }
+      },
     },
   };
 
