@@ -8,42 +8,45 @@ function renderLogin(req, res) {
   res.status(200).render('login');
 }
 
-function logout(req, res) {
-  req.logOut();
-  req.session.destroy();
-  res.status(301).redirect('/');
-}
-
 function getGithubAuth(req, res) {
-  passport.authenticate('github', { scope: [ 'user:email' ] });
+  passport.authenticate('github', { scope: ['user:email'] });
 }
 
 function getGithubAuthCallback(req, res) {
   const referrer = req.session.referrer ?? '/';
-  delete req.session.referrer;
+
+  if (req.session.referrer) {
+    delete req.session.referrer;
+  }
 
   res.status(301).redirect(referrer);
 }
 
-function getSignup(req, res, next) {
+function renderSignup(req, res, next) {
   res.status(200).render('signup');
 }
 
 async function postSignup(req, res, next) {
+  const { name, email, password } = req.body;
+
+  name.trim();
+  email.trim();
+  password.trim();
+
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, getRandomSalt());
+    const hashedPassword = await bcrypt.hash(password, getRandomSalt());
 
     const user = new User({
-      name: req.body.name,
-      email: req.body.email,
+      name,
+      email,
       password: hashedPassword,
     });
 
     await user.save();
-    res.redirect('/');
+    res.status(301).redirect('/');
   } catch (err) {
     req.flash('info', 'Failed to signup, try again :)');
-    res.redirect('/auth/signup');
+    res.status(301).redirect('/auth/signup');
   }
 }
 
@@ -58,10 +61,19 @@ function postLogin(req, res, next) {
   })(req, res);
 }
 
+function logout(req, res) {
+  req.logOut();
+  req.session.destroy();
+  res.status(301).redirect('/');
+}
+
 exports.renderLogin = renderLogin;
-exports.logout = logout;
+exports.postLogin = postLogin;
+
+exports.renderSignup = renderSignup;
+exports.postSignup = postSignup;
+
 exports.getGithubAuth = getGithubAuth;
 exports.getGithubAuthCallback = getGithubAuthCallback;
-exports.getSignup = getSignup;
-exports.postSignup = postSignup;
-exports.postLogin = postLogin;
+
+exports.logout = logout;

@@ -20,7 +20,7 @@ router.get(
   authController.getGithubAuthCallback,
 );
 
-router.get('/signup', checkNotAuthenticated, authController.getSignup);
+router.get('/signup', checkNotAuthenticated, authController.renderSignup);
 router.post('/signup', authController.postSignup);
 
 router.get('/login', checkNotAuthenticated, authController.renderLogin);
