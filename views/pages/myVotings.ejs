@@ -10,11 +10,11 @@
           <div class="pull-right">
             <span class="vote-progress">
               <span class="vote-progress-bg">
-                <span class="vote-progress-fg" style="width: 88%"></span>
+                <span class="vote-progress-fg" style="width: <%= vote.expiredPercent %>"></span>
               </span>
 
               <span class="vote-progress-labels">
-                <span class="vote-progress-label"> 88% </span>
+                <span class="vote-progress-label"> <%= vote.expiredPercent %> </span>
 
                 <span class="vote-completes"> <%= vote.entire_count %></span>
               </span>
@@ -24,7 +24,7 @@
               <% if (!vote.is_progress) { %>
                 ended
               <% } %>
-              "> <%= new Date(vote.expire_datetime).toLocaleString() %></span>
+              "> <%= vote.expiredDateLocaleString %></span>
             <span class="vote-stage">
               <% if (vote.is_progress) { %>
                 <span class="stage live">Live</span>

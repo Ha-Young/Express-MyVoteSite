@@ -27,7 +27,9 @@ module.exports = () => {
         return next(createError(error));
       }
 
-      res.render("myVotings", { votes: votes || {} });
+      const refinedVotes = votes.map(vote => refineVoteOnDate(vote));
+
+      res.render("myVotings", { votes: refinedVotes || {} });
 
     } catch (err) {
       return next(createError(err));
@@ -39,3 +41,18 @@ module.exports = () => {
 
   return app;
 };
+
+function refineVoteOnDate(vote) {
+  const refinedVote = { ...vote };
+
+  const startDate = new Date(refinedVote.createdAt);
+  const expiredDate = new Date(refinedVote.expire_datetime);
+  const todayDate = new Date();
+  refinedVote.expiredDateLocaleString = expiredDate.toLocaleString();
+
+  const percentage = Math.round(((todayDate - startDate) / (expiredDate - startDate)) * 100) + "%";
+
+  refinedVote.expiredPercent = refinedVote.is_progress ? percentage : "100%";
+
+  return refinedVote;
+}
