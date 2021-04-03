@@ -1,7 +1,7 @@
 <div class="vote-result-column vote-info">
   <h2 class="vote-title"><%= vote.title %></h2>
   <div class="vote-stage">
-    <% if (vote.is_process) { %>
+    <% if (vote.is_progress) { %>
       <span class="stage live"></span>
     <% } else { %>
       <span class="stage end"></span>
@@ -19,7 +19,7 @@
     <div class="vote-info-row">
       <span class="vote-info-label">투표 상태</span>
       <span class="vote-info-content">
-        <% if (vote.is_process) { %>
+        <% if (vote.is_progress) { %>
           <span class="live-color">투표 가능</span>
         <% } else { %>
           <span class="end-color">만료됨</span>

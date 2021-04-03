@@ -22,7 +22,7 @@
 
             <span class="vote-end-date ended"> <%= vote.expire_datetime %></span>
             <span class="vote-stage">
-              <% if (vote.is_process) { %>
+              <% if (vote.is_progress) { %>
                 <span class="stage live">Live</span>
               <% } else { %>
                 <span class="stage ended">Ended</span>
