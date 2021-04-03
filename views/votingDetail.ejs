@@ -54,6 +54,7 @@
           </form>
         <% } %> 
       </div>
+      <div class="options" data-options=<%- JSON.stringify(voting.options) %>></div>
       <a href="/">Return</a>
     </div>
   </div>
@@ -62,9 +63,6 @@
 <script src="/javascripts/put.js"></script>
 
 <% if (!voting.isCurrent || voting.proponent.toString() === user?.id) { %>
-  <script>
-    const options = <%- JSON.stringify(voting.options) %>;
-  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
   <script src="/javascripts/chart.js"></script>
   <script src="/javascripts/delete.js"></script>

@@ -1,4 +1,7 @@
 const votingChart = document.getElementById("voting-chart");
+const votingData = document.querySelector(".options");
+
+const options = JSON.parse(votingData.dataset.options);
 
 const chartData = {
   labels: [],
