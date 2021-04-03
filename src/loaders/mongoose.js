@@ -1,3 +1,4 @@
+const { format } = require("date-fns");
 const mongoose = require("mongoose");
 const config = require("../config");
 
@@ -10,11 +11,10 @@ module.exports = async function () {
     useFindAndModify: false,
   });
 
-  // mock data
   // const Vote = require("../models/Vote");
   // if (process.env.NODE_ENV === "development") {
   //   const mock = async () => {
-  //     for (let i = 0; i < 1000; i++) {
+  //     for (let i = 0; i < 100; i++) {
   //       await Vote.create({
   //         title: `test${i}`,
   //         creator: mongoose.Types.ObjectId("6062f9acee0fae32f8a511d8"),
