@@ -80,7 +80,7 @@ Controller.postNewVoting = async (req, res, next) => {
     console.error(error.message);
     next(handleError(500, error));
   }
-}
+};
 
 Controller.getSuccessVoting = async (req, res, next) => {
   try {

@@ -1,6 +1,5 @@
 const passport = require("passport");
 const session = require("express-session");
-const flash = require("connect-flash");
 
 const User = require("../models/User");
 
@@ -14,7 +13,6 @@ function passportConfig(app) {
     },
   ));
 
-  app.use(flash());
   passport.use(User.createStrategy());
 
   passport.serializeUser(User.serializeUser());

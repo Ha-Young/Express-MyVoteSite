@@ -3,7 +3,7 @@ const db = mongoose.connection;
 
 function mongooseConfig() {
   mongoose.connect(
-    `mongodb+srv://takhyunkim:${process.env.MONGOOSE_PASSWORD}@voting-platform.wgyg1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+    process.env.MONGOOSE_URL,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

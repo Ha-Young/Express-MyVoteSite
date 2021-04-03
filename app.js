@@ -4,6 +4,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const flash = require("connect-flash");
 
 const passportConfig = require("./config/passport");
 const mongooseConfig = require("./config/mongoose");
@@ -17,6 +18,8 @@ const ERROR_MESSAGE = require("./constants/errorConstants");
 const app = express();
 
 require("dotenv").config();
+
+app.use(flash());
 
 passportConfig(app);
 mongooseConfig();
