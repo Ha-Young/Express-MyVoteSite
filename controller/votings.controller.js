@@ -11,8 +11,9 @@ exports.create = async (req, res, next) => {
     const {
       title, description, dueDate, founder,
     } = req.body;
-    const options = req.body.options.map(opt => {
-      if (opt !== '') return { opt, likes: [] };
+    const options = [];
+    req.body.options.forEach(opt => {
+      if (opt !== '') options.push({ opt, likes: [] });
     });
 
     const votingData = await Voting.create({
@@ -38,7 +39,8 @@ exports.create = async (req, res, next) => {
       }));
     }
 
-    return next({
+    return res.render('message', {
+      url: '/',
       isRedirected: false,
       message: '투표를 추가하셨네요!',
     });
@@ -49,25 +51,18 @@ exports.create = async (req, res, next) => {
 
 exports.getOne = async (req, res, next) => {
   try {
-    const voteData = await Voting.findById(req.params.id).exec();
+    const voteData = await Voting.findById(req.params.id)
+      .populate('founder', 'username');
 
     if (!voteData) {
       return next(createError(401, '삭제 되었거나 존재하지 않는 투표입니다'));
     }
 
-    const votingFounder = await User.findById(voteData.founder, 'username');
-
-    if (!votingFounder) {
-      return next({
-        url: '/',
-        isRedirected: true,
-        message: '탈퇴, 또는 삭제된 사용자입니다.',
-      });
-    }
+    console.log(req.user);
+    console.log(voteData);
     return res.render('partial/votingItem', {
       user: req.user,
       data: voteData,
-      votingFounder: votingFounder.username,
     });
   } catch (err) {
     return next(createError(500));
@@ -76,6 +71,7 @@ exports.getOne = async (req, res, next) => {
 
 exports.updateVoting = async (req, res, next) => {
   try {
+    console.log('update 도착')
     const voting = await Voting.findOne({ _id: req.params.id });
     if (!voting) {
       return res.send(false);
@@ -115,11 +111,11 @@ exports.deleteVoting = async (req, res, next) => {
         message: '이미 삭제되었거나 존재하지않는 투표입니다.',
       });
     }
-    return next(createError({
+    return res.render('message', {
       url: '/',
       isRedirected: true,
       message: '삭제 성공!',
-    }));
+    });
   } catch (err) {
     return next(createError(500));
   }

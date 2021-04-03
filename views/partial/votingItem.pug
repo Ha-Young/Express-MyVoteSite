@@ -14,6 +14,7 @@ block content
       isInProgress,
       createdAt,
       options,
+      founder,
       participants,
     } = data;
   .votingItem
@@ -23,27 +24,30 @@ block content
       span.notInProgress [투표종료]
       span.expiredMessage 종료된 투표는 참여할 수 없습니다.
     .votingItemTitle #{title}
-    div
-      span.founder 투표진행자 #{votingFounder}
-      span.createdAt 투표생성일 #{moment(createdAt).format('yy년 MM월 DD일 HH시 mm분')}
+    span.founder 투표진행자 #{founder.username}
+    br
+    span.createdAt 투표생성일 #{moment(createdAt).format('yy년 MM월 DD일 HH시 mm분')}
+    br
     span.dueDate 투표만료시간 #{moment(dueDate).format('yy년 MM월 DD일 HH시 mm분')}
     .description #{description}
     .votingItemBottom
       - if (isInProgress) // 진행중
         - if (user) // 로그인상태
-          - const isFounder = votingFounder.toString() === user.id.toString();
+          - const isFounder = founder.username === user.username;
           each option in options
             - if (participants.includes(user.id)) // 투표 했음
-              .options
-                .selectedOption #{option.opt}
-            - else // 투표 안했음
-                div(
-                  class="options"
-                  data-id=option.id
-                  onclick=`sendAjax("/votings/update/${id}", "${option.id}")`
-                ) #{option.opt}
-            - if (isFounder) // 생성자
+              .options(
+                class=option.likes.includes(user.id) ? "selectedOption" : ""
+              ) #{option.opt}
+                - if (isFounder) // 생성자
                 .likes #{option.likes.length}
+            - else // 투표 안했음
+              .options.active(
+                data-id=option.id
+                onclick=`sendAjax("/votings/update/${id}", "${option.id}")`
+              ) #{option.opt}
+                - if (isFounder) // 생성자
+                  .likes #{option.likes.length}
         - else // 로그아웃
           span 로그인을 해야 투표에 참여할 수 있습니다.
           each option in options

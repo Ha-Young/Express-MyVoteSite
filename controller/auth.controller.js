@@ -27,10 +27,11 @@ exports.post = async (req, res, next) => {
     const userData = await User.findOne({ email });
 
     if (userData) {
-      return res.render('partial/message', {
-        isSuccess: false,
+      return next(createError(401, {
+        url: '/',
+        isRedirected: false,
         message: '이미 가입된 계정입니다.',
-      });
+      }));
     }
 
     const hashedPassword = await bcrypt.hash(
@@ -44,10 +45,11 @@ exports.post = async (req, res, next) => {
     });
 
     if (!newUser) {
-      return res.render('partial/message', {
-        isSuccess: false,
+      return next(createError(401, {
+        url: '/',
+        isRedirected: false,
         message: '이미 가입된 계정입니다.',
-      });
+      }));
     }
     return res.redirect('/auth/login');
   } catch (err) {
@@ -63,10 +65,11 @@ exports.login = async (req, res, next) => {
   const fmsg = req.flash();
 
   if (fmsg.error) {
-    return res.render('partial/message', {
-      isSuccess: false,
+    return next(createError(401, {
+      url: '/',
+      isRedirected: true,
       message: '가입되지 않은 계정입니다.',
-    });
+    }));
   }
   return res.render('partial/login');
 };

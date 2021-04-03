@@ -18,7 +18,7 @@ function sendAjax(url, id) {
 
     const target = [].slice.call(document.querySelectorAll('.options'))
       .filter(option => option.dataset.id === id);
-    target[0].removeAttribute('onclick');
+    // target[0].removeAttribute('onclick');
     target[0].classList.add('selectedOption');
 
     const targetLikes = document.querySelector('.likes');

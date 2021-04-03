@@ -23,9 +23,11 @@
 }
 
 .dueDate {
-  font-weight: 400;
-  color: var(--pink);
   padding: 1vw;
+  border-radius: 1vw;
+  font-weight: 600;
+  color: white;
+  background-color: var(--pink);
 }
 
 .description {
@@ -56,4 +58,13 @@
 .votingItemFooter {
   position: absolute;
   right: 5vw;
+}
+
+.active {
+  cursor: pointer;
+}
+
+.selectedOption {
+  color: white;
+  background-color: var(--pink);
 }
