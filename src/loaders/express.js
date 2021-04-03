@@ -59,6 +59,11 @@ module.exports = function ({ app, routerLoader }) {
   // error handler
   app.use(function (err, req, res, next) {
     // set locals, only providing error in development
+    if (err.message === "celebrate request validation failed") {
+      err.status = 400;
+      err.message = "Bad Request";
+    }
+
     res.locals.message = err.message;
     res.locals.status = err.status || 500;
     res.locals.error = req.app.get("env") === "development" ? err : {};
@@ -67,6 +72,7 @@ module.exports = function ({ app, routerLoader }) {
 
     // render the error page
     res.status(err.status || 500);
+
 
     if (req.headers["content-type"] === "application/json" || err.json) {
       res.json({
