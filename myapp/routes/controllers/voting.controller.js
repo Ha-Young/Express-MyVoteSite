@@ -54,8 +54,17 @@ const createVoting = async (req) => {
   });
 };
 
+const getMyVotings = async (userId) => {
+  const myVotings = await Voting.find({
+    voting_items: { $elemMatch: { voters: userId } },
+  });
+
+  return myVotings;
+};
+
 module.exports = {
   getVotingById,
   createVoting,
   updateAndGetVotings,
+  getMyVotings,
 };
