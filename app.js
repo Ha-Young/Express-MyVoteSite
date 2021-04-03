@@ -12,6 +12,7 @@ const logger = require("morgan");
 const MongoStore = require("connect-mongo");
 const passport = require("passport");
 const flash = require("connect-flash");
+const createError = require("http-errors");
 
 const global = require("./routes/global");
 const voting = require("./routes/voting");
@@ -60,11 +61,12 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res) => {
-  res.locals.message = err.status ? err.name : SERVER_ERROR.INTERNAL_SERVER_ERROR;
+  res.locals.message = err.message || SERVER_ERROR.INTERNAL_SERVER_ERROR;
+  res.locals.status = err.status || 500;
   res.locals.error = req.app.get("env") === "development" ? err : {};
   
   res.status(err.status || 500);
-  res.render("error");
+  res.render("error", { message: err.message, error });
 });
 
 module.exports = app;
