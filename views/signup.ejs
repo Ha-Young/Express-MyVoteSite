@@ -52,9 +52,7 @@
             </p>
           </div>
           <div class="sign-error">
-            <% if (typeof message !== "undefined") { %>
-              <%= message %>
-            <% } %>
+            <%- include("partials/message") %>
           </div>
           <p class="signup-button">
             <input class="signup-submit" type="submit" value="Signup">

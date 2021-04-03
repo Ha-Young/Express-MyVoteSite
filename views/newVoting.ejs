@@ -1,3 +1,5 @@
+<%- include("partials/header") %>
+
 <div class="new-voting-wrapper">
   <div class="main-bar">
     <div class="main-title">
@@ -47,9 +49,7 @@
             <button class="voting-delete-button">-</button>
           </p>
           <div class="new-voting-error">
-            <% if (typeof message !== "undefined") { %>
-              <%= message %>
-            <% } %>
+            <%- include("partials/message") %>
           </div>
           <p class="voting-button">
             <input class="voting-submit" type="submit" value="Submit">

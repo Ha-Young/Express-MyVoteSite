@@ -20,7 +20,7 @@ exports.createNewVoting = async (req, res, next) => {
   const { body: { options, expired_at, title }, user } = req;
 
   try {
-    if (!user.hasOwnProperty(_id)) {
+    if (!user) {
       throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
     }
 
