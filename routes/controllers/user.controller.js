@@ -2,14 +2,16 @@ const jwt = require("jsonwebToken");
 const passport = require("passport");
 const mongoose = require("mongoose");
 
+const { CLIENT_ERROR } = require("../../constants/error");
+
 exports.signUp = (req, res) => {
-  const [error] = req.flash("signUpError");
+  const [error] = req.flash(CLIENT_ERROR.SIGN_UP_ERROR);
 
   res.status(200).render("signup", { message: error });
 };
 
 exports.logIn = (req, res) => {
-  const [error] = req.flash("loginError");
+  const [error] = req.flash(CLIENT_ERROR.LOGIN_ERROR);
   const query = req.query?.next || "";
 
   res.status(200).render("login", { message: error, query });

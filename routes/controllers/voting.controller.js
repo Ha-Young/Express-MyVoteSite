@@ -1,6 +1,8 @@
 const Voting = require("../../models/Voting");
 const User = require("../../models/User");
 
+const { CLIENT_ERROR } = require("../../constants/error");
+
 exports.getAllVotings = async (req, res, next) => {
   const { user } = req;
   
@@ -118,7 +120,7 @@ exports.getMyVotingPage = async (req, res, next) => {
 };
 
 exports.getNewVotingPage = (req, res) => {
-  const [error] = req.flash("newVotingError");
+  const [error] = req.flash(CLIENT_ERROR.NEW_VOTING_ERROR);
 
   res.status(200).render("newVoting", { message: error });
 };
