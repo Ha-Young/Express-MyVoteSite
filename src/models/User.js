@@ -7,12 +7,6 @@ const userSchema = new Schema({
     lowercase: true,
     unique: true,
     required: true,
-    validate: {
-      validator: function (el) {
-        return el.match(/^([\w-]+@([\w-]+\.)+[\w-]{2,4})?$/);
-      },
-      message: "Invalid email",
-    },
   },
   username: {
     type: String,

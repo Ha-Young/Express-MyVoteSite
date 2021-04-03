@@ -2,7 +2,7 @@ extends layouts/main
 
 block content
   h1 #{pageTitle}
-  .login-container
+  .content-container
     form.submit-form(
       action=`/auth/login?${nextPage.key}=${nextPage.value}`
       method="POST"

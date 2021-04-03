@@ -1,7 +1,7 @@
 extends layouts/main
 
 block content
-  .content-section
+  .content-container
     h1 #{pageTitle}
     .posted-by 생성자: #{voting.postedBy.username}
     .expiration 만료일: #{new Date(voting.expiration).toLocaleString()}
@@ -10,7 +10,7 @@ block content
     else
       .progress 상태: 종료
 
-    form.voting-form(action=`/votings/${voting.id}` method="POST")
+    form.voting-form(action=`/votings/${voting.id}?_method=PUT` method="POST")
       .option-list
         each option in voting.options
           .option-box

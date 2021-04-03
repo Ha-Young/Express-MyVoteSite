@@ -2,13 +2,13 @@ extends layouts/main
 
 block content
   h1 #{pageTitle}
-  .signup-container
+  .content-container
     form.submit-form(action="./signup" method="POST")
       input.username(type="text" placeholder="userName" name="username" required=true)
       input.email(type="email" placeholder="email" name="email" required=true)
       input.password1(type="password" placeholder="password1" name="password1" required=true)
       input.password2(type="password" placeholder="password2" name="password2" required=true)
       .warning-box #{errorMessage}
-      button.submit-button Signup
+      button.content-button.submit-button Signup
 
   script(src="/javascripts/common/submitHandler.js")

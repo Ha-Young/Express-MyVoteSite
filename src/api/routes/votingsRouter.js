@@ -1,13 +1,13 @@
 const express = require("express");
 const { isAuthenticated } = require("../middlewares/authenticator");
-const { validatePostVoting } = require("../middlewares/validator");
+const { validatePutVoting } = require("../middlewares/validator");
 const {
   getNewVoting,
   postNewVoting,
   votingSuccess,
   votingFail,
   getVoting,
-  postVoting,
+  putVoting,
   deleteVoting
 } = require("../../controllers/votingsController");
 
@@ -20,7 +20,7 @@ votingRouter.get("/success", isAuthenticated, votingSuccess);
 votingRouter.get("/error", votingFail);
 
 votingRouter.get("/:id", getVoting);
-votingRouter.post("/:id", validatePostVoting, postVoting);
+votingRouter.put("/:id", validatePutVoting, putVoting);
 
 votingRouter.delete("/:id/delete", deleteVoting);
 

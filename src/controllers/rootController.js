@@ -4,8 +4,12 @@ const Voting = require("../models/Voting");
 exports.home = async (req, res, next) => {
   try {
     const votings = await Voting.find();
+    const renderOption = {
+      pageTitle: "Voting List",
+      votings,
+    };
 
-    res.render("home", { pageTitle: "Voting List", votings });
+    res.render("home", renderOption);
   } catch (err) {
     console.log("Failed find votings!");
     next(createError(500));
@@ -23,8 +27,12 @@ exports.myVotings = async (req, res, next) => {
 
     try {
       const userVoting = await Voting.find({ "postedBy.id": id });
+      const renderOption = {
+        pageTitle: "My Votings",
+        userVoting,
+      };
 
-      res.render("myVoting", { pageTitle: "My Votings", userVoting });
+      res.render("myVoting", renderOption);
     } catch (err) {
       console.log("Failed find user voting!");
       next(createError(500));

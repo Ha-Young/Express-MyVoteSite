@@ -3,6 +3,13 @@ const User = require("../../models/User");
 const { validPassword } = require("../../utils/passwordHelper");
 
 const initializeLocal = (passport) => {
+  const localOption = {
+    usernameField: "email",
+    passwordField: "password",
+    session: true,
+    passReqToCallback: false,
+  };
+
   const localAuthenticate = async (email, password, done) => {
     try {
       const isExistUser = await User.findOne({ email });
@@ -29,30 +36,24 @@ const initializeLocal = (passport) => {
     };
   };
 
-  passport.use(new LocalStrategy({
-    usernameField: "email",
-    passwordField: "password",
-    session: true,
-    passReqToCallback: false,
-  },
-  localAuthenticate
-  ));
+  passport.use(new LocalStrategy(localOption, localAuthenticate));
 
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });
+
   passport.deserializeUser(async (id, done) => {
     try {
       const user = await User.findById(id);
-
-      done(null, {
+      const deserializedUser = {
         id: user.id,
         username: user.username,
-      });
+      };
+
+      done(null, deserializedUser);
     } catch (err) {
       console.log("Fail deserializeUser!");
       done(err);
-      return;
     }
   });
 };

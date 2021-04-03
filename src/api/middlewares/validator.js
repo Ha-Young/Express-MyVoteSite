@@ -13,6 +13,12 @@ exports.validatePostSignUp = async (req, res, next) => {
       return;
     }
 
+    if (!email.match(/^([\w-]+@([\w-]+\.)+[\w-]{2,4})?$/)) {
+      req.flash("error", "잘못된 이메일 주소입니다.");
+      res.redirect("/auth/signup");
+      return;
+    }
+
     if (isExistEmail) {
       req.flash("error", "존재하는 이메일입니다.");
       res.redirect("/auth/signup");
@@ -32,7 +38,7 @@ exports.validatePostSignUp = async (req, res, next) => {
   }
 };
 
-exports.validatePostVoting = async (req, res, next) => {
+exports.validatePutVoting = async (req, res, next) => {
   const votingId = req.params.id;
 
   if (!req.user) {

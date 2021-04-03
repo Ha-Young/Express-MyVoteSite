@@ -6,46 +6,57 @@ exports.getLogin = (req, res) => {
   const queryKey = Object.keys(req.query);
   const errorMessage = req.flash("error");
 
-  res.render("login", {
+  const renderOption = {
     pageTitle: "Login",
     nextPage: {
       key: queryKey,
       value: req.query[queryKey],
     },
     errorMessage,
-  });
+  };
+
+  res.status(200).render("login", renderOption);
 };
 
 exports.postLogin = (req, res) => {
   const queryKey = Object.keys(req.query);
+  const redirectUrl = `/${queryKey}/${req.query[queryKey]}`;
 
   if (queryKey.length) {
-    res.redirect(`/${queryKey}/${req.query[queryKey]}`);
+    res.status(301).redirect(redirectUrl);
     return;
   }
 
-  res.redirect("/");
+  res.status(301).redirect("/");
 };
 
 exports.getSignup = (req, res) => {
   const errorMessage = req.flash("error");
+  const renderOption = {
+    pageTitle: "Signup",
+    errorMessage,
+  };
 
-  res.render("signup", { pageTitle: "Signup", errorMessage });
+  res.status(200).render("signup", renderOption);
 };
 
 exports.postSignup = async (req, res, next) => {
-  const { username, email, password1: password } = req.body;
+  const {
+    username,
+    email,
+    password1,
+  } = req.body;
 
   try {
     await User.create({
       username,
       email,
-      ...generatePassword(password),
+      ...generatePassword(password1),
     });
 
-    res.redirect("/auth/login");
+    res.status().redirect("/auth/login");
   } catch (err) {
-    console.log(err);
+    console.log("Failed create user", err);
     next(createError(500));
   }
 };

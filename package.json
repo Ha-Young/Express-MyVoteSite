@@ -7,10 +7,11 @@
     "dev": "NODE_ENV=development nodemon ./src/bin/www",
     "build:assets": "WEBPACK_ENV=production webpack",
     "dev:assets": "WEBPACK_ENV=development webpack -w",
-    "lint": "eslint 'src/**'"
+    "lint": "eslint \"src/**\" "
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
+    "celebrate": "^14.0.0",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^4.4.1",
     "cookie-parser": "~1.4.4",

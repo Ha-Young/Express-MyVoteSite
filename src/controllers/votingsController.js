@@ -8,7 +8,6 @@ exports.getVoting = async (req, res, next) => {
 
   try {
     const voting = await Voting.findById(id);
-    console.log(voting.expiration, new Date(voting.expiration), new Date(voting.expiration).toLo);
 
     if (!voting) {
       console.log(`Can't find voting by ${id}!`);
@@ -16,20 +15,21 @@ exports.getVoting = async (req, res, next) => {
     }
 
     const votingResult = getVotingResult(voting.options);
-
-    res.render("votingDetail", {
+    const renderOption = {
       pageTitle: voting.title,
       voting,
       votingResult,
       errorMessage,
-    });
+    };
+
+    res.render("votingDetail", renderOption);
   } catch (err) {
     console.log(err);
     next(createError(500));
   }
 };
 
-exports.postVoting = async (req, res, next) => {
+exports.putVoting = async (req, res, next) => {
   const userId = req.user.id;
   const votingId = req.params.id;
   const selection = Object.keys(req.body)[0];
@@ -38,28 +38,31 @@ exports.postVoting = async (req, res, next) => {
     await Voting.findOneAndUpdate(
       {
         _id: votingId,
-        "options._id": selection
+        "options._id": selection,
       },
       { $push:
         {
           participants: [userId],
-          "options.$.selector": [userId]
+          "options.$.selector": [userId],
         },
       }
     );
 
     res.redirect("/");
   } catch (err) {
-    console.log(err);
+    console.log("Failed put voting", err);
+
     next(createError(500));
   }
 };
 
 exports.getNewVoting = (req, res) => {
-  res.render("newVoting", { pageTitle: "New Voting" });
+  const renderOption = { pageTitle: "New Voting" };
+
+  res.render("newVoting", renderOption);
 };
 
-exports.postNewVoting = async (req, res, next) => {
+exports.postNewVoting = async (req, res) => {
   const { title, expiration, option } = req.body;
   const { id, username } = req.user;
 
@@ -69,20 +72,23 @@ exports.postNewVoting = async (req, res, next) => {
     count: 0,
   }));
 
+  const votingInfo = {
+    title,
+    options,
+    expiration: timeStamp,
+    postedBy: {
+      id,
+      username,
+    },
+  };
+
   try {
-    await Voting.create({
-      title,
-      options,
-      expiration: timeStamp,
-      postedBy: {
-        id,
-        username,
-      },
-    });
+    await Voting.create(votingInfo);
 
     res.redirect("/votings/success");
   } catch (err) {
-    console.log(err);
+    console.log("Failed post new voting!", err);
+
     res.redirect("/votings/error");
   }
 };
