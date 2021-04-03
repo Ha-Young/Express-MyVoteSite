@@ -13,8 +13,8 @@ function initialize() {
       const user = await User.findById(id);
       done(null, user);
     } catch (error) {
-      // TODO: flash or error page.
       console.error(error);
+      done(err, null, { message: 'Fail to connect to user data.' });
     }
   });
 
@@ -31,7 +31,7 @@ function initialize() {
 
       return done(null, user.doc);
     } catch (error) {
-      // TODO: flash or error page.
+      console.error(error);
       return done(error);
     }
   }
