@@ -1,12 +1,12 @@
-const optionText = document.getElementsByClassName('option-text');
-const optionCount = document.getElementsByClassName('option-count');
+const $optionText = document.getElementsByClassName('option-text');
+const $optionCount = document.getElementsByClassName('option-count');
 
 const text = [];
 const count = [];
 
-for (let i = 0; i < optionText.length; i++) {
-  text.push(optionText[i].getAttribute('name'));
-  count.push(optionCount[i].getAttribute('name'));
+for (let i = 0; i < $optionText.length; i++) {
+  text.push($optionText[i].getAttribute('name'));
+  count.push($optionCount[i].getAttribute('name'));
 }
 
 const ctx = document.getElementById('vote-chart').getContext('2d');

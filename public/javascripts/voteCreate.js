@@ -1,40 +1,40 @@
-const optionBox = document.getElementById('options');
-const options = document.getElementsByClassName('option');
-const resetButton = document.getElementById('form-reset');
-const createButton = document.getElementById('option-create');
-const deleteButton = document.getElementById('option-delete');
-const messageBox = document.getElementById('form-message');
+const $optionBox = document.getElementById('options');
+const $options = document.getElementsByClassName('option');
+const $resetButton = document.getElementById('form-reset');
+const $createButton = document.getElementById('option-create');
+const $deleteButton = document.getElementById('option-delete');
+const $messageBox = document.getElementById('form-message');
 
 function createOption() {
-  const leng = options.length;
+  const length = $options.length;
 
-  if (leng === 5) {
-    messageBox.textContent = 'Option is full.';
+  if (length === 5) {
+    $messageBox.textContent = 'Option is full.';
 
     return;
   }
 
   const option = makeOption();
 
-  optionBox.appendChild(option);
-  messageBox.textContent = '';
+  $optionBox.appendChild(option);
+  $messageBox.textContent = '';
 }
 
 function deleteOption() {
-  const leng = options.length;
+  const leng = $options.length;
 
   if (leng === 2) {
-    messageBox.textContent = 'Option least 2.';
+    $messageBox.textContent = 'Option least 2.';
 
     return;
   }
 
-  optionBox.removeChild(optionBox.lastElementChild);
-  messageBox.textContent = '';
+  $optionBox.removeChild($optionBox.lastElementChild);
+  $messageBox.textContent = '';
 }
 
 function resetOption() {
-  optionBox.textContent = '';
+  $optionBox.textContent = '';
 
   createOption();
   createOption();
@@ -53,9 +53,9 @@ function makeOption() {
 }
 
 function init() {
-  createButton.addEventListener('click', createOption);
-  deleteButton.addEventListener('click', deleteOption);
-  resetButton.addEventListener('click', resetOption);
+  $createButton.addEventListener('click', createOption);
+  $deleteButton.addEventListener('click', deleteOption);
+  $resetButton.addEventListener('click', resetOption);
 }
 
 init();
