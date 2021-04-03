@@ -1,9 +1,5 @@
-exports.getLogOut = async function(req, res, next) {
-  try {
-    req.session.destroy();
-    res.redirect("/");
-    return;
-  } catch (error) {
-    next(error);
-  }
+exports.getLogOut = function(req, res, next) {
+  req.logout();
+  req.session.destroy();
+  res.redirect("/");
 };

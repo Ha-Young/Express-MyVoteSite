@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
-exports.getSignUpPage = async function(req, res, next) {
+exports.getSignUpPage = function(req, res, next) {
   res.render(
     "signUp",
     { title: "Sign up",

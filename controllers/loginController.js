@@ -1,7 +1,7 @@
 const createError = require("http-errors");
 const passport = require("passport");
 
-exports.getLoginPage = async function(req, res, next) {
+exports.getLoginPage = function(req, res, next) {
   res.render(
     "login",
     { title: "Login",
@@ -10,7 +10,7 @@ exports.getLoginPage = async function(req, res, next) {
   );
 };
 
-exports.authenticateUser = async function(req, res, next) {
+exports.authenticateUser = function(req, res, next) {
   passport.authenticate(
     "local",
     function(err, user) {
@@ -31,7 +31,7 @@ exports.authenticateUser = async function(req, res, next) {
   })(req, res, next);
 };
 
-exports.directUserToRelevantPage = async function(req, res, next) {
+exports.directUserToRelevantPage = function(req, res, next) {
   if (req.session.returnTo) {
     res.redirect(req.session.returnTo);
   } else {
