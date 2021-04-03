@@ -1,16 +1,14 @@
 const mongoose = require("mongoose");
 
 const votingSchema = new mongoose.Schema({
-  source: {
-    name: { type: String, required: true }
-  },
-  author: { type: String },
   title: { type: String, required: true },
-  description: { type: String, required: true },
-  url: { type: String, required: true },
-  urlToImage: { type: String },
-  publishedAt: { type: Date, default: Date.now },
-  content: { type: String, required: true },
+  generator: { type: String, required: true },
+  expiryDate: { type: Date },
+  options: [{
+    option: { type: String, required: true },
+    count: { type: Number, default: 0 },
+  }],
+  isInProgress: { type: Boolean, default: true },
 });
 
 module.exports = mongoose.model("Voting", votingSchema);

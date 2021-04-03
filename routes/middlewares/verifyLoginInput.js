@@ -6,7 +6,7 @@ const verifyLoginInput = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const savedUser = await User.findOne({ email });
-    const isValidPassword = await savedUser.validatePassword(password, savedUser.password);
+    const isValidPassword = await savedUser.comparePassword(password, savedUser.password);
 
     if (email === "" || password === "") {
       return res.redirect("/login");

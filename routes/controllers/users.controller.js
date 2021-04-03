@@ -12,9 +12,9 @@ exports.register = async (req, res, next) => {
       password,
     }).save();
 
-    res.redirect("/login");
+    return res.redirect("/login");
   } catch (err) {
-    next(createError(500, INTERNAL_SERVER_ERROR));
+    return next(createError(500, INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -32,8 +32,9 @@ exports.generateToken = async (req, res, next) => {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
     });
-    res.redirect(302, "/");
+
+    return res.redirect("/");
   } catch (err) {
-    next(createError(500, INTERNAL_SERVER_ERROR));
+    return next(createError(500, INTERNAL_SERVER_ERROR));
   }
 };
