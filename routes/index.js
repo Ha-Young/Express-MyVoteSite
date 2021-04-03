@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const isLoggedIn = require('./middleware/isLoggedIn');
+const setUserNickname = require('../routes/middleware/setUserNickname');
 const votingsController = require('../controllers/votings.controller');
 const userController = require('../controllers/user.controller');
 const wrapAsync = require('../utils/wrapAsync');
 
-router.get('/', wrapAsync(votingsController.voteGetAll));
+router.get('/',setUserNickname, wrapAsync(votingsController.voteGetAll));
 
 router.get('/logout', isLoggedIn, (req, res, next) => {
   try {

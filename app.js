@@ -44,9 +44,7 @@ app.use(express.static('public'));
 dbLoader.checkDB();
 passportLoader(app);
 
-setUserNickname(app);
-
-app.use('/', indexRouter);
+app.use('/', setUserNickname, indexRouter);
 app.use('/login', loginRouter);
 app.use('/votings', votingsRouter);
 

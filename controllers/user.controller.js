@@ -34,15 +34,15 @@ exports.loginGithubCallback = passport.authenticate('github', {
 exports.logout = (req, res, next)=> {
   if (req.session) {
     try {
-      req.logOut();
       req.session.destroy();
+      req.logOut();
       res.status(200).redirect('/');
     } catch (e) {
       next(e);
     }
   } else {
     try {
-      res.status(200).redirect('/');
+      res.status(200).redirect('/logout');
     } catch (e) {
       next(e);
     }
@@ -74,22 +74,18 @@ exports.signout = async (req, res, next) => {
   const { _id } = req.user;
   const { ObjectId } = mongoose.Types;
 
-  try {
-    const votes = await Vote.aggregate([
-      {
-        $match: { "creater._id": ObjectId(_id) }
-      }
-    ]);
-
-    for (let i = 0; i < votes.length; i++) {
-      await Vote.deleteOne({ _id: votes[i]._id });
+  const votes = await Vote.aggregate([
+    {
+      $match: { "creater._id": ObjectId(_id) }
     }
+  ]);
 
-    await User.deleteOne({ _id });
-    req.session.destroy();
-
-    res.redirect('/');
-  } catch (e) {
-    next(e);
+  for (let i = 0; i < votes.length; i++) {
+    await Vote.deleteOne({ _id: votes[i]._id });
   }
+
+  await User.deleteOne({ _id });
+  req.session.destroy();
+
+  res.redirect('/');
 };
