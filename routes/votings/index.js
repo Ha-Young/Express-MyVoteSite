@@ -16,7 +16,6 @@ router.get("/new", verifyAuth, function(req, res, next) {
     }
   );
 });
-
 router.post("/new", verifyAuth, newVotingInputValidation, votingController.postNewVoting);
 
 router.get("/:id", votingController.getSelectedVoting);

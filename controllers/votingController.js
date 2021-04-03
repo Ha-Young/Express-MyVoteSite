@@ -47,6 +47,7 @@ exports.getSelectedVoting = async function (req, res, next) {
       const { _id, title, voters } = option;
 
       if (isProceeding) {
+        console.log(getMaxVoterCount(options), "1?")
         if (voters.length === getMaxVoterCount(options)) {
           winner.push(title);
         }

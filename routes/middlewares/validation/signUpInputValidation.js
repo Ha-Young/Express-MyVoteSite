@@ -22,7 +22,7 @@ async function signUpInputValidation(req, res, next) {
       "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$"
     );
 
-    if (password.length < 5 || !registerPasswordFormat.test(password)) {
+    if (!registerPasswordFormat.test(password)) {
       errorMessages.push({
         message: "Password should contain at least one number, letter, special character, minimum length 8"
       });

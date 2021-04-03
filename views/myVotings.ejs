@@ -15,7 +15,7 @@
     <%- include("./partials/header.ejs") %>
       <h1 class="myvointg-title"><%= title %>: What I registered</h1>
       <div class="content-wrap">
-        <% if(myVotings.length > 0) { %>
+        <% if (myVotings.length > 0) { %>
           <% myVotings.forEach(function(voting) { %>
             <div class="content-container">
               <a class="my-voting-link" href="/votings/<%= voting._id %>">

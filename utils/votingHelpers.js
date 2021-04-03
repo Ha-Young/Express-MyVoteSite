@@ -4,16 +4,8 @@ function checkExpireDate(expireDate) {
   return today <= votingExpireDate;
 }
 
-function getMaxVoterCount (votingOptions) {
-  let max = 0;
-
-  votingOptions.forEach(option => {
-    if (option.voters.length > max) {
-      max = option.voters.length;
-    }
-  });
-
-  return max;
+function getMaxVoterCount(votingOptions) {
+  return votingOptions.reduce((acc, option) => Math.max(option.voters.length, acc), 0);
 }
 
 exports.checkExpireDate = checkExpireDate;
