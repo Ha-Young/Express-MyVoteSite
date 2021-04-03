@@ -1,3 +1,9 @@
+input {
+  width: 200px;
+  height: 30px;
+  margin: 10px;
+}
+
 .login-page {
   display: flex;
 }
@@ -12,8 +18,13 @@
   color: white;
 }
 
-input {
-  width: 200px;
-  height: 30px;
-  margin: 10px;
+.login-button {
+  color: white;
+}
+
+.signup {
+  display: block;
+  width: 100px;
+  margin: 0 auto;
+  color: white;
 }

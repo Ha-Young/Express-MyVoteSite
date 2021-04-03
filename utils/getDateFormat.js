@@ -1,3 +1,11 @@
+/**
+ * This function will accept Date format
+ * and create an YYYY-MM-DD mm:ss format of Date
+ *
+ * @param {Date} dateInfo date of javascript
+ * @returns {String} The Date of YYYY-MM-DD mm:ss format
+ */
+
 function getDateFormat(dateInfo) {
   const date = new Date(dateInfo);
   const year = date.getFullYear();
