@@ -8,9 +8,14 @@
   margin-top: 5vh;
 }
 
-.loginForm .loginFlex {
+.loginForm .flex {
   width: 80%;
   margin-bottom: 3vh;
+}
+
+.loginForm i {
+  font-size: 2.5vw;
+  color: white;
 }
 
 .loginForm button {

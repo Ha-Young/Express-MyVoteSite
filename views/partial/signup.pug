@@ -13,29 +13,30 @@ block content
         | 투표에 참여하세요!
 
     form(class="signupForm" action="signup", method="post")
-      .loginFlex
+      span.signupTitle 회 원 가 입
+      .flex
         .icon
           i.fas.fa-dice-d6
         .textBox
           label(for="username") Username:
           input(type="text" id="username" name="username" required)
-      .loginFlex
+      .flex
         .icon
           i.fas.fa-envelope
         .textBox
           label(for="email") Your Email:
           input(type="email" id="email" name="email" required)
-      .loginFlex
+      .flex
         .icon
           i.fas.fa-lock
         .textBox
           label(for="password") Password:
           input(type="password" id="password" name="password" required)
-      .loginFlex
+      .flex
         .icon
           i.fas.fa-lock-open
         .textBox
           label(for="password") Confirm:
           input(type="password" id="password" name="confirm" required)
       .rightSide
-        button(type="submit") SUBMIT
+        button(type="submit") 등록

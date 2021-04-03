@@ -17,35 +17,41 @@ exports.post = async (req, res, next) => {
     const validateError = validationResult(req);
     if (!validateError.isEmpty()) {
       const { msg, param } = validateError.errors[0];
-      res.render('partial/message', {
+      return res.render('partial/message', {
+        isSuccess: false,
         message: `${msg}: ${param}`,
       });
-      return;
     }
 
     const { username, email, password } = req.body;
     const userData = await User.findOne({ email });
 
     if (userData) {
-      res.render('partial/message', {
+      return res.render('partial/message', {
+        isSuccess: false,
         message: '이미 가입된 계정입니다.',
       });
-    } else {
-      const hashedPassword = await bcrypt.hash(
-        password,
-        parseInt(process.env.SECRET_KEY, 10),
-      );
-      const newUser = await User.create({ username, email, password: hashedPassword });
-
-      if (newUser) {
-        console.log('success sign up');
-        res.redirect('/auth/login');
-      } else {
-        console.log('signup failed');
-      }
     }
+
+    const hashedPassword = await bcrypt.hash(
+      password,
+      parseInt(process.env.SECRET_KEY, 10),
+    );
+    const newUser = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+    });
+
+    if (!newUser) {
+      return res.render('partial/message', {
+        isSuccess: false,
+        message: '이미 가입된 계정입니다.',
+      });
+    }
+    return res.redirect('/auth/login');
   } catch (err) {
-    next(createError(err.message));
+    return next(createError(500));
   }
 };
 
@@ -58,6 +64,7 @@ exports.login = async (req, res, next) => {
 
   if (fmsg.error) {
     return res.render('partial/message', {
+      isSuccess: false,
       message: '가입되지 않은 계정입니다.',
     });
   }

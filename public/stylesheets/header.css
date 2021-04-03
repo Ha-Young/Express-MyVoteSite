@@ -21,7 +21,7 @@ header .home {
 .username {
   padding: .3em 1em;
   border-radius: 1vw;
-  border-bottom: white .3vw solid;
+  border-bottom: white .5vw solid;
   color: white;
   background-color: var(--pink);
 }
@@ -36,10 +36,10 @@ header a {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-left: 2vw;
-  border-bottom: white .3vw solid;
+  border-bottom: white .5vw solid;
+  padding: 0 2vw;
 }
 
 header a:hover {
-  border-bottom: var(--pink) .3vw solid;
+  border-bottom: var(--pink) .5vw solid;
 }

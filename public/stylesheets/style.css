@@ -1,8 +1,6 @@
 :root {
-  --beige: #FFF3F4;
-  --dark-beige: #FDF5FA;
-  --light-pink: #FFC2D1;
   --pink: #FF3366;
+  --light-yellow: #FFE299;
   --yello: #FFBA08;
   --green: #3BCEAC;
   --graish-white: #FBFBFB;
@@ -50,10 +48,28 @@ main {
 }
 
 button {
-  font-size: .7vw;
+  min-width: 10vw;
   padding: 2em;
+  margin-left: 2vw;
   border: none;
   border-radius: 1vw;
-  margin-left: 2vw;
+  font-size: .7vw;
   outline: none;
+  cursor: pointer;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.alertBox {
+  width: 70vw;
+  height: 15vh;
+  border-left: var(--yello) 1vw solid;
+  font-weight: 300;
+  color: var(--dark-gray);
+  background-color: var(--light-yellow);
+  margin-bottom: 2vw;
 }

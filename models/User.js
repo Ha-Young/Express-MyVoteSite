@@ -15,7 +15,6 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   myVotings: [mongoose.Schema.Types.ObjectId],
-  likes: [mongoose.Schema.Types.ObjectId],
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

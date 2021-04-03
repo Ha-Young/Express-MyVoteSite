@@ -1,0 +1,10 @@
+extends layout.pug
+
+block content
+  .alertBox.flex #{message}
+  - if (isRedirected)
+    input(type="hidden", value=url)
+  - else
+    button
+      a(href="/") Home
+  script(src="/javascripts/setTimeout.js")

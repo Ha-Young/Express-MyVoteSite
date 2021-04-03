@@ -25,7 +25,6 @@
 .dueDate {
   font-weight: 400;
   color: var(--pink);
-  background-color: var(--beige);
   padding: 1vw;
 }
 

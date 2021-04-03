@@ -1,33 +1,42 @@
 extends ../layout.pug
 
 block stylesheet
+  link(rel="stylesheet", href="/stylesheets/signup.css")
   link(rel="stylesheet", href="/stylesheets/votingForm.css")
 
 block content
   form(action="/votings/new", method="post")
     - const today = moment().format('yyyy-MM-DDTHH:mm:ss')
     - const minVotingTime = moment().add(1, 'day').format('yyyy-MM-DDTHH:mm:ss')
-    div
-      label 등록자 이름:
-        input(type="text" name="founder" readOnly value=user.id)
-    div
-      label 제목:
-        input(type="text" name="title" value="제목이다")
-    div
-      label 투표 설명:
-        input(type="text" name="description" value="설명이다")
-    div.optionsContainer
-      label 옵션:
-      span.addOptionBtn +
-      input(type="text" name="options" value="옵션1")
-      input(type="text" name="options" value="옵션2")
-    div
-      label 투표기간:
+    input(type="hidden" name="founder" value=user.id)
+    .flex
+      .icon
+        i.fas.fa-envelope
+      .textBox
+        label(for="title") 투표제목:
+        input(type="text" id="title" name="title")
+    .flex
+      .icon
+        i.fas.fa-envelope
+      .textBox
+        label(for="description") 내 용:
+        input(type="text" id="description" name="description")
+    .optionsContainer
+      label(for="options") 투표옵션:
+        span.addOptionBtn +
+        input(type="text" name="options" value="옵션1")
+        input(type="text" name="options" value="옵션2")
+    .flex
+      .icon
+        i.fas.fa-envelope
+      .textBox
         input(
           type="datetime-local"
+          id="dueDate"
           name="dueDate"
           value=minVotingTime
           min=today
         )
-    button.submitBtn SUBMIT
+    .rightSide
+      button(type="submit") 투표등록
   script(src="/javascripts/votingForm.js")

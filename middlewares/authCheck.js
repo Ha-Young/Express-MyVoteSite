@@ -2,9 +2,13 @@ const createError = require('http-errors');
 
 const authCheck = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    next(createError(401, '로그인이 필요합니다.'));
+    return next(createError({
+      url: '/auth/login',
+      isRedirected: true,
+      message: '로그인이 필요합니다. 로그인 페이지로 이동합니다.',
+    }));
   }
-  next();
+  return next();
 };
 
 exports.authCheck = authCheck;

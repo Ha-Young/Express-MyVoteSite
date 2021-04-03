@@ -7,16 +7,16 @@ block stylesheet
 block content
   form(class="loginForm" action="/auth/login", method="post")
     input(type="hidden", name="votingId" value=votingId)
-    .loginFlex
+    .flex
       .icon
         i.fas.fa-envelope
       .textBox
         label(for="email") Your Email:
         input(type="email" id="email" name="email" required)
-    .loginFlex
+    .flex
       .icon
         i.fas.fa-lock
       .textBox
         label(for="password") Password:
         input(type="password" id="password" name="password" required)
-    button(type="submit") LOGIN
+    button(type="submit") Login

@@ -39,6 +39,11 @@
   border: var(--pink) .1vw solid;
 }
 
+.signupTitle {
+  color: var(--pink);
+  text-align: center;
+}
+
 .textBox {
   position: relative;
   width: 100%;
@@ -70,13 +75,7 @@
   justify-content: flex-end;
 }
 
-.loginFlex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.loginFlex .icon {
+.icon {
   width: 5vw;
   height: 5vw;
   display: flex;
@@ -91,7 +90,7 @@
   background-color: var(--pink);
 }
 
-.loginFlex i {
-  font-size: 2vw;
+.icon i {
+  font-size: 2.5vw;
   color: white;
 }

@@ -25,7 +25,7 @@ db.once('open', () => {
 const mainRouter = require('./routes/main');
 const authRouter = require('./routes/auth');
 const votingsRouter = require('./routes/votings');
-const myPageRouter = require('./routes/myPage');
+const myPageRouter = require('./routes/myVotings');
 
 const app = express();
 
@@ -65,7 +65,11 @@ app.use((err, req, res, next) => {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('message', {
+    url: err.url,
+    isRedirected: err.isRedirected,
+    message: err.message,
+  });
 });
 
 module.exports = app;

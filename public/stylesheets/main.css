@@ -9,7 +9,7 @@
   width: 100%;
   padding: 1em;
   border-radius: 2vw;
-  border: var(--light-pink) 1px solid;
+  border: var(--pink) .1vw solid;
   margin-bottom: 1vw;
   cursor: pointer;
 }

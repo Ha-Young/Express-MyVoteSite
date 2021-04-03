@@ -18,7 +18,10 @@ exports.create = async (req, res, next) => {
       title, description, dueDate, founder, options,
     });
     if (!votingData) {
-      return next(createError('투표 추가에 실패했습니다'));
+      return next(createError(500, {
+        isRedirected: false,
+        message: '???',
+      }));
     }
 
     const updateResult = await User.updateOne(
@@ -26,12 +29,18 @@ exports.create = async (req, res, next) => {
       { $push: { myVotings: votingData.id } },
     );
     if (!updateResult.nModified) {
-      return next(createError(500, '이미 삭제되었거나 존재하지않는 투표입니다.'));
+      return next(createError(500, {
+        isRedirected: false,
+        message: '투표를 추가하지 못했습니다.',
+      }));
     }
 
-    res.render('partial/message', { isSuccess: true });
+    return next({
+      isRedirected: false,
+      message: '투표를 추가하셨네요!',
+    });
   } catch (err) {
-    next(createError(err.status));
+    return next(createError(500));
   }
 };
 
@@ -39,14 +48,24 @@ exports.getOne = async (req, res, next) => {
   try {
     const voteData = await Voting.findById(req.params.id).exec();
     if (!voteData) {
-      return next(createError('삭제 되었거나 존재하지 않는 투표입니다'));
+      return next(createError(401, '삭제 되었거나 존재하지 않는 투표입니다'));
     }
-    res.render('partial/votingItem', {
+
+    const votingFounder = await User.findOne({ id: voteData.founder }).exec();
+    if (!votingFounder) {
+      return next({
+        url: '/',
+        isRedirected: true,
+        message: '탈퇴, 또는 삭제된 사용자입니다.',
+      });
+    }
+    return res.render('partial/votingItem', {
       user: req.user,
       data: voteData,
+      votingFounder: votingFounder.username,
     });
   } catch (err) {
-    next(createError(err.status));
+    return next(createError(500));
   }
 };
 
@@ -63,7 +82,7 @@ exports.updateVoting = async (req, res, next) => {
     const result = await voting.save();
     return res.send(!!result);
   } catch (err) {
-    return next(createError(err.status));
+    return next(createError(500));
   }
 };
 
@@ -71,7 +90,11 @@ exports.deleteVoting = async (req, res, next) => {
   try {
     const deleteResult = await Voting.deleteOne({ _id: req.params.id });
     if (!deleteResult.deletedCount) {
-      return next(createError(500, '이미 삭제되었거나 존재하지않는 투표입니다.'));
+      return res.render('partial/message', {
+        url: '/',
+        isSuccess: false,
+        message: '이미 삭제되었거나 존재하지않는 투표입니다.',
+      });
     }
     const updateResult = await User.updateOne(
       { _id: req.user.id },
@@ -79,11 +102,15 @@ exports.deleteVoting = async (req, res, next) => {
     );
 
     if (!updateResult.nModified) {
-      return next(createError(500, '이미 삭제되었거나 존재하지않는 투표입니다.'));
+      return res.render('partial/message', {
+        url: '/',
+        isSuccess: false,
+        message: '이미 삭제되었거나 존재하지않는 투표입니다.',
+      });
     }
 
     return res.redirect('/');
   } catch (err) {
-    return next(createError(err.status));
+    return next(createError(500));
   }
 };
