@@ -1,4 +1,8 @@
 .error
-  h1= message
-  h2= error.status
+  if (error.status === 500)
+    h1 INTERNAL SERVER ERROR
+    h2 500
+  else
+    h1 NOT FOUND
+    h2 404
   a(href='/') GO BACK HOME

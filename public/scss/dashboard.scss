@@ -138,36 +138,6 @@ body {
       }
     }
   }
-
-  &.collapse {
-    width: 90px;
-    border-right: 1px solid $border-color;
-    .logo-expand,
-    .side-title {
-      display: none;
-    }
-    .logo {
-      display: flex;
-    }
-    .side-wrapper {
-      width: 30px;
-    }
-    .side-menu svg {
-      margin-right: 30px;
-    }
-  }
-}
-
-@keyframes bottom {
-  0% {
-    transform: translateY(100px);
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 .side-menu {
@@ -312,6 +282,18 @@ body {
 
 .delay-animation {
   animation: bottom 0.8s var(--delay) both;
+}
+
+@keyframes bottom {
+  0% {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .main-header {
