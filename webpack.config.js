@@ -8,10 +8,28 @@ const PATH = path.resolve(__dirname, "src", "public", "static");
 
 module.exports = () => {
   return {
-    entry: ENTRY,
+    entry: {
+      main: ENTRY,
+      shared: ["@babel/polyfill"],
+    },
+    output: {
+      path: PATH,
+      filename: "[name].js",
+    },
     mode: MODE,
     module: {
       rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-env"],
+              plugins: ["@babel/plugin-proposal-class-properties"]
+            }
+          }
+        },
         {
           test: /\.scss$/,
           use: [
@@ -36,10 +54,7 @@ module.exports = () => {
         },
       ],
     },
-    output: {
-      path: PATH,
-      filename: "main.js",
-    },
+    devtool: "inline-source-map",
     plugins: [new MiniCssExtractPlugin()],
   };
 };

@@ -1,3 +1,5 @@
+@import "./error.scss";
+
 * {
   outline: none;
   box-sizing: border-box;
@@ -22,7 +24,7 @@ a {
 
 .option {
   display: flex;
-  margin:5px;
+  margin: 5px;
 }
 
 .warning-box {
@@ -42,13 +44,13 @@ a {
   --dropdown-bg: #21242d;
   --dropdown-hover: rgb(42 46 60);
   --popup-bg: rgb(22 25 37);
-  --search-bg:  #14162b;
+  --search-bg: #14162b;
   --overlay-bg: rgba(36, 39, 59, 0.3);
   --scrollbar-bg: rgb(1 2 3 / 40%);
   --calendar-picker-color: invert(1);
- }
+}
 
- .light-mode {
+.light-mode {
   --theme-bg-color: rgb(255 255 255 / 31%);
   --theme-color: #3c3a3a;
   --inactive-color: #333333;
@@ -154,16 +156,16 @@ input {
     stroke: var(--theme-color);
   }
   .profile-img {
-    border: 2px solid var(--theme-bg-color)
+    border: 2px solid var(--theme-bg-color);
   }
-  .content-section ul{
+  .content-section ul {
     background-color: var(--theme-bg-color);
   }
   .pop-up__title {
     border-color: var(--theme-color);
   }
   .dropdown.is-active ul {
-    background-color:rgb(255 255 255 / 94%);
+    background-color: rgb(255 255 255 / 94%);
   }
 }
 
@@ -174,7 +176,11 @@ body.light-mode:before {
   top: 0;
   width: 100%;
   height: 100vh;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgb(255 255 255 / 45%) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgb(255 255 255 / 45%) 100%
+  );
   backdrop-filter: saturate(3);
 }
 
@@ -281,18 +287,18 @@ body.light-mode:before {
 .notification {
   position: relative;
   &-number {
-   position: absolute;
-   background-color: #3a6df0;
-   width: 16px;
-   height: 16px;
-   border-radius: 50%;
-   font-size: 10px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   color: #fff;
-   right: -6px;
-   top: -6px;
+    position: absolute;
+    background-color: #3a6df0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    right: -6px;
+    top: -6px;
   }
 }
 
@@ -339,7 +345,6 @@ body.light-mode:before {
   }
 }
 
-
 .side-wrapper + .side-wrapper {
   margin-top: 20px;
 }
@@ -383,7 +388,6 @@ body.light-mode:before {
   font-size: 11px;
 }
 
-
 .main-header {
   display: flex;
   align-items: center;
@@ -416,7 +420,6 @@ body.light-mode:before {
   }
 }
 
-
 .content-wrapper {
   display: flex;
   flex-direction: column;
@@ -432,29 +435,29 @@ body.light-mode:before {
     justify-content: space-between;
     background-image: url("/src/public/img/cubes.png"),
       linear-gradient(
-     to right top,
-     #cf4af3,
-     #e73bd7,
-     #f631bc,
-     #fd31a2,
-     #ff3a8b,
-     #ff4b78,
-     #ff5e68,
-     #ff705c,
-     #ff8c51,
-     #ffaa49,
-     #ffc848,
-     #ffe652
-    );    border-radius: 14px;
+        to right top,
+        #cf4af3,
+        #e73bd7,
+        #f631bc,
+        #fd31a2,
+        #ff3a8b,
+        #ff4b78,
+        #ff5e68,
+        #ff705c,
+        #ff8c51,
+        #ffaa49,
+        #ffc848,
+        #ffe652
+      );
+    border-radius: 14px;
     padding: 20px 40px;
   }
   &.overlay {
-   pointer-events: none;
-   transition: 0.3s;
-   background-color: var(--overlay-bg);
+    pointer-events: none;
+    transition: 0.3s;
+    background-color: var(--overlay-bg);
   }
 }
-
 
 .overlay-app {
   width: 100%;
@@ -530,11 +533,9 @@ body.light-mode:before {
   }
 }
 
-
 .content-button:not(.open):hover {
   background: #1e59f1;
 }
-
 
 .dropdown {
   position: relative;
