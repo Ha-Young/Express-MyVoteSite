@@ -21,6 +21,7 @@ const votingSchema = new mongoose.Schema({
   },
   founder: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
   participants: [{

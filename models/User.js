@@ -14,7 +14,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  myVotings: [mongoose.Schema.Types.ObjectId],
+  myVotings: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Voting',
+  }],
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

@@ -45,6 +45,7 @@ block content
             - if (isFounder) // 생성자
                 .likes #{option.likes.length}
         - else // 로그아웃
+          span 로그인을 해야 투표에 참여할 수 있습니다.
           each option in options
             a(href=`/auth/login/${id}`)
               .options #{option.opt}
