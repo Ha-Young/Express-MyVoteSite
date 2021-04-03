@@ -69,7 +69,7 @@ voteSchema.methods.makeResult = async function() {
   const options = this.options;
 
   const biggestOption = Object.keys(options).reduce((acc, cur) => {
-    return options[acc] > options[cur] ? acc : cur
+    return options[acc] > options[cur] ? acc : cur;
   });
 
   this.winner = biggestOption;
