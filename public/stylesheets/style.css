@@ -19,15 +19,14 @@ a {
   height: 20px;
   margin: 20px;
   font-size: 15px;
+  text-align: center;
 }
 
 a:link {
-  color: black;
   text-decoration: none;
 }
 
 a:visited {
-  color: black;
   text-decoration: none;
 }
 
@@ -47,6 +46,8 @@ button {
 
 .main-page {
   display: flex;
+  height: 100vh;
+  background: #24282C;
 }
 
 .side-page {
@@ -56,8 +57,15 @@ button {
   align-items: center;
   position: sticky;
   top: 0;
-  height: 100%;
+  height: 1000px;
+  background-image: url(/images/sidebar.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
   padding: 20px;
+}
+
+.side-bar-link {
+  color: black;
 }
 
 .title {
@@ -77,7 +85,7 @@ button {
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   min-height: 100vh;
 }
 
@@ -97,24 +105,6 @@ button {
   justify-content: center;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  padding: 15px;
-  background: #222222;
-  font-size: 17px;
-  color: white;
-}
-
-.home-link {
-  position: absolute;
-  display: inline-block;
-  width: 150px;
-  height: 50px;
-  cursor: pointer;
-  z-index: 1;
-}
-
 .user-info {
   height: 55px;
   line-height: 55px;
@@ -122,7 +112,7 @@ button {
 
 .success {
   display: block;
-  width: 670px;
+  width:  750px;
   height: 30px;
   line-height: 30px;
   margin: 10px auto;
@@ -131,7 +121,7 @@ button {
 
 .failure {
   display: block;
-  width: 670px;
+  width: 750px;
   height: 30px;
   line-height: 30px;
   margin: 10px auto;

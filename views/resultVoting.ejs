@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include("partial/header") %>
     <title>Voting Platform</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <link rel="stylesheet" href="/stylesheets/detailVoting.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   </head>
   <body>
-    <a href="/">투표 목록</a>
-    <section class="voting-information container">
+    <section class="main-page">
       <div class="chart">
         <canvas id="myChart" name="<%= JSON.stringify(voting.options) %>"></canvas>
       </div>
@@ -41,6 +39,7 @@
                 <% } %>
               </label>
             <% }) %>
+            <a href="/">투표 목록</a>
           </article>
           <% if (isAuthor) { %>
             <button id="deleteButton" name="<%= voting._id %>">삭제</button>

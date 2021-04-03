@@ -1,31 +1,44 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include("partial/header") %>
     <title>Voting Platform</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <link rel="stylesheet" href="/stylesheets/detailVoting.css" />
   </head>
   <body>
-    <span class="success">투표 생성에 성공했습니다.</span>
-    <section id="voting" class="voting-information">
-      <article class="voting-list">
-        <ul>
-          <p>투표 주제: <%= newVoting.title %></p>
-          <p>투표 종료 시간: <%= newVoting.endDate %></p>
-          <% newVoting.options.forEach(option => { %>
-            <li class="voting-option">
-              <%= option.title %>
-              투표 수: <%= option.value %>
-            </li>
-          <% }) %>
-          <a href="/voting/votings/<%= newVoting._id %>">
-            투표 페이지로
-          </a>
-          <button id="deleteButton" name="<%= newVoting._id %>">삭제</button>
-        </ul>
-        <script src="/javascripts/deleteVoting.js"></script>
-        <a href="/">투표 목록</a>
+    <section class="main-page">
+      <article class="side-page">
+        <h2 class="title">
+          VOTING<br>
+          PLATFORM
+        </h2>
+        <pre class="description">
+          투표 생성에 성공하였습니다.
+          "투표 페이지"로 를 누를 경우 바로 투표가 가능합니다!
+          혹시나 삭제하고 싶을 경우 "삭제 버튼"을!
+          투표 목록으로 돌아가고 싶은 경우는 "투표 목록"을 눌러주세요!🚌
+        </pre>
+      </article>
+      <article id="voting" class="voting-information">
+        <span class="success">투표 생성에 성공했습니다.</span>
+        <article class="voting-list">
+          <ul>
+            <p>투표 주제: <%= newVoting.title %></p>
+            <p>투표 종료 시간: <%= newVoting.endDate %></p>
+            <% newVoting.options.forEach(option => { %>
+              <li class="voting-option">
+                <%= option.title %>
+                투표 수: <%= option.value %>
+              </li>
+            <% }) %>
+            <a href="/voting/votings/<%= newVoting._id %>">
+              투표 페이지로
+            </a>
+            <button id="deleteButton" name="<%= newVoting._id %>">삭제</button>
+          </ul>
+          <script src="/javascripts/deleteVoting.js"></script>
+          <a href="/">투표 목록</a>
+        </article>
       </article>
     </section>
   </body>

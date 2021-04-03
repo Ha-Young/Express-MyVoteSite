@@ -1,12 +1,15 @@
+.login-page {
+  display: flex;
+}
+
 .auth-box {
-  width: 300px;
-  height: 400px;
-  margin: 30px auto;
-  padding: 10px;
-  background: #d1d8ec;
-  text-align: center;
-  box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
-  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  background: #24282C;
+  color: white;
 }
 
 input {

@@ -20,14 +20,14 @@
         </pre>
         <article class="buttons">
           <% if (user) { %>
-            <a href="/auth/logout">로그아웃</a>
+            <a href="/auth/logout" class="side-bar-link">로그아웃</a>
           <% } else { %>
-            <a href="/auth/login">로그인</a>
+            <a href="/auth/login" class="side-bar-link">로그인</a>
           <% } %>
-          <a href="/auth/signup">회원가입</a>
+          <a href="/auth/signup" class="side-bar-link">회원가입</a>
         </article>
       </article>
-      <section class="container">
+      <article class="container">
         <article class="voting-buttons">
           <a href="/voting/votings/new">투표 생성</a>
           <a href="/voting/votings/my-votings">내 투표</a>
@@ -62,7 +62,7 @@
             </li>
           <% }) %>
         </ul>
-      </section>
+      </article>
     </section>
   </body>
 </html>

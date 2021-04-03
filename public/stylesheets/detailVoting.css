@@ -14,23 +14,23 @@ ul {
   justify-content: center;
   width: 100%;
   min-height: 100%;
-}
-
-.voting-description {
-  display: block;
-  width: 50%;
-  height: 100%;
-  text-align: center;
-  border: 1px solid white;
+  background: #24282C;
 }
 
 .voting-list {
   display: block;
-  width: 40%;
+  width: 70%;
   min-height: 500px;
+  height: 90vh;
   margin: 10px;
+  background: white;
   text-align: center;
-  border: 1px solid white;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.voting-list > a {
+  color: black;
 }
 
 .voting-option {
@@ -40,7 +40,7 @@ ul {
   line-height: 70px;
   margin: 10px;
   padding: 10px;
-  border: 1px solid white;
+  border: 1px solid black;
   text-align: left;
   list-style: none;
   cursor: pointer;

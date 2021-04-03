@@ -1,27 +1,40 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include("partial/header") %>
     <title>Voting Platform</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <link rel="stylesheet" href="/stylesheets/auth.css" />
   </head>
   <body>
-    <section class="auth-box">
-      <form action="/auth/login" method="POST">
-        <div>
-          <p>이메일</p>
-          <input type="email" name="email" placeholder="Email" required=true>
-        </div>
-        <div>
-          <p>비밀번호</p>
-          <input type="password" name="password" placeholder="password" required=true>
-        </div>
-        <button type="submit">로그인</button>
-      </form>
-      <form action="/auth/signup" method="GET">
-        <button type="submit">회원가입</button>
-      </form>
+    <section class="login-page">
+      <article class="side-page">
+        <h2 class="title">
+          VOTING<br>
+          PLATFORM
+        </h2>
+        <pre class="description">
+          로그인을 해주세요!
+          가입하지 않은 경우 회원가입을 먼저 해주세요~!
+        </pre>
+        <a href="/" class="side-bar-link">투표 목록</a>
+      </article>
+      <article class="auth-box">
+        <p class="title">로그인</p>
+        <form action="/auth/login" method="POST">
+          <div>
+            <p>이메일</p>
+            <input type="email" name="email" placeholder="Email" required=true>
+          </div>
+          <div>
+            <p>비밀번호</p>
+            <input type="password" name="password" placeholder="password" required=true>
+          </div>
+          <button type="submit">로그인</button>
+        </form>
+        <form action="/auth/signup" method="GET">
+          <button type="submit">회원가입</button>
+        </form>
+      </article>
     </section>
   </body>
 </html>

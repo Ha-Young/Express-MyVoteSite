@@ -1,47 +1,59 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include("partial/header") %>
     <title>Voting Platform</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <link rel="stylesheet" href="/stylesheets/detailVoting.css" />
   </head>
   <body>
-    <p id="message" class="message-box"></p>
-    <section class="voting-information">
-      <article class="voting-list">
-        <ul>
-          <p>투표 주체자: <%= author %></p>
-          <p>투표 주제: <%= voting.title %></p>
-          <p>투표 종료 시간: <%= voting.endDate %></p>
-          <article class="voting-options">
-            <% voting.options.forEach(option => { %>
-              <label for="<%= option.title %>">
-                <li class="voting-option">
-                  <input
-                    id="<%= option.title %>"
-                    type="radio"
-                    name="option"
-                    value="<%= option.title %>"
-                  >
-                  <%= option.title %>
-                  <% if (isAuthor) { %>
-                    <span class="option-value">
-                      투표 수: <%= option.value %>
-                    </span>
-                  <% } %>
-                </li>
-              </label>
-            <% }) %>
-          </article>
-          <button id="submitButton" name="<%= voting._id %>">투표 제출</button>
-          <% if (isAuthor) { %>
-            <button id="deleteButton" name="<%= voting._id %>">삭제</button>
-            <script src="/javascripts/deleteVoting.js"></script>
-          <% } %>
-          <script src="/javascripts/patchVoting.js"></script>
-        </ul>
-        <a href="/">투표 목록</a>
+    <section class="main-page">
+      <article class="side-page">
+        <h2 class="title">
+          VOTING<br>
+          PLATFORM
+        </h2>
+        <pre class="description">
+          우측의 상세 투표함에서 당신의 소중한 한 표를 던져주세요!
+          투표 결과는 투표 종료 시간 이 후에 확인하실 수 있습니다.
+          한 번 투표하면 변경이 불가하오니 신중하게 투표 바랍니다!🧐
+        </pre>
+      </article>
+      <p id="message" class="message-box"></p>
+      <article class="voting-information">
+        <article class="voting-list">
+          <ul>
+            <p>투표 주체자: <%= author %></p>
+            <p>투표 주제: <%= voting.title %></p>
+            <p>투표 종료 시간: <%= voting.endDate %></p>
+            <article class="voting-options">
+              <% voting.options.forEach(option => { %>
+                <label for="<%= option.title %>">
+                  <li class="voting-option">
+                    <input
+                      id="<%= option.title %>"
+                      type="radio"
+                      name="option"
+                      value="<%= option.title %>"
+                    >
+                    <%= option.title %>
+                    <% if (isAuthor) { %>
+                      <span class="option-value">
+                        투표 수: <%= option.value %>
+                      </span>
+                    <% } %>
+                  </li>
+                </label>
+              <% }) %>
+            </article>
+            <button id="submitButton" name="<%= voting._id %>">투표 제출</button>
+            <% if (isAuthor) { %>
+              <button id="deleteButton" name="<%= voting._id %>">삭제</button>
+              <script src="/javascripts/deleteVoting.js"></script>
+            <% } %>
+            <script src="/javascripts/patchVoting.js"></script>
+          </ul>
+          <a href="/">투표 목록</a>
+        </article>
       </article>
     </section>
   </body>

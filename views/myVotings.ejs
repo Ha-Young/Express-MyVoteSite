@@ -1,33 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include("partial/header") %>
     <title>Voting Platform</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <link rel="stylesheet" href="/stylesheets/detailVoting.css" />
   </head>
   <body>
-    <section id="voting" class="voting-information">
-      <% myVotings.forEach(myVoting => { %>
-        <article class="voting-list">
-          <ul>
-            <p>투표 주제: <%= myVoting.title %></p>
-            <p>투표 종료 시간: <%= myVoting.endDate %></p>
-            <% myVoting.options.forEach(option => { %>
-              <li class="voting-option">
-                <%= option.title %>/
-                투표 수: <%= option.value %>
-              </li>
-            <% }) %>
-            <a href="/voting/votings/<%= myVoting._id %>">
-              투표 페이지로
-            </a>
-            <button id="deleteButton" name="<%= myVoting._id %>">삭제</button>
-          </ul>
-          <script src="/javascripts/deleteVoting.js"></script>
-          <a href="/">투표 목록</a>
-        </article>
-      <% }) %>
+    <section class="main-page">
+      <article class="side-page">
+        <h2 class="title">
+          VOTING<br>
+          PLATFORM
+        </h2>
+        <pre class="description">
+          우측의 상세 투표함에서 당신의 소중한 한 표를 던져주세요!
+          투표 결과는 투표 종료 시간 이 후에 확인하실 수 있습니다.
+          한 번 투표하면 변경이 불가하오니 신중하게 투표 바랍니다!🧐
+        </pre>
+      </article>
+      <article id="voting" class="voting-information">
+        <% myVotings.forEach(myVoting => { %>
+          <article class="voting-list">
+            <ul>
+              <p>투표 주제: <%= myVoting.title %></p>
+              <p>투표 종료 시간: <%= myVoting.endDate %></p>
+              <% myVoting.options.forEach(option => { %>
+                <li class="voting-option">
+                  <%= option.title %>/
+                  투표 수: <%= option.value %>
+                </li>
+              <% }) %>
+              <a href="/voting/votings/<%= myVoting._id %>">
+                투표 페이지로
+              </a>
+              <button id="deleteButton" name="<%= myVoting._id %>">삭제</button>
+            </ul>
+            <script src="/javascripts/deleteVoting.js"></script>
+            <a href="/">투표 목록</a>
+          </article>
+        <% }) %>
+      </article>
     </section>
   </body>
 </html>
