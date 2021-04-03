@@ -46,19 +46,21 @@ voteSchema.plugin(findOrCreate);
 voteSchema.statics.updateIsVotable = async function() {
   const currentDate = new Date();
 
-  const filter = {
+  const findExpiredVotes = {
     'isVotable': true,
-    'expiredAt': { '$lte': currentDate },
+    'expiredAt': {
+      '$lte': currentDate,
+    },
   };
 
-  const update = {
+  const makeExpired = {
     '$set': {
       'isVotable': false,
     },
   };
 
   try {
-    await this.updateMany(filter, update);
+    await this.updateMany(findExpiredVotes, makeExpired);
   } catch (error) {
     console.error(error);
     throw new Error(error);

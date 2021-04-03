@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
 userSchema.plugin(findOrCreate);
 
 userSchema.statics.deleteCompletedVotes = async function(voteId) {
-  const filter = {
+  const findVotedUsers = {
     'completedVotes': {
       '$elemMatch': {
         '$eq': voteId,
@@ -57,7 +57,7 @@ userSchema.statics.deleteCompletedVotes = async function(voteId) {
   };
 
   try {
-    await this.updateMany(filter, deleteVote);
+    await this.updateMany(findVotedUsers, deleteVote);
   } catch (error) {
     throw new Error(error);
   }
