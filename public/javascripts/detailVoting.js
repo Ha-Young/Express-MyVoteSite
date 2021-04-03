@@ -58,7 +58,7 @@ votingButtonBoard.addEventListener("click", (e) => {
       if (data.status === 401) {
         messageBoard.textContent = "로그인 창으로 이동합니다...";
         setTimeout(() => {
-          window.location.href = "http://localhost:3000/logIn";
+          window.location.href = "/logIn";
         }, 2000);
       } else {
         messageBoard.textContent = "투표 되었습니다!";
@@ -71,15 +71,11 @@ votingButtonBoard.addEventListener("click", (e) => {
 });
 
 deleteButton.addEventListener("click", (e) => {
-  fetchVoting(
-    `http://localhost:3000/votings/delete/${votingId}`,
-    { votingId },
-    "DELETE"
-  )
+  fetchVoting(`/votings/delete/${votingId}`, { votingId }, "DELETE")
     .then((data) => {
-      window.location.href = "http://localhost:3000/votings";
+      window.location.href = "/votings";
     })
-    .catch((error) => {
+    .catch(() => {
       messageBoard.textContent("다시 시도해 주세요!");
     });
 });
