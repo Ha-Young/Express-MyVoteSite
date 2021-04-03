@@ -6,9 +6,9 @@ const SERVER_ERROR = {
 };
 
 const CLIENT_ERROR = {
-	NEW_VOTING_ERROR: "newVotingError",
-	LOGIN_ERROR: "loginError",
-	SIGN_UP_ERROR: "signUpError",
+  NEW_VOTING_ERROR: "newVotingError",
+  LOGIN_ERROR: "loginError",
+  SIGN_UP_ERROR: "signUpError",
 };
 
 module.exports.SERVER_ERROR = SERVER_ERROR;

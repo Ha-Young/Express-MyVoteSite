@@ -60,7 +60,7 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res) => {
-  res.locals.message = err.status ? err.message : SERVER_ERROR.INTERNAL_SERVER_ERROR;
+  res.locals.message = err.status ? err.name : SERVER_ERROR.INTERNAL_SERVER_ERROR;
   res.locals.error = req.app.get("env") === "development" ? err : {};
   
   res.status(err.status || 500);
