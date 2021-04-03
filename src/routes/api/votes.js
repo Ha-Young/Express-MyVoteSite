@@ -26,10 +26,10 @@ module.exports = app => {
     async (req, res, next) => {
       try {
         const { condition, page, limit, sort_field, sort_order } = req.query;
-
+        console.log("start", req.query);
         const { votesWithPage, error } = await voteService.GetVotes({
           condition,
-          page: page || 0,
+          page: page || 1,
           limit: limit || 10,
           sort_field,
           sort_order,

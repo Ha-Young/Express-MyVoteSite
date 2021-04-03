@@ -3,14 +3,14 @@ window.myCookieController = (function () {
   const setCookie = function (name, value, day = 1) {
     const date = new Date();
     date.setTime(date.getTime() + day * 60 * 60 * 24 * 1000);
-    document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+    document.cookie = name + "=" + value + ";expires=" + date.toUTCString() + ";path=/";
   };
 
   const getCookie = function (cookieName) {
     if (document.cookie) {
-      const array = document.cookie.split((escape(cookieName)+'='));
+      const array = document.cookie.split((escape(cookieName)+"="));
       if (array.length >= 2){
-        const arraySub = array[1].split(';');
+        const arraySub = array[1].split(";");
         return unescape(arraySub[0]);
       }
     }

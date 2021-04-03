@@ -1,5 +1,5 @@
 const argon2 = require("argon2");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const { randomBytes } = require("crypto");
 
 const User = require("../models/User");
@@ -13,20 +13,20 @@ exports.SignUp = async userInputDTO => {
     const hashedPassword = await argon2.hash(userInputDTO.password, { salt });
     const userRecord = await User.create({
       ...userInputDTO,
-      salt: salt.toString('hex'),
+      salt: salt.toString("hex"),
       password: hashedPassword,
     });
 
     const token = generateToken(userRecord);
 
     if (!userRecord) {
-      throw new Error('user was not created');
+      throw new Error("user was not created");
     }
 
     const user = userRecord.toObject();
 
-    Reflect.deleteProperty(user, 'password');
-    Reflect.deleteProperty(user, 'salt');
+    Reflect.deleteProperty(user, "password");
+    Reflect.deleteProperty(user, "salt");
 
     return { user, token };
   } catch (err) {
@@ -47,8 +47,8 @@ exports.SignIn = async (email, password) => {
 
       const user = userRecord.toObject();
 
-      Reflect.deleteProperty(user, 'password');
-      Reflect.deleteProperty(user, 'salt');
+      Reflect.deleteProperty(user, "password");
+      Reflect.deleteProperty(user, "salt");
 
       return { user, token };
     } else {
@@ -75,8 +75,8 @@ exports.SocialLogin = async userInputDTO => {
 
     const user = userRecord.toObject();
 
-    Reflect.deleteProperty(user, 'password');
-    Reflect.deleteProperty(user, 'salt');
+    Reflect.deleteProperty(user, "password");
+    Reflect.deleteProperty(user, "salt");
 
     return { user, token };
   } catch (e) {

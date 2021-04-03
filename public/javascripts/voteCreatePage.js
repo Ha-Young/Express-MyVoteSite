@@ -33,13 +33,15 @@ function handleVoteCreateSubmit(e) {
   }
 
   if (checkIsDateTimePast()) {
-    alert(`만료 날짜를 확인해주세요. 현재 시간보다 ${LIMIT_HOUR}시간 이후의 시간이어야 합니다.`);
+    alert(
+      `만료 날짜를 확인해주세요. 현재 시간보다 ${LIMIT_HOUR}시간 이후의 시간이어야 합니다.`
+    );
     return;
   }
 
   const form = e.target;
 
-  const dummyVoteOptionElement = document.createElement('textarea');
+  const dummyVoteOptionElement = document.createElement("textarea");
   dummyVoteOptionElement.classList.add("invisible");
   dummyVoteOptionElement.value = JSON.stringify(getOptionObjectList());
   dummyVoteOptionElement.name = "vote_options";
@@ -63,7 +65,9 @@ function getOptionObjectList() {
 }
 
 function checkIsDateTimePast() {
-  const dateTimeElement = document.querySelector("input[type='datetime-local']");
+  const dateTimeElement = document.querySelector(
+    "input[type='datetime-local']"
+  );
 
   const limitDate = new Date();
   limitDate.setHours(limitDate.getHours() + LIMIT_HOUR);
