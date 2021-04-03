@@ -20,7 +20,11 @@
               </span>
             </span>
 
-            <span class="vote-end-date ended"> <%= vote.expire_datetime %></span>
+            <span class="vote-end-date
+              <% if (!vote.is_progress) { %>
+                ended
+              <% } %>
+              "> <%= new Date(vote.expire_datetime).toLocaleString() %></span>
             <span class="vote-stage">
               <% if (vote.is_progress) { %>
                 <span class="stage live">Live</span>
