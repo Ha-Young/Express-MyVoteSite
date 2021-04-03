@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 const MONGO_URI = require("../constants/database");
 
 function connectDatabase() {
-  mongoose.set('useNewUrlParser', true);
-  mongoose.set('useFindAndModify', false);
-  mongoose.set('useCreateIndex', true);
+  mongoose.set("useNewUrlParser", true);
+  mongoose.set("useFindAndModify", false);
+  mongoose.set("useCreateIndex", true);
 
   mongoose.connect(MONGO_URI, {
     useUnifiedTopology: true,
-    useNewUrlParser: true,
+    useNewUrlParser: true
   });
 
   const db = mongoose.connection;
