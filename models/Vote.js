@@ -1,18 +1,34 @@
 const mongoose = require('mongoose');
 const findOrCreate = require('mongoose-findorcreate');
 
-const defaultUserImgUrl = 'https://ccbg.boun.edu.tr/sites/ccbg.boun.edu.tr/files/default_images/default-user-icon-4.jpg';
-
 const voteSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  creatorId: { type: mongoose.Schema.Types.ObjectId, required: true },
-  expiredAt: { type: Date, required: true },
-  options: { type: Object, required: true },
-  creatorName: { type: String, required: true },
-  creatorImgUrl: { type: String, default: defaultUserImgUrl},
+  title: {
+    type: String,
+    required: [true, 'title is required.'],
+  },
+  creatorId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: [true, 'creatorId is required.'],
+  },
+  expiredAt: {
+    type: Date,
+    required: [true, 'expire date is required.'],
+  },
+  options: {
+    type: Object,
+    required: [true, 'options are required.'],
+  },
+  creatorName: {
+    type: String,
+    required: [true, 'creator name is required.'],
+  },
+  isVotable: {
+    type: Boolean,
+    default: true,
+  },
+  creatorImgUrl: { type: String },
   winner: { type: String },
   imgUrl: { type: String },
-  isVotable: { type: Boolean, default: true },
 }, {
   timestamps: true,
 });

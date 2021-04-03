@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const findOrCreate = require('mongoose-findorcreate');
 
+const defaultUserImgUrl = 'https://www.seekpng.com/png/detail/428-4287240_no-avatar-user-circle-icon-png.png';
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -15,7 +17,7 @@ const userSchema = new mongoose.Schema({
       message: 'please enter a valid email',
     },
   },
-  avatarUrl: { type: String },
+  avatarUrl: { type: String, default: defaultUserImgUrl },
   githubId: { type: String },
   password: { type: String },
   completedVotes: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Vote' }],
