@@ -8,11 +8,9 @@ const clientPromise = mongoose.connect(process.env.MONGODB_ATLAS, {
 }).then(result => result.connection.getClient());
 
 function checkDB() {
-
   mongoose.connection.on('error', () => {
     console.log("MongoDB Atlas database connected failure!!");
   });
-
   mongoose.connection.once("open", () => {
     console.log("🔥🌏🔥 MongoDB Atlas database connected successfully!");
   });

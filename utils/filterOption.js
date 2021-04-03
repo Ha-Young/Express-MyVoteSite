@@ -1,13 +1,13 @@
-function filterOption(options) {
-  const filteredOptions = [];
+function assembleOption(options) {
+  const assembledOptions = [];
   let count = 0;
 
   while (options[count]) {
-    filteredOptions.push(options[count]);
+    assembledOptions.push(options[count]);
     count++;
   }
 
-  return filteredOptions.map(option => ({ text: option }));
+  return assembledOptions.map(option => ({ text: option }));
 }
 
-module.exports = filterOption;
+module.exports = assembleOption;
