@@ -4,7 +4,7 @@ const voteItemListTemplate = (function () {
   function voteItemTemplate({
     _id,
     title,
-    is_process,
+    is_progress,
     entire_count,
     expire_datetime,
     creator,
@@ -33,7 +33,7 @@ const voteItemListTemplate = (function () {
 
             <span class="vote-end-date ended"> ${expire_datetime}</span>
             <span class="vote-stage">
-              ${is_process
+              ${is_progress
                   ? `<span class="stage live">Live</span>`
                   : `<span class="stage ended">Ended</span>`
                 }
