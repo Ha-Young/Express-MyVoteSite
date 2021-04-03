@@ -7,9 +7,21 @@ const voteItemListTemplate = (function () {
     is_progress,
     entire_count,
     expire_datetime,
+    createdAt,
     creator,
   }) {
     const creatorName = creator.name;
+
+    const startDate = new Date(createdAt);
+    const expiredDate = new Date(expire_datetime);
+    const todayDate = new Date();
+    const expiredDateLocaleString = expiredDate.toLocaleString();
+
+    const percentage = Math.round(((todayDate - startDate) / (expiredDate - startDate)) * 100) + "%";
+
+    console.log(percentage);
+
+    const expiredPercent = is_progress ? percentage : "100%";
 
     return `
       <a href="votings/${_id}">
@@ -21,17 +33,16 @@ const voteItemListTemplate = (function () {
           <div class="pull-right">
             <span class="vote-progress">
               <span class="vote-progress-bg">
-                <span class="vote-progress-fg" style="width: 88%"></span>
+                <span class="vote-progress-fg" style="width: ${expiredPercent}"></span>
               </span>
 
               <span class="vote-progress-labels">
-                <span class="vote-progress-label"> 88% </span>
-
+                <span class="vote-progress-label"> ${expiredPercent} </span>
                 <span class="vote-completes"> ${entire_count}</span>
               </span>
             </span>
 
-            <span class="vote-end-date ended"> ${expire_datetime}</span>
+            <span class="vote-end-date ${!is_progress && "ended"}"> ${expiredDateLocaleString}</span>
             <span class="vote-stage">
               ${is_progress
                   ? `<span class="stage live">Live</span>`

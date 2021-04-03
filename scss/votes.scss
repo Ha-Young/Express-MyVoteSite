@@ -136,10 +136,10 @@
   color: #a1a1a4;
 }
 .grid .vote-end-date:before {
-  content: "Ends\00a0";
+  content: "진행중 ";
 }
 .grid .vote-end-date.ended:before {
-  content: "Ended\00a0";
+  content: "만료됨 ";
 }
 .grid .vote-progress {
   display: block;
@@ -179,8 +179,12 @@
   font-weight: 400;
 }
 .grid .vote-completes {
+  &::before {
+    content: "총 투표 수";
+  }
+
   line-height: 21px;
-  font-size: 13px;
+  font-size: 12px;
   vertical-align: middle;
 }
 .grid .vote-stage {
