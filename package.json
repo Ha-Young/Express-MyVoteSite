@@ -1,6 +1,6 @@
 {
   "name": "voting-platform",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "NODE_ENV=production ./src/bin/www",
