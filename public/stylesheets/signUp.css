@@ -1,0 +1,50 @@
+.form-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 70vh;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+
+.label-wrap {
+  display: flex;
+  width: 50%;
+  margin: 1vh 0;
+}
+
+input {
+  width: 50%;
+  height: 3vh;
+  border: 3px solid black;
+  outline: none;
+}
+
+.submit-btn {
+  margin: 3vh 0;
+  width: 20%;
+  height: 4vh;
+}
+
+.link-btn-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: 0;
+}
+
+.home-link {
+  height: 3vh;
+  margin-top: 1vh;
+}
+
+h3 {
+  margin: 0;
+}
