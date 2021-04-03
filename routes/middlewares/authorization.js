@@ -27,11 +27,11 @@ exports.getUserData = async (req, res, next) => {
     const user = await User.findOne({ email: res.locals.user });
     let userData;
 
-		if (user) {
-			Reflect.deleteProperty(user, "password");
-			userData = user;
-		}
-		
+    if (user) {
+      Reflect.deleteProperty(user, "password");
+      userData = user;
+    }
+
     req.user = userData;
 
     next();
