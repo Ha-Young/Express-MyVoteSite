@@ -7,7 +7,6 @@ const { getRandomImage } = require('../util/getRandomImage');
 
 const INITIAL_COUNT = 0;
 
-// TODO: name
 async function renderAllVotes(req, res) {
   try {
     await Vote.updateIsVotable();

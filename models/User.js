@@ -17,10 +17,20 @@ const userSchema = new mongoose.Schema({
       message: 'please enter a valid email',
     },
   },
-  avatarUrl: { type: String, default: defaultUserImgUrl },
-  githubId: { type: String },
-  password: { type: String },
-  completedVotes: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Vote' }],
+  avatarUrl: {
+    type: String,
+    default: defaultUserImgUrl,
+  },
+  completedVotes: [{
+    type: mongoose.Schema.Types.ObjectID,
+    ref: 'Vote',
+  }],
+  githubId: {
+    type: String,
+  },
+  password: {
+    type: String,
+  },
 }, {
   timestamps: true,
 });

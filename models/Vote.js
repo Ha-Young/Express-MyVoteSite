@@ -26,9 +26,15 @@ const voteSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  creatorImgUrl: { type: String },
-  winner: { type: String },
-  imgUrl: { type: String },
+  creatorImgUrl: {
+    type: String,
+  },
+  winner: {
+    type: String,
+  },
+  imgUrl: {
+    type: String,
+  },
 }, {
   timestamps: true,
 });
