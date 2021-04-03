@@ -14,7 +14,7 @@
     </div>
     <div class="vote-info-row">
       <span class="vote-info-label">만료날짜</span>
-      <span class="vote-info-content"><%= vote.expire_datetime %></span>
+      <span class="vote-info-content"><%= new Date(vote.expire_datetime).toLocaleString() %></span>
     </div>
     <div class="vote-info-row">
       <span class="vote-info-label">투표 상태</span>
