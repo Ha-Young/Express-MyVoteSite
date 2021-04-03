@@ -1,20 +1,31 @@
 extends layouts/main
 
 block content
-  if currentUser.id
-    a.new-votings-link(href="/votings/new")
-      button.new-votings-button New Voting
-    a.my-votings-link(href="/my-votings")
-      button.my-votings-button My Votings
-  h1 #{pageTitle}
-  ul.voting-list
-    each voting in votings
-      li.voting
-        a.voting-detail-link(href=`/votings/${voting.id}`)
-          h2.voting-title= voting.title
-        .posted-by 생성자: #{voting.postedBy.username}
-        .expiration 만료일: #{new Date(voting.expiration).toLocaleString()}
-        if voting.progress
-          .progress 상태: 진행 중
-        else
-          .progress 상태: 종료
+  .content-wrapper-header
+    .content-wrapper-context
+      h3.image-content Voting
+      .content-text
+        |Voting is a method for a group, such as a meeting or an electorate,
+        |in order to make a collective decision or express an opinion usually following discussions,
+        |debates or election campaigns. Democracies elect holders of high office by voting.
+        |Residents of a place represented by an elected official are called "constituents",
+        |and those constituents who cast a ballot for their chosen candidate are called "voters".
+        |There are different systems for collecting votes,
+        |but while many of the systems used in decision-making can also be used as electoral systems,
+        |any which cater for proportional representation can only be used in elections.
+  .content-section
+    .content-section-title #{pageTitle}
+    .apps-card.voting-list
+      each voting in votings
+        .app-card.voting
+          span.voting-title #{voting.title}
+          .app-card__subtext
+            .posted-by 생성자: #{voting.postedBy.username}
+            .expiration 만료일: #{new Date(voting.expiration).toLocaleString()}
+            if voting.progress
+              .progress 상태: 진행 중
+            else
+              .progress 상태: 종료
+          .app-card-buttons
+            a.voting-detail-link(href=`/votings/${voting.id}`)
+              button.content-button.status-button Vote

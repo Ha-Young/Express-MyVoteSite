@@ -1,0 +1,14 @@
+mixin votings(href1, href2)
+  a.menu-link.new-votings-link(href=href1) New Voting
+  a.menu-link.my-votings-link(href=href2) My Votings
+
+.main-header
+  a.menu-link-main(href="#") #{pageTitle}
+  .header-menu
+    a.menu-link(href="/") Home
+    if (currentUser.id)
+      a.menu-link(href="/logout") Logout
+      +votings("/votings/new", "/my-votings")
+    else
+      a.menu-link(href="/auth/login") Login
+      +votings("/auth/login", "/auth/login")

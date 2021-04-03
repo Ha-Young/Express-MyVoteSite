@@ -7,6 +7,14 @@ html(lang="en")
     title #{siteTitle} | #{pageTitle}
     link(rel="stylesheet" type="text/css" href="/static/main.css")
   body
-    include ../partials/header
-    block content
-  script(src="/static/main.js")
+    include ../partials/modeHandler
+    .app
+      include ../partials/header
+      .wrapper
+        include ../partials/leftSide
+        .main-container
+          include ../partials/mainHeader
+          .content-wrapper
+            block content
+  script(type="text/javascript" src="/static/main.js")
+  script(type="text/javascript" src="/javascripts/common/styleEffect.js")

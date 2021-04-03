@@ -1,10 +1,11 @@
 header.header
-  a(href="/")
-    button.home-button Home
-  if (currentUser.name)
-    div.current-user Hello #{currentUser.name}
-    a(href="/logout")
-      button.logout-button Logout
-  else
-    a(href="/auth/login")
-      button.login-button Login
+  .menu-circle
+  .search-bar
+    input(type="text" placeholder="Search")
+  .header-profile
+    .header-profile
+      img.profile-img(src="" alt="")
+      if (currentUser.id)
+        span.current-user Hello #{currentUser.name}
+      else
+        span.current-user Hello Visitor
