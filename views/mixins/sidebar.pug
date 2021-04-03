@@ -1,4 +1,4 @@
-include titleSvgs
+include svgs
 mixin sidebar(page)
   .sidebar
     a.logo-expand(href='/') Vote
@@ -6,33 +6,33 @@ mixin sidebar(page)
       .side-title MENU
       .side-menu
         a.sidebar-link.discover(href='/' class=`${page === 'index' ? 'is-active' : ''}`)
-          +titleSvgs('discover')
+          +svgs('discover')
           | Discover
         a.sidebar-link.trending(href='/' class=`${page === 'trend' ? 'is-active' : ''}`)
-          +titleSvgs('trending')
+          +svgs('trending')
           | Trending
     .side-wrapper
       if (user)
         .side-title PERSONAL
         .side-menu
           a.sidebar-link(href='/myvotes' class=`${page === 'myvote' ? 'is-active' : ''}`)
-            +titleSvgs('myvotes')
+            +svgs('myvotes')
             | My Votes
           a.sidebar-link(href='/vote/new' class=`${page === 'newvote' ? 'is-active' : ''}`)
-            +titleSvgs('newvote')
+            +svgs('newvote')
             | New Vote
           form.delete-form(action='/auth/logout?_method=DELETE' method='POST')
-            +titleSvgs('logout')
+            +svgs('logout')
             button.delete-button(type='submit') Logout
       else
         .side-title AUTH
         .side-menu
           a.sidebar-link(href='/auth/login' class=`${page === 'login' ? 'is-active' : ''}`)
-            +titleSvgs('login')
+            +svgs('login')
             | Log In
           a.sidebar-link(href='/auth/signup' class=`${page === 'signup' ? 'is-active' : ''}`)
-            +titleSvgs('signup')
+            +svgs('signup')
             | Sign Up
           a.sidebar-link(href='/auth/github')
-            +titleSvgs('githubLogin')
+            +svgs('githubLogin')
             | Github Login
