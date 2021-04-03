@@ -1,6 +1,7 @@
 const Voting = require("../../models/Voting");
 const User = require("../../models/User");
 
+const { ErrorHandler } = require("../../util/error");
 const { CLIENT_ERROR } = require("../../constants/error");
 
 exports.getAllVotings = async (req, res, next) => {
@@ -17,6 +18,11 @@ exports.getAllVotings = async (req, res, next) => {
 
 exports.createNewVoting = async (req, res, next) => {
   const { body: { options, expired_at, title }, user } = req;
+
+	if (!_id) {
+		throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
+	}
+
   try {
     const newVoting = await Voting.create({
       title,
@@ -78,7 +84,7 @@ exports.updateVoting = async (req, res, next) => {
     } = req;
 
     let isSuccessVoting = false;
-  
+		
     if (!user) {
       res.status(200).json({ isSuccessVoting, queryString: originalUrl, message: "로그인이 필요합니다." });
 
@@ -109,6 +115,10 @@ exports.updateVoting = async (req, res, next) => {
 
 exports.getMyVotingPage = async (req, res, next) => {
   const { user: { _id } } = req;
+	
+	if (!_id) {
+		throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
+	}
   
   try {
     const [user] = await User.find({ _id }).populate("voting");
@@ -120,7 +130,11 @@ exports.getMyVotingPage = async (req, res, next) => {
 };
 
 exports.getNewVotingPage = (req, res) => {
-  const [error] = req.flash(CLIENT_ERROR.NEW_VOTING_ERROR);
+	const { user, flash: [error] } = req;
+
+	if (user) {
+		throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
+	}
 
   res.status(200).render("newVoting", { message: error });
 };

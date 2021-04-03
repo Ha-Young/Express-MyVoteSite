@@ -1,9 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
 
-const { ErrorHandler } = require("../../util/error");
-const { SERVER_ERROR } = require("../../constants/error");
-
 exports.verifyToken = (req, res, next) => {
   try {
     const token = req.cookies["jwt"];
@@ -18,51 +15,28 @@ exports.verifyToken = (req, res, next) => {
     }
     
     res.locals.user = decoded?.email;
-
+		
     next();
   } catch (error) {
     next(error);
   }
 };
 
-exports.getUserDataByToken = async (req, res, next) => {
+exports.getUserData = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: res.locals.user });
+    let userData;
 
-    if (user) {
-      const userData = new User();
-
-      userData.email = user.email;
-      userData.name = user.name;
-      userData._id = user._id;
-      userData.votings = user.votings;
-      userData.avatar = user.avatar;
-      
-      req.user = userData;
-    }
-
-    next();
-  } catch (error) {
-    next(error);
-  }
-};
-
-exports.isAuthenticated = async (req, res, next) => {
-  try {
-    const user = await User.findOne({ email: res.locals.user });
-
-    if (!user) {
-      throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
-    }
-    
-    const userData = new User();
-
-    userData.email = user.email;
-    userData.name = user.name;
-    userData._id = user._id;
-    userData.votings = user.votings;
-    userData.avatar = user.avatar;
-    
+		if (user) {
+			userData = new User();
+			
+			userData.email = user.email;
+			userData.name = user.name;
+			userData._id = user._id;
+			userData.votings = user.votings;
+			userData.avatar = user.avatar;
+		}
+		
     req.user = userData;
 
     next();
