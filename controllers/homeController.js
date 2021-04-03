@@ -13,6 +13,11 @@ exports.getVotings = async function(req, res, next) {
     );
 
     await Voting.find().populate("author").exec((err, votings) => {
+      if (err) {
+        next(err);
+        return;
+      }
+
       res.render(
         "index",
         { title: "Home",

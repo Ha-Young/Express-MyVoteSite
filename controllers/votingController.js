@@ -90,9 +90,10 @@ exports.deleteVoting = async function (req, res, next) {
     await User.findByIdAndUpdate(
       user._id,
       { $pull: {
-        votingsCreatedByMe: { $in: [votingId] },
-        myVotingList: { $in: [votingId] },
-      }},
+          votingsCreatedByMe: { $in: [votingId] },
+          myVotingList: { $in: [votingId] },
+        }
+      },
       { new: true },
     );
 
