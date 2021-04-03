@@ -1,4 +1,5 @@
 const express = require("express");
+const auth = require("./auth");
 const vote = require("./votes");
 
 // guaranteed to get dependencies
@@ -11,6 +12,7 @@ module.exports = () => {
     });
   });
 
+  auth(app);
   vote(app);
 
   return app;
