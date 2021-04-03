@@ -17,6 +17,10 @@ const DEFAULT_PARAM_GET_VOTES = {
 };
 
 async function getVotes() {
+  if (!currentPage) {
+    return;
+  }
+
   const condition = PATH.searchParam("filter");
 
   const votesWithPage = await API_VOTE.getVotes({
@@ -35,7 +39,7 @@ async function getVotes() {
 
   voteListElement.insertAdjacentHTML("beforeend", votesHTMLTemplate);
 
-  currentPage += 1;
+  currentPage = votesWithPage.nextPage;
 }
 
 async function indexPageInit() {
