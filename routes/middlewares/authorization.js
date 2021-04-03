@@ -10,7 +10,7 @@ exports.verifyToken = (req, res, next) => {
       decoded = jwt.verify(
         token, 
         process.env.JWT_SECRET_KEY, 
-        { expiresIn: process.env.JWT_EXPIRES_IN }
+        { expiresIn: "1h" }
       );
     }
     
@@ -28,13 +28,8 @@ exports.getUserData = async (req, res, next) => {
     let userData;
 
 		if (user) {
-			userData = new User();
-			
-			userData.email = user.email;
-			userData.name = user.name;
-			userData._id = user._id;
-			userData.votings = user.votings;
-			userData.avatar = user.avatar;
+			Reflect.deleteProperty(user, "password");
+			userData = user;
 		}
 		
     req.user = userData;

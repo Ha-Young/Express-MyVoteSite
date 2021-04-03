@@ -59,8 +59,8 @@ app.use((req, res, next) => {
   next(new ErrorHandler(404, SERVER_ERROR.NOT_FOUND));
 });
 
-app.use(function(err, req, res, next) {
-  res.locals.message = err.message || SERVER_ERROR.INTERNAL_SERVER_ERROR;
+app.use((err, req, res) => {
+  res.locals.message = err.status ? err.message : SERVER_ERROR.INTERNAL_SERVER_ERROR;
   res.locals.error = req.app.get("env") === "development" ? err : {};
   
   res.status(err.status || 500);

@@ -2,7 +2,7 @@ const Voting = require("../../models/Voting");
 const User = require("../../models/User");
 
 const { ErrorHandler } = require("../../util/error");
-const { CLIENT_ERROR } = require("../../constants/error");
+const { SERVER_ERROR, CLIENT_ERROR } = require("../../constants/error");
 
 exports.getAllVotings = async (req, res, next) => {
   const { user } = req;
@@ -19,11 +19,11 @@ exports.getAllVotings = async (req, res, next) => {
 exports.createNewVoting = async (req, res, next) => {
   const { body: { options, expired_at, title }, user } = req;
 
-	if (!_id) {
-		throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
-	}
-
   try {
+		if (!user.hasOwnProperty(_id)) {
+			throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
+		}
+
     const newVoting = await Voting.create({
       title,
       expired_at,
@@ -114,27 +114,33 @@ exports.updateVoting = async (req, res, next) => {
 };
 
 exports.getMyVotingPage = async (req, res, next) => {
-  const { user: { _id } } = req;
+  const { user } = req;
 	
-	if (!_id) {
-		throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
-	}
-  
   try {
-    const [user] = await User.find({ _id }).populate("voting");
+		if (!user) {
+			throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
+		}
+
+    const [userData] = await User.find({ _id: user._id }).populate("voting");
     
-    res.status(200).render("myVoting", { votings: user.voting });
+    res.status(200).render("myVoting", { votings: userData.voting });
   } catch (error) {
     next(error);
   }
 };
 
-exports.getNewVotingPage = (req, res) => {
-	const { user, flash: [error] } = req;
+exports.getNewVotingPage = (req, res, next) => {
+	const { user } = req;
 
-	if (user) {
-		throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
+	try {
+		if (!user) {
+			throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
+		}
+
+		const [error] =req.flash(CLIENT_ERROR.NEW_VOTING_ERROR);
+
+		res.status(200).render("newVoting", { message: error });
+	} catch (error) {
+		next(error);
 	}
-
-  res.status(200).render("newVoting", { message: error });
 };
