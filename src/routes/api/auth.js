@@ -61,23 +61,33 @@ module.exports = app => {
     }
   );
 
-  route.get(AUTH.LOGIN_GOOGLE, passport.authenticate('google', { scope: ['profile','email'], session: false }));
+  route.get(
+    AUTH.LOGIN_GOOGLE,
+    passport.authenticate("google", {
+      scope: ["profile", "email"],
+      session: false,
+    })
+  );
 
-  route.get(AUTH.LOGIN_GOOGLE_REDIRECT, passport.authenticate('google', { session: false }), async (req, res)=>{
-    const userInputDTO = {
-      name: req.user.displayName,
-      email: req.user._json.email,
-      provider: req.user.provider,
-    };
+  route.get(
+    AUTH.LOGIN_GOOGLE_REDIRECT,
+    passport.authenticate("google", { session: false }),
+    async (req, res) => {
+      const userInputDTO = {
+        name: req.user.displayName,
+        email: req.user._json.email,
+        provider: req.user.provider,
+      };
 
-    const { token, error } = await authService.SocialLogin(userInputDTO);
+      const { token, error } = await authService.SocialLogin(userInputDTO);
 
-    if (error) {
-      return res.render("login", { error });
+      if (error) {
+        return res.render("login", { error });
+      }
+
+      authSuccess({ res, token });
     }
-
-    authSuccess({ res, token });
-  });
+  );
 };
 
 function authSuccess({ res, token }) {

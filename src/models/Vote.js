@@ -1,6 +1,6 @@
 const { Joi } = require("celebrate");
 const mongoose = require("mongoose");
-const mongoosePaginate = require('mongoose-paginate-v2');
+const mongoosePaginate = require("mongoose-paginate-v2");
 const joigoose = require("joigoose")(mongoose, null, {
   timestamp: true,
 });
@@ -21,14 +21,19 @@ const joiVoteSchema = Joi.object({
   entire_count: Joi.number(),
 });
 
-const VoteSchema = new mongoose.Schema(joigoose.convert(joiVoteSchema), { timestamps: true });
+const VoteSchema = new mongoose.Schema(joigoose.convert(joiVoteSchema), {
+  timestamps: true,
+});
 
-VoteSchema.index('expire_datetime');
-VoteSchema.index('creator');
+VoteSchema.index("expire_datetime");
+VoteSchema.index("creator");
 VoteSchema.plugin(mongoosePaginate);
 
 VoteSchema.pre(/^find/, async function (next) {
-  await Vote.updateMany({ expire_datetime: { $lte: new Date() } }, { is_process: false });
+  await Vote.updateMany(
+    { expire_datetime: { $lte: new Date() } },
+    { is_process: false }
+  );
   next();
 });
 

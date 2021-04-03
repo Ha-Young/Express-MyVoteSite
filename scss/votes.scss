@@ -54,7 +54,7 @@
 .list .vote-progress,
 .list .vote-completes,
 .list .vote-end-date {
-  color: #A1A1A4;
+  color: #a1a1a4;
 }
 .list .vote-country,
 .list .vote-completes,
@@ -96,11 +96,11 @@
   }
 
   .live {
-    background-color: #8DC63F
+    background-color: #8dc63f;
   }
 
   .ended {
-    background-color: #A1A1A4;
+    background-color: #a1a1a4;
   }
 }
 
@@ -133,13 +133,13 @@
 }
 .grid .vote-country,
 .grid .vote-end-date {
-  color: #A1A1A4;
+  color: #a1a1a4;
 }
 .grid .vote-end-date:before {
-  content: 'Ends\00a0';
+  content: "Ends\00a0";
 }
 .grid .vote-end-date.ended:before {
-  content: 'Ended\00a0';
+  content: "Ended\00a0";
 }
 .grid .vote-progress {
   display: block;
@@ -199,7 +199,7 @@
 .vote-progress-label {
   vertical-align: middle;
   margin: 0 10px;
-  color: #8DC63F;
+  color: #8dc63f;
 }
 
 .vote-progress-bg {
@@ -220,7 +220,7 @@
   height: 100%;
   left: 0;
   margin: 0;
-  background: #8DC63F;
+  background: #8dc63f;
 }
 
 .filter {
@@ -231,7 +231,7 @@
 
   a {
     margin: 20px;
-    transition: font-weight .3s ease-in-out;
+    transition: font-weight 0.3s ease-in-out;
 
     &:hover {
       font-weight: 800;

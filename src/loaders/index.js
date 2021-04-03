@@ -1,8 +1,8 @@
-const morgan = require('morgan');
+const morgan = require("morgan");
 
-const mongooseLoader = require('./mongoose');
-const expressLoader = require('./express');
-const routerLoader = require('./router');
+const mongooseLoader = require("./mongoose");
+const expressLoader = require("./express");
+const routerLoader = require("./router");
 const { stream } = require("./logger");
 
 module.exports = async function ({ expressApp }) {
