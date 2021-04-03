@@ -2,7 +2,7 @@ const submitButton = document.getElementById("submitButton");
 const alertMessageBox = document.getElementById("message");
 
 const patchVotedResult = async (votingId, checkedOption) => {
-  const data = await fetch(`http://localhost:3000/voting/votings/${votingId}`, {
+  const patchResult = await fetch(`/voting/votings/${votingId}`, {
     method: "PATCH",
     body: JSON.stringify({
       checkedOption,
@@ -12,17 +12,17 @@ const patchVotedResult = async (votingId, checkedOption) => {
     },
   });
 
-  const parseData = await data.json();
+  const parsePatchResult = await patchResult.json();
 
-  switch (data.status) {
+  switch (patchResult.status) {
     case 200:
       alertMessageBox.classList.add("success");
-      alertMessageBox.textContent = parseData.message;
+      alertMessageBox.textContent = parsePatchResult.message;
       break;
 
     case 400:
       alertMessageBox.classList.add("failure");
-      alertMessageBox.textContent = parseData.message;
+      alertMessageBox.textContent = parsePatchResult.message;
       break;
 
     case 401:
