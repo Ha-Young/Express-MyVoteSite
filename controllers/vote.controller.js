@@ -101,16 +101,20 @@ async function updateVoteById(req, res, next) {
   }
 
   try {
-    const vote = await Vote.findByIdAndUpdate(voteId, {
+    await Vote.findByIdAndUpdate(voteId, {
       $inc: {
         [optionKey]: 1,
       },
     });
 
-    await User.addCompletedVotesById(userId, voteId);
+    await User.findByIdAndUpdate(userId, {
+      '$push': {
+        'completedVotes': voteId,
+      },
+    });
 
-    await vote.save();
-    res.status(301).redirect('/');
+    req.flash('info', 'Successfully voted!');
+    res.status(301).redirect(req.originalUrl);
   } catch (error) {
     next(createError(500));
   }

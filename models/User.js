@@ -41,17 +41,6 @@ const userSchema = new mongoose.Schema({
 
 userSchema.plugin(findOrCreate);
 
-userSchema.statics.addCompletedVotesById = async function(userId, voteId) {
-  try {
-    const user = await this.findById(userId);
-    user.completedVotes.push(voteId);
-
-    await user.save();
-  } catch (error) {
-    throw new Error(error);
-  }
-}
-
 userSchema.statics.deleteCompletedVotes = async function(voteId) {
   const filter = {
     'completedVotes': {
@@ -61,14 +50,14 @@ userSchema.statics.deleteCompletedVotes = async function(voteId) {
     },
   };
 
-  const update = {
+  const deleteVote = {
     '$pull': {
       'completedVotes': voteId,
     },
   };
 
   try {
-    await this.updateMany(filter, update);
+    await this.updateMany(filter, deleteVote);
   } catch (error) {
     throw new Error(error);
   }
