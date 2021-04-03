@@ -25,11 +25,27 @@
       <p class="title">회원가입</p>
       <form action="/auth/signup" method="POST">
         <p>이메일</p>
-        <input type="email" name="email" placeholder="Email" required=true>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          required=true
+        >
         <p>비밀번호</p>
-        <input type="password" name="password" placeholder="password" required=true>
+        <input
+          type="password"
+          name="password" placeholder="password"
+          minlength="8"
+          required=true
+        >
         <p>비밀번호 확인</p>
-        <input type="password" name="check-password" placeholder="password" required=true>
+        <input
+          type="password"
+          name="check-password"
+          placeholder="password"
+          minlength="8"
+          required=true
+        >
         <button class="signup" type="submit">회원가입</button>
       </form>
     </article>

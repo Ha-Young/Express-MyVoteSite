@@ -42,7 +42,9 @@
             <a href="/">투표 목록</a>
           </article>
           <% if (isAuthor) { %>
-            <button id="deleteButton" name="<%= voting._id %>">삭제</button>
+            <button id="deleteButton" name="<%= voting._id %>">
+              삭제
+            </button>
             <script src="/javascripts/deleteVoting.js"></script>
           <% } %>
         </ul>

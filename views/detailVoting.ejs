@@ -45,9 +45,13 @@
                 </label>
               <% }) %>
             </article>
-            <button id="submitButton" name="<%= voting._id %>">투표 제출</button>
+            <button id="submitButton" name="<%= voting._id %>">
+              투표 제출
+            </button>
             <% if (isAuthor) { %>
-              <button id="deleteButton" name="<%= voting._id %>">삭제</button>
+              <button id="deleteButton" name="<%= voting._id %>">
+                삭제
+              </button>
               <script src="/javascripts/deleteVoting.js"></script>
             <% } %>
             <script src="/javascripts/patchVoting.js"></script>
