@@ -2,7 +2,7 @@ require("dotenv").config();
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
-const passport = require("passport");
+
 
 const index = require("./routes/index");
 const login = require("./routes/api/login");
@@ -15,23 +15,11 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-const mongoose = require("mongoose");
-const { MONGO_URI } = require("./config/index");
+const connectDatabase = require("./config/database");
+const configureSession = require("./lib/passport");
 
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-
-mongoose.connect(MONGO_URI, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-});
-
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function () {
-  console.log("Connected to mongod server");
-});
+connectDatabase();
+configureSession(app);
 
 app.use(express.static("public"));
 app.set("view engine", "ejs");
@@ -42,17 +30,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-const session = require("express-session");
-app.use(session({
-  secret: "hyeongju",
-  resave: false,
-  saveUninitialized: true
-}));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
 
 app.use("/", index);
 app.use("/login", login);
