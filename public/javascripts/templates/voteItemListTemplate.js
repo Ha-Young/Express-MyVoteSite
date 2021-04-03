@@ -19,8 +19,6 @@ const voteItemListTemplate = (function () {
 
     const percentage = Math.round(((todayDate - startDate) / (expiredDate - startDate)) * 100) + "%";
 
-    console.log(percentage);
-
     const expiredPercent = is_progress ? percentage : "100%";
 
     return `
