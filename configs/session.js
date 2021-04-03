@@ -1,5 +1,7 @@
 const session = require('express-session');
 
+const ONE_DAY = 24 * 60 * 60 * 1000;
+
 module.exports = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -7,6 +9,6 @@ module.exports = session({
   cookie: {
     httpOnly: true,
     secure: false,
-    maxAge: 24 * 60 * 60 * 1000,
+    maxAge: ONE_DAY,
   },
 });
