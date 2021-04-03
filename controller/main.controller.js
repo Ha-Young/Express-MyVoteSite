@@ -1,5 +1,4 @@
 const createError = require('http-errors');
-const User = require('../models/User');
 const Voting = require('../models/Voting');
 
 exports.getMain = async (req, res, next) => {
