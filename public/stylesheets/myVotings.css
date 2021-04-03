@@ -1,0 +1,35 @@
+.content-wrap {
+  display:flex;
+  width: 100vw;
+  height: 80vh;
+}
+
+.myvointg-title {
+  height: 5vh;
+}
+
+.content-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5vh;
+}
+
+.content-container {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  height: 100%;
+  margin-bottom: 1vh;
+  border: 2px solid black;
+}
+
+.content {
+  width: 90%;
+}
+
+.my-voting-link {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

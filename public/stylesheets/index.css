@@ -5,7 +5,7 @@
   align-items: flex-start;
   align-content: flex-start;
   width: 95vw;
-  height: 90vh;
+  height: 85vh;
   margin-bottom: 2vh;
 }
 
@@ -67,14 +67,6 @@
   box-shadow: 6px 7px 0px 2px #E03853;
   -webkit-box-shadow: 6px 7px 0px 2px #E03853;
   -moz-box-shadow: 6px 7px 0px 2px #E03853;
-}
-
-.finished-font {
-  color: #E03853;
-}
-
-.proceeding-font {
-  color: #3853e0;
 }
 
 @keyframes animate {
