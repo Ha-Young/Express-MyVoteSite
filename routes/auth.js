@@ -13,7 +13,7 @@ router.post("/login",
   }
 ), (req, res, next) => {
   try {
-    const loginUrl = "http://localhost:3000/auth/login";
+    const loginUrl = "https://solsol-voting-platform.herokuapp.com/auth/login";
     const redirectUrl = req.headers.referer.replace(loginUrl+"?url=", "");
 
     if (redirectUrl !== "undefined" && redirectUrl !== loginUrl) {
