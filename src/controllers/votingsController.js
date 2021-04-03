@@ -8,6 +8,7 @@ exports.getVoting = async (req, res, next) => {
 
   try {
     const voting = await Voting.findById(id);
+    console.log(voting.expiration, new Date(voting.expiration), new Date(voting.expiration).toLo);
 
     if (!voting) {
       console.log(`Can't find voting by ${id}!`);
