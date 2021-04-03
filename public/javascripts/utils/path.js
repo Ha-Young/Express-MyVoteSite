@@ -4,7 +4,12 @@ window.myPathController = (function () {
     return window.location.origin;
   };
 
+  const searchParam = function (key) {
+    return new URLSearchParams(location.search).get(key);
+  };
+
   return {
     getRootPath,
+    searchParam,
   };
 })();
