@@ -1,3 +1,47 @@
-.nav-wrap {
+html {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
   display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  font-family: "Do Hyeon", sans-serif;
+  color: black;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width:100vw;
+  margin: 1vh 0;
+  text-align: center;
+  border: 1px solid black;
+}
+
+.indicator-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 50%;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  width: 95vw;
+  margin-bottom: 2vh;
 }

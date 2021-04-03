@@ -10,7 +10,6 @@ const voterSchema = new mongoose.Schema({
 const optionSchema = new mongoose.Schema({
   title: {
     type: String,
-    unique: true,
     required: true,
   },
   voters: [voterSchema],

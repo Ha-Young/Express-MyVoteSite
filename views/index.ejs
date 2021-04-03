@@ -2,40 +2,51 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/global.css">
+    <link rel="stylesheet" href="/stylesheets/index.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap">
   </head>
   <body>
     <%- include("./partials/header.ejs") %>
+    <div class="btn-wrap">
+      <button class="voting-add-btn">
+        <% if (displayName) { %>
+          <a href="/votings/new">Add Voting!</a>
+        <% } else { %>
+          <a href="/login">Log in to add Voting!</a>
+        <% } %>
+      </button>
+    </div>
+    <div clas="main-content-wrap">
     <div class="main-content">
-      <div>
-        <button class="voting-add-btn">
-          <% if (displayName) { %>
-            <a href="/votings/new">Add Voting!</a>
-          <% } else { %>
-            <a href="/login">Log in to add Voting!</a>
-          <% } %>
-        </button>
-      </div>
-
     <% if (votings.length > 0) { %>
       <% votings.forEach(function(voting) { %>
-        <div>
+
+        <div class="voting-card">
+          <span></span>
+          <span></span>
+          <span></span>
+          <div class="card-container">
           <a href="/votings/<%= voting._id %>">
-            <h2><%= voting.title %></h2>
-            <h3>Author: <%= voting.author.userName %></h3>
-            <h4>contact: <%= voting.author.email %></h4>
-            <h4>Status: <%= voting.isProceeding %></h4>
-          <% if (voting.isProceeding) { %>
-            <h3>Expire Date: <%= voting.expireDate %></h3>
-          <% } else { %>
-            <h3>This voting is finished</h3>
-          <% } %>
+            <h2 class="title"><%= voting.title %></h2>
+            <h4 class="is-proceeding">
+              <% if (voting.isProceeding) { %>
+                <h3>Proceeding...</h3>
+                <h4 class="expire-date">Expire At: <%= format(voting.expireDate, "yyyy/MM/dd") %></h4>
+              <% } else { %>
+                <h4 class="expire-status">This voting is finished</h4>
+              <% } %>
+            </h4>
+            <h4 class="author">Author: <%= voting.author.userName %></h4>
+            <h4 class="contact">Contact: <%= voting.author.email %></h4>
           </a>
+          </div>
         </div>
       <% }) %>
     <% } %>
-
-    <%- include("./partials/footer.ejs") %>
     </div>
+    </div>
+    <%- include("./partials/footer.ejs") %>
   </body>
 </html>

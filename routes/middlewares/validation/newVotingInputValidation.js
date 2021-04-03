@@ -10,7 +10,6 @@ async function newVotingInputValidation(req, res, next) {
     }
 
     const isProceeding = checkExpireDate(expireDate);
-
     const isOptionsValidated = options && options.every(option => option.trim().length > 0);
 
     if (!isOptionsValidated) {

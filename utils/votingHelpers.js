@@ -1,3 +1,9 @@
+function checkExpireDate(expireDate) {
+  const today = new Date();
+  const votingExpireDate = new Date(expireDate);
+  return today <= votingExpireDate;
+}
+
 function getMaxVoterCount (votingOptions) {
   let max = 0;
 
@@ -10,4 +16,5 @@ function getMaxVoterCount (votingOptions) {
   return max;
 }
 
+exports.checkExpireDate = checkExpireDate;
 exports.getMaxVoterCount = getMaxVoterCount;

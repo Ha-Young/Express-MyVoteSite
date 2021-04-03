@@ -1,0 +1,67 @@
+.main-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
+  width: 95vw;
+  height: 90vh;
+  margin-bottom: 2vh;
+}
+
+.main-content-wrap {
+  display: flex;
+  align-items: flex-start;
+  height: 80%;
+  margin-bottom: 2vh;
+}
+
+.btn-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.voting-add-btn {
+  display: flex;
+  justify-content: center;
+  margin: 1vh 0;
+}
+
+.voting-card {
+  display: flex;
+  width: 20%;
+  height: 20%;
+  margin: 1vh 1vw;
+  padding: 1vh 1vw;
+  border: 3px solid black;
+  box-shadow: 6px 7px 0px 2px #3853e0;
+  -webkit-box-shadow: 6px 7px 0px 2px #3853e0;
+  -moz-box-shadow: 6px 7px 0px 2px #3853e0;
+  transition: transform 2s;
+  cursor: pointer;
+}
+
+.voting-card:hover {
+  border: 4px solid black;
+  border-radius: 20% 70% 23% 37% / 41% 60% 30% 20%;
+  animation: animate 2s linear alternate infinite;
+}
+
+@keyframes animate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(5deg);
+  }
+}
+
+.card-container {
+  display: flex;
+}
+
+h4 {
+  margin: 0;
+
+}
