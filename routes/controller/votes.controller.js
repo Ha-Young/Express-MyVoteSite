@@ -75,6 +75,7 @@ exports.showVoteDetails = async function (req, res, next) {
 exports.addOneToSelectedOption = async function (req, res, next) {
   const userId = req.session.passport.user;
   const votingId = req.params.vote_id;
+  const voting = await Voting.findById(votingId);
   const selectedOptionName = req.body.name;
   const hasParticipated = await User.find(
     {
@@ -83,7 +84,7 @@ exports.addOneToSelectedOption = async function (req, res, next) {
     }
   );
 
-  if (hasParticipated.length) {
+  if (hasParticipated.length || voting.status === "CLOSED") {
     return res.render("index");
   }
 
