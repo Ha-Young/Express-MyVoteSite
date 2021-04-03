@@ -117,7 +117,7 @@ exports.getMyVotingPage = async (req, res, next) => {
   }
 };
 
-exports.getNewVotingPage = (req, res, next) => {
+exports.getNewVotingPage = (req, res) => {
   const [error] = req.flash("newVotingError");
 
   res.status(200).render("newVoting", { message: error });

@@ -2,13 +2,13 @@ const jwt = require("jsonwebToken");
 const passport = require("passport");
 const mongoose = require("mongoose");
 
-exports.signUp = (req, res, next) => {
+exports.signUp = (req, res) => {
   const [error] = req.flash("signUpError");
 
   res.status(200).render("signup", { message: error });
 };
 
-exports.logIn = (req, res, next) => {
+exports.logIn = (req, res) => {
   const [error] = req.flash("loginError");
   const query = req.query?.next || "";
 
