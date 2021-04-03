@@ -9,8 +9,8 @@ for (let i = 0; i < $optionText.length; i++) {
   count.push($optionCount[i].getAttribute('name'));
 }
 
-const ctx = document.getElementById('vote-chart').getContext('2d');
-const myChart = new Chart(ctx, {
+const $ctx = document.getElementById('vote-chart').getContext('2d');
+const myChart = new Chart($ctx, {
     type: 'pie',
     data: {
         labels: text,
