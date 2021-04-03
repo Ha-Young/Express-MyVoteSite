@@ -6,6 +6,7 @@ const getLoginStatus = require("../utils/getLoginStatus");
 const {
   getVotingById,
   createVoting,
+  deleteVoting,
 } = require("./controllers/voting.controller");
 
 router.get("/new", (req, res, next) => {
@@ -67,18 +68,13 @@ router.get("/:votingId", async (req, res, next) => {
 
 router.get("/:votingId/delete", async (req, res, next) => {
   try {
+    const isLogin = getLoginStatus(req);
+    if (!isLogin) return res.status(302).redirect("/");
+
     const { votingId } = req.params;
-    const votingInfo = await getVotingById(votingId);
     const userId = req.user._id;
-    const authorId = votingInfo.author._id;
-    let isAuthor;
 
-    isAuthor = userId.equals(authorId) ? true : false;
-
-    if (isAuthor) {
-      await Voting.deleteOne({ _id: votingId });
-    }
-
+    await deleteVoting(userId, votingId);
     res.status(302).redirect("/");
   } catch (err) {
     console.error(`get /:votingId delete in votings.js ${err.message}`);

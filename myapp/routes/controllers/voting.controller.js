@@ -62,9 +62,22 @@ const getMyVotings = async (userId) => {
   return myVotings;
 };
 
+const deleteVoting = async (userId, votingId) => {
+  const votingInfo = await getVotingById(votingId);
+  const authorId = votingInfo.author._id;
+  let isAuthor;
+
+  isAuthor = userId.equals(authorId) ? true : false;
+
+  if (isAuthor) {
+    await Voting.deleteOne({ _id: votingId });
+  }
+};
+
 module.exports = {
   getVotingById,
   createVoting,
   updateAndGetVotings,
   getMyVotings,
+  deleteVoting,
 };
