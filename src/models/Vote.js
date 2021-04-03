@@ -16,7 +16,7 @@ const joiVoteSchema = Joi.object({
   title: Joi.string().required(),
   creator: Joi.objectId().required(),
   expire_datetime: Joi.date().required(),
-  is_process: Joi.boolean(),
+  is_progress: Joi.boolean(),
   vote_options: Joi.array().items(joiVoteOptionSchema).required(),
   entire_count: Joi.number(),
 });
@@ -32,7 +32,7 @@ VoteSchema.plugin(mongoosePaginate);
 VoteSchema.pre(/^find/, async function (next) {
   await Vote.updateMany(
     { expire_datetime: { $lte: new Date() } },
-    { is_process: false }
+    { is_progress: false }
   );
   next();
 });

@@ -7,10 +7,10 @@ function getVotesQuery(condition) {
 
   switch (condition) {
     case "open":
-      query = { is_process: true };
+      query = { is_progress: true };
       break;
     case "close":
-      query = { is_process: false };
+      query = { is_progress: false };
       break;
     case "all":
     default:
@@ -112,7 +112,7 @@ exports.CreateVote = async ({ voteInputDTO, userId }) => {
       creator: userId,
       vote_options: voteOptions,
       entire_count: 0,
-      is_process: true,
+      is_progress: true,
     });
 
     if (!voteRecord) {
