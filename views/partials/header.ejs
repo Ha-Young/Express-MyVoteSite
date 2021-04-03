@@ -7,10 +7,17 @@
         <i class="fas fa-home header-icon"></i>
         <div class="header-logout">HOME</div>
       </a>
-      <a class="header-button-logout" href="/logout">
-        <i class="fas fa-sign-out-alt header-icon"></i>
-        <div class="header-logout">LOG OUT</div>
-      </a>
+      <% if (typeof user !== "undefined") { %>
+        <a class="header-button-logout" href="/logout">
+          <i class="fas fa-sign-out-alt header-icon"></i>
+          <div class="header-logout">LOG OUT</div>
+        </a>
+      <% } else { %>
+        <a class="header-button-logout" href="/login">
+          <i class="fas fa-sign-out-alt header-icon"></i>
+          <div class="header-logout">LOG IN</div>
+        </a>
+      <% } %>
     </div>
   </div>
 </header>
