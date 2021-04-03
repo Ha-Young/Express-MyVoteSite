@@ -4,8 +4,11 @@ header.header
     input(type="text" placeholder="Search")
   .header-profile
     .header-profile
-      img.profile-img(src="" alt="")
+      if (currentUser.avatar)
+        img.profile-img(src=currentUser.avatar alt="user-avatar")
+      else
+        img.profile-img(src="/img/guest.svg" alt="user-avatar")
       if (currentUser.id)
         span.current-user Hello #{currentUser.name}
       else
-        span.current-user Hello Visitor
+        span.current-user Hello Guest

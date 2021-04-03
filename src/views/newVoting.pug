@@ -3,7 +3,7 @@ extends layouts/main
 mixin option
   .option
     input(type="text" placeholder="option" name="option" autocomplete=false required)
-    button.remove-option-button.blind(type="button") -
+    button.content-button.remove-option-button.blind(type="button") -
 
 block content
   h1 #{pageTitle}
@@ -12,11 +12,11 @@ block content
       input(type="text" placeholder="title" name="title" required)
       lable(for="expiraton") 만료일:
       input.expiration(type="datetime-local" name="expiration" id="expiration" required)
-      button.add-option-button(type="button") +
+      button.content-button.add-option-button(type="button") +
       .option-container
         +option
         +option
-      button.new-voting-button Create Voting
+      button.content-button.new-voting-button Create Voting
     .warning-box
 
   script(src="/javascripts/newVoting/index.js")

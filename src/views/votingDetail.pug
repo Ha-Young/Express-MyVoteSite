@@ -1,28 +1,30 @@
 extends layouts/main
 
 block content
-  h1 #{pageTitle}
-  .posted-by 생성자: #{voting.postedBy.username}
-  .expiration 만료일: #{new Date(voting.expiration).toLocaleString()}
-  if voting.progress
-    .progress 상태: 진행 중
-  else
-    .progress 상태: 종료
+  .content-section
+    h1 #{pageTitle}
+    .posted-by 생성자: #{voting.postedBy.username}
+    .expiration 만료일: #{new Date(voting.expiration).toLocaleString()}
+    if voting.progress
+      .progress 상태: 진행 중
+    else
+      .progress 상태: 종료
 
-  form.voting-form(action=`/votings/${voting.id}` method="POST")
-    .option-list
-      each option in voting.options
-        input.option(type="checkbox" name=`${option.id}` id=`${option.id}`)
-        label(for=`${option.id}`) #{option.title}
-    button.submit-voting-button Vote
+    form.voting-form(action=`/votings/${voting.id}` method="POST")
+      .option-list
+        each option in voting.options
+          .option-box
+            label(for=`${option.id}`) #{option.title}
+            input.option(type="checkbox" name=`${option.id}` id=`${option.id}`)
+      button.content-button.submit-voting-button Vote
 
-  if currentUser.id
-    if (voting.postedBy.id.toString() === currentUser.id.toString())
+    if currentUser.id
+      if (voting.postedBy.id.toString() === currentUser.id.toString())
+        .result Result: #{votingResult.join(", ")}
+        form.delete-voting-form(action=`/votings/${voting.id}/delete?_method=DELETE` method="POST")
+          button.content-button.delete-voting-button Delete Voting
+    else if (!voting.progress)
       .result Result: #{votingResult.join(", ")}
-      form.delete-voting-form(action=`/votings/${voting.id}/delete?_method=DELETE` method="POST")
-        button.delete-voting-button Delete Voting
-  else if (!voting.progress)
-    .result Result: #{votingResult.join(", ")}
-  .warning-box #{errorMessage}
+    .warning-box #{errorMessage}
 
   script(src="/javascripts/votingDetail/index.js")

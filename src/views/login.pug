@@ -9,9 +9,9 @@ block content
     )
       input(type="email" placeholder="email" name="email" required=true)
       input(type="password" placeholder="password" name="password" required=true)
-      button.submit-button Login
+      button.content-button.submit-button Login
     .warning-box #{errorMessage}
     a.signup-link(href="/auth/signup")
-      button.signup-button Signup
+      button.content-button.signup-button Signup
 
   script(src="/javascripts/common/submitHandler.js")
