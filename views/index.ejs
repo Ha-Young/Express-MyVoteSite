@@ -6,38 +6,37 @@
     <link rel="stylesheet" href="/stylesheets/index.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap">
+    <link rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+      integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
+      crossorigin="anonymous"
+    >
   </head>
   <body>
     <%- include("./partials/header.ejs") %>
     <div class="btn-wrap">
-      <button class="voting-add-btn">
-        <% if (displayName) { %>
-          <a href="/votings/new">Add Voting!</a>
-        <% } else { %>
-          <a href="/login">Log in to add Voting!</a>
-        <% } %>
-      </button>
+      <% if (displayName) { %>
+        <a href="/votings/new"><i class="fas fa-plus"></i></a>
+      <% } else { %>
+        <a href="/login"><i class="fas fa-plus"></i></a>
+      <% } %>
     </div>
     <div clas="main-content-wrap">
     <div class="main-content">
     <% if (votings.length > 0) { %>
       <% votings.forEach(function(voting) { %>
-
-        <div class="voting-card">
-          <span></span>
-          <span></span>
-          <span></span>
+        <div class="voting-card <% voting.isProceeding ? null : finished %>">
           <div class="card-container">
           <a href="/votings/<%= voting._id %>">
-            <h2 class="title"><%= voting.title %></h2>
-            <h4 class="is-proceeding">
+            <h2 class="voting-title"><%= voting.title %></h2>
+            <div class="is-proceeding">
               <% if (voting.isProceeding) { %>
-                <h3>Proceeding...</h3>
+                <h3 class="proceeding-font">Proceeding...</h3>
                 <h4 class="expire-date">Expire At: <%= format(voting.expireDate, "yyyy/MM/dd") %></h4>
               <% } else { %>
-                <h4 class="expire-status">This voting is finished</h4>
+                <h4 class="expire-status finished-font">Finished</h4>
               <% } %>
-            </h4>
+            </div>
             <h4 class="author">Author: <%= voting.author.userName %></h4>
             <h4 class="contact">Contact: <%= voting.author.email %></h4>
           </a>
