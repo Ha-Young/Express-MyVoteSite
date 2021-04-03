@@ -14,14 +14,14 @@ Controller.getAllVotings = async (req, res, next) => {
     const votings = await Voting.find();
     const currentUser = req.user;
 
-    votings.forEach(async (voting) => {
+    await Promise.all(votings.map(async (voting) => {
       const { endDate } = voting;
       const isProgressNow = validateDate(endDate, Date.now());
 
       if (!isProgressNow && voting.isProgress) {
         await voting.update({ isProgress: isProgressNow });
       }
-    });
+    }));
 
     res.render("index", { votings, user: currentUser });
   } catch (error) {
