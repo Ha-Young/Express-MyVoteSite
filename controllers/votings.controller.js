@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Vote = require('../models/vote');
 const convertDate = require('../utils/combineDateAndTime');
-const filterOption = require('../utils/filterOption');
+const filterOption = require('../utils/assembleOption');
 const classifyAccordingToIsproceeding = require('../utils/classifyAccordingToIsproceeding');
 
 exports.voteGetAll = async (req, res, next) => {
@@ -48,7 +48,6 @@ exports.voteCreate = async (req, res, next) => {
   const {
     title,
     option,
-    option_type: optionType,
     expired_date: expiredDate,
     expired_time: expiredTime,
   } = req.body;
@@ -71,7 +70,6 @@ exports.voteCreate = async (req, res, next) => {
       },
       expiredAt,
       convertedExpiredAt,
-      optionType,
       options: filterOption(option),
     });
     res.status(200).redirect('/');
