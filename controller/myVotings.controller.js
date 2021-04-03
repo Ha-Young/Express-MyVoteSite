@@ -7,8 +7,9 @@ exports.getMyPage = async (req, res, next) => {
     const userInfo = await User.findById(req.user.id).exec();
 
     if (!userInfo) {
-      return res.render('partial/message', {
-        isSuccess: false,
+      return res.render('message', {
+        url: '/',
+        isRedirected: true,
         message: '데이터를 불러오는데에 실패했습니다',
       });
     }

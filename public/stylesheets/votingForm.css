@@ -1,13 +1,45 @@
-form {
+.votingForm {
   width: 80%;
   height: 60%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   align-items: center;
-  background-color: var(--green);
 }
 
-.formFlex {
+.votingForm .formTitle,
+.votingForm .textBox {
+  margin-bottom: 2vh;
+}
+
+.formTitle {
+  margin-bottom: 2vh;
+  border-bottom: var(--pink) .5vw solid;
+}
+
+.votingForm div {
+  width: 100%;
+}
+
+.optionsContainer {
   display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.optionsTitle {
+  padding: 1vw;
+  font-size: 2vw;
+}
+
+.optionsTitle span {
+  margin-left: 2vw;
+  padding: .5vw 1vw;
+  border-radius: 1vw;
+  color: white;
+  background-color: var(--pink);
+  cursor: pointer;
+}
+
+.optionsContainer input {
+  margin-bottom: 1vh;
 }

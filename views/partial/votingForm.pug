@@ -5,30 +5,25 @@ block stylesheet
   link(rel="stylesheet", href="/stylesheets/votingForm.css")
 
 block content
-  form(action="/votings/new", method="post")
+  form(action="/votings/new", method="post", class="votingForm")
     - const today = moment().format('yyyy-MM-DDTHH:mm:ss')
     - const minVotingTime = moment().add(1, 'day').format('yyyy-MM-DDTHH:mm:ss')
     input(type="hidden" name="founder" value=user.id)
+    .formTitle 투 표 등 록 하 기
     .flex
-      .icon
-        i.fas.fa-envelope
       .textBox
         label(for="title") 투표제목:
-        input(type="text" id="title" name="title")
+        input(type="text" id="title" name="title" required)
     .flex
-      .icon
-        i.fas.fa-envelope
       .textBox
         label(for="description") 내 용:
-        input(type="text" id="description" name="description")
-    .optionsContainer
-      label(for="options") 투표옵션:
-        span.addOptionBtn +
-        input(type="text" name="options" value="옵션1")
-        input(type="text" name="options" value="옵션2")
+        input(type="text" id="description" name="description" required)
+    .textBox.optionsContainer
+      .optionsTitle 투표항목: (최대 7개)
+        button.addOptionBtn 항목추가
+      input(type="text" name="options" value="옵션1")
+      input(type="text" name="options" value="옵션2")
     .flex
-      .icon
-        i.fas.fa-envelope
       .textBox
         input(
           type="datetime-local"
