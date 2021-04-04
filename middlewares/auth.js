@@ -1,4 +1,4 @@
-function checkAuthenticated(req, res, next) {
+function checkLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     res.locals.user = req.user;
     next();
@@ -11,7 +11,7 @@ function checkAuthenticated(req, res, next) {
   res.redirect('/auth/login');
 }
 
-function checkNotAuthenticated(req, res, next) {
+function checkLoggedOut(req, res, next) {
   if (req.isAuthenticated()) {
     res.redirect('/');
     return;
@@ -28,6 +28,6 @@ function addUserInfo(req, res, next) {
   return next();
 }
 
-exports.checkAuthenticated = checkAuthenticated;
-exports.checkNotAuthenticated = checkNotAuthenticated;
+exports.checkLoggedIn = checkLoggedIn;
+exports.checkLoggedOut = checkLoggedOut;
 exports.addUserInfo = addUserInfo;
