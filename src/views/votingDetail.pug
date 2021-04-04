@@ -1,8 +1,8 @@
 extends layouts/main
 
 block content
+  h1 #{pageTitle}
   .content-container
-    h1 #{pageTitle}
     .posted-by 생성자: #{voting.postedBy.username}
     .expiration 만료일: #{new Date(voting.expiration).toLocaleString()}
     if voting.progress

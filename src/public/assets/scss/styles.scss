@@ -33,8 +33,23 @@ a {
 
 .content-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: var(--content-bg);
+  border-radius: 14px;
+  border: 1px solid var(--theme-bg-color);
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  input,
+  button,
+  div {
+    margin: 5px;
+  }
 }
 
 :root {

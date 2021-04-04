@@ -8,6 +8,6 @@ rootRouter.get("/", home);
 
 rootRouter.get("/logout", logout);
 
-rootRouter.get("/my-votings",isAuthenticated, myVotings);
+rootRouter.get("/my-votings", isAuthenticated, myVotings);
 
 module.exports = rootRouter;

@@ -9,11 +9,6 @@ exports.getVoting = async (req, res, next) => {
   try {
     const voting = await Voting.findById(id);
 
-    if (!voting) {
-      console.log(`Can't find voting by ${id}!`);
-      next(createError(404));
-    }
-
     const votingResult = getVotingResult(voting.options);
     const renderOption = {
       pageTitle: voting.title,
@@ -24,8 +19,8 @@ exports.getVoting = async (req, res, next) => {
 
     res.render("votingDetail", renderOption);
   } catch (err) {
-    console.log(err);
-    next(createError(500));
+    console.log(`Can't find voting by ${id}!`, err);
+    next(createError(404));
   }
 };
 
