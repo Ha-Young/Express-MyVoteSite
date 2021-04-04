@@ -13,7 +13,6 @@ exports.getVotings = async function(req, res, next) {
       { $set: { isProceeding: false }}
     );
 
-
     await Voting.find().populate("author").exec((err, votings) => {
       if (err) {
         next(err);

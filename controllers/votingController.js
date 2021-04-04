@@ -95,46 +95,33 @@ exports.getSelectedVoting = async function (req, res, next) {
 };
 
 exports.deleteVoting = function (req, res, next) {
-    const { params, user } = req;
-    const votingId = params.id;
+  const { params, user } = req;
+  const votingId = params.id;
 
-    Voting.findByIdAndDelete(votingId, (error) => {
-      if (error) {
-        next(error);
-        return;
-      }
+  Voting.findByIdAndDelete(votingId, (error) => {
+    if (error) {
+      next(error);
+      return;
+    }
 
-      User.findByIdAndUpdate(
-        user._id,
-        { $pull: {
-            votingsCreatedByMe: { $in: [votingId] },
-            myVotingList: { $in: [votingId] },
-          }
-        },
-        { new: true },
-        (error) => {
-          if (error) {
-            next(error);
-            return;
-          }
-
-          res.status(200).json({ result: "voting deleted" });
+    User.findByIdAndUpdate(
+      user._id,
+      { $pull: {
+          votingsCreatedByMe: { $in: [votingId] },
+          myVotingList: { $in: [votingId] },
         }
-      );
-    });
+      },
+      { new: true },
+      (error) => {
+        if (error) {
+          next(error);
+          return;
+        }
 
-    // if (deletedVoting) {
-    //   const updatedVoting = await User.findByIdAndUpdate(
-    //     user._id,
-    //     { $pull: {
-    //         votingsCreatedByMe: { $in: [votingId] },
-    //         myVotingList: { $in: [votingId] },
-    //       }
-    //     },
-    //     { new: true },
-    //   );
-    // }
-
+        res.status(200).json({ result: "voting deleted" });
+      }
+    );
+  });
 };
 
 exports.updateVoting = async function (req, res, next) {
