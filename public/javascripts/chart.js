@@ -34,11 +34,11 @@ const chart = new Chart(votingChart, {
 });
 
 function generateRandomColor() {
-  const Char = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const char = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   let randomColor = "";
   
   for(i = 0; i < 6; i++) {
-    randomColor = randomColor + Char[Math.floor(Math.random() * 16)];
+    randomColor = randomColor + char[Math.floor(Math.random() * 16)];
   }
   
   return "#" + randomColor;

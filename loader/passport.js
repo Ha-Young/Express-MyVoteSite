@@ -20,7 +20,9 @@ passport.use(
         const user = await User.findOne({ email });
 
         if (user) {
-          throw new Error("user exists");
+          req.flash(CLIENT_ERROR.LOGIN_ERROR, "already exists");
+          
+          return;
         }
 
         const newUser = User(req.body);

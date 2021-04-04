@@ -139,7 +139,7 @@ exports.getNewVotingPage = (req, res, next) => {
       throw new ErrorHandler(401, SERVER_ERROR.UNAUTHORIZED);
     }
 
-    const [error] =req.flash(CLIENT_ERROR.NEW_VOTING_ERROR);
+    const [error] = req.flash(CLIENT_ERROR.NEW_VOTING_ERROR);
 
     res.status(200).render("newVoting", { message: error });
   } catch (error) {

@@ -22,5 +22,5 @@ async function requestDeleteVoting(ev) {
 }
 
 if (deleteForm) {
-	deleteForm.addEventListener("submit", requestDeleteVoting);
+  deleteForm.addEventListener("submit", requestDeleteVoting);
 }

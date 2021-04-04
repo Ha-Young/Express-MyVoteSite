@@ -40,9 +40,9 @@ userSchema.virtual("id").get(function() {
   return this._id.toString();
 });
 
-userSchema.methods.comparePassword = async function(pw ,cb) {
+userSchema.methods.comparePassword = async function(password, cb) {
   try {
-    const comparedPasswordResult = await bcrypt.compare(pw, this.password);
+    const comparedPasswordResult = await bcrypt.compare(password, this.password);
     
     if (comparedPasswordResult) {
       const user = { email: this.email, name: this.name };
