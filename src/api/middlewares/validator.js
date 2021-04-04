@@ -5,9 +5,9 @@ const Voting = require("../../models/Voting");
 exports.validatePostSignUp = async (req, res, next) => {
   try {
     const { email, password1, password2 } = req.body;
-    const isExistEmail = await User.exists({ email });
+    const emailTrim = email.split("@").map(item => item.trim());
 
-    if (email.trim().length < 3 || !password1.trim() || !password2.trim()) {
+    if (!emailTrim[0].length || !emailTrim[1].length || !password1.trim() || !password2.trim()) {
       req.flash("error", "공백은 입력할 수 없습니다.");
       res.redirect("/auth/signup");
       return;
@@ -18,6 +18,8 @@ exports.validatePostSignUp = async (req, res, next) => {
       res.redirect("/auth/signup");
       return;
     }
+
+    const isExistEmail = await User.exists({ email });
 
     if (isExistEmail) {
       req.flash("error", "존재하는 이메일입니다.");

@@ -8,8 +8,14 @@ exports.getVoting = async (req, res, next) => {
 
   try {
     const voting = await Voting.findById(id);
-
     const votingResult = getVotingResult(voting.options);
+
+    if (!votingResult) {
+      console.log(`Can't find voting by ${id}!`);
+      next(createError(404));
+      return;
+    }
+
     const renderOption = {
       pageTitle: voting.title,
       voting,
@@ -17,10 +23,10 @@ exports.getVoting = async (req, res, next) => {
       errorMessage,
     };
 
-    res.render("votingDetail", renderOption);
+    res.status(200).render("votingDetail", renderOption);
   } catch (err) {
-    console.log(`Can't find voting by ${id}!`, err);
-    next(createError(404));
+    console.log(err);
+    next(createError(500));
   }
 };
 
@@ -43,7 +49,7 @@ exports.putVoting = async (req, res, next) => {
       }
     );
 
-    res.redirect("/");
+    res.status(301).redirect("/");
   } catch (err) {
     console.log("Failed put voting", err);
 
@@ -54,7 +60,7 @@ exports.putVoting = async (req, res, next) => {
 exports.getNewVoting = (req, res) => {
   const renderOption = { pageTitle: "New Voting" };
 
-  res.render("newVoting", renderOption);
+  res.status(200).render("newVoting", renderOption);
 };
 
 exports.postNewVoting = async (req, res) => {
@@ -80,20 +86,20 @@ exports.postNewVoting = async (req, res) => {
   try {
     await Voting.create(votingInfo);
 
-    res.redirect("/votings/success");
+    res.status(200).redirect("/votings/success");
   } catch (err) {
     console.log("Failed post new voting!", err);
 
-    res.redirect("/votings/error");
+    res.status(200).redirect("/votings/error");
   }
 };
 
 exports.votingSuccess = (req, res) => {
-  res.render("votingSuccess", { pageTitle: "Voting Success" });
+  res.status(200).render("votingSuccess", { pageTitle: "Voting Success" });
 };
 
 exports.votingFail = (req, res) => {
-  res.render("votingError", { pageTitle: "Voting Error" });
+  res.status(404).render("votingError", { pageTitle: "Voting Error" });
 };
 
 exports.deleteVoting = async (req, res, next) => {
@@ -101,8 +107,7 @@ exports.deleteVoting = async (req, res, next) => {
     const { id } = req.params;
 
     await Voting.findByIdAndDelete(id);
-
-    res.redirect("/");
+    res.status(301).redirect("/");
   } catch (err) {
     console.log(err);
     next(createError(500));

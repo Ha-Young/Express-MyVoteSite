@@ -14,7 +14,7 @@ exports.isAuthenticated = (req, res, next) => {
   res.redirect("/");
 };
 
-exports.authenticated = (req, res, next) => {
+exports.loggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     res.redirect("/");
     return;

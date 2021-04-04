@@ -3,8 +3,10 @@ const User = require("../models/User");
 const { generatePassword } = require("../utils/passwordHelper");
 
 exports.getLogin = (req, res) => {
-  const queryKey = Object.keys(req.query);
+  const queryKey = Object.keys(req.query)[0];
   const errorMessage = req.flash("error");
+
+  console.log(req.query, queryKey, req.query[queryKey])
 
   const renderOption = {
     pageTitle: "Login",
@@ -44,17 +46,17 @@ exports.postSignup = async (req, res, next) => {
   const {
     username,
     email,
-    password1,
+    password1: password,
   } = req.body;
 
   try {
     await User.create({
       username,
       email,
-      ...generatePassword(password1),
+      ...generatePassword(password),
     });
 
-    res.status().redirect("/auth/login");
+    res.status(301).redirect("/auth/login");
   } catch (err) {
     console.log("Failed create user", err);
     next(createError(500));

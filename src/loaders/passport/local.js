@@ -1,6 +1,6 @@
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("../../models/User");
-const { validPassword } = require("../../utils/passwordHelper");
+const { validatePassword } = require("../../utils/passwordHelper");
 
 const initializeLocal = (passport) => {
   const localOption = {
@@ -12,19 +12,19 @@ const initializeLocal = (passport) => {
 
   const localAuthenticate = async (email, password, done) => {
     try {
-      const isExistUser = await User.findOne({ email });
+      const user = await User.findOne({ email });
 
-      if (!isExistUser) {
+      if (!user) {
         console.log("Invaild email!");
         done(null, false);
         return;
       }
 
-      const isValid = validPassword(password, isExistUser.hash, isExistUser.salt);
+      const isValid = validatePassword(password, user.hash, user.salt);
 
       if (isValid) {
         console.log("Our user!");
-        done(null, isExistUser);
+        done(null, user);
         return;
       }
 

@@ -17,7 +17,7 @@ const authRouter = require("./api/routes/authRouter");
 const votingRouter = require("./api/routes/votingsRouter");
 
 const { localMiddleware } = require("./api/middlewares/localMiddleware");
-const { authenticated } = require("./api/middlewares/authenticator");
+const { loggedIn } = require("./api/middlewares/authenticator");
 
 const app = express();
 
@@ -39,7 +39,7 @@ app.use(flash());
 app.use(localMiddleware);
 
 app.use("/", rootRouter);
-app.use("/auth", authenticated, authRouter);
+app.use("/auth", loggedIn, authRouter);
 app.use("/votings", votingRouter);
 
 app.use((req, res, next) => {
