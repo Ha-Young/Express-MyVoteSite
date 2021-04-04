@@ -16,8 +16,9 @@ const votingSchema = new mongoose.Schema({
     required: true,
   },
   isInProgress: {
-    type: Boolean,
-    default: true,
+    type: String,
+    enum: ['progress', 'closed'],
+    default: 'progress',
   },
   founder: {
     type: mongoose.Schema.Types.ObjectId,
@@ -39,7 +40,11 @@ const votingSchema = new mongoose.Schema({
 
 // eslint-disable-next-line prefer-arrow-callback
 votingSchema.pre(/^find/, async function (next) {
-  await Voting.updateMany({ dueDate: { $lte: moment().format('yyyy-MM-DDTHH:mm:ss') } }, { isInProgress: false });
+  await Voting.updateMany({
+    dueDate: {
+      $lte: moment().format('yyyy-MM-DDTHH:mm:ss'),
+    },
+  }, { isInProgress: 'closed' });
   next();
 });
 

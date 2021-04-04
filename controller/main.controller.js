@@ -1,7 +1,7 @@
 const createError = require('http-errors');
 const Voting = require('../models/Voting');
 
-exports.getMain = async (req, res, next) => {
+exports.getAll = async (req, res, next) => {
   try {
     const allVotingList = await Voting.find({})
       .populate('founder', 'username')

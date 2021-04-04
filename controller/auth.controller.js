@@ -9,17 +9,20 @@ exports.signup = (req, res, next) => {
 
 exports.post = async (req, res, next) => {
   try {
-    await check('email').isEmail().run(req);
+    await check('email').isEmail().run(req)
+      .catch(err => next(createError(err.status)));
+
     await check('password')
       .isLength({ min: 4 })
-      .custom(value => value === req.body.confirm).run(req);
+      .custom(value => value === req.body.confirm).run(req)
+      .catch(err => next(createError(err.status)));
 
     const validateError = validationResult(req);
     if (!validateError.isEmpty()) {
-      const { msg, param } = validateError.errors[0];
-      return res.render('partial/message', {
+      const { param } = validateError.errors[0];
+      return res.render('message', {
         isSuccess: false,
-        message: `${msg}: ${param}`,
+        message: `${param}의 형식이 맞지 않습니다.`,
       });
     }
 

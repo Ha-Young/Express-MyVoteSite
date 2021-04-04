@@ -25,20 +25,20 @@ passport.use(new Strategy(
   // eslint-disable-next-line consistent-return
   async (email, password, done) => {
     try {
-      const userInfo = await User.findOne({ email });
-      if (!userInfo) {
+      const user = await User.findOne({ email });
+      if (!user) {
         return done(null, false, {
           message: '가입되지 않은 계정입니다.',
         });
       }
-      bcrypt.compare(password, userInfo.password, (err, res) => {
+      bcrypt.compare(password, user.password, (err, res) => {
         if (err) return done(err);
         if (!res) {
           return done(null, false, {
             message: '비밀번호를 확인하세요',
           });
         }
-        return done(null, userInfo);
+        return done(null, user);
       });
     } catch (err) {
       return done(err);

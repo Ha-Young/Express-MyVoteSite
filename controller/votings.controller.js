@@ -58,8 +58,6 @@ exports.getOne = async (req, res, next) => {
       return next(createError(401, '삭제 되었거나 존재하지 않는 투표입니다'));
     }
 
-    console.log(req.user);
-    console.log(voteData);
     return res.render('partial/votingItem', {
       user: req.user,
       data: voteData,
@@ -71,7 +69,6 @@ exports.getOne = async (req, res, next) => {
 
 exports.updateVoting = async (req, res, next) => {
   try {
-    console.log('update 도착')
     const voting = await Voting.findOne({ _id: req.params.id });
     if (!voting) {
       return res.send(false);
