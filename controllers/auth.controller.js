@@ -52,7 +52,7 @@ function postLogin(req, res, next) {
 
   return passport.authenticate('local', {
     successRedirect: referrer,
-    failureRedirect: '/login',
+    failureRedirect: '/auth/login',
     failureFlash: true,
   })(req, res);
 }

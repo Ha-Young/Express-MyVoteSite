@@ -10,16 +10,16 @@ function initialize() {
       const user = await User.findOne({ email });
 
       if (!user) {
-        return done(null, false, { message: 'unknown email' });
+        return done(null, false, { message: 'Unknown email' });
       }
 
-      const hasUser = await bcrypt.compare(password, user.password);
+      const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
-      if (hasUser) {
+      if (isPasswordCorrect) {
         return done(null, user);
       }
 
-      return done(null, false, { message: 'wrong password' });
+      return done(null, false, { message: 'Wrong password' });
     } catch (error) {
       return done(error);
     }

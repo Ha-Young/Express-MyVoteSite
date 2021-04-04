@@ -8,9 +8,6 @@ mixin sidebar(page)
         a.sidebar-link.discover(href='/' class=`${page === 'index' ? 'is-active' : ''}`)
           +svgs('discover')
           | Discover
-        a.sidebar-link.trending(href='/' class=`${page === 'trend' ? 'is-active' : ''}`)
-          +svgs('trending')
-          | Trending
     .side-wrapper
       if (user)
         .side-title PERSONAL

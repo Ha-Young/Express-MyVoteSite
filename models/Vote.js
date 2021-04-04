@@ -35,13 +35,20 @@ const voteSchema = new mongoose.Schema({
   },
   imgUrl: {
     type: String,
-    default: getRandomImage(),
   },
 }, {
   timestamps: true,
 });
 
 voteSchema.plugin(findOrCreate);
+
+voteSchema.pre('save', function(next) {
+  if (!this.imgUrl) {
+      this.imgUrl = getRandomImage();
+  }
+
+  next();
+});
 
 voteSchema.statics.updateIsVotable = async function() {
   const currentDate = new Date();
