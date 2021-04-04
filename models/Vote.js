@@ -69,7 +69,6 @@ voteSchema.statics.updateIsVotable = async function() {
   try {
     await this.updateMany(findExpiredVotes, makeExpired);
   } catch (error) {
-    console.error(error);
     throw new Error(error);
   }
 }
@@ -87,7 +86,6 @@ voteSchema.methods.makeResult = async function() {
     await this.save();
     return this;
   } catch (error) {
-    console.error(error);
     throw new Error(error);
   }
 }

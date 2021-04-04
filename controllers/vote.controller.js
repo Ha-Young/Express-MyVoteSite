@@ -11,7 +11,6 @@ async function renderAllVotes(req, res) {
 
     res.status(200).render('index', { votes });
   } catch (error) {
-    console.error(error);
     next(createError(500));
   }
 }
@@ -28,7 +27,6 @@ async function renderMyVote(req, res) {
 
     res.status(200).render('myVote', { allVotes: myVotes });
   } catch (error) {
-    console.error(error);
     next(createError(500));
   }
 }
