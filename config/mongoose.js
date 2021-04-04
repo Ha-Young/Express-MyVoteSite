@@ -3,7 +3,7 @@ const db = mongoose.connection;
 
 function mongooseConfig() {
   mongoose.connect(
-    process.env.MONGOOSE_URL,
+    process.env.MONGOOSE_URI,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
