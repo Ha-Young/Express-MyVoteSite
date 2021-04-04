@@ -4,6 +4,3 @@ node_modules
 
 views/mixins/popular.pug
 views/mixins/original-voteList.pug
-
-out
-jsdoc.conf
