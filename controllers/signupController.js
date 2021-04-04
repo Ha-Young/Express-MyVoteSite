@@ -20,14 +20,15 @@ exports.registerNewUser = async function(req, res, next) {
       email,
       userName: username,
       password: hashedPassword,
-    }, (error) => {
-      if (error) {
-        next(error);
+    }, (err) => {
+      if (err) {
+        next(err);
       }
+
+      res.redirect("/login");
     });
 
-    res.redirect("/login");
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };

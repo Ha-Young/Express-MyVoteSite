@@ -42,9 +42,9 @@
           </form>
         </div>
       </div>
-      <% if (messages.length > 0) { %>
-        <% messages.forEach(function(message) { %>
-          <div class="error-message"><strong><%= message.message %></strong></div>
+      <% if (newVotingMessages.length > 0) { %>
+        <% newVotingMessages.forEach(function(newVotingMessage) { %>
+          <div class="new-voting-message"><strong><%= newVotingMessage.newVotingMessage %></strong></div>
         <% }) %>
       <% } %>
       <div class="go-back-to-link">

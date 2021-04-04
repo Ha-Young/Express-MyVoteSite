@@ -11,7 +11,7 @@ exports.getNewVotingPage = function(req, res, next) {
     "newVoting",
     { title: "New Voting",
       displayName,
-      messages: req.flash("messages")
+      newVotingMessages: req.flash("newVotingMessages")
     }
   );
 }
@@ -35,10 +35,10 @@ exports.postNewVoting = async function (req, res, next) {
       { $push: { votingsCreatedByMe: newVoting._id }}
     );
 
-    req.flash("messages", { message: "Registered your voting successfully!" });
+    req.flash("newVotingMessages", { newVotingMessage: "Registered your voting successfully!" });
     res.redirect("/votings/new");
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -89,39 +89,43 @@ exports.getSelectedVoting = async function (req, res, next) {
         messages: req.flash("messages")
       }
     );
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
-exports.deleteVoting = function (req, res, next) {
-  const { params, user } = req;
-  const votingId = params.id;
+exports.deleteVoting = async function (req, res, next) {
+  try {
+    const { params, user } = req;
+    const votingId = params.id;
 
-  Voting.findByIdAndDelete(votingId, (error) => {
-    if (error) {
-      next(error);
-      return;
-    }
-
-    User.findByIdAndUpdate(
-      user._id,
-      { $pull: {
-          votingsCreatedByMe: { $in: [votingId] },
-          myVotingList: { $in: [votingId] },
-        }
-      },
-      { new: true },
-      (error) => {
-        if (error) {
-          next(error);
-          return;
-        }
-
-        res.status(200).json({ result: "voting deleted" });
+    await Voting.findByIdAndDelete(votingId, (err) => {
+      if (err) {
+        next(err);
+        return;
       }
-    );
-  });
+
+      User.findByIdAndUpdate(
+        user._id,
+        { $pull: {
+            votingsCreatedByMe: { $in: [votingId] },
+            myVotingList: { $in: [votingId] },
+          }
+        },
+        { new: true },
+        (err) => {
+          if (err) {
+            next(err);
+            return;
+          }
+
+          res.status(200).json({ result: "voting deleted" });
+        }
+      );
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
 exports.updateVoting = async function (req, res, next) {
@@ -144,12 +148,18 @@ exports.updateVoting = async function (req, res, next) {
     await Voting.findOneAndUpdate(
       { _id: votingId },
       { $push: { 'options.$[option].voters': userId }},
-      { arrayFilters: [{ "option._id": selectedOptionId }]}
-    );
-    await User.findByIdAndUpdate({ _id: userId }, { $push : { myVotingList: votingId }});
+      { arrayFilters: [{ "option._id": selectedOptionId }]},
+      (err) => {
+        if (err) {
+          next(err);
+          return;
+        }
 
-    res.json("user exist");
-  } catch (error) {
-    next(error);
+        User.findByIdAndUpdate({ _id: userId }, { $push : { myVotingList: votingId }});
+        res.json("user exist");
+      }
+    );
+  } catch (err) {
+    next(err);
   }
 };

@@ -23,7 +23,7 @@ exports.getMyVotings = async function(req, res, next) {
         }
       );
     });
-  } catch (error) {
+  } catch (err) {
     next(err);
   }
 };
