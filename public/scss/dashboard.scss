@@ -460,7 +460,6 @@ body {
   grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 20px;
   grid-row-gap: 20px;
-
   @media screen and (max-width: 980px) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -475,6 +474,17 @@ body {
 
   &-wrapper {
     position: relative;
+  }
+
+  &-img {
+    max-width: 100%;
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 20px 20px 0 0;
+    display: block;
+    cursor: pointer;
+    transition: 0.4s;
   }
 
   &-name {
@@ -543,13 +553,3 @@ body {
   }
 }
 
-img {
-  max-width: 100%;
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 20px 20px 0 0;
-  display: block;
-  cursor: pointer;
-  transition: 0.4s;
-}

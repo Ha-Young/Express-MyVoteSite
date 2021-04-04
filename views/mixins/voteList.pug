@@ -3,7 +3,7 @@ mixin voteList(vote)
     .vote-status #{vote.isVotable ? 'vote now' : 'finished'}
     .vote-wrapper
       a(href=`/vote/${vote._id}`)
-        img(src=`${vote.imgUrl}`)
+        img.vote-img(src=`${vote.imgUrl}`)
       if (vote.creatorImgUrl)
         .creator-img__wrapper.vote-creator
           svg.feather.feather-check(viewbox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round')
