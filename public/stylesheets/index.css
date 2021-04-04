@@ -1,0 +1,46 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+header .login-signup-container {
+  display: flex;
+}
+
+header .login-signup-container a,
+nav a {
+  width: 80px;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  background: black;
+  font-weight: bold;
+  line-height: 25px;
+  align-self: center;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+}
+
+nav a {
+  width: auto;
+}
+
+main .votings {
+  display: flex;
+  height: 750px;
+  border: 1px solid black;
+  margin: 20px;
+}
+
+main .votings .voting {
+  height: 300px;
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid black;
+}

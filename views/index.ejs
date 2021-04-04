@@ -3,24 +3,35 @@
   <head>
     <title>Voting Platform</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/index.css" />
   </head>
   <body>
-    <h1>Voting Platform</h1>
-    <a href="/login">
-      <button>로그인</button>
-    </a>
-    <br>
-    <a href="/signup">
-      <button>회원가입</button>
-    </a>
-    <br>
-    <a href="/votings/new">
-      <button>투표 생성</button>
-    </a>
-    <br>
-    <a href="/my-votings">
-      <button>내 투표 보기</button>
-    </a>
-    <br>
+    <header>
+      <h1>Voting Platform</h1>
+      <div class="login-signup-container">
+        <a href="/login">로그인</a>
+        <a href="/signup">회원가입</a>
+      </div>
+    </header>
+    <nav>
+      <a href="/votings/new">투표 생성</a>
+      <a href="/my-votings">내 투표 보기</a>
+    </nav>
+    <main>
+      <article class="votings">
+        <% if (votings && votings.length) { %>
+            <% votings.forEach((voting) => { %>
+              <article class="voting">
+                <h2><%= voting.title %></h2>
+                <h4>만든 사람: <%= voting.generator %></h4>
+                <h4>만료 날짜 및 시간</h4>
+                <p>: <%= voting.expiryDate %></p>
+                <h4><%= voting.isInProgress ? "진행중" : "투표 종료" %></h4>
+                <a href="/votings/<%= voting._id %>">투표하러 가기</a>
+              </article>
+            <% }) %>
+        <% } %>
+      </article>
+    </main>
   </body>
 </html>

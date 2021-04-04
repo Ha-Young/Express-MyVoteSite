@@ -1,8 +1,12 @@
+html,
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
-a {
-  color: #00B7FF;
+*, *:before, *:after {
+  box-sizing: inherit;
 }
