@@ -1,7 +1,7 @@
-const placeholderTarget = [].slice.call(document.querySelectorAll('.textBox'));
+const placeholdersList = Array.from(document.querySelectorAll('.textBox'));
 
-if (placeholderTarget.length) {
-  placeholderTarget.forEach(element => {
+if (placeholdersList.length) {
+  placeholdersList.forEach(element => {
     const input = element.querySelector('input');
 
     input.addEventListener('focus', () => {

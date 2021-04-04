@@ -11,10 +11,11 @@ exports.create = async (req, res, next) => {
     const {
       title, description, dueDate, founder,
     } = req.body;
-    const options = [];
-    req.body.options.forEach(opt => {
-      if (opt !== '') options.push({ opt, likes: [] });
-    });
+
+    const options = req.body.options.reduce((acc, opt) => {
+      if (opt !== '') return acc.concat({ opt, likes: [] });
+      return acc;
+    }, []);
 
     const votingData = await Voting.create({
       title, description, dueDate, founder, options,
@@ -75,12 +76,19 @@ exports.updateVoting = async (req, res, next) => {
     }
 
     voting.participants.push(req.user.id);
-    voting.options.id(req.body.id).likes.push(req.user.id);
+    voting.options.id(req.body.id).likes.push(req.user);
 
     const result = await voting.save();
-    return res.send(!!result);
+    if (!result) {
+      return res.send(null);
+    }
+    return res.send(true);
   } catch (err) {
-    return next(createError(500));
+    res.render('message', {
+      url: '/',
+      isRedirected: true,
+      message: '더이상 참여할 수 없는 투표입니다.',
+    });
   }
 };
 
