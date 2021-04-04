@@ -1,6 +1,9 @@
 const Voting = require("../../models/Voting");
 const createError = require("http-errors");
-const { INTERNAL_SERVER_ERROR } = require("../../constants/errorMessage");
+const {
+  INTERNAL_SERVER_ERROR,
+  INVALID_VOTING_ID_ERROR,
+} = require("../../constants/errorMessage");
 
 exports.getAll = async (req, res, next) => {
   await Voting.find()
@@ -34,4 +37,17 @@ exports.create = async (req, res, next) => {
   } catch (err) {
     return next(createError(500, INTERNAL_SERVER_ERROR));
   }
+};
+
+exports.getVotingDetails = async (req, res, next) => {
+  const { voting_id: votingId } = req.params;
+
+  await Voting.findById(votingId)
+    .exec((err, voting) => {
+      try {
+        res.render("votingDetails", { voting });
+      } catch (err) {
+        return next(createError(400, INVALID_VOTING_ID_ERROR));
+      }
+    });
 };

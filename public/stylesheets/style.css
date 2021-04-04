@@ -10,3 +10,27 @@ body {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+header .login-signup-container {
+  display: flex;
+}
+
+header .login-signup-container a,
+nav a {
+  width: 80px;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  background: black;
+  font-weight: bold;
+  line-height: 25px;
+  align-self: center;
+}

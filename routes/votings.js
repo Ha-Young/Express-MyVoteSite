@@ -6,4 +6,6 @@ const votingsController = require("./controllers/votings.controller");
 router.get("/new", verifyToken, (req, res) => res.render("newVoting"));
 router.post("/new", verifyToken, votingsController.create);
 
+router.get("/:voting_id", votingsController.getVotingDetails);
+
 module.exports = router;

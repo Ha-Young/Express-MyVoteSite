@@ -6,6 +6,7 @@ const PASSWORD_HASHING_FAILED_ERROR = "Failed to hash password";
 const HASHED_PASSWORD_COMPARISON_FAILED_ERROR = "Failed to compare hashed password";
 const UNAUTHORIZED_TOKEN_ERROR = "Unauthorized Token";
 const FAILED_TO_DECODE_TOKEN_ERROR = "Failed to decode token";
+const INVALID_VOTING_ID_ERROR = "Invalid voting ID";
 
 module.exports = {
   INTERNAL_SERVER_ERROR,
@@ -16,4 +17,5 @@ module.exports = {
   HASHED_PASSWORD_COMPARISON_FAILED_ERROR,
   UNAUTHORIZED_TOKEN_ERROR,
   FAILED_TO_DECODE_TOKEN_ERROR,
+  INVALID_VOTING_ID_ERROR,
 };

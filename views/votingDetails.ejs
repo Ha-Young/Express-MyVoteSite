@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Voting Details</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1><%= voting.title %></h1>
+      <div class="login-signup-container">
+        <a href="/login">로그인</a>
+        <a href="/signup">회원가입</a>
+      </div>
+    </header>
+    <main>
+      <section class="voting-details">
+        <h3>만든 사람: <%= voting.generator %></h3>
+        <h3>만료 날짜 및 시간: <%= voting.expiryDate %></h3>
+        <h2><%= voting.isInProgress ? "진행중" : "투표 종료" %></h2>
+      </section>
+      <form action="/votings/<%= voting._id %>" method="put">
+        <% if (voting.options && voting.options.length) { %>
+          <% voting.options.forEach((item) => { %>
+            <div>
+              <input type="radio"
+                name="options"
+                id="<%= item.option %>"
+                value="<%= item.option %>"
+              >
+              <label for="<%= item.option %>"><%= item.option %></label>
+            </div>
+          <% }) %>
+        <% } %>
+        <button type="submit">투표 하기</button>
+      </form>
+    </main>
+    <footer>
+      <button>투표 삭제</button>
+      <a href="/votings/<%= voting._id %>/voteResult">결과 보기</a>
+      <a href="http://localhost:3000/">Back to Home</a>
+    </footer>
+  </body>
+</html>
