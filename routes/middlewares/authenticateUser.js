@@ -1,16 +1,7 @@
 const createError = require("http-errors");
 const passport = require("passport");
 
-exports.getLoginPage = function(req, res, next) {
-  res.render(
-    "login",
-    { title: "Login",
-      error: req.flash("error")
-    }
-  );
-};
-
-exports.authenticateUser = function(req, res, next) {
+function authenticateUser(req, res, next) {
   passport.authenticate(
     "local",
     function(err, user) {
@@ -31,10 +22,4 @@ exports.authenticateUser = function(req, res, next) {
   })(req, res, next);
 };
 
-exports.directUserToRelevantPage = function(req, res, next) {
-  if (req.session.returnTo) {
-    res.redirect(req.session.returnTo);
-  } else {
-    res.redirect("/");
-  }
-};
+module.exports = authenticateUser;

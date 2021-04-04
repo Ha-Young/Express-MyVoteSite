@@ -15,7 +15,7 @@ if ($deleteButton) {
 const optionData = $optionsList.map(option => ({
   title: option.value,
   count: Number(option.dataset.value),
-}))
+}));
 
 const myChart = document.getElementById("myChart").getContext("2d");
 const optionChart = new Chart(myChart, {

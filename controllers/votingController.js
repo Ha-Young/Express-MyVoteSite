@@ -3,6 +3,18 @@ const User = require("../models/User");
 const { format } = require("date-fns");
 const { getMaxVoterCount } = require("../utils/votingHelpers");
 
+exports.getNewVotingPage = function(req, res, next) {
+  const displayName = req.user ? req.user.userName : null;
+
+  res.render(
+    "newVoting",
+    { title: "New Voting",
+      displayName,
+      messages: req.flash("messages")
+    }
+  );
+}
+
 exports.postNewVoting = async function (req, res, next) {
   try {
     const { title, expireDate, options } = req.body;
@@ -47,7 +59,6 @@ exports.getSelectedVoting = async function (req, res, next) {
       const { _id, title, voters } = option;
 
       if (isProceeding) {
-        console.log(getMaxVoterCount(options), "1?")
         if (voters.length === getMaxVoterCount(options)) {
           winner.push(title);
         }
