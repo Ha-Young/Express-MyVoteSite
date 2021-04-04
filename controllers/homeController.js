@@ -1,10 +1,11 @@
 const Voting = require("../models/Voting");
 const { format } = require("date-fns");
+const { getDisplayName } = require("../utils/votingHelpers");
 
 exports.getVotings = async function(req, res, next) {
   try {
     const { user } = req;
-    const displayName = user ? user.userName : null;
+    const displayName = getDisplayName(user);
     const today = new Date();
 
     await Voting.updateMany(
@@ -21,7 +22,7 @@ exports.getVotings = async function(req, res, next) {
       res.render(
         "index",
         { title: "Home",
-          format: format,
+          format,
           displayName,
           votings,
           error: req.flash("error")

@@ -1,10 +1,11 @@
 const Voting = require("../models/Voting");
 const User = require("../models/User");
 const { format } = require("date-fns");
-const { getMaxVoterCount } = require("../utils/votingHelpers");
+const { getMaxVoterCount, getDisplayName } = require("../utils/votingHelpers");
 
 exports.getNewVotingPage = function(req, res, next) {
-  const displayName = req.user ? req.user.userName : null;
+  const { user } = req;
+  const displayName = getDisplayName(user);
 
   res.render(
     "newVoting",
@@ -23,9 +24,9 @@ exports.postNewVoting = async function (req, res, next) {
     const votingOptionFormat = options.map(option => ({ title: option }));
 
     const newVoting = await Voting.create({
-      title: title,
+      title,
+      expireDate,
       author: _id,
-      expireDate: expireDate,
       options: votingOptionFormat,
     });
 
@@ -44,7 +45,7 @@ exports.postNewVoting = async function (req, res, next) {
 exports.getSelectedVoting = async function (req, res, next) {
   try {
     const { params, user } = req;
-    const isLoggedIn = req.user ? true : false;
+    const isLoggedIn = Boolean(user);
     const {
       title,
       author,
@@ -65,19 +66,19 @@ exports.getSelectedVoting = async function (req, res, next) {
       }
 
       return {
-        _id: _id,
-        title: title,
-        voters: voters,
+        _id,
+        title,
+        voters,
       };
     });
 
     const votingDetailFormat = {
-      title: title,
+      title,
+      isProceeding,
+      winner,
       author: author.userName,
       contact: author.email,
       expireDate: format(expireDate, "yyyy/MM/dd"),
-      isProceeding: isProceeding,
-      winner: winner,
     };
 
     res.render("voting",
