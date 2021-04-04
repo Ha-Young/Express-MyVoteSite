@@ -6,21 +6,15 @@ $formSubmitButton.addEventListener('click', handleSubmitButtonClick);
 
 async function handleSubmitButtonClick(e) {
   e.preventDefault();
+  deleteClassListIfExist();
 
-  if (!$needOptionSelect.classList.contains('hidden')) {
-    $needOptionSelect.classList.add('hidden');
-  }
-
-  if (!$alreadyVotedAlert.classList.contains('hidden')) {
-    $alreadyVotedAlert.classList.add('hidden');
-  }
-
-  let selected_option;
+  let selectedOption;
 
   try {
-    selected_option = document.querySelector('input[name="option"]:checked').value;
+    selectedOption = document.querySelector('input[name="option"]:checked').value;
   } catch (err) {
-    return $needOptionSelect.classList.remove('hidden');
+    $needOptionSelect.classList.remove('hidden');
+    return;
   }
 
   try {
@@ -30,7 +24,7 @@ async function handleSubmitButtonClick(e) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        option: selected_option
+        option: selectedOption
       })
     });
 
@@ -39,11 +33,21 @@ async function handleSubmitButtonClick(e) {
     if (responseBody.error === '이미 투표했습니다.') {
       return $alreadyVotedAlert.classList.remove('hidden');
     } else if (responseBody.error) {
-      window.location.href = `/error/${responseBody.error}`;
+      window.location.href = `/error/${response.status}`;
     } else {
       window.location.href = `/votings/${$formSubmitButton.dataset.votingid}`;
     }
   } catch (err) {
     window.location.href = '/error/500';
+  }
+}
+
+function deleteClassListIfExist() {
+  if (!$needOptionSelect.classList.contains('hidden')) {
+    $needOptionSelect.classList.add('hidden');
+  }
+
+  if (!$alreadyVotedAlert.classList.contains('hidden')) {
+    $alreadyVotedAlert.classList.add('hidden');
   }
 }

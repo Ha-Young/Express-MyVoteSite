@@ -18,7 +18,7 @@
         <div>
           <label for="email">E-mail*</label>
           <div>
-            <input type="email" name="email" value="<%= userInput.email %>" required>
+            <input id="email" type="email" name="email" value="<%= userInput.email %>" required>
             <% if(errors.email){ %>
               <div>
                 <span class="invalid-feedback"><%= errors.email.message %></span>
@@ -32,7 +32,7 @@
             <span>영어 대소문자와 숫자로만 구성되고 네글자 이상이어야 합니다.</span>
           </div>
           <div>
-            <input type="text" name="name" value="<%= userInput.name %>" required>
+            <input id="name" type="text" name="name" value="<%= userInput.name %>" required>
             <% if(errors.name){ %>
               <div>
                 <span class="invalid-feedback"><%= errors.name.message %></span>
@@ -46,7 +46,7 @@
             <span>영어 소문자, 대문자, 특수문자(!, @, #, $, %, ^, &, *)를 모두 포함하고 8자리 이상이어야 합니다.</span>
           </div>
           <div>
-            <input type="text" name="password" value="<%= userInput.password %>" required>
+            <input id="password" type="text" name="password" value="<%= userInput.password %>" required>
             <% if(errors.password){ %>
               <div>
                 <span class="invalid-feedback"><%= errors.password.message %></span>
@@ -57,7 +57,7 @@
         <div>
           <label for="passwordConfirm">Password Confirm*</label>
           <div>
-            <input type="text" name="passwordConfirm" value="<%= userInput.passwordConfirm %>" required>
+            <input id="passwordConfirm" type="text" name="passwordConfirm" value="<%= userInput.passwordConfirm %>" required>
             <% if(errors.passwordConfirm){ %>
               <div>
                 <span class="invalid-feedback"><%= errors.passwordConfirm.message %></span>

@@ -7,7 +7,7 @@ exports.verifyAddVote = async function (req, res, next) {
       if (err) {
         res.cookie('prev_page', req.originalUrl);
 
-        return res.status(401).json({ error: 401 });
+        return res.status(401).json({ error: '투표 권한이 없습니다' });
       }
 
       if (!req.user) {

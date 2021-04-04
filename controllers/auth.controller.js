@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const createError = require('http-errors');
 const User = require('../models/User');
 const { mongodbErrorMessage } = require('../constants/mongodbErrorMessage');
+const { constants } = require('../constants');
 const { getErrorMessage } = require('../utils');
 
 exports.signup = async function (req, res, next) {
@@ -13,7 +14,7 @@ exports.signup = async function (req, res, next) {
 
     if (isEmailAlreadyUsed) {
       req.flash('userInput', req.body);
-      req.flash('errors', getErrorMessage(new Error(mongodbErrorMessage.EMAIL_ALREADY_EXIST)));
+      req.flash('errors', getErrorMessage(mongodbErrorMessage.EMAIL_ALREADY_EXIST));
 
       return res.status(301).redirect('/signup');
     } else {
@@ -57,7 +58,7 @@ exports.login = async function (req, res, next) {
     res.cookie('access_token', jwt.sign(
       { id: currentUser._id },
       process.env.JWT_SECRET,
-      { expiresIn: '2H' }
+      { expiresIn: constants.cookieMaxAge }
     ));
 
     if (req.cookies.prev_page) {

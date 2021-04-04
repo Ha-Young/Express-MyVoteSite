@@ -16,9 +16,9 @@ async function handleDeleteButtonClick(e) {
     const responseBody = await response.json();
 
     if (responseBody.error) {
-      window.location.href = `/error/${responseBody.error}`;
+      window.location.href = `/error/${response.status}`;
     } else {
-      window.location.href = `/`;
+      window.location.href = '/';
     }
   } catch (err) {
     window.location.href = '/error/500';

@@ -9,7 +9,7 @@ exports.renderNewVoting = function (req, res) {
 exports.createVoting = async function (req, res, next) {
   const { title, userOptions, expiration_date } = req.body;
   const options = userOptions.map(option => {
-    return { optionTitle: option };
+    return { title: option };
   });
 
   try {
@@ -39,43 +39,46 @@ exports.renderVotingDetail = async function (req, res, next) {
 };
 
 exports.addVote = async function (req, res, next) {
+  const votingId = req.params.voting_id;
   const selectedOption = req.body.option;
 
   try {
-    const voting = await Voting.findById(req.votingId);
+    const voting = await Voting.findById(votingId);
     const currentUser = await User.findById(req.user);
 
     if (!voting) {
-      return res.status(404).json({ error: 404 });
+      return res.status(404).json({ error: '투표가 존재하지 않습니다.' });
     }
 
     if (!voting.isExistOption(selectedOption)) {
-      return res.status(400).json({ error: 400 });
+      return res.status(400).json({ error: '선택한 옵션이 존재하지 않습니다.' });
     }
 
-    if (currentUser.isAlreadyVote(req.votingId)) {
+    if (currentUser.isAlreadyVoted(votingId)) {
       return res.status(400).json({ error: '이미 투표했습니다.' });
     } else {
-      await voting.addVoteCount(selectedOption);
-      await currentUser.addVotingList(req.votingId);
+      await Voting.addVoteCount(votingId, selectedOption);
+      await currentUser.addVotingList(votingId);
     }
 
-    res.json({ success: '성공' });
+    res.json({ success: '성공했습니다.' });
   } catch (err) {
     next(createError(500, err));
   }
 };
 
 exports.deleteVoting = async function (req, res) {
+  const votingId = req.params.voting_id;
+
   try {
     await Voting.findOneAndDelete({
-      _id: req.votingId,
+      _id: votingId,
       author: req.user,
     });
 
-    res.json({ success: '성공' });
+    res.json({ success: '성공했습니다.' });
   } catch (err) {
-    res.status(500).json({ error: '실패' });
+    res.status(500).json({ error: '삭제하려는 투표가 존재하지 않거나 삭제 권한이 없습니다.' });
   }
 };
 

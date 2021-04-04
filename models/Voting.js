@@ -21,7 +21,7 @@ const votingSchema = new mongoose.Schema({
     required: true
   },
   options: [{
-    optionTitle: { type: String, trim: true, required: true },
+    title: { type: String, trim: true, required: true },
     count: { type: Number, default: 0 }
   }]
 });
@@ -29,7 +29,7 @@ const votingSchema = new mongoose.Schema({
 votingSchema.virtual('selected_option').get(function () {
   const optionsCopy = [...this.options];
 
-  return optionsCopy.sort((a, b) => b.count - a.count)[0].optionTitle;
+  return optionsCopy.sort((a, b) => b.count - a.count)[0].title;
 });
 
 votingSchema.statics.updateExpiredVotingStatus = function (now) {
@@ -39,15 +39,15 @@ votingSchema.statics.updateExpiredVotingStatus = function (now) {
   );
 };
 
-votingSchema.methods.addVoteCount = function (target) {
-  const targetOption = this.options.find(option => option.optionTitle === target);
-  targetOption.count += 1;
-
-  return this.save();
+votingSchema.statics.addVoteCount = function (votingId, target) {
+  return this.findOneAndUpdate(
+    { _id: votingId, 'options.title': target },
+    { $inc: { 'options.$.count': 1 } }
+  );
 };
 
 votingSchema.methods.isExistOption = function (target) {
-  return this.options.some(option => option.optionTitle === target);
+  return this.options.some(option => option.title === target);
 };
 
 module.exports = mongoose.model('Voting', votingSchema);

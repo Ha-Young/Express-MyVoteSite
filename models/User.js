@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
-    lowercase: true,
     unique: true,
     trim: true,
     required: true,
@@ -11,11 +10,13 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     minLength: 8,
+    trim: true,
     required: true,
   },
   name: {
     type: String,
     minLength: 4,
+    maxLength: 10,
     trim: true,
     required: true,
   },
@@ -25,7 +26,7 @@ const userSchema = new mongoose.Schema({
   }]
 });
 
-userSchema.methods.isAlreadyVote = function (id) {
+userSchema.methods.isAlreadyVoted = function (id) {
   return this.voting_list.includes(id);
 };
 

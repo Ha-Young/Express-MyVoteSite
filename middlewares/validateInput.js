@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 const Joi = require('joi');
 const {
   signupErrorMessage,
@@ -15,16 +14,19 @@ exports.signupValidation = function (req, res, next) {
       .error(new Error(signupErrorMessage.INVALID_EMAIL)),
     name: Joi.string()
       .min(4)
+      .max(10)
       .alphanum()
       .required()
       .error(new Error(signupErrorMessage.INVALID_NAME)),
     password: Joi.string()
       .min(8)
+      .max(20)
       .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])'))
       .required()
       .error(new Error(signupErrorMessage.INVALID_PASSWORD)),
     passwordConfirm: Joi.string()
       .min(8)
+      .max(20)
       .valid(Joi.ref('password'))
       .required()
       .error(new Error(signupErrorMessage.INVALID_PASSWORDCONFIRM)),
@@ -41,6 +43,7 @@ exports.loginInputValidation = function (req, res, next) {
       .error(new Error(loginErrorMessage.INVALID_EMAIL)),
     password: Joi.string()
       .min(8)
+      .max(20)
       .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])'))
       .required()
       .error(new Error(loginErrorMessage.INVALID_PASSWORD)),

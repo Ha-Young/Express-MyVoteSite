@@ -32,10 +32,10 @@
           <input
             type="radio"
             name="option"
-            value="<%= voting.options[i].optionTitle %>"
+            value="<%= voting.options[i].title %>"
             data-count="<%= voting.options[i].count %>"
           >
-            <%= voting.options[i].optionTitle %>
+            <%= voting.options[i].title %>
           </input>
         <% } %>
         <% if (voting.status === "inprogress") { %>
