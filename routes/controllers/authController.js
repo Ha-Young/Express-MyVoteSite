@@ -1,8 +1,8 @@
 const passport = require("passport");
 
 const User = require("../../models/User");
-const validationPassword = require("../../utils/validationPassword");
-const validationEmail = require("../../utils/validationEmail");
+const validatePassword = require("../../utils/validatePassword");
+const validateEmail = require("../../utils/validateEmail");
 
 const AUTH = require("../../constants/authConstants");
 
@@ -23,11 +23,15 @@ Controller.postSignup = async (req, res, next) => {
       return res.render("error", { message: AUTH.EXISTING_USER });
     }
 
-    const passwordValidation = validationPassword(password, checkingPassword);
-    const emailValidation = validationEmail(email);
+    const passwordValidation = validatePassword(password, checkingPassword);
+    const emailValidation = validateEmail(email);
 
-    if (passwordValidation || emailValidation) {
-      return res.render("error", { message: passwordValidation || emailValidation });
+    if (!passwordValidation.result || emailValidation.result) {
+      return res.render("error",
+        {
+          message: passwordValidation.message || emailValidation.message
+        }
+      );
     }
 
     const user = await User({ email });

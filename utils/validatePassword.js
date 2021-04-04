@@ -10,16 +10,18 @@ const AUTH = require("../constants/authConstants");
  * @returns {String} return value is the result fo validationpassword
  */
 
-function validationPassword(password, secondPassword) {
+function validatePassword(password, secondPassword) {
   const passwordRegex = new RegExp("^(?=.*[0-9])(?=.*[a-zA-z]).{8,15}$");
 
   if (!passwordRegex.test(password)) {
-    return AUTH.WORNG_PASSWORD_MESSAGE;
+    return { result: false, message: AUTH.WORNG_PASSWORD_MESSAGE };
   }
 
   if (password.length !== secondPassword.length) {
-    return AUTH.DIFFERENT_PASSWORD;
+    return { result: false, message: AUTH.DIFFERENT_PASSWORD };
   }
+
+  return { result: true, message: null };
 }
 
-module.exports = validationPassword;
+module.exports = validatePassword;

@@ -8,12 +8,14 @@ const AUTH = require("../constants/authConstants");
  * @returns {String} Returns the validation result as a String
  */
 
-function validationEmail(userEmail) {
+function validateEmail(userEmail) {
   const emailRegex = new RegExp("([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})");
 
   if (!emailRegex.test(userEmail)) {
-    return AUTH.EMAIL_FORMAT;
+    return { result: false, message: AUTH.EMAIL_FORMAT }
   }
+
+  return { result: true, message: null };
 }
 
-module.exports = validationEmail;
+module.exports = validateEmail;
