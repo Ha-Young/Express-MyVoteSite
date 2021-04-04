@@ -24,10 +24,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: defaultUserImgUrl,
   },
-  completedVotes: [{
-    type: mongoose.Schema.Types.ObjectID,
-    ref: 'Vote',
-  }],
+  completedVotes: [
+    {
+      type: mongoose.Schema.Types.ObjectID,
+      ref: 'Vote',
+    },
+  ],
   githubId: {
     type: String,
   },
