@@ -2,14 +2,9 @@ const $options = document.querySelectorAll(".option-radio");
 const $optionsList = Array.from($options);
 const $votingInfo = document.querySelector(".voting-info");
 const $votingSubmitBtn = document.querySelector(".voting-submit-btn");
-const $deleteButton = document.querySelector(".voting-delete-btn");
 
 if ($votingSubmitBtn) {
   $votingSubmitBtn.addEventListener("click", handleVotingSubmit);
-}
-
-if ($deleteButton) {
-  $deleteButton.addEventListener("click", handleDeleteBtnClick);
 }
 
 const optionData = $optionsList.map(option => ({

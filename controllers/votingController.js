@@ -94,26 +94,47 @@ exports.getSelectedVoting = async function (req, res, next) {
   }
 };
 
-exports.deleteVoting = async function (req, res, next) {
-  try {
+exports.deleteVoting = function (req, res, next) {
     const { params, user } = req;
     const votingId = params.id;
 
-    await Voting.findByIdAndDelete(votingId);
-    await User.findByIdAndUpdate(
-      user._id,
-      { $pull: {
-          votingsCreatedByMe: { $in: [votingId] },
-          myVotingList: { $in: [votingId] },
-        }
-      },
-      { new: true },
-    );
+    Voting.findByIdAndDelete(votingId, (error) => {
+      if (error) {
+        next(error);
+        return;
+      }
 
-    res.status(200).json({ result: "voting deleted" });
-  } catch (error) {
-    next(error);
-  }
+      User.findByIdAndUpdate(
+        user._id,
+        { $pull: {
+            votingsCreatedByMe: { $in: [votingId] },
+            myVotingList: { $in: [votingId] },
+          }
+        },
+        { new: true },
+        (error) => {
+          if (error) {
+            next(error);
+            return;
+          }
+
+          res.status(200).json({ result: "voting deleted" });
+        }
+      );
+    });
+
+    // if (deletedVoting) {
+    //   const updatedVoting = await User.findByIdAndUpdate(
+    //     user._id,
+    //     { $pull: {
+    //         votingsCreatedByMe: { $in: [votingId] },
+    //         myVotingList: { $in: [votingId] },
+    //       }
+    //     },
+    //     { new: true },
+    //   );
+    // }
+
 };
 
 exports.updateVoting = async function (req, res, next) {

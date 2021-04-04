@@ -6,7 +6,7 @@ exports.getSignUpPage = function(req, res, next) {
   res.render(
     "signUp",
     { title: "Sign up",
-      messages: req.flash("messages")
+      signUpMessages: req.flash("signUpMessage")
     }
   );
 }
@@ -20,6 +20,10 @@ exports.registerNewUser = async function(req, res, next) {
       email,
       userName: username,
       password: hashedPassword,
+    }, (error) => {
+      if (error) {
+        next(error);
+      }
     });
 
     res.redirect("/login");

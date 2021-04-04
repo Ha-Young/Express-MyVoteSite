@@ -27,9 +27,9 @@
         <div class="label-wrap"><label for="user-password-confirm">Password Confirm</label></div>
           <input type="password" name="confirmedPassword" placeholder="Confirm your password" >
         <button class="submit-btn global-button" type="submit">Submit</button>
-          <% if (messages.length > 0) { %>
-            <% messages.forEach(function(errMessage) { %>
-              <div><strong><%= errMessage.message %></strong></div>
+          <% if (signUpMessages.length > 0) { %>
+            <% signUpMessages.forEach(function(signUpMessage) { %>
+              <div><strong><%= signUpMessage.signUpMessage %></strong></div>
             <% }) %>
           <% } %>
       </form>

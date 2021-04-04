@@ -1,3 +1,9 @@
+const $deleteButton = document.querySelector(".voting-delete-btn");
+
+if ($deleteButton) {
+  $deleteButton.addEventListener("click", handleDeleteBtnClick);
+}
+
 async function handleDeleteBtnClick(e) {
   try {
     e.preventDefault();

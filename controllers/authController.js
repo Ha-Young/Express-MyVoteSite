@@ -2,7 +2,7 @@ exports.getLoginPage = function(req, res, next) {
   res.render(
     "login",
     { title: "Login",
-      error: req.flash("error")
+      loginMessage: req.flash("loginMessage")
     }
   );
 };

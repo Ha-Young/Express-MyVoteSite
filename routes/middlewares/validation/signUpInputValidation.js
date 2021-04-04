@@ -2,7 +2,7 @@ const User = require("../../../models/User");
 
 async function signUpInputValidation(req, res, next) {
   try {
-    const errorMessages = [];
+    const signUpMessages = [];
     const {
       email,
       username,
@@ -10,12 +10,12 @@ async function signUpInputValidation(req, res, next) {
       confirmedPassword,
     } = req.body;
 
-    if (password !== confirmedPassword) {
-      errorMessages.push({ message: "Passwords do not match" });
+    if (!email || !username || !password || !confirmedPassword) {
+      signUpMessages.push({ signUpMessage: "Please fill out all fileds" });
     }
 
-    if (!email || !username || !password || !confirmedPassword) {
-      errorMessages.push({ message: "Please fill out all fileds" });
+    if (password !== confirmedPassword) {
+      signUpMessages.push({ signUpMessage: "Passwords do not match" });
     }
 
     const registerPasswordFormat = new RegExp(
@@ -23,20 +23,20 @@ async function signUpInputValidation(req, res, next) {
     );
 
     if (!registerPasswordFormat.test(password)) {
-      errorMessages.push({
-        message: "Password should contain at least one number, letter, special character, minimum length 8"
+      signUpMessages.push({
+        signUpMessage: "Password should contain at least one number, letter, special character, minimum length 8"
       });
     }
 
     const user = await User.findOne({ email });
 
     if (user) {
-      errorMessages.push({ message: "This Email is already exist" });
+      signUpMessages.push({ signUpMessage: "This Email is already exist" });
     }
 
-    if (errorMessages.length) {
-      errorMessages.forEach(errorMessage => {
-        req.flash("messages", errorMessage);
+    if (signUpMessages.length) {
+      signUpMessages.forEach(signUpMessage=> {
+        req.flash("signUpMessage", signUpMessage);
       });
       res.redirect("/signup");
       return;
