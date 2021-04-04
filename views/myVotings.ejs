@@ -15,15 +15,15 @@
     <%- include("./partials/header.ejs") %>
       <h1 class="myvointg-title"><%= title %>: What I registered</h1>
       <div class="content-wrap">
-        <% if (myVotings.length > 0) { %>
-          <% myVotings.forEach(function(voting) { %>
+        <% if (myVotingFormat.length > 0) { %>
+          <% myVotingFormat.forEach(function(voting) { %>
             <div class="content-container">
               <a class="my-voting-link" href="/votings/<%= voting._id %>">
                 <div class="content">
                   <h2>
                     <%= voting.title %>
                   </h2>
-                <h3>Expire at: <%= format(voting.expireDate, "yyyy/MM/dd") %></h3>
+                <h3>Expire at: <%= voting.expireDate %></h3>
                 <h3 class="<%= voting.isProceeding ? "proceeding-font" : "finished-font" %>">
                   <%= voting.isProceeding ? "Proceeding..." : "Finished" %>
                 </h3>

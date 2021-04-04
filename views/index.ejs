@@ -23,8 +23,8 @@
     </div>
     <div clas="main-content-wrap">
       <div class="main-content">
-      <% if (votings.length > 0) { %>
-        <% votings.forEach(function(voting) { %>
+      <% if (votingFormat.length > 0) { %>
+        <% votingFormat.forEach(function(voting) { %>
           <div class="voting-card <% voting.isProceeding ? null : finished %>">
             <div class="card-container">
               <a class="voting-link" href="/votings/<%= voting._id %>">
@@ -32,7 +32,7 @@
                 <div class="is-proceeding">
                   <% if (voting.isProceeding) { %>
                     <h3 class="proceeding-font">Proceeding...</h3>
-                    <h4 class="expire-date">Expire at: <%= format(voting.expireDate, "yyyy/MM/dd") %></h4>
+                    <h4 class="expire-date">Expire at: <%= voting.expireDate %></h4>
                   <% } else { %>
                     <h4 class="expire-status finished-font">Finished</h4>
                   <% } %>

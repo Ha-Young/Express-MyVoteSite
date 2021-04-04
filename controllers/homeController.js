@@ -1,6 +1,5 @@
 const Voting = require("../models/Voting");
-const { format } = require("date-fns");
-const { getDisplayName } = require("../utils/votingHelpers");
+const { getDisplayName, getFormattedExpireDate } = require("../utils/votingHelpers");
 
 exports.getVotings = async function(req, res, next) {
   try {
@@ -12,23 +11,33 @@ exports.getVotings = async function(req, res, next) {
       { expireDate: { $lte: today }},
       { $set: { isProceeding: false }}
     );
+    const votings = await Voting.find().populate("author").lean();
 
-    await Voting.find().populate("author").exec((err, votings) => {
-      if (err) {
-        next(err);
-        return;
+    const votingFormat = votings.map(voting => {
+      const {
+        _id,
+        title,
+        isProceeding,
+        expireDate,
+        author
+      } = voting;
+
+      return {
+        _id,
+        title,
+        author,
+        isProceeding,
+        expireDate: getFormattedExpireDate(expireDate)
       }
+    })
 
-      res.render(
-        "index",
-        { title: "Home",
-          format,
-          displayName,
-          votings,
-          error: req.flash("error")
-        }
-      );
-    });
+    res.render(
+      "index",
+      { title: "Home",
+        displayName,
+        votingFormat,
+      }
+    );
   } catch (err) {
     next(err);
   }

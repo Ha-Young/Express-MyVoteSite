@@ -10,6 +10,10 @@ function getMaxVoterCount(votingOptions) {
   return votingOptions.reduce((acc, option) => Math.max(option.voters.length, acc), 0);
 }
 
+function getFormattedExpireDate(expireDate) {
+  return format(expireDate, "yyyy/MM/dd");
+}
+
 function getDisplayName(user) {
   return user ? user.userName : null;
 }
@@ -17,3 +21,4 @@ function getDisplayName(user) {
 exports.checkExpireDate = checkExpireDate;
 exports.getMaxVoterCount = getMaxVoterCount;
 exports.getDisplayName = getDisplayName;
+exports.getFormattedExpireDate = getFormattedExpireDate;

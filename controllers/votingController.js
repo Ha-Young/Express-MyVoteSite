@@ -1,7 +1,6 @@
 const Voting = require("../models/Voting");
 const User = require("../models/User");
-const { format } = require("date-fns");
-const { getMaxVoterCount, getDisplayName } = require("../utils/votingHelpers");
+const { getMaxVoterCount, getDisplayName, getFormattedExpireDate } = require("../utils/votingHelpers");
 
 exports.getNewVotingPage = function(req, res, next) {
   const { user } = req;
@@ -56,6 +55,7 @@ exports.getSelectedVoting = async function (req, res, next) {
     } = await Voting.findById(params.id).populate("author").lean();
 
     const isAuthor = isLoggedIn && String(author._id) === String(user._id);
+
     const votingOptionFormat = options.map(option => {
       const { _id, title, voters } = option;
 
@@ -78,7 +78,7 @@ exports.getSelectedVoting = async function (req, res, next) {
       winner,
       author: author.userName,
       contact: author.email,
-      expireDate: format(expireDate, "yyyy/MM/dd"),
+      expireDate: getFormattedExpireDate(expireDate),
     };
 
     res.render("voting",
@@ -86,7 +86,6 @@ exports.getSelectedVoting = async function (req, res, next) {
         votingDetailFormat,
         votingOptionFormat,
         isAuthor,
-        messages: req.flash("messages")
       }
     );
   } catch (err) {

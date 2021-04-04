@@ -1,28 +1,37 @@
 const User = require("../models/User");
 const { format } = require("date-fns");
-const { getDisplayName } = require("../utils/votingHelpers");
+const { getDisplayName, getFormattedExpireDate } = require("../utils/votingHelpers");
 
 exports.getMyVotings = async function(req, res, next) {
   try {
     const { user } = req;
     const displayName = getDisplayName(user);
+    const myVotings = await User.findById(user._id).populate("votingsCreatedByMe").lean();
+    const votingsCreatedByMe = myVotings.votingsCreatedByMe;
 
-    await User.findById(user._id).populate("votingsCreatedByMe").exec((err, votings) => {
-      if (err) {
-        next(err);
-        return;
+    const myVotingFormat = votingsCreatedByMe.map(voting => {
+      const {
+        _id,
+        title,
+        isProceeding,
+        expireDate
+      } = voting;
+
+      return {
+        _id,
+        title,
+        isProceeding,
+        expireDate: getFormattedExpireDate(expireDate)
       }
-
-      const myVotings = votings.votingsCreatedByMe;
-      res.render(
-        "myVotings",
-        { title: "My Votings",
-          format,
-          displayName,
-          myVotings,
-        }
-      );
     });
+
+    res.render(
+      "myVotings",
+      { title: "My Votings",
+        displayName,
+        myVotingFormat,
+      }
+    );
   } catch (err) {
     next(err);
   }
