@@ -4,6 +4,12 @@ const confirmPasswordInput = document.querySelector('#confirm-password');
 const validationMessageField = document.querySelector('#validation-message');
 const signupButton = document.querySelector('.submit-button');
 
+const MESSAGES = {
+  INVALID_EMAIL: 'invalid email format',
+  DIFFERENT_PASSWORDS: 'passwords not identical',
+  EMPTY_STRING: '',
+};
+
 function ValidateEmail(userEmail) {
   const format = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -18,11 +24,11 @@ function handleKeyupEmail() {
   const email = emailField.value;
 
   if (!ValidateEmail(email)) {
-    validationMessageField.textContent = 'invalid email format';
+    validationMessageField.textContent = MESSAGES.INVALID_EMAIL;
     return;
   }
 
-  validationMessageField.textContent = '';
+  validationMessageField.textContent = MESSAGES.EMPTY_STRING;
 }
 
 function handleKeyupPasswords() {
@@ -30,12 +36,12 @@ function handleKeyupPasswords() {
   const confirmPassword = confirmPasswordInput.value;
 
   if (password !== confirmPassword) {
-    validationMessageField.textContent = 'passwords not identical';
+    validationMessageField.textContent = MESSAGES.DIFFERENT_PASSWORDS;
     signupButton.disabled = true;
     return;
   }
 
-  validationMessageField.textContent = '';
+  validationMessageField.textContent = MESSAGES.EMPTY_STRING;
   signupButton.disabled = false;
 }
 
