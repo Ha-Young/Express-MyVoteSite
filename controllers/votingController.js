@@ -21,7 +21,6 @@ exports.postNewVoting = async function (req, res, next) {
     const { _id } = req.user;
 
     const votingOptionFormat = options.map(option => ({ title: option }));
-
     const newVoting = await Voting.create({
       title,
       expireDate,
@@ -55,7 +54,6 @@ exports.getSelectedVoting = async function (req, res, next) {
     } = await Voting.findById(params.id).populate("author").lean();
 
     const isAuthor = isLoggedIn && String(author._id) === String(user._id);
-
     const votingOptionFormat = options.map(option => {
       const { _id, title, voters } = option;
 
@@ -99,7 +97,6 @@ exports.deleteVoting = async function (req, res, next) {
     const votingId = params.id;
 
     await Voting.findByIdAndDelete(votingId);
-
     await User.findByIdAndUpdate(
       user._id,
       { $pull: {

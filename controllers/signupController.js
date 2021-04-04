@@ -27,7 +27,6 @@ exports.registerNewUser = async function(req, res, next) {
 
       res.redirect("/login");
     });
-
   } catch (err) {
     next(err);
   }
