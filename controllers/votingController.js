@@ -99,30 +99,19 @@ exports.deleteVoting = async function (req, res, next) {
     const { params, user } = req;
     const votingId = params.id;
 
-    await Voting.findByIdAndDelete(votingId, (err) => {
-      if (err) {
-        next(err);
-        return;
-      }
+    await Voting.findByIdAndDelete(votingId);
 
-      User.findByIdAndUpdate(
-        user._id,
-        { $pull: {
-            votingsCreatedByMe: { $in: [votingId] },
-            myVotingList: { $in: [votingId] },
-          }
-        },
-        { new: true },
-        (err) => {
-          if (err) {
-            next(err);
-            return;
-          }
-
-          res.status(200).json({ result: "voting deleted" });
+    await User.findByIdAndUpdate(
+      user._id,
+      { $pull: {
+          votingsCreatedByMe: { $in: [votingId] },
+          myVotingList: { $in: [votingId] },
         }
-      );
-    });
+      },
+      { new: true },
+    );
+
+    res.status(200).json({ result: "voting deleted" });
   } catch (err) {
     next(err);
   }
@@ -149,16 +138,11 @@ exports.updateVoting = async function (req, res, next) {
       { _id: votingId },
       { $push: { 'options.$[option].voters': userId }},
       { arrayFilters: [{ "option._id": selectedOptionId }]},
-      (err) => {
-        if (err) {
-          next(err);
-          return;
-        }
-
-        User.findByIdAndUpdate({ _id: userId }, { $push : { myVotingList: votingId }});
-        res.json("user exist");
-      }
     );
+
+    await User.findByIdAndUpdate({ _id: userId }, { $push : { myVotingList: votingId }});
+
+    res.json("user exist");
   } catch (err) {
     next(err);
   }
