@@ -1,0 +1,18 @@
+<article class="card-buttons">
+  <div class="card-button">
+    <% if (voting.isProgress) { %>
+      <p>투표 진행 중</p>
+    <% } else { %>
+      <p>투표 종료</p>
+    <% } %>
+  </div>
+  <div class="card-button">
+    <a href="/voting/votings/<%= voting._id %>">
+      <% if (voting.isProgress) { %>
+        투표하러 가기
+      <% } else { %>
+        투표 결과 보기
+      <% } %>
+    </a>
+  </div>
+</article>
