@@ -357,6 +357,10 @@ body {
     position: relative;
     transition: background 0.3s;
     background-repeat: no-repeat;
+
+    a {
+      color: #fff;
+    }
     & + & {
       margin-left: 20px;
       width: 35%;
@@ -501,7 +505,7 @@ body {
     -webkit-box-orient: vertical;
   }
 
-  &-view {
+  &-time {
     font-size: 12px;
     padding: 12px 20px 20px;
     background-color: $video-bg;
@@ -553,3 +557,16 @@ body {
   }
 }
 
+.each-vote {
+  background-color: #252936;
+  border-radius: 4px;
+  padding: 1rem;
+
+  a {
+    color: #fff;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}

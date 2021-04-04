@@ -11,7 +11,7 @@ mixin voteList(vote)
           img.creator-img(src=`${vote.creatorImgUrl}`)
     .vote-by #{vote.creatorName}
     .vote-name #{vote.title}
-    .vote-view
+    .vote-time
       | Until
       | #{vote.expiredAt.toISOString().slice(0, 10)}
       | #{vote.expiredAt.toISOString().slice(11, 16)}

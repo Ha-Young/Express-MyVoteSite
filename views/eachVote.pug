@@ -3,36 +3,41 @@ include mixins/header
 include mixins/sidebar
 head
   link(rel='stylesheet' href='/css/form.min.css')
-  link(rel='stylesheet', href='/css/dashboard.min.css')
+  link(rel='stylesheet' href='/css/dashboard.min.css')
   script(src='https://kit.fontawesome.com/5fab680b0a.js' crossorigin='anonymous')
 .container
   +sidebar()
   .wrapper
     +header(user)
     .main-container
-      a(href='/')
-        i.fas.fa-arrow-circle-left
-        | &nbsp Back to list
-      if (vote)
-        .vote
-          .vote-wrapper
-            h4 #{vote.title}
-            p avilable - #{vote.isVotable}
-            p expired At - #{vote.expiredAt}
-            p Updated by - #{vote.creatorName}
-            p #{vote.description || 'No Description'}
-          if (vote.isVotable)
-            form.form-container(action=`/vote/${vote._id}?_method=PATCH` method='POST')
-              each count, option in vote.options
-                .form-group
-                  label
-                    input.input-radio(name='option' value=`${option}` type='radio')
-                    | #{option}
-                    if (isCreator)
-                      | -- 현재 현황: #{count}
-              button(type='submit') Submit
-          else
-            h2 winner is ...#{vote.winner}
+      .each-vote
+        a(href='/')
+          i.fas.fa-arrow-circle-left
+          | &nbsp Back to list
+        .small-header  #{vote.title}
+        img.creator-img(src=`${vote.creatorImgUrl}`)
+        .vote-by updated by #{vote.creatorName}
+        .vote-time
+          | Vote available Until
+          | #{vote.expiredAt.toISOString().slice(0, 10)}
+          | #{vote.expiredAt.toISOString().slice(11, 16)}
+        p #{vote.description || ''}
+        if (vote.isVotable)
+          form(action=`/vote/${vote._id}?_method=PATCH` method='POST')
+            h2 Select one of the options.
+            each count, option in vote.options
+              .form-group
+                label(for='option')
+                  input.input-radio(name='option' value=`${option}` type='radio')
+                  | #{option}
+                  if (isCreator)
+                    | -- 현재 현황: #{count}
+            button(type='submit') Submit
+        else
+          h1 WINER: #{vote.winner}
+          h3 options
+          each count, option in vote.options
+            li #{option}
       if (isCreator)
         form(action=`/vote/${vote._id}?_method=DELETE` method='POST')
           button(type='submit') DELETE
