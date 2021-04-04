@@ -2,15 +2,13 @@ if (process.env.NODE_ENV) {
   require('dotenv').config();
 }
 
-const createError = require('http-errors');
-const express = require('express');
 const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+const express = require('express');
 const passport = require('passport');
+const createError = require('http-errors');
+const cookieParser = require('cookie-parser');
 const methodOverride = require('method-override');
 const flash = require('express-flash');
-const connectFlash = require('connect-flash');
 
 const initDB = require('./configs/db');
 const initGithubPassport = require('./loaders/githubPassport');
@@ -18,18 +16,17 @@ const initLocalPassport = require('./loaders/localPassport');
 
 const app = express();
 
-app.use(logger('dev'));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('./configs/session'));
 
 app.use(flash());
-app.use(connectFlash());
+app.use(methodOverride('_method'));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(methodOverride('_method'));
 
 initDB();
 initGithubPassport();
