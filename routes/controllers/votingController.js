@@ -52,11 +52,11 @@ Controller.postNewVoting = async (req, res, next) => {
       return res.redirect("/voting/votings/error");
     }
 
-    const filteredOptions = option.filter(
+    const unusedFilteredOptions = option.filter(
       option => VOTING.OPTION_LIMIT_LENGTH < option.length
     );
 
-    const options = filteredOptions.map(option => {
+    const options = unusedFilteredOptions.map(option => {
       return { title: option, value: VOTING.OPTION_DEFAULT_VALUE };
     });
 
