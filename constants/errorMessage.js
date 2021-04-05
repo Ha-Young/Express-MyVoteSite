@@ -7,6 +7,7 @@ const HASHED_PASSWORD_COMPARISON_FAILED_ERROR = "Failed to compare hashed passwo
 const UNAUTHORIZED_TOKEN_ERROR = "Unauthorized Token";
 const FAILED_TO_DECODE_TOKEN_ERROR = "Failed to decode token";
 const INVALID_VOTING_ID_ERROR = "Invalid voting ID";
+const BEFORE_CURRENT_DATE_ERROR = "Expiration date cannot be before current date"
 
 module.exports = {
   INTERNAL_SERVER_ERROR,
@@ -18,4 +19,5 @@ module.exports = {
   UNAUTHORIZED_TOKEN_ERROR,
   FAILED_TO_DECODE_TOKEN_ERROR,
   INVALID_VOTING_ID_ERROR,
+  BEFORE_CURRENT_DATE_ERROR,
 };

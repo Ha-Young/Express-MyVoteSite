@@ -7,9 +7,14 @@ nav a {
   width: auto;
 }
 
+main {
+  height: 100%;
+  display: flex;
+}
+
 main .votings {
   display: flex;
-  height: 750px;
+  flex-flow: wrap;
   border: 1px solid black;
   margin: 20px;
 }
