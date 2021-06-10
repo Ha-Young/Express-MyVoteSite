@@ -1,4 +1,4 @@
-![main](.\readME_asset\main.png)
+![main](./readME_asset/main.png)
 
 ## 배포링크
 
